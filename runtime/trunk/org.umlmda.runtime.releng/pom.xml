@@ -13,7 +13,8 @@
   <description>UMLMDA maven project for umlmda runtime modules.</description>
   
   <modules>
-  	<module>../build/runtime/org.umlmda.runtime.core</module>
-  	<module>../build/runtime/org.umlmda.runtime.common</module>
+  	<module>../org.umlmda.runtime.core</module>
+  	<module>../org.umlmda.runtime.common</module>
+    <module>../org.umlmda.runtime.sdo.sync</module>
   </modules>
 </project>
