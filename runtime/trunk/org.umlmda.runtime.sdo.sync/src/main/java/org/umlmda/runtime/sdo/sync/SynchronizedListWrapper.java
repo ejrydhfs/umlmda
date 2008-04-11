@@ -18,6 +18,18 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
       this.wrappedList = wrappedList;
    }
    
+   public void add(int index, Object o) {
+      if (o instanceof SynchronizedObject) {
+         SynchronizedObject recordedObject = (SynchronizedObject) o;
+
+         wrappedList.add(index, (T)o);
+         recorder.recordAdd(this, recordedObject, index);
+      }
+      else {
+         throw createIllegalArgumentException(o);
+      }
+   }
+
    public boolean add(T o) {
       if (o instanceof SynchronizedObject) {
          SynchronizedObject recordedObject = (SynchronizedObject) o;
@@ -103,11 +115,6 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
    @SuppressWarnings("hiding")
    public <T> T[] toArray(T[] a) {
       return wrappedList.toArray(a);
-   }
-
-   public void add(int index, T element) {
-      // TODO Auto-generated method stub
-
    }
 
    public boolean addAll(int index, Collection<? extends T> c) {

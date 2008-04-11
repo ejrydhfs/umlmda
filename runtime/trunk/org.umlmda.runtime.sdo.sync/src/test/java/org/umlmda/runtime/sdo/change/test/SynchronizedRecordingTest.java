@@ -24,7 +24,7 @@ public class SynchronizedRecordingTest extends TestCase {
       
       root.setRootChild(new RootChild(recorder));
       
-      logEntries(recorder);
+      TestUtils.logEntries(logger, recorder);
       assertEquals(3, recorder.getChangeEntries().size());
       
    }
@@ -40,7 +40,7 @@ public class SynchronizedRecordingTest extends TestCase {
       root.getRootChildren().get(0).setStringAttr("A string value");
       root.getRootChildren().get(1).setStringAttr("Another string value");
       
-      logEntries(recorder);
+      TestUtils.logEntries(logger, recorder);
       assertEquals(7, recorder.getChangeEntries().size());
    }
    
@@ -63,17 +63,8 @@ public class SynchronizedRecordingTest extends TestCase {
       
       root.getRootChildren().get(0).getRootGreatChildren().add(greatChildren);
 
-      logEntries(recorder);
+      TestUtils.logEntries(logger, recorder);
       assertEquals(12, recorder.getChangeEntries().size());
    }
    
-   private void logEntries(org.umlmda.runtime.sdo.sync.Synchronizer recorder) {
-      if ( logger.isTraceEnabled()) {
-         logger.trace("<!-- LogEntries");
-         for (AbstractChangeLogEntry logEntry : recorder.getChangeEntries()) {
-            logger.trace(logEntry);
-         }
-         logger.trace("LogEntries -->");
-      }
-   }
 }
