@@ -1,20 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-	  <groupId>org.umlmda</groupId>
-	  <artifactId>org.umlmda.releng</artifactId>
-	  <version>3.0.0-SNAPSHOT</version>
-  </parent>
-  <artifactId>org.umlmda.runtime.releng</artifactId>
-  <packaging>pom</packaging>
-  <version>2.0.0-SNAPSHOT</version>
-  <description>UMLMDA maven project for umlmda runtime modules.</description>
-  
-  <modules>
-  	<module>../org.umlmda.runtime.core</module>
-  	<module>../org.umlmda.runtime.common</module>
-    <module>../org.umlmda.runtime.sdo.sync</module>
-  </modules>
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.releng</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+   </parent>
+   <artifactId>org.umlmda.runtime.releng</artifactId>
+   <packaging>pom</packaging>
+   <version>2.0.0-SNAPSHOT</version>
+   <description>UMLMDA maven project for umlmda runtime modules.</description>
+
+   <!-- inherited property values -->
+   <properties>
+      <spring.version>1.2.7</spring.version>
+      <gwt.version>1.5-SNAPSHOT</gwt.version>
+      <gwt.home>${env.GWT_HOME}</gwt.home>
+   </properties>
+
+   <dependencyManagement>
+      <dependencies>
+         <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <scope>provided</scope>
+            <version>${gwt.version}</version>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
+
+   <modules>
+      <module>../org.umlmda.runtime.core</module>
+      <module>../org.umlmda.runtime.common</module>
+      <module>../org.umlmda.runtime.sdo.sync</module>
+      <module>../org.umlmda.runtime.sdo.sync.test</module>
+      <module>../org.umlmda.runtime.sdo.sync.gwtclient</module>
+      <module>../org.umlmda.runtime.sdo.sync.gwtserver</module>
+   </modules>
 </project>
