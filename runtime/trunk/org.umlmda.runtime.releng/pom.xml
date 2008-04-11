@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+	  <groupId>org.umlmda</groupId>
+	  <artifactId>org.umlmda.releng</artifactId>
+	  <version>3.0.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>org.umlmda.runtime.releng</artifactId>
+  <packaging>pom</packaging>
+  <version>2.0.0-SNAPSHOT</version>
+  <description>UMLMDA maven project for umlmda runtime modules.</description>
+  
+  <modules>
+  	<module>../build/runtime/org.umlmda.runtime.core</module>
+  	<module>../build/runtime/org.umlmda.runtime.common</module>
+  </modules>
+</project>
