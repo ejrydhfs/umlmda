@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.umlmda.runtime.sdo.sync.SynchronizedListWrapper;
-import org.umlmda.runtime.sdo.sync.Synchronizer;
+import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.impl.AbstractSynchronizedObject;
 
 public class RootChildren extends AbstractSynchronizedObject {
@@ -12,7 +12,7 @@ public class RootChildren extends AbstractSynchronizedObject {
    private String stringAttr;
    private List<RootGreatChildren> rootGreatChildren = new SynchronizedListWrapper<RootGreatChildren>(recorder, new ArrayList<RootGreatChildren>());
    
-   public RootChildren(Synchronizer recorder) {
+   public RootChildren(Recorder recorder) {
       super(recorder);
    }
 

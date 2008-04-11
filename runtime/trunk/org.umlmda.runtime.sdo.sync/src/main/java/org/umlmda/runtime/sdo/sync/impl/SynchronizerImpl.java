@@ -7,13 +7,13 @@ import org.umlmda.runtime.sdo.sync.SynchronizedCollection;
 import org.umlmda.runtime.sdo.sync.SynchronizedList;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedSet;
-import org.umlmda.runtime.sdo.sync.Synchronizer;
+import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
 
-public class SynchronizerImpl implements Synchronizer {
+public class SynchronizerImpl implements Recorder {
    private List<AbstractChangeLogEntry> changeEntries = new ArrayList<AbstractChangeLogEntry>();
    private int recordedObjectCount = 0;
    private boolean recording = true;

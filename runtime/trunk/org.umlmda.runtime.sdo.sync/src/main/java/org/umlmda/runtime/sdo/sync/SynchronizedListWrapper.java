@@ -10,9 +10,9 @@ import org.umlmda.runtime.sdo.sync.impl.AbstractSynchronizedObject;
 
 public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject implements SynchronizedList<T> {
    private final List<T> wrappedList;
-   private final transient Synchronizer recorder;
+   private final transient Recorder recorder;
    
-   public SynchronizedListWrapper(Synchronizer recorder, List<T> wrappedList) {
+   public SynchronizedListWrapper(Recorder recorder, List<T> wrappedList) {
       super(recorder, false);
       this.recorder = recorder;
       this.wrappedList = wrappedList;

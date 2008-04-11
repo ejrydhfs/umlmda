@@ -18,7 +18,7 @@ public class SynchronizedRecordingTest extends TestCase {
    }
 
    public void testAddChild() {
-      org.umlmda.runtime.sdo.sync.Synchronizer recorder = new SynchronizerImpl();
+      org.umlmda.runtime.sdo.sync.Recorder recorder = new SynchronizerImpl();
       
       RootClass root = new RootClass(recorder);
       
@@ -30,7 +30,7 @@ public class SynchronizedRecordingTest extends TestCase {
    }
 
    public void testAddChildren() {
-      org.umlmda.runtime.sdo.sync.Synchronizer recorder = new SynchronizerImpl();
+      org.umlmda.runtime.sdo.sync.Recorder recorder = new SynchronizerImpl();
       
       RootClass root = new RootClass(recorder);
       
@@ -45,7 +45,7 @@ public class SynchronizedRecordingTest extends TestCase {
    }
    
    public void testAddGreatChildren() {
-      org.umlmda.runtime.sdo.sync.Synchronizer recorder = new SynchronizerImpl();
+      org.umlmda.runtime.sdo.sync.Recorder recorder = new SynchronizerImpl();
       
       RootClass root = new RootClass(recorder);
       RootChild rootChild = new RootChild(recorder);

@@ -8,7 +8,7 @@ import org.umlmda.runtime.sdo.change.test.model.RootChild;
 import org.umlmda.runtime.sdo.change.test.model.RootClass;
 import org.umlmda.runtime.sdo.change.test.model.TestRootFactory;
 import org.umlmda.runtime.sdo.sync.Player;
-import org.umlmda.runtime.sdo.sync.Synchronizer;
+import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
 
@@ -24,8 +24,8 @@ public class SynchronizedPlayerTest extends TestCase {
    }
 
    public void testPlayback() {
-      Synchronizer masterRecorder = new SynchronizerImpl();
-      Synchronizer slaveRecorder = new SynchronizerImpl();
+      Recorder masterRecorder = new SynchronizerImpl();
+      Recorder slaveRecorder = new SynchronizerImpl();
       Player player = new PlayerImpl(new TestRootFactory(slaveRecorder), new ReflectionInvocationFactory());
       
       RootClass root = new RootClass(masterRecorder);

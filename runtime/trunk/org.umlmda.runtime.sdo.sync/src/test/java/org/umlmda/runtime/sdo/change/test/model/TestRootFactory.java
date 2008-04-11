@@ -2,13 +2,13 @@ package org.umlmda.runtime.sdo.change.test.model;
 
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectFactory;
-import org.umlmda.runtime.sdo.sync.Synchronizer;
+import org.umlmda.runtime.sdo.sync.Recorder;
 
 public class TestRootFactory implements SynchronizedObjectFactory {
 
-   private final Synchronizer recorder;
+   private final Recorder recorder;
 
-   public TestRootFactory(Synchronizer recorder) {
+   public TestRootFactory(Recorder recorder) {
       this.recorder = recorder;
    }
 

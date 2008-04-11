@@ -1,17 +1,17 @@
 package org.umlmda.runtime.sdo.sync.impl;
 
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
-import org.umlmda.runtime.sdo.sync.Synchronizer;
+import org.umlmda.runtime.sdo.sync.Recorder;
 
 public class AbstractSynchronizedObject implements SynchronizedObject {
-   protected final transient Synchronizer recorder;
+   protected final transient Recorder recorder;
    private int recordObjectId;
 
-   protected AbstractSynchronizedObject(Synchronizer recorder) {
+   protected AbstractSynchronizedObject(Recorder recorder) {
       this(recorder, true);
    }
 
-   protected AbstractSynchronizedObject(Synchronizer recorder, boolean recordCreation) {
+   protected AbstractSynchronizedObject(Recorder recorder, boolean recordCreation) {
       this.recorder = recorder;
       this.recorder.register(this, recordCreation);
    }

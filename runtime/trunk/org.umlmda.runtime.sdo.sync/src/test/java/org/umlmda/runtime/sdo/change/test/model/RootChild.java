@@ -1,13 +1,13 @@
 package org.umlmda.runtime.sdo.change.test.model;
 
-import org.umlmda.runtime.sdo.sync.Synchronizer;
+import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.impl.AbstractSynchronizedObject;
 
 public class RootChild extends AbstractSynchronizedObject {
    public static final String PROPERTY_GREAT_CHILDREN = "greatChildren";
    private RootGreatChildren greatChildren;
    
-   public RootChild(Synchronizer recorder) {
+   public RootChild(Recorder recorder) {
       super(recorder);
    }
 

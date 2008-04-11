@@ -11,7 +11,7 @@ import org.umlmda.runtime.sdo.sync.impl.AbstractSynchronizedObject;
  * @author moroff
  *
  */
-public interface Synchronizer {
+public interface Recorder {
 
    public abstract List<AbstractChangeLogEntry>   getChangeEntries();
    
