@@ -2,6 +2,7 @@ package org.umlmda.runtime.sdo.sync.gwt.server;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.umlmda.runtime.reflect.ReflectionInvocationFactory;
 import org.umlmda.runtime.sdo.change.test.model.TestRootFactory;
 import org.umlmda.runtime.sdo.sync.Player;
@@ -14,7 +15,8 @@ import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class SyncServiceImpl extends RemoteServiceServlet implements SyncService {
-
+   static Logger logger = Logger.getLogger(SyncServiceImpl.class);
+   
    /**
     * 
     */
@@ -24,9 +26,10 @@ public class SyncServiceImpl extends RemoteServiceServlet implements SyncService
     * Servcerside implementation of the SyncService
     */
    public List<AbstractChangeLogEntry> synchronizeChanges(List<AbstractChangeLogEntry> changes) {
-
       Recorder slaveRecorder = new SynchronizerImpl();
       Player player = new PlayerImpl(new TestRootFactory(slaveRecorder), new ReflectionInvocationFactory());
+
+      logger.info("synchronizeChanges()");
       
       player.playback(changes, null);
       
