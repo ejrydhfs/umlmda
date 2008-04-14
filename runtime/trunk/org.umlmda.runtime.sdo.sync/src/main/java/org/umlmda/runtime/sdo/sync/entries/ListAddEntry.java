@@ -1,5 +1,8 @@
 package org.umlmda.runtime.sdo.sync.entries;
 
+import org.umlmda.runtime.sdo.sync.SynchronizedObject;
+import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
+
 
 public class ListAddEntry extends AbstractChangeLogEntry {
 
@@ -7,7 +10,7 @@ public class ListAddEntry extends AbstractChangeLogEntry {
     * 
     */
    private static final long serialVersionUID = 100L;
-   private Object value;
+   private SynchronizedObjectProxy proxy;
    private int index;
 
    public ListAddEntry() {
@@ -16,11 +19,18 @@ public class ListAddEntry extends AbstractChangeLogEntry {
    public ListAddEntry(int recordId, Object value, int index) {
       super(recordId);
       this.index = index;
-      this.value = getRecordedValue(value);
+      if (value instanceof SynchronizedObject) {
+         SynchronizedObject synchronizedObject = (SynchronizedObject) value;
+         
+         this.proxy = new SynchronizedObjectProxy(synchronizedObject.getRecordObjectId());
+      }
+      else {
+         throw new IllegalArgumentException(value.getClass()+" unsupported type");
+      }
    }
 
    public Object getValue() {
-      return value;
+      return proxy;
    }
 
    public int getIndex() {
@@ -29,6 +39,6 @@ public class ListAddEntry extends AbstractChangeLogEntry {
 
    @Override
    public String toString() {
-      return "ListAddEntry: ROID="+getRecordId()+" index="+index+" value=\""+value+"\"";
+      return "ListAddEntry: ROID="+getRecordId()+" index="+index+" value=\""+proxy+"\"";
    }
 }

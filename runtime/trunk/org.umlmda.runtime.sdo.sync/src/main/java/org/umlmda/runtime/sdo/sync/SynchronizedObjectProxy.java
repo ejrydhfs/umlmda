@@ -1,6 +1,10 @@
 package org.umlmda.runtime.sdo.sync;
 
-public class SynchronizedObjectProxy implements SynchronizedObject {
+import java.io.Serializable;
+
+public class SynchronizedObjectProxy implements SynchronizedObject, Serializable {
+
+   private static final long serialVersionUID = 100L;
    private int recordObjectId;
 
    public SynchronizedObjectProxy() {

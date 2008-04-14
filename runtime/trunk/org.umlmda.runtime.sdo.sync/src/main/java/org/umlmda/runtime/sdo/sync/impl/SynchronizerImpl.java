@@ -9,7 +9,9 @@ import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedSet;
 import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
-import org.umlmda.runtime.sdo.sync.entries.ChangeEntry;
+import org.umlmda.runtime.sdo.sync.entries.AbstractChangeEntry;
+import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
+import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
 
@@ -45,7 +47,15 @@ public class SynchronizerImpl implements Recorder {
 
    public synchronized void recordChange(SynchronizedObject object, String propertyName, Object value) {
       if ( recording ) {
-         changeEntries.add(new ChangeEntry(object.getRecordObjectId(), propertyName, value));
+         if (value instanceof String) {
+            changeEntries.add(new ChangeStringEntry(object.getRecordObjectId(), propertyName, (String) value));
+         }
+         else if (value instanceof SynchronizedObject) {
+            changeEntries.add(new ChangeObjectEntry(object.getRecordObjectId(), propertyName, (SynchronizedObject) value));
+         }
+         else {
+            throw new IllegalArgumentException(value.getClass()+ " not supported");
+         }
       }
    }
 

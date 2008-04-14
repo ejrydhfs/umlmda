@@ -12,7 +12,7 @@ import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectFactory;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
-import org.umlmda.runtime.sdo.sync.entries.ChangeEntry;
+import org.umlmda.runtime.sdo.sync.entries.AbstractChangeEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
 
@@ -39,8 +39,8 @@ public class PlayerImpl implements Player {
             synchronizedObjects.put(createEntry.getRecordId(), object);
          }
          
-         else if (logEntry instanceof ChangeEntry) {
-            ChangeEntry changeEntry = (ChangeEntry) logEntry;
+         else if (logEntry instanceof AbstractChangeEntry) {
+            AbstractChangeEntry changeEntry = (AbstractChangeEntry) logEntry;
             Object changeValue = getValue(changeEntry.getValue());
             BeanInvocation beanInvocation = beanInvocationFactory.create(object);
             
