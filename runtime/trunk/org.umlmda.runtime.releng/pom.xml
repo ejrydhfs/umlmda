@@ -16,8 +16,8 @@
    <!-- inherited property values -->
    <properties>
       <spring.version>1.2.7</spring.version>
-      <gwt.version>1.5-SNAPSHOT</gwt.version>
-      <gwt.home>${env.GWT_HOME}</gwt.home>
+      <gwt.version>1.5.M2</gwt.version>
+      <google.webtoolkit.home>${env.GWT_HOME}</google.webtoolkit.home>
    </properties>
 
    <dependencyManagement>
@@ -38,5 +38,6 @@
       <module>../org.umlmda.runtime.sdo.sync.test</module>
       <module>../org.umlmda.runtime.sdo.sync.gwtclient</module>
       <module>../org.umlmda.runtime.sdo.sync.gwtserver</module>
+      <module>../org.umlmda.runtime.sdo.sync.gwttest</module>
    </modules>
 </project>
