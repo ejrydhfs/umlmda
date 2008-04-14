@@ -1,0 +1,31 @@
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<table border="0">
+   <th>
+     <td colspan="2" align="center">DEMO GUI</td>
+   </th>
+   <tr>
+      <td>Artifact</td>
+      <td>${pom.artifactId}</td>
+   </tr>
+   <tr>
+      <td>Version</td>
+      <td>${pom.version}</td>
+   </tr>
+   <tr>
+      <td>Build-ID</td>
+      <td>${BUILD_ID}</td>
+   </tr>
+   <tr>
+      <td>Build-Tag</td>
+      <td>${BUILD_TAG}</td>
+   </tr>
+   <tr>
+      <td align="center"><a href="${HUDSON_URL}/job/${JOB_NAME}/${BUILD_NUMBER}/" target="_blank">Hudson</a></td>
+   </tr>
+</table>
+</body>
+</html>
