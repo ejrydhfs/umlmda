@@ -1,4 +1,5 @@
 <module>
 	<inherits name="java.Io"/>
+    <inherits name="java.Beans"/>
 	<source path="runtime"/>
 </module>
