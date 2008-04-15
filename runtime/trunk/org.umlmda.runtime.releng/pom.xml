@@ -40,4 +40,17 @@
       <module>../org.umlmda.runtime.sdo.sync.gwtserver</module>
       <module>../org.umlmda.runtime.sdo.sync.gwttest</module>
    </modules>
+   
+   <repositories>
+      <repository>
+         <id>artifactory</id>
+         <url>http://coding.ds2k.de/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
 </project>
