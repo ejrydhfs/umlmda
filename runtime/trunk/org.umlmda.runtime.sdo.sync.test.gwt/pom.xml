@@ -24,6 +24,11 @@
          <artifactId>org.umlmda.runtime.core</artifactId>
          <version>${pom.version}</version>
       </dependency>
+      <dependency>
+         <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.sdo</artifactId>
+         <version>${pom.version}</version>
+      </dependency>
    </dependencies>
 
    <build>
@@ -45,6 +50,18 @@
                   </configuration>
                </execution>
             </executions>
+         </plugin>
+         <!-- JRE Emulation mst be first in classpath -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+               <compilerArguments>
+                  <bootclasspath>
+                     ${basedir}/../org.umlmda.runtime.gwt.jreemul/target/classes;${java.home}/lib/rt.jar
+                  </bootclasspath>
+               </compilerArguments>
+            </configuration>
          </plugin>
       </plugins>
    </build>
