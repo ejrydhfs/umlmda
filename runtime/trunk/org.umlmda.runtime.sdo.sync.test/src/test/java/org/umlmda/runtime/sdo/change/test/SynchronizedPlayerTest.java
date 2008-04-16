@@ -4,13 +4,13 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.umlmda.runtime.reflect.ReflectionInvocationFactory;
-import org.umlmda.runtime.sdo.change.test.model.RootChild;
-import org.umlmda.runtime.sdo.change.test.model.RootClass;
-import org.umlmda.runtime.sdo.change.test.model.TestRootFactory;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
+import org.umlmda.runtime.sdo.sync.test.dto.RootClass;
+import org.umlmda.runtime.sdo.sync.test.dto.TestFactory;
+import org.umlmda.runtime.sdo.sync.test.dto.impl.TestFactoryImpl;
 
 public class SynchronizedPlayerTest extends TestCase {
    private static Logger logger = Logger.getLogger(SynchronizedPlayerTest.class);
@@ -25,12 +25,13 @@ public class SynchronizedPlayerTest extends TestCase {
 
    public void testPlayback() {
       Recorder masterRecorder = new SynchronizerImpl();
+      TestFactory factory = new TestFactoryImpl(masterRecorder);
       Recorder slaveRecorder = new SynchronizerImpl();
-      Player player = new PlayerImpl(new TestRootFactory(slaveRecorder), new ReflectionInvocationFactory());
+      Player player = new PlayerImpl(new TestFactoryImpl(slaveRecorder), new ReflectionInvocationFactory());
       
-      RootClass root = new RootClass(masterRecorder);
+      RootClass root = factory.createRootClass();
       
-      root.setRootChild(new RootChild(masterRecorder));
+      root.setRootChild(factory.createRootChild());
       
       TestUtils.logEntries(logger, masterRecorder);
 

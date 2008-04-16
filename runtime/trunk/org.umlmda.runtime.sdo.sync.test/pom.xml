@@ -31,6 +31,12 @@
          <version>${pom.version}</version>
          <scope>test</scope>
       </dependency>
+      <dependency>
+         <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.sdo.sync.test.java</artifactId>
+         <version>${pom.version}</version>
+         <scope>test</scope>
+      </dependency>
    </dependencies>
 
    <build>
