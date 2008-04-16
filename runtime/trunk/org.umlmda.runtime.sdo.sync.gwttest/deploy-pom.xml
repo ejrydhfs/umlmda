@@ -45,7 +45,12 @@
             <configuration>
                <warSourceDirectory>webapp</warSourceDirectory>
                <webXml>webapp/WEB-INF/web.xml</webXml>
-               <warSourceExcludes>WEB-INF/lib/*sources.jar</warSourceExcludes>
+               <warSourceExcludes>
+                  WEB-INF/lib/*sources.jar,
+                  WEB-INF/lib/org.umlmda.runtime.gwt.jreemul-*.jar,
+                  WEB-INF/lib/org.umlmda.runtime.sdo.sync.test-*.jar
+                  WEB-INF/lib/org.umlmda.runtime.sdo.sync.test.gwt-*.jar
+               </warSourceExcludes>
                <webResources>
                   <resource>
                      <directory>webapp</directory>

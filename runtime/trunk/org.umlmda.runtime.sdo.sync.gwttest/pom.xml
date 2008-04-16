@@ -123,7 +123,10 @@
                <warSourceDirectory>webapp</warSourceDirectory>
                <webXml>target/web.xml</webXml>
                <warSourceExcludes>
-                  WEB-INF/lib/*sources.jar
+                  WEB-INF/lib/*sources.jar,
+                  WEB-INF/lib/org.umlmda.runtime.gwt.jreemul-*.jar,
+                  WEB-INF/lib/org.umlmda.runtime.sdo.sync.test-*.jar
+                  WEB-INF/lib/org.umlmda.runtime.sdo.sync.test.gwt-*.jar
                </warSourceExcludes>
                <webResources>
                   <resource>
