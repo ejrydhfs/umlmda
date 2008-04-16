@@ -7,12 +7,11 @@ import java.util.Map;
 import org.umlmda.runtime.bean.BeanInvocation;
 import org.umlmda.runtime.bean.BeanInvocation.Factory;
 import org.umlmda.runtime.sdo.sync.Player;
-import org.umlmda.runtime.sdo.sync.SynchronizedList;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectFactory;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
-import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeEntry;
+import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
 

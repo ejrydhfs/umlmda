@@ -18,11 +18,11 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
       this.wrappedList = wrappedList;
    }
    
-   public void add(int index, Object o) {
+   public void add(int index, T o) {
       if (o instanceof SynchronizedObject) {
          SynchronizedObject recordedObject = (SynchronizedObject) o;
 
-         wrappedList.add(index, (T)o);
+         wrappedList.add(index, o);
          recorder.recordAdd(this, recordedObject, index);
       }
       else {
@@ -77,7 +77,6 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
 
    public boolean remove(Object o) {
       if (o instanceof SynchronizedObject) {
-         SynchronizedObject recordedObject = (SynchronizedObject) o;
          int listIndex = wrappedList.indexOf(o);
          boolean listResult = wrappedList.remove(o);
 

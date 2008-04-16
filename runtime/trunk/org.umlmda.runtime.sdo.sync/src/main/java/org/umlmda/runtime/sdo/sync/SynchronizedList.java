@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface SynchronizedList<T> extends SynchronizedCollection<T>, List<T> {
 
-   void add(int index, Object listElement);
+   void add(int index, T listElement);
 
 }

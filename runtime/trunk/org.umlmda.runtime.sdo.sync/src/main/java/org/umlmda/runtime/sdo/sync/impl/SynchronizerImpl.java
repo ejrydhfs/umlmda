@@ -3,13 +3,12 @@ package org.umlmda.runtime.sdo.sync.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.SynchronizedCollection;
 import org.umlmda.runtime.sdo.sync.SynchronizedList;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedSet;
-import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
-import org.umlmda.runtime.sdo.sync.entries.AbstractChangeEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
@@ -40,7 +39,7 @@ public class SynchronizerImpl implements Recorder {
       }
    }
 
-   public synchronized void recordAdd(SynchronizedSet set, Object value) {
+   public synchronized void recordAdd(SynchronizedSet<?> set, Object value) {
       // TODO Auto-generated method stub
 
    }
@@ -59,7 +58,7 @@ public class SynchronizerImpl implements Recorder {
       }
    }
 
-   public synchronized void recordClear(SynchronizedCollection collection) {
+   public synchronized void recordClear(SynchronizedCollection<?> collection) {
       // TODO Auto-generated method stub
 
    }
@@ -75,7 +74,7 @@ public class SynchronizerImpl implements Recorder {
 
    }
 
-   public synchronized void recordRemove(SynchronizedSet set, Object value) {
+   public synchronized void recordRemove(SynchronizedSet<?> set, Object value) {
       // TODO Auto-generated method stub
 
    }
