@@ -3,17 +3,16 @@ package org.umlda.runtime.sdo.sync.gwt.test.client;
 import java.util.Date;
 import java.util.List;
 
-import org.umlmda.runtime.sdo.change.test.model.RootChild;
-import org.umlmda.runtime.sdo.change.test.model.RootClass;
 import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
-import org.umlmda.runtime.sdo.sync.gwt.client.SyncService;
 import org.umlmda.runtime.sdo.sync.gwt.client.SyncServiceAsync;
 import org.umlmda.runtime.sdo.sync.gwt.client.SyncServiceLocator;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
+import org.umlmda.runtime.sdo.sync.test.dto.RootClass;
+import org.umlmda.runtime.sdo.sync.test.dto.TestFactory;
+import org.umlmda.runtime.sdo.sync.test.dto.impl.TestFactoryImpl;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -47,10 +46,11 @@ public class SdoGwtServiceTest implements EntryPoint {
    
    void startTest() {
       Recorder recorder = new SynchronizerImpl();
+      TestFactory factory = new TestFactoryImpl(recorder);
       SyncServiceAsync serviceAsync = SyncServiceLocator.getInstance();
-      RootClass root = new RootClass(recorder);
+      RootClass root = factory.createRootClass();
       
-      root.setRootChild(new RootChild(recorder));
+      root.setRootChild(factory.createRootChild());
       
       serviceAsync.synchronizeChanges(recorder.getChangeEntries(), new AsyncCallback<List<AbstractChangeLogEntry>>() {
 

@@ -26,4 +26,11 @@
 		<nature>org.maven.ide.eclipse.maven2Nature</nature>
 		<nature>com.swtdesigner.gwt.GWTNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Tomcat Logs</name>
+			<type>2</type>
+			<locationURI>tomcat_home/logs</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
