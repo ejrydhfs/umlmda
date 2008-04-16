@@ -40,7 +40,7 @@
       <module>../org.umlmda.runtime.sdo.sync.test</module>
       <module>../org.umlmda.runtime.sdo.sync.gwtclient</module>
       <module>../org.umlmda.runtime.sdo.sync.gwtserver</module>
-      <module>../org.umlmda.runtime.sdo.sync.gwttest</module>
+      <!--module>../org.umlmda.runtime.sdo.sync.gwttest</module-->
    </modules>
    
    <repositories>
