@@ -44,10 +44,10 @@
                   <id>compile</id>
                   <phase>compile</phase>
                   <configuration>
-                  <task>
-                  <echo message="JAVA_HOME_MAVEN: ${java.home}"/>
-                  <echo message="JAVA_HOME_ENV: ${env.JAVA_HOME}"/>
-                  </task>
+                     <task>
+                        <echo message="JAVA_HOME_MAVEN: ${java.home}" />
+                        <echo message="JAVA_HOME_ENV: ${env.JAVA_HOME}" />
+                     </task>
                   </configuration>
                </execution>
             </executions>
@@ -65,4 +65,29 @@
          </plugin>
       </plugins>
    </build>
+
+   <profiles>
+      <profile>
+         <activation>
+            <os>
+               <family>unix</family>
+            </os>
+         </activation>
+         <build>
+            <plugins>
+               <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-compiler-plugin</artifactId>
+                  <configuration>
+                     <compilerArguments>
+                        <bootclasspath>
+                           ${basedir}/../org.umlmda.runtime.gwt.jreemul/target/classes:${java.home}/lib/rt.jar
+                        </bootclasspath>
+                     </compilerArguments>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+   </profiles>
 </project>
