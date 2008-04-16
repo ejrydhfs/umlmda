@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
 
    <modelVersion>4.0.0</modelVersion>
    <parent>
@@ -11,7 +12,7 @@
    </parent>
    <artifactId>org.umlmda.runtime.sdo.sync.gwtserver</artifactId>
    <name>UMLMDA SDO Sync-Service Server GWT</name>
-   <description></description>
+   <description />
 
    <dependencies>
       <dependency>
@@ -19,8 +20,12 @@
          <artifactId>log4j</artifactId>
       </dependency>
       <dependency>
+         <groupId>servletapi</groupId>
+         <artifactId>servlet-api</artifactId>
+      </dependency>
+      <dependency>
          <groupId>com.google.gwt</groupId>
-         <artifactId>gwt-user</artifactId>
+         <artifactId>gwt-servlet</artifactId>
       </dependency>
       <dependency>
          <groupId>${pom.groupId}</groupId>
@@ -42,9 +47,10 @@
          <artifactId>org.umlmda.runtime.sdo.sync.gwtclient</artifactId>
          <version>${pom.version}</version>
       </dependency>
+      <!-- TODO For Test purposes remove later -->
       <dependency>
          <groupId>${pom.groupId}</groupId>
-         <artifactId>org.umlmda.runtime.sdo.sync.test</artifactId>
+         <artifactId>org.umlmda.runtime.sdo.sync.test.java</artifactId>
          <version>${pom.version}</version>
       </dependency>
    </dependencies>
