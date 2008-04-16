@@ -38,6 +38,8 @@
       <module>../org.umlmda.runtime.common</module>
       <module>../org.umlmda.runtime.sdo.sync</module>
       <module>../org.umlmda.runtime.sdo.sync.test</module>
+      <module>../org.umlmda.runtime.sdo.sync.test.pim</module>
+      <module>../org.umlmda.runtime.sdo.sync.test.gwt</module>
       <module>../org.umlmda.runtime.sdo.sync.gwtclient</module>
       <module>../org.umlmda.runtime.sdo.sync.gwtserver</module>
       <!--module>../org.umlmda.runtime.sdo.sync.gwttest</module-->
