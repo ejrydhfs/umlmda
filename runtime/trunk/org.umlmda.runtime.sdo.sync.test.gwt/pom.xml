@@ -10,7 +10,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.umlmda</groupId>
    <artifactId>org.umlmda.runtime.sdo.sync.test.gwt</artifactId>
-   <name />
+   <name>UMLMDA SDO Sync-Service Test GWT Client Model</name>
    <description />
 
    <dependencies>
