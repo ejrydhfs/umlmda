@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.profile:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.profile="http:///org/umlmda/generator/profile.ecore" name="j2eeClient" description="Generatorprofil für J2EE" adapterFactory="org.umlmda.uml.generator.j2ee.J2EEModelAdapterFactory">
+  <stereotypes name="BusinessService">
+    <mappings artefact="//@artefacts.0"/>
+    <mappings artefact="//@artefacts.1"/>
+    <mappings artefact="//@artefacts.2"/>
+    <mappings artefact="//@artefacts.3"/>
+    <mappings artefact="//@artefacts.4"/>
+    <mappings artefact="//@artefacts.5"/>
+    <mappings artefact="//@artefacts.6"/>
+  </stereotypes>
+  <stereotypes name="BusinessComponent">
+    <mappings artefact="//@artefacts.7"/>
+  </stereotypes>
+  <artefacts name="j2ee.BeanUtils" postfix="" namespacePostfix=".ejb.utils" replacement="$1Utils" replacementPattern="(.*)" writer="org.umlmda.uml.generator.j2ee.writer.BeanUtilsWriter"/>
+  <artefacts name="j2ee.RemoteInterface" namespacePostfix=".ejb.bean" replacementPattern="" writer="org.umlmda.uml.generator.j2ee.writer.RemoteInterfaceWriter"/>
+  <artefacts name="j2ee.LocalInterface" postfix="" namespacePostfix=".ejb.bean" replacement="$1Local" replacementPattern="(.*)" writer="org.umlmda.uml.generator.j2ee.writer.LocalInterfaceWriter"/>
+  <artefacts name="j2ee.SessionBean" postfix="" namespacePostfix=".ejb.beanimpl" replacement="$1BeanImpl" replacementPattern="(.*)" writer="org.umlmda.uml.generator.j2ee.writer.SessionBeanWriter"/>
+  <artefacts name="j2ee.HomeInterface" postfix="" namespacePostfix=".ejb.bean" replacement="$1Home" replacementPattern="(.*)" writer="org.umlmda.uml.generator.j2ee.writer.HomeInterfaceWriter"/>
+  <artefacts name="j2ee.LocalHomeInterface" postfix="" namespacePostfix=".ejb.bean" replacement="$1LocalHome" replacementPattern="(.*)" writer="org.umlmda.uml.generator.j2ee.writer.LocalHomeInterfaceWriter"/>
+  <artefacts name="j2ee.Adapter" postfix="Accessor" namespacePostfix=".ejb.adapter" writer="org.umlmda.uml.generator.j2ee.writer.AdapterWriter"/>
+  <artefacts name="j2ee.AdapterFactory" fileExtension="java" postfix="" namespacePostfix=".ejb.adapter" replacement="\u$1AccessorFactory" replacementPattern="(.*)" writer="org.umlmda.uml.generator.j2ee.writer.AdapterFactoryWriter"/>
+  <defaultProperties name="JNDIName" value="ejb/${componentValues.getProperty(&quot;EJBComponent&quot;, ${genClass.component.name})}/${componentValues.getProperty(&quot;MajorVersion&quot;, &quot;1&quot;)}/${genClass.name}"/>
+  <defaultProperties name="SpringSupport" value="true"/>
+  <basedOn href="java.ump#java"/>
+</org.umlmda.generator.profile:Profile>

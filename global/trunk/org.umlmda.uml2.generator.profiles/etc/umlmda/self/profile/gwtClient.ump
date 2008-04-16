@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.profile:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.profile="http:///org/umlmda/generator/profile.ecore" name="gwtClient">
+  <artefacts name="gwt.BeanDescriptor" fileExtension="java" postfix="Descriptor" namespacePostfix=".dto.impl" type="None"/>
+  <basedOn href="javaArtefacts.ump#javaArtefacts"/>
+</org.umlmda.generator.profile:Profile>

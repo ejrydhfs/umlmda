@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.releng</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+   </parent>
+   <artifactId>org.umlmda.uml2.generator.profiles</artifactId>
+   <description></description>
+   <packaging>pom</packaging>
+   
+   <build>
+      <plugins>
+         <!-- Zusammenpacken der UMLMDA Profile -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>model2java</id>
+                  <phase>package</phase>
+                  <configuration>
+                     <tasks>
+                        <mkdir dir="${project.build.directory}"/>
+                        <zip destfile="${project.build.directory}/java-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="java*.ump"/>
+                        </zip>
+                        <zip destfile="${project.build.directory}/gwt-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="gwt*.ump"/>
+                        </zip>
+                        <zip destfile="${project.build.directory}/j2ee-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="j2ee*.ump"/>
+                        </zip>
+                        <zip destfile="${project.build.directory}/ws-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="ws*.ump"/>
+                        </zip>
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+                  
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>attach-artifacts</id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>attach-artifact</goal>
+                  </goals>
+                  <configuration>
+                     <artifacts>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/java-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>java-ump</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/gwt-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>gwt-ump</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/j2ee-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>j2ee-ump</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/ws-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>ws-ump</classifier>
+                        </artifact>
+                     </artifacts>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
+
+</project>
