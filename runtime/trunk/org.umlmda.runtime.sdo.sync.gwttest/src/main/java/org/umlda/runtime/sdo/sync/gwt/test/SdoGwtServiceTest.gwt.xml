@@ -2,6 +2,7 @@
 	<inherits name="com.google.gwt.user.User"/>
     <inherits name="java.Io"/>
     <inherits name="java.Beans"/>
+    <inherits name="java.lang.Reflect"/>
     <inherits name="org.umlmda.Runtime"/>
     <inherits name="org.umlmda.runtime.Sdo"/>
     <inherits name="org.umlmda.runtime.sdo.sync.gwt.SdoSync"/>
