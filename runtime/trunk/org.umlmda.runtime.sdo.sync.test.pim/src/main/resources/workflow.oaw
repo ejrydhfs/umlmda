@@ -18,11 +18,16 @@
     	<init value="true"/>
     </component> 
 
-    <!-- Loading UMLMDA generationset -->
+    <!-- Loading UMLMDA generation sets -->
 	<component id="generationSetLoader"
 			class="org.umlmda.oaw.generator.workflow.GenerationSetLoader">
 		<generationSet value="${model.project}/etc/umlmda/self/set/SyncTestModelClient.ums"/>
 		<generationSetSlot value="gs_gwtclient"/>
+	</component>
+	<component id="generationSetLoader"
+			class="org.umlmda.oaw.generator.workflow.GenerationSetLoader">
+		<generationSet value="${model.project}/etc/umlmda/self/set/SyncTestModelServer.ums"/>
+		<generationSetSlot value="gs_gwtserver"/>
 	</component>
 
 	<!-- Read the uml model -->
@@ -31,15 +36,32 @@
 		<outputSlot value="uml_model_${slot}" />
 	</component>
 
-	<!-- Generate java code -->
+	<cartridge file="org/umlmda/oaw/generator/workflow/gwtModel.oaw">
+	    <profile value="${profile.java}"/>
+	    <slotPostfix value="${slot}"/>
+	</cartridge>
+
+	<!-- Generate gwt client side java code -->
 	<cartridge file="org/umlmda/oaw/generator/workflow/gwtClientModel.oaw">
-		<javaNoGenPath value="${javaNoGenPath}"/>
-		<javaGenPath value="${javaGenPath}"/>
+		<javaNoGenPath value="${javaNoGenPath.gwt}"/>
+		<javaGenPath value="${javaGenPath.gwt}"/>
+		<javaGenEntryPoint value="javaModel"/>
+	    <profile value="${profile.gwt}"/>
+	    <slotPostfix value="${slot}"/>
+        <dateMapping value="${dateMapping.gwt}"/>
+        <decimalMapping value="${decimalMapping.gwt}"/>
+        <basedir value="${basedir}"/>
+	</cartridge>
+	
+	<!-- Generate gwt client side java code -->
+	<cartridge file="org/umlmda/oaw/generator/workflow/gwtServerModel.oaw">
+		<javaNoGenPath value="${javaNoGenPath.java}"/>
+		<javaGenPath value="${javaGenPath.java}"/>
 		<javaGenEntryPoint value="javaModel"/>
 	    <profile value="${profile.java}"/>
 	    <slotPostfix value="${slot}"/>
-        <dateMapping value="${dateMapping}"/>
-        <decimalMapping value="${decimalMapping}"/>
+        <dateMapping value="${dateMapping.java}"/>
+        <decimalMapping value="${decimalMapping.java}"/>
         <basedir value="${basedir}"/>
 	</cartridge>
 	

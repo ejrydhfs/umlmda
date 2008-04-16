@@ -313,7 +313,7 @@
                     <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_imRJ0QosEd28E8WXYUmvjQ" value="1"/>
                     <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_imRJ0AosEd28E8WXYUmvjQ"/>
                   </ownedAttribute>
-                  <ownedAttribute xmi:id="_mLAb4gosEd28E8WXYUmvjQ" name="rootChildren" visibility="private" type="_a3GesAosEd28E8WXYUmvjQ" aggregation="composite" association="_mLAb4AosEd28E8WXYUmvjQ">
+                  <ownedAttribute xmi:id="_mLAb4gosEd28E8WXYUmvjQ" name="rootChildren" visibility="private" type="_a3GesAosEd28E8WXYUmvjQ" isOrdered="true" isUnique="false" aggregation="composite" association="_mLAb4AosEd28E8WXYUmvjQ">
                     <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_mLJl0QosEd28E8WXYUmvjQ" value="*"/>
                     <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_mLJl0AosEd28E8WXYUmvjQ"/>
                   </ownedAttribute>
