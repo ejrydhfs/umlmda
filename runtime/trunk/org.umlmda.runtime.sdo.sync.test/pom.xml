@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+
    <parent>
       <artifactId>org.umlmda.runtime.releng</artifactId>
       <groupId>org.umlmda</groupId>
@@ -15,14 +17,33 @@
    <dependencies>
       <dependency>
          <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.gwt.jreemul</artifactId>
+         <version>${pom.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>${pom.groupId}</groupId>
          <artifactId>org.umlmda.runtime.sdo</artifactId>
          <version>${pom.version}</version>
       </dependency>
       <dependency>
-            <groupId>${pom.groupId}</groupId>
-            <artifactId>org.umlmda.runtime.common</artifactId>
-            <version>${pom.version}</version>
-            <scope>test</scope>
+         <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.common</artifactId>
+         <version>${pom.version}</version>
+         <scope>test</scope>
       </dependency>
    </dependencies>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+               <compilerArguments>
+                  <bootclasspath>${basedir}/../org.umlmda.runtime.gwt.jreemul/target/classes;${java.home}\lib\rt.jar</bootclasspath>
+               </compilerArguments>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
 </project>

@@ -1,11 +1,16 @@
 package org.umlmda.runtime.sdo.change.test.model;
 
+import org.umlmda.runtime.bean.PropertyDescriptorProvider;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectFactory;
 import org.umlmda.runtime.sdo.sync.Recorder;
 
 public class TestRootFactory implements SynchronizedObjectFactory {
 
+   static {
+      PropertyDescriptorProvider.registerDescriptor(RootChildren.class, RootChildrenClass.INSTANCE);
+   }
+   
    private final Recorder recorder;
 
    public TestRootFactory(Recorder recorder) {
