@@ -1,0 +1,131 @@
+package org.umlmda.runtime.sdo.sync.gwt.server;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+
+import org.apache.log4j.Logger;
+import org.umlmda.runtime.reflect.ReflectionInvocationFactory;
+import org.umlmda.runtime.sdo.sync.Player;
+import org.umlmda.runtime.sdo.sync.ReconnectableSynchronizedObjectFactory;
+import org.umlmda.runtime.sdo.sync.Recorder;
+import org.umlmda.runtime.sdo.sync.SynchronizedObject;
+import org.umlmda.runtime.sdo.sync.SynchronizedObjectFactory;
+import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
+import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
+import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
+import org.umlmda.runtime.sdo.sync.entries.VoidInvocationResult;
+import org.umlmda.runtime.sdo.sync.gwt.client.SyncService;
+import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
+import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
+
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet implements SyncService {
+   private static final String SESSION_ATTR_SDO_PLAYER = "SDOPlayer";
+
+   static Logger logger = Logger.getLogger(AbstractSyncServiceImpl.class);
+   
+   private static final long serialVersionUID = 100L;
+   
+   public AbstractSyncServiceImpl() {
+   }
+   
+   public abstract SynchronizedObjectFactory createRootFactory();
+   
+   
+   @Override
+   public void destroy() {
+      // TODO Auto-generated method stub
+      super.destroy();
+   }
+
+   @Override
+   public void init() throws ServletException {
+      super.init();
+   }
+
+   @Override
+   public ServletContext getServletContext() {
+      ServletContext servletContext = super.getServletContext();
+      
+      if ( servletContext.getAttribute(SESSION_ATTR_SDO_PLAYER) == null ) {
+         Player player = new PlayerImpl(createRootFactory(), new ReflectionInvocationFactory());
+         
+         servletContext.setAttribute(SESSION_ATTR_SDO_PLAYER, player);
+      }
+      return servletContext;
+   }
+   
+   private Player getPlayer() {
+      return (Player) getServletContext().getAttribute(SESSION_ATTR_SDO_PLAYER);
+   }
+   
+   /**
+    * Servcerside implementation of the SyncService
+    */
+   public List<AbstractChangeLogEntry> synchronizeChanges(List<AbstractChangeLogEntry> changes) {
+      logger.info("synchronizeChanges()");
+
+      Player player = getPlayer();
+      SynchronizedObjectFactory factory = player.getRootFactory();
+      Recorder slaveRecorder = connectToNewRecorder(factory);
+      
+      player.playback(changes, null);
+
+      return slaveRecorder.getChangeEntries();
+   }
+
+   public AbstractInvocationResult invokeMethod(SynchronizedObjectProxy objectProxy, String methodName) {
+      Player player = getPlayer();
+      SynchronizedObjectFactory factory = player.getRootFactory();
+      Recorder slaveRecorder = connectToNewRecorder(factory);
+
+      SynchronizedObject object = player.getObject(objectProxy);
+      AbstractInvocationResult result = null;
+      
+      try {
+         Method method = object.getClass().getMethod(methodName, new Class<?>[] {});
+         
+         method.invoke(object, (Object)null);
+         result = new VoidInvocationResult(slaveRecorder.getChangeEntries());
+      } catch (SecurityException e) {
+         result = handleException(e);
+      } catch (NoSuchMethodException e) {
+         result = handleException(e);
+      } catch (IllegalArgumentException e) {
+         result = handleException(e);
+      } catch (IllegalAccessException e) {
+         result = handleException(e);
+      } catch (InvocationTargetException e) {
+         result = handleException(e);
+      }
+
+      return result;
+   }
+
+   private AbstractInvocationResult handleException(Throwable e) {
+      AbstractInvocationResult result;
+      logger.error(e.getMessage(), e);
+      result = new VoidInvocationResult(e.getMessage(), e.getStackTrace().toString());
+      return result;
+   }
+   
+   private Recorder connectToNewRecorder(SynchronizedObjectFactory factory) {
+      Recorder slaveRecorder = factory.getRecorder();
+      
+      if (factory instanceof ReconnectableSynchronizedObjectFactory) {
+         ReconnectableSynchronizedObjectFactory reconnectableFactory = (ReconnectableSynchronizedObjectFactory) factory;
+         
+         slaveRecorder = new SynchronizerImpl();
+         reconnectableFactory.setRecorder(slaveRecorder);
+      }
+      
+      return slaveRecorder;
+   }
+
+   
+}
