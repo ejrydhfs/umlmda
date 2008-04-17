@@ -1,7 +1,7 @@
-package org.umlmda.runtime.sdo.sync.test.dto.impl.delegate;
+package org.umlmda.runtime.sdo.sync.test.model.impl.delegate;
 
-import org.umlmda.runtime.sdo.sync.test.dto.RootChildren;
-import org.umlmda.runtime.sdo.sync.test.dto.RootChildrenDelegate;
+import org.umlmda.runtime.sdo.sync.test.model.RootChildren;
+import org.umlmda.runtime.sdo.sync.test.model.RootChildrenDelegate;
 import java.beans.PropertyChangeSupport;
 
 /**
