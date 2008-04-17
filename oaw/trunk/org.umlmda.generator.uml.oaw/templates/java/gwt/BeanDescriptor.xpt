@@ -1,0 +1,80 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::Association»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::Element»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+«EXTENSION org::umlmda::uml::java::StructuralFeature»
+
+«DEFINE Impl FOR JavaBusinessObject»
+«LET generatedName(this, "gwt.BeanDescriptor") AS className»
+«this.resetImports()»
+«this.registerImport(getDefaultArtefact("BusinessObject"))»
+«this.registerImports(getDefaultArtefact("BusinessObject"), referencedTypes, "BusinessObject")»
+«this.registerImports(getDefaultArtefact("BusinessException"), referencedTypes, "BusinessException")»
+«this.registerImports(getDefaultArtefact("Enumeration"), referencedTypes, "Enumeration")»
+«FILE generatedPath+"/"+className+".java"»
+	package «generatorPackage.getQualifiedPackageName("gwt.BeanDescriptor")»;
+
+	import java.beans.IntrospectionException;
+	import java.beans.PropertyDescriptor;
+	import java.beans.PropertyEditor;
+	
+	import org.umlmda.runtime.bean.AbstractPropertyEditor;
+	import org.umlmda.runtime.bean.BeanDescriptor;
+	
+	«this.registeredImports()»
+
+	public class «className» extends BeanDescriptor {
+	
+	   public static final «className» INSTANCE = new «className»();
+	
+	   private «className»() {
+	      try {
+	     	 «FOREACH implementedAttributes.typeSelect(JavaModelAttribute).select(e|e.isSDOServerOnly() == false) AS attr»
+	     	 	«EXPAND addPropertyDescriptor(this, ((JavaModelDataType)attr.dataType).javaTypeName(true)) FOR attr»
+	     	 «ENDFOREACH» 
+	     	 «FOREACH implementedAssociations.typeSelect(JavaModelAssociation).select(e|e.isSDOServerOnly() == false) AS assoc»
+	     	 	«EXPAND addPropertyDescriptor(this, assoc.interfaceType) FOR assoc»
+	     	 «ENDFOREACH» 
+	      } catch (IntrospectionException e) {
+	
+	      }
+	   }
+	}
+«ENDFILE»
+«ENDLET»	
+«ENDDEFINE»
+
+«DEFINE addPropertyDescriptor(JavaModelClass class, String javaType) FOR JavaModelStructuraleFeature»
+	«LET class.getScopedName(getDefaultArtefact("BusinessObject")) AS interface»
+		addPropertyDescriptor(new PropertyDescriptor(«interface».PROPERTY_«upperCaseIdentifier», «interface».class) {
+			@Override public PropertyEditor createPropertyEditor(Object bean) {
+				return new AbstractPropertyEditor<«interface»>((«interface»)bean, «interface».PROPERTY_«upperCaseIdentifier») {
+					@Override public Object getValue() {
+						return getBean().«getter»();
+					}
+					«IF readOnly»
+						@Override public void setValue(Object value) {
+							throw new UnsupportedOperationException("Property is readonly");
+						}};
+					«ELSE»	                  
+						@Override public void setValue(Object value) {
+							getBean().«setter»((«javaType») value);
+						}};
+                  «ENDIF»
+            }
+            @Override public Class<?> getPropertyType() {
+               return «javaType».class;
+            }
+         }); 
+	«ENDLET»
+«ENDDEFINE»

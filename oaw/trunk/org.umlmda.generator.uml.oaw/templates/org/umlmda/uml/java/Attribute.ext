@@ -1,0 +1,29 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelAttribute
+ */
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator::java;
+
+extension org::umlmda::uml::java::DataType;
+
+cached String javaTypeName(JavaModelAttribute attr) :
+	attr.dataType == null ? attr.javaType
+	                      : attr.javaAttributeTypeName();
+	                         
+private String javaAttributeTypeName(JavaModelAttribute attr) :
+    attr.multivalue ?
+		attr.dataType.javaTypeName(false)+"[]"
+	:	
+		attr.dataType.javaTypeName(attr.optional)
+;
+	
+/**
+ * @return the initial value of the attribute, if datatype is string and the model
+ * value doesn't contaits quotes, the quotes are added
+ */	
+cached String initialValue(JavaModelAttribute attr) :
+	attr.javaTypeName() == "String" && attr.initialValue.startsWith('"') == false ?
+		'"'+attr.initialValue+'"'
+	:	
+		attr.initialValue
+;

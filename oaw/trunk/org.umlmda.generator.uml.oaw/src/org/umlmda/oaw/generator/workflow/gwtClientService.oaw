@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+
+    <!-- Creating UMLMDA Java PSM -->
+	<component id="javaPsmCreator_${slotPostfix}" class="org.umlmda.oaw.generator.workflow.PsmCreator">
+		<adapterFactory value="org.umlmda.oaw.generator.model.java.JavaModelAdapterFactory"/>
+		<pimModelSlot value="umlmda_pim_${slotPostfix}"/>
+		<psmModelSlot value="javaModel_${slotPostfix}"/>
+		<generationSetSlot value="gs_gwtclient"/>
+		<generationProfile value="${profile}"/>
+	</component>
+
+	<component id="dirCleaner"
+			class="org.openarchitectureware.workflow.common.DirectoryCleaner" skipOnErrors="true">
+		<directories value="${javaGenPath}"/>
+	</component>
+
+	<component adviceTarget="generator_client_${slotPostfix}" id="reflectionAdvice" class="oaw.xpand2.GeneratorAdvice">
+        <advices value="java::aop::NoJmiReflectAdvices"/>
+        <advices value="java::gwt::aop::ClientBOInterfaceAdvices"/>
+        <advices value="java::gwt::aop::ClientBOImplAdvices"/>
+    </component>	
+
+	<component id="generator_client_${slotPostfix}" class="org.openarchitectureware.xpand2.Generator" skipOnErrors="true">
+	   <metaModel class="org.openarchitectureware.type.impl.java.JavaMetaModel">
+	   		<typeStrategy class="org.openarchitectureware.type.impl.java.beans.JavaBeansStrategy" />
+	   </metaModel>
+	   <fileEncoding value="ISO-8859-1"/>
+	   <expand value="java::gwt::Client::Root FOR javaModel_${slotPostfix}"/>
+
+		<!-- Generated sources -->
+ 		<outlet path="${javaGenPath}/">
+	    	<postprocessor class="org.openarchitectureware.xpand2.output.JavaBeautifier">
+	    		<configFile value="${basedir}/etc/eclipse/formatting.xml"/>
+	    	</postprocessor>
+		</outlet>
+
+	   	<globalVarDef name="dateMapping" value="${dateMapping}"/>
+	   	<globalVarDef name="decimalMapping" value="${decimalMapping}"/>
+
+	   <!-- Protected Regions (not used) -->	
+       <prSrcPaths value="${javaGenPath}/"/>
+       <prDefaultExcludes value="false"/>
+	   
+	</component>
+
+</workflow>

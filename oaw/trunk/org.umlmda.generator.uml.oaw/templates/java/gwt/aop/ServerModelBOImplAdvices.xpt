@@ -1,0 +1,34 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION org::umlmda::uml::java::Element»
+«EXTENSION org::umlmda::uml::java::StructuralFeature»
+
+// =================
+// Avoid jmi support
+// =================
+«AROUND java::JmiReflect::Impl FOR JavaModelClass»
+«ENDAROUND»
+
+«AROUND java::JmiReflect::Imports FOR JavaModelClass»
+«ENDAROUND»
+
+// ===========================
+// Skip <<SDOClient>> features
+// ===========================
+«AROUND java::BOImpl::handleAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOImpl::xmlMarshalAttribute FOR JavaModelAttribute»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»

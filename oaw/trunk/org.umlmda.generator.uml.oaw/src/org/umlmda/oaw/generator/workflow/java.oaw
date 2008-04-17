@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+
+    <!-- Creating UMLMDA Java PSM -->
+	<component id="javaPsmCreator"
+			class="org.umlmda.oaw.generator.workflow.PsmCreator">
+		<adapterFactory value="org.umlmda.oaw.generator.model.java.JavaModelAdapterFactory"/>
+		<pimModelSlot value="pim"/>
+		<psmModelSlot value="javaModel"/>
+		<generationSetSlot value="gs"/>
+		<generationProfile value="${profile}"/>
+	</component>
+
+	<component id="dirCleaner"
+			class="org.openarchitectureware.workflow.common.DirectoryCleaner" skipOnErrors="true">
+		<directories value="${javaGenPath}"/>
+	</component>
+
+	<component id="generator" class="org.openarchitectureware.xpand2.Generator" skipOnErrors="true">
+	   <metaModel class="org.openarchitectureware.type.impl.java.JavaMetaModel">
+	   		<typeStrategy class="org.openarchitectureware.type.impl.java.beans.JavaBeansStrategy" />
+	   </metaModel>
+	   <fileEncoding value="ISO-8859-1"/>
+	   <expand value="Java::Root FOR ${javaGenEntryPoint}"/>
+	   <genPath value="${javaGenPath}/"/>
+       <srcPath value="${javaGenPath}/"/>
+
+       <prSrcPaths value="${javaGenPath}/"/>
+       <prDefaultExcludes value="false"/>
+
+    	<beautifier class="org.openarchitectureware.xpand2.output.JavaBeautifier">
+    		<configFile value="etc/eclipse/formatting.xml"/>
+    	</beautifier>
+		<beautifier class="org.openarchitectureware.xpand2.output.XmlBeautifier"/>
+	</component>
+
+</workflow>

@@ -1,0 +1,68 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+
+«AROUND java::BOFactoryImpl::standardImports FOR JavaBusinessComponent»
+	import org.umlmda.runtime.bean.PropertyDescriptorProvider;
+	import org.umlmda.runtime.model.ModeledElementProxy;
+	import org.umlmda.runtime.sdo.sync.Recorder;
+	import org.umlmda.runtime.sdo.sync.SynchronizedObject;
+	import org.umlmda.runtime.sdo.sync.SynchronizedObjectFactory;
+
+	«FOREACH businessObjects.typeSelect(JavaBusinessObject).select(bo|bo.abstract == false) AS bo»
+		«this.registerImport("gwt.BeanDescriptor", bo)»
+	«ENDFOREACH»
+«ENDAROUND»
+
+«AROUND java::BOFactoryImpl::standardImplementsDecl FOR JavaBusinessComponent»
+	«targetDef.proceed()», SynchronizedObjectFactory
+«ENDAROUND»
+
+
+«AROUND java::BOFactoryImpl::standardCtor FOR JavaBusinessComponent»
+«LET generatedName(this, "java.BusinessObjectFactoryImpl") AS className»
+	// Register bean descriptors
+	static {
+	«FOREACH businessObjects.typeSelect(JavaBusinessObject).select(e|e.abstract == false) AS bo»
+		PropertyDescriptorProvider.registerDescriptor(«getScopedName("java.BusinessObject", bo)».class, «getScopedName("gwt.BeanDescriptor", bo)».INSTANCE);
+	«ENDFOREACH»
+	}
+
+   private final Recorder recorder;
+
+   /**
+    * Ctor with SDO recorder
+    */
+   public «className»(Recorder recorder) {
+      this.recorder = recorder;
+   }
+   
+   public Recorder getRecorder() {
+   	return this.recorder;
+   }
+   
+«ENDLET»
+«ENDAROUND»
+
+«AROUND java::BOFactoryImpl::createBOBody FOR JavaBusinessObject»
+	{
+		return new «getScopedName("java.BusinessObject")»(recorder);
+	}
+«ENDAROUND»
+ 
+«AROUND java::BOFactoryImpl::additionalMethods FOR JavaBusinessComponent»
+	public SynchronizedObject create(ModeledElementProxy element) {
+		«FOREACH businessObjects.typeSelect(JavaBusinessObject).select(e|e.abstract == false) AS bo SEPARATOR "else"»
+			if ( «getScopedName("java.BusinessObject", bo)».MODEL_NAME.equals(element.getModelName())) {
+         		return (SynchronizedObject)create«bo.name»();
+         	}
+		«ENDFOREACH»
+		else {
+			throw new IllegalArgumentException(element.getModelName());
+		}
+      }
+«ENDAROUND»

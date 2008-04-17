@@ -1,0 +1,50 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«EXTENSION java::UMLMDA»
+
+«REM»
+	Definition of the deletation implementation to implement none generatable
+	features (derived attributes/associations and methods).
+«ENDREM»
+«DEFINE Impl FOR JavaModelClass»
+	«IF this.delegationInterfaceNeeded»
+		«LET generatedName(this, "java.DelegateImpl") AS className»
+		«this.resetImports()»
+		«this.registerImport("java.BusinessObjectInterface")»
+		«this.registerImport("java.DelegateInterface")»
+		«FILE generatedPath+"/"+className+".java" delegateImpl»
+			package «generatorPackage.getQualifiedPackageName("java.DelegateImpl")»;
+			
+			«this.registeredImports()»
+			import java.beans.PropertyChangeSupport;
+			
+			/**
+			 * Implementation for none generated methods and derived attributes of
+			 * «qualifiedName».
+			 * @see «getScopedName("java.BusinessObjectInterface")»
+			 */
+			 public
+			«IF abstract»
+				abstract
+			«ENDIF»  
+			 class «className»
+			 «IF javaSuperClass != null && javaSuperClass.delegationInterfaceNeeded »
+			 	extends «getScopedName("java.DelegateImpl", javaSuperClass)»
+			 «ENDIF» 
+			 implements «getScopedName("java.DelegateInterface")»
+			 {
+				private final «getScopedName("java.BusinessObjectInterface")» businessObject;
+				
+				public «className» («getScopedName("java.BusinessObjectInterface")» businessObject«EXPAND BOImpl::propertyChangeSupportParameterDecl FOR this») {
+					«IF javaSuperClass != null && javaSuperClass.delegationInterfaceNeeded »
+					 	super(businessObject, «EXPAND BOImpl::propertyChangeSupportParameterDecl FOR this»);
+					«ENDIF» 
+					this.businessObject = businessObject;
+				}
+				
+			}
+		«ENDFILE»
+		«ENDLET»
+	«ENDIF»
+«ENDDEFINE»

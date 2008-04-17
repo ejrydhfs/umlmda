@@ -1,0 +1,14 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+
+«AROUND derivedGetterBody FOR ModelStructuralFeature»
+	//@@UserSection-Begin «qualifiedName».getter
+	//TODO Enter your implementation here
+	throw new UnsupportedOperationException();
+	//@@UserSection-End «qualifiedName».getter
+«ENDAROUND»

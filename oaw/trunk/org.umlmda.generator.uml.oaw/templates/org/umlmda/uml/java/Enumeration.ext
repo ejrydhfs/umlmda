@@ -1,0 +1,30 @@
+import java::util;
+import org::umlmda::generator::model::uml;
+import org::umlmda::profile;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+extension org::umlmda::uml::java::Attribute;
+
+// and we also load the io extensions, for the purpose of
+// debugging, in case we need it   
+extension org::openarchitectureware::util::stdlib::io;   
+extension org::openarchitectureware::util::stdlib::issues;   
+extension org::openarchitectureware::util::stdlib::counter;   
+
+cached String enumType(JavaEnumeration clazz) :
+	clazz.attributes.typeSelect(JavaModelAttribute).first().javaTypeName();
+	
+cached String enumInterface(JavaEnumeration clazz) :
+	switch ( clazz.enumType() ) {
+		case "String":
+			"StringEnumeration"
+		case "int":
+			"IntEnumeration"
+		default:
+			"Enumeration"
+	}
+;				
