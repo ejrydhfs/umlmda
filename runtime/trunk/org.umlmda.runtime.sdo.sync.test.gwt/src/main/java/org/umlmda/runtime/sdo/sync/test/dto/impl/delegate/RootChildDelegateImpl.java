@@ -16,8 +16,4 @@ public class RootChildDelegateImpl implements RootChildDelegate {
       this.businessObject = businessObject;
    }
 
-   public void serverMethod() {
-      // TODO Auto-generated method stub
-      
-   }
 }
