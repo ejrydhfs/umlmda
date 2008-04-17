@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xtools2_universal_type_manager-->
+<?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.uml.msl.profile" version="7.0.0"><feature description="" name="com.ibm.xtools.ruml.feature" url="" version="7.0.0"/></signature>?>
+<uml:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation" xmi:id="_M0s9MAvoEd28E8WXYUmvjQ" name="UMLMDASDOProfile" metamodelReference="_M0s9MgvoEd28E8WXYUmvjQ">
+  <eAnnotations xmi:id="_M1JpIQvoEd28E8WXYUmvjQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <contents xmi:type="ecore:EPackage" xmi:id="_n83n4QvpEd28E8WXYUmvjQ" name="UMLMDASDOProfile" nsURI="http:///schemas/UMLMDASDOProfile/_n83n4AvpEd28E8WXYUmvjQ/2" nsPrefix="UMLMDASDOProfile">
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_n83n4gvpEd28E8WXYUmvjQ" name="SDOClient">
+        <eAnnotations xmi:id="_n83n4wvpEd28E8WXYUmvjQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_RKwXcAvoEd28E8WXYUmvjQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_n83n5AvpEd28E8WXYUmvjQ" name="base_Property" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/2.1.0/UML#//Property"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_n83n5gvpEd28E8WXYUmvjQ" name="base_Operation" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/2.1.0/UML#//Operation"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_n83n6AvpEd28E8WXYUmvjQ" name="base_Association" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/2.1.0/UML#//Association"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_n83n6gvpEd28E8WXYUmvjQ" name="SDOServer">
+        <eAnnotations xmi:id="_n83n6wvpEd28E8WXYUmvjQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_VJ3RUAvoEd28E8WXYUmvjQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_n83n7AvpEd28E8WXYUmvjQ" name="base_Property" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/2.1.0/UML#//Property"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_n83n7gvpEd28E8WXYUmvjQ" name="base_Operation" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/2.1.0/UML#//Operation"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_n83n8AvpEd28E8WXYUmvjQ" name="base_Association" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/2.1.0/UML#//Association"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_Hmf9gQvpEd28E8WXYUmvjQ" name="UMLMDASDOProfile" nsURI="http:///schemas/UMLMDASDOProfile/_Hmf9gAvpEd28E8WXYUmvjQ/1" nsPrefix="UMLMDASDOProfile">
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Hmf9ggvpEd28E8WXYUmvjQ" name="SDOClient">
+        <eAnnotations xmi:id="_Hmf9gwvpEd28E8WXYUmvjQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_RKwXcAvoEd28E8WXYUmvjQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Hmf9hAvpEd28E8WXYUmvjQ" name="base_Property" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/2.1.0/UML#//Property"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Hmf9hgvpEd28E8WXYUmvjQ" name="base_Operation" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/2.1.0/UML#//Operation"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Hmf9iAvpEd28E8WXYUmvjQ" name="base_Association" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/2.1.0/UML#//Association"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Hmf9igvpEd28E8WXYUmvjQ" name="SDOServer">
+        <eAnnotations xmi:id="_Hmf9iwvpEd28E8WXYUmvjQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_VJ3RUAvoEd28E8WXYUmvjQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Hmf9jAvpEd28E8WXYUmvjQ" name="base_Property" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/2.1.0/UML#//Property"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Hmf9jgvpEd28E8WXYUmvjQ" name="base_Operation" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/2.1.0/UML#//Operation"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Hmf9kAvpEd28E8WXYUmvjQ" name="base_Association" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/2.1.0/UML#//Association"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+  </eAnnotations>
+  <eAnnotations xmi:id="_OzN4UAvoEd28E8WXYUmvjQ" source="uml2.profile.diagrams">
+    <contents xmi:type="notation:Diagram" xmi:id="_OzN4UQvoEd28E8WXYUmvjQ" type="Class" name="Main">
+      <children xmi:id="_RL8qQAvoEd28E8WXYUmvjQ" element="_RKwXcAvoEd28E8WXYUmvjQ">
+        <children xmi:id="_RL8qQwvoEd28E8WXYUmvjQ" type="ImageCompartment">
+          <layoutConstraint xmi:type="notation:Size" xmi:id="_RL8qRAvoEd28E8WXYUmvjQ" width="1320" height="1320"/>
+        </children>
+        <children xmi:id="_RMGbQAvoEd28E8WXYUmvjQ" type="Stereotype"/>
+        <children xmi:id="_RMGbQQvoEd28E8WXYUmvjQ" type="Kind"/>
+        <children xmi:id="_RMGbQgvoEd28E8WXYUmvjQ" type="Name"/>
+        <children xmi:id="_RMGbQwvoEd28E8WXYUmvjQ" type="Parent"/>
+        <children xmi:id="_RMGbRAvoEd28E8WXYUmvjQ" type="AttributeCompartment">
+          <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_RMGbRQvoEd28E8WXYUmvjQ"/>
+        </children>
+        <children xmi:id="_RMGbRgvoEd28E8WXYUmvjQ" visible="false" type="OperationCompartment">
+          <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_RMGbRwvoEd28E8WXYUmvjQ"/>
+        </children>
+        <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_RL8qQQvoEd28E8WXYUmvjQ" fontHeight="8" showListSignature="true" showStereotype="Label"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_RL8qQgvoEd28E8WXYUmvjQ" x="4350" y="6974"/>
+      </children>
+      <children xmi:id="_VKBCUAvoEd28E8WXYUmvjQ" element="_VJ3RUAvoEd28E8WXYUmvjQ">
+        <children xmi:id="_VKBCUwvoEd28E8WXYUmvjQ" type="ImageCompartment">
+          <layoutConstraint xmi:type="notation:Size" xmi:id="_VKBCVAvoEd28E8WXYUmvjQ" width="1320" height="1320"/>
+        </children>
+        <children xmi:id="_VKBCVQvoEd28E8WXYUmvjQ" type="Stereotype"/>
+        <children xmi:id="_VKBCVgvoEd28E8WXYUmvjQ" type="Kind"/>
+        <children xmi:id="_VKBCVwvoEd28E8WXYUmvjQ" type="Name"/>
+        <children xmi:id="_VKBCWAvoEd28E8WXYUmvjQ" type="Parent"/>
+        <children xmi:id="_VKBCWQvoEd28E8WXYUmvjQ" type="AttributeCompartment">
+          <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_VKBCWgvoEd28E8WXYUmvjQ"/>
+        </children>
+        <children xmi:id="_VKBCWwvoEd28E8WXYUmvjQ" visible="false" type="OperationCompartment">
+          <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_VKBCXAvoEd28E8WXYUmvjQ"/>
+        </children>
+        <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_VKBCUQvoEd28E8WXYUmvjQ" fontHeight="8" showListSignature="true" showStereotype="Label"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_VKBCUgvoEd28E8WXYUmvjQ" x="16312" y="6974"/>
+      </children>
+      <children xmi:id="_10y2cAvoEd28E8WXYUmvjQ" element="_yIwpkAvoEd28E8WXYUmvjQ">
+        <eAnnotations xmi:id="_10y2cwvoEd28E8WXYUmvjQ" source="com.ibm.xtools.uml.ui.diagram.internal.styles">
+          <details xmi:id="_10y2dAvoEd28E8WXYUmvjQ" key="ImageModeStyle" value="true"/>
+        </eAnnotations>
+        <children xmi:id="_10y2dQvoEd28E8WXYUmvjQ" type="ImageCompartment">
+          <layoutConstraint xmi:type="notation:Size" xmi:id="_10y2dgvoEd28E8WXYUmvjQ" width="1320" height="1320"/>
+        </children>
+        <children xmi:id="_10y2dwvoEd28E8WXYUmvjQ" type="Stereotype"/>
+        <children xmi:id="_10y2eAvoEd28E8WXYUmvjQ" type="CommentBody"/>
+        <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_10y2cQvoEd28E8WXYUmvjQ" fontHeight="8" showListSignature="true" fillColor="16763850" lineColor="16744576" showStereotype="Label"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_10y2cgvoEd28E8WXYUmvjQ" x="1585" y="2853" width="8147"/>
+      </children>
+      <children xmi:id="_E2EdQAvpEd28E8WXYUmvjQ" element="_EbZTcAvpEd28E8WXYUmvjQ">
+        <eAnnotations xmi:id="_E2EdQwvpEd28E8WXYUmvjQ" source="com.ibm.xtools.uml.ui.diagram.internal.styles">
+          <details xmi:id="_E2EdRAvpEd28E8WXYUmvjQ" key="ImageModeStyle" value="true"/>
+        </eAnnotations>
+        <children xmi:id="_E2EdRQvpEd28E8WXYUmvjQ" type="ImageCompartment">
+          <layoutConstraint xmi:type="notation:Size" xmi:id="_E2EdRgvpEd28E8WXYUmvjQ" width="1320" height="1320"/>
+        </children>
+        <children xmi:id="_E2EdRwvpEd28E8WXYUmvjQ" type="Stereotype"/>
+        <children xmi:id="_E2EdSAvpEd28E8WXYUmvjQ" type="CommentBody"/>
+        <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_E2EdQQvpEd28E8WXYUmvjQ" fontHeight="8" showListSignature="true" fillColor="16763850" lineColor="16744576" showStereotype="Label"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_E2EdQgvpEd28E8WXYUmvjQ" x="13229" y="2857" width="8941"/>
+      </children>
+      <styles xmi:type="umlnotation:UMLDiagramStyle" xmi:id="_OzN4UgvoEd28E8WXYUmvjQ"/>
+      <element xsi:nil="true"/>
+      <edges xmi:id="_13LcEAvoEd28E8WXYUmvjQ" type="Reference" source="_10y2cAvoEd28E8WXYUmvjQ" target="_RL8qQAvoEd28E8WXYUmvjQ">
+        <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_13LcEQvoEd28E8WXYUmvjQ" fontHeight="8" routing="Rectilinear" avoidObstructions="true" showStereotype="Text"/>
+        <element xsi:nil="true"/>
+        <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_13LcEgvoEd28E8WXYUmvjQ" points="[-53, 952, -27, -2884]$[-53, 3201, -27, -635]"/>
+      </edges>
+      <edges xmi:id="_E4mz4AvpEd28E8WXYUmvjQ" type="Reference" source="_E2EdQAvpEd28E8WXYUmvjQ" target="_VKBCUAvoEd28E8WXYUmvjQ">
+        <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_E4mz4QvpEd28E8WXYUmvjQ" fontHeight="8" routing="Rectilinear" avoidObstructions="true" showStereotype="Text"/>
+        <element xsi:nil="true"/>
+        <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_E4mz4gvpEd28E8WXYUmvjQ" points="[449, 1296, 476, -2196]$[449, 2857, 476, -635]"/>
+      </edges>
+    </contents>
+  </eAnnotations>
+  <eAnnotations xmi:id="_XYM7sAvpEd28E8WXYUmvjQ" source="uml2.versions">
+    <details xmi:id="_XYM7sQvpEd28E8WXYUmvjQ" key="1" value="1.0.0"/>
+    <details xmi:id="_pvA68AvpEd28E8WXYUmvjQ" key="2" value="1.0.1"/>
+  </eAnnotations>
+  <packageImport xmi:id="_M0s9MQvoEd28E8WXYUmvjQ">
+    <eAnnotations xmi:id="_Hmf9kgvpEd28E8WXYUmvjQ" source="uml2.extensions">
+      <details xmi:id="_Hmf9kwvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+    </eAnnotations>
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packageImport xmi:id="_M0s9MgvoEd28E8WXYUmvjQ">
+    <eAnnotations xmi:id="_Hmf9lAvpEd28E8WXYUmvjQ" source="uml2.extensions">
+      <details xmi:id="_Hmf9lQvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+    </eAnnotations>
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_METAMODELS/UML.metamodel.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_RKwXcAvoEd28E8WXYUmvjQ" name="SDOClient">
+    <eAnnotations xmi:id="_Hmf9lgvpEd28E8WXYUmvjQ" source="uml2.extensions">
+      <details xmi:id="_Hmf9lwvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+    </eAnnotations>
+    <ownedComment xmi:id="_yIwpkAvoEd28E8WXYUmvjQ" annotatedElement="_RKwXcAvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9mAvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9mQvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+      <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3268&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Stereotype to mark attributes, methods or associations to exist only on the client side of a sdo (service data object) model.&lt;/BODY>&lt;/HTML></body>
+    </ownedComment>
+    <ownedAttribute xmi:id="_aY13oAvoEd28E8WXYUmvjQ" name="base_Property" association="_aYstsAvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9mgvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9mwvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_fr2CUgvoEd28E8WXYUmvjQ" name="base_Operation" association="_fr2CUAvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9nAvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9nQvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_jzJ18gvoEd28E8WXYUmvjQ" name="base_Association" association="_jzJ18AvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9ngvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9nwvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Association"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_VJ3RUAvoEd28E8WXYUmvjQ" name="SDOServer">
+    <eAnnotations xmi:id="_Hmf9oAvpEd28E8WXYUmvjQ" source="uml2.extensions">
+      <details xmi:id="_Hmf9oQvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+    </eAnnotations>
+    <ownedComment xmi:id="_EbZTcAvpEd28E8WXYUmvjQ" annotatedElement="_VJ3RUAvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9ogvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9owvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+      <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3268&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Stereotype to mark attributes, methods or associations to exist only on the&amp;nbsp;server side of a sdo (service data object) model. However method which are on the serverside only have a client proxy to synchronize the client and server model and invoke the method.&lt;/BODY>&lt;/HTML></body>
+    </ownedComment>
+    <ownedAttribute xmi:id="_cHQhQgvoEd28E8WXYUmvjQ" name="base_Property" association="_cHQhQAvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9pAvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9pQvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_glN6UgvoEd28E8WXYUmvjQ" name="base_Operation" association="_glN6UAvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9pgvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9pwvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_is9p8gvoEd28E8WXYUmvjQ" name="base_Association" association="_is9p8AvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9qAvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9qQvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Association"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_aYstsAvoEd28E8WXYUmvjQ" name="Property_SDOClient" memberEnd="_aYstsQvoEd28E8WXYUmvjQ _aY13oAvoEd28E8WXYUmvjQ">
+    <eAnnotations xmi:id="_Hmf9qgvpEd28E8WXYUmvjQ" source="uml2.extensions">
+      <details xmi:id="_Hmf9qwvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_aYstsQvoEd28E8WXYUmvjQ" name="extension_SDOClient" type="_RKwXcAvoEd28E8WXYUmvjQ" aggregation="composite" association="_aYstsAvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9rAvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9rQvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_cHQhQAvoEd28E8WXYUmvjQ" name="Property_SDOServer" memberEnd="_cHQhQQvoEd28E8WXYUmvjQ _cHQhQgvoEd28E8WXYUmvjQ">
+    <eAnnotations xmi:id="_Hmf9rgvpEd28E8WXYUmvjQ" source="uml2.extensions">
+      <details xmi:id="_Hmf9rwvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_cHQhQQvoEd28E8WXYUmvjQ" name="extension_SDOServer" type="_VJ3RUAvoEd28E8WXYUmvjQ" aggregation="composite" association="_cHQhQAvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9sAvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9sQvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_fr2CUAvoEd28E8WXYUmvjQ" name="Operation_SDOClient" memberEnd="_fr2CUQvoEd28E8WXYUmvjQ _fr2CUgvoEd28E8WXYUmvjQ">
+    <eAnnotations xmi:id="_Hmf9sgvpEd28E8WXYUmvjQ" source="uml2.extensions">
+      <details xmi:id="_Hmf9swvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_fr2CUQvoEd28E8WXYUmvjQ" name="extension_SDOClient" type="_RKwXcAvoEd28E8WXYUmvjQ" aggregation="composite" association="_fr2CUAvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9tAvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9tQvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_glN6UAvoEd28E8WXYUmvjQ" name="Operation_SDOServer" memberEnd="_glN6UQvoEd28E8WXYUmvjQ _glN6UgvoEd28E8WXYUmvjQ">
+    <eAnnotations xmi:id="_Hmf9tgvpEd28E8WXYUmvjQ" source="uml2.extensions">
+      <details xmi:id="_Hmf9twvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_glN6UQvoEd28E8WXYUmvjQ" name="extension_SDOServer" type="_VJ3RUAvoEd28E8WXYUmvjQ" aggregation="composite" association="_glN6UAvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9uAvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9uQvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_is9p8AvoEd28E8WXYUmvjQ" name="Association_SDOServer" memberEnd="_is9p8QvoEd28E8WXYUmvjQ _is9p8gvoEd28E8WXYUmvjQ">
+    <eAnnotations xmi:id="_Hmf9ugvpEd28E8WXYUmvjQ" source="uml2.extensions">
+      <details xmi:id="_Hmf9uwvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_is9p8QvoEd28E8WXYUmvjQ" name="extension_SDOServer" type="_VJ3RUAvoEd28E8WXYUmvjQ" aggregation="composite" association="_is9p8AvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9vAvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9vQvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_jzJ18AvoEd28E8WXYUmvjQ" name="Association_SDOClient" memberEnd="_jzJ18QvoEd28E8WXYUmvjQ _jzJ18gvoEd28E8WXYUmvjQ">
+    <eAnnotations xmi:id="_Hmf9vgvpEd28E8WXYUmvjQ" source="uml2.extensions">
+      <details xmi:id="_Hmf9vwvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_jzJ18QvoEd28E8WXYUmvjQ" name="extension_SDOClient" type="_RKwXcAvoEd28E8WXYUmvjQ" aggregation="composite" association="_jzJ18AvoEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_Hmf9wAvpEd28E8WXYUmvjQ" source="uml2.extensions">
+        <details xmi:id="_Hmf9wQvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+      </eAnnotations>
+    </ownedEnd>
+  </packagedElement>
+  <profileApplication xmi:id="_M0s9MwvoEd28E8WXYUmvjQ">
+    <eAnnotations xmi:id="_M0s9NAvoEd28E8WXYUmvjQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <references xmi:type="ecore:EPackage" href="pathmap://UML2_MSL_PROFILES/ProfileBase.epx#_IfFYQMmBEdqBcN1R6EvWUw?ProfileBase/ProfileBase?"/>
+    </eAnnotations>
+    <eAnnotations xmi:id="_Hmf9wgvpEd28E8WXYUmvjQ" source="uml2.extensions">
+      <details xmi:id="_Hmf9wwvpEd28E8WXYUmvjQ" key="addedInVersion" value="1"/>
+    </eAnnotations>
+    <appliedProfile href="pathmap://UML2_MSL_PROFILES/ProfileBase.epx#_bFUAMdWLEdiy4IqP8whjFA?ProfileBase?"/>
+  </profileApplication>
+</uml:Profile>
