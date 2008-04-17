@@ -20,7 +20,7 @@
 	</build>
 	
 	<modules>
-		<module>../build/plugins/org.umlmda.generator.uml.oaw</module>
+		<module>../org.umlmda.generator.uml.oaw</module>
 	</modules>
 
 	<dependencyManagement>
