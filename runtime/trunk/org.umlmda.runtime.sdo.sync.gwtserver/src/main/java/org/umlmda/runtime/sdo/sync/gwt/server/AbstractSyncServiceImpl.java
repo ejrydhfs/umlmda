@@ -71,7 +71,7 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       logger.info("synchronizeChanges()");
 
       Player player = getPlayer();
-      SynchronizedObjectFactory factory = player.getRootFactory();
+      SynchronizedObjectFactory factory = player.getObjectFactory();
       Recorder slaveRecorder = connectToNewRecorder(factory);
       
       player.playback(changes, null);
@@ -81,7 +81,7 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
 
    public AbstractInvocationResult invokeMethod(SynchronizedObjectProxy objectProxy, String methodName) {
       Player player = getPlayer();
-      SynchronizedObjectFactory factory = player.getRootFactory();
+      SynchronizedObjectFactory factory = player.getObjectFactory();
       Recorder slaveRecorder = connectToNewRecorder(factory);
 
       SynchronizedObject object = player.getObject(objectProxy);
@@ -90,7 +90,7 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       try {
          Method method = object.getClass().getMethod(methodName, new Class<?>[] {});
          
-         method.invoke(object, (Object)null);
+         method.invoke(object);
          result = new VoidInvocationResult(slaveRecorder.getChangeEntries());
       } catch (SecurityException e) {
          result = handleException(e);
@@ -120,7 +120,7 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       if (factory instanceof ReconnectableSynchronizedObjectFactory) {
          ReconnectableSynchronizedObjectFactory reconnectableFactory = (ReconnectableSynchronizedObjectFactory) factory;
          
-         slaveRecorder = new SynchronizerImpl();
+         slaveRecorder = new SynchronizerImpl(null);
          reconnectableFactory.setRecorder(slaveRecorder);
       }
       
