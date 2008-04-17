@@ -3,12 +3,19 @@ package org.umlmda.runtime.sdo.sync.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
+import org.umlmda.runtime.sdo.sync.SyncService;
 import org.umlmda.runtime.sdo.sync.SynchronizedCollection;
 import org.umlmda.runtime.sdo.sync.SynchronizedList;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
+import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.SynchronizedSet;
+import org.umlmda.runtime.sdo.sync.SyncService.Callback;
+import org.umlmda.runtime.sdo.sync.SyncService.InternalInvokeCallback;
+import org.umlmda.runtime.sdo.sync.SyncService.InternalSynchronizeCallback;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
+import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
 import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
@@ -18,8 +25,11 @@ public class SynchronizerImpl implements Recorder {
    private List<AbstractChangeLogEntry> changeEntries = new ArrayList<AbstractChangeLogEntry>();
    private int recordedObjectCount = 0;
    private boolean recording = true;
+   private final SyncService service;
+   private Player player;
    
-   public SynchronizerImpl() {
+   public SynchronizerImpl(SyncService service) {
+      this.service = service;
    }
 
    public synchronized List<AbstractChangeLogEntry> getChangeEntries() {
@@ -89,15 +99,74 @@ public class SynchronizerImpl implements Recorder {
 
    public Object recordInvoke(SynchronizedObject recordedObject, String methodName, Object... parameters) {
       // TODO Auto-generated method stub
-      return null;
+      throw new UnsupportedOperationException("TODO implementation");
    }
 
-   public void recordInvoke(SynchronizedObject recordedObject, String methodName) {
-      // TODO Auto-generated method stub
-      
+   public synchronized void recordInvoke(final SynchronizedObject recordedObject, final String methodName) {
+      // Synchronize to remote peer
+      if ( service != null && changeEntries.size() > 0 ) {
+         service.synchronizeChanges(changeEntries, new InternalSynchronizeCallback() {
+
+            public void onException(Throwable throwable, Callback callback) {
+               if ( callback != null ) {
+                  callback.onException(throwable);
+               }
+               else {
+                  // FIXME Error handling
+                  throwable.printStackTrace(System.err);
+               }
+            }
+
+            public void onSucess(List<AbstractChangeLogEntry> remoteChanges, Callback callback) {
+               
+               // Get remote results put to local objects 
+               if( player != null && remoteChanges != null && remoteChanges.size() > 0 ) {
+                  player.playback(remoteChanges, null);
+               }
+               
+               changeEntries.clear();
+               
+               // Now call the method
+               SynchronizedObjectProxy objectProxy = new SynchronizedObjectProxy(recordedObject.getRecordObjectId());
+               service.invokeMethod(objectProxy, methodName, new InternalInvokeCallback() {
+
+                  public void onException(Throwable throwable, Callback callback) {
+                     if ( callback != null ) {
+                        callback.onException(throwable);
+                     }
+                     else {
+                        // FIXME Error handling
+                        throwable.printStackTrace(System.err);
+                     }
+                  }
+
+                  public void onSucess(AbstractInvocationResult invocationResult, Callback callback) {
+                     if ( player != null && invocationResult.getRemoteChanges() != null && invocationResult.getRemoteChanges().size() > 0 ) {
+                        player.playback(invocationResult.getRemoteChanges(), null);
+                     }
+                     if ( callback != null ) {
+                        callback.onSuccess();
+                     }
+                  }
+                  
+               });
+               
+            }
+            
+           
+         });
+      }
    }
 
    private synchronized int getNextRecordObjectId() {
       return ++recordedObjectCount;
+   }
+
+   public Player getPlayer() {
+      return player;
+   }
+
+   public void setPlayer(Player player) {
+      this.player = player;
    }
 }

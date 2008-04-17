@@ -20,7 +20,7 @@ public interface Player extends Serializable {
     */
    SynchronizedObject playback(List<AbstractChangeLogEntry> changeEntries, SynchronizedObject rootObject);
 
-   SynchronizedObjectFactory getRootFactory();
+   SynchronizedObjectFactory getObjectFactory();
 
    SynchronizedObject getObject(SynchronizedObjectProxy proxy);
 }

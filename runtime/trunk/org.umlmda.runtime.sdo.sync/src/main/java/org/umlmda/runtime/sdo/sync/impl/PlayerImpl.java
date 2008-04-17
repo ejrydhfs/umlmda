@@ -75,7 +75,7 @@ public class PlayerImpl implements Player {
       return synchronizedObjects.get(proxy.getRecordObjectId());
    }
 
-   public SynchronizedObjectFactory getRootFactory() {
+   public SynchronizedObjectFactory getObjectFactory() {
       return objectFactory;
    }
       
