@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.umlmda.generator.profile.edit
+Bundle-Version: 3.0.4.qualifier
+Bundle-Activator: org.umlmda.generator.set.provider.UmpEditPlugin$Implementation
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Export-Package: org.umlmda.generator.profile.provider,
+ org.umlmda.generator.set.provider
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.edit;visibility:=reexport,
+ org.umlmda.generator.profile;visibility:=reexport
+Eclipse-LazyStart: true
