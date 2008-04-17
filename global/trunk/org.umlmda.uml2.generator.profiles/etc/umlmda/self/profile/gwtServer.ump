@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <org.umlmda.generator.profile:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.profile="http:///org/umlmda/generator/profile.ecore" name="gwtServer">
+  <artefacts name="java.BusinessObjectFactoryImpl" prefix="" postfix="" namespacePostfix=".model.impl" replacement="\u$1FactoryImpl" replacementPattern="(.*)" writer="org.umlmda.uml.generator.java.writer.BusinessObjectFactoryImplWriter"/>
+  <artefacts name="java.BusinessObjectFactory" fileExtension="" prefix="" postfix="" namespacePostfix=".model" replacement="\u$1Factory" replacementPattern="(.*)" type="None" writer=""/>
+  <artefacts name="java.BusinessObjectInterface" prefix="" namespacePostfix=".model" type="None" writer=""/>
+  <artefacts name="java.BusinessObject" prefix="" postfix="Impl" namespacePostfix=".model.impl" replacement="" replacementPattern="" writer="org.umlmda.uml.generator.java.writer.SimpleBeanWriter"/>
+  <artefacts name="java.DelegateInterface" fileExtension="java" postfix="Delegate" namespacePostfix=".model" writer="" generationStrategy="org.umlmda.uml.generator.java.DelegationGenerationStrategy"/>
+  <artefacts name="java.DelegateImpl" postfix="DelegateImpl" namespacePostfix=".model.impl.delegate" type="None"/>
   <basedOn href="javaArtefacts.ump#javaArtefacts"/>
 </org.umlmda.generator.profile:Profile>
