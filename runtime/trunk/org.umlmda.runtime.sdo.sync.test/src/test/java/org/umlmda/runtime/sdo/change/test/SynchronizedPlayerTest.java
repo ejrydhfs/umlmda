@@ -8,9 +8,9 @@ import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
-import org.umlmda.runtime.sdo.sync.test.dto.RootClass;
-import org.umlmda.runtime.sdo.sync.test.dto.TestFactory;
-import org.umlmda.runtime.sdo.sync.test.dto.impl.TestFactoryImpl;
+import org.umlmda.runtime.sdo.sync.test.model.RootClass;
+import org.umlmda.runtime.sdo.sync.test.model.TestFactory;
+import org.umlmda.runtime.sdo.sync.test.model.impl.TestFactoryImpl;
 
 public class SynchronizedPlayerTest extends TestCase {
    private static Logger logger = Logger.getLogger(SynchronizedPlayerTest.class);
