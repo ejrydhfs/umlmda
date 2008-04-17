@@ -17,14 +17,14 @@
 		<testSourceDirectory>test</testSourceDirectory>
 	</build>
 	<modules>
-		<module>../build/plugins/org.umlmda.crazybeans</module>
-		<module>../build/plugins/org.umlmda.generator.model</module>
-		<module>../build/plugins/org.umlmda.generator.profile</module>
-		<module>../build/plugins/org.umlmda.generator.uml.psm</module>
-		<module>../build/plugins/org.umlmda.model.profile</module>
-		<module>../build/plugins/org.umlmda.umlmodel</module>
-		<module>../build/plugins/org.umlmda.umlmodel.uml2</module>
-		<module>../build/plugins/org.umlmda.umlmodel.nsuml</module>
+		<module>../org.umlmda.crazybeans</module>
+		<module>../org.umlmda.generator.model</module>
+		<module>../org.umlmda.generator.profile</module>
+		<module>../org.umlmda.generator.uml.psm</module>
+		<module>../org.umlmda.model.profile</module>
+		<module>../org.umlmda.umlmodel</module>
+		<module>../org.umlmda.umlmodel.uml2</module>
+		<module>../org.umlmda.umlmodel.nsuml</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
