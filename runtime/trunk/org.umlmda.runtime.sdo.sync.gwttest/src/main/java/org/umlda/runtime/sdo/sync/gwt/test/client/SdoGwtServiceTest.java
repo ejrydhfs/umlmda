@@ -3,10 +3,14 @@ package org.umlda.runtime.sdo.sync.gwt.test.client;
 import java.util.Date;
 import java.util.List;
 
+import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
+import org.umlmda.runtime.sdo.sync.SyncService;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
-import org.umlmda.runtime.sdo.sync.gwt.client.SyncServiceAsync;
+import org.umlmda.runtime.sdo.sync.gwt.client.BeanEditorInvocationFactory;
 import org.umlmda.runtime.sdo.sync.gwt.client.SyncServiceLocator;
+import org.umlmda.runtime.sdo.sync.gwt.client.SyncServiceWrapper;
+import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
 import org.umlmda.runtime.sdo.sync.test.client.model.RootClass;
 import org.umlmda.runtime.sdo.sync.test.client.model.TestFactory;
@@ -45,16 +49,10 @@ public class SdoGwtServiceTest implements EntryPoint {
    }
    
    void startTest() {
-      Recorder recorder = new SynchronizerImpl();
-      TestFactory factory = new TestFactoryImpl(recorder);
-      SyncServiceAsync serviceAsync = SyncServiceLocator.getInstance();
-      RootClass root = factory.createRootClass();
-      
-      root.setRootChild(factory.createRootChild());
-      
-      serviceAsync.synchronizeChanges(recorder.getChangeEntries(), new AsyncCallback<List<AbstractChangeLogEntry>>() {
+      RootClass root;
+      SynchronizerImpl synchronizer = new SynchronizerImpl(new SyncServiceWrapper(new SyncService.Callback() {
 
-         public void onFailure(Throwable caught) {
+         public void onException(Throwable caught) {
             StringBuffer buffer = new StringBuffer();
 
             buffer.append(new Date()+"\n\n");
@@ -66,19 +64,18 @@ public class SdoGwtServiceTest implements EntryPoint {
                buffer.append("\n");
             }
             testOutputArea.setText(buffer.toString());
-            
          }
 
-         public void onSuccess(List<AbstractChangeLogEntry> result){
-            StringBuffer buffer = new StringBuffer();
-
-            buffer.append(new Date()+"\n\n");
-            for (AbstractChangeLogEntry logEntry : result) {
-               buffer.append(logEntry.toString());
-               buffer.append("\n");
-            }
-            testOutputArea.setText(buffer.toString());
-         }});
+         public void onSuccess() {
+            testOutputArea.setText("Sync successful");
+         }}));
       
+      // The test itself
+      TestFactoryImpl factory = new TestFactoryImpl(synchronizer);
+      synchronizer.setPlayer(new PlayerImpl(factory, new BeanEditorInvocationFactory()));
+
+      root = factory.createRootClass();
+      root.setRootChild(factory.createRootChild());
+      root.getRootChild().serverMethod();
    }
 }
