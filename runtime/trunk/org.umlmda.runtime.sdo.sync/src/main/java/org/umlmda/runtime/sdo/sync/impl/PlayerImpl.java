@@ -35,7 +35,7 @@ public class PlayerImpl implements Player {
          if ( object == null && logEntry instanceof NewEntry ) {
             NewEntry createEntry = (NewEntry) logEntry;
             
-            object = objectFactory.create(createEntry.getClassName());
+            object = objectFactory.create(createEntry.getElementProxy());
             synchronizedObjects.put(createEntry.getRecordId(), object);
          }
          

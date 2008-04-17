@@ -169,5 +169,6 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
    private IllegalArgumentException createIllegalArgumentException(Object o) {
       return new IllegalArgumentException(o.getClass().getName()+" not instanceof "+SynchronizedObject.class.getName());
    }
+
    
 }

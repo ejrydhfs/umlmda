@@ -26,4 +26,12 @@ public class SynchronizedObjectProxy implements SynchronizedObject, Serializable
    public String toString() {
       return "Proxy to ROID="+recordObjectId;
    }
+
+   public String getModelName() {
+      throw new UnsupportedOperationException();
+   }
+
+   public String getModelVersion() {
+      throw new UnsupportedOperationException();
+   }
 }

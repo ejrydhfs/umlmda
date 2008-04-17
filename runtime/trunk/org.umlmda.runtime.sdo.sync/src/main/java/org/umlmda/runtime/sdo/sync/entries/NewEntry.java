@@ -1,12 +1,15 @@
 package org.umlmda.runtime.sdo.sync.entries;
 
+import org.umlmda.runtime.model.ModeledElement;
+import org.umlmda.runtime.model.ModeledElementProxy;
+
 /*
  * Change entry for new instances
  */
 public class NewEntry extends AbstractChangeLogEntry {
 
    private static final long serialVersionUID = 100L;
-   private String className;
+   private ModeledElementProxy elementProxy;
    
    /**
     * Ctor required for serialization/deserialization
@@ -15,17 +18,17 @@ public class NewEntry extends AbstractChangeLogEntry {
    }
 
    @SuppressWarnings("unchecked")
-   public NewEntry(int recordedObjectId, Class newInstanceClass) {
+   public NewEntry(int recordedObjectId, ModeledElement modeledElement) {
       super(recordedObjectId);
-      className = newInstanceClass.getName();
+      elementProxy = new ModeledElementProxy(modeledElement);
    }
 
-   public String getClassName() {
-      return className;
+   public ModeledElementProxy getElementProxy() {
+      return elementProxy;
    }
    
    @Override
    public String toString() {
-      return "NewEntry: ROID="+getRecordId()+" class="+className;
+      return "NewEntry: ROID="+getRecordId()+" element="+elementProxy.getModelName()+" version="+elementProxy.getModelVersion();
    }
 }

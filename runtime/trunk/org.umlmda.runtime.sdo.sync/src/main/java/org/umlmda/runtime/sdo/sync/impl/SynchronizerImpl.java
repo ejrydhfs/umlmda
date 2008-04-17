@@ -65,7 +65,7 @@ public class SynchronizerImpl implements Recorder {
 
    public synchronized void recordNew(SynchronizedObject object) {
       if ( recording ) {
-         changeEntries.add(new NewEntry(object.getRecordObjectId(), object.getClass()));
+         changeEntries.add(new NewEntry(object.getRecordObjectId(), object));
       }
    }
 
