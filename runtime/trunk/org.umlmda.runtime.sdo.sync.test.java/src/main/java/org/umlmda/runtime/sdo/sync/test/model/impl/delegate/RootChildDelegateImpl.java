@@ -2,6 +2,8 @@ package org.umlmda.runtime.sdo.sync.test.model.impl.delegate;
 
 import org.umlmda.runtime.sdo.sync.test.model.RootChild;
 import org.umlmda.runtime.sdo.sync.test.model.RootChildDelegate;
+import org.umlmda.runtime.sdo.sync.test.model.TestFactory;
+
 import java.beans.PropertyChangeSupport;
 
 /**
@@ -17,7 +19,8 @@ public class RootChildDelegateImpl implements RootChildDelegate {
    }
 
    public void serverMethod() {
-      // TODO Auto-generated method stub
+//      TestFactory factory = businessObject.get
+//      // TODO Auto-generated method stub
       
    }
 }
