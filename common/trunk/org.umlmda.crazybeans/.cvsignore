@@ -1,0 +1,8 @@
+org.umlmda.crazybeans_*.jar
+bin
+temp.folder
+javaCompiler.runtime_org.umlmda.crazybeans.jar.args
+@dot
+javaCompiler.*.args
+src.zip
+target
