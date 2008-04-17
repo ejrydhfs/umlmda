@@ -2,7 +2,7 @@
 <!--xtools2_universal_type_manager-->
 <?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.mmi.ui.signatures.diagram" version="7.0.0"><feature description="" name="Rational Modeling Platform (com.ibm.xtools.rmp)" url="" version="7.0.0"/></signature>?>
 <?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.uml.msl.model" version="7.0.0"><feature description="" name="com.ibm.xtools.ruml.feature" url="" version="7.0.0"/></signature>?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:UMLMDAProfile="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation" xsi:schemaLocation="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22 pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx#_m4nosa87Edy5F6gxEi6kNw?UMLMDAProfile/UMLMDAProfile?">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:UMLMDAProfile="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22" xmlns:UMLMDASDOProfile="http:///schemas/UMLMDASDOProfile/_n83n4AvpEd28E8WXYUmvjQ/2" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation" xsi:schemaLocation="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22 pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx#_m4nosa87Edy5F6gxEi6kNw?UMLMDAProfile/UMLMDAProfile? http:///schemas/UMLMDASDOProfile/_n83n4AvpEd28E8WXYUmvjQ/2 ../../../profiles/rsm/3rd/umlmda/profiles/UMLMDASDOProfile.epx#_n83n4QvpEd28E8WXYUmvjQ?UMLMDASDOProfile/UMLMDASDOProfile?">
   <uml:Model xmi:id="_bmpVofLCEdmyduCk8dC3zA" name="SyncTestModel">
     <eAnnotations xmi:id="_bmpVovLCEdmyduCk8dC3zA" source="uml2.diagrams"/>
     <packageImport xmi:id="_bmpVtPLCEdmyduCk8dC3zA">
@@ -40,7 +40,7 @@
                         <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_Xoa8PwosEd28E8WXYUmvjQ"/>
                       </children>
                       <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_Xoa8MQosEd28E8WXYUmvjQ" fontHeight="8" showListSignature="true" showStereotype="Label"/>
-                      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Xoa8MgosEd28E8WXYUmvjQ" x="2219" y="1268"/>
+                      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Xoa8MgosEd28E8WXYUmvjQ" x="6340" y="1268"/>
                     </children>
                     <children xmi:id="_Z_EqgAosEd28E8WXYUmvjQ" element="_Zhk2MAosEd28E8WXYUmvjQ">
                       <children xmi:id="_Z_EqgwosEd28E8WXYUmvjQ" type="ImageCompartment">
@@ -118,7 +118,7 @@
                       </children>
                       <children xmi:id="_im3mxwosEd28E8WXYUmvjQ" type="ToMultiplicityLabel" element="_imRJ0gosEd28E8WXYUmvjQ">
                         <children xmi:id="_im3myQosEd28E8WXYUmvjQ" type="ToMultiplicity"/>
-                        <layoutConstraint xmi:type="notation:Location" xmi:id="_im3myAosEd28E8WXYUmvjQ" y="396"/>
+                        <layoutConstraint xmi:type="notation:Location" xmi:id="_im3myAosEd28E8WXYUmvjQ" x="198" y="574"/>
                       </children>
                       <children xmi:id="_im3mygosEd28E8WXYUmvjQ" type="ToRoleLabel" element="_imRJ0gosEd28E8WXYUmvjQ">
                         <children xmi:id="_inAwsAosEd28E8WXYUmvjQ" type="ToRole"/>
@@ -126,11 +126,11 @@
                       </children>
                       <children xmi:id="_inAwsQosEd28E8WXYUmvjQ" type="FromMultiplicityLabel" element="_imH_4gosEd28E8WXYUmvjQ">
                         <children xmi:id="_inAwswosEd28E8WXYUmvjQ" type="FromMultiplicity"/>
-                        <layoutConstraint xmi:type="notation:Location" xmi:id="_inAwsgosEd28E8WXYUmvjQ" x="52" y="-556"/>
+                        <layoutConstraint xmi:type="notation:Location" xmi:id="_inAwsgosEd28E8WXYUmvjQ" x="506" y="-574"/>
                       </children>
                       <children xmi:id="_inAwtAosEd28E8WXYUmvjQ" type="FromRoleLabel" element="_imH_4gosEd28E8WXYUmvjQ">
                         <children xmi:id="_inAwtgosEd28E8WXYUmvjQ" type="FromRole"/>
-                        <layoutConstraint xmi:type="notation:Location" xmi:id="_inAwtQosEd28E8WXYUmvjQ" x="-239" y="-820"/>
+                        <layoutConstraint xmi:type="notation:Location" xmi:id="_inAwtQosEd28E8WXYUmvjQ" x="189" y="-971"/>
                       </children>
                       <children xmi:id="_inAwtwosEd28E8WXYUmvjQ" type="ToQualifierLabel" element="_imRJ0gosEd28E8WXYUmvjQ">
                         <children xmi:id="_inAwuQosEd28E8WXYUmvjQ" type="QualifierCompartment">
@@ -157,7 +157,7 @@
                         <layoutConstraint xmi:type="notation:Location" xmi:id="_inAwxAosEd28E8WXYUmvjQ" y="1058"/>
                       </children>
                       <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_im3mwQosEd28E8WXYUmvjQ" fontHeight="8" routing="Rectilinear" showStereotype="Text"/>
-                      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_im3mwgosEd28E8WXYUmvjQ" points="[-3, 31, -8, -122]$[-22, 123, -27, -30]"/>
+                      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_im3mwgosEd28E8WXYUmvjQ" points="[0, 821, 3016, -3280]$[0, 1588, 3016, -2513]$[-3280, 1588, -264, -2513]$[-3280, 3255, -264, -846]"/>
                     </edges>
                     <edges xmi:id="_mLTW0AosEd28E8WXYUmvjQ" element="_mLAb4AosEd28E8WXYUmvjQ" source="_Xoa8MAosEd28E8WXYUmvjQ" target="_bRetkAosEd28E8WXYUmvjQ">
                       <children xmi:id="_mLTW0wosEd28E8WXYUmvjQ" type="NameLabel">
@@ -175,11 +175,11 @@
                       </children>
                       <children xmi:id="_mLTW3QosEd28E8WXYUmvjQ" type="FromMultiplicityLabel" element="_mLAb4gosEd28E8WXYUmvjQ">
                         <children xmi:id="_mLTW3wosEd28E8WXYUmvjQ" type="FromMultiplicity"/>
-                        <layoutConstraint xmi:type="notation:Location" xmi:id="_mLTW3gosEd28E8WXYUmvjQ" x="873" y="-450"/>
+                        <layoutConstraint xmi:type="notation:Location" xmi:id="_mLTW3gosEd28E8WXYUmvjQ" x="514" y="-273"/>
                       </children>
                       <children xmi:id="_mLTW4AosEd28E8WXYUmvjQ" type="FromRoleLabel" element="_mLAb4gosEd28E8WXYUmvjQ">
                         <children xmi:id="_mLTW4gosEd28E8WXYUmvjQ" type="FromRole"/>
-                        <layoutConstraint xmi:type="notation:Location" xmi:id="_mLTW4QosEd28E8WXYUmvjQ" x="502" y="-1058"/>
+                        <layoutConstraint xmi:type="notation:Location" xmi:id="_mLTW4QosEd28E8WXYUmvjQ" x="197" y="-1067"/>
                       </children>
                       <children xmi:id="_mLTW4wosEd28E8WXYUmvjQ" type="ToQualifierLabel" element="_mLJl0gosEd28E8WXYUmvjQ">
                         <children xmi:id="_mLTW5QosEd28E8WXYUmvjQ" type="QualifierCompartment">
@@ -206,7 +206,7 @@
                         <layoutConstraint xmi:type="notation:Location" xmi:id="_mLcgwwosEd28E8WXYUmvjQ" y="1058"/>
                       </children>
                       <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_mLTW0QosEd28E8WXYUmvjQ" fontHeight="8" routing="Rectilinear" showStereotype="Text"/>
-                      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_mLTW0gosEd28E8WXYUmvjQ" points="[794, 820, -5239, -3228]$[794, 1554, -5239, -2494]$[5874, 1554, -159, -2494]$[5874, 3254, -159, -794]"/>
+                      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_mLTW0gosEd28E8WXYUmvjQ" points="[556, 821, -2725, -3492]$[556, 1638, -2725, -2675]$[3890, 1638, 609, -2675]$[3890, 3255, 609, -1058]"/>
                     </edges>
                     <edges xmi:id="_u_TjEAosEd28E8WXYUmvjQ" element="_u_AoIAosEd28E8WXYUmvjQ" source="_bRetkAosEd28E8WXYUmvjQ" target="_c_5XMAosEd28E8WXYUmvjQ">
                       <children xmi:id="_u_dUEAosEd28E8WXYUmvjQ" type="NameLabel">
@@ -333,6 +333,9 @@
                     <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_u_KZIwosEd28E8WXYUmvjQ" value="*"/>
                     <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_u_KZIgosEd28E8WXYUmvjQ"/>
                   </ownedAttribute>
+                  <ownedAttribute xmi:id="_8S2XoAvrEd28E8WXYUmvjQ" name="derivedStringAttr" visibility="private" isReadOnly="true" isDerived="true">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string?"/>
+                  </ownedAttribute>
                 </packagedElement>
                 <packagedElement xmi:type="uml:Class" xmi:id="_cXEcoAosEd28E8WXYUmvjQ" name="RootGreatChildren">
                   <ownedAttribute xmi:id="_A1e6cAotEd28E8WXYUmvjQ" name="intAttr" visibility="private">
@@ -395,6 +398,12 @@
       </eAnnotations>
       <appliedProfile href="pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx#_fgmLseO5Edm14clrpIgO7w?UMLMDAProfile?"/>
     </profileApplication>
+    <profileApplication xmi:id="_2MSCAAvrEd28E8WXYUmvjQ">
+      <eAnnotations xmi:id="_2MSCAQvrEd28E8WXYUmvjQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="../../../profiles/rsm/3rd/umlmda/profiles/UMLMDASDOProfile.epx#_n83n4QvpEd28E8WXYUmvjQ?UMLMDASDOProfile/UMLMDASDOProfile?"/>
+      </eAnnotations>
+      <appliedProfile href="../../../profiles/rsm/3rd/umlmda/profiles/UMLMDASDOProfile.epx#_M0s9MAvoEd28E8WXYUmvjQ?UMLMDASDOProfile?"/>
+    </profileApplication>
   </uml:Model>
   <UMLMDAProfile:BusinessObject xmi:id="_Xn1GUAosEd28E8WXYUmvjQ" base_Class="_V7gHYAosEd28E8WXYUmvjQ"/>
   <UMLMDAProfile:BusinessObject xmi:id="_Z-7gkAosEd28E8WXYUmvjQ" base_Class="_Zhk2MAosEd28E8WXYUmvjQ"/>
@@ -419,4 +428,7 @@
   <UMLMDAProfile:PersistentAttribute xmi:id="_E3uA0QotEd28E8WXYUmvjQ" base_Property="_E3uA0AotEd28E8WXYUmvjQ"/>
   <UMLMDAProfile:PersistentAttribute xmi:id="_GqdJwQotEd28E8WXYUmvjQ" base_Property="_GqdJwAotEd28E8WXYUmvjQ"/>
   <UMLMDAProfile:TransactionalMethod xmi:id="_LeUhYQotEd28E8WXYUmvjQ" base_Operation="_LeUhYAotEd28E8WXYUmvjQ"/>
+  <UMLMDASDOProfile:SDOServer xmi:id="_4avdoAvrEd28E8WXYUmvjQ" base_Operation="_LeUhYAotEd28E8WXYUmvjQ"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_8S2XoQvrEd28E8WXYUmvjQ" base_Property="_8S2XoAvrEd28E8WXYUmvjQ"/>
+  <UMLMDASDOProfile:SDOClient xmi:id="__PV98AvrEd28E8WXYUmvjQ" base_Property="_8S2XoAvrEd28E8WXYUmvjQ"/>
 </xmi:XMI>

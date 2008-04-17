@@ -9,7 +9,7 @@
         <!-- Standard profiles -->
 		<pathMapEntry>
 			<alias value="UMLMDA_PROFILE"/>
-			<path value="${umlmda.plugin.path}/org.umlmda.uml2.profile_2.1.0.200801142220/profiles"/>
+			<path value="${basedir}/profiles/rsm/3rd/umlmda/profiles"/>
 		</pathMapEntry>
         <pathMapEntry>
             <alias value="UML2_MSL_PROFILES"/>

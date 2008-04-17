@@ -144,12 +144,24 @@
                         </artifactItem>
                         <artifactItem>
                            <groupId>org.umlmda</groupId>
-                           <artifactId>uml2_profile</artifactId>
-                           <version>2.1.0</version>
+                           <artifactId>org.umlmda.uml2.profiles</artifactId>
+                           <version>2.2.0</version>
                            <type>zip</type>
+                           <classifier>std</classifier>
                            <overWrite>false</overWrite>
                            <outputDirectory>
-                              ${basedir}/profiles/rsm/3rd/org.umlmda.uml2.profile_2.1.0.200801142220/profiles
+                              ${basedir}/profiles/rsm/3rd/umlmda/profiles
+                           </outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                           <groupId>org.umlmda</groupId>
+                           <artifactId>org.umlmda.uml2.profiles</artifactId>
+                           <version>2.2.0</version>
+                           <type>zip</type>
+                           <classifier>sdo</classifier>
+                           <overWrite>false</overWrite>
+                           <outputDirectory>
+                              ${basedir}/profiles/rsm/3rd/umlmda/profiles
                            </outputDirectory>
                         </artifactItem>
                         <artifactItem>
