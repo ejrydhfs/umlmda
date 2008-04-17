@@ -47,11 +47,5 @@
          <artifactId>org.umlmda.runtime.sdo.sync.gwtclient</artifactId>
          <version>${pom.version}</version>
       </dependency>
-      <!-- TODO For Test purposes remove later -->
-      <dependency>
-         <groupId>${pom.groupId}</groupId>
-         <artifactId>org.umlmda.runtime.sdo.sync.test.java</artifactId>
-         <version>${pom.version}</version>
-      </dependency>
    </dependencies>
 </project>
