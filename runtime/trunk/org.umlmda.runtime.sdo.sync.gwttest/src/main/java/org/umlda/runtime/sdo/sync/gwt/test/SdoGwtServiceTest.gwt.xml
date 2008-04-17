@@ -9,6 +9,6 @@
     
 	<entry-point class="org.umlda.runtime.sdo.sync.gwt.test.client.SdoGwtServiceTest"/>
    
-    <servlet path="/SyncService" class="org.umlmda.runtime.sdo.sync.gwt.server.SyncServiceImpl"/>
+    <servlet path="/SyncService" class="org.umlda.runtime.sdo.sync.gwt.test.server.SyncServiceImpl"/>
    
 </module>

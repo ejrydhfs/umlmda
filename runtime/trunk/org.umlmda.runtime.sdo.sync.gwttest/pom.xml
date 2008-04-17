@@ -71,6 +71,12 @@
       </dependency>
       <dependency>
          <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.sdo.sync.test.java</artifactId>
+         <version>${pom.version}</version>
+         <scope></scope>
+      </dependency>
+      <dependency>
+         <groupId>${pom.groupId}</groupId>
          <artifactId>org.umlmda.runtime.sdo.sync.test.gwt</artifactId>
          <version>${pom.version}</version>
          <scope></scope>
