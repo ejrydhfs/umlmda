@@ -24,9 +24,9 @@ public class SynchronizedPlayerTest extends TestCase {
    }
 
    public void testPlayback() {
-      Recorder masterRecorder = new SynchronizerImpl();
+      Recorder masterRecorder = new SynchronizerImpl(null);
       TestFactory factory = new TestFactoryImpl(masterRecorder);
-      Recorder slaveRecorder = new SynchronizerImpl();
+      Recorder slaveRecorder = new SynchronizerImpl(null);
       Player player = new PlayerImpl(new TestFactoryImpl(slaveRecorder), new ReflectionInvocationFactory());
       
       RootClass root = factory.createRootClass();

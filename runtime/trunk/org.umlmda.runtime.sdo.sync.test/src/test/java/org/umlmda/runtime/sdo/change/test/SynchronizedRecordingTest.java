@@ -14,7 +14,7 @@ import org.umlmda.runtime.sdo.sync.test.model.impl.TestFactoryImpl;
 
 public class SynchronizedRecordingTest extends TestCase {
    private static Logger logger = Logger.getLogger(SynchronizedRecordingTest.class);
-   private Recorder recorder = new SynchronizerImpl();
+   private Recorder recorder = new SynchronizerImpl(null);
    private TestFactory factory = new TestFactoryImpl(recorder);
    
    protected void setUp() throws Exception {
