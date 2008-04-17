@@ -13,12 +13,7 @@ public abstract class AbstractPropertyEditor<TBeanClass> implements PropertyEdit
    private final TBeanClass bean;
 
    public AbstractPropertyEditor(TBeanClass bean, String propertyName) {
-      if ( bean instanceof PropertyChangeSupport) {
-         this.bean = bean;
-      }
-      else {
-         this.bean = null;
-      }
+      this.bean = bean;
       this.propertyName = propertyName;
    }
 
