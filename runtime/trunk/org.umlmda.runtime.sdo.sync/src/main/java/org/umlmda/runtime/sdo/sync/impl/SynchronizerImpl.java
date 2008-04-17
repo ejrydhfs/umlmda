@@ -87,6 +87,16 @@ public class SynchronizerImpl implements Recorder {
       recording = false;
    }
 
+   public Object recordInvoke(SynchronizedObject recordedObject, String methodName, Object... parameters) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public void recordInvoke(SynchronizedObject recordedObject, String methodName) {
+      // TODO Auto-generated method stub
+      
+   }
+
    private synchronized int getNextRecordObjectId() {
       return ++recordedObjectCount;
    }

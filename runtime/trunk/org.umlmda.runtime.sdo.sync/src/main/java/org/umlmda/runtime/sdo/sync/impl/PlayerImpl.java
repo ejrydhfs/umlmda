@@ -16,7 +16,8 @@ import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
 
 public class PlayerImpl implements Player {
-   private Map<Integer, SynchronizedObject> synchronizedObjects = new HashMap<Integer, SynchronizedObject>();
+   private static final long serialVersionUID = 1L;
+   private transient Map<Integer, SynchronizedObject> synchronizedObjects = new HashMap<Integer, SynchronizedObject>();
    private final SynchronizedObjectFactory objectFactory;
    private final Factory beanInvocationFactory;
 
@@ -25,7 +26,7 @@ public class PlayerImpl implements Player {
       this.beanInvocationFactory = beanInvocationFactory;
    }
 
-   @SuppressWarnings("unchecked")
+   
    public synchronized SynchronizedObject playback(List<AbstractChangeLogEntry> changeEntries, SynchronizedObject rootObject) {
       
       for (AbstractChangeLogEntry logEntry : changeEntries) {
@@ -49,7 +50,7 @@ public class PlayerImpl implements Player {
          else if (logEntry instanceof ListAddEntry) {
             ListAddEntry listAddEntry = (ListAddEntry) logEntry;
             Object listElement = getValue(listAddEntry.getValue());
-            List list = (List) object;
+            List<Object> list = (List<Object>) object;
             
             list.add(listAddEntry.getIndex(), listElement);
          }
@@ -68,6 +69,14 @@ public class PlayerImpl implements Player {
          changeValue = synchronizedObjects.get(proxy.getRecordObjectId());
       }
       return changeValue;
+   }
+
+   public SynchronizedObject getObject(SynchronizedObjectProxy proxy) {
+      return synchronizedObjects.get(proxy.getRecordObjectId());
+   }
+
+   public SynchronizedObjectFactory getRootFactory() {
+      return objectFactory;
    }
       
 

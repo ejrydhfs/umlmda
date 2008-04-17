@@ -1,6 +1,11 @@
 package org.umlmda.runtime.sdo.sync;
 
-public interface SynchronizedObjectFactory {
+import java.io.Serializable;
 
-   SynchronizedObject create(String className);
+public interface SynchronizedObjectFactory extends Serializable {
+
+   public abstract SynchronizedObject create(String className);
+
+   public abstract Recorder getRecorder();
+   
 }

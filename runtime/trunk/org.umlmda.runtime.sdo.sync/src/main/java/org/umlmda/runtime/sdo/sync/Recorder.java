@@ -37,5 +37,17 @@ public interface Recorder {
    @SuppressWarnings("unchecked")
    public abstract void recordClear(SynchronizedCollection<?> collection);
 
+   /**
+    * Invoke a method without parameters on the remote peer
+    * @param method
+    * @return
+    */
+   public abstract void recordInvoke(SynchronizedObject recordedObject, String string);
    
+   /**
+    * Invoke a method with parameters on the remote peer
+    * @param method
+    * @return
+    */
+   public abstract Object recordInvoke(SynchronizedObject recordedObject, String method, Object... parameters);
 }
