@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
-	<parent>
-		<artifactId>org.umlmda.common.releng</artifactId>
-		<groupId>org.umlmda</groupId>
-		<version>3.1.0-SNAPSHOT</version>
-	</parent>
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>org.umlmda.umlmodel.nsuml</artifactId>
-	<version>3.1.0-SNAPSHOT</version>
-	<description></description>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<dependencies>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.umlmda</groupId>
-			<artifactId>ru.novosoft.uml.nsuml</artifactId>
-			<version>0.4.20</version>
-		</dependency>
-		<dependency>
-			<groupId>org.umlmda</groupId>
-			<artifactId>org.umlmda.umlmodel</artifactId>
-			<version>3.1.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.umlmda</groupId>
-			<artifactId>org.umlmda.crazybeans</artifactId>
-			<version>3.1.0-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <artifactId>org.umlmda.common.releng</artifactId>
+      <groupId>org.umlmda</groupId>
+      <version>3.1.0-SNAPSHOT</version>
+   </parent>
+   <artifactId>org.umlmda.umlmodel.nsuml</artifactId>
+   <version>3.1.0-SNAPSHOT</version>
+   <name>UMLMDA umlmodel nsuml</name>
+   <description></description>
+
+   <dependencies>
+      <dependency>
+         <groupId>commons-lang</groupId>
+         <artifactId>commons-lang</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>log4j</groupId>
+         <artifactId>log4j</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.umlmda</groupId>
+         <artifactId>ru.novosoft.uml.nsuml</artifactId>
+         <version>0.4.20</version>
+      </dependency>
+      <dependency>
+         <groupId>org.umlmda</groupId>
+         <artifactId>org.umlmda.umlmodel</artifactId>
+         <version>3.1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+         <groupId>org.umlmda</groupId>
+         <artifactId>org.umlmda.crazybeans</artifactId>
+         <version>3.1.0-SNAPSHOT</version>
+      </dependency>
+   </dependencies>
 
 </project>
