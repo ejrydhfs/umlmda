@@ -1,61 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<artifactId>org.umlmda.releng</artifactId>
-		<groupId>org.umlmda</groupId>
-		<version>3.0.0-SNAPSHOT</version>
-	</parent>
-	<artifactId>org.umlmda.oaw.releng</artifactId>
-	<packaging>pom</packaging>
-	<version>3.1.1-SNAPSHOT</version>
-	<description>
-		UMLMDA maven project for umlmda openarchitectureware integration
-		modules.
-	</description>
-	
-	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test</testSourceDirectory>
-	</build>
-	
-	<modules>
-		<module>../org.umlmda.generator.uml.oaw</module>
-	</modules>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.eclipse.uml2</groupId>
-				<artifactId>uml</artifactId>
-				<version>2.1.0</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openarchitectureware</groupId>
-  				<artifactId>oaw-core-expressions</artifactId>
-  				<version>4.2.0</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openarchitectureware</groupId>
-  				<artifactId>oaw-core-workflow</artifactId>
-  				<version>4.2.0</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openarchitectureware</groupId>
-  				<artifactId>oaw-core-xpand2</artifactId>
-  				<version>4.2.0</version>
-				<scope>provided</scope>
-			</dependency>
-            <dependency>
-               <groupId>org.openarchitectureware</groupId>
-               <artifactId>oaw-util-stdlib</artifactId>
-               <version>4.2.0</version>
-               <scope>provided</scope>
-            </dependency>
-		</dependencies>
-	</dependencyManagement>
-	
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.releng</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+   </parent>
+   <artifactId>org.umlmda.oaw.releng</artifactId>
+   <version>3.2.0-SNAPSHOT</version>
+   <packaging>pom</packaging>
+   <description>
+      UMLMDA maven project for umlmda openarchitectureware integration
+      modules.
+   </description>
+
+   <properties>
+      <umlmda_common.version>3.2.0-SNAPSHOT</umlmda_common.version>
+   </properties>
+
+   <build>
+      <sourceDirectory>src</sourceDirectory>
+      <testSourceDirectory>test</testSourceDirectory>
+   </build>
+
+   <modules>
+      <module>../org.umlmda.generator.uml.oaw</module>
+   </modules>
+
+   <dependencyManagement>
+      <dependencies>
+         <dependency>
+            <groupId>org.eclipse.uml2</groupId>
+            <artifactId>uml</artifactId>
+            <version>2.1.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-expressions</artifactId>
+            <version>4.2.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-workflow</artifactId>
+            <version>4.2.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-xpand2</artifactId>
+            <version>4.2.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-util-stdlib</artifactId>
+            <version>4.2.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>${parent.groupId}</groupId>
+            <artifactId>org.umlmda.umlmodel.uml2</artifactId>
+            <version>${umlmda_common.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>${parent.groupId}</groupId>
+            <artifactId>org.umlmda.umlmodel.nsuml</artifactId>
+            <version>${umlmda_common.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>${parent.groupId}</groupId>
+            <artifactId>org.umlmda.generator.uml.psm</artifactId>
+            <version>${umlmda_common.version}</version>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
+
 </project>
