@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
    <parent>
@@ -8,10 +11,11 @@
       <version>3.0.0-SNAPSHOT</version>
    </parent>
    <artifactId>org.umlmda.uml2.profiles</artifactId>
+   <name>UMLMDA uml2 profiles</name>
    <description></description>
    <packaging>pom</packaging>
    <version>2.2.0</version>
-   
+
    <build>
       <plugins>
          <!-- Pack RSx/UML2 Profiles -->
@@ -24,16 +28,18 @@
                   <phase>package</phase>
                   <configuration>
                      <tasks>
-                        <mkdir dir="${project.build.directory}"/>
-                        <zip destfile="${project.build.directory}/umlmda-std-profiles.zip">
+                        <mkdir dir="${project.build.directory}" />
+                        <zip
+                           destfile="${project.build.directory}/umlmda-std-profiles.zip">
                            <fileset dir="${basedir}/profiles">
-                              <include name="UMLMDAProfile.epx"/>
-                              <include name="UMLMDATypes.emx"/>
+                              <include name="UMLMDAProfile.epx" />
+                              <include name="UMLMDATypes.emx" />
                            </fileset>
                         </zip>
-                        <zip destfile="${project.build.directory}/umlmda-sdo-profiles.zip">
+                        <zip
+                           destfile="${project.build.directory}/umlmda-sdo-profiles.zip">
                            <fileset dir="${basedir}/profiles">
-                              <include name="UMLMDASDOProfile.epx"/>
+                              <include name="UMLMDASDOProfile.epx" />
                            </fileset>
                         </zip>
                      </tasks>
@@ -44,7 +50,7 @@
                </execution>
             </executions>
          </plugin>
-                  
+
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>build-helper-maven-plugin</artifactId>

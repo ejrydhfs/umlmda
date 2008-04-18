@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
    <parent>
@@ -8,9 +11,10 @@
       <version>3.0.0-SNAPSHOT</version>
    </parent>
    <artifactId>org.umlmda.uml2.generator.profiles</artifactId>
+   <name>UMLMDA generator profiles</name>
    <description></description>
    <packaging>pom</packaging>
-   
+
    <build>
       <plugins>
          <!-- Zusammenpacken der UMLMDA Profile -->
@@ -23,18 +27,30 @@
                   <phase>package</phase>
                   <configuration>
                      <tasks>
-                        <mkdir dir="${project.build.directory}"/>
-                        <zip destfile="${project.build.directory}/java-profiles.zip">
-                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="java*.ump"/>
+                        <mkdir dir="${project.build.directory}" />
+                        <zip
+                           destfile="${project.build.directory}/java-profiles.zip">
+                           <fileset
+                              dir="${basedir}/etc/umlmda/self/profile"
+                              includes="java*.ump" />
                         </zip>
-                        <zip destfile="${project.build.directory}/gwt-profiles.zip">
-                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="gwt*.ump"/>
+                        <zip
+                           destfile="${project.build.directory}/gwt-profiles.zip">
+                           <fileset
+                              dir="${basedir}/etc/umlmda/self/profile"
+                              includes="gwt*.ump" />
                         </zip>
-                        <zip destfile="${project.build.directory}/j2ee-profiles.zip">
-                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="j2ee*.ump"/>
+                        <zip
+                           destfile="${project.build.directory}/j2ee-profiles.zip">
+                           <fileset
+                              dir="${basedir}/etc/umlmda/self/profile"
+                              includes="j2ee*.ump" />
                         </zip>
-                        <zip destfile="${project.build.directory}/ws-profiles.zip">
-                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="ws*.ump"/>
+                        <zip
+                           destfile="${project.build.directory}/ws-profiles.zip">
+                           <fileset
+                              dir="${basedir}/etc/umlmda/self/profile"
+                              includes="ws*.ump" />
                         </zip>
                      </tasks>
                   </configuration>
@@ -44,7 +60,7 @@
                </execution>
             </executions>
          </plugin>
-                  
+
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>build-helper-maven-plugin</artifactId>
