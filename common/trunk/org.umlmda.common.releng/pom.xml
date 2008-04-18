@@ -5,14 +5,14 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <parent>
-      <artifactId>org.umlmda.releng</artifactId>
       <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.releng</artifactId>
       <version>3.0.0-SNAPSHOT</version>
    </parent>
 
    <artifactId>org.umlmda.common.releng</artifactId>
+   <version>3.2.0-SNAPSHOT</version>
    <packaging>pom</packaging>
-   <version>3.1.0-SNAPSHOT</version>
    <name>UMLMDA common</name>
    <description>
       UMLMDA maven project for umlmda common modules.
@@ -101,7 +101,7 @@
       <src.java>${src}</src.java>
       <test>test</test>
    </properties>
-   
+
    <repositories>
       <repository>
          <id>artifactory</id>
@@ -110,7 +110,7 @@
             <enabled>true</enabled>
          </releases>
          <snapshots>
-             <enabled>true</enabled>
+            <enabled>true</enabled>
          </snapshots>
       </repository>
    </repositories>
