@@ -29,22 +29,18 @@
       <dependency>
          <groupId>${pom.groupId}</groupId>
          <artifactId>org.umlmda.runtime.core</artifactId>
-         <version>${pom.version}</version>
       </dependency>
       <dependency>
          <groupId>${pom.groupId}</groupId>
          <artifactId>org.umlmda.runtime.common</artifactId>
-         <version>${pom.version}</version>
       </dependency>
       <dependency>
          <groupId>${pom.groupId}</groupId>
          <artifactId>org.umlmda.runtime.sdo</artifactId>
-         <version>${pom.version}</version>
       </dependency>
       <dependency>
          <groupId>${pom.groupId}</groupId>
          <artifactId>org.umlmda.runtime.sdo.sync.gwtclient</artifactId>
-         <version>${pom.version}</version>
       </dependency>
    </dependencies>
 </project>
