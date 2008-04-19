@@ -11,6 +11,8 @@
 
    <!-- inherited property values -->
    <properties>
+      <srcDir>src</srcDir>
+      <testDir>test</testDir>
       <tomcat.url>http://localhost:8080/manager</tomcat.url>
    </properties>
 
@@ -126,6 +128,7 @@
 
    <!-- sub project modules to build -->
    <modules>
+      <module>../org.umlmda.uml2.generator.profiles</module>
       <module>../org.umlmda.runtime.releng</module>
       <module>../org.umlmda.common.releng</module>
       <module>../org.umlmda.oaw.releng</module>
@@ -220,6 +223,11 @@
                <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-deploy-plugin</artifactId>
                <version>2.3</version>
+            </plugin>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-antrun-plugin</artifactId>
+               <version>1.1</version>
             </plugin>
             <plugin>
                <groupId>org.codehaus.mojo</groupId>
