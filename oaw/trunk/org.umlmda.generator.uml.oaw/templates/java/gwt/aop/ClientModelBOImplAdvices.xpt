@@ -12,9 +12,12 @@
 	, Serializable
 «ENDAROUND»
 
-// ==========================
+// =================
 // Avoid persistence
-// ==========================
+// =================
+«AROUND java::BOImpl::persistenceInterface FOR JavaBusinessObject»
+«ENDAROUND»
+
 «AROUND java::BOImpl::persistenceImpl FOR JavaBusinessObject»
 «ENDAROUND»
 
