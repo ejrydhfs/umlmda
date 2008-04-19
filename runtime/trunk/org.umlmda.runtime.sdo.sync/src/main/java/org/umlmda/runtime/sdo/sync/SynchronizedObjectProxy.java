@@ -53,4 +53,7 @@ public class SynchronizedObjectProxy implements SynchronizedObject, Serializable
          
    }  
   
+   public Recorder getRecorder() {
+	   return null;
+   }
 }

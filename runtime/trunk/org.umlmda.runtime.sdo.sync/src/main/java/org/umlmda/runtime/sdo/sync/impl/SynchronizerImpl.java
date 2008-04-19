@@ -20,6 +20,7 @@ import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
+import org.umlmda.runtime.sdo.sync.entries.SetAddEntry;
 
 public class SynchronizerImpl implements Recorder {
    private List<AbstractChangeLogEntry> changeEntries = new ArrayList<AbstractChangeLogEntry>();
@@ -50,8 +51,9 @@ public class SynchronizerImpl implements Recorder {
    }
 
    public synchronized void recordAdd(SynchronizedSet<?> set, Object value) {
-      // TODO Auto-generated method stub
-
+      if ( recording ) {
+         changeEntries.add(new SetAddEntry(set.getRecordObjectId(), value));
+      }
    }
 
    public synchronized void recordChange(SynchronizedObject object, String propertyName, Object value) {

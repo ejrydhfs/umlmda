@@ -14,4 +14,6 @@ public interface SynchronizedObject extends ModeledElement {
 
    int getRecordObjectId();
 
+   public abstract Recorder getRecorder();
+
 }
