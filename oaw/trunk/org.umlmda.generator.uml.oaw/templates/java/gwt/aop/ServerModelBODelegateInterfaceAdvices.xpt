@@ -17,3 +17,15 @@
 		«targetDef.proceed()»
 	«ENDIF»
 «ENDAROUND»
+
+«AROUND java::BODelegateInterface::handleMethod FOR JavaModelMethod»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BODelegateInterface::handleDerivedAssociation FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»

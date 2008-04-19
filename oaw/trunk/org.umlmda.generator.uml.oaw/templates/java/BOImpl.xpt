@@ -57,9 +57,7 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 	«ENDFOREACH»
 	
 	«FOREACH implementedMethods.typeSelect(JavaModelMethod) AS method»
-		«EXPAND BOInterface::methodDecl FOR method» {
-			«EXPAND methodBody(this) FOR method»
-		}
+		«EXPAND handleMethod(this) FOR method»
 	«ENDFOREACH»
 	
 	«EXPAND modelMetaInformation FOR this»
@@ -96,6 +94,12 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 		«EXPAND BOInterface::assocSetterDecl FOR this»
 		«EXPAND setterBody(modelClass) FOR this»
 		«EXPAND internalSetMethod FOR this»
+«ENDDEFINE»
+
+«DEFINE handleMethod(JavaModelClass modelClass) FOR JavaModelMethod»
+	«EXPAND BOInterface::methodDecl FOR this» {
+		«EXPAND methodBody(modelClass) FOR this»
+	}
 «ENDDEFINE»
 
 «DEFINE extendsDecl FOR JavaModelClass»
@@ -423,14 +427,16 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 // ===================
 «DEFINE persistenceInterface FOR ModelClass»
 «ENDDEFINE»
+
 «DEFINE persistenceInterface FOR JavaBusinessObject»
 	«IF this.persistable() && superClass == null»
-		, net.sourceforge.umlmda.persistence.IPersistentObject
+		, org.umlmda.runtime.persistence.IPersistentObject
 	«ENDIF»
 «ENDDEFINE»
 
 «DEFINE persistenceImpl FOR ModelClass»
 «ENDDEFINE»
+
 «DEFINE persistenceImpl FOR JavaBusinessObject»
 	«IF this.persistable() && superClass == null»
 		private boolean persistent = false;

@@ -19,8 +19,22 @@
 	org.umlmda.runtime.model.ModeledElement, java.io.Serializable
 «ENDAROUND»
 
-// Skip <<SDOClient>> features
+// ==========================================
+// Skip <<UMLMDASDOProfile::Client>> features
+// ==========================================
 «AROUND java::BOInterface::handleAttribute FOR JavaModelAttribute»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOInterface::handleAssociation FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOInterface::handleMethod FOR JavaModelMethod»
 	«IF this.isSDOClientOnly() == false»
 		«targetDef.proceed()»
 	«ENDIF»

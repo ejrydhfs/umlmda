@@ -43,7 +43,7 @@
 		«EXPAND handleAssociations FOR this»		
 		
 		«FOREACH methods.typeSelect(JavaModelMethod) AS method»
-			«EXPAND methodDecl FOR method»;
+			«EXPAND handleMethod FOR method»
 		«ENDFOREACH»
 		}
 	«ENDFILE»
@@ -61,11 +61,19 @@
 	«EXPAND attrSetterDecl FOR this»;
 «ENDDEFINE»
 
+«DEFINE handleMethod FOR JavaModelMethod»
+	«EXPAND methodDecl FOR this»;
+«ENDDEFINE»
+
 «DEFINE handleAssociations FOR JavaModelClass»
 	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
-		«EXPAND assocGetterDecl FOR assoc»;
-		«EXPAND assocSetterDecl FOR assoc»;
+		«EXPAND handleAssociation FOR assoc»
 	«ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE handleAssociation FOR JavaModelAssociation»
+	«EXPAND assocGetterDecl FOR this»;
+	«EXPAND assocSetterDecl FOR this»;
 «ENDDEFINE»
 
 // Superclasses

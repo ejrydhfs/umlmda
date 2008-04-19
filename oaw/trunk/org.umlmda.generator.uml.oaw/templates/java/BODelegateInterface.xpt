@@ -37,8 +37,7 @@ package «generatorPackage.getQualifiedPackageName("java.DelegateInterface")»;
 
 	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
 		«IF assoc.derived»
-			«EXPAND BOInterface::assocGetterDecl FOR assoc»;
-			«EXPAND BOInterface::assocSetterDecl FOR assoc»;
+			«EXPAND handleDerivedAssociation FOR assoc»
 		«ENDIF»
 	«ENDFOREACH»
 
@@ -56,6 +55,11 @@ package «generatorPackage.getQualifiedPackageName("java.DelegateInterface")»;
 		«EXPAND BOInterface::attrGetterDecl(" derived") FOR this»;
 		«EXPAND BOInterface::attrSetterDecl(" derived") FOR this»;
 	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE handleDerivedAssociation FOR JavaModelAssociation»
+	«EXPAND BOInterface::assocGetterDecl FOR this»;
+	«EXPAND BOInterface::assocSetterDecl FOR this»;
 «ENDDEFINE»
 
 «DEFINE handleMethod FOR JavaModelMethod»

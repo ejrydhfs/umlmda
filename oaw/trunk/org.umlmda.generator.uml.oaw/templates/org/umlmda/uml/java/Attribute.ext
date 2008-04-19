@@ -8,13 +8,17 @@ extension org::umlmda::uml::java::DataType;
 
 cached String javaTypeName(JavaModelAttribute attr) :
 	attr.dataType == null ? attr.javaType
-	                      : attr.javaAttributeTypeName();
+	                      : attr.javaAttributeTypeName(attr.optional);
+
+cached String javaPropertyTypeName(JavaModelAttribute attr) :
+	attr.dataType == null ? attr.javaType
+	                      : attr.javaAttributeTypeName(true);
 	                         
-private String javaAttributeTypeName(JavaModelAttribute attr) :
+private String javaAttributeTypeName(JavaModelAttribute attr, boolean optional) :
     attr.multivalue ?
 		attr.dataType.javaTypeName(false)+"[]"
 	:	
-		attr.dataType.javaTypeName(attr.optional)
+		attr.dataType.javaTypeName(optional)
 ;
 	
 /**
@@ -27,3 +31,4 @@ cached String initialValue(JavaModelAttribute attr) :
 	:	
 		attr.initialValue
 ;
+

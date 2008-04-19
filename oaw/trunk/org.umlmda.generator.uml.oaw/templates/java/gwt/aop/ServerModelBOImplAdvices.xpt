@@ -36,8 +36,21 @@
 	«ENDIF»
 «ENDAROUND»
 
+«AROUND java::BOImpl::handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOImpl::handleMethod(JavaModelClass modelClass) FOR JavaModelMethod»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
 «AROUND java::BOImpl::xmlMarshalAttribute FOR JavaModelAttribute»
 	«IF this.isSDOClientOnly() == false»
 		«targetDef.proceed()»
 	«ENDIF»
 «ENDAROUND»
+

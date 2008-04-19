@@ -36,9 +36,9 @@
 			 {
 				private final «getScopedName("java.BusinessObjectInterface")» businessObject;
 				
-				public «className» («getScopedName("java.BusinessObjectInterface")» businessObject«EXPAND BOImpl::propertyChangeSupportParameterDecl FOR this») {
+				public «className» («getScopedName("java.BusinessObjectInterface")» businessObject «EXPAND BOImpl::propertyChangeSupportParameterDecl FOR this») {
 					«IF javaSuperClass != null && javaSuperClass.delegationInterfaceNeeded »
-					 	super(businessObject, «EXPAND BOImpl::propertyChangeSupportParameterDecl FOR this»);
+					 	super(businessObject «EXPAND BOImpl::propertyChangeSupportParameter FOR this»);
 					«ENDIF» 
 					this.businessObject = businessObject;
 				}

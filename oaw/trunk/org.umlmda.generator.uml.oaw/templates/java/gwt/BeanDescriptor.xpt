@@ -40,7 +40,7 @@
 	   private «className»() {
 	      try {
 	     	 «FOREACH implementedAttributes.typeSelect(JavaModelAttribute).select(e|e.isSDOServerOnly() == false) AS attr»
-	     	 	«EXPAND addPropertyDescriptor(this, ((JavaModelDataType)attr.dataType).javaTypeName(true)) FOR attr»
+	     	 	«EXPAND addPropertyDescriptor(this, attr.javaPropertyTypeName()) FOR attr»
 	     	 «ENDFOREACH» 
 	     	 «FOREACH implementedAssociations.typeSelect(JavaModelAssociation).select(e|e.isSDOServerOnly() == false) AS assoc»
 	     	 	«EXPAND addPropertyDescriptor(this, assoc.interfaceType) FOR assoc»

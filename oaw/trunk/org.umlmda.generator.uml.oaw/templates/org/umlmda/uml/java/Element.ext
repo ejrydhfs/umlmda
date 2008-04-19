@@ -5,9 +5,9 @@ import org::umlmda::model::uml;
 import org::umlmda::uml::generator::java;
 
 cached boolean isSDOClientOnly(ModelElement feature) :
-	feature.hasStereotype("SDOClient")
+	feature.hasStereotype("Client")
 ;				
 
 cached boolean isSDOServerOnly(ModelElement feature) :
-	feature.hasStereotype("SDOServer")
+	feature.hasStereotype("Server")
 ;				
