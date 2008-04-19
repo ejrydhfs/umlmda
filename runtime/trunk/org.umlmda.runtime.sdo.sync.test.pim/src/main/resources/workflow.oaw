@@ -43,6 +43,7 @@
 
 	<!-- Generate gwt client side java code -->
 	<cartridge file="org/umlmda/oaw/generator/workflow/gwtClientModel.oaw">
+    	<jmiPackage value="'javax.jmi'"/>
 		<javaNoGenPath value="${javaNoGenPath.gwt}"/>
 		<javaGenPath value="${javaGenPath.gwt}"/>
 		<javaGenEntryPoint value="javaModel"/>
