@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class SdoGwtServiceTest implements EntryPoint {
    private Button clickMeButton;
    private TextArea testOutputArea;
+   private RootClass root;
    public void onModuleLoad() {
       RootPanel rootPanel = RootPanel.get();
 
@@ -49,7 +50,6 @@ public class SdoGwtServiceTest implements EntryPoint {
    }
    
    void startTest() {
-      RootClass root;
       SynchronizerImpl synchronizer = new SynchronizerImpl(new SyncServiceWrapper(new SyncService.Callback() {
 
          public void onException(Throwable caught) {
