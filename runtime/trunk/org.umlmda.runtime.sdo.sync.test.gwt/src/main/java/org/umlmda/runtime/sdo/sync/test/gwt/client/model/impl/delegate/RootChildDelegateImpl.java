@@ -1,7 +1,7 @@
-package org.umlmda.runtime.sdo.sync.test.client.model.impl.delegate;
+package org.umlmda.runtime.sdo.sync.test.gwt.client.model.impl.delegate;
 
-import org.umlmda.runtime.sdo.sync.test.client.model.RootChild;
-import org.umlmda.runtime.sdo.sync.test.client.model.RootChildDelegate;
+import org.umlmda.runtime.sdo.sync.test.gwt.client.model.RootChild;
+import org.umlmda.runtime.sdo.sync.test.gwt.client.model.RootChildDelegate;
 import java.beans.PropertyChangeSupport;
 
 /**
@@ -14,5 +14,15 @@ public class RootChildDelegateImpl implements RootChildDelegate {
 
    public RootChildDelegateImpl(RootChild businessObject, PropertyChangeSupport propertyChangeSupport) {
       this.businessObject = businessObject;
+   }
+
+   public void clientMethod() {
+      // TODO Auto-generated method stub
+      
+   }
+
+   public void init() {
+      // TODO Auto-generated method stub
+      
    }
 }
