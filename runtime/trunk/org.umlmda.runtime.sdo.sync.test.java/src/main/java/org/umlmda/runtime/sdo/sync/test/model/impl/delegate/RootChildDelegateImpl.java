@@ -28,4 +28,9 @@ public class RootChildDelegateImpl implements RootChildDelegate {
       
 //      greatChildren.setIntAttr(42);
    }
+
+   public void init() {
+      // TODO Auto-generated method stub
+      
+   }
 }
