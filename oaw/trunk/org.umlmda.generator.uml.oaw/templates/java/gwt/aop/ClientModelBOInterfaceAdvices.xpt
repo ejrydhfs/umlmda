@@ -4,6 +4,7 @@
 «IMPORT org::umlmda::oaw::generator::util»
 «IMPORT org::umlmda::oaw::generator::model::java»
 
+«EXTENSION java::JmiReflect»
 «EXTENSION org::umlmda::uml::java::Artefact»
 «EXTENSION org::umlmda::uml::java::Attribute»
 «EXTENSION org::umlmda::uml::java::DataType»
@@ -14,6 +15,6 @@
 // Base interface is java.io.Serializable
 // ======================================
 «AROUND java::BOInterface::standardBaseInterface FOR JavaBusinessObject»
-	org.umlmda.runtime.model.ModeledElement, java.io.Serializable
+	org.umlmda.runtime.sdo.sync.SynchronizedObject, «jmiPackage()».RefFeatured, org.umlmda.runtime.bean.PropertyChangeSupport, java.io.Serializable
 «ENDAROUND»
 

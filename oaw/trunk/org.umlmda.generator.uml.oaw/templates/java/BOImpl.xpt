@@ -670,17 +670,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 			super.marshalChildren(context);
 		«ENDIF»
 		«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
-			«IF assoc.multiple && assoc.composition»
-				for (Iterator i = «assoc.getter»().iterator(); i.hasNext();) {
-	         		Object child = i.next();
-	         
-	         		if ( child instanceof XMLSerializable )
-	            		((XMLSerializable)child).marshal("«assoc.name»", context, false);
-	      		}
-	      	«ELSEIF assoc.multiple == false && assoc.composition»
-	      		if ( «assoc.name» instanceof XMLSerializable )
-	            	((XMLSerializable)«assoc.name»).marshal("«assoc.name»", context, false);
-	      	«ENDIF»
+			«EXPAND xmlMarshalChild FOR assoc»
 		«ENDFOREACH»   
 	}
    
@@ -692,17 +682,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 		super.marshalReferences(context);
 	«ENDIF»
 	«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
-		«IF assoc.multiple && assoc.composition == false»
-			for (Iterator i = «assoc.getter»().iterator(); i.hasNext();) {
-         		Object child = i.next();
-         
-         		if ( child instanceof XMLSerializable )
-		            context.elementRef("«assoc.name»", (XMLSerializable)child);
-      		}
-      	«ELSEIF assoc.multiple == false && assoc.composition»
-      		if ( «assoc.name» instanceof XMLSerializable )
-				context.elementRef("«assoc.name»", (XMLSerializable)«assoc.getter»());
-      	«ENDIF»
+		«EXPAND xmlMarshalReference FOR assoc»
 	«ENDFOREACH»   
    }
 
@@ -715,6 +695,35 @@ import org.umlmda.runtime.bean.BeanUtils;
          context.simpleElement("«name»", «getter»());
 	«ENDIF»
 «ENDDEFINE»
+
+«DEFINE xmlMarshalChild FOR JavaModelAssociation»
+	«IF this.multiple && this.composition»
+		for (Iterator i = «this.getter»().iterator(); i.hasNext();) {
+     		Object child = i.next();
+     
+     		if ( child instanceof XMLSerializable )
+        		((XMLSerializable)child).marshal("«this.name»", context, false);
+  		}
+  	«ELSEIF this.multiple == false && this.composition»
+  		if ( «this.name» instanceof XMLSerializable )
+        	((XMLSerializable)«this.name»).marshal("«this.name»", context, false);
+  	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE xmlMarshalReference FOR JavaModelAssociation»
+	«IF this.multiple && this.composition == false»
+		for (Iterator i = «this.getter»().iterator(); i.hasNext();) {
+	 		Object child = i.next();
+	 
+	 		if ( child instanceof XMLSerializable )
+	            context.elementRef("«this.name»", (XMLSerializable)child);
+  		}
+  	«ELSEIF this.multiple == false && this.composition»
+  		if ( «this.name» instanceof XMLSerializable )
+		context.elementRef("«this.name»", (XMLSerializable)«this.getter»());
+  	«ENDIF»
+«ENDDEFINE»
+
 
 «DEFINE delegateFactory FOR JavaBusinessObject»
 «IF abstract == false»

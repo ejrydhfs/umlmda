@@ -56,3 +56,11 @@
 		«targetDef.proceed()»
 	«ENDIF»
 «ENDAROUND»
+
+«AROUND java::BOImpl::callPostSetMethod FOR JavaModelStructuraleFeature»
+	«IF multivalue == false»
+	    this.recorder.recordChange(this, PROPERTY_«upperCaseIdentifier», «name»);
+	«ENDIF»
+	«targetDef.proceed()»
+«ENDAROUND»
+

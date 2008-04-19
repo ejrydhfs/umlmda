@@ -5,6 +5,7 @@
 
 «EXTENSION java::UMLMDA»
 «EXTENSION java::NamingConventions»
+«EXTENSION java::gwt::BeanDescriptor»
 
 «EXTENSION org::umlmda::uml::java::Artefact»
 «EXTENSION org::umlmda::uml::java::Attribute»
@@ -38,16 +39,18 @@
 	   public static final «className» INSTANCE = new «className»();
 	
 	   private «className»() {
-	      try {
-	     	 «FOREACH implementedAttributes.typeSelect(JavaModelAttribute).select(e|e.isSDOServerOnly() == false) AS attr»
-	     	 	«EXPAND addPropertyDescriptor(this, attr.javaPropertyTypeName()) FOR attr»
-	     	 «ENDFOREACH» 
-	     	 «FOREACH implementedAssociations.typeSelect(JavaModelAssociation).select(e|e.isSDOServerOnly() == false) AS assoc»
-	     	 	«EXPAND addPropertyDescriptor(this, assoc.interfaceType) FOR assoc»
-	     	 «ENDFOREACH» 
-	      } catch (IntrospectionException e) {
-	
-	      }
+		   «IF hasImplementedClientFeatures()»
+		      try {
+		     	 «FOREACH getImplementedClientAttributes() AS attr»
+		     	 	«EXPAND addPropertyDescriptor(this, attr.javaPropertyTypeName()) FOR attr»
+		     	 «ENDFOREACH» 
+		     	 «FOREACH getImplementedClientAssociation() AS assoc»
+		     	 	«EXPAND addPropertyDescriptor(this, assoc.interfaceType) FOR assoc»
+		     	 «ENDFOREACH» 
+		      } catch (IntrospectionException e) {
+		
+		      }
+		   «ENDIF»
 	   }
 	}
 «ENDFILE»

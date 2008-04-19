@@ -4,6 +4,7 @@
 «IMPORT org::umlmda::oaw::generator::util»
 «IMPORT org::umlmda::oaw::generator::model::java»
 
+«EXTENSION java::JmiReflect»
 «EXTENSION java::UMLMDA»
 «EXTENSION java::NamingConventions»
 «EXTENSION org::umlmda::uml::java::Attribute»
@@ -18,14 +19,22 @@
 	«EXPAND jmiRefGetValueImpl FOR this»
 	«EXPAND jmiRefSetValueImpl FOR this»
 	«EXPAND jmiRefInvokeOperationImpl FOR this»
+	«EXPAND jmiRefStandardImpl FOR this»
 «ENDDEFINE»
 
 «DEFINE Imports FOR JavaModelClass»
-	import javax.jmi.RefException;
-	import javax.jmi.InvalidNameException;
+	import «jmiPackage()».InvalidNameException;
+	import «jmiPackage()».RefBaseObject;
+	import «jmiPackage()».RefException;
+	import «jmiPackage()».RefObject;
+	import «jmiPackage()».RefPackage;
 «ENDDEFINE»
 
 «DEFINE jmiRefGetValueImpl FOR JavaModelClass»
+	public Object refGetValue(RefObject feature) {
+      throw new UnsupportedOperationException("not implemented");
+	}
+	
 	/**
 	 * Reflective read access to the class features.
 	 * @param featureName
@@ -72,6 +81,10 @@
 «ENDDEFINE»
 
 «DEFINE jmiRefSetValueImpl FOR JavaModelClass»
+	public void refSetValue(RefObject feature, Object value) {
+      throw new UnsupportedOperationException("not implemented");
+	}
+
 	/**
 	 * Reflective write access to the class features.
 	 * @param featureName
@@ -112,6 +125,10 @@
 «ENDDEFINE»
 
 «DEFINE jmiRefInvokeOperationImpl FOR JavaModelClass»
+	public Object refInvokeOperation(RefObject requestedOperation, java.util.List args) {
+      throw new UnsupportedOperationException("not implemented");
+	}
+	
 	/**
 	 * Reflective operation call to the class methods.
 	 * @param requestedOperation
@@ -121,7 +138,32 @@
 	 * @return
 	 *	  Methods return 	
 	 */
-	public Object refInvokeOperation(String requestedOperation, List args) throws RefException {
-		return null;
+	public Object refInvokeOperation(String requestedOperation, java.util.List args) throws RefException {
+       throw new UnsupportedOperationException("not implemented");
 	}
+«ENDDEFINE»
+
+«DEFINE jmiRefStandardImpl FOR JavaModelClass»
+	// Implementation of interface «jmiPackage()».RefBaseObject
+   public RefPackage refImmediatePackage() {
+      throw new UnsupportedOperationException("not implemented");
+   }
+
+   public RefObject refMetaObject() {
+      throw new UnsupportedOperationException("not implemented");
+   }
+
+   public String refMofId() {
+      throw new UnsupportedOperationException("not implemented");
+   }
+
+   public RefPackage refOutermostPackage() {
+      throw new UnsupportedOperationException("not implemented");
+   }
+
+   public java.util.Collection refVerifyConstraints(boolean deepVerify) {
+      throw new UnsupportedOperationException("not implemented");
+   }
+   
+   // Implementation of «jmiPackage()».RefFeatured
 «ENDDEFINE»

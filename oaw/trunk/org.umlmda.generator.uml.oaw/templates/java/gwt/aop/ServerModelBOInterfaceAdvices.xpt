@@ -16,7 +16,7 @@
 // Base interface is java.io.Serializable
 // ======================================
 «AROUND java::BOInterface::standardBaseInterface FOR JavaBusinessObject»
-	org.umlmda.runtime.model.ModeledElement, java.io.Serializable
+	org.umlmda.runtime.sdo.sync.SynchronizedObject, java.io.Serializable
 «ENDAROUND»
 
 // ==========================================

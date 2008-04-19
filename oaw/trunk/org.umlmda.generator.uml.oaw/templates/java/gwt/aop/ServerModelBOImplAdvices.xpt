@@ -48,9 +48,29 @@
 	«ENDIF»
 «ENDAROUND»
 
+«AROUND java::BOImpl::callPostSetMethod FOR JavaModelStructuraleFeature»
+	«IF multivalue == false»
+	    this.recorder.recordChange(this, PROPERTY_«upperCaseIdentifier», «name»);
+	«ENDIF»
+	«IF postSetMethod() != null && postSetMethod().isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
 «AROUND java::BOImpl::xmlMarshalAttribute FOR JavaModelAttribute»
 	«IF this.isSDOClientOnly() == false»
 		«targetDef.proceed()»
 	«ENDIF»
 «ENDAROUND»
 
+«AROUND java::BOImpl::xmlMarshalChild FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOImpl::xmlMarshalReference FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
