@@ -12,9 +12,9 @@ import org.umlmda.runtime.sdo.sync.gwt.client.SyncServiceLocator;
 import org.umlmda.runtime.sdo.sync.gwt.client.SyncServiceWrapper;
 import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
-import org.umlmda.runtime.sdo.sync.test.client.model.RootClass;
-import org.umlmda.runtime.sdo.sync.test.client.model.TestFactory;
-import org.umlmda.runtime.sdo.sync.test.client.model.impl.TestFactoryImpl;
+import org.umlmda.runtime.sdo.sync.test.gwt.client.model.RootClass;
+import org.umlmda.runtime.sdo.sync.test.gwt.client.model.TestFactory;
+import org.umlmda.runtime.sdo.sync.test.gwt.client.model.impl.TestFactoryImpl;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.rpc.AsyncCallback;
