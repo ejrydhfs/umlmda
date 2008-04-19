@@ -22,4 +22,24 @@ public class ChangeObjectEntry extends AbstractChangeEntry {
       return proxy;
    }
 
+   @Override
+   public boolean equals(Object obj) {
+      
+      boolean bReturn = false;
+      
+      if (obj instanceof ChangeObjectEntry){
+         
+         ChangeObjectEntry chgEntry = (ChangeObjectEntry) obj;
+         
+         if (super.equals(obj)){
+            if (chgEntry.getValue() == proxy)
+               bReturn = true;
+            else
+               bReturn = chgEntry.getValue().equals(proxy);
+         }
+      }
+      
+      return bReturn;
+         
+   }  
 }

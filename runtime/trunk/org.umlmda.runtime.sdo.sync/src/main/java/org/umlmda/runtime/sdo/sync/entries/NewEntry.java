@@ -31,4 +31,24 @@ public class NewEntry extends AbstractChangeLogEntry {
    public String toString() {
       return "NewEntry: ROID="+getRecordId()+" element="+elementProxy.getModelName()+" version="+elementProxy.getModelVersion();
    }
+   
+
+   @Override
+   public boolean equals(Object obj) {
+      
+      boolean bReturn = false;
+      
+      if (obj instanceof NewEntry){
+         
+         NewEntry entry = (NewEntry) obj;
+         
+         if (super.equals(obj)){
+            bReturn = elementProxy.equals(entry.getElementProxy());
+         }
+      }
+      
+      return bReturn;
+         
+   }  
+
 }

@@ -31,5 +31,10 @@ public abstract class AbstractSynchronizedObject implements SynchronizedObject {
    public String getModelVersion() {
       throw new UnsupportedOperationException();
    }
+
+   public Recorder getRecorder() {
+      return recorder;
+   }
+ 
    
 }

@@ -41,4 +41,23 @@ public class ListAddEntry extends AbstractChangeLogEntry {
    public String toString() {
       return "ListAddEntry: ROID="+getRecordId()+" index="+index+" value=\""+proxy+"\"";
    }
+   
+   @Override
+   public boolean equals(Object obj) {
+      
+      boolean bReturn = false;
+      
+      if (obj instanceof ListAddEntry){
+         
+         ListAddEntry chgEntry = (ListAddEntry) obj;
+         
+         if (super.equals(obj)){
+            bReturn = (proxy != null) && proxy.equals(chgEntry.getValue()) && (chgEntry.getIndex() == index);
+         }
+      }
+      
+      return bReturn;
+         
+   }  
+
 }

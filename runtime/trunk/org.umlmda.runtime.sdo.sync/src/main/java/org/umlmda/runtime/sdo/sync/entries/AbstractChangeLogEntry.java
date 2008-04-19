@@ -39,4 +39,20 @@ public abstract class AbstractChangeLogEntry implements Serializable {
       }
    }
    
+   @Override
+   public boolean equals(Object obj) {
+      
+      boolean bReturn = false;
+      
+      if (obj instanceof AbstractChangeLogEntry){
+         
+         AbstractChangeLogEntry entry = (AbstractChangeLogEntry) obj;
+         
+            bReturn = (recordedObjectId == entry.getRecordId());
+      }
+      
+      return bReturn;
+         
+   }  
+
 }

@@ -25,4 +25,23 @@ public abstract class AbstractChangeEntry extends AbstractChangeLogEntry {
    public String toString() {
       return "ChangeEntry: ROID="+getRecordId()+" property="+propertyName+" value=\""+getValue()+"\"";
    }
+   
+   @Override
+   public boolean equals(Object obj) {
+      
+      boolean bReturn = false;
+      
+      if (obj instanceof AbstractChangeEntry){
+         
+         AbstractChangeEntry entry = (AbstractChangeEntry) obj;
+         
+         if (super.equals(obj)){
+            bReturn = (propertyName != null) && propertyName.equals(entry.getPropertyName());   
+         }
+      }
+      
+      return bReturn;
+         
+   }  
+
 }

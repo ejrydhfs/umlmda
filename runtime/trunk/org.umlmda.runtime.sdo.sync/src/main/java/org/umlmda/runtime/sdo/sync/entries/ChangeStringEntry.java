@@ -18,4 +18,26 @@ public class ChangeStringEntry extends AbstractChangeEntry {
       return value;
    }
 
+   @Override
+   public boolean equals(Object obj) {
+      
+      boolean bReturn = false;
+      
+      if (obj instanceof ChangeStringEntry){
+         
+         ChangeStringEntry chgEntry = (ChangeStringEntry) obj;
+         
+         if (super.equals(obj)){
+            if (value == chgEntry.getValue())
+               bReturn = true; // Values are the same String or both are null
+            else
+               bReturn = (value != null) && value.equals(chgEntry.getValue());
+         }
+      }
+      
+      return bReturn;
+         
+   }  
+
+   
 }

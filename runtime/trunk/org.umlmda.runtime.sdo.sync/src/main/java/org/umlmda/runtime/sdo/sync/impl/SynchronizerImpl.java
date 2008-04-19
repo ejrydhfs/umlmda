@@ -37,10 +37,10 @@ public class SynchronizerImpl implements Recorder {
    }
 
    public void register(SynchronizedObject recordedObject, boolean recordCreation) {
-      recordedObject.setRecordObjectId(getNextRecordObjectId());
-      if ( recordCreation ) {
-         recordNew(recordedObject);
-      }
+         recordedObject.setRecordObjectId(getNextRecordObjectId());
+         if ( recordCreation ) {
+            recordNew(recordedObject);
+         }
    }
 
    public synchronized void recordAdd(SynchronizedList<?> list, Object value, int index) {
@@ -75,7 +75,7 @@ public class SynchronizerImpl implements Recorder {
 
    public synchronized void recordNew(SynchronizedObject object) {
       if ( recording ) {
-         changeEntries.add(new NewEntry(object.getRecordObjectId(), object));
+            changeEntries.add(new NewEntry(object.getRecordObjectId(), object));
       }
    }
 
@@ -103,7 +103,8 @@ public class SynchronizerImpl implements Recorder {
    }
 
    public synchronized void recordInvoke(final SynchronizedObject recordedObject, final String methodName) {
-      // Synchronize to remote peer
+      // Synchronize all avaiulable changes to remote peer before calling the method
+      // TODO Check if invoke works without prio changes
       if ( service != null && changeEntries.size() > 0 ) {
          service.synchronizeChanges(changeEntries, new InternalSynchronizeCallback() {
 
@@ -117,11 +118,15 @@ public class SynchronizerImpl implements Recorder {
                }
             }
 
+            // Replay changes from remote to local, caused by the remote synchronization above
             public void onSucess(List<AbstractChangeLogEntry> remoteChanges, Callback callback) {
                
                // Get remote results put to local objects 
                if( player != null && remoteChanges != null && remoteChanges.size() > 0 ) {
                   player.playback(remoteChanges, null);
+                  
+                  changeEntries.removeAll(remoteChanges);
+                  
                }
                
                changeEntries.clear();
@@ -169,4 +174,5 @@ public class SynchronizerImpl implements Recorder {
    public void setPlayer(Player player) {
       this.player = player;
    }
+
 }
