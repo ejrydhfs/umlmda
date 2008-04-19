@@ -75,6 +75,7 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       Recorder slaveRecorder = connectToNewRecorder(factory);
       
       player.playback(changes, null);
+      slaveRecorder.getChangeEntries().removeAll(changes);
 
       return slaveRecorder.getChangeEntries();
    }
