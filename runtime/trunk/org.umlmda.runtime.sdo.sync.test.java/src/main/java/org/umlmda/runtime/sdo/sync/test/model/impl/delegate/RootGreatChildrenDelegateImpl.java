@@ -1,5 +1,6 @@
 package org.umlmda.runtime.sdo.sync.test.model.impl.delegate;
 
+import org.umlmda.runtime.sdo.sync.test.dto.CodeType;
 import org.umlmda.runtime.sdo.sync.test.model.RootGreatChildren;
 import org.umlmda.runtime.sdo.sync.test.model.RootGreatChildrenDelegate;
 import java.beans.PropertyChangeSupport;
@@ -14,5 +15,10 @@ public class RootGreatChildrenDelegateImpl implements RootGreatChildrenDelegate 
 
    public RootGreatChildrenDelegateImpl(RootGreatChildren businessObject) {
       this.businessObject = businessObject;
+   }
+
+   public void postCodeAttrSet(CodeType newValue) {
+      // TODO Auto-generated method stub
+      
    }
 }
