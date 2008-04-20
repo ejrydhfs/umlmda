@@ -73,6 +73,17 @@
          </dependency>
          <dependency>
             <groupId>${pom.groupId}</groupId>
+            <artifactId>org.umlmda.runtime.gwt.jeeemul</artifactId>
+            <version>${pom.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>org.umlmda.runtime.gwt.jeeemul</artifactId>
+            <version>${pom.version}</version>
+            <classifier>sources</classifier>
+         </dependency>
+         <dependency>
+            <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.runtime.sdo</artifactId>
             <version>${pom.version}</version>
          </dependency>
@@ -172,6 +183,7 @@
 
    <modules>
       <module>../org.umlmda.runtime.gwt.jreemul</module>
+      <module>../org.umlmda.runtime.gwt.jeeemul</module>
       <module>../org.umlmda.runtime.core</module>
       <module>../org.umlmda.runtime.common</module>
       <module>../org.umlmda.runtime.sdo.sync</module>
