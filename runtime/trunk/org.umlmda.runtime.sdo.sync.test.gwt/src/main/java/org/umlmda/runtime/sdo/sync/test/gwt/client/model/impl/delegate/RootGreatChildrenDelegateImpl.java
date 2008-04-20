@@ -3,6 +3,7 @@ package org.umlmda.runtime.sdo.sync.test.gwt.client.model.impl.delegate;
 import org.umlmda.runtime.sdo.sync.test.gwt.client.model.RootGreatChildren;
 import org.umlmda.runtime.sdo.sync.test.gwt.client.model.RootGreatChildrenDelegate;
 import java.beans.PropertyChangeSupport;
+import java.util.Date;
 
 /**
  * Implementation for none generated methods and derived attributes of
@@ -14,5 +15,10 @@ public class RootGreatChildrenDelegateImpl implements RootGreatChildrenDelegate 
 
    public RootGreatChildrenDelegateImpl(RootGreatChildren businessObject, PropertyChangeSupport propertyChangeSupport) {
       this.businessObject = businessObject;
+   }
+
+   public void postDateAttrSet(Date newValue) {
+      // TODO Auto-generated method stub
+      
    }
 }
