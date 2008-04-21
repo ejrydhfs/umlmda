@@ -30,7 +30,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -40,13 +39,20 @@ import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.EnumerationLiteral;
+import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.umlmda.model.uml.ModelBase;
+import org.umlmda.model.uml.ModelClass;
+import org.umlmda.model.uml.ModelClassBase;
+import org.umlmda.model.uml.ModelClassifierBase;
 import org.umlmda.model.uml.ModelConstants;
 import org.umlmda.model.uml.ModelElementBase;
+import org.umlmda.model.uml.ModelMethod;
+import org.umlmda.model.uml.ModelMethodBase;
 
 
 /**
@@ -222,10 +228,32 @@ public class ModelElementImpl implements ModelConstants, ModelElementBase {
    public ModelElementBase getOwnerBase() {
       Element container = modelElement.getOwner();
       
-      if ( container instanceof Classifier )
-         return model.findClassifier((Classifier)container);
+      if ( container instanceof Model ) {
+         if ( ((Model)container).getName().equals(model.getName()) ) {
+            return model;
+         }
+         else {
+            return model.findModel((Model)container);
+         }
+      }
       else if ( container instanceof Package )
          return model.findPackage((Package)container);
+      else if ( container instanceof Classifier )
+         return model.findClassifier((Classifier)container);
+      else if ( container instanceof Operation ) {
+         Operation operation = (Operation) container;
+         Classifier operationOwner  = (Classifier) operation.getOwner();
+         ModelClassBase operationClass = (ModelClassBase) model.findClassifier(operationOwner);
+         
+         for (Iterator im = operationClass.getMethods().iterator(); im.hasNext();) {
+            ModelMethodBase method = (ModelMethodBase) im.next();
+            
+            if ( method.getName().equals(operation.getName())) {
+               return method;
+            }
+         }
+         return null;
+      }
       else
          return null;
    }

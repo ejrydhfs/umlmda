@@ -29,11 +29,14 @@ import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Enumeration;
@@ -42,12 +45,14 @@ import org.eclipse.uml2.uml.Namespace;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageImport;
 import org.eclipse.uml2.uml.PrimitiveType;
+import org.eclipse.uml2.uml.ProfileApplication;
 import org.eclipse.uml2.uml.Signal;
 import org.eclipse.uml2.uml.Stereotype;
 import org.umlmda.model.uml.ModelBase;
 import org.umlmda.model.uml.ModelClassBase;
 import org.umlmda.model.uml.ModelClassifierBase;
 import org.umlmda.model.uml.ModelDataTypeBase;
+import org.umlmda.model.uml.ModelElementBase;
 import org.umlmda.model.uml.ModelPackageBase;
 
 /**
@@ -62,6 +67,7 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
     */
    private Set modelClasses = new HashSet();
    private Set modelPackages = new HashSet();
+   private Map modelReferences = new IdentityHashMap();
    private Hashtable dataTypes;
    private Hashtable packages;
 	
@@ -92,12 +98,12 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
          packages = new Hashtable();
 
          // Modellklassen erzeugen
-			addClasses(modelClasses, classes, dataTypes, modelPackages, packages, this, model);
+			addClasses(modelClasses, classes, dataTypes, modelPackages, packages, this, modelReferences, model);
 		}
 		return modelClasses;
 	}
 
-	private static void addClasses(Set modelClasses, Hashtable classes, Hashtable dataTypes, Set modelPackages, Hashtable packages, ModelImpl model, Namespace namespace) {	
+	private static void addClasses(Set modelClasses, Hashtable classes, Hashtable dataTypes, Set modelPackages, Hashtable packages, ModelImpl model, Map modelReferences, Namespace namespace) {	
 		Collection elements = namespace.getOwnedElements();
 		for (Iterator ie = elements.iterator(); ie.hasNext();) {
 			Object element = (Object) ie.next();
@@ -137,20 +143,33 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
                if ( logger.isDebugEnabled() )
                   logger.debug(element.toString()+" not from model");
             }
-			addClasses(modelClasses, classes, dataTypes, modelPackages, packages, model, umlPackage);
+			addClasses(modelClasses, classes, dataTypes, modelPackages, packages, model, modelReferences, umlPackage);
          }
          else if ( element instanceof PackageImport ) {
             PackageImport packageImport = (PackageImport) element;
             Package umlPackage = packageImport.getImportedPackage();
-            
-//            packages.put(element, new ModelPackageImpl(model, umlPackage));
+            Model referenceModel = umlPackage.getModel();
+            ModelImpl referencedModelImpl = (ModelImpl) model.findModel(referenceModel);
+
+            if ( referencedModelImpl == null ) {
+               referencedModelImpl = new ModelImpl(referenceModel);
+               
+               modelReferences.put(referenceModel, referencedModelImpl);
+            }
             if ( umlPackage != null ) {
-               addClasses(modelClasses, classes, dataTypes, modelPackages, packages, model, umlPackage);
+               addClasses(modelClasses, classes, dataTypes, modelPackages, packages, referencedModelImpl, modelReferences, umlPackage);
+               if ( logger.isDebugEnabled() )
+                  logger.debug("packageImport of "+umlPackage.getQualifiedName()+" loaded");
             }
             else {
-               if ( logger.isDebugEnabled() )
-                  logger.debug("packageImport "+packageImport.toString()+" not loaded");
+               logger.warn("packageImport "+packageImport.toString()+" not loaded");
             }
+         }
+         else if (element instanceof ProfileApplication) {
+            // Nothing to do for ProfileApplication
+         }
+         else if (element instanceof Comment) {
+            // Nothing to do for Comment
          }
          else {
             if ( logger.isDebugEnabled() )
@@ -177,7 +196,7 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
       if ( modelClassImpl == null ) {
          if ( modelClass.getModel() != this.model ) {
             // Add classes from referenced model
-            addClasses(modelClasses, classes, dataTypes, modelPackages, packages, this, modelClass.getModel());
+            addClasses(modelClasses, classes, dataTypes, modelPackages, packages, this, modelReferences, modelClass.getModel());
 
             // Try again
             modelClassImpl = (ModelClassImpl) classes.get(modelClass);
@@ -249,5 +268,19 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
          
          modelClass.getAssociations();
       }
+   }
+
+   public ModelBase findModel(Model model) {
+      ModelBase referencedModelBase = (ModelBase) modelReferences.get(model);
+      
+      // Add none existiering model
+      if ( referencedModelBase == null ) {
+         referencedModelBase = new ModelImpl(model);
+         modelReferences.put(model, referencedModelBase);
+         
+         if ( logger.isDebugEnabled())
+            logger.debug("loaded model "+model.getName()+" ("+model.eResource().getURI().toFileString()+") into model "+getName());
+      }
+      return referencedModelBase;
    }
 }
