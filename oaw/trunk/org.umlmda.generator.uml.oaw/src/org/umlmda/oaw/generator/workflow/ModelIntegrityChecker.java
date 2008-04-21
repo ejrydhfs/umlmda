@@ -29,6 +29,9 @@ public class ModelIntegrityChecker extends WorkflowComponentWithModelSlot {
             }
          }
       }
+      else if ( model == null ) {
+         issues.addError("Not model found in modelSlot");
+      }
       else {
          issues.addError("Invalid model not an emf object "+model.getClass());
       }
