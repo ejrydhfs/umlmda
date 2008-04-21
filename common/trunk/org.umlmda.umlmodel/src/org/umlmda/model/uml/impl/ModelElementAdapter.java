@@ -36,6 +36,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.umlmda.model.uml.Model;
 import org.umlmda.model.uml.ModelBase;
 import org.umlmda.model.uml.ModelDependencyBase;
@@ -59,6 +60,8 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
    private final ModelElementBase modelElement; // reference to source model
                                                 // element
 
+   private final static Logger logger = Logger.getLogger(ModelElementAdapter.class);
+   
    private ModelElement owner = null;
 
    private Set stereotypes = null;
@@ -236,10 +239,14 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
       if (owner == null) {
          ModelElementBase ownerBase = modelElement.getOwnerBase();
          if ( ownerBase == adaptedModel ) {
-            return adaptedModel;
+            owner = adaptedModel;
          }
          else {
             owner = adaptedModel.getModelElement(ownerBase);
+            
+//            if ( owner == null ) {
+//               logger.warn("Count not get owner of element "+getName());
+//            }
          }
       }
       return owner;

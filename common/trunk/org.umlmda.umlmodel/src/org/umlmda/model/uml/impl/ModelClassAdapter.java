@@ -432,7 +432,11 @@ public class ModelClassAdapter extends ModelClassifierAdapter implements ModelCl
 				ModelAssociation newAss = adaptedModel.getModelAssociation(ass);
 				associations.add(newAss);
 			}
-			Collections.sort(associations);
+			Collections.sort(associations, new Comparator<ModelAssociation>() {
+
+            public int compare(ModelAssociation o1, ModelAssociation o2) {
+               return o1.getName().compareTo(o2.getName());
+            }});
 		}
 		return associations;
 	}
