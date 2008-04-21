@@ -38,7 +38,6 @@
 	«EXPAND Root FOREACH classes.typeSelect(ModelClass)»
 	«EXPAND java::BOFactory::BOFactory FOR this»
 	«EXPAND java::BOFactoryImpl::BOFactoryImpl FOR this»
-	«EXPAND java::BFactory::BFactory FOR this»
 «ENDDEFINE»
 
 «DEFINE Root FOR JavaModelPackage»
