@@ -46,16 +46,25 @@ public class PsmCreator extends AbstractWorkflowComponent {
    public void invoke(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
       Class<ModelAdapterFactory> adapterFactoryClass;
       ModelAdapterFactory factory;
-      Model pimModel = (Model) ctx.get(pimModelSlot);
+      Object pimModel = ctx.get(pimModelSlot);
       GeneratorModel psmModel = null;
       GenerationSet set = null;
+      
+      if ( !(pimModel instanceof Model) ) {
+         issues.addError("Expected "+Model.class+" in slot "+pimModelSlot+" but was "+pimModel.getClass());
+      }
       
       try {
          adapterFactoryClass = (Class<ModelAdapterFactory>) Class.forName(adapterFactory);
          factory = adapterFactoryClass.newInstance();
-         psmModel = (GeneratorModel) factory.createModel(pimModel);
+         psmModel = (GeneratorModel) factory.createModel((Model)pimModel);
          set = (GenerationSet) ctx.get(generationSetSlot);
          psmModel.setGenerationSet(set);
+
+         // Check generation set
+         if ( set == null ) {
+        	issues.addError("No generationset in "+generationSetSlot+" found"); 
+         }
          
          // Lockup and set profile
          for (Iterator ip = set.getGenerationProfile().iterator(); ip.hasNext();) {
