@@ -56,13 +56,15 @@
  
 «AROUND java::BOFactoryImpl::additionalMethods FOR JavaBusinessComponent»
 	public SynchronizedObject create(ModeledElementProxy element) {
-		«FOREACH businessObjects.typeSelect(JavaBusinessObject).select(e|e.abstract == false) AS bo SEPARATOR "else"»
-			if ( «getScopedName("java.BusinessObject", bo)».MODEL_NAME.equals(element.getModelName())) {
-         		return (SynchronizedObject)create«bo.name»();
-         	}
-		«ENDFOREACH»
-		else {
-			throw new IllegalArgumentException(element.getModelName());
-		}
+		«IF businessObjects.typeSelect(JavaBusinessObject).select(e|e.abstract == false).size > 0 »
+			«FOREACH businessObjects.typeSelect(JavaBusinessObject).select(e|e.abstract == false) AS bo SEPARATOR "else"»
+				if ( «getScopedName("java.BusinessObject", bo)».MODEL_NAME.equals(element.getModelName())) {
+	         		return (SynchronizedObject)create«bo.name»();
+	         	}
+			«ENDFOREACH»
+			else {
+				throw new IllegalArgumentException(element.getModelName());
+			}
+		«ENDIF»
       }
 «ENDAROUND»
