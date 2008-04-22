@@ -2,11 +2,12 @@ package org.umlmda.runtime.sdo.sync.gwt.client;
 
 import java.util.List;
 
-import org.umlmda.runtime.sdo.sync.SyncService;
 import org.umlmda.runtime.sdo.sync.SyncServiceCallback;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
+import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalInvokeCallback;
+import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalSynchronizeCallback;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -19,7 +20,7 @@ public class SyncServiceWrapper implements org.umlmda.runtime.sdo.sync.SyncServi
       this.callback = callback;
    }
    
-   public void invokeMethod(SynchronizedObjectProxy object, String methodName, final SyncService.InternalInvokeCallback invokeCallback) {
+   public void invokeMethod(SynchronizedObjectProxy object, String methodName, final SyncServiceInternalInvokeCallback invokeCallback) {
       if ( invokeCallback == null ) {
          throw new IllegalStateException("invokeCallback not set");
       }
@@ -34,7 +35,7 @@ public class SyncServiceWrapper implements org.umlmda.runtime.sdo.sync.SyncServi
          }});
    }
 
-   public void synchronizeChanges(List<AbstractChangeLogEntry> changes, final SyncService.InternalSynchronizeCallback synchronizeCallback) {
+   public void synchronizeChanges(List<AbstractChangeLogEntry> changes, final SyncServiceInternalSynchronizeCallback synchronizeCallback) {
       if ( synchronizeCallback == null ) {
          throw new IllegalStateException("synchronizeCallback not set");
       }

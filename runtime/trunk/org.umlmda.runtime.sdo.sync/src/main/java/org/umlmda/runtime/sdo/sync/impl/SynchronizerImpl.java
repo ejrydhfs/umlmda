@@ -12,8 +12,6 @@ import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.SynchronizedSet;
 import org.umlmda.runtime.sdo.sync.SyncServiceCallback;
-import org.umlmda.runtime.sdo.sync.SyncService.InternalInvokeCallback;
-import org.umlmda.runtime.sdo.sync.SyncService.InternalSynchronizeCallback;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
 import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
@@ -21,6 +19,8 @@ import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
 import org.umlmda.runtime.sdo.sync.entries.SetAddEntry;
+import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalInvokeCallback;
+import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalSynchronizeCallback;
 
 public class SynchronizerImpl implements Recorder {
    private List<AbstractChangeLogEntry> changeEntries = new ArrayList<AbstractChangeLogEntry>();
@@ -108,7 +108,7 @@ public class SynchronizerImpl implements Recorder {
       // Synchronize all avaiulable changes to remote peer before calling the method
       // TODO Check if invoke works without prio changes
       if ( service != null && changeEntries.size() > 0 ) {
-         service.synchronizeChanges(changeEntries, new InternalSynchronizeCallback() {
+         service.synchronizeChanges(changeEntries, new SyncServiceInternalSynchronizeCallback() {
 
             public void onException(Throwable throwable, SyncServiceCallback callback) {
                if ( callback != null ) {
@@ -135,7 +135,7 @@ public class SynchronizerImpl implements Recorder {
                
                // Now call the method
                SynchronizedObjectProxy objectProxy = new SynchronizedObjectProxy(recordedObject.getRecordObjectId());
-               service.invokeMethod(objectProxy, methodName, new InternalInvokeCallback() {
+               service.invokeMethod(objectProxy, methodName, new SyncServiceInternalInvokeCallback() {
 
                   public void onException(Throwable throwable, SyncServiceCallback callback) {
                      if ( callback != null ) {
