@@ -3,6 +3,7 @@ package org.umlmda.runtime.sdo.sync.gwt.client;
 import java.util.List;
 
 import org.umlmda.runtime.sdo.sync.SyncService;
+import org.umlmda.runtime.sdo.sync.SyncServiceCallback;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
@@ -12,9 +13,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public class SyncServiceWrapper implements org.umlmda.runtime.sdo.sync.SyncService {
 
    private final SyncServiceAsync serviceAsync = SyncServiceLocator.getInstance();
-   private final SyncService.Callback callback;
+   private final SyncServiceCallback callback;
 
-   public SyncServiceWrapper(SyncService.Callback callback) {
+   public SyncServiceWrapper(SyncServiceCallback callback) {
       this.callback = callback;
    }
    
@@ -48,7 +49,7 @@ public class SyncServiceWrapper implements org.umlmda.runtime.sdo.sync.SyncServi
          }});
    }
 
-   public Callback getCallback() {
+   public SyncServiceCallback getCallback() {
       return callback;
    }
 }

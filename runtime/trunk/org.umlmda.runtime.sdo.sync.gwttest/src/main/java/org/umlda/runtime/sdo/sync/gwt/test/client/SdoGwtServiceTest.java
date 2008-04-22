@@ -6,6 +6,7 @@ import java.util.List;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.SyncService;
+import org.umlmda.runtime.sdo.sync.SyncServiceCallback;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.gwt.client.BeanEditorInvocationFactory;
 import org.umlmda.runtime.sdo.sync.gwt.client.SyncServiceLocator;
@@ -50,7 +51,7 @@ public class SdoGwtServiceTest implements EntryPoint {
    }
    
    void startTest() {
-      SynchronizerImpl synchronizer = new SynchronizerImpl(new SyncServiceWrapper(new SyncService.Callback() {
+      SynchronizerImpl synchronizer = new SynchronizerImpl(new SyncServiceWrapper(new SyncServiceCallback() {
 
          public void onException(Throwable caught) {
             StringBuffer buffer = new StringBuffer();

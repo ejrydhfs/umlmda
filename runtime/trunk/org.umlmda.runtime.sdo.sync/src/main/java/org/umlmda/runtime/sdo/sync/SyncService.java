@@ -6,23 +6,16 @@ import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
 
 public interface SyncService {
-   public interface Callback 
-   {
-      public abstract void onSuccess();
-      
-      public abstract void onException(Throwable throwable);
-   }
-
    public interface InternalInvokeCallback {
-      public abstract void onSucess(AbstractInvocationResult result, Callback callback);
+      public abstract void onSucess(AbstractInvocationResult result, SyncServiceCallback callback);
       
-      public abstract void onException(Throwable throwable, Callback callback);
+      public abstract void onException(Throwable throwable, SyncServiceCallback callback);
    }
 
    public interface InternalSynchronizeCallback {
-      public abstract void onSucess(List<AbstractChangeLogEntry> result, Callback callback);
+      public abstract void onSucess(List<AbstractChangeLogEntry> result, SyncServiceCallback callback);
       
-      public abstract void onException(Throwable throwable, Callback callback);
+      public abstract void onException(Throwable throwable, SyncServiceCallback callback);
    }
 
    /**
@@ -40,5 +33,5 @@ public interface SyncService {
 	 */
 	public abstract void invokeMethod(SynchronizedObjectProxy object, String methodName, InternalInvokeCallback callback);
 	
-	public abstract Callback getCallback();
+	public abstract SyncServiceCallback getCallback();
 }

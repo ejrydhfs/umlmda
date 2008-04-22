@@ -11,7 +11,7 @@ import org.umlmda.runtime.sdo.sync.SynchronizedList;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.SynchronizedSet;
-import org.umlmda.runtime.sdo.sync.SyncService.Callback;
+import org.umlmda.runtime.sdo.sync.SyncServiceCallback;
 import org.umlmda.runtime.sdo.sync.SyncService.InternalInvokeCallback;
 import org.umlmda.runtime.sdo.sync.SyncService.InternalSynchronizeCallback;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
@@ -110,7 +110,7 @@ public class SynchronizerImpl implements Recorder {
       if ( service != null && changeEntries.size() > 0 ) {
          service.synchronizeChanges(changeEntries, new InternalSynchronizeCallback() {
 
-            public void onException(Throwable throwable, Callback callback) {
+            public void onException(Throwable throwable, SyncServiceCallback callback) {
                if ( callback != null ) {
                   callback.onException(throwable);
                }
@@ -121,7 +121,7 @@ public class SynchronizerImpl implements Recorder {
             }
 
             // Replay changes from remote to local, caused by the remote synchronization above
-            public void onSucess(List<AbstractChangeLogEntry> remoteChanges, Callback callback) {
+            public void onSucess(List<AbstractChangeLogEntry> remoteChanges, SyncServiceCallback callback) {
                
                // Get remote results put to local objects 
                if( player != null && remoteChanges != null && remoteChanges.size() > 0 ) {
@@ -137,7 +137,7 @@ public class SynchronizerImpl implements Recorder {
                SynchronizedObjectProxy objectProxy = new SynchronizedObjectProxy(recordedObject.getRecordObjectId());
                service.invokeMethod(objectProxy, methodName, new InternalInvokeCallback() {
 
-                  public void onException(Throwable throwable, Callback callback) {
+                  public void onException(Throwable throwable, SyncServiceCallback callback) {
                      if ( callback != null ) {
                         callback.onException(throwable);
                      }
@@ -147,7 +147,7 @@ public class SynchronizerImpl implements Recorder {
                      }
                   }
 
-                  public void onSucess(AbstractInvocationResult invocationResult, Callback callback) {
+                  public void onSucess(AbstractInvocationResult invocationResult, SyncServiceCallback callback) {
                      if ( player != null && invocationResult.getRemoteChanges() != null && invocationResult.getRemoteChanges().size() > 0 ) {
                         player.playback(invocationResult.getRemoteChanges(), null);
                      }
