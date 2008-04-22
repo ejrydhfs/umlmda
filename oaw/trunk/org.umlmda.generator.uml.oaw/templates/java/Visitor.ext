@@ -1,0 +1,13 @@
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+cached List[JavaModelClass] visitedClasses(JavaBusinessComponent component) :
+	component.businessObjects.typeSelect(JavaModelClass)
+;
+	
+cached Boolean visitorRequired(JavaBusinessComponent component) :
+	component.visitedClasses().size > 0
+;
