@@ -1,5 +1,6 @@
 <module>
    <inherits name="com.google.gwt.user.User"/>
+   <inherits name="javax.Jmi"/>
    <inherits name="org.umlmda.Runtime"/>
    <inherits name="org.umlmda.runtime.Sdo"/>
 </module>
