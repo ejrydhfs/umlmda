@@ -26,6 +26,9 @@ public class PlayerImpl implements Player {
       this.beanInvocationFactory = beanInvocationFactory;
    }
 
+   public void register(int recordObjectId, SynchronizedObject recordedObject) {
+      synchronizedObjects.put(recordObjectId, recordedObject);
+   }
    
    public synchronized SynchronizedObject playback(List<AbstractChangeLogEntry> changeEntries, SynchronizedObject rootObject) {
       

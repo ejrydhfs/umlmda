@@ -1,6 +1,7 @@
 package org.umlmda.runtime.sdo.sync.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.umlmda.runtime.sdo.sync.Player;
@@ -14,6 +15,10 @@ import org.umlmda.runtime.sdo.sync.SynchronizedSet;
 import org.umlmda.runtime.sdo.sync.SyncServiceCallback;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
+import org.umlmda.runtime.sdo.sync.entries.ChangeBooleanEntry;
+import org.umlmda.runtime.sdo.sync.entries.ChangeDateEntry;
+import org.umlmda.runtime.sdo.sync.entries.ChangeDoubleEntry;
+import org.umlmda.runtime.sdo.sync.entries.ChangeIntegerEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
@@ -39,6 +44,9 @@ public class SynchronizerImpl implements Recorder {
 
    public void register(SynchronizedObject recordedObject, boolean recordCreation) {
          recordedObject.setRecordObjectId(getNextRecordObjectId());
+         if ( player != null ) {
+            player.register(recordedObject.getRecordObjectId(), recordedObject);
+         }
          if ( recordCreation ) {
             recordNew(recordedObject);
          }
@@ -57,15 +65,23 @@ public class SynchronizerImpl implements Recorder {
    }
 
    public synchronized void recordChange(SynchronizedObject object, String propertyName, Object value) {
-      if ( recording ) {
-         if (value instanceof String) {
+      if (recording) {
+         if (value instanceof Boolean) {
+            changeEntries.add(new ChangeBooleanEntry(object.getRecordObjectId(), propertyName, (Boolean) value));
+         } else if (value instanceof Date) {
+            changeEntries.add(new ChangeDateEntry(object.getRecordObjectId(), propertyName, (Date) value));
+         } else if (value instanceof Double) {
+            changeEntries.add(new ChangeDoubleEntry(object.getRecordObjectId(), propertyName, (Double) value));
+         } else if (value instanceof Integer) {
+            changeEntries.add(new ChangeIntegerEntry(object.getRecordObjectId(), propertyName, (Integer) value));
+         } else if (value instanceof String) {
             changeEntries.add(new ChangeStringEntry(object.getRecordObjectId(), propertyName, (String) value));
-         }
-         else if (value instanceof SynchronizedObject) {
+         } else if (value instanceof String) {
+            changeEntries.add(new ChangeStringEntry(object.getRecordObjectId(), propertyName, (String) value));
+         } else if (value instanceof SynchronizedObject) {
             changeEntries.add(new ChangeObjectEntry(object.getRecordObjectId(), propertyName, (SynchronizedObject) value));
-         }
-         else {
-            throw new IllegalArgumentException(value.getClass()+ " not supported");
+         } else {
+            throw new IllegalArgumentException(value.getClass() + " not supported");
          }
       }
    }

@@ -23,4 +23,6 @@ public interface Player extends Serializable {
    SynchronizedObjectFactory getObjectFactory();
 
    SynchronizedObject getObject(SynchronizedObjectProxy proxy);
+
+   void register(int recordObjectId, SynchronizedObject recordedObject);
 }

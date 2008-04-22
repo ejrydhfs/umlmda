@@ -28,15 +28,14 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
    private static final String SESSION_ATTR_SDO_PLAYER = "SDOPlayer";
 
    static Logger logger = Logger.getLogger(AbstractSyncServiceImpl.class);
-   
+
    private static final long serialVersionUID = 100L;
-   
+
    public AbstractSyncServiceImpl() {
    }
-   
+
    public abstract SynchronizedObjectFactory createRootFactory();
-   
-   
+
    @Override
    public void destroy() {
       // TODO Auto-generated method stub
@@ -51,19 +50,19 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
    @Override
    public ServletContext getServletContext() {
       ServletContext servletContext = super.getServletContext();
-      
-      if ( servletContext.getAttribute(SESSION_ATTR_SDO_PLAYER) == null ) {
+
+      if (servletContext.getAttribute(SESSION_ATTR_SDO_PLAYER) == null) {
          Player player = new PlayerImpl(createRootFactory(), new ReflectionInvocationFactory());
-         
+
          servletContext.setAttribute(SESSION_ATTR_SDO_PLAYER, player);
       }
       return servletContext;
    }
-   
+
    private Player getPlayer() {
       return (Player) getServletContext().getAttribute(SESSION_ATTR_SDO_PLAYER);
    }
-   
+
    /**
     * Servcerside implementation of the SyncService
     */
@@ -73,7 +72,7 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       Player player = getPlayer();
       SynchronizedObjectFactory factory = player.getObjectFactory();
       Recorder slaveRecorder = connectToNewRecorder(factory);
-      
+
       player.playback(changes, null);
       slaveRecorder.getChangeEntries().removeAll(changes);
 
@@ -83,14 +82,15 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
    public AbstractInvocationResult invokeMethod(SynchronizedObjectProxy objectProxy, String methodName) {
       Player player = getPlayer();
       SynchronizedObjectFactory factory = player.getObjectFactory();
-      Recorder slaveRecorder = connectToNewRecorder(factory);
-
+      final Recorder slaveRecorder = connectToNewRecorder(factory);
       SynchronizedObject object = player.getObject(objectProxy);
       AbstractInvocationResult result = null;
+
+      SyncContext.recorderHolder.set(slaveRecorder);
       
       try {
          Method method = object.getClass().getMethod(methodName, new Class<?>[] {});
-         
+
          method.invoke(object);
          result = new VoidInvocationResult(slaveRecorder.getChangeEntries());
       } catch (SecurityException e) {
@@ -114,19 +114,18 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       result = new VoidInvocationResult(e.getMessage(), e.getStackTrace().toString());
       return result;
    }
-   
+
    private Recorder connectToNewRecorder(SynchronizedObjectFactory factory) {
       Recorder slaveRecorder = factory.getRecorder();
-      
+
       if (factory instanceof ReconnectableSynchronizedObjectFactory) {
          ReconnectableSynchronizedObjectFactory reconnectableFactory = (ReconnectableSynchronizedObjectFactory) factory;
-         
+
          slaveRecorder = new SynchronizerImpl(null);
          reconnectableFactory.setRecorder(slaveRecorder);
       }
-      
+
       return slaveRecorder;
    }
 
-   
 }
