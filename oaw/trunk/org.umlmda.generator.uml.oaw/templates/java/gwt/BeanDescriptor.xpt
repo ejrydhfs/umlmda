@@ -31,6 +31,8 @@
 	
 	import org.umlmda.runtime.bean.AbstractPropertyEditor;
 	import org.umlmda.runtime.bean.BeanDescriptor;
+	import org.umlmda.runtime.bean.DynamicEditorPropertyDescriptor;
+	import org.umlmda.runtime.bean.ReadOnlyPropertyDescriptor;
 	
 	«this.registeredImports()»
 
@@ -59,7 +61,11 @@
 
 «DEFINE addPropertyDescriptor(JavaModelClass class, String javaType) FOR JavaModelStructuraleFeature»
 	«LET class.getScopedName(getDefaultArtefact("BusinessObject")) AS interface»
-		addPropertyDescriptor(new PropertyDescriptor(«interface».PROPERTY_«upperCaseIdentifier», «interface».class) {
+		addPropertyDescriptor(new «getPropertyDesciptor()»(«interface».PROPERTY_«upperCaseIdentifier», «interface».class
+		«IF readOnly»
+			, "«getter»"
+		«ENDIF»
+		) {
 			@Override public PropertyEditor createPropertyEditor(Object bean) {
 				return new AbstractPropertyEditor<«interface»>((«interface»)bean, «interface».PROPERTY_«upperCaseIdentifier») {
 					@Override public Object getValue() {

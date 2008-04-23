@@ -20,3 +20,7 @@ cached List[JavaModelAttribute] getImplementedClientAttributes(JavaModelClass cl
 cached List[JavaModelAssociation] getImplementedClientAssociation(JavaModelClass class) :
 	class.implementedAssociations.typeSelect(JavaModelAssociation).select(e|e.isSDOServerOnly() == false)	
 ;	
+
+cached String getPropertyDesciptor(JavaModelStructuraleFeature attr) :
+	attr.readOnly ? "ReadOnlyPropertyDescriptor" : "DynamicEditorPropertyDescriptor"
+;
