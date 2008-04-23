@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.umlmda.runtime.exception.FeatureNotImplemementedException;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.SyncService;
@@ -21,6 +22,7 @@ import org.umlmda.runtime.sdo.sync.entries.ChangeDoubleEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeIntegerEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
+import org.umlmda.runtime.sdo.sync.entries.CollectionRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
 import org.umlmda.runtime.sdo.sync.entries.SetAddEntry;
@@ -86,8 +88,7 @@ public class SynchronizerImpl implements Recorder {
    }
 
    public synchronized void recordClear(SynchronizedCollection<?> collection) {
-      // TODO Auto-generated method stub
-
+      throw new FeatureNotImplemementedException();
    }
 
    public synchronized void recordNew(SynchronizedObject object) {
@@ -97,13 +98,13 @@ public class SynchronizerImpl implements Recorder {
    }
 
    public synchronized void recordRemove(SynchronizedList<?> list, int index) {
-      // TODO Auto-generated method stub
-
+      throw new FeatureNotImplemementedException();
    }
 
-   public synchronized void recordRemove(SynchronizedSet<?> set, Object value) {
-      // TODO Auto-generated method stub
-
+   public synchronized void recordRemove(SynchronizedCollection<?> collection, Object value) {
+      if ( recording ) {
+         changeEntries.add(new CollectionRemoveEntry(collection.getRecordObjectId(), value));
+      }
    }
 
    public synchronized void startRecording() {

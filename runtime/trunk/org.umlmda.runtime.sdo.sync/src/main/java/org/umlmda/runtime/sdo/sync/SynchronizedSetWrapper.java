@@ -58,8 +58,7 @@ public class SynchronizedSetWrapper<T> extends AbstractSynchronizedObject implem
    }
 
    public Iterator<T> iterator() {
-      // TODO Auto-generated method stub
-      throw new FeatureNotImplemementedException();
+      return new SynchronizedIteratorWrapper<T>(this, wrappedSet.iterator());
    }
 
    public boolean remove(Object o) {

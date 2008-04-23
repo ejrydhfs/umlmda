@@ -26,15 +26,10 @@ public interface Recorder {
    
    public abstract void recordAdd(SynchronizedList<?> list, Object value, int index);
    
-   public abstract void recordRemove(SynchronizedList<?> list, int index);
+   public abstract void recordRemove(SynchronizedCollection<?> collection, Object object);
    
-   @SuppressWarnings("unchecked")
    public abstract void recordAdd(SynchronizedSet<?> set, Object value);
    
-   @SuppressWarnings("unchecked")
-   public abstract void recordRemove(SynchronizedSet<?> set, Object value);
-      
-   @SuppressWarnings("unchecked")
    public abstract void recordClear(SynchronizedCollection<?> collection);
 
    /**

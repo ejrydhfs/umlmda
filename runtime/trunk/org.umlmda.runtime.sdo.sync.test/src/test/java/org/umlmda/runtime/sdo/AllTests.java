@@ -1,5 +1,6 @@
 package org.umlmda.runtime.sdo;
 
+import org.umlmda.runtime.sdo.change.test.SynchonizedListTest;
 import org.umlmda.runtime.sdo.change.test.SynchronizedPlayerTest;
 import org.umlmda.runtime.sdo.change.test.SynchronizedRecordingTest;
 
@@ -13,6 +14,7 @@ public class AllTests {
       //$JUnit-BEGIN$
       suite.addTestSuite(SynchronizedRecordingTest.class);
       suite.addTestSuite(SynchronizedPlayerTest.class);
+      suite.addTestSuite(SynchonizedListTest.class);
       //$JUnit-END$
       return suite;
    }

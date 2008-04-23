@@ -71,8 +71,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
    }
 
    public Iterator<T> iterator() {
-      // TODO Auto-generated method stub
-      throw new FeatureNotImplemementedException();
+      return new SynchronizedIteratorWrapper<T>(this, wrappedList.iterator());
    }
 
    public boolean remove(Object o) {
@@ -118,7 +117,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
 
    public boolean addAll(int index, Collection<? extends T> c) {
       // TODO Auto-generated method stub
-      return false;
+      throw new FeatureNotImplemementedException();
    }
 
    public T get(int index) {
@@ -134,13 +133,11 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
    }
 
    public ListIterator<T> listIterator() {
-      // TODO Auto-generated method stub
-      throw new FeatureNotImplemementedException();
+      return new SynchronizedListIteratorWrapper<T>(this, wrappedList.listIterator());
    }
 
    public ListIterator<T> listIterator(int index) {
-      // TODO Auto-generated method stub
-      throw new FeatureNotImplemementedException();
+      return new SynchronizedListIteratorWrapper<T>(this, wrappedList.listIterator(index));
    }
 
    public T remove(int index) {
