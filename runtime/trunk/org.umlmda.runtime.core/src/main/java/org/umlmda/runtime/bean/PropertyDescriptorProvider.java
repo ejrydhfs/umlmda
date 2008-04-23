@@ -13,7 +13,19 @@ public class PropertyDescriptorProvider {
    }
 
    public static PropertyDescriptor getPropertyDescriptor(String propertyName, Class<?> beanClass) {
-      return beanDescriptorMap.get(beanClass).getPropertyDescriptor(propertyName);
+      BeanDescriptor beanDescriptor = beanDescriptorMap.get(beanClass);
+      
+      if ( beanDescriptor == null ) {
+         throw new IllegalArgumentException("Not description registered for "+beanClass.getName());
+      }
+      
+      PropertyDescriptor descriptor = beanDescriptor.getPropertyDescriptor(propertyName);
+      
+      if ( descriptor == null ) {
+         throw new IllegalArgumentException("Property "+propertyName+" not registered for "+beanClass.getName());
+      }
+
+      return descriptor; 
    }
    
    public static void registerDescriptor(Class<?> beanClass, BeanDescriptor beanDescriptor) {

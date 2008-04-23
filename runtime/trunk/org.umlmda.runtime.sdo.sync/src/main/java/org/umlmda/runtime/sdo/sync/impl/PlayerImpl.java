@@ -20,6 +20,7 @@ public class PlayerImpl implements Player {
    private transient Map<Integer, SynchronizedObject> synchronizedObjects = new HashMap<Integer, SynchronizedObject>();
    private final SynchronizedObjectFactory objectFactory;
    private final Factory beanInvocationFactory;
+   private int recordedObjectCount = 0;
 
    public PlayerImpl(SynchronizedObjectFactory objectFactory, BeanInvocation.Factory beanInvocationFactory) {
       this.objectFactory = objectFactory;
@@ -82,5 +83,8 @@ public class PlayerImpl implements Player {
       return objectFactory;
    }
       
+   synchronized int getNextRecordObjectId() {
+      return ++recordedObjectCount;
+   }
 
 }

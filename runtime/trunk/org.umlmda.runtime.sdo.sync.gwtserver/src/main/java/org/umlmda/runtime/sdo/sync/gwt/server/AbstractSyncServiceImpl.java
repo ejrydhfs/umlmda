@@ -69,29 +69,54 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
    public List<AbstractChangeLogEntry> synchronizeChanges(List<AbstractChangeLogEntry> changes) {
       logger.info("synchronizeChanges()");
 
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("Changes to synchronize");
+         for (AbstractChangeLogEntry entry : changes) {
+            logger.debug(entry);
+         }
+      }
+      
       Player player = getPlayer();
       SynchronizedObjectFactory factory = player.getObjectFactory();
-      Recorder slaveRecorder = connectToNewRecorder(factory);
+      Recorder slaveRecorder = connectToNewRecorder(factory, player);
 
       player.playback(changes, null);
       slaveRecorder.getChangeEntries().removeAll(changes);
 
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("Changes to send back from synchonize");
+         for (AbstractChangeLogEntry entry : slaveRecorder.getChangeEntries()) {
+            logger.debug(entry);
+         }
+      }
+      
       return slaveRecorder.getChangeEntries();
    }
 
    public AbstractInvocationResult invokeMethod(SynchronizedObjectProxy objectProxy, String methodName) {
       Player player = getPlayer();
       SynchronizedObjectFactory factory = player.getObjectFactory();
-      final Recorder slaveRecorder = connectToNewRecorder(factory);
+      final Recorder slaveRecorder = connectToNewRecorder(factory, player);
       SynchronizedObject object = player.getObject(objectProxy);
       AbstractInvocationResult result = null;
 
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("invoke method "+methodName+" on "+object.getClass());
+      }
       SyncContext.recorderHolder.set(slaveRecorder);
       
       try {
          Method method = object.getClass().getMethod(methodName, new Class<?>[] {});
 
          method.invoke(object);
+         
+         if ( logger.isDebugEnabled() ) {
+            logger.debug("Changes to send back from invoke");
+            for (AbstractChangeLogEntry entry : slaveRecorder.getChangeEntries()) {
+               logger.debug(entry);
+            }
+         }
+         
          result = new VoidInvocationResult(slaveRecorder.getChangeEntries());
       } catch (SecurityException e) {
          result = handleException(e);
@@ -115,13 +140,14 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       return result;
    }
 
-   private Recorder connectToNewRecorder(SynchronizedObjectFactory factory) {
-      Recorder slaveRecorder = factory.getRecorder();
+   private Recorder connectToNewRecorder(SynchronizedObjectFactory factory, Player player) {
+      SynchronizerImpl slaveRecorder = (SynchronizerImpl) factory.getRecorder();
 
       if (factory instanceof ReconnectableSynchronizedObjectFactory) {
          ReconnectableSynchronizedObjectFactory reconnectableFactory = (ReconnectableSynchronizedObjectFactory) factory;
 
          slaveRecorder = new SynchronizerImpl(null);
+         slaveRecorder.setPlayer(player);
          reconnectableFactory.setRecorder(slaveRecorder);
       }
 

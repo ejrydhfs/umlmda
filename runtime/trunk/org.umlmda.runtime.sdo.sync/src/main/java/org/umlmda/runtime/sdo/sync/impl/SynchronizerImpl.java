@@ -29,7 +29,6 @@ import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalSynchronizeCallba
 
 public class SynchronizerImpl implements Recorder {
    private List<AbstractChangeLogEntry> changeEntries = new ArrayList<AbstractChangeLogEntry>();
-   private int recordedObjectCount = 0;
    private boolean recording = true;
    private final SyncService service;
    private Player player;
@@ -182,7 +181,7 @@ public class SynchronizerImpl implements Recorder {
    }
 
    private synchronized int getNextRecordObjectId() {
-      return ++recordedObjectCount;
+      return ((PlayerImpl)getPlayer()).getNextRecordObjectId();
    }
 
    public Player getPlayer() {
