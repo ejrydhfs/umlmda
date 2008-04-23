@@ -3,7 +3,10 @@ package org.umlmda.runtime.sdo.change.test;
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
+import org.umlmda.runtime.reflect.ReflectionInvocationFactory;
+import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
+import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
 import org.umlmda.runtime.sdo.sync.test.model.RootChild;
 import org.umlmda.runtime.sdo.sync.test.model.RootChildren;
@@ -14,8 +17,13 @@ import org.umlmda.runtime.sdo.sync.test.model.impl.TestFactoryImpl;
 
 public class SynchronizedRecordingTest extends TestCase {
    private static Logger logger = Logger.getLogger(SynchronizedRecordingTest.class);
-   private Recorder recorder = new SynchronizerImpl(null);
-   private TestFactory factory = new TestFactoryImpl(recorder);
+   private SynchronizerImpl recorder = new SynchronizerImpl(null);
+   private TestFactoryImpl factory = new TestFactoryImpl(recorder);
+   private Player player = new PlayerImpl(factory, new ReflectionInvocationFactory());;
+   
+   public SynchronizedRecordingTest() {
+      recorder.setPlayer(player);
+   }
    
    protected void setUp() throws Exception {
       super.setUp();

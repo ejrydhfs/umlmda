@@ -24,18 +24,25 @@ public class SynchronizedPlayerTest extends TestCase {
    }
 
    public void testPlayback() {
-      Recorder masterRecorder = new SynchronizerImpl(null);
-      TestFactory factory = new TestFactoryImpl(masterRecorder);
-      Recorder slaveRecorder = new SynchronizerImpl(null);
-      Player player = new PlayerImpl(new TestFactoryImpl(slaveRecorder), new ReflectionInvocationFactory());
+      SynchronizerImpl masterRecorder = new SynchronizerImpl(null);
+      TestFactory masterFactory = new TestFactoryImpl(masterRecorder);
+      Player masterPlayer = new PlayerImpl(new TestFactoryImpl(masterRecorder), new ReflectionInvocationFactory());
+
+      masterRecorder.setPlayer(masterPlayer);
       
-      RootClass root = factory.createRootClass();
+      SynchronizerImpl slaveRecorder = new SynchronizerImpl(null);
+      TestFactory slaveFactory = new TestFactoryImpl(slaveRecorder);
+      Player slavePlayer = new PlayerImpl(new TestFactoryImpl(slaveRecorder), new ReflectionInvocationFactory());
       
-      root.setRootChild(factory.createRootChild());
+      slaveRecorder.setPlayer(slavePlayer);
+      
+      RootClass root = masterFactory.createRootClass();
+      
+      root.setRootChild(masterFactory.createRootChild());
       
       TestUtils.logEntries(logger, masterRecorder);
 
-      RootClass copy = (RootClass) player.playback(masterRecorder.getChangeEntries(), null);
+      RootClass copy = (RootClass) slavePlayer.playback(masterRecorder.getChangeEntries(), null);
       
       TestUtils.logEntries(logger, slaveRecorder);
 
