@@ -22,6 +22,10 @@
 «this.registerImports(getDefaultArtefact("BusinessObject"), referencedTypes, "BusinessObject")»
 «this.registerImports(getDefaultArtefact("BusinessException"), referencedTypes, "BusinessException")»
 «this.registerImports(getDefaultArtefact("Enumeration"), referencedTypes, "Enumeration")»
+«IF javaSuperClass != null»
+	«this.registerImport("gwt.BeanDescriptor", javaSuperClass)»
+«ENDIF» 	
+
 «FILE generatedPath+"/"+className+".java"»
 	package «generatorPackage.getQualifiedPackageName("gwt.BeanDescriptor")»;
 
@@ -29,6 +33,7 @@
 	import java.beans.PropertyDescriptor;
 	import java.beans.PropertyEditor;
 	
+	import org.apache.log4j.Logger;
 	import org.umlmda.runtime.bean.AbstractPropertyEditor;
 	import org.umlmda.runtime.bean.BeanDescriptor;
 	import org.umlmda.runtime.bean.DynamicEditorPropertyDescriptor;
@@ -36,11 +41,17 @@
 	
 	«this.registeredImports()»
 
-	public class «className» extends BeanDescriptor {
+	public class «className» extends 
+		«IF javaSuperClass != null»
+			«getScopedName("gwt.BeanDescriptor", javaSuperClass)»
+		«ELSE»
+			BeanDescriptor
+		«ENDIF» 	
+	 {
 	
 	   public static final «className» INSTANCE = new «className»();
 	
-	   private «className»() {
+	   protected «className»() {
 		   «IF hasImplementedClientFeatures()»
 		      try {
 		     	 «FOREACH getImplementedClientAttributes() AS attr»
@@ -50,7 +61,7 @@
 		     	 	«EXPAND addPropertyDescriptor(this, assoc.interfaceType) FOR assoc»
 		     	 «ENDFOREACH» 
 		      } catch (IntrospectionException e) {
-		
+		         Logger.getRootLogger().error(e.getMessage(), e);
 		      }
 		   «ENDIF»
 	   }
@@ -77,7 +88,16 @@
 						}};
 					«ELSE»	                  
 						@Override public void setValue(Object value) {
+						«IF classifier().hasStereotype("Enumeration")»
+							if ( value instanceof org.umlmda.runtime.lang.GenericEnumeration ) {
+								getBean().«setter»((«javaType») value);
+							}
+							else {	
+								getBean().«setter»(«javaType».fromValue((«classifier().enumerationType()»)value));
+							}
+						«ELSE»
 							getBean().«setter»((«javaType») value);
+						«ENDIF»
 						}};
                   «ENDIF»
             }
