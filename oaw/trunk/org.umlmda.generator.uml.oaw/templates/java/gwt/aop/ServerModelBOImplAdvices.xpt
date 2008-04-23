@@ -30,6 +30,12 @@
 // ===========================
 // Skip <<SDOClient>> features
 // ===========================
+«AROUND java::BOImpl::standardImports FOR JavaBusinessObject»
+	«targetDef.proceed()»
+	
+	import org.umlmda.runtime.sdo.sync.gwt.server.SyncContext;
+«ENDAROUND»
+
 «AROUND java::BOImpl::handleAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
 	«IF this.isSDOClientOnly() == false»
 		«targetDef.proceed()»
@@ -50,7 +56,9 @@
 
 «AROUND java::BOImpl::callPostSetMethod FOR JavaModelStructuraleFeature»
 	«IF multivalue == false»
-	    this.recorder.recordChange(this, PROPERTY_«upperCaseIdentifier», «name»);
+		Recorder recorder = SyncContext.recorderHolder.get();
+		
+	    recorder.recordChange(this, PROPERTY_«upperCaseIdentifier», «name»);
 	«ENDIF»
 	«IF postSetMethod() != null && postSetMethod().isSDOClientOnly() == false»
 		«targetDef.proceed()»
