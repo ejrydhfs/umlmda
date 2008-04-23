@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.umlmda.runtime.reflect.ReflectionInvocationFactory;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
+import org.umlmda.runtime.sdo.sync.gwt.server.SyncContext;
 import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
 import org.umlmda.runtime.sdo.sync.test.model.RootClass;
@@ -29,12 +30,14 @@ public class SynchronizedPlayerTest extends TestCase {
       Player masterPlayer = new PlayerImpl(new TestFactoryImpl(masterRecorder), new ReflectionInvocationFactory());
 
       masterRecorder.setPlayer(masterPlayer);
-      
+
       SynchronizerImpl slaveRecorder = new SynchronizerImpl(null);
       TestFactory slaveFactory = new TestFactoryImpl(slaveRecorder);
       Player slavePlayer = new PlayerImpl(new TestFactoryImpl(slaveRecorder), new ReflectionInvocationFactory());
       
       slaveRecorder.setPlayer(slavePlayer);
+      SyncContext.recorderHolder.set(slaveRecorder);
+      
       
       RootClass root = masterFactory.createRootClass();
       

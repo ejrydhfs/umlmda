@@ -64,73 +64,88 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
    }
 
    /**
-    * Servcerside implementation of the SyncService
+    * Server side implementation of the SyncService
     */
    public List<AbstractChangeLogEntry> synchronizeChanges(List<AbstractChangeLogEntry> changes) {
       logger.info("synchronizeChanges()");
 
-      if ( logger.isDebugEnabled() ) {
-         logger.debug("Changes to synchronize");
-         for (AbstractChangeLogEntry entry : changes) {
-            logger.debug(entry);
-         }
-      }
-      
-      Player player = getPlayer();
-      SynchronizedObjectFactory factory = player.getObjectFactory();
-      Recorder slaveRecorder = connectToNewRecorder(factory, player);
-
-      player.playback(changes, null);
-      slaveRecorder.getChangeEntries().removeAll(changes);
-
-      if ( logger.isDebugEnabled() ) {
-         logger.debug("Changes to send back from synchonize");
-         for (AbstractChangeLogEntry entry : slaveRecorder.getChangeEntries()) {
-            logger.debug(entry);
-         }
-      }
-      
-      return slaveRecorder.getChangeEntries();
-   }
-
-   public AbstractInvocationResult invokeMethod(SynchronizedObjectProxy objectProxy, String methodName) {
-      Player player = getPlayer();
-      SynchronizedObjectFactory factory = player.getObjectFactory();
-      final Recorder slaveRecorder = connectToNewRecorder(factory, player);
-      SynchronizedObject object = player.getObject(objectProxy);
-      AbstractInvocationResult result = null;
-
-      if ( logger.isDebugEnabled() ) {
-         logger.debug("invoke method "+methodName+" on "+object.getClass());
-      }
-      SyncContext.recorderHolder.set(slaveRecorder);
-      
       try {
-         Method method = object.getClass().getMethod(methodName, new Class<?>[] {});
-
-         method.invoke(object);
-         
          if ( logger.isDebugEnabled() ) {
-            logger.debug("Changes to send back from invoke");
+            logger.debug("Changes to synchronize");
+            for (AbstractChangeLogEntry entry : changes) {
+               logger.debug(entry);
+            }
+         }
+         
+         Player player = getPlayer();
+         SynchronizedObjectFactory factory = player.getObjectFactory();
+         Recorder slaveRecorder = connectToNewRecorder(factory, player);
+
+         // Put recorder to thread local to be accessible in subsequent functions
+         SyncContext.recorderHolder.set(slaveRecorder);
+         
+         player.playback(changes, null);
+         slaveRecorder.getChangeEntries().removeAll(changes);
+
+         if ( logger.isDebugEnabled() ) {
+            logger.debug("Changes to send back from synchonize");
             for (AbstractChangeLogEntry entry : slaveRecorder.getChangeEntries()) {
                logger.debug(entry);
             }
          }
          
-         result = new VoidInvocationResult(slaveRecorder.getChangeEntries());
-      } catch (SecurityException e) {
-         result = handleException(e);
-      } catch (NoSuchMethodException e) {
-         result = handleException(e);
-      } catch (IllegalArgumentException e) {
-         result = handleException(e);
-      } catch (IllegalAccessException e) {
-         result = handleException(e);
-      } catch (InvocationTargetException e) {
-         result = handleException(e);
+         return slaveRecorder.getChangeEntries();
+      } catch (RuntimeException e) {
+         logger.error(e.getMessage(), e);
+         throw e;
       }
+   }
 
-      return result;
+   public AbstractInvocationResult invokeMethod(SynchronizedObjectProxy objectProxy, String methodName) {
+      try {
+         Player player = getPlayer();
+         SynchronizedObjectFactory factory = player.getObjectFactory();
+         final Recorder slaveRecorder = connectToNewRecorder(factory, player);
+         SynchronizedObject object = player.getObject(objectProxy);
+         AbstractInvocationResult result = null;
+
+         if ( logger.isDebugEnabled() ) {
+            logger.debug("invoke method "+methodName+" on "+object.getClass());
+         }
+         
+         // Put recorder to thread local to be accessible in subsequent functions
+         SyncContext.recorderHolder.set(slaveRecorder);
+         
+         try {
+            Method method = object.getClass().getMethod(methodName, new Class<?>[] {});
+
+            method.invoke(object);
+            
+            if ( logger.isDebugEnabled() ) {
+               logger.debug("Changes to send back from invoke");
+               for (AbstractChangeLogEntry entry : slaveRecorder.getChangeEntries()) {
+                  logger.debug(entry);
+               }
+            }
+            
+            result = new VoidInvocationResult(slaveRecorder.getChangeEntries());
+         } catch (SecurityException e) {
+            result = handleException(e);
+         } catch (NoSuchMethodException e) {
+            result = handleException(e);
+         } catch (IllegalArgumentException e) {
+            result = handleException(e);
+         } catch (IllegalAccessException e) {
+            result = handleException(e);
+         } catch (InvocationTargetException e) {
+            result = handleException(e);
+         }
+
+         return result;
+      } catch (RuntimeException e) {
+         logger.error(e.getMessage(), e);
+         throw e;
+      }
    }
 
    private AbstractInvocationResult handleException(Throwable e) {

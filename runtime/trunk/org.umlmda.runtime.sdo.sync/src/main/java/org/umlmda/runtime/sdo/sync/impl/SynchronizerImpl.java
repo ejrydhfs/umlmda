@@ -5,20 +5,22 @@ import java.util.Date;
 import java.util.List;
 
 import org.umlmda.runtime.exception.FeatureNotImplemementedException;
+import org.umlmda.runtime.lang.GenericEnumeration;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.SyncService;
+import org.umlmda.runtime.sdo.sync.SyncServiceCallback;
 import org.umlmda.runtime.sdo.sync.SynchronizedCollection;
 import org.umlmda.runtime.sdo.sync.SynchronizedList;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.SynchronizedSet;
-import org.umlmda.runtime.sdo.sync.SyncServiceCallback;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
 import org.umlmda.runtime.sdo.sync.entries.ChangeBooleanEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeDateEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeDoubleEntry;
+import org.umlmda.runtime.sdo.sync.entries.ChangeEnumerationEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeIntegerEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
@@ -77,8 +79,8 @@ public class SynchronizerImpl implements Recorder {
             changeEntries.add(new ChangeIntegerEntry(object.getRecordObjectId(), propertyName, (Integer) value));
          } else if (value instanceof String) {
             changeEntries.add(new ChangeStringEntry(object.getRecordObjectId(), propertyName, (String) value));
-         } else if (value instanceof String) {
-            changeEntries.add(new ChangeStringEntry(object.getRecordObjectId(), propertyName, (String) value));
+         } else if (value instanceof GenericEnumeration) {
+            changeEntries.add(new ChangeEnumerationEntry(object.getRecordObjectId(), propertyName, (GenericEnumeration) value));
          } else if (value instanceof SynchronizedObject) {
             changeEntries.add(new ChangeObjectEntry(object.getRecordObjectId(), propertyName, (SynchronizedObject) value));
          } else {

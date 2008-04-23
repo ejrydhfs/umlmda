@@ -1,5 +1,6 @@
 package org.umlmda.runtime.sdo.sync.impl;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.umlmda.runtime.sdo.sync.SynchronizedObjectFactory;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
+import org.umlmda.runtime.sdo.sync.entries.CollectionRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
 
@@ -57,6 +59,14 @@ public class PlayerImpl implements Player {
             List<Object> list = (List<Object>) object;
             
             list.add(listAddEntry.getIndex(), listElement);
+         }
+
+         else if (logEntry instanceof CollectionRemoveEntry) {
+            CollectionRemoveEntry removeEntry = (CollectionRemoveEntry) logEntry;
+            Object listElement = getValue(removeEntry.getValue());
+            Collection<Object> collection = (Collection<Object>) object;
+            
+            collection.remove(listElement);
          }
          else {
             throw new IllegalArgumentException();

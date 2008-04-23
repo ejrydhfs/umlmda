@@ -6,8 +6,11 @@ import org.apache.log4j.Logger;
 import org.umlmda.runtime.reflect.ReflectionInvocationFactory;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
+import org.umlmda.runtime.sdo.sync.gwt.server.SyncContext;
 import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
+import org.umlmda.runtime.sdo.sync.test.dto.CodeType;
+import org.umlmda.runtime.sdo.sync.test.dto.IntCodeType;
 import org.umlmda.runtime.sdo.sync.test.model.RootChild;
 import org.umlmda.runtime.sdo.sync.test.model.RootChildren;
 import org.umlmda.runtime.sdo.sync.test.model.RootClass;
@@ -23,6 +26,9 @@ public class SynchronizedRecordingTest extends TestCase {
    
    public SynchronizedRecordingTest() {
       recorder.setPlayer(player);
+      
+      // Put recorder to thread local to be accessible in subsequent functions
+      SyncContext.recorderHolder.set(recorder);
    }
    
    protected void setUp() throws Exception {
@@ -70,8 +76,11 @@ public class SynchronizedRecordingTest extends TestCase {
       
       ((RootChildren)root.getRootChildren().get(0)).getRootGreatChildren().add(greatChildren);
 
+      greatChildren.setCodeAttr(CodeType.A);
+      greatChildren.setIntCodeAttr(IntCodeType.A);
+      
       TestUtils.logEntries(logger, recorder);
-      assertEquals(12, recorder.getChangeEntries().size());
+      assertEquals(14, recorder.getChangeEntries().size());
    }
    
 }

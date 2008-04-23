@@ -5,8 +5,6 @@ import java.io.Serializable;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-
 public abstract class AbstractChangeLogEntry implements Serializable {
 
    private int recordedObjectId;
