@@ -39,16 +39,3 @@
 	import org.umlmda.runtime.sdo.sync.impl.AbstractSynchronizedObject;
 «ENDAROUND»
 
-«AROUND java::BOImpl::assocDecl FOR JavaModelAssociation»
-	«IF derived == false»
-		«IF multiple»
-			«IF interfaceType.startsWith("java.util.List")»
-			   private «interfaceType» «name» = new org.umlmda.runtime.sdo.sync.SynchronizedListWrapper(this.recorder, new «implementationType»());
-			«ELSE»   
-			   private «interfaceType» «name» = new org.umlmda.runtime.sdo.sync.SynchronizedSetWrapper(this.recorder, new «implementationType»());
-			«ENDIF»
-		«ELSE»
-		   private «interfaceType» «name»;
-		«ENDIF»
-	«ENDIF»
-«ENDAROUND»

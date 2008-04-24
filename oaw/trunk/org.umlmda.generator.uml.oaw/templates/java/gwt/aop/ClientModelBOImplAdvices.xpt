@@ -64,3 +64,20 @@
 	«targetDef.proceed()»
 «ENDAROUND»
 
+«AROUND java::BOImpl::assocDecl FOR JavaModelAssociation»
+	«IF derived == false»
+		«IF multiple»
+			«IF interfaceType.startsWith("java.util.List")»
+			   private «interfaceType» «name» = new org.umlmda.runtime.sdo.sync.SynchronizedListWrapper(this.recorder,  
+			   				new org.umlmda.runtime.bean.PropertyChangeSupportingListWrapper(this.propertyChangeSupport, «EXPAND java::BOInterface::propertyNameConstant FOR this»,
+			   					new «implementationType»()));
+			«ELSE»   
+			   private «interfaceType» «name» = new org.umlmda.runtime.sdo.sync.SynchronizedSetWrapper(this.recorder, 
+			   				new org.umlmda.runtime.bean.PropertyChangeSupportingSetWrapper(this.propertyChangeSupport, «EXPAND java::BOInterface::propertyNameConstant FOR this»,
+			   					new «implementationType»()));
+			«ENDIF»
+		«ELSE»
+		   private «interfaceType» «name»;
+		«ENDIF»
+	«ENDIF»
+«ENDAROUND»
