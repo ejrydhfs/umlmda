@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import org.apache.log4j.Logger;
 import org.umlmda.runtime.reflect.ReflectionInvocationFactory;
 import org.umlmda.runtime.sdo.sync.Player;
-import org.umlmda.runtime.sdo.sync.ReconnectableSynchronizedObjectFactory;
 import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectFactory;
@@ -25,16 +24,18 @@ import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet implements SyncService {
-   private static final String SESSION_ATTR_SDO_PLAYER = "SDOPlayer";
+   public static final String SESSION_ATTR_SDO_PLAYER = "SDOPlayer";
+   public static final String SESSION_ATTR_SDO_RECORDER = "SDORecorder";
 
    static Logger logger = Logger.getLogger(AbstractSyncServiceImpl.class);
 
    private static final long serialVersionUID = 100L;
 
+
    public AbstractSyncServiceImpl() {
    }
 
-   public abstract SynchronizedObjectFactory createRootFactory();
+   public abstract SynchronizedObjectFactory createRootFactory(Recorder recorder);
 
    @Override
    public void destroy() {
@@ -52,9 +53,13 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       ServletContext servletContext = super.getServletContext();
 
       if (servletContext.getAttribute(SESSION_ATTR_SDO_PLAYER) == null) {
-         Player player = new PlayerImpl(createRootFactory(), new ReflectionInvocationFactory());
+         SynchronizerImpl recorder = new SynchronizerImpl(null);
+         SynchronizedObjectFactory factory = createRootFactory(recorder); 
+         Player player = new PlayerImpl(factory, new ReflectionInvocationFactory());
 
+         recorder.setPlayer(player);
          servletContext.setAttribute(SESSION_ATTR_SDO_PLAYER, player);
+         servletContext.setAttribute(SESSION_ATTR_SDO_RECORDER, recorder);
       }
       return servletContext;
    }
@@ -79,12 +84,19 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
          
          Player player = getPlayer();
          SynchronizedObjectFactory factory = player.getObjectFactory();
-         Recorder slaveRecorder = connectToNewRecorder(factory, player);
+
+         // Reset recorder
+         Recorder slaveRecorder = factory.getRecorder();
+         
+         slaveRecorder.getChangeEntries().clear();
 
          // Put recorder to thread local to be accessible in subsequent functions
+         // TODO can be removed, because recorder is singleton for session
          SyncContext.recorderHolder.set(slaveRecorder);
          
          player.playback(changes, null);
+         
+         // Remove changes from input
          slaveRecorder.getChangeEntries().removeAll(changes);
 
          if ( logger.isDebugEnabled() ) {
@@ -105,7 +117,12 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       try {
          Player player = getPlayer();
          SynchronizedObjectFactory factory = player.getObjectFactory();
-         final Recorder slaveRecorder = connectToNewRecorder(factory, player);
+
+         // Reset recorder
+         Recorder slaveRecorder = factory.getRecorder();
+         
+         slaveRecorder.getChangeEntries().clear();
+         
          SynchronizedObject object = player.getObject(objectProxy);
          AbstractInvocationResult result = null;
 
@@ -153,20 +170,6 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       logger.error(e.getMessage(), e);
       result = new VoidInvocationResult(e.getMessage(), e.getStackTrace().toString());
       return result;
-   }
-
-   private Recorder connectToNewRecorder(SynchronizedObjectFactory factory, Player player) {
-      SynchronizerImpl slaveRecorder = (SynchronizerImpl) factory.getRecorder();
-
-      if (factory instanceof ReconnectableSynchronizedObjectFactory) {
-         ReconnectableSynchronizedObjectFactory reconnectableFactory = (ReconnectableSynchronizedObjectFactory) factory;
-
-         slaveRecorder = new SynchronizerImpl(null);
-         slaveRecorder.setPlayer(player);
-         reconnectableFactory.setRecorder(slaveRecorder);
-      }
-
-      return slaveRecorder;
    }
 
 }
