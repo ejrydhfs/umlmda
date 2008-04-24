@@ -168,6 +168,8 @@ public class SynchronizerImpl implements Recorder {
                   public void onSucess(AbstractInvocationResult invocationResult, SyncServiceCallback callback) {
                      if ( player != null && invocationResult.getRemoteChanges() != null && invocationResult.getRemoteChanges().size() > 0 ) {
                         player.playback(invocationResult.getRemoteChanges(), null);
+                        
+                        changeEntries.removeAll(invocationResult.getRemoteChanges());
                      }
                      if ( callback != null ) {
                         callback.onSuccess();
