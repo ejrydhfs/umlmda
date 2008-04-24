@@ -28,10 +28,14 @@ public abstract class PropertyDescriptor extends FeatureDescriptor {
    boolean constrained;
    boolean bound;
    private final Class<?> beanClass;
+   private String getterName;
+   private String setterName;
 
    public PropertyDescriptor(String propertyName, Class<?> beanClass, String getterName, String setterName)
          throws IntrospectionException {
-      throw new UnsupportedOperationException("Not GWT compatible");
+      this.beanClass = beanClass;
+      this.getterName = getterName;
+      this.setterName = setterName;
    }
 
    public PropertyDescriptor(String propertyName, Method getter, Method setter) throws IntrospectionException {
