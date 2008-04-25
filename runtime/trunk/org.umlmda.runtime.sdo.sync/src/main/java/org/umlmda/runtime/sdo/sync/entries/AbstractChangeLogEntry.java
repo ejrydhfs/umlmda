@@ -53,4 +53,6 @@ public abstract class AbstractChangeLogEntry implements Serializable {
          
    }  
 
+   @Override
+   public abstract String toString();
 }

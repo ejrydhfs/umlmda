@@ -14,8 +14,10 @@ import org.umlmda.runtime.sdo.sync.SynchronizedObjectFactory;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
+import org.umlmda.runtime.sdo.sync.entries.CollectionClearEntry;
 import org.umlmda.runtime.sdo.sync.entries.CollectionRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
+import org.umlmda.runtime.sdo.sync.entries.ListRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
 
 public class PlayerImpl implements Player {
@@ -81,6 +83,20 @@ public class PlayerImpl implements Player {
             Collection<Object> collection = (Collection<Object>) object;
             
             collection.remove(listElement);
+         }
+         
+         else if (logEntry instanceof CollectionClearEntry) {
+            CollectionClearEntry removeEntry = (CollectionClearEntry) logEntry;
+            Collection<Object> collection = (Collection<Object>) object;
+            
+            collection.clear();
+         }
+         
+         else if (logEntry instanceof ListRemoveEntry) {
+            ListRemoveEntry removeEntry = (ListRemoveEntry) logEntry;
+            Collection<Object> collection = (Collection<Object>) object;
+            
+            collection.remove(removeEntry.getIndex());
          }
          else {
             throw new IllegalArgumentException();

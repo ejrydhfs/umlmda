@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 
+import org.apache.log4j.Logger;
+
 /**
  * Collection supporting {@link PropertyChangeEvent} on any change on the collection.
  * 
@@ -12,7 +14,7 @@ import java.beans.PropertyChangeSupport;
  * @param <T>
  */
 public abstract class PropertyChangeSupportingCollectionWrapper<T> implements Collection<T> {
-
+   protected final Logger logger = Logger.getLogger(PropertyChangeSupportingCollectionWrapper.class);
    private final Collection<T> wrappedCollection;
    protected final PropertyChangeSupport owner;
    protected final String collectionPropertyName;
@@ -27,7 +29,11 @@ public abstract class PropertyChangeSupportingCollectionWrapper<T> implements Co
    
    void notifyChange(Collection<T> oldValue) {
       if ( owner.hasListeners(collectionPropertyName) ) {
+         logger.debug("notifyChange of "+collectionPropertyName);
          owner.firePropertyChange(collectionPropertyName, oldValue, this);
+      }
+      else {
+         logger.debug("no notifyChange of "+collectionPropertyName+" bacuase no listeners available");
       }
    }
    

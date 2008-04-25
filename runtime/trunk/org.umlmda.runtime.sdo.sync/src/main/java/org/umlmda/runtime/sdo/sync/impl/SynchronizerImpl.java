@@ -26,6 +26,8 @@ import org.umlmda.runtime.sdo.sync.entries.ChangeIntegerEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeToNull;
+import org.umlmda.runtime.sdo.sync.entries.CollectionClearEntry;
+import org.umlmda.runtime.sdo.sync.entries.ListRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.CollectionRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
@@ -99,7 +101,9 @@ public class SynchronizerImpl implements Recorder {
    }
 
    public synchronized void recordClear(SynchronizedCollection<?> collection) {
-      throw new FeatureNotImplemementedException();
+      if ( recording ) {
+         changeEntries.add(new CollectionClearEntry(collection.getRecordObjectId()));
+      }
    }
 
    public synchronized void recordNew(SynchronizedObject object) {
@@ -109,7 +113,9 @@ public class SynchronizerImpl implements Recorder {
    }
 
    public synchronized void recordRemove(SynchronizedList<?> list, int index) {
-      throw new FeatureNotImplemementedException();
+      if ( recording ) {
+         changeEntries.add(new ListRemoveEntry(list.getRecordObjectId(), index));
+      }
    }
 
    public synchronized void recordRemove(SynchronizedCollection<?> collection, Object value) {
