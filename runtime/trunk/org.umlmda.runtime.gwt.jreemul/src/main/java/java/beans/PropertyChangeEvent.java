@@ -14,7 +14,7 @@ public class PropertyChangeEvent extends EventObject implements Serializable {
 	private Object propagationId;
 	private String propertyName;
 	
-	PropertyChangeEvent(Object source, String propertyName, Object oldValue, Object newValue) {
+	public PropertyChangeEvent(Object source, String propertyName, Object oldValue, Object newValue) {
 		super(source);
 		this.propertyName = propertyName;
 		this.oldValue = oldValue;
