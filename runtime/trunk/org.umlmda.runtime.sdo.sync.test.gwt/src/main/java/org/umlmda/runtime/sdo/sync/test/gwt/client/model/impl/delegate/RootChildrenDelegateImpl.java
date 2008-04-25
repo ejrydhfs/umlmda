@@ -1,9 +1,10 @@
 package org.umlmda.runtime.sdo.sync.test.gwt.client.model.impl.delegate;
 
 import org.umlmda.runtime.bean.NotificationChain;
+import org.umlmda.runtime.bean.IPropertyChangeSupport;
+import org.umlmda.runtime.bean.PropertyChangeSupportHelper;
 import org.umlmda.runtime.sdo.sync.test.gwt.client.model.RootChildren;
 import org.umlmda.runtime.sdo.sync.test.gwt.client.model.RootChildrenDelegate;
-import java.beans.PropertyChangeSupport;
 
 /**
  * Implementation for none generated methods and derived attributes of
@@ -15,7 +16,7 @@ public class RootChildrenDelegateImpl implements RootChildrenDelegate {
    @SuppressWarnings("unused")
    private NotificationChain chain;
 
-   public RootChildrenDelegateImpl(RootChildren businessObject, PropertyChangeSupport propertyChangeSupport) {
+   public RootChildrenDelegateImpl(RootChildren businessObject, PropertyChangeSupportHelper propertyChangeSupport) {
       this.businessObject = businessObject;
       
       chain = new NotificationChain(propertyChangeSupport, RootChildren.PROPERTY_DERIVED_STRING_ATTR, RootChildren.PROPERTY_STRING_ATTR);

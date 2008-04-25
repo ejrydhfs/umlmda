@@ -4,7 +4,6 @@
 package org.umlmda.runtime.bean;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeSupport;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +23,7 @@ public class PropertyChangeSupportingSetWrapper<T> extends PropertyChangeSupport
     * @param collectionPropertyName
     * @param wrappedSet
     */
-   public PropertyChangeSupportingSetWrapper(PropertyChangeSupport owner, String collectionPropertyName, Set<T> wrappedSet) {
+   public PropertyChangeSupportingSetWrapper(PropertyChangeSupportHelper owner, String collectionPropertyName, Set<T> wrappedSet) {
       super(owner, collectionPropertyName, wrappedSet);
       this.wrappedSet = wrappedSet;
    }

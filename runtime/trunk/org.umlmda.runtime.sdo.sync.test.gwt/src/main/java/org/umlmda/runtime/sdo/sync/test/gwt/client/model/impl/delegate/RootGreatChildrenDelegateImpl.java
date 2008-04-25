@@ -1,8 +1,8 @@
 package org.umlmda.runtime.sdo.sync.test.gwt.client.model.impl.delegate;
 
+import org.umlmda.runtime.bean.IPropertyChangeSupport;
 import org.umlmda.runtime.sdo.sync.test.gwt.client.model.RootGreatChildren;
 import org.umlmda.runtime.sdo.sync.test.gwt.client.model.RootGreatChildrenDelegate;
-import java.beans.PropertyChangeSupport;
 import java.util.Date;
 
 /**
@@ -13,7 +13,7 @@ import java.util.Date;
 public class RootGreatChildrenDelegateImpl implements RootGreatChildrenDelegate {
    private final RootGreatChildren businessObject;
 
-   public RootGreatChildrenDelegateImpl(RootGreatChildren businessObject, PropertyChangeSupport propertyChangeSupport) {
+   public RootGreatChildrenDelegateImpl(RootGreatChildren businessObject, IPropertyChangeSupport propertyChangeSupport) {
       this.businessObject = businessObject;
    }
 

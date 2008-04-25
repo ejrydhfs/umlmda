@@ -1,9 +1,9 @@
 package org.umlmda.runtime.bean;
 
+import java.beans.PropertyChangeEvent;
 import java.util.Collection;
 import java.util.Iterator;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeSupport;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -16,14 +16,15 @@ import org.apache.log4j.Logger;
 public abstract class PropertyChangeSupportingCollectionWrapper<T> implements Collection<T> {
    protected final Logger logger = Logger.getLogger(PropertyChangeSupportingCollectionWrapper.class);
    private final Collection<T> wrappedCollection;
-   protected final PropertyChangeSupport owner;
+   protected final PropertyChangeSupportHelper owner;
    protected final String collectionPropertyName;
 
-   PropertyChangeSupportingCollectionWrapper(PropertyChangeSupport owner, String collectionPropertyName, Collection<T> wrappedCollection) {
+   protected PropertyChangeSupportingCollectionWrapper(PropertyChangeSupportHelper owner, String collectionPropertyName, Collection<T> wrappedCollection) {
       this.owner = owner;
       this.collectionPropertyName = collectionPropertyName;
       this.wrappedCollection = wrappedCollection;
    }
+
 
    abstract Collection<T> createClone();
    

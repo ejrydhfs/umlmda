@@ -1,7 +1,6 @@
 package org.umlmda.runtime.bean;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,7 +16,7 @@ public class PropertyChangeSupportingListWrapper<T> extends PropertyChangeSuppor
 
    private final List<T> wrappedList;
 
-   public PropertyChangeSupportingListWrapper(PropertyChangeSupport owner, String collectionPropertyName, List<T> wrappedList) {
+   public PropertyChangeSupportingListWrapper(PropertyChangeSupportHelper owner, String collectionPropertyName, List<T> wrappedList) {
       super(owner, collectionPropertyName, wrappedList);
       this.wrappedList = wrappedList;
    }

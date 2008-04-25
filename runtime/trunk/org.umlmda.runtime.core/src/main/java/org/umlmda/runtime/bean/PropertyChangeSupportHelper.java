@@ -1,7 +1,7 @@
 /**
  * Remimplementation of the java.bean.PropertyChangeSupport for gwt
  */
-package java.beans;
+package org.umlmda.runtime.bean;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -9,7 +9,7 @@ import java.beans.PropertyChangeListenerProxy;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PropertyChangeSupport implements Serializable {
+public class PropertyChangeSupportHelper implements IPropertyChangeSupport, Serializable {
 	
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class PropertyChangeSupport implements Serializable {
 	private ArrayList listeners;
 	private Object    sourceBean;
 	
-	public PropertyChangeSupport(Object    sourceBean) {
+	public PropertyChangeSupportHelper(Object    sourceBean) {
 		this.listeners  = new java.util.ArrayList ();
 		this.sourceBean = sourceBean;
 	}

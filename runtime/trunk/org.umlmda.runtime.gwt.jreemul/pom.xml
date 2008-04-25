@@ -3,14 +3,46 @@
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <parent>
-    <artifactId>org.umlmda.runtime.releng</artifactId>
-    <groupId>org.umlmda</groupId>
-    <version>2.1.0-SNAPSHOT</version>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>org.umlmda.runtime.gwt.jreemul</artifactId>
-  <name>UMLMDA JRE emulation</name>
-  <description>Contains classes handled on GWT clients to emulate JRE functionalität missing in GWT itself.</description>
+   <parent>
+      <artifactId>org.umlmda.runtime.releng</artifactId>
+      <groupId>org.umlmda</groupId>
+      <version>2.1.0-SNAPSHOT</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>org.umlmda.runtime.gwt.jreemul</artifactId>
+   <name>UMLMDA JRE emulation</name>
+   <description>
+      Contains classes handled on GWT clients to emulate JRE functionalität missing in GWT itself.
+   </description>
 
+   <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-jar-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>jre-dummy</id>
+                  <phase>package</phase>
+                  <goals><goal>jar</goal></goals>
+                  <configuration>
+                     <classifier>dummy</classifier>
+                     <includes>
+                        <include>**/*</include>
+                     </includes>
+                     <excludes>
+                        <exclude>**/beans/*</exclude>
+                        <exclude>**/Beans.gwt.xml</exclude>
+                     </excludes>
+                  </configuration>
+               </execution>
+            </executions>
+            <configuration>
+               <includes>
+                  <include>**/beans/*</include>
+                  <include>**/Beans.gwt.xml</include>
+               </includes>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
 </project>

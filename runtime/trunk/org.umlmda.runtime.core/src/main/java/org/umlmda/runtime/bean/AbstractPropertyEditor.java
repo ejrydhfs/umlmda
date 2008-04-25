@@ -4,7 +4,6 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.beans.PropertyEditor;
 
 public abstract class AbstractPropertyEditor<TBeanClass> implements PropertyEditor {
@@ -26,14 +25,14 @@ public abstract class AbstractPropertyEditor<TBeanClass> implements PropertyEdit
    }
    
    public void addPropertyChangeListener(PropertyChangeListener listener) {
-      if ( bean instanceof PropertyChangeSupport ) {
-         ((PropertyChangeSupport)bean).addPropertyChangeListener(propertyName, listener);
+      if ( bean instanceof PropertyChangeSupportHelper ) {
+         ((PropertyChangeSupportHelper)bean).addPropertyChangeListener(propertyName, listener);
       }
    }
 
    public void removePropertyChangeListener(PropertyChangeListener listener) {
-      if ( bean instanceof PropertyChangeSupport ) {
-         ((PropertyChangeSupport)bean).removePropertyChangeListener(propertyName, listener);
+      if ( bean instanceof PropertyChangeSupportHelper ) {
+         ((PropertyChangeSupportHelper)bean).removePropertyChangeListener(propertyName, listener);
       }
    }
 

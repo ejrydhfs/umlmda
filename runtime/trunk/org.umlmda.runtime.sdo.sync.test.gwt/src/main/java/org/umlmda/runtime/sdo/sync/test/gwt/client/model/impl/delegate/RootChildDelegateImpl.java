@@ -1,8 +1,8 @@
 package org.umlmda.runtime.sdo.sync.test.gwt.client.model.impl.delegate;
 
+import org.umlmda.runtime.bean.IPropertyChangeSupport;
 import org.umlmda.runtime.sdo.sync.test.gwt.client.model.RootChild;
 import org.umlmda.runtime.sdo.sync.test.gwt.client.model.RootChildDelegate;
-import java.beans.PropertyChangeSupport;
 
 /**
  * Implementation for none generated methods and derived attributes of
@@ -12,7 +12,7 @@ import java.beans.PropertyChangeSupport;
 public class RootChildDelegateImpl implements RootChildDelegate {
    private final RootChild businessObject;
 
-   public RootChildDelegateImpl(RootChild businessObject, PropertyChangeSupport propertyChangeSupport) {
+   public RootChildDelegateImpl(RootChild businessObject, IPropertyChangeSupport propertyChangeSupport) {
       this.businessObject = businessObject;
    }
 

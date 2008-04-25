@@ -26,7 +26,6 @@ package org.umlmda.runtime.bean;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 
 /**
@@ -38,9 +37,9 @@ import java.beans.PropertyChangeSupport;
  */
 public class NotificationChain implements PropertyChangeListener{
 	private final String derivedAttrName;
-	private final PropertyChangeSupport changeSupport;
+	private final PropertyChangeSupportHelper changeSupport;
 	
-	public NotificationChain(PropertyChangeSupport changeSupport, String derivedAttrName, String... baseAttrNames){
+	public NotificationChain(PropertyChangeSupportHelper changeSupport, String derivedAttrName, String... baseAttrNames){
 		this.derivedAttrName = derivedAttrName;
 		this.changeSupport   = changeSupport;
 		

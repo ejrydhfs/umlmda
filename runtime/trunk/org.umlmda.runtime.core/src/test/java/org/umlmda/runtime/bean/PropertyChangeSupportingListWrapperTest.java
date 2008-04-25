@@ -2,7 +2,6 @@ package org.umlmda.runtime.bean;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +19,7 @@ public class PropertyChangeSupportingListWrapperTest extends TestCase {
 
    }
    
-   PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+   PropertyChangeSupportHelper propertyChangeSupport = new PropertyChangeSupportHelper(this);
    boolean gotEvent = false;
    List<Element> elements = new PropertyChangeSupportingListWrapper<Element>(propertyChangeSupport, "elements", new ArrayList<Element>());
    
