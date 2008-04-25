@@ -45,4 +45,6 @@ public interface Recorder {
     * @return
     */
    public abstract Object recordInvoke(SynchronizedObject recordedObject, String method, Object... parameters);
+
+   public abstract void reset();
 }

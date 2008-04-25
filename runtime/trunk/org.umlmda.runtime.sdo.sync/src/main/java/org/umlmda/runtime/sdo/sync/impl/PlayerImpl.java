@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.umlmda.runtime.bean.BeanInvocation;
 import org.umlmda.runtime.bean.BeanInvocation.Factory;
 import org.umlmda.runtime.sdo.sync.Player;
@@ -19,6 +20,7 @@ import org.umlmda.runtime.sdo.sync.entries.NewEntry;
 
 public class PlayerImpl implements Player {
    private static final long serialVersionUID = 1L;
+   private static final Logger logger = Logger.getLogger(PlayerImpl.class);
    private transient Map<Integer, SynchronizedObject> synchronizedObjects = new HashMap<Integer, SynchronizedObject>();
    private final SynchronizedObjectFactory objectFactory;
    private final Factory beanInvocationFactory;
@@ -33,7 +35,19 @@ public class PlayerImpl implements Player {
       synchronizedObjects.put(recordObjectId, recordedObject);
    }
    
+   public synchronized void reset() {
+      logger.debug("Got reset");
+      recordedObjectCount = 0;
+      synchronizedObjects.clear();
+   }
+   
    public synchronized SynchronizedObject playback(List<AbstractChangeLogEntry> changeEntries, SynchronizedObject rootObject) {
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("Got the messages to play back");
+         for (AbstractChangeLogEntry entry : changeEntries) {
+            logger.debug(entry);
+         }
+      }
       
       for (AbstractChangeLogEntry logEntry : changeEntries) {
          SynchronizedObject object = synchronizedObjects.get(logEntry.getRecordId());

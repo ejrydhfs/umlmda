@@ -20,6 +20,32 @@ public class SyncServiceWrapper implements org.umlmda.runtime.sdo.sync.SyncServi
       this.callback = callback;
    }
    
+   @SuppressWarnings("unchecked")
+   public void startConversation() {
+      serviceAsync.startConversation(new AsyncCallback() {
+
+         public void onFailure(Throwable caught) {
+            getCallback().onException(caught);
+         }
+
+         public void onSuccess(Object result) {
+            getCallback().onSuccess();
+         }});
+   }
+   
+   @SuppressWarnings("unchecked")
+   public void finishConversation() {
+      serviceAsync.finishConversation(new AsyncCallback() {
+
+         public void onFailure(Throwable caught) {
+            getCallback().onException(caught);
+         }
+
+         public void onSuccess(Object result) {
+            getCallback().onSuccess();
+         }});
+   }
+   
    public void invokeMethod(SynchronizedObjectProxy object, String methodName, final SyncServiceInternalInvokeCallback invokeCallback) {
       if ( invokeCallback == null ) {
          throw new IllegalStateException("invokeCallback not set");

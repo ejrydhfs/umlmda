@@ -7,6 +7,16 @@ import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalInvokeCallback;
 import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalSynchronizeCallback;
 
 public interface SyncService {
+   /** 
+    * Start the conversation
+    */
+   public void startConversation();
+   
+   /**
+    * Finish the conversation. A new conversation can be started.
+    */
+   public void finishConversation();
+
    /**
     * Synchronize changes with remote peer
     * @param changes

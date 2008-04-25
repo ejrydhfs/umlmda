@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.umlmda.runtime.exception.FeatureNotImplemementedException;
 import org.umlmda.runtime.lang.GenericEnumeration;
 import org.umlmda.runtime.sdo.sync.Player;
@@ -24,6 +25,7 @@ import org.umlmda.runtime.sdo.sync.entries.ChangeEnumerationEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeIntegerEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
+import org.umlmda.runtime.sdo.sync.entries.ChangeToNull;
 import org.umlmda.runtime.sdo.sync.entries.CollectionRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
@@ -32,6 +34,7 @@ import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalInvokeCallback;
 import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalSynchronizeCallback;
 
 public class SynchronizerImpl implements Recorder {
+   private Logger logger = Logger.getLogger(SynchronizerImpl.class);
    private List<AbstractChangeLogEntry> changeEntries = new ArrayList<AbstractChangeLogEntry>();
    private boolean recording = true;
    private final SyncService service;
@@ -41,6 +44,10 @@ public class SynchronizerImpl implements Recorder {
       this.service = service;
    }
 
+   public void reset() {
+      changeEntries.clear();
+   }
+   
    public synchronized List<AbstractChangeLogEntry> getChangeEntries() {
       return changeEntries;
    }
@@ -69,7 +76,9 @@ public class SynchronizerImpl implements Recorder {
 
    public synchronized void recordChange(SynchronizedObject object, String propertyName, Object value) {
       if (recording) {
-         if (value instanceof Boolean) {
+         if (value == null) {
+            changeEntries.add(new ChangeToNull(object.getRecordObjectId(), propertyName));
+         } else if (value instanceof Boolean) {
             changeEntries.add(new ChangeBooleanEntry(object.getRecordObjectId(), propertyName, (Boolean) value));
          } else if (value instanceof Date) {
             changeEntries.add(new ChangeDateEntry(object.getRecordObjectId(), propertyName, (Date) value));
@@ -123,6 +132,13 @@ public class SynchronizerImpl implements Recorder {
    }
 
    public synchronized void recordInvoke(final SynchronizedObject recordedObject, final String methodName) {
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("About to invoke "+methodName+" pushd changes to remote peer");
+         for (AbstractChangeLogEntry entry : changeEntries) {
+            logger.debug(entry);
+         }
+      }
+      
       // Synchronize all avaiulable changes to remote peer before calling the method
       // TODO Check if invoke works without prio changes
       if ( service != null && changeEntries.size() > 0 ) {
@@ -133,8 +149,7 @@ public class SynchronizerImpl implements Recorder {
                   callback.onException(throwable);
                }
                else {
-                  // FIXME Error handling
-                  throwable.printStackTrace(System.err);
+                  logger.error(throwable.getMessage(), throwable);
                }
             }
 
@@ -160,8 +175,7 @@ public class SynchronizerImpl implements Recorder {
                         callback.onException(throwable);
                      }
                      else {
-                        // FIXME Error handling
-                        throwable.printStackTrace(System.err);
+                        logger.error(throwable.getMessage(), throwable);
                      }
                   }
 

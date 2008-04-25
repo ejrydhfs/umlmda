@@ -68,6 +68,24 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       return (Player) getServletContext().getAttribute(SESSION_ATTR_SDO_PLAYER);
    }
 
+   private Recorder getRecorder() {
+      return (Recorder) getServletContext().getAttribute(SESSION_ATTR_SDO_RECORDER);
+   }
+
+   public void startConversation() {
+      logger.info("startConversation()");
+
+      getPlayer().reset();
+      getRecorder().reset();
+   }
+   
+   public void finishConversation() {
+      logger.info("finishConversation()");
+
+      getPlayer().reset();
+      getRecorder().reset();
+   }
+   
    /**
     * Server side implementation of the SyncService
     */
@@ -105,11 +123,15 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
                logger.debug(entry);
             }
          }
+
          
          return slaveRecorder.getChangeEntries();
       } catch (RuntimeException e) {
          logger.error(e.getMessage(), e);
          throw e;
+      } catch (Throwable e) {
+         logger.fatal(e.getMessage(), e);
+         throw new RuntimeException(e);
       }
    }
 
