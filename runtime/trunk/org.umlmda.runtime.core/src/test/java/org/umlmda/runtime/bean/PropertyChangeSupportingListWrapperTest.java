@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -35,6 +36,13 @@ public class PropertyChangeSupportingListWrapperTest extends TestCase {
 
       elements.add(new Element("Hallo"));
       assertTrue(gotEvent);
+      assertTrue(elements.size() == 1);
+      
+      Iterator<Element> it = elements.iterator();
+      
+      assertTrue(it.hasNext());
+      assertNotNull(it.next());
+      assertFalse(it.hasNext());
    }
 
    public void testListIterator() {
