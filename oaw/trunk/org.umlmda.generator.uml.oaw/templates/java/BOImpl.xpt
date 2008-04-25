@@ -465,7 +465,7 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 // Property Change Support
 // =======================
 «DEFINE propertyChangeImports FOR JavaModelClass»
-import java.beans.PropertyChangeSupport;
+import org.umlmda.runtime.bean.PropertyChangeSupportHelper;
 import java.beans.PropertyChangeListener;
 import org.umlmda.runtime.bean.BeanUtils;
 «ENDDEFINE»
@@ -473,7 +473,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 «DEFINE propertyChangeSupportAttr FOR JavaModelClass»
 	«IF superClass == null»
    // Property change support
-   protected final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+   protected final PropertyChangeSupportHelper propertyChangeSupport = new PropertyChangeSupportHelper(this);
 	«ENDIF»
 «ENDDEFINE»
 
@@ -482,13 +482,13 @@ import org.umlmda.runtime.bean.BeanUtils;
 «ENDDEFINE»
 
 «DEFINE propertyChangeSupportParameterDecl FOR JavaModelClass»
-	, PropertyChangeSupport propertyChangeSupport
+	, PropertyChangeSupportHelper propertyChangeSupport
 «ENDDEFINE»
 
 «DEFINE propertyChangeSupportMethods FOR JavaModelClass»
 	«IF superClass == null»
 	   /**
-	    * @see java.beans.PropertyChangeSupport#addPropertyChangeListener(java.beans.PropertyChangeListener)
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#addPropertyChangeListener(java.beans.PropertyChangeListener)
 	    */
 	   public void addPropertyChangeListener(java.beans.PropertyChangeListener listener)
 	   {
@@ -500,7 +500,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 	   }
 	
 	   /**
-	    * @see java.beans.PropertyChangeSupport#addPropertyChangeListener(java.lang.String,
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#addPropertyChangeListener(java.lang.String,
 	    *      java.beans.PropertyChangeListener)
 	    */
 	   public void addPropertyChangeListener(String propertyName, java.beans.PropertyChangeListener listener)
@@ -514,7 +514,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 	
 	   /**
 	    * 
-	    * @see java.beans.PropertyChangeSupport#getPropertyChangeListeners()
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#getPropertyChangeListeners()
 	    */
 	   public java.beans.PropertyChangeListener[] getPropertyChangeListeners()
 	   {
@@ -523,7 +523,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 	
 	   /**
 	    * 
-	    * @see java.beans.PropertyChangeSupport#getPropertyChangeListeners(java.lang.String)
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#getPropertyChangeListeners(java.lang.String)
 	    */
 	   public java.beans.PropertyChangeListener[] getPropertyChangeListeners(String propertyName)
 	   {
@@ -531,7 +531,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 	   }
 	
 	   /**
-	    * @see java.beans.PropertyChangeSupport#hasListeners(java.lang.String)
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#hasListeners(java.lang.String)
 	    */
 	   public boolean hasListeners(String propertyName)
 	   {
@@ -539,7 +539,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 	   }
 	
 	   /**
-	    * @see java.beans.PropertyChangeSupport#removePropertyChangeListener(java.beans.PropertyChangeListener)
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#removePropertyChangeListener(java.beans.PropertyChangeListener)
 	    */
 	   public void removePropertyChangeListener(java.beans.PropertyChangeListener listener)
 	   {
@@ -547,7 +547,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 	   }
 	
 	   /**
-	    * @see java.beans.PropertyChangeSupport#removePropertyChangeListener(java.lang.String,
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#removePropertyChangeListener(java.lang.String,
 	    *      java.beans.PropertyChangeListener)
 	    */
 	   public void removePropertyChangeListener(String propertyName, java.beans.PropertyChangeListener listener)

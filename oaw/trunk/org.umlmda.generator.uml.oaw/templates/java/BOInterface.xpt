@@ -103,7 +103,7 @@
 «ENDDEFINE»
 
 «DEFINE propertyChangeBaseInterface FOR JavaBusinessObject»
-	org.umlmda.runtime.bean.PropertyChangeSupport
+	org.umlmda.runtime.bean.IPropertyChangeSupport
 «ENDDEFINE»
 
 

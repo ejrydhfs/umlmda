@@ -15,6 +15,6 @@
 // Base interface is java.io.Serializable
 // ======================================
 «AROUND java::BOInterface::standardBaseInterface FOR JavaBusinessObject»
-	org.umlmda.runtime.sdo.sync.SynchronizedObject, «jmiPackage()».RefFeatured, org.umlmda.runtime.bean.PropertyChangeSupport, java.io.Serializable
+	org.umlmda.runtime.sdo.sync.SynchronizedObject, «jmiPackage()».RefFeatured, org.umlmda.runtime.bean.IPropertyChangeSupport, java.io.Serializable
 «ENDAROUND»
 

@@ -17,7 +17,7 @@
 			package «generatorPackage.getQualifiedPackageName("java.DelegateImpl")»;
 			
 			«this.registeredImports()»
-			import java.beans.PropertyChangeSupport;
+			import org.umlmda.runtime.bean.PropertyChangeSupportHelper;
 			
 			/**
 			 * Implementation for none generated methods and derived attributes of
