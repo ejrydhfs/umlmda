@@ -690,7 +690,9 @@ import org.umlmda.runtime.bean.BeanUtils;
 
 «DEFINE xmlMarshalAttribute FOR JavaModelAttribute»
 	«IF this.modelClassifier.hasStereotype("Enumeration")»
-         context.simpleElement("«name»", «getter»().getValue());
+		 if ( «getter»() != null ) {
+	         context.simpleElement("«name»", «getter»().getValue());
+         }
 	«ELSE»
          context.simpleElement("«name»", «getter»());
 	«ENDIF»
