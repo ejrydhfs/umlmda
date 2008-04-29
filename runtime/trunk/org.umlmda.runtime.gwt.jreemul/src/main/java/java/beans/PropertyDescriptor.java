@@ -36,6 +36,7 @@ public abstract class PropertyDescriptor extends FeatureDescriptor {
       this.beanClass = beanClass;
       this.getterName = getterName;
       this.setterName = setterName;
+      super.setName(propertyName);
    }
 
    public PropertyDescriptor(String propertyName, Method getter, Method setter) throws IntrospectionException {
@@ -44,6 +45,7 @@ public abstract class PropertyDescriptor extends FeatureDescriptor {
 
    public PropertyDescriptor(String propertyName, Class<?> beanClass) throws IntrospectionException {
       this.beanClass = beanClass;
+      super.setName(propertyName);
    }
 
    public void setWriteMethod(Method setter) throws IntrospectionException {
