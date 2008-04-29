@@ -42,6 +42,7 @@ public class SynchronizedSetWrapper<T> extends AbstractSynchronizedObject implem
    }
 
    public void clear() {
+      wrappedSet.clear();
       recorder.recordClear(this);
    }
 

@@ -55,6 +55,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
    }
 
    public void clear() {
+      wrappedList.clear();
       recorder.recordClear(this);
    }
 
