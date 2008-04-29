@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.umlmda.runtime.bean.BeanInvocation;
@@ -19,6 +20,7 @@ import org.umlmda.runtime.sdo.sync.entries.CollectionRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
+import org.umlmda.runtime.sdo.sync.entries.SetAddEntry;
 
 public class PlayerImpl implements Player {
    private static final long serialVersionUID = 1L;
@@ -77,6 +79,14 @@ public class PlayerImpl implements Player {
             list.add(listAddEntry.getIndex(), listElement);
          }
 
+         else if (logEntry instanceof SetAddEntry) {
+            SetAddEntry setAddEntry = (SetAddEntry) logEntry;
+            Object setElement = getValue(setAddEntry.getValue());
+            Set<Object> set = (Set<Object>) object;
+            
+            set.add(setElement);
+         }
+
          else if (logEntry instanceof CollectionRemoveEntry) {
             CollectionRemoveEntry removeEntry = (CollectionRemoveEntry) logEntry;
             Object listElement = getValue(removeEntry.getValue());
@@ -98,6 +108,7 @@ public class PlayerImpl implements Player {
             
             collection.remove(removeEntry.getIndex());
          }
+
          else {
             throw new IllegalArgumentException();
          }
