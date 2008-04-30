@@ -19,9 +19,9 @@
 «LET generatedName(this, "gwt.BeanDescriptor") AS className»
 «this.resetImports()»
 «this.registerImport(getDefaultArtefact("BusinessObject"))»
-«this.registerImports(getDefaultArtefact("BusinessObject"), referencedTypes, "BusinessObject")»
-«this.registerImports(getDefaultArtefact("BusinessException"), referencedTypes, "BusinessException")»
-«this.registerImports(getDefaultArtefact("Enumeration"), referencedTypes, "Enumeration")»
+«this.registerImports(getDefaultArtefact("BusinessObject"), implementationReferencedTypes, "BusinessObject")»
+«this.registerImports(getDefaultArtefact("BusinessException"), implementationReferencedTypes, "BusinessException")»
+«this.registerImports(getDefaultArtefact("Enumeration"), implementationReferencedTypes, "Enumeration")»
 «IF javaSuperClass != null»
 	«this.registerImport("gwt.BeanDescriptor", javaSuperClass)»
 «ENDIF» 	
