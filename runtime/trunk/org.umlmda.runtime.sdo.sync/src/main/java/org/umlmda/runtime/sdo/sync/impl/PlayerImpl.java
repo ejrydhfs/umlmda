@@ -46,15 +46,20 @@ public class PlayerImpl implements Player {
    }
    
    public synchronized SynchronizedObject playback(List<AbstractChangeLogEntry> changeEntries, SynchronizedObject rootObject) {
+      int index = 0;
+      int count = changeEntries.size();
+      
       if ( logger.isDebugEnabled() ) {
-         logger.debug("Got the messages to play back");
-         for (AbstractChangeLogEntry entry : changeEntries) {
-            logger.debug(entry);
-         }
+         logger.debug("Got "+count+" messages to play back");
       }
       
       for (AbstractChangeLogEntry logEntry : changeEntries) {
          SynchronizedObject object = synchronizedObjects.get(logEntry.getRecordId());
+         
+         if ( logger.isDebugEnabled() ) {
+            ++index;
+            logger.debug("About to playback ("+index+"/"+count+"): "+logEntry);
+         }
          
          if ( object == null && logEntry instanceof NewEntry ) {
             NewEntry createEntry = (NewEntry) logEntry;
