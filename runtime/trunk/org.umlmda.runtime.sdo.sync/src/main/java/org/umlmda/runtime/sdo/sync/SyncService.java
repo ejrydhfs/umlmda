@@ -3,8 +3,8 @@ package org.umlmda.runtime.sdo.sync;
 import java.util.List;
 
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
-import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalInvokeCallback;
-import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalSynchronizeCallback;
+import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
+import org.umlmda.runtime.sdo.sync.impl.ServiceCallWrapperImpl;
 
 public interface SyncService {
    /** 
@@ -22,7 +22,7 @@ public interface SyncService {
     * @param changes
     * @return
     */
-	public abstract void synchronizeChanges(List<AbstractChangeLogEntry> changes, SyncServiceInternalSynchronizeCallback callback);
+	public abstract void synchronizeChanges(List<AbstractChangeLogEntry> changes, ServiceCallWrapperImpl<List<AbstractChangeLogEntry>> callback);
 	
 	/**
 	 * Invoke a method on the remote peer.
@@ -30,7 +30,7 @@ public interface SyncService {
 	 * @param methodName
 	 * @return
 	 */
-	public abstract void invokeMethod(SynchronizedObjectProxy object, String methodName, SyncServiceInternalInvokeCallback callback);
+	public abstract void invokeMethod(SynchronizedObjectProxy object, String methodName, ServiceCallWrapperImpl<AbstractInvocationResult> callback);
 	
 	public abstract SyncServiceCallback getCallback();
 }

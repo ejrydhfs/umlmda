@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.umlmda.runtime.exception.FeatureNotImplemementedException;
 import org.umlmda.runtime.lang.GenericEnumeration;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
@@ -27,13 +26,12 @@ import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeToNull;
 import org.umlmda.runtime.sdo.sync.entries.CollectionClearEntry;
-import org.umlmda.runtime.sdo.sync.entries.ListRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.CollectionRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
+import org.umlmda.runtime.sdo.sync.entries.ListRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
 import org.umlmda.runtime.sdo.sync.entries.SetAddEntry;
-import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalInvokeCallback;
-import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalSynchronizeCallback;
+import org.umlmda.runtime.sdo.sync.internal.AbstractServiceCall;
 
 public class SynchronizerImpl implements Recorder {
    private Logger logger = Logger.getLogger(SynchronizerImpl.class);
@@ -145,64 +143,49 @@ public class SynchronizerImpl implements Recorder {
          }
       }
       
-      // Synchronize all avaiulable changes to remote peer before calling the method
-      // TODO Check if invoke works without prio changes
-      if ( service != null && changeEntries.size() > 0 ) {
-         service.synchronizeChanges(changeEntries, new SyncServiceInternalSynchronizeCallback() {
+      ServiceQueue serviceQueue = new ServiceQueue();
+      
+      // Write pending changes to remote peer
+      if ( changeEntries.size() > 0 ) {
+         serviceQueue.addServiceCall(new AbstractServiceCall<List<AbstractChangeLogEntry>>() {
 
-            public void onException(Throwable throwable, SyncServiceCallback callback) {
-               if ( callback != null ) {
-                  callback.onException(throwable);
-               }
-               else {
-                  logger.error(throwable.getMessage(), throwable);
-               }
+            public void onExecute(ServiceCallWrapperImpl<List<AbstractChangeLogEntry>> wrapper) {
+               service.synchronizeChanges(changeEntries, wrapper);
             }
 
-            // Replay changes from remote to local, caused by the remote synchronization above
             public void onSucess(List<AbstractChangeLogEntry> remoteChanges, SyncServiceCallback callback) {
-               
                // Get remote results put to local objects 
-               if( player != null && remoteChanges != null && remoteChanges.size() > 0 ) {
+               if ( player != null && remoteChanges != null && remoteChanges.size() > 0 ) {
                   player.playback(remoteChanges, null);
-                  
                   changeEntries.removeAll(remoteChanges);
-                  
                }
-               
                changeEntries.clear();
-               
-               // Now call the method
-               SynchronizedObjectProxy objectProxy = new SynchronizedObjectProxy(recordedObject.getRecordObjectId());
-               service.invokeMethod(objectProxy, methodName, new SyncServiceInternalInvokeCallback() {
-
-                  public void onException(Throwable throwable, SyncServiceCallback callback) {
-                     if ( callback != null ) {
-                        callback.onException(throwable);
-                     }
-                     else {
-                        logger.error(throwable.getMessage(), throwable);
-                     }
-                  }
-
-                  public void onSucess(AbstractInvocationResult invocationResult, SyncServiceCallback callback) {
-                     if ( player != null && invocationResult.getRemoteChanges() != null && invocationResult.getRemoteChanges().size() > 0 ) {
-                        player.playback(invocationResult.getRemoteChanges(), null);
-                        
-                        changeEntries.removeAll(invocationResult.getRemoteChanges());
-                     }
-                     if ( callback != null ) {
-                        callback.onSuccess();
-                     }
-                  }
-                  
-               });
-               
             }
-            
-           
          });
       }
+      
+      // Call the service
+      serviceQueue.addServiceCall(new AbstractServiceCall<AbstractInvocationResult>() {
+
+         public void onExecute(ServiceCallWrapperImpl<AbstractInvocationResult> wrapper) {
+            SynchronizedObjectProxy objectProxy = new SynchronizedObjectProxy(recordedObject.getRecordObjectId());
+            service.invokeMethod(objectProxy, methodName, wrapper);            
+         }
+
+         public void onSucess(AbstractInvocationResult invocationResult, SyncServiceCallback callback) {
+            if ( player != null && invocationResult.getRemoteChanges() != null && invocationResult.getRemoteChanges().size() > 0 ) {
+               player.playback(invocationResult.getRemoteChanges(), null);
+               
+               changeEntries.removeAll(invocationResult.getRemoteChanges());
+            }
+            if ( callback != null ) {
+               callback.onSuccess();
+            }            
+         }
+      });
+      
+      serviceQueue.execute();
+      
    }
 
    private synchronized int getNextRecordObjectId() {

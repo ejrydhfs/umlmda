@@ -2,12 +2,12 @@ package org.umlmda.runtime.sdo.sync.gwt.client;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.umlmda.runtime.sdo.sync.SyncServiceCallback;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
-import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalInvokeCallback;
-import org.umlmda.runtime.sdo.sync.internal.SyncServiceInternalSynchronizeCallback;
+import org.umlmda.runtime.sdo.sync.impl.ServiceCallWrapperImpl;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -15,6 +15,7 @@ public class SyncServiceWrapper implements org.umlmda.runtime.sdo.sync.SyncServi
 
    private final SyncServiceAsync serviceAsync = SyncServiceLocator.getInstance();
    private final SyncServiceCallback callback;
+   private static Logger                logger = Logger.getLogger(SyncServiceWrapper.class);
 
    public SyncServiceWrapper(SyncServiceCallback callback) {
       this.callback = callback;
@@ -46,22 +47,25 @@ public class SyncServiceWrapper implements org.umlmda.runtime.sdo.sync.SyncServi
          }});
    }
    
-   public void invokeMethod(SynchronizedObjectProxy object, String methodName, final SyncServiceInternalInvokeCallback invokeCallback) {
+   public void invokeMethod(SynchronizedObjectProxy object, String methodName, final ServiceCallWrapperImpl<AbstractInvocationResult> invokeCallback) {
       if ( invokeCallback == null ) {
          throw new IllegalStateException("invokeCallback not set");
       }
+      logger.debug("serviceAsync started");
       serviceAsync.invokeMethod(object, methodName, new AsyncCallback<AbstractInvocationResult>(){
 
          public void onFailure(Throwable caught) {
+            logger.debug("onFailure called");
             invokeCallback.onException(caught, callback);
          }
 
          public void onSuccess(AbstractInvocationResult result) {
+            logger.debug("onSucess called");
             invokeCallback.onSucess(result, callback);
          }});
    }
 
-   public void synchronizeChanges(List<AbstractChangeLogEntry> changes, final SyncServiceInternalSynchronizeCallback synchronizeCallback) {
+   public void synchronizeChanges(List<AbstractChangeLogEntry> changes, final ServiceCallWrapperImpl<List<AbstractChangeLogEntry>> synchronizeCallback) {
       if ( synchronizeCallback == null ) {
          throw new IllegalStateException("synchronizeCallback not set");
       }
