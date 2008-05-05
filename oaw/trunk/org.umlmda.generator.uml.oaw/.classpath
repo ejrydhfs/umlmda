@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="templates"/>
-	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="src" path="model"/>
+	<classpathentry kind="src" output="target-eclipse/classes" path="src"/>
+	<classpathentry kind="src" output="target-eclipse/test-classes" path="test">
+		<attributes>
+			<attribute name="maven.type" value="test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="templates" path="templates"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="target-eclipse/classes"/>
 </classpath>

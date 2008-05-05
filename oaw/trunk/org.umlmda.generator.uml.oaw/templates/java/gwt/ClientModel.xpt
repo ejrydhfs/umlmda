@@ -11,7 +11,7 @@
 «DEFINE Root FOR JavaModel»
     «ERROR "Root called on <<Model>> "+name»
     «resetDefaultArtefacts()»
-	«EXPAND Root FOREACH this.modelElements.typeSelect(ModelElement)»
+	«EXPAND Root FOREACH this.packages.typeSelect(ModelPackage)»
 «ENDDEFINE»
 
 «DEFINE Root FOR JavaBusinessException»
@@ -32,6 +32,7 @@
 
 «DEFINE Root FOR JavaEnumeration»
 	«EXPAND java::Enumeration::Enumeration»
+	«EXPAND java::gwt::EnumerationCustomFieldSerializer::Root»
 «ENDDEFINE»
 
 «DEFINE Root FOR JavaBusinessComponent»

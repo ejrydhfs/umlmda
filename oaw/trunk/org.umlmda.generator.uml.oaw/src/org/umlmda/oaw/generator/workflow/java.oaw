@@ -59,6 +59,7 @@
 	   	<globalVarDef name="dateMapping" value="${dateMapping}"/>
 	   	<globalVarDef name="decimalMapping" value="${decimalMapping}"/>
 	   	<globalVarDef name="javaGenerics" value="'true'"/>
+        <globalVarDef name="GWTSupport" value="${GWTSupport}"/>
 
 	</component>
 

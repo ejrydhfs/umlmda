@@ -11,9 +11,9 @@ extension org::umlmda::uml::java::Attribute;
 
 // and we also load the io extensions, for the purpose of
 // debugging, in case we need it   
-extension org::openarchitectureware::util::stdlib::io;   
-extension org::openarchitectureware::util::stdlib::issues;   
-extension org::openarchitectureware::util::stdlib::counter;   
+//extension org::openarchitectureware::util::stdlib::io;   
+//extension org::openarchitectureware::util::stdlib::issues;   
+//extension org::openarchitectureware::util::stdlib::counter;   
 
 cached String enumType(JavaEnumeration clazz) :
 	clazz.attributes.typeSelect(JavaModelAttribute).first().javaTypeName();
