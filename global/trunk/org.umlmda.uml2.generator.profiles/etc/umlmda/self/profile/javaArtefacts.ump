@@ -20,4 +20,5 @@
   <artefacts name="java.ConstraintIteration" fileExtension="java" postfix="" namespacePostfix=".dto.util" replacement="\u$1ConstraintIteration" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintIteration.vm"/>
   <artefacts name="java.MetaFeaturesInterface" fileExtension="java" postfix="Features" namespacePostfix=".dto.meta" type="Velocity" writer="java/MetaFeaturesInterface.vm"/>
   <artefacts name="java.MetaClassInterface" fileExtension="java" postfix="Class" namespacePostfix=".dto.meta" type="Velocity" writer="java/MetaClassInterface.vm"/>
+  <artefacts name="gwt.EnumerationCustomFieldSerializer" fileExtension="java" postfix="_CustomFieldSerializer" namespacePostfix=".dto" type="None" writer=""/>
 </org.umlmda.generator.profile:Profile>

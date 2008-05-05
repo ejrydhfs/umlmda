@@ -11,5 +11,6 @@
   <artefacts name="java.VisitableIterator" fileExtension="java" postfix="" namespacePostfix=".model" replacement="\u$1VisitableIterator" replacementPattern="(.*)" type="Velocity" writer="java/VisitableIterator.vm"/>
   <artefacts name="java.ConstraintVisitor" fileExtension="java" postfix="" namespacePostfix=".model.util" replacement="\u$1ConstraintVisitor" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintVisitor.vm"/>
   <artefacts name="java.ConstraintIteration" fileExtension="java" postfix="" namespacePostfix=".model.util" replacement="\u$1ConstraintIteration" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintIteration.vm"/>
+  <artefacts name="gwt.EnumerationCustomFieldSerializer" fileExtension="java" postfix="_CustomFieldSerializer" namespacePostfix=".dto" type="None" writer=""/>
   <basedOn href="javaArtefacts.ump#javaArtefacts"/>
 </org.umlmda.generator.profile:Profile>
