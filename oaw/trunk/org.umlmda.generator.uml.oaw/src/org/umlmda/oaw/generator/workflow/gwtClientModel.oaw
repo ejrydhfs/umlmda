@@ -49,6 +49,7 @@
 	   	<globalVarDef name="dateMapping" value="${dateMapping}"/>
 	   	<globalVarDef name="decimalMapping" value="${decimalMapping}"/>
 	   	<globalVarDef name="javaGenerics" value="'true'"/>
+        <globalVarDef name="GWTSupport" value="'true'"/>
 
 	   <!-- Protected Regions (not used) -->	
        <prSrcPaths value="${javaGenPath}/"/>
