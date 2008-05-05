@@ -30,6 +30,11 @@
          <groupId>${pom.groupId}</groupId>
          <artifactId>org.umlmda.runtime.sdo</artifactId>
       </dependency>
+      <dependency>
+         <groupId>com.google.gwt</groupId>
+         <artifactId>gwt-servlet</artifactId>
+         <scope>provided</scope>
+      </dependency>
    </dependencies>
 
    <build>
