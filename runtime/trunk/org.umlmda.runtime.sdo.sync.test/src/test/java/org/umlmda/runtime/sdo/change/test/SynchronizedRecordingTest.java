@@ -78,6 +78,7 @@ public class SynchronizedRecordingTest extends TestCase {
 
       greatChildren.setCodeAttr(CodeType.A);
       greatChildren.setIntCodeAttr(IntCodeType.A);
+      greatChildren.setArrayAttr(new String[] { "A", "B"});
       
       TestUtils.logEntries(logger, recorder);
       assertEquals(14, recorder.getChangeEntries().size());

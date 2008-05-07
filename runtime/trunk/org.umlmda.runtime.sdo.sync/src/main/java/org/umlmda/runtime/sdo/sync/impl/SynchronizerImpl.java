@@ -23,6 +23,7 @@ import org.umlmda.runtime.sdo.sync.entries.ChangeDoubleEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeEnumerationEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeIntegerEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
+import org.umlmda.runtime.sdo.sync.entries.ChangeStringArrayEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeToNull;
 import org.umlmda.runtime.sdo.sync.entries.CollectionClearEntry;
@@ -88,6 +89,8 @@ public class SynchronizerImpl implements Recorder {
             changeEntries.add(new ChangeIntegerEntry(object.getRecordObjectId(), propertyName, (Integer) value));
          } else if (value instanceof String) {
             changeEntries.add(new ChangeStringEntry(object.getRecordObjectId(), propertyName, (String) value));
+         } else if (value instanceof String[]) {
+            changeEntries.add(new ChangeStringArrayEntry(object.getRecordObjectId(), propertyName, (String[]) value));
          } else if (value instanceof GenericEnumeration) {
             changeEntries.add(new ChangeEnumerationEntry(object.getRecordObjectId(), propertyName, (GenericEnumeration) value));
          } else if (value instanceof SynchronizedObject) {
