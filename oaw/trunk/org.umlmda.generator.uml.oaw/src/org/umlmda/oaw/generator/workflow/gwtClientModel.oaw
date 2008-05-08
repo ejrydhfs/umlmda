@@ -44,8 +44,8 @@
 		</outlet>
 
 	   	<globalVarDef name="jmiPackage" value="${jmiPackage}"/>
-	   	<globalVarDef name="generateClient" value="'true'"/>
-	   	<globalVarDef name="generateServer" value="'false'"/>
+	   	<globalVarDef name="generateClient" value="true"/>
+	   	<globalVarDef name="generateServer" value="false"/>
 	   	<globalVarDef name="dateMapping" value="${dateMapping}"/>
 	   	<globalVarDef name="decimalMapping" value="${decimalMapping}"/>
 	   	<globalVarDef name="javaGenerics" value="'true'"/>
