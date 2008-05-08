@@ -24,7 +24,6 @@
  */
 package org.umlmda.runtime.constraint;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -86,8 +85,9 @@ public class ConstraintVisitorContext implements VisitorContext {
       if ( value != null ) {
 	      Class valueClass = value.getClass();
 	      
-	      if ( valueClass.isArray() ) {
-	         int length = Array.getLength(value);
+	      if ( value instanceof Object[] ) {
+	         Object array[] = (Object[]) value;
+	         int length = array.length;
 	         
 	         if ( lower > length ) {
 	            violations.add(new MultiplicityConstraintViolation(feature, "lower", length, lower));
