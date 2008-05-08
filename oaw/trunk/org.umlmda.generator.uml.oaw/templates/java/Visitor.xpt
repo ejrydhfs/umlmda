@@ -8,7 +8,6 @@
 «EXTENSION java::Visitor»
 
 «DEFINE Visitor FOR JavaBusinessComponent»
-«IF this.visitorRequired()»
 	«LET generatedName(this, "java.Visitor") AS className»
 	«FILE generatedPath+"/"+className+".java"»
 		package «getQualifiedPackageName("java.Visitor")»;
@@ -28,7 +27,6 @@
 		}
 	«ENDFILE»
 	«ENDLET»
-«ENDIF»
 «ENDDEFINE»
 
 «DEFINE ImportVisitorBaseIface FOR JavaBusinessComponent»
