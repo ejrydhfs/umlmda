@@ -93,7 +93,7 @@
 								getBean().«setter»((«javaType») value);
 							}
 							else {	
-								getBean().«setter»(«javaType».fromValue((«classifier().enumerationType()»)value));
+								getBean().«setter»(value != null ? «javaType».fromValue((«classifier().enumerationType()»)value) : null);
 							}
 						«ELSE»
 							getBean().«setter»((«javaType») value);
