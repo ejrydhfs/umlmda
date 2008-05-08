@@ -55,11 +55,9 @@
 «ENDAROUND»
 
 «AROUND java::BOImpl::callPostSetMethod FOR JavaModelStructuraleFeature»
-	«IF multivalue == false»
-		Recorder recorder = SyncContext.recorderHolder.get();
-		
-	    recorder.recordChange(this, PROPERTY_«upperCaseIdentifier», «name»);
-	«ENDIF»
+	Recorder recorder = SyncContext.recorderHolder.get();
+	
+    recorder.recordChange(this, PROPERTY_«upperCaseIdentifier», «name»);
 	«IF postSetMethod() != null && postSetMethod().isSDOClientOnly() == false»
 		«targetDef.proceed()»
 	«ENDIF»
