@@ -24,15 +24,18 @@ import org.umlmda.runtime.sdo.sync.entries.SetAddEntry;
 
 public class PlayerImpl implements Player {
    private static final long serialVersionUID = 1L;
-   private static final Logger logger = Logger.getLogger(PlayerImpl.class);
+   private final Logger logger;
    private transient Map<Integer, SynchronizedObject> synchronizedObjects = new HashMap<Integer, SynchronizedObject>();
    private final SynchronizedObjectFactory objectFactory;
    private final Factory beanInvocationFactory;
    private int recordedObjectCount = 0;
+   private final String mode;
 
-   public PlayerImpl(SynchronizedObjectFactory objectFactory, BeanInvocation.Factory beanInvocationFactory) {
+   public PlayerImpl(String mode, SynchronizedObjectFactory objectFactory, BeanInvocation.Factory beanInvocationFactory) {
+      this.mode = mode;
       this.objectFactory = objectFactory;
       this.beanInvocationFactory = beanInvocationFactory;
+      this.logger = Logger.getLogger(PlayerImpl.class+"$"+mode);
    }
 
    public void register(int recordObjectId, SynchronizedObject recordedObject) {
@@ -135,6 +138,10 @@ public class PlayerImpl implements Player {
       return synchronizedObjects.get(proxy.getRecordObjectId());
    }
 
+   public SynchronizedObject getObjectById(int recordObjectId) {
+      return synchronizedObjects.get(recordObjectId);
+   }
+   
    public SynchronizedObjectFactory getObjectFactory() {
       return objectFactory;
    }

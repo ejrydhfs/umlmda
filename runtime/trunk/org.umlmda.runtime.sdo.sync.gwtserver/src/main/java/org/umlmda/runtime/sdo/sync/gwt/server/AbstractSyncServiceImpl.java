@@ -55,7 +55,7 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       if (servletContext.getAttribute(SESSION_ATTR_SDO_PLAYER) == null) {
          SynchronizerImpl recorder = new SynchronizerImpl(null);
          SynchronizedObjectFactory factory = createRootFactory(recorder); 
-         Player player = new PlayerImpl(factory, new ReflectionInvocationFactory());
+         Player player = new PlayerImpl(Player.SERVER, factory, new ReflectionInvocationFactory());
 
          recorder.setPlayer(player);
          servletContext.setAttribute(SESSION_ATTR_SDO_PLAYER, player);

@@ -21,7 +21,7 @@ public class SynchonizedListTest extends TestCase {
    public void testIterator() {
       SynchronizerImpl masterRecorder = new SynchronizerImpl(null);
       TestFactory masterFactory = new TestFactoryImpl(masterRecorder);
-      Player masterPlayer = new PlayerImpl(new TestFactoryImpl(masterRecorder), new ReflectionInvocationFactory());
+      Player masterPlayer = new PlayerImpl("Test", new TestFactoryImpl(masterRecorder), new ReflectionInvocationFactory());
 
       masterRecorder.setPlayer(masterPlayer);
 

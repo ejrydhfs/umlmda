@@ -27,13 +27,13 @@ public class SynchronizedPlayerTest extends TestCase {
    public void testPlayback() {
       SynchronizerImpl masterRecorder = new SynchronizerImpl(null);
       TestFactory masterFactory = new TestFactoryImpl(masterRecorder);
-      Player masterPlayer = new PlayerImpl(new TestFactoryImpl(masterRecorder), new ReflectionInvocationFactory());
+      Player masterPlayer = new PlayerImpl("Test", new TestFactoryImpl(masterRecorder), new ReflectionInvocationFactory());
 
       masterRecorder.setPlayer(masterPlayer);
 
       SynchronizerImpl slaveRecorder = new SynchronizerImpl(null);
       TestFactory slaveFactory = new TestFactoryImpl(slaveRecorder);
-      Player slavePlayer = new PlayerImpl(new TestFactoryImpl(slaveRecorder), new ReflectionInvocationFactory());
+      Player slavePlayer = new PlayerImpl("Test", new TestFactoryImpl(slaveRecorder), new ReflectionInvocationFactory());
       
       slaveRecorder.setPlayer(slavePlayer);
       SyncContext.recorderHolder.set(slaveRecorder);

@@ -73,7 +73,7 @@ public class SdoGwtServiceTest implements EntryPoint {
       
       // The test itself
       TestFactoryImpl factory = new TestFactoryImpl(synchronizer);
-      synchronizer.setPlayer(new PlayerImpl(factory, new BeanEditorInvocationFactory()));
+      synchronizer.setPlayer(new PlayerImpl("Test", factory, new BeanEditorInvocationFactory()));
 
       root = factory.createRootClass();
       root.setRootChild(factory.createRootChild());

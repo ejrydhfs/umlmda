@@ -11,6 +11,8 @@ import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
  *
  */
 public interface Player extends Serializable {
+   public static final String CLIENT = "Client";
+   public static final String SERVER = "Server";
    
    /**
     * Starts the playback with a given change recording.
@@ -24,7 +26,10 @@ public interface Player extends Serializable {
 
    SynchronizedObject getObject(SynchronizedObjectProxy proxy);
 
+   SynchronizedObject getObjectById(int recordObjectId);
+
    void register(int recordObjectId, SynchronizedObject recordedObject);
 
    void reset();
+
 }

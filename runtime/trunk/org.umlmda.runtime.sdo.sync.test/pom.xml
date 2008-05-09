@@ -13,6 +13,7 @@
    <artifactId>org.umlmda.runtime.sdo.sync.test</artifactId>
    <name>UMLMDA SDO Sync-Service Test</name>
    <description></description>
+   <packaging>jar</packaging>
 
    <dependencies>
       <dependency>
@@ -25,8 +26,17 @@
       </dependency>
       <dependency>
          <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.sdo.sync.gwtclient</artifactId>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.sdo.sync.gwtserver</artifactId>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>${pom.groupId}</groupId>
          <artifactId>org.umlmda.runtime.common</artifactId>
-         <scope>test</scope>
       </dependency>
       <dependency>
          <groupId>${pom.groupId}</groupId>

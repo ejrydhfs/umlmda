@@ -22,7 +22,7 @@ public class SynchronizedRecordingTest extends TestCase {
    private static Logger logger = Logger.getLogger(SynchronizedRecordingTest.class);
    private SynchronizerImpl recorder = new SynchronizerImpl(null);
    private TestFactoryImpl factory = new TestFactoryImpl(recorder);
-   private Player player = new PlayerImpl(factory, new ReflectionInvocationFactory());;
+   private Player player = new PlayerImpl("Test", factory, new ReflectionInvocationFactory());;
    
    public SynchronizedRecordingTest() {
       recorder.setPlayer(player);
