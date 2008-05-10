@@ -2,6 +2,8 @@ package org.umlmda.runtime.sdo.sync.impl;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -49,13 +51,35 @@ public class PlayerImpl implements Player {
    }
    
    public synchronized SynchronizedObject playback(List<AbstractChangeLogEntry> changeEntries, SynchronizedObject rootObject) {
-      int index = 0;
       int count = changeEntries.size();
+      Set<NewEntry> processedNewEntries = new HashSet<NewEntry>();
       
       if ( logger.isDebugEnabled() ) {
          logger.debug("Got "+count+" messages to play back");
       }
       
+      // Create new Objects first
+      int index = 0;
+      for ( Iterator ile = changeEntries.iterator(); ile.hasNext(); ) {
+         AbstractChangeLogEntry logEntry = (AbstractChangeLogEntry) ile.next();
+         
+         if ( logEntry instanceof NewEntry ) {
+            SynchronizedObject object = synchronizedObjects.get(logEntry.getRecordId());
+            NewEntry newEntry = (NewEntry) logEntry;
+            
+            if ( object == null ) {
+               NewEntry createEntry = (NewEntry) logEntry;
+               
+               object = objectFactory.create(createEntry.getElementProxy());
+               synchronizedObjects.put(createEntry.getRecordId(), object);
+               processedNewEntries.add(createEntry);
+               logger.debug("Created ("+index+"/"+count+"): "+logEntry+" as "+object.getClass().getName());
+            }
+         }
+      }
+      
+      // Playback other entries
+      index = 0;
       for (AbstractChangeLogEntry logEntry : changeEntries) {
          SynchronizedObject object = synchronizedObjects.get(logEntry.getRecordId());
          
@@ -64,13 +88,10 @@ public class PlayerImpl implements Player {
             logger.debug("About to playback ("+index+"/"+count+"): "+logEntry);
          }
          
-         if ( object == null && logEntry instanceof NewEntry ) {
-            NewEntry createEntry = (NewEntry) logEntry;
-            
-            object = objectFactory.create(createEntry.getElementProxy());
-            synchronizedObjects.put(createEntry.getRecordId(), object);
+         if ( logEntry instanceof NewEntry && processedNewEntries.contains(logEntry) ) {
+            // Done before
          }
-         
+
          else if (logEntry instanceof AbstractChangeEntry) {
             AbstractChangeEntry changeEntry = (AbstractChangeEntry) logEntry;
             Object changeValue = getValue(changeEntry.getValue());
