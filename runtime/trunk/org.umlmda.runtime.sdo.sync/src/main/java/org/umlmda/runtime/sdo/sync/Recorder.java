@@ -28,6 +28,8 @@ public interface Recorder {
    
    public abstract void recordRemove(SynchronizedCollection<?> collection, Object object);
    
+   public abstract void recordRemove(SynchronizedList<?> list, int index);
+   
    public abstract void recordAdd(SynchronizedSet<?> set, Object value);
    
    public abstract void recordClear(SynchronizedCollection<?> collection);

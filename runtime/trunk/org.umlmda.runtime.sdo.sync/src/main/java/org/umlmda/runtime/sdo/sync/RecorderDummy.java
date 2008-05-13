@@ -69,6 +69,9 @@ public class RecorderDummy implements Recorder {
    public void recordRemove(SynchronizedCollection<?> collection, Object object) {
    }
 
+   public void recordRemove(SynchronizedList<?> list, int index) {
+   }
+   
    /* (non-Javadoc)
     * @see org.umlmda.runtime.sdo.sync.Recorder#register(org.umlmda.runtime.sdo.sync.SynchronizedObject, boolean)
     */
@@ -92,5 +95,6 @@ public class RecorderDummy implements Recorder {
     */
    public void stopRecording() {
    }
+
 
 }
