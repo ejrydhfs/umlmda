@@ -81,7 +81,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
          boolean listResult = wrappedList.remove(o);
 
          if ( listResult == true ) {
-            recorder.recordRemove(this, listIndex);
+            recorder.recordRemoveIndex(this, listIndex);
          }
          return listResult;
       }
@@ -145,7 +145,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
       T element = wrappedList.remove(index);
       
       if ( element != null ) {
-         recorder.recordRemove(this, index);
+         recorder.recordRemoveIndex(this, index);
       }
 
       return element;
@@ -154,7 +154,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
    public T set(int index, T element) {
       T oldElement = wrappedList.set(index, element);
       
-      recorder.recordRemove(this, index);
+      recorder.recordRemoveIndex(this, index);
       recorder.recordAdd(this, element, index);
 
       return oldElement;

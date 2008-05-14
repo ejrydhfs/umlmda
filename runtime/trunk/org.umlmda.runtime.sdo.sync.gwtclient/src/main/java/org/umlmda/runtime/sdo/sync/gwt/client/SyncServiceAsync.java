@@ -5,6 +5,7 @@ import java.util.List;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
+import org.umlmda.runtime.sdo.sync.parameter.AbstractParameter;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -30,6 +31,6 @@ public interface SyncServiceAsync {
     * @param methodName
     * @return
     */
-   public void invokeMethod(SynchronizedObjectProxy object, String methodName, AsyncCallback<AbstractInvocationResult> callback);
+   public void invokeMethod(SynchronizedObjectProxy object, String methodName, List<AbstractParameter> parameters, AsyncCallback<AbstractInvocationResult> callback);
 	
 }

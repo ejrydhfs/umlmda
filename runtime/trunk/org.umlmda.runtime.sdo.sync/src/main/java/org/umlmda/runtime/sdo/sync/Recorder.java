@@ -28,7 +28,7 @@ public interface Recorder {
    
    public abstract void recordRemove(SynchronizedCollection<?> collection, Object object);
    
-   public abstract void recordRemove(SynchronizedList<?> list, int index);
+   public abstract void recordRemoveIndex(SynchronizedList<?> list, int index);
    
    public abstract void recordAdd(SynchronizedSet<?> set, Object value);
    
@@ -44,9 +44,8 @@ public interface Recorder {
    /**
     * Invoke a method with parameters on the remote peer
     * @param method
-    * @return
     */
-   public abstract Object recordInvoke(SynchronizedObject recordedObject, String method, Object... parameters);
+   public abstract void recordInvoke(SynchronizedObject recordedObject, String method, Object... parameters);
 
    public abstract void reset();
 }

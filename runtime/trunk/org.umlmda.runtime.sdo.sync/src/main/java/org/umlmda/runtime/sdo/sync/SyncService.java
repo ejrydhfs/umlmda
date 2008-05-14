@@ -30,7 +30,7 @@ public interface SyncService {
 	 * @param methodName
 	 * @return
 	 */
-	public abstract void invokeMethod(SynchronizedObjectProxy object, String methodName, ServiceCallWrapperImpl<AbstractInvocationResult> callback);
+	public abstract void invokeMethod(SynchronizedObjectProxy object, String methodName, Object[] parameter, ServiceCallWrapperImpl<AbstractInvocationResult> callback);
 	
 	public abstract SyncServiceCallback getCallback();
 }

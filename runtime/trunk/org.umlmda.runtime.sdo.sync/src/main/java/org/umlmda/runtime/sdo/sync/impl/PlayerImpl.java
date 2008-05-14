@@ -133,9 +133,9 @@ public class PlayerImpl implements Player {
          
          else if (logEntry instanceof ListRemoveEntry) {
             ListRemoveEntry removeEntry = (ListRemoveEntry) logEntry;
-            Collection<Object> collection = (Collection<Object>) object;
+            List<Object> list = (List<Object>) object;
             
-            collection.remove(removeEntry.getIndex());
+            list.remove(removeEntry.getIndex());
          }
 
          else {

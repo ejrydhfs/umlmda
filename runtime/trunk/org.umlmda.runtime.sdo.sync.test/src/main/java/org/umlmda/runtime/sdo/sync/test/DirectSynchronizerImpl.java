@@ -12,9 +12,10 @@ import org.umlmda.runtime.sdo.sync.MasterFactory;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
+import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
-import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
 import org.umlmda.runtime.sdo.sync.gwt.client.BeanEditorInvocationFactory;
+import org.umlmda.runtime.sdo.sync.gwt.server.MethodUtils;
 import org.umlmda.runtime.sdo.sync.gwt.server.SyncContext;
 import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
@@ -45,7 +46,7 @@ public class DirectSynchronizerImpl extends SynchronizerImpl
    }
 
    @Override
-   public synchronized void recordInvoke(SynchronizedObject objectProxy, String methodName) {
+   public synchronized void recordInvoke(SynchronizedObject objectProxy, String methodName, Object... parameters) {
       List<AbstractChangeLogEntry> changeEntries = getChangeEntries();
       
       if ( logger.isDebugEnabled() ) {
@@ -65,7 +66,7 @@ public class DirectSynchronizerImpl extends SynchronizerImpl
       // Empty up own recording
       reset();
       
-      // Replay stuff from server to client if necesary
+      // Replay stuff from server to client if necessary
       if ( serverModelRecorder.getChangeEntries().size() > 0 ) {
          SyncContext.recorderHolder.set(this);
          clientModelPlayer.playback(serverModelRecorder.getChangeEntries(), null);
@@ -79,7 +80,6 @@ public class DirectSynchronizerImpl extends SynchronizerImpl
       serverModelRecorder.reset();
       
       SynchronizedObject object = serverModelPlayer.getObjectById(objectProxy.getRecordObjectId());
-      AbstractInvocationResult result = null;
 
       if ( logger.isDebugEnabled() ) {
          logger.debug("invoke method "+methodName+" on "+object.getClass());
@@ -89,9 +89,22 @@ public class DirectSynchronizerImpl extends SynchronizerImpl
       SyncContext.recorderHolder.set(serverModelRecorder);
       
       try {
-         Method method = object.getClass().getMethod(methodName, new Class<?>[] {});
+         // Translate parameters
+         Object callParameters[] = new Object[parameters.length];
+         for (int i = 0; i < parameters.length; i++) {
+            Object parameter = parameters[i];
+            
+            if ( parameter instanceof SynchronizedObjectProxy ) {
+               callParameters[i] = serverModelPlayer.getObject((SynchronizedObjectProxy)parameter);
+            }
+            else {
+               callParameters[i] = parameter;
+            }
+         }
+         
+         Method method = MethodUtils.findMatchingMethod(object.getClass(), methodName, callParameters);
 
-         method.invoke(object);
+         method.invoke(object, callParameters);
          
          if ( logger.isDebugEnabled() ) {
             logger.debug(serverModelRecorder.getChangeEntries().size()+ " changes to send back from invoke");

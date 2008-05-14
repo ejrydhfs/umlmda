@@ -53,8 +53,7 @@ public class RecorderDummy implements Recorder {
    /* (non-Javadoc)
     * @see org.umlmda.runtime.sdo.sync.Recorder#recordInvoke(org.umlmda.runtime.sdo.sync.SynchronizedObject, java.lang.String, java.lang.Object[])
     */
-   public Object recordInvoke(SynchronizedObject recordedObject, String method, Object... parameters) {
-      return null;
+   public void recordInvoke(SynchronizedObject recordedObject, String method, Object... parameters) {
    }
 
    /* (non-Javadoc)
@@ -69,7 +68,7 @@ public class RecorderDummy implements Recorder {
    public void recordRemove(SynchronizedCollection<?> collection, Object object) {
    }
 
-   public void recordRemove(SynchronizedList<?> list, int index) {
+   public void recordRemoveIndex(SynchronizedList<?> list, int index) {
    }
    
    /* (non-Javadoc)

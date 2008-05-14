@@ -8,6 +8,7 @@ import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
 import org.umlmda.runtime.sdo.sync.impl.ServiceCallWrapperImpl;
+import org.umlmda.runtime.sdo.sync.parameter.ParameterUtil;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -47,12 +48,13 @@ public class SyncServiceWrapper implements org.umlmda.runtime.sdo.sync.SyncServi
          }});
    }
    
-   public void invokeMethod(SynchronizedObjectProxy object, String methodName, final ServiceCallWrapperImpl<AbstractInvocationResult> invokeCallback) {
+   public void invokeMethod(SynchronizedObjectProxy object, String methodName, Object[] parameters, final ServiceCallWrapperImpl<AbstractInvocationResult> invokeCallback) {
       if ( invokeCallback == null ) {
          throw new IllegalStateException("invokeCallback not set");
       }
       logger.debug("serviceAsync started");
-      serviceAsync.invokeMethod(object, methodName, new AsyncCallback<AbstractInvocationResult>(){
+      
+      serviceAsync.invokeMethod(object, methodName, ParameterUtil.toList(parameters), new AsyncCallback<AbstractInvocationResult>(){
 
          public void onFailure(Throwable caught) {
             logger.debug("onFailure called");

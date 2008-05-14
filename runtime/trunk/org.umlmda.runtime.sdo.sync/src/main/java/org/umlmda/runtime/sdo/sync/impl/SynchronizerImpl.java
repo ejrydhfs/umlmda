@@ -113,7 +113,7 @@ public class SynchronizerImpl implements Recorder {
       }
    }
 
-   public synchronized void recordRemove(SynchronizedList<?> list, int index) {
+   public synchronized void recordRemoveIndex(SynchronizedList<?> list, int index) {
       if ( recording ) {
          changeEntries.add(new ListRemoveEntry(list.getRecordObjectId(), index));
       }
@@ -133,12 +133,21 @@ public class SynchronizerImpl implements Recorder {
       recording = false;
    }
 
-   public Object recordInvoke(SynchronizedObject recordedObject, String methodName, Object... parameters) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("TODO implementation");
-   }
-
-   public synchronized void recordInvoke(final SynchronizedObject recordedObject, final String methodName) {
+   public void recordInvoke(final SynchronizedObject recordedObject, final String methodName, final Object... parameters) {
+      // Translate parameters
+      final Object transferParameter[] = new Object[parameters.length];
+      
+      for (int i = 0; i < parameters.length; i++) {
+         Object parameter = parameters[i];
+         
+         if ( parameter instanceof SynchronizedObject ) {
+            transferParameter[i] = new SynchronizedObjectProxy(((SynchronizedObject)parameter).getRecordObjectId());
+         }
+         else {
+            transferParameter[i] = parameter;
+         }
+      }
+      
       if ( logger.isDebugEnabled() ) {
          logger.debug("About to invoke "+methodName+" pushd changes to remote peer");
          for (AbstractChangeLogEntry entry : changeEntries) {
@@ -172,7 +181,7 @@ public class SynchronizerImpl implements Recorder {
 
          public void onExecute(ServiceCallWrapperImpl<AbstractInvocationResult> wrapper) {
             SynchronizedObjectProxy objectProxy = new SynchronizedObjectProxy(recordedObject.getRecordObjectId());
-            service.invokeMethod(objectProxy, methodName, wrapper);            
+            service.invokeMethod(objectProxy, methodName, transferParameter, wrapper);            
          }
 
          public void onSucess(AbstractInvocationResult invocationResult, SyncServiceCallback callback) {
@@ -188,7 +197,10 @@ public class SynchronizerImpl implements Recorder {
       });
       
       serviceQueue.execute();
-      
+   }
+
+   public synchronized void recordInvoke(final SynchronizedObject recordedObject, final String methodName) {
+      recordInvoke(recordedObject, methodName, new Object[] {});
    }
 
    private synchronized int getNextRecordObjectId() {

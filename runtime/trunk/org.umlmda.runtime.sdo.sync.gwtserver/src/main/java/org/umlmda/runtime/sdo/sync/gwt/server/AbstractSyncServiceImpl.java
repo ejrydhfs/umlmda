@@ -20,6 +20,8 @@ import org.umlmda.runtime.sdo.sync.entries.VoidInvocationResult;
 import org.umlmda.runtime.sdo.sync.gwt.client.SyncService;
 import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
+import org.umlmda.runtime.sdo.sync.parameter.AbstractParameter;
+import org.umlmda.runtime.sdo.sync.parameter.ParameterUtil;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -135,7 +137,7 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       }
    }
 
-   public AbstractInvocationResult invokeMethod(SynchronizedObjectProxy objectProxy, String methodName) {
+   public AbstractInvocationResult invokeMethod(SynchronizedObjectProxy objectProxy, String methodName, List<AbstractParameter> parameters) {
       try {
          Player player = getPlayer();
          SynchronizedObjectFactory factory = player.getObjectFactory();
@@ -156,9 +158,10 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
          SyncContext.recorderHolder.set(slaveRecorder);
          
          try {
-            Method method = object.getClass().getMethod(methodName, new Class<?>[] {});
+            Object parameterArray[] = ParameterUtil.toArray(parameters, player);
+            Method method = MethodUtils.findMatchingMethod(object.getClass(), methodName, parameterArray);
 
-            method.invoke(object);
+            method.invoke(object, parameterArray);
             
             if ( logger.isDebugEnabled() ) {
                logger.debug("Changes to send back from invoke");

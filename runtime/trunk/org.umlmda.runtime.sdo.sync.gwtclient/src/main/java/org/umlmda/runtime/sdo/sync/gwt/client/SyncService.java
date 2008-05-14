@@ -5,6 +5,7 @@ import java.util.List;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
+import org.umlmda.runtime.sdo.sync.parameter.AbstractParameter;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 
@@ -32,5 +33,5 @@ public interface SyncService extends RemoteService {
 	 * @param methodName
 	 * @return
 	 */
-	public AbstractInvocationResult invokeMethod(SynchronizedObjectProxy object, String methodName);
+	public AbstractInvocationResult invokeMethod(SynchronizedObjectProxy object, String methodName, List<AbstractParameter> parameters);
 }
