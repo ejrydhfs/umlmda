@@ -10,6 +10,7 @@ import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.SyncService;
 import org.umlmda.runtime.sdo.sync.SyncServiceCallback;
+import org.umlmda.runtime.sdo.sync.SynchronizeStrategy;
 import org.umlmda.runtime.sdo.sync.SynchronizedCollection;
 import org.umlmda.runtime.sdo.sync.SynchronizedList;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
@@ -40,6 +41,7 @@ public class SynchronizerImpl implements Recorder {
    private boolean recording = true;
    private final SyncService service;
    private Player player;
+   private SynchronizeStrategy strategy = SynchronizeStrategy.COLLECT;
    
    public SynchronizerImpl(SyncService service) {
       this.service = service;
@@ -65,36 +67,36 @@ public class SynchronizerImpl implements Recorder {
 
    public synchronized void recordAdd(SynchronizedList<?> list, Object value, int index) {
       if ( recording ) {
-         changeEntries.add(new ListAddEntry(list.getRecordObjectId(), value, index));
+         addEntry(new ListAddEntry(list.getRecordObjectId(), value, index));
       }
    }
 
    public synchronized void recordAdd(SynchronizedSet<?> set, Object value) {
       if ( recording ) {
-         changeEntries.add(new SetAddEntry(set.getRecordObjectId(), value));
+         addEntry(new SetAddEntry(set.getRecordObjectId(), value));
       }
    }
 
    public synchronized void recordChange(SynchronizedObject object, String propertyName, Object value) {
       if (recording) {
          if (value == null) {
-            changeEntries.add(new ChangeToNull(object.getRecordObjectId(), propertyName));
+            addEntry(new ChangeToNull(object.getRecordObjectId(), propertyName));
          } else if (value instanceof Boolean) {
-            changeEntries.add(new ChangeBooleanEntry(object.getRecordObjectId(), propertyName, (Boolean) value));
+            addEntry(new ChangeBooleanEntry(object.getRecordObjectId(), propertyName, (Boolean) value));
          } else if (value instanceof Date) {
-            changeEntries.add(new ChangeDateEntry(object.getRecordObjectId(), propertyName, (Date) value));
+            addEntry(new ChangeDateEntry(object.getRecordObjectId(), propertyName, (Date) value));
          } else if (value instanceof Double) {
-            changeEntries.add(new ChangeDoubleEntry(object.getRecordObjectId(), propertyName, (Double) value));
+            addEntry(new ChangeDoubleEntry(object.getRecordObjectId(), propertyName, (Double) value));
          } else if (value instanceof Integer) {
-            changeEntries.add(new ChangeIntegerEntry(object.getRecordObjectId(), propertyName, (Integer) value));
+            addEntry(new ChangeIntegerEntry(object.getRecordObjectId(), propertyName, (Integer) value));
          } else if (value instanceof String) {
-            changeEntries.add(new ChangeStringEntry(object.getRecordObjectId(), propertyName, (String) value));
+            addEntry(new ChangeStringEntry(object.getRecordObjectId(), propertyName, (String) value));
          } else if (value instanceof String[]) {
-            changeEntries.add(new ChangeStringArrayEntry(object.getRecordObjectId(), propertyName, (String[]) value));
+            addEntry(new ChangeStringArrayEntry(object.getRecordObjectId(), propertyName, (String[]) value));
          } else if (value instanceof GenericEnumeration) {
-            changeEntries.add(new ChangeEnumerationEntry(object.getRecordObjectId(), propertyName, (GenericEnumeration) value));
+            addEntry(new ChangeEnumerationEntry(object.getRecordObjectId(), propertyName, (GenericEnumeration) value));
          } else if (value instanceof SynchronizedObject) {
-            changeEntries.add(new ChangeObjectEntry(object.getRecordObjectId(), propertyName, (SynchronizedObject) value));
+            addEntry(new ChangeObjectEntry(object.getRecordObjectId(), propertyName, (SynchronizedObject) value));
          } else {
             throw new IllegalArgumentException(value.getClass() + " not supported");
          }
@@ -103,25 +105,25 @@ public class SynchronizerImpl implements Recorder {
 
    public synchronized void recordClear(SynchronizedCollection<?> collection) {
       if ( recording ) {
-         changeEntries.add(new CollectionClearEntry(collection.getRecordObjectId()));
+         addEntry(new CollectionClearEntry(collection.getRecordObjectId()));
       }
    }
 
    public synchronized void recordNew(SynchronizedObject object) {
       if ( recording ) {
-            changeEntries.add(new NewEntry(object.getRecordObjectId(), object));
+            addEntry(new NewEntry(object.getRecordObjectId(), object));
       }
    }
 
    public synchronized void recordRemoveIndex(SynchronizedList<?> list, int index) {
       if ( recording ) {
-         changeEntries.add(new ListRemoveEntry(list.getRecordObjectId(), index));
+         addEntry(new ListRemoveEntry(list.getRecordObjectId(), index));
       }
    }
 
    public synchronized void recordRemove(SynchronizedCollection<?> collection, Object value) {
       if ( recording ) {
-         changeEntries.add(new CollectionRemoveEntry(collection.getRecordObjectId(), value));
+         addEntry(new CollectionRemoveEntry(collection.getRecordObjectId(), value));
       }
    }
 
@@ -168,11 +170,11 @@ public class SynchronizerImpl implements Recorder {
             public void onSucess(List<AbstractChangeLogEntry> remoteChanges, SyncServiceCallback callback) {
                // Get remote results put to local objects 
                if ( player != null && remoteChanges != null && remoteChanges.size() > 0 ) {
-                  player.playback(remoteChanges, null);
-                  changeEntries.removeAll(remoteChanges);
+                  playbackRemoteChanges(remoteChanges);
                }
                changeEntries.clear();
             }
+
          });
       }
       
@@ -186,9 +188,7 @@ public class SynchronizerImpl implements Recorder {
 
          public void onSucess(AbstractInvocationResult invocationResult, SyncServiceCallback callback) {
             if ( player != null && invocationResult.getRemoteChanges() != null && invocationResult.getRemoteChanges().size() > 0 ) {
-               player.playback(invocationResult.getRemoteChanges(), null);
-               
-               changeEntries.removeAll(invocationResult.getRemoteChanges());
+               playbackRemoteChanges(invocationResult.getRemoteChanges());
             }
             if ( callback != null ) {
                callback.onSuccess();
@@ -199,6 +199,26 @@ public class SynchronizerImpl implements Recorder {
       serviceQueue.execute();
    }
 
+   private void playbackRemoteChanges(List<AbstractChangeLogEntry> remoteChanges) {
+      SynchronizeStrategy oldStrategy = strategy;
+      
+      // Temporary switch to collect strategy
+      setSynchronizeStrategy(SynchronizeStrategy.COLLECT);
+      
+      try {
+         player.playback(remoteChanges, null);
+         
+         // Remove remote changes from local change set
+         changeEntries.removeAll(remoteChanges);
+      } catch (RuntimeException e) {
+         throw e;
+      } finally {
+         // Switch back to old strategy
+         setSynchronizeStrategy(oldStrategy);
+      }
+      
+   }
+   
    public synchronized void recordInvoke(final SynchronizedObject recordedObject, final String methodName) {
       recordInvoke(recordedObject, methodName, new Object[] {});
    }
@@ -213,6 +233,16 @@ public class SynchronizerImpl implements Recorder {
 
    public void setPlayer(Player player) {
       this.player = player;
+   }
+
+   private void addEntry(AbstractChangeLogEntry entry) {
+      changeEntries.add(entry);
+      strategy.postRecordAction();
+   }
+   
+   public void setSynchronizeStrategy(SynchronizeStrategy strategy) {
+      assert strategy != null : "Strategy must not be null";
+      this.strategy = strategy;
    }
 
 }

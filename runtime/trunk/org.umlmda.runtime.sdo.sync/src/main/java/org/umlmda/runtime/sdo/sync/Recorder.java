@@ -48,4 +48,6 @@ public interface Recorder {
    public abstract void recordInvoke(SynchronizedObject recordedObject, String method, Object... parameters);
 
    public abstract void reset();
+   
+   public abstract void setSynchronizeStrategy(SynchronizeStrategy strategy);
 }
