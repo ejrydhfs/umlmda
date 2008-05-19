@@ -32,6 +32,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -61,7 +62,7 @@ public class NotificationChain {
 	 * @author reinhard
 	 *
 	 */
-	class InnerObjectNotification implements PropertyChangeListener {
+	class InnerObjectNotification implements PropertyChangeListener, Serializable {
 
 		private final PropertyChangeSupportHelper changeSupport;
 		private final String derivedAttrName;
@@ -93,7 +94,7 @@ public class NotificationChain {
 	 * @author reinhard
 	 *
 	 */
-	class CrossObjectNotification implements PropertyChangeListener {
+	class CrossObjectNotification implements PropertyChangeListener, Serializable {
 		
 		private final InnerObjectNotification      innerObjectNotification;
         private final String[]                     accessPath;
