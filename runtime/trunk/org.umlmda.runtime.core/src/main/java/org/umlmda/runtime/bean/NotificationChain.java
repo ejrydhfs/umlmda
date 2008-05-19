@@ -75,6 +75,9 @@ public class NotificationChain {
 		}
 
 		public void propertyChange(PropertyChangeEvent evt) {
+			if (logger.isDebugEnabled()){
+				logger.debug("Firering PropertyChange for property " + derivedAttrName + " instead of " + evt.getPropertyName());
+			}
 			fireChangeEvent();
 		}
 		
