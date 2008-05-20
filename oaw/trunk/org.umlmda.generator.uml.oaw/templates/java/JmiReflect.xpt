@@ -45,7 +45,7 @@
 	public Object refGetValue(String featureName) {
 		Object retObj = null;
 		
-		«FOREACH javaAttributes() AS attr SEPARATOR "else"»
+		«FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr SEPARATOR "else"»
 			if (featureName.equals(«EXPAND java::BOInterface::propertyNameConstant FOR attr»)){
 			    «IF attr.javaPrimitiveType»
 			    	retObj = new «attr.dataType.javaTypeWrapper()» ( «attr.getter»() );
@@ -57,7 +57,7 @@
 		«IF attributes.size > 0 && associations.size > 0  »
 			else
 		«ENDIF»
-		«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc SEPARATOR "else"»
+		«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc SEPARATOR "else"»
 			if (featureName.equals(«EXPAND java::BOInterface::propertyNameConstant FOR assoc»)){
 				retObj = «assoc.getter»();
 			}
@@ -93,7 +93,7 @@
 	 *    Value of the feature or null to be set
 	 */
 	public void refSetValue(String featureName, Object value) {
-		«FOREACH javaWriteableAttributes() AS attr SEPARATOR "else"»
+		«FOREACH javaWriteableImplementedAttributes() AS attr SEPARATOR "else"»
 			if (featureName.equals(«EXPAND java::BOInterface::propertyNameConstant FOR attr»)){
   				«IF attr.javaPrimitiveType»
 	   				«attr.setter»(((«attr.dataType.javaTypeWrapper()»)value).«attr.dataType.javaTypeWrapperValue()»());
@@ -102,15 +102,15 @@
 	   			«ENDIF»
 	   		}
 	   	«ENDFOREACH»	
-		«IF javaWriteableAttributes().size > 0 && javaWriteableAssociations().size > 0  »
+		«IF javaWriteableImplementedAttributes().size > 0 && javaWriteableImplementedAssociations().size > 0  »
 			else
 		«ENDIF»
-		«FOREACH javaWriteableAssociations() AS assoc SEPARATOR "else"»
+		«FOREACH javaWriteableImplementedAssociations() AS assoc SEPARATOR "else"»
 			if (featureName.equals(«EXPAND java::BOInterface::propertyNameConstant FOR assoc»)){
    				«assoc.setter»((«assoc.interfaceType»)value);
 			}
 		«ENDFOREACH»
-		«IF javaWriteableAttributes().size > 0 || javaWriteableAssociations().size > 0  »
+		«IF javaWriteableImplementedAttributes().size > 0 || javaWriteableImplementedAssociations().size > 0  »
 		    else {
 	    «ENDIF»
     	«IF superClass != null»
@@ -118,7 +118,7 @@
     	«ELSE»
 	    	throw new InvalidNameException(featureName);
     	«ENDIF»
-		«IF javaWriteableAttributes().size > 0 || javaWriteableAssociations().size > 0  »
+		«IF javaWriteableImplementedAttributes().size > 0 || javaWriteableImplementedAssociations().size > 0  »
 		    }
 	    «ENDIF»
 	}

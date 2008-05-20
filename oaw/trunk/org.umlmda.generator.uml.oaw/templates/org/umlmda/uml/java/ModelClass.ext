@@ -16,6 +16,12 @@ cached List[JavaModelAttribute] javaWriteableAttributes(ModelClass clazz) :
 cached List[JavaModelAssociation] javaWriteableAssociations(ModelClass clazz) :
 	clazz.associations.typeSelect(JavaModelAssociation).select(e|e.readOnly == false);
 
+cached List[JavaModelAttribute] javaWriteableImplementedAttributes(ModelClass clazz) :
+	clazz.implementedAttributes.typeSelect(JavaModelAttribute).select(e|e.readOnly == false);
+
+cached List[JavaModelAssociation] javaWriteableImplementedAssociations(ModelClass clazz) :
+	clazz.implementedAssociations.typeSelect(JavaModelAssociation).select(e|e.readOnly == false);
+
 String javaTypeName(ModelClass clazz) :
 	((JavaModelClass)clazz).javaType;
 	
