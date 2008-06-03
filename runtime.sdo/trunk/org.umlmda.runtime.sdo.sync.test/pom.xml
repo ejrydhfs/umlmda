@@ -5,9 +5,9 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <parent>
-      <artifactId>org.umlmda.runtime.releng</artifactId>
+      <artifactId>org.umlmda.runtime.sdo.releng</artifactId>
       <groupId>org.umlmda</groupId>
-      <version>2.1.0-SNAPSHOT</version>
+      <version>3.1.0-SNAPSHOT</version>
    </parent>
    <modelVersion>4.0.0</modelVersion>
    <artifactId>org.umlmda.runtime.sdo.sync.test</artifactId>
