@@ -1,8 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
    <parent>
@@ -12,15 +8,15 @@
    </parent>
    
    <artifactId>org.umlmda.uml2.profiles</artifactId>
-   <version>3.1.0-SNAPSHOT</version>
+   <version>3.1.0</version>
    <name>UMLMDA uml2 profiles</name>
-   <description></description>
+   <description />
    <packaging>pom</packaging>
    
    
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/trunk/org.umlmda.uml2.profiles</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/trunk/org.umlmda.uml2.profiles</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.profiles-3.1.0</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.profiles-3.1.0</developerConnection>
    </scm>
    
    <build>
@@ -36,15 +32,13 @@
                   <configuration>
                      <tasks>
                         <mkdir dir="${project.build.directory}" />
-                        <zip
-                           destfile="${project.build.directory}/umlmda-std-profiles.zip">
+                        <zip destfile="${project.build.directory}/umlmda-std-profiles.zip">
                            <fileset dir="${basedir}/profiles">
                               <include name="UMLMDAProfile.epx" />
                               <include name="UMLMDATypes.emx" />
                            </fileset>
                         </zip>
-                        <zip
-                           destfile="${project.build.directory}/umlmda-sdo-profiles.zip">
+                        <zip destfile="${project.build.directory}/umlmda-sdo-profiles.zip">
                            <fileset dir="${basedir}/profiles">
                               <include name="UMLMDASDOProfile.epx" />
                            </fileset>
