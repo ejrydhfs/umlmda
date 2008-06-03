@@ -1,0 +1,7 @@
+temp.folder
+javaCompiler.runtime_org.umlmda.generator.uml.oaw.jar.args
+@dot
+javaCompiler.*.args
+target
+build.xml
+.externalToolBuilders
