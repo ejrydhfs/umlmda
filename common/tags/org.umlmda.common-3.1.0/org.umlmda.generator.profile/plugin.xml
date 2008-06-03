@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+/**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id: plugin.xml,v 1.45.2.1 2008/01/21 11:14:19 moroff Exp $
+ */
+-->
+
+<plugin>
+
+    <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http:///org/umlmda/generator/set.ecore" 
+       class = "org.umlmda.generator.set.UmsPackage" />
+  </extension>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http:///org/umlmda/generator/profile.ecore" 
+       class = "org.umlmda.generator.profile.UmpPackage" />
+  </extension>
+
+</plugin>
+
