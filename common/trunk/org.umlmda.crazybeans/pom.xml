@@ -23,7 +23,6 @@
       <dependency>
          <groupId>org.umlmda</groupId>
          <artifactId>ru.novosoft.uml.nsuml</artifactId>
-         <version>0.4.20</version>
       </dependency>
    </dependencies>
 

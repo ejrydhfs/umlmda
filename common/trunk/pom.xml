@@ -101,6 +101,11 @@
             <version>4.2.0</version>
             <scope>provided</scope>
          </dependency>
+         <dependency>
+            <groupId>org.umlmda</groupId>
+            <artifactId>ru.novosoft.uml.nsuml</artifactId>
+            <version>0.4.20</version>
+         </dependency>
       </dependencies>
    </dependencyManagement>
    

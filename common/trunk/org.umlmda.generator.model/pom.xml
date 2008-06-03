@@ -13,6 +13,7 @@
    <artifactId>org.umlmda.generator.model</artifactId>
    <name>UMLMDA common generator model</name>
    <description></description>
+
    <dependencies>
       <dependency>
          <groupId>commons-lang</groupId>
@@ -49,4 +50,15 @@
          <version>${parent.version}</version>
       </dependency>
    </dependencies>
+   
+   <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+               <failIfNoTests>false</failIfNoTests>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
 </project>
