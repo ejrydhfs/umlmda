@@ -1,0 +1,15 @@
+<module>
+	<inherits name="com.google.gwt.user.User"/>
+    <inherits name="java.Io"/>
+    <inherits name="java.Beans"/>
+    <inherits name="java.lang.Reflect"/>
+    <inherits name="javax.Jmi"/>
+    <inherits name="org.umlmda.Runtime"/>
+    <inherits name="org.umlmda.runtime.Sdo"/>
+    <inherits name="org.umlmda.runtime.sdo.sync.gwt.SdoSync"/>
+    
+	<entry-point class="org.umlda.runtime.sdo.sync.gwt.test.client.SdoGwtServiceTest"/>
+   
+    <servlet path="/SyncService" class="org.umlda.runtime.sdo.sync.gwt.test.server.SyncServiceImpl"/>
+   
+</module>
