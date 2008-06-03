@@ -1,8 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
    <parent>
@@ -12,13 +8,13 @@
    </parent>
    <artifactId>org.umlmda.uml2.generator.profiles</artifactId>
    <name>UMLMDA generator profiles</name>
-   <version>3.1.0-SNAPSHOT</version>
-   <description></description>
+   <version>3.1.0</version>
+   <description />
    <packaging>pom</packaging>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/trunk/org.umlmda.uml2.generator.profiles</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/trunk/org.umlmda.uml2.generator.profiles</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.generator.profiles-3.1.0</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.generator.profiles-3.1.0</developerConnection>
    </scm>
 
    <build>
@@ -34,29 +30,17 @@
                   <configuration>
                      <tasks>
                         <mkdir dir="${project.build.directory}" />
-                        <zip
-                           destfile="${project.build.directory}/java-profiles.zip">
-                           <fileset
-                              dir="${basedir}/etc/umlmda/self/profile"
-                              includes="java*.ump" />
+                        <zip destfile="${project.build.directory}/java-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="java*.ump" />
                         </zip>
-                        <zip
-                           destfile="${project.build.directory}/gwt-profiles.zip">
-                           <fileset
-                              dir="${basedir}/etc/umlmda/self/profile"
-                              includes="gwt*.ump" />
+                        <zip destfile="${project.build.directory}/gwt-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="gwt*.ump" />
                         </zip>
-                        <zip
-                           destfile="${project.build.directory}/j2ee-profiles.zip">
-                           <fileset
-                              dir="${basedir}/etc/umlmda/self/profile"
-                              includes="j2ee*.ump" />
+                        <zip destfile="${project.build.directory}/j2ee-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="j2ee*.ump" />
                         </zip>
-                        <zip
-                           destfile="${project.build.directory}/ws-profiles.zip">
-                           <fileset
-                              dir="${basedir}/etc/umlmda/self/profile"
-                              includes="ws*.ump" />
+                        <zip destfile="${project.build.directory}/ws-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="ws*.ump" />
                         </zip>
                      </tasks>
                   </configuration>
