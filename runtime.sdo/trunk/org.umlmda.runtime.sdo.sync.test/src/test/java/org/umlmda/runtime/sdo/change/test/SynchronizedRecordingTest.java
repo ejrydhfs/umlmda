@@ -41,7 +41,7 @@ public class SynchronizedRecordingTest extends TestCase {
       root.setRootChild(factory.createRootChild());
       
       TestUtils.logEntries(logger, recorder);
-      //assertEquals(3, recorder.getChangeEntries().size());
+      assertEquals(3, recorder.getChangeEntries().size());
       
    }
 
@@ -55,7 +55,7 @@ public class SynchronizedRecordingTest extends TestCase {
       ((RootChildren)root.getRootChildren().get(1)).setStringAttr("Another string value");
       
       TestUtils.logEntries(logger, recorder);
-      //assertEquals(7, recorder.getChangeEntries().size());
+      assertEquals(7, recorder.getChangeEntries().size());
    }
    
    public void testAddGreatChildren() {
@@ -81,7 +81,7 @@ public class SynchronizedRecordingTest extends TestCase {
       greatChildren.setArrayAttr(new String[] { "A", "B"});
       
       TestUtils.logEntries(logger, recorder);
-      //assertEquals(14, recorder.getChangeEntries().size());
+      assertEquals(14, recorder.getChangeEntries().size());
    }
    
 }

@@ -51,7 +51,7 @@ public class SynchronizedPlayerTest extends TestCase {
 
       assertNotNull(copy);
       assertFalse(root == copy);
-      //assertEquals(masterRecorder.getChangeEntries().size(), slaveRecorder.getChangeEntries().size());
+      assertEquals(masterRecorder.getChangeEntries().size(), slaveRecorder.getChangeEntries().size());
    }
 
 }
