@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.releng</artifactId>
+      <version>3.1.0</version>
+   </parent>
+
+   <artifactId>org.umlmda.common.releng</artifactId>
+   <version>3.1.0-SNAPSHOT</version>
+   <packaging>pom</packaging>
+   <name>UMLMDA common</name>
+   <description>
+      UMLMDA maven project for umlmda common modules.
+   </description>
+   
+   <build>
+      <sourceDirectory>src</sourceDirectory>
+      <testSourceDirectory>test</testSourceDirectory>
+   </build>
+   
+   <modules>
+      <module>org.umlmda.crazybeans</module>
+      <module>org.umlmda.generator.model</module>
+      <module>org.umlmda.generator.profile</module>
+      <module>org.umlmda.generator.uml.psm</module>
+      <module>org.umlmda.model.profile</module>
+      <module>org.umlmda.umlmodel</module>
+      <module>org.umlmda.umlmodel.uml2</module>
+      <module>org.umlmda.umlmodel.nsuml</module>
+   </modules>
+   
+   <scm>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/common/trunk</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/common/trunk</developerConnection>
+   </scm>
+   
+   <dependencyManagement>
+      <dependencies>
+         <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.5</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>oro</groupId>
+            <artifactId>oro</artifactId>
+            <version>2.0.8</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.eclipse.uml2</groupId>
+            <artifactId>resources</artifactId>
+            <version>2.1.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.eclipse.uml2</groupId>
+            <artifactId>uml</artifactId>
+            <version>2.1.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.eclipse.emf</groupId>
+            <artifactId>common</artifactId>
+            <version>2.3.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.eclipse.emf</groupId>
+            <artifactId>ecore</artifactId>
+            <version>2.3.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.eclipse.emf.ecore</groupId>
+            <artifactId>xmi</artifactId>
+            <version>2.3.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-expressions</artifactId>
+            <version>4.2.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-workflow</artifactId>
+            <version>4.2.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-xpand2</artifactId>
+            <version>4.2.0</version>
+            <scope>provided</scope>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
+   
+   <properties>
+      <src.junit>${test}</src.junit>
+      <src>src</src>
+      <src.java>${src}</src.java>
+      <test>test</test>
+   </properties>
+
+   <repositories>
+      <repository>
+         <id>artifactory</id>
+         <url>http://coding.ds2k.de/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+      <repository>
+         <id>cor-artifactory</id>
+         <url>http://cor-health-dev1:8090/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
+
+</project>
