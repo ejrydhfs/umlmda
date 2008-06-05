@@ -13,7 +13,7 @@
       <srcDir>src</srcDir>
       <testDir>test</testDir>
       <tomcat.url>http://localhost:8080/manager</tomcat.url>
-      <artifactory.port>8080</artifactory.port>
+      <artifactory.port>8090</artifactory.port>
    </properties>
 
    <organization>
