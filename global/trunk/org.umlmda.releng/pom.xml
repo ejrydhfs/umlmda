@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.umlmda</groupId>
    <artifactId>org.umlmda.releng</artifactId>
@@ -12,6 +13,7 @@
       <srcDir>src</srcDir>
       <testDir>test</testDir>
       <tomcat.url>http://localhost:8080/manager</tomcat.url>
+      <artifactory.port>8080</artifactory.port>
    </properties>
 
    <organization>
@@ -52,24 +54,25 @@
 
    <!-- external communication and system setup -->
    <distributionManagement>
-      <!-- Deploy to COR -->
       <repository>
          <uniqueVersion>true</uniqueVersion>
          <id>ext-releases</id>
          <name>UMLMDA Repository (libs-releases)</name>
-         <url>dav:http://localhost/artifactory/lib-releases</url>
+         <url>dav:http://localhost:${artifactory.port}/artifactory/umlmda-releases</url>
       </repository>
       <snapshotRepository>
          <uniqueVersion>false</uniqueVersion>
          <id>ext-snapshots</id>
          <name>UMLMDA Repository (libs-snapshots)</name>
-         <url>dav:http://localhost/artifactory/lib-snapshots</url>
+         <url>dav:http://localhost:${artifactory.port}/artifactory/umlmda-snapshots</url>
       </snapshotRepository>
    </distributionManagement>
 
    <scm>
       <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/trunk/org.umlmda.releng</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/trunk/org.umlmda.releng</developerConnection>
+      <developerConnection>
+         scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/trunk/org.umlmda.releng
+      </developerConnection>
    </scm>
 
    <!-- dependency management and dependencies to inherit -->
@@ -426,6 +429,7 @@
             </plugins>
          </build>
       </profile>
+
    </profiles>
 
 </project>
