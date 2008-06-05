@@ -57,28 +57,14 @@
          <uniqueVersion>true</uniqueVersion>
          <id>ext-releases</id>
          <name>UMLMDA Repository (libs-releases)</name>
-         <url>dav:http://cor-health-dev1.corag.de:8090/artifactory/ext-releases</url>
+         <url>dav:http://localhost/artifactory/lib-releases</url>
       </repository>
       <snapshotRepository>
          <uniqueVersion>false</uniqueVersion>
          <id>ext-snapshots</id>
          <name>UMLMDA Repository (libs-snapshots)</name>
-         <url>dav:http://cor-health-dev1.corag.de:8090/artifactory/ext-snapshots</url>
+         <url>dav:http://localhost/artifactory/lib-snapshots</url>
       </snapshotRepository>
-      <!-- 
-         <repository>
-         <uniqueVersion>true</uniqueVersion>
-         <id>libs-releases</id>
-         <name>UMLMDA Repository (libs-releases)</name>
-         <url>ftp://www.umlmda.org/m2/libs-releases</url>
-         </repository>
-         <snapshotRepository>
-         <uniqueVersion>false</uniqueVersion>
-         <id>libs-snapshots</id>
-         <name>UMLMDA Repository (libs-snapshots)</name>
-         <url>ftp://www.umlmda.org/m2/libs-snapshots</url>
-         </snapshotRepository>
-      -->
    </distributionManagement>
 
    <scm>
