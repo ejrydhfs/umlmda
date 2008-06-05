@@ -14,7 +14,7 @@
       <testDir>test</testDir>
       <tomcat.url>http://localhost:8080/manager</tomcat.url>
       <artifactory.port>80</artifactory.port>
-      <artifactory.host>coding.ds2k.de</artifactory.port>
+      <artifactory.host>coding.ds2k.de</artifactory.host>
    </properties>
 
    <organization>
