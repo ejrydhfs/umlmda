@@ -13,7 +13,8 @@
       <srcDir>src</srcDir>
       <testDir>test</testDir>
       <tomcat.url>http://localhost:8080/manager</tomcat.url>
-      <artifactory.port>8090</artifactory.port>
+      <artifactory.port>80</artifactory.port>
+      <artifactory.host>coding.ds2k.de</artifactory.port>
    </properties>
 
    <organization>
@@ -58,13 +59,13 @@
          <uniqueVersion>true</uniqueVersion>
          <id>ext-releases</id>
          <name>UMLMDA Repository (libs-releases)</name>
-         <url>dav:http://localhost:${artifactory.port}/artifactory/umlmda-releases</url>
+         <url>dav:http://${artifactory.host}:${artifactory.port}/artifactory/umlmda-releases</url>
       </repository>
       <snapshotRepository>
          <uniqueVersion>false</uniqueVersion>
          <id>ext-snapshots</id>
          <name>UMLMDA Repository (libs-snapshots)</name>
-         <url>dav:http://localhost:${artifactory.port}/artifactory/umlmda-snapshots</url>
+         <url>dav:http://${artifactory.host}:${artifactory.port}/artifactory/umlmda-snapshots</url>
       </snapshotRepository>
    </distributionManagement>
 
