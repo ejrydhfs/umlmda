@@ -57,13 +57,13 @@
    <distributionManagement>
       <repository>
          <uniqueVersion>true</uniqueVersion>
-         <id>ext-releases</id>
+         <id>umlmda-releases</id>
          <name>UMLMDA Repository (libs-releases)</name>
          <url>dav:http://${artifactory.host}:${artifactory.port}/artifactory/umlmda-releases</url>
       </repository>
       <snapshotRepository>
          <uniqueVersion>false</uniqueVersion>
-         <id>ext-snapshots</id>
+         <id>umlmda-snapshots</id>
          <name>UMLMDA Repository (libs-snapshots)</name>
          <url>dav:http://${artifactory.host}:${artifactory.port}/artifactory/umlmda-snapshots</url>
       </snapshotRepository>
