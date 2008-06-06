@@ -7,7 +7,7 @@
 	</parent>
 	<artifactId>org.umlmda.runtime.releng</artifactId>
 	<packaging>pom</packaging>
-	<version>3.2.0</version>
+	<version>3.3.0-SNAPSHOT</version>
 	<name>UMLMDA runtime pom</name>
 	<description>
 		UMLMDA maven project for umlmda runtime modules.
@@ -75,8 +75,8 @@
 	</modules>
 	
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime/tags/org.umlmda.runtime-3.2.0</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime/tags/org.umlmda.runtime-3.2.0</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime/trunk</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime/trunk</developerConnection>
    </scm>
 
    <repositories>
