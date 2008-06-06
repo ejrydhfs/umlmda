@@ -2,7 +2,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.umlmda</groupId>
    <artifactId>org.umlmda.releng</artifactId>
-   <version>3.2.0</version>
+   <version>3.3.0-SNAPSHOT</version>
    <name>UMLMDA parent</name>
    <description>UMLMDA maven main project.</description>
    <packaging>pom</packaging>
@@ -69,8 +69,8 @@
    </distributionManagement>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.releng-3.2.0</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.releng-3.2.0</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/trunk/org.umlmda.releng</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/trunk/org.umlmda.releng</developerConnection>
    </scm>
 
    <!-- dependency management and dependencies to inherit -->
