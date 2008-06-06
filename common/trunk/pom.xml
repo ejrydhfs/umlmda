@@ -3,10 +3,10 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.releng</artifactId>
-      <version>3.1.0</version>
+      <version>3.2.0</version>
    </parent>
 
-   <artifactId>org.umlmda.common.releng</artifactId>
+   <artifactId>org.umlmda.common</artifactId>
    <version>3.2.0-SNAPSHOT</version>
    <packaging>pom</packaging>
    <name>UMLMDA common</name>
