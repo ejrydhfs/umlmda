@@ -1,0 +1,112 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.releng</artifactId>
+      <version>3.2.0</version>
+   </parent>
+   
+   <artifactId>org.umlmda.uml2.profiles</artifactId>
+   <version>3.2.0</version>
+   <name>UMLMDA uml2 profiles</name>
+   <description />
+   <packaging>pom</packaging>
+   
+   
+   <scm>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.profiles-3.2.0</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.profiles-3.2.0</developerConnection>
+   </scm>
+   
+   <build>
+      <plugins>
+         <!-- Pack RSx/UML2 Profiles -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>model2java</id>
+                  <phase>package</phase>
+                  <configuration>
+                     <tasks>
+                        <mkdir dir="${project.build.directory}" />
+                        <zip destfile="${project.build.directory}/umlmda-std-profiles.zip">
+                           <fileset dir="${basedir}/profiles">
+                              <include name="UMLMDAProfile.epx" />
+                              <include name="UMLMDATypes.emx" />
+                           </fileset>
+                        </zip>
+                        <zip destfile="${project.build.directory}/umlmda-sdo-profiles.zip">
+                           <fileset dir="${basedir}/profiles">
+                              <include name="UMLMDASDOProfile.epx" />
+                           </fileset>
+                        </zip>
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>attach-artifacts</id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>attach-artifact</goal>
+                  </goals>
+                  <configuration>
+                     <artifacts>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/umlmda-std-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>std</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/umlmda-sdo-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>sdo</classifier>
+                        </artifact>
+                     </artifacts>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
+
+   <repositories>
+      <repository>
+         <id>artifactory</id>
+         <url>http://coding.ds2k.de/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+      <repository>
+         <id>cor-artifactory</id>
+         <url>http://cor-health-dev1:8090/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
+
+</project>
