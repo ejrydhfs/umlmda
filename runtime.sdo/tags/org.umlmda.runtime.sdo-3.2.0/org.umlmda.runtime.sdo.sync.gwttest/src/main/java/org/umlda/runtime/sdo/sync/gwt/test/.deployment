@@ -1,0 +1,5 @@
+#Sat Apr 12 08:17:07 CEST 2008
+war.name=SdoGwtServiceTest.war
+compiler.style=DETAILED
+server.path=C\:\\winapp\\apache.org\\jakarta-tomcat-5.0.28\\webapps
+compiler.memory.max=512m
