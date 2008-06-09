@@ -1,0 +1,41 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::Element»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+«EXTENSION org::umlmda::uml::java::Parameter»
+«EXTENSION org::umlmda::uml::java::StructuralFeature»
+
+// ======================================
+// Base interface is java.io.Serializable
+// ======================================
+«AROUND java::BOInterface::standardBaseInterface FOR JavaBusinessObject»
+	org.umlmda.runtime.sdo.sync.SynchronizedObject, java.io.Serializable
+«ENDAROUND»
+
+// ==========================================
+// Skip <<UMLMDASDOProfile::Client>> features
+// ==========================================
+«AROUND java::BOInterface::handleAttribute FOR JavaModelAttribute»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOInterface::handleAssociation FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOInterface::handleMethod FOR JavaModelMethod»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»

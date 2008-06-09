@@ -1,0 +1,81 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION org::umlmda::uml::java::Element»
+
+«AROUND java::BOImpl::standardBOInterfaces FOR JavaModelClass»
+	, Serializable
+«ENDAROUND»
+
+// =================
+// Avoid persistence
+// =================
+«AROUND java::BOImpl::persistenceInterface FOR JavaBusinessObject»
+«ENDAROUND»
+
+«AROUND java::BOImpl::persistenceImpl FOR JavaBusinessObject»
+«ENDAROUND»
+
+// ==========================
+// Avoid XML serialization
+// ==========================
+«AROUND java::BOImpl::xmlSerializationMethods FOR JavaBusinessObject»
+«ENDAROUND»
+
+«AROUND java::BOImpl::xmlSerializationImports FOR JavaBusinessObject»
+«ENDAROUND»
+
+// ==========================
+// Avoid visitor interaction
+// ==========================
+«AROUND java::BOImpl::ImportVisitorBase FOR JavaBusinessObject»
+«ENDAROUND»
+
+«AROUND java::BOImpl::visitorAcceptMethod FOR JavaBusinessObject»
+«ENDAROUND»
+
+«AROUND java::BOImpl::methodBody(ModelClass generatedClass) FOR ModelMethod»
+	«IF isSDOServerOnly()»
+		«IF returnType != null »
+			return («((JavaModelClassifier)returnType).javaType») =
+		«ENDIF»
+		recorder.recordInvoke(this, "«name»"
+		«IF parameters.size > 0»
+			,
+			«FOREACH parameters.typeSelect(JavaModelParameter) AS param SEPARATOR ","»
+				«param.name»
+			«ENDFOREACH»
+		«ENDIF»
+		);
+	«ELSE»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOImpl::callPostSetMethod FOR JavaModelStructuraleFeature»
+	this.recorder.recordChange(this, PROPERTY_«upperCaseIdentifier», «name»);
+	«targetDef.proceed()»
+«ENDAROUND»
+
+«AROUND java::BOImpl::assocDecl FOR JavaModelAssociation»
+	«IF derived == false»
+		«IF multiple»
+			«IF interfaceType.startsWith("java.util.List")»
+			   private «interfaceType» «name» = new org.umlmda.runtime.sdo.sync.SynchronizedListWrapper(this.recorder,  
+			   				new org.umlmda.runtime.bean.PropertyChangeSupportingListWrapper(this.propertyChangeSupport, «EXPAND java::BOInterface::propertyNameConstant FOR this»,
+			   					new «implementationType»()));
+			«ELSE»   
+			   private «interfaceType» «name» = new org.umlmda.runtime.sdo.sync.SynchronizedSetWrapper(this.recorder, 
+			   				new org.umlmda.runtime.bean.PropertyChangeSupportingSetWrapper(this.propertyChangeSupport, «EXPAND java::BOInterface::propertyNameConstant FOR this»,
+			   					new «implementationType»()));
+			«ENDIF»
+		«ELSE»
+		   private «interfaceType» «name»;
+		«ENDIF»
+	«ENDIF»
+«ENDAROUND»
