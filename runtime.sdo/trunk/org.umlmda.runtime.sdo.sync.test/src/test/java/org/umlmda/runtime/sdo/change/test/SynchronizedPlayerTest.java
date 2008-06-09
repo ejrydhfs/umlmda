@@ -1,11 +1,14 @@
 package org.umlmda.runtime.sdo.change.test;
 
+import java.util.ArrayList;
+
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.umlmda.runtime.reflect.ReflectionInvocationFactory;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
+import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.gwt.server.SyncContext;
 import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
@@ -30,28 +33,28 @@ public class SynchronizedPlayerTest extends TestCase {
       Player masterPlayer = new PlayerImpl("Test", new TestFactoryImpl(masterRecorder), new ReflectionInvocationFactory());
 
       masterRecorder.setPlayer(masterPlayer);
-
+      SyncContext.recorderHolder.set(masterRecorder);
+      RootClass root = masterFactory.createRootClass();
+      
+      root.setRootChild(masterFactory.createRootChild());
+      
+      TestUtils.logEntries(logger, masterRecorder);
+      int masterCount = masterRecorder.getChangeEntries().size();
+      
       SynchronizerImpl slaveRecorder = new SynchronizerImpl(null);
       TestFactory slaveFactory = new TestFactoryImpl(slaveRecorder);
       Player slavePlayer = new PlayerImpl("Test", new TestFactoryImpl(slaveRecorder), new ReflectionInvocationFactory());
       
       slaveRecorder.setPlayer(slavePlayer);
       SyncContext.recorderHolder.set(slaveRecorder);
-      
-      
-      RootClass root = masterFactory.createRootClass();
-      
-      root.setRootChild(masterFactory.createRootChild());
-      
-      TestUtils.logEntries(logger, masterRecorder);
 
-      RootClass copy = (RootClass) slavePlayer.playback(masterRecorder.getChangeEntries(), null);
+      RootClass copy = (RootClass) slavePlayer.playback(new ArrayList<AbstractChangeLogEntry>(masterRecorder.getChangeEntries()), null);
       
       TestUtils.logEntries(logger, slaveRecorder);
 
       assertNotNull(copy);
       assertFalse(root == copy);
-      assertEquals(masterRecorder.getChangeEntries().size(), slaveRecorder.getChangeEntries().size());
+      assertEquals(masterCount, slaveRecorder.getChangeEntries().size());
    }
 
 }

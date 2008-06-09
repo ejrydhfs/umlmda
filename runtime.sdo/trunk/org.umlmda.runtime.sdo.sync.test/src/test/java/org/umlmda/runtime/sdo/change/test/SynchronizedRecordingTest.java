@@ -4,11 +4,14 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.umlmda.runtime.reflect.ReflectionInvocationFactory;
+import org.umlmda.runtime.sdo.sync.MasterFactory;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.gwt.server.SyncContext;
 import org.umlmda.runtime.sdo.sync.impl.PlayerImpl;
 import org.umlmda.runtime.sdo.sync.impl.SynchronizerImpl;
+import org.umlmda.runtime.sdo.sync.test.DirectSynchronizerImpl;
+import org.umlmda.runtime.sdo.sync.test.DirectSynchronizerImpl.FactoryBuilder;
 import org.umlmda.runtime.sdo.sync.test.dto.CodeType;
 import org.umlmda.runtime.sdo.sync.test.dto.IntCodeType;
 import org.umlmda.runtime.sdo.sync.test.model.RootChild;
@@ -20,19 +23,34 @@ import org.umlmda.runtime.sdo.sync.test.model.impl.TestFactoryImpl;
 
 public class SynchronizedRecordingTest extends TestCase {
    private static Logger logger = Logger.getLogger(SynchronizedRecordingTest.class);
-   private SynchronizerImpl recorder = new SynchronizerImpl(null);
+   private SynchronizerImpl recorder = new DirectSynchronizerImpl(new FactoryBuilder() {
+
+		public MasterFactory createFactory(Recorder recorder) {
+			MasterFactory masterFactory = new MasterFactory(recorder);
+			
+			masterFactory.registerFactory(factory);
+			return masterFactory;
+		}}, new FactoryBuilder() {
+
+		public MasterFactory createFactory(Recorder recorder) {
+			MasterFactory masterFactory = new MasterFactory(recorder);
+			
+			masterFactory.registerFactory(factory);
+			return masterFactory;
+		}});
+
    private TestFactoryImpl factory = new TestFactoryImpl(recorder);
    private Player player = new PlayerImpl("Test", factory, new ReflectionInvocationFactory());;
-   
    public SynchronizedRecordingTest() {
       recorder.setPlayer(player);
       
       // Put recorder to thread local to be accessible in subsequent functions
-      SyncContext.recorderHolder.set(recorder);
+      //SyncContext.recorderHolder.set(recorder);
    }
    
    protected void setUp() throws Exception {
       super.setUp();
+      SyncContext.recorderHolder.set(recorder);
    }
 
    public void testAddChild() {
@@ -81,7 +99,7 @@ public class SynchronizedRecordingTest extends TestCase {
       greatChildren.setArrayAttr(new String[] { "A", "B"});
       
       TestUtils.logEntries(logger, recorder);
-      assertEquals(14, recorder.getChangeEntries().size());
+      assertEquals(15, recorder.getChangeEntries().size());
    }
    
 }
