@@ -1,0 +1,265 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = SimpleBeanWriter
+main.CodeWriterFormat	     = format/ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.java.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.java.AbstractJavaClassWriter
+%><% import!
+import java.util.Iterator;
+import java.util.Collection;
+import org.apache.commons.lang.StringUtils;
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.model.uml.*;
+import org.umlmda.profile.ModelStereotype;
+import org.umlmda.uml.generator.java.*;
+import org.umlmda.generator.model.util.StringUtil;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+   /* (non-Javadoc)
+    * @see net.sourceforge.umlmda.generator.AbstractWriter#getFileExt()
+    */
+   public SimpleBeanWriter() {
+      super();
+      setClassHelper(new AbstractInterfaceWriter.JavaClassHelper());
+   }
+
+%><% @section %><%
+   JavaModelClass genClass = (JavaModelClass)getGenClass();
+   JavaModelPackage genPackage = (JavaModelPackage)genClass.getPackage();
+   JavaModelClass genSuperClass = genClass.getExtendedClass();
+   JavaModel genModel = (JavaModel)genClass.getGeneratorModel();
+   boolean factoryCtor = Boolean.valueOf(genModel.getProperties().getProperty("ImplCreateByFactoryOnly", "true")).booleanValue();
+   boolean implVisitable = Boolean.valueOf(genModel.getProperties().getProperty("ImplVisitable", "true")).booleanValue();
+   boolean propertyChangeSupport = genClass.hasBoundProperties();
+   boolean ctorWithAttributes = false;
+   String ctorScope = " ";
+   
+   if ( factoryCtor ) {
+   	  ctorScope = "protected ";
+   }
+   else {
+   	  ctorScope = "public ";
+   }
+   
+   genClass.resetImports();
+   genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT_INTERFACE);
+   if ( genSuperClass != null ) {
+      genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT, genSuperClass);
+   }
+   genClass.registerImports(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, genClass.getReferencedTypes(), ModelStereotype.BUSINESS_OBJECT);
+   genClass.registerImports(JavaArtefacts.ENUMERATION, genClass.getReferencedTypes(), ModelStereotype.ENUMERATION);
+   genClass.registerImports(JavaArtefacts.BUSINESS_EXCEPTION, genClass.getReferencedTypes(), ModelStereotype.BUSINESS_EXCEPTION);
+   if ( implVisitable ) {
+      genClass.registerImport(JavaArtefacts.VISITOR, genPackage);
+   }
+%>//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+
+package <%=getPackageName()%>;
+
+import java.io.Serializable;
+import java.util.Iterator;
+<% if ( propertyChangeSupport ) {
+%>import java.beans.PropertyChangeSupport;
+import java.beans.PropertyChangeListener;
+import org.umlmda.runtime.beans.BeanUtils;
+<% }
+%>import org.umlmda.runtime.xml.XMLMarshalContext;
+import org.umlmda.runtime.xml.XMLSerializable;
+
+<%=genClass.registeredImports()%>
+<%=beginUserSection("Imports", COMMON) %>
+<%=endUserSection("Imports", COMMON) %>
+
+/**
+ * <%=getModelClass().getDocumentation()%>
+ */
+public <% if (genClass.isAbstract() ) { %>abstract <%}%>class <%=genClass.getGeneratedName()%> <%
+if ( genSuperClass != null ) {
+%> extends <%=genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT, genSuperClass)%> <%}
+%> implements <%=genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE)%>, Serializable, XMLSerializable<%
+if ( isPersistable() ) {
+%>, net.sourceforge.umlmda.persistence.IPersistentObject<% } 
+if ( implVisitable && !genClass.isAbstract() ) {
+%>, org.umlmda.runtime.visitor.Visitable<% }%>
+{
+   // Version information from BusinessComponent <%=genClass.getComponent().getQualifiedName()%>
+   private static final String modelVersion = "<%=genClass.getModelVersion()%>";
+//@@UserSection-Begin VersionInfo
+   private static final String interfaceVersion = "<%=genClass.getModelVersion()%>";
+   private static final long serialVersionUID = <%=genClass.getSerialVersionUID()%>;
+//@@UserSection-End VersionInfo
+   
+<% if ( isPersistable() ) {
+%>   private boolean persistent = false;
+
+   /**
+    * Returns wheather the object is already persistent
+    */
+   public boolean isPersistent() {
+      return persistent;
+   }
+   
+   /**
+    * Sets the businessobjekt to persistent
+    */
+   public void setPersistent() {
+      this.persistent = true;
+   }
+<% }%><% @include JavaClassBody.jti template-relative %>
+
+<% if ( genClass.isAbstract() == false ) {
+%>   /**
+    * Factory method, only called by the factory implementation in the same package
+    */
+   static <%=genClass.getGeneratedName()%> create<%=genClass.getGeneratedName()%>() {
+      return new <%=genClass.getGeneratedName()%>();
+   }
+    
+<%   if ( keyAttributes.size() > 0 ) {
+   // PKey-Ctor
+%>   static <%=genClass.getGeneratedName()%> create<%=genClass.getGeneratedName()%>(<%
+       for ( Iterator ia = keyAttributes.iterator(); ia.hasNext(); ) {
+         JavaModelAttribute attribute = (JavaModelAttribute)ia.next();
+         %><%=attribute.getJavaType()%> <%=attribute.getName()%><%if ( ia.hasNext() ) {%>, <%}
+       }%>) {
+       return new <%=genClass.getGeneratedName()%>(<%
+       for ( Iterator ia = keyAttributes.iterator(); ia.hasNext(); ) {
+         ModelAttribute attribute = (ModelAttribute)ia.next();
+         %><%=attribute.getName()%><%if ( ia.hasNext() ) {%>, <%}
+       } // for
+       %>);
+   }
+<%   } // if
+   }
+   
+   if ( implVisitable ) {
+      String visitor = genClass.getScopedName(JavaArtefacts.VISITOR, genPackage);
+%>   
+   /** 
+    * Accept the visitor
+    * @param visitor
+    *           must be instance of <%=genPackage.getQualifiedName(JavaArtefacts.VISITOR)%>.
+    * @see <%=genPackage.getQualifiedName(JavaArtefacts.VISITOR)%>.
+    */
+    public void accept(org.umlmda.runtime.visitor.Visitor visitor) {
+       if ( visitor instanceof <%=visitor%> ) {
+          <%=visitor%> aVisitor = (<%=visitor%>)visitor;
+          
+          aVisitor.visit(this);
+       }
+    }
+<% } %>    
+
+   /**
+    * Diagnostics
+    */
+   public String toString() {
+//@@UserSection-Begin toString
+		return toXmlString();
+//@@UserSection-End toString
+   }
+
+   /**
+    * XML serialization
+    */
+   public String toXmlString() {
+      XMLMarshalContext context = new XMLMarshalContext();
+      
+      marshal("<%=genClass.getGeneratedName(JavaArtefacts.BUSINESS_OBJECT)%>", context, true);
+      return context.toString();
+   }
+   
+   /**
+    * XML serialization of the elements and all children
+    */
+   public void marshal(String elementName, XMLMarshalContext context, boolean isRoot) {
+      context.startElement(elementName, this, isRoot);
+      marshalAttributes(context);
+      marshalChildren(context);
+      marshalReferences(context);
+      context.endElement(elementName, this, isRoot);
+   }
+
+   /**
+    * Marshal attributes
+    */
+   protected void marshalAttributes(XMLMarshalContext context) {
+<% if ( genClass.getSuperClass() != null ) {
+%>      super.marshalAttributes(context);
+<% }
+   for ( Iterator ia = genClass.getImplementedAttributes().iterator(); ia.hasNext(); ) {
+      JavaModelAttribute attribute = (JavaModelAttribute)ia.next();
+      if ( attribute.isDerived() == false ) {
+         if ( attribute.getModelClassifier().hasStereotype(ModelStereotype.ENUMERATION) ) {
+%>      if ( <%=attribute.getGetter()%>() != null ) {
+         context.simpleElement("<%=attribute.getName()%>", <%=attribute.getGetter()%>().getValue());
+      } 
+<%       } else {      
+%>      context.simpleElement("<%=attribute.getName()%>", <%=attribute.getGetter()%>());
+<%       }
+      }
+   }
+%>   }
+
+   /**
+    * Marshal children
+    */
+   protected void marshalChildren(XMLMarshalContext context) {
+<% if ( genClass.getSuperClass() != null ) {
+%>      super.marshalChildren(context);
+<% }
+   // Associations-Accessors
+   for ( Iterator ia = genClass.getImplementedAssociations().iterator(); ia.hasNext(); ) {
+      JavaModelAssociation association = (JavaModelAssociation)ia.next();
+      JavaModelClass assocClass = (JavaModelClass)association.getTarget();
+      String assocType = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT, assocClass);
+
+      if ( !association.isDerived() && association.isComposition() && association.isMultiple() ) {
+%>      for (Iterator i = <%=association.getGetter()%>().iterator(); i.hasNext();) {
+         Object child = i.next();
+         
+         if ( child instanceof XMLSerializable )
+            ((XMLSerializable)child).marshal("<%=association.getName()%>", context, false);
+      }
+<%    } else if ( !association.isDerived() && association.isComposition() && association.isMultiple() == false ) {
+%>         if ( <%=association.getName()%> instanceof XMLSerializable )
+            ((XMLSerializable)<%=association.getName()%>).marshal("<%=association.getName()%>", context, false);
+<%    }
+   }
+%>   }
+   
+   /**
+    * @param context
+    */
+   protected void marshalReferences(XMLMarshalContext context) {
+<% if ( genClass.getSuperClass() != null ) {
+%>      super.marshalReferences(context);
+<% }
+   // Associations-Accessors
+   for ( Iterator ia = genClass.getImplementedAssociations().iterator(); ia.hasNext(); ) {
+      JavaModelAssociation association = (JavaModelAssociation)ia.next();
+      JavaModelClass assocClass = (JavaModelClass)association.getTarget();
+      String assocType = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT, assocClass);
+
+      if ( association.isComposition() == false && association.isMultiple() ) {
+%>      for (Iterator i = <%=association.getGetter()%>().iterator(); i.hasNext();) {
+         Object child = i.next();
+         
+         if ( child instanceof XMLSerializable )
+            context.elementRef("<%=association.getName()%>", (XMLSerializable)child);
+      }
+<%    } else if ( association.isComposition() == false && association.isMultiple() == false ) {
+%>      if ( <%=association.getGetter()%>() instanceof XMLSerializable )
+         context.elementRef("<%=association.getName()%>", (XMLSerializable)<%=association.getGetter()%>());
+<%    }
+   }
+%>   }
+
+}
+
+//@@UserSection-Begin RCSLog
+<%=RcsHelper.writeLog("// ")%>
+//@@UserSection-End RCSLog
