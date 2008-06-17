@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.set:GenerationSet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.set="http:///org/umlmda/generator/set.ecore" name="UMLGeneratorTest_All">
+  <GenerationProfile destination="../org.umlmda.classic.test.java/generated/main/java" packagePrefix="org.umlmda.demo">
+    <profile href="../../3rd/profile/java.ump#java"/>
+  </GenerationProfile>
+  <!--
+  <GenerationProfile destination="src/j2ee" packagePrefix="org.umlmda.demo">
+    <profile href="../../3rd/profile/j2ee.ump#j2ee"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src/j2ee/META-INF" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/j2eeDeployment.ump#j2eeDeployment"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src/ws-axis/WEB-INF/wsdl" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/wsdlRpcEncoded.ump#wsdlRpcEncoded"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src/ws-axis" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/wsAxisClient.ump#wsAxisClient"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src/ws-axis" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/wsAxisServer.ump#wsAxisServer"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src/ws-axis/WEB-INF" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/wsAxisServerDeployment.ump#wsAxisServerDeployment"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src/ws-jboss/WEB-INF/wsdl" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/wsdlRpcEncoded.ump#wsdlRpcEncoded"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src/ws-jboss" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/wsJBossServer.ump#wsJBossServer"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src/ws-jboss/WEB-INF" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/wsAxisServerDeployment.ump#wsAxisServerDeployment"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src/ws-was/WEB-INF/wsdl" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/wsdlNew.ump#wsdlNew"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src/ws-was" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/wsWASClient.ump#wsWASClient"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src/xml" packagePrefix="org.umlmda.demo" active="false">
+    <profile href="../../3rd/profile/xml.ump#xml"/>
+  </GenerationProfile>
+  <GenerationProfile destination="cfg/xml" packagePrefix="org.umlmda.demo" active="false">
+    <profile href="../../3rd/profile/xsd.ump#xsd"/>
+  </GenerationProfile>
+  <GenerationProfile destination="cfg/xsd" packagePrefix="org.umlmda.demo" active="false">
+    <profile href="../../3rd/profile/wsdlXsd.ump#wsdlXsd"/>
+  </GenerationProfile>
+  <GenerationProfile destination="docsrc" packagePrefix="org.umlmda.demo" active="false">
+    <profile href="../../3rd/profile/docbook.ump#docbook"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src/test/java" packagePrefix="org.umlmda.test">
+    <profile href="../../3rd/profile/java.ump#java"/>
+  </GenerationProfile>
+  <GenerationProfile destination="testws/WEB-INF/wsdl" packagePrefix="org.umlmda.test">
+    <profile href="../../3rd/profile/wsdlNew.ump#wsdlNew"/>
+  </GenerationProfile>
+  <GenerationProfile destination="testws" packagePrefix="org.umlmda.test">
+    <profile href="../../3rd/profile/wsAxisClient.ump#wsAxisClient"/>
+  </GenerationProfile>
+  -->
+</org.umlmda.generator.set:GenerationSet>

@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: UMLMDA UML Generator Plug-in
+Bundle-SymbolicName: org.umlmda.generator.uml; singleton:=true
+Bundle-Version: 3.0.1.qualifier
+Bundle-ClassPath: runtime/org.umlmda.generator.uml.jar
+Bundle-Vendor: www.umlmda.org
+Bundle-Localization: plugin
+Export-Package: org.umlmda.uml.generator.cpp,
+ org.umlmda.uml.generator.cpp.writer,
+ org.umlmda.uml.generator.docbook,
+ org.umlmda.uml.generator.docbook.writer,
+ org.umlmda.uml.generator.hibernate,
+ org.umlmda.uml.generator.hibernate.writer,
+ org.umlmda.uml.generator.idl,
+ org.umlmda.uml.generator.idl.writer,
+ org.umlmda.uml.generator.j2ee,
+ org.umlmda.uml.generator.j2ee.writer,
+ org.umlmda.uml.generator.java,
+ org.umlmda.uml.generator.java.writer,
+ org.umlmda.uml.generator.sql,
+ org.umlmda.uml.generator.sql.writer,
+ org.umlmda.uml.generator.webservices,
+ org.umlmda.uml.generator.webservices.writer,
+ org.umlmda.uml.generator.xml,
+ org.umlmda.uml.generator.xml.writer
+Require-Bundle: org.apache.commons.lang,
+ org.apache.velocity,
+ org.umlmda.model.profile;visibility:=reexport,
+ org.umlmda.umlmodel;visibility:=reexport,
+ org.umlmda.generator.core;visibility:=reexport,
+ org.umlmda.generator.profile,
+ org.umlmda.eclipse,
+ org.umlmda.generator.model,
+ org.umlmda.generator.uml.psm
+Eclipse-LazyStart: true

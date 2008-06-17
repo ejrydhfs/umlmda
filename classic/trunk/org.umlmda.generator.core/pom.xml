@@ -9,7 +9,7 @@
       <version>3.2.0-SNAPSHOT</version>
    </parent>
 
-   <artifactId>org.umlmda.generator.uml.oaw</artifactId>
+   <artifactId>org.umlmda.generator.core</artifactId>
    <name>UMLMDA classic generator core</name>
    <description />
 
@@ -60,5 +60,30 @@
             </excludes>
          </resource>
       </resources>
+
+      <plugins>
+         <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <phase>generate-sources</phase>
+                  <configuration>
+                     <tasks>
+
+                        <!--
+                           Place any ant task here. You can add anything
+                           you can add between <target> and </target> in a
+                           build.xml.
+                        -->
+
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
    </build>
 </project>

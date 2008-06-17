@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         id="UMLGenerator.templatePath"
+         point="org.umlmda.eclipse.templatePath">
+      <Path
+            path="templates"
+            name="UMLGenerator.templatePath"/>
+   </extension>
+   <extension
+         point="org.umlmda.eclipse.extensionClassloader">
+   </extension>
+
+</plugin>

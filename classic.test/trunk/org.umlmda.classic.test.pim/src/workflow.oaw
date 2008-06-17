@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+
+    <!-- Nur zum Debugging des Workflows, wird normalerweise von Maven gesetzt -->
+    <!-- 
+    <property name="basedir" value="C:\devel\COR-PnC\vertrag_pnc_oap_gui_pim"/>
+     -->
+    <property file="workflow.properties"/>
+
+    <!-- initializes resourcemaps, urimaps, etc. -->
+    <component class="org.openarchitectureware.adapter.rsdp.workflow.RSASetup" >
+        <!-- Standard profiles -->
+        <pathMapEntry>
+            <alias value="UMLMDA_PROFILE"/>
+            <path value="${basedir}/profiles/rsm/3rd/umlmda/profiles"/>
+        </pathMapEntry>
+        <pathMapEntry>
+            <alias value="UML2_MSL_PROFILES"/>
+            <path value="${basedir}/profiles/rsm/3rd/ibm"/>
+        </pathMapEntry>
+        <init value="true"/>
+    </component> 
+
+    <!-- Loading and verify UMLMDA generation sets -->
+    <component id="generationSetLoader"
+            class="org.umlmda.oaw.generator.workflow.GenerationSetLoader">
+        <generationSet value="${model.project}/etc/umlmda/self/set/All.ums"/>
+        <generationSetSlot value="gs"/>
+    </component>
+    <component id="gsIntegrityCheck" class="org.umlmda.oaw.generator.workflow.ModelIntegrityChecker">
+      <modelSlot value="gs"/>
+    </component>
+
+	<!-- Load and verify uml models -->
+	<component class="org.openarchitectureware.emf.XmiReader">
+		<modelFile value="${model}" />
+		<outputSlot value="uml_model" />
+	</component>
+    <component id="modelIntegrityCheck" class="org.umlmda.oaw.generator.workflow.ModelIntegrityChecker">
+      <modelSlot value="uml_model"/>
+    </component>
+	
+	<!-- Generate UMLMDA Pim from uml model -->
+	<component id="pimLoader" class="org.umlmda.oaw.generator.workflow.ModelLoader">
+		<modelFactory class="org.umlmda.oaw.generator.workflow.Uml2ModelFactory">
+		   <umlmodelSlot value="uml_model"/>
+		</modelFactory>   
+		<modelSlot value="umlmda_pim"/>
+	</component>
+	
+	<!-- Run classic generator -->
+	<component class="org.umlmda.generator.oaw.ClassicGenerator">
+		<templateFolder value="etc/umlmda/3rd/templates"/>
+		<modelSlot value="umlmda_pim"/>
+		<generatorProfile value="gs"/>
+	</component>
+</workflow>
