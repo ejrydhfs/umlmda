@@ -1,5 +1,6 @@
 package org.umlmda.runtime.sdo.sync.gwt.server;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
@@ -46,10 +47,42 @@ public class MethodUtils {
       for (int i = 0; i < parameterTypes.length; i++) {
          Class<?> parameterClass = parameterTypes[i];
       
-         if ( parameterClass.isAssignableFrom(parameters[i].getClass()) == false ) {
+         if ( isAssignable(parameterClass, parameters[i].getClass()) == false ) {
             return false;
          }
       }
       return true;
+   }
+   
+   private static boolean isAssignable(Class class1, Class class2) {
+      return class1.isAssignableFrom(class2)
+        || ( class1.isPrimitive() && class1.isAssignableFrom(getPrimitiveType(class2)));
+   }
+
+   private static Class getPrimitiveType(Class clazz) {
+      try {
+         Field typeField = clazz.getField("TYPE");
+         
+         Object type = typeField.get(clazz);
+         
+         if ( type instanceof Class ) {
+            return (Class) type;
+         }
+         else {
+            return null;
+         }
+      }
+      catch (SecurityException e) {
+         throw new RuntimeException(e);
+      }
+      catch (NoSuchFieldException e) {
+         return null;
+      }
+      catch (IllegalArgumentException e) {
+         return null;
+      }
+      catch (IllegalAccessException e) {
+         throw new RuntimeException(e);
+      }
    }
 }
