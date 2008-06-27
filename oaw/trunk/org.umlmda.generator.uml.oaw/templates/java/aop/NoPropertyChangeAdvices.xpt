@@ -6,7 +6,7 @@
 // =============================
 // Avoid property change support
 // =============================
-«AROUND propertyChangeBaseInterface FOR JavaBusinessObject»
+«AROUND java::BOInterface::propertyChangeBaseInterface FOR JavaBusinessObject»
 	java.io.Serializable
 «ENDAROUND»
 
