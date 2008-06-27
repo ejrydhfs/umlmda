@@ -13,7 +13,7 @@
 «EXTENSION org::umlmda::uml::java::Parameter»
 
 «DEFINE BOInterface FOR JavaModelClass»
-	«LET generatedName(this, getDefaultArtefact("BusinessObject")) AS interfaceName»
+	«LET generatedName(this, getDefaultArtefact()) AS interfaceName»
 	«this.resetImports()»
 	«IF superClass != null»
 		«this.registerImport(interfaceArtefact(this), (JavaModelClass)superClass)»
@@ -22,7 +22,7 @@
 	«this.registerImports(getDefaultArtefact("BusinessException"), referencedTypes, "BusinessException")»
 	«this.registerImports(getDefaultArtefact("Enumeration"), referencedTypes, "Enumeration")»
 	«FILE generatedPath+"/"+interfaceName+".java"»
-		package «generatorPackage.getQualifiedPackageName(getDefaultArtefact("BusinessObject"))»;
+		package «generatorPackage.getQualifiedPackageName(getDefaultArtefact())»;
 		
 		«this.registeredImports()»
 		
