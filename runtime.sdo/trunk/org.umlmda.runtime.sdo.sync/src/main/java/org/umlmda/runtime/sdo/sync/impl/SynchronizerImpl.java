@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.umlmda.runtime.bean.ManagedPropertyChangeSupportHelper;
+import org.umlmda.runtime.bean.PropertyChangeEventManager;
 import org.umlmda.runtime.lang.GenericEnumeration;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
@@ -204,6 +206,9 @@ public class SynchronizerImpl implements Recorder {
       
       // Temporary switch to collect strategy
       setSynchronizeStrategy(SynchronizeStrategy.COLLECT);
+
+      // Switch property change events off while doing the playback
+      boolean startQueuing = PropertyChangeEventManager.INSTANCE.startQueuing();
       
       try {
          player.playback(remoteChanges, null);
@@ -213,6 +218,10 @@ public class SynchronizerImpl implements Recorder {
       } catch (RuntimeException e) {
          throw e;
       } finally {
+         // Enable property change events again
+         if ( startQueuing ) {
+            PropertyChangeEventManager.INSTANCE.finishQueuing();
+         }
          // Switch back to old strategy
          setSynchronizeStrategy(oldStrategy);
       }
