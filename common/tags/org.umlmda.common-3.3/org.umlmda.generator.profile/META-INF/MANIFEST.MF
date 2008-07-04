@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.umlmda.generator.profile; singleton:=true
+Bundle-Version: 3.2.0.qualifier
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Export-Package: org.umlmda.generator.profile,
+ org.umlmda.generator.profile.impl,
+ org.umlmda.generator.profile.util,
+ org.umlmda.generator.set,
+ org.umlmda.generator.set.impl,
+ org.umlmda.generator.set.util
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.emf.ecore.xmi;visibility:=reexport
+Eclipse-LazyStart: true
