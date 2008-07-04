@@ -28,9 +28,9 @@
       <gwt.version>1.5.M2</gwt.version>
       <google.webtoolkit.home>${env.GWT_HOME}</google.webtoolkit.home>
       <oaw.version>4.2.0</oaw.version>
-      <umlmda.common.version>3.2.0</umlmda.common.version>
-      <umlmda.oaw.version>3.3.0-SNAPSHOT</umlmda.oaw.version>
-      <umlmda.runtime.version>3.4-SNAPSHOT</umlmda.runtime.version>
+      <umlmda.common.version>3.3</umlmda.common.version>
+      <umlmda.oaw.version>3.3</umlmda.oaw.version>
+      <umlmda.runtime.version>3.4</umlmda.runtime.version>
       <umlmda.uml2.profile.version>3.2.0</umlmda.uml2.profile.version>
       <umlmda.generator.profile.version>3.2.0</umlmda.generator.profile.version>
    </properties>
