@@ -1,0 +1,38 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelStructuralFeature
+ */
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator::java;
+
+extension org::umlmda::uml::java::DataType;
+
+cached JavaModelMethod postSetMethod(JavaModelStructuraleFeature attr) :
+	attr.owningJavaClass.methods.typeSelect(JavaModelMethod).select(m|m.name == "post"+attr.name.toFirstUpper()+"Set").first();
+	
+cached String javaType(JavaModelStructuraleFeature feature) :
+	feature.metaType.isAssignableFrom(JavaModelAssociation) ?
+		((JavaModelAssociation)feature).interfaceType
+	:
+		((JavaModelAttribute)feature).javaType
+;		
+
+
+cached JavaModelClassifier classifier(JavaModelStructuraleFeature feature) :
+	null
+;
+
+cached JavaModelClassifier classifier(JavaModelAttribute attr) :
+	(JavaModelClassifier)attr.modelClassifier
+;
+	
+cached JavaModelClassifier classifier(JavaModelAssociation assoc) :
+	(JavaModelClass)assoc.target
+;
+	
+cached String enumerationType(JavaModelClassifier classifier) :
+	null
+;
+
+cached String enumerationType(JavaModelClass classifier) :
+	classifier.attributes.typeSelect(JavaModelAttribute).first().dataType.javaTypeName(true)	
+;
