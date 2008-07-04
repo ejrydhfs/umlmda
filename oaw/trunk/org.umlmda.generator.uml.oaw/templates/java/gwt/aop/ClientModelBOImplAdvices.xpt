@@ -12,6 +12,19 @@
 	, Serializable
 «ENDAROUND»
 
+«AROUND java::BOImpl::propertyChangeImports FOR JavaModelClass»
+import org.umlmda.runtime.bean.ManagedPropertyChangeSupportHelper;
+import java.beans.PropertyChangeListener;
+import org.umlmda.runtime.bean.BeanUtils;
+«ENDAROUND»
+
+«AROUND java::BOImpl::propertyChangeSupportAttr FOR JavaModelClass»
+	«IF superClass == null»
+   // Property change support
+   protected final ManagedPropertyChangeSupportHelper propertyChangeSupport = new ManagedPropertyChangeSupportHelper(this);
+	«ENDIF»
+«ENDAROUND»
+
 // =================
 // Avoid persistence
 // =================
@@ -40,9 +53,12 @@
 «ENDAROUND»
 
 «AROUND java::BOImpl::methodBody(ModelClass generatedClass) FOR ModelMethod»
+	boolean queuingSwitchedOn = propertyChangeSupport.startQueuing();
+	
+	try {
 	«IF isSDOServerOnly()»
 		«IF returnType != null »
-			return («((JavaModelClassifier)returnType).javaType») =
+			return («((JavaModelClassifier)returnType).javaType»)
 		«ENDIF»
 		recorder.recordInvoke(this, "«name»"
 		«IF parameters.size > 0»
@@ -55,6 +71,11 @@
 	«ELSE»
 		«targetDef.proceed()»
 	«ENDIF»
+	} finally {
+		if ( queuingSwitchedOn ) {
+			propertyChangeSupport.finishQueuing();
+		} 
+	}
 «ENDAROUND»
 
 «AROUND java::BOImpl::callPostSetMethod FOR JavaModelStructuraleFeature»
@@ -79,3 +100,4 @@
 		«ENDIF»
 	«ENDIF»
 «ENDAROUND»
+
