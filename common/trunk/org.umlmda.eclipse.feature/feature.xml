@@ -2,7 +2,7 @@
 <feature
       id="org.umlmda.eclipse.feature"
       label="org.umlmda.eclipse.feature"
-      version="3.0.4.qualifier"
+      version="3.2.0.qualifier"
       provider-name="www.umlmda.org">
 
    <description url="readme.html">
@@ -23,100 +23,54 @@ transformations using UMLMDA.
    </url>
 
    <requires>
+      <import plugin="org.apache.log4j"/>
       <import plugin="org.apache.commons.lang"/>
       <import plugin="org.junit"/>
       <import plugin="org.umlmda.model.profile"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.emf.ecore.xmi"/>
+      <import plugin="org.eclipse.emf.edit"/>
+      <import plugin="org.umlmda.generator.profile"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.emf.edit.ui"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.umlmda.generator.profile.edit"/>
    </requires>
 
    <plugin
          id="org.umlmda.model.profile"
          download-size="0"
          install-size="0"
-         version="3.0.4.qualifier"
+         version="3.2.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.umlmda.umlmodel"
          download-size="0"
          install-size="0"
-         version="3.0.4.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.crazybeans"
-         download-size="0"
-         install-size="0"
-         version="3.0.4.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.umlmodel.mdr"
-         download-size="0"
-         install-size="0"
-         version="3.0.4.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.umlmodel.nsuml"
-         download-size="0"
-         install-size="0"
-         version="3.0.4.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.umlmodel.uml2"
-         download-size="0"
-         install-size="0"
-         version="3.0.4.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.eclipse"
-         download-size="0"
-         install-size="0"
-         version="3.0.4.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.eclipse.jdt"
-         download-size="0"
-         install-size="0"
-         version="3.0.4.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.generator.model"
-         download-size="0"
-         install-size="0"
-         version="3.0.4.qualifier"
+         version="3.2.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.umlmda.generator.profile"
          download-size="0"
          install-size="0"
-         version="3.0.4.qualifier"
+         version="3.2.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.umlmda.generator.profile.edit"
          download-size="0"
          install-size="0"
-         version="3.0.4.qualifier"
+         version="3.2.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.umlmda.generator.profile.editor"
          download-size="0"
          install-size="0"
-         version="3.0.4.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.generator.uml.psm"
-         download-size="0"
-         install-size="0"
-         version="3.0.4.qualifier"
+         version="3.2.0.qualifier"
          unpack="false"/>
 
 </feature>
