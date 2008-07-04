@@ -80,6 +80,8 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
       if ( getDataType() != null ) {
          if ( getDataType().getName().equals("char"))
             return "xsd:string";
+         else if ( getDataType().getName().equals(ModelDataType.BINARY))
+            return "xsd:hexBinary";
          else
             return "xsd:"+getDataType().getName();
       }
