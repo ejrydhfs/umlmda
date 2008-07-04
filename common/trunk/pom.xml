@@ -7,7 +7,7 @@
    </parent>
 
    <artifactId>org.umlmda.common</artifactId>
-   <version>3.3</version>
+   <version>3.4-SNAPSHOT</version>
    <packaging>pom</packaging>
    <name>UMLMDA common</name>
    <description>UMLMDA maven project for umlmda common modules.</description>
@@ -29,8 +29,8 @@
    </modules>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/common/tags/org.umlmda.common-3.3</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/common/tags/org.umlmda.common-3.3</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/common/trunk</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/common/trunk</developerConnection>
    </scm>
 
    <dependencyManagement>
