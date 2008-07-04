@@ -16,7 +16,7 @@
    </description>
 
    <properties>
-      <umlmda.common.version>3.2.0</umlmda.common.version>
+      <umlmda.common.version>3.3</umlmda.common.version>
       <oaw.version>4.2.0</oaw.version>
    </properties>
 
