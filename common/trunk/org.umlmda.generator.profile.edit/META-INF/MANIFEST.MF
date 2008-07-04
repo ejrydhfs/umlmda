@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.umlmda.generator.profile.edit
-Bundle-Version: 3.0.4.qualifier
+Bundle-Version: 3.2.0.qualifier
 Bundle-Activator: org.umlmda.generator.set.provider.UmpEditPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin

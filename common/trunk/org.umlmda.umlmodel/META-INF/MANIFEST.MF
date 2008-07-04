@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: UMLMDA UMLModel-Interface Plug-in
 Bundle-SymbolicName: org.umlmda.umlmodel
-Bundle-Version: 3.0.4.qualifier
+Bundle-Version: 3.2.0.qualifier
 Bundle-Vendor: www.umlmda.org
 Bundle-Localization: plugin
 Require-Bundle: org.apache.log4j,
