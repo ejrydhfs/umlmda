@@ -16,7 +16,9 @@ public interface Recorder {
    
    public abstract void startRecording();
 
-   public abstract void stopRecording();
+   public abstract boolean stopRecording();
+   
+   public abstract boolean isRecording();
    
    public abstract void register(SynchronizedObject recordedObject, boolean recordCreation);
 
