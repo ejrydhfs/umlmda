@@ -96,3 +96,8 @@
 		«ENDIF»
 	«ENDIF»
 «ENDAROUND»
+
+«AROUND java::BOImpl::modelMetaInformation FOR JavaModelClass»
+	«targetDef.proceed()»
+	«EXPAND java::gwt::BOImpl::setEnabled(false) FOR this»
+«ENDAROUND»

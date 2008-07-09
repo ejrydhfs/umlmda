@@ -39,3 +39,12 @@
 		«targetDef.proceed()»
 	«ENDIF»
 «ENDAROUND»
+
+«AROUND java::BOInterface::handleAttributes FOR JavaModelClass»
+	«targetDef.proceed()»
+	
+	/**
+	 * Controls the editable of all gui elements
+	 */
+	public void setEnabled(boolean editable);
+«ENDAROUND»

@@ -8,6 +8,9 @@ extension org::umlmda::uml::java::DataType;
 
 cached JavaModelMethod postSetMethod(JavaModelStructuraleFeature attr) :
 	attr.owningJavaClass.methods.typeSelect(JavaModelMethod).select(m|m.name == "post"+attr.name.toFirstUpper()+"Set").first();
+
+cached JavaModelMethod postSetMethod(JavaModelClass class, String attrName) :
+	class.methods.typeSelect(JavaModelMethod).select(m|m.name == "post"+attrName.toFirstUpper()+"Set").first();
 	
 cached String javaType(JavaModelStructuraleFeature feature) :
 	feature.metaType.isAssignableFrom(JavaModelAssociation) ?
