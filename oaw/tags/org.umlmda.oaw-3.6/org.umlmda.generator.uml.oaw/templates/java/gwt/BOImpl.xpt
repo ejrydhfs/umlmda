@@ -1,0 +1,69 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION org::umlmda::uml::java::Element»
+«EXTENSION org::umlmda::uml::java::StructuralFeature»
+
+«DEFINE setEnabled(boolean genClient) FOR JavaModelClass»
+«ENDDEFINE»
+
+«DEFINE setEnabled(boolean genClient) FOR JavaBusinessObject»
+	/**
+	 * Controls the editable of all gui elements
+	 */
+	public void setEnabled(boolean enabled) {
+	    boolean recordingSwitchedOff = false;
+	    
+		if ( recorder.isRecording() ) {
+         	recorder.recordChange(this, "enabled", enabled);
+			recordingSwitchedOff = recorder.stopRecording();
+		}	
+		
+		try {
+			«IF superClass != null»
+				super.setEnabled(enabled);
+			«ENDIF»
+			
+			«FOREACH this.implementedAttributes.typeSelect(JavaModelAttribute).select(a|a.name.endsWith("Enabled")) AS attr»
+				«IF (genClient && attr.isSDOServerOnly() || !genClient && attr.isSDOClientOnly()) == false && attr.readOnly == false»
+					«attr.setter»(enabled);	
+				«ENDIF»
+			«ENDFOREACH»
+
+			«FOREACH this.implementedAssociations.typeSelect(JavaModelAssociation).select(a|a.name.endsWith("Selection") == false) AS assoc»
+				«IF assoc.composition»
+					«IF (genClient && assoc.isSDOServerOnly() || !genClient && assoc.isSDOClientOnly()) == false »
+						«IF assoc.multiple»
+							for (Iterator i = «assoc.getter»().iterator(); i.hasNext();) {
+					     		«((JavaModelClass)assoc.target).javaType» child = («((JavaModelClass)assoc.target).javaType»)i.next();
+		
+								child.setEnabled(enabled);			     
+					  		}
+						«ELSE»
+							«assoc.getter»().setEnabled(enabled);
+						«ENDIF»
+					«ENDIF»
+				«ENDIF»
+			«ENDFOREACH»			
+
+			«IF postSetMethod("Enabled") != null»
+				«LET postSetMethod("Enabled") AS psm»
+					«IF (genClient && psm.isSDOServerOnly() || !genClient && psm.isSDOClientOnly()) == false »
+						«IF psm.parameters.size == 1»
+							«psm.name»(enabled);
+						«ENDIF»
+					«ENDIF»
+				«ENDLET»
+			«ENDIF»
+		} finally {
+			if ( recordingSwitchedOff ) {
+				recorder.startRecording();
+			}
+		}	
+	}
+«ENDDEFINE»

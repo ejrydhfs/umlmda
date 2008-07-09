@@ -1,0 +1,72 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+
+«DEFINE BOException FOR JavaBusinessException»
+«LET generatedName(this, "java.BusinessException") AS className»
+«FILE generatedPath+"/"+className+".java"»
+package «generatorPackage.getQualifiedPackageName("java.BusinessException")»;
+
+/**
+ * «documentation»
+ */
+public class «className» extends «javaSuperClass.javaType» {
+   	«EXPAND BOImpl::versionInfo FOR this»
+
+	«FOREACH javaConstants.typeSelect(JavaModelAttribute) AS attr»
+		«EXPAND BOInterface::constantDecl FOR attr»;
+	«ENDFOREACH»
+
+	«FOREACH attributes.typeSelect(JavaModelAttribute) AS attr»
+		«EXPAND BOImpl::attrDecl FOR attr»
+	
+		«EXPAND BOInterface::attrGetterDecl FOR attr»
+		«EXPAND BOImpl::getterBody(this) FOR attr»
+		
+		«EXPAND BOInterface::attrSetterDecl FOR attr» 
+		«EXPAND BOImpl::setterBody(this) FOR attr»
+	«ENDFOREACH»
+
+s	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+		«EXPAND BOImpl::assocDecl FOR assoc»
+	
+		«EXPAND BOInterface::assocGetterDecl FOR assoc»
+		«EXPAND BOImpl::getterBody(this) FOR assoc»
+	
+		«EXPAND BOInterface::assocSetterDecl FOR assoc»
+		«EXPAND BOImpl::setterBody(this) FOR assoc»
+	«ENDFOREACH»
+	
+	«FOREACH methods.typeSelect(org::umlmda::uml::generator::java::JavaModelMethod) AS method»
+		«EXPAND BOInterface::methodDecl FOR method»
+		«EXPAND BOImpl::methodBody(this) FOR method»
+	«ENDFOREACH»
+
+    /**
+     * Default constructor
+     */
+    public «className» () {
+    }
+     
+    /**
+     * Constructor with all attributes set
+     */
+	«IF attributes.size > 0 »
+		public «className» (
+		«FOREACH javaAttributes.typeSelect(org::umlmda::uml::generator::java::JavaModelAttribute) AS attr SEPARATOR ","»
+			«attr.javaType» «attr.name»
+		«ENDFOREACH»
+		) {
+		«FOREACH javaAttributes.typeSelect(org::umlmda::uml::generator::java::JavaModelAttribute) AS attr»
+			this.«attr.name» = «attr.name»;
+		«ENDFOREACH»
+		}
+	«ENDIF»
+}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»

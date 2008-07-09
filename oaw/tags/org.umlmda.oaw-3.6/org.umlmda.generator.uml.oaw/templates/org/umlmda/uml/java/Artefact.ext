@@ -1,0 +1,41 @@
+import org::umlmda::model::uml;
+
+String scopeInterface() :
+	JAVA org.umlmda.uml.generator.util.ArtefactUtils.getScopeInterface()
+;
+	
+String scopeImplementation() :
+	JAVA org.umlmda.uml.generator.util.ArtefactUtils.getScopeImplemenation()
+;
+	
+Void resetDefaultArtefacts() :
+	JAVA org.umlmda.uml.generator.util.ArtefactUtils.resetDefaultMappings()
+;
+
+String getDefaultArtefact(ModelElement element)	:
+   let stereotypeName = element.stereotypes.typeSelect(String).first() :
+   
+   getDefaultArtefact(stereotypeName)
+;
+   
+String getDefaultArtefact(ModelElement element, String scope)	:
+   let stereotypeName = element.stereotypes.typeSelect(String).first() :
+   
+   getDefaultArtefact(stereotypeName, scope)
+;
+   
+String getDefaultArtefact(String stereotypeName)	:
+   JAVA org.umlmda.uml.generator.util.ArtefactUtils.getDefaultMapping(java.lang.String)
+;
+   
+String getDefaultArtefact(String stereotypeName, String scope)	:
+   JAVA org.umlmda.uml.generator.util.ArtefactUtils.getDefaultMapping(java.lang.String, java.lang.String)
+;
+   
+Void setDefaultArtefact(String stereotypeName, String artefactName) :
+   JAVA org.umlmda.uml.generator.util.ArtefactUtils.setDefaultMapping(java.lang.String, java.lang.String)
+;   
+
+Void setDefaultArtefact(String stereotypeName, String artefactName, String scope) :
+   JAVA org.umlmda.uml.generator.util.ArtefactUtils.setDefaultMapping(java.lang.String, java.lang.String, java.lang.String)
+;   
