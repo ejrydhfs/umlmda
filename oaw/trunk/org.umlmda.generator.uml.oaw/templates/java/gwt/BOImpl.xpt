@@ -30,19 +30,23 @@
 			«ENDIF»
 			
 			«FOREACH this.implementedAttributes.typeSelect(JavaModelAttribute).select(a|a.name.endsWith("Enabled")) AS attr»
-				«attr.setter»(enabled);	
+				«IF (genClient && attr.isSDOServerOnly() || !genClient && attr.isSDOClientOnly()) == false »
+					«attr.setter»(enabled);	
+				«ENDIF»
 			«ENDFOREACH»
 
 			«FOREACH this.implementedAssociations.typeSelect(JavaModelAssociation).select(a|a.name.endsWith("Selection") == false) AS assoc»
 				«IF assoc.composition»
-					«IF assoc.multiple»
-						for (Iterator i = «assoc.getter»().iterator(); i.hasNext();) {
-				     		«((JavaModelClass)assoc.target).javaType» child = («((JavaModelClass)assoc.target).javaType»)i.next();
-	
-							child.setEnabled(enabled);			     
-				  		}
-					«ELSE»
-						«assoc.getter»().setEnabled(enabled);
+					«IF (genClient && assoc.isSDOServerOnly() || !genClient && assoc.isSDOClientOnly()) == false »
+						«IF assoc.multiple»
+							for (Iterator i = «assoc.getter»().iterator(); i.hasNext();) {
+					     		«((JavaModelClass)assoc.target).javaType» child = («((JavaModelClass)assoc.target).javaType»)i.next();
+		
+								child.setEnabled(enabled);			     
+					  		}
+						«ELSE»
+							«assoc.getter»().setEnabled(enabled);
+						«ENDIF»
 					«ENDIF»
 				«ENDIF»
 			«ENDFOREACH»			
