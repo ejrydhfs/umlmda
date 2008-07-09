@@ -29,7 +29,7 @@
       <google.webtoolkit.home>${env.GWT_HOME}</google.webtoolkit.home>
       <oaw.version>4.2.0</oaw.version>
       <umlmda.common.version>3.3</umlmda.common.version>
-      <umlmda.oaw.version>3.3</umlmda.oaw.version>
+      <umlmda.oaw.version>3.4</umlmda.oaw.version>
       <umlmda.runtime.version>3.4</umlmda.runtime.version>
       <umlmda.uml2.profile.version>3.2.0</umlmda.uml2.profile.version>
       <umlmda.generator.profile.version>3.2.0</umlmda.generator.profile.version>
