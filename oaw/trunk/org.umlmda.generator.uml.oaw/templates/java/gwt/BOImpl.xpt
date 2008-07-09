@@ -30,7 +30,7 @@
 			«ENDIF»
 			
 			«FOREACH this.implementedAttributes.typeSelect(JavaModelAttribute).select(a|a.name.endsWith("Enabled")) AS attr»
-				«IF (genClient && attr.isSDOServerOnly() || !genClient && attr.isSDOClientOnly()) == false »
+				«IF (genClient && attr.isSDOServerOnly() || !genClient && attr.isSDOClientOnly()) == false && attr.readOnly == false»
 					«attr.setter»(enabled);	
 				«ENDIF»
 			«ENDFOREACH»
