@@ -1,0 +1,14 @@
+import org::umlmda::generator::model::uml;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::oaw::generator::model::java;
+
+String getterProtectedRegion(JavaModelAttribute attr) :
+	attr.qualifiedName+".get";
+	
+String setterProtectedRegion(JavaModelAttribute attr) :
+	attr.qualifiedName+".set";
+	
+String versionProtectedRegion(JavaModelClass cls) :
+	cls.qualifiedName+".versionInfo";
+	

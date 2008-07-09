@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.oaw</artifactId>
+      <version>3.4</version>
+   </parent>
+
+   <artifactId>org.umlmda.generator.uml.oaw</artifactId>
+   <name>UMLMDA generator uml oaw</name>
+   <description />
+
+   <dependencies>
+      <dependency>
+         <groupId>commons-lang</groupId>
+         <artifactId>commons-lang</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.eclipse.uml2</groupId>
+         <artifactId>uml</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-core-expressions</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-core-workflow</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-core-xpand2</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-util-stdlib</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>${parent.groupId}</groupId>
+         <artifactId>org.umlmda.umlmodel.uml2</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>${parent.groupId}</groupId>
+         <artifactId>org.umlmda.umlmodel.nsuml</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>${parent.groupId}</groupId>
+         <artifactId>org.umlmda.generator.uml.psm</artifactId>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <resources>
+         <resource>
+            <directory>${basedir}/templates</directory>
+         </resource>
+         <resource>
+            <directory>${basedir}/src</directory>
+            <includes>
+               <include>**/*.oaw</include>
+            </includes>
+         </resource>
+      </resources>
+   </build>
+</project>
