@@ -1,0 +1,61 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::j2ee»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::j2ee»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::persistence::Hibernate»
+
+«DEFINE HibernateMapping FOR JavaBusinessObject»
+«LET generatedName(this, "hibernate.MappingXml") AS className»
+«FILE mappingName()»
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Generated file, please edit UserSections only -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="«entityPackage()»">
+	<class name="«entityImpl()»"
+	       table="«tableName()»">
+		«EXPAND Id FOR this»	  
+		
+		«FOREACH noneKeyAttributes() AS attr»
+		    <property name="«attr.name»" 
+	         		  column="«attr.columnName()»"
+					  type="«attr.modelClassifier.dbType()»"/>	   
+		«ENDFOREACH»     
+	</class>       
+</hibernate-mapping>
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE Id FOR JavaBusinessObject»
+	«IF keyAttributes.size > 1»
+		«EXPAND CompoundId FOR this»
+	«ELSEIF keyAttributes.size == 1»
+		«EXPAND SimpleId FOR this»
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE SimpleId FOR JavaBusinessObject»
+«LET keyAttributes.typeSelect(JavaModelAttribute).first() AS keyAttr»
+    <id name="«name»"
+	    column="«keyAttr.columnName()»"
+	    type="«keyAttr.dataType.dbType()»">
+<!-- @@UserSection-Begin Generator -->
+      <generator class="assigned">
+      </generator> 
+<!-- @@UserSection-End Generator -->
+    </id>
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE CompoundId FOR JavaBusinessObject»
+    <composite-id name="«name»PKey" class="«entityPKeyImpl()»">
+    	«FOREACH keyAttributes() AS keyAttr»
+			<key-property name="«keyAttr.name»" 
+	         			  column="«keyAttr.columnName()»"
+	         			  type="«keyAttr.dataType.dbType()»"/>
+	    «ENDFOREACH»
+    </composite-id>
+«ENDDEFINE»
