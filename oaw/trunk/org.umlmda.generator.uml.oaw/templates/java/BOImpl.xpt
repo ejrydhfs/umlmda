@@ -47,10 +47,8 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 	«EXPAND delegateFactory FOR this»
 	«EXPAND keyImpl FOR this»
 	«EXPAND standardCtor FOR this»
-	
-	«FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr»
-		«EXPAND handleAttribute(this) FOR attr»
-	«ENDFOREACH»
+
+	«EXPAND handleAttributes FOR this»	
 	
 	«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
 		«EXPAND handleAssociation(this) FOR assoc»
@@ -73,6 +71,12 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 «DEFINE standardImports FOR JavaBusinessObject»
 	import java.io.Serializable;
 	import java.util.Iterator;
+«ENDDEFINE»
+
+«DEFINE handleAttributes FOR JavaModelClass»
+	«FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr»
+		«EXPAND handleAttribute(this) FOR attr»
+	«ENDFOREACH»
 «ENDDEFINE»
 
 «DEFINE handleAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»

@@ -100,8 +100,3 @@ import org.umlmda.runtime.bean.BeanUtils;
 		«ENDIF»
 	«ENDIF»
 «ENDAROUND»
-
-«AROUND java::BOImpl::modelMetaInformation FOR JavaModelClass»
-	«targetDef.proceed()»
-	«EXPAND java::gwt::BOImpl::setEnabled(true) FOR this»
-«ENDAROUND»

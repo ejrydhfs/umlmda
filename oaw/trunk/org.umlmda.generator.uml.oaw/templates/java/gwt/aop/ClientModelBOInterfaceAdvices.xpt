@@ -18,11 +18,3 @@
 	org.umlmda.runtime.sdo.sync.SynchronizedObject, «jmiPackage()».RefFeatured, org.umlmda.runtime.bean.IPropertyChangeSupport, java.io.Serializable
 «ENDAROUND»
 
-«AROUND java::BOInterface::handleAttributes FOR JavaModelClass»
-	«targetDef.proceed()»
-	
-	/**
-	 * Controls the editable of all gui elements
-	 */
-	public void setEnabled(boolean editable);
-«ENDAROUND»
