@@ -1,0 +1,28 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::j2ee»
+«EXTENSION java::UMLMDA»
+
+«DEFINE HomeInterface FOR J2EEBusinessService»
+«LET generatedName(this, "j2ee.HomeInterface") AS interfaceName»
+«FILE generatedPath+"/"+interfaceName+".java"»//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//@@UserSection-End RCSHeader
+
+package «generatorPackage.getQualifiedPackageName("j2ee.HomeInterface")»;
+
+/**
+ * J2EE Homeinterface for businessservice «getScopedName("java.BusinessServiceInterface")»
+ */
+public interface «interfaceName» extends javax.ejb.EJBHome
+{
+   public static final String JNDI_NAME="«jndiName»";
+   public static final String COMP_NAME="java:comp/env/ejb/«getGeneratedName("j2ee.RemoteInterface")»";
+
+   public «getScopedName("j2ee.RemoteInterface")» create() throws java.rmi.RemoteException, javax.ejb.CreateException;
+}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
