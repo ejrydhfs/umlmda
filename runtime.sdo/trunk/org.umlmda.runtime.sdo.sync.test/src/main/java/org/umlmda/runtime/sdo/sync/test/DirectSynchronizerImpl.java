@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.umlmda.runtime.bean.BeanInvocation;
 import org.umlmda.runtime.reflect.ReflectionInvocationFactory;
+import org.umlmda.runtime.sdo.sync.InvocationStatus;
 import org.umlmda.runtime.sdo.sync.MasterFactory;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
@@ -47,6 +48,11 @@ public class DirectSynchronizerImpl extends SynchronizerImpl
 
    @Override
    public synchronized void recordInvoke(SynchronizedObject objectProxy, String methodName, Object... parameters) {
+      if (invocationStatus.equals(InvocationStatus.RUNNING)) {
+         throw new RuntimeException("we are currently in invocation and can't do another one!");
+      }
+      invocationStatus = InvocationStatus.RUNNING;
+
       List<AbstractChangeLogEntry> changeEntries = getChangeEntries();
       
       if ( logger.isDebugEnabled() ) {
@@ -133,11 +139,14 @@ public class DirectSynchronizerImpl extends SynchronizerImpl
          SyncContext.recorderHolder.set(this);
          clientModelPlayer.playback(serverModelRecorder.getChangeEntries(), null);
 
+         //assert false : "Hier sollten wir hinbekommen bevor neues invoke ausgefuehrt wird!";
+         
          // Remove entries from playback
          getChangeEntries().removeAll(serverModelRecorder.getChangeEntries());
          
          serverModelRecorder.reset();
       }
+      invocationStatus = InvocationStatus.IDLE;
    }
 
    private void logEntries(List<AbstractChangeLogEntry> changeEntries) {
