@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.umlmda.runtime.bean.ManagedPropertyChangeSupportHelper;
 import org.umlmda.runtime.bean.PropertyChangeEventManager;
 import org.umlmda.runtime.lang.GenericEnumeration;
+import org.umlmda.runtime.sdo.sync.InvocationStatus;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
 import org.umlmda.runtime.sdo.sync.SyncService;
@@ -44,6 +45,7 @@ public class SynchronizerImpl implements Recorder {
 	private final SyncService service;
 	private Player player;
 	private SynchronizeStrategy strategy = SynchronizeStrategy.COLLECT;
+	protected InvocationStatus invocationStatus = InvocationStatus.IDLE;
 
 	public SynchronizerImpl(SyncService service) {
 		this.service = service;
@@ -164,6 +166,11 @@ public class SynchronizerImpl implements Recorder {
 
 	public void recordInvoke(final SynchronizedObject recordedObject,
 			final String methodName, final Object... parameters) {
+	   if (invocationStatus.equals(InvocationStatus.RUNNING)) {
+	      throw new RuntimeException("we are currently in invocation and can't do another one!");
+	   }
+	   invocationStatus = InvocationStatus.RUNNING;
+	   
 		// Translate parameters
 		final Object transferParameter[] = new Object[parameters.length];
 
@@ -240,6 +247,7 @@ public class SynchronizerImpl implements Recorder {
 				});
 
 		serviceQueue.execute();
+		invocationStatus = InvocationStatus.IDLE;
 	}
 
 	private void playbackRemoteChanges(
