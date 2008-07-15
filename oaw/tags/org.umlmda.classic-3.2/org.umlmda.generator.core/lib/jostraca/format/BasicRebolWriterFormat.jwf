@@ -1,0 +1,849 @@
+!<header>
+REBOL [
+!<rebolheader>
+]
+
+
+
+!<{import>; section:import <<
+;
+
+!<import>
+
+;
+; section:import >> !<}import>
+
+
+
+; Constants << ;
+ 
+; Command line arguments
+WRITER__ARGUMENT_CONTROL_PREFIX:         "$<main.CodeWriter.argument.ControlPrefix>"
+WRITER__ARGUMENT_OutputFolder:           "$<main.CodeWriter.argument.name.OutputFolder>"
+WRITER__ARGUMENT_BackupFolder:           "$<main.CodeWriter.argument.name.BackupFolder>"
+WRITER__ARGUMENT_NoBackup:               "$<main.CodeWriter.argument.name.NoBackup>"
+
+; User Interface text message parts
+WRITER__UITEXT_Method:                   "method "
+WRITER__UITEXT_Main:                     "main "
+WRITER__UITEXT_ExceptionIn:              "Exception in "
+WRITER__UITEXT_ColonNewLine:             ":^/"
+WRITER__UITEXT_NewLine:                  "^/"
+WRITER__UITEXT_Section:                  "section "
+WRITER__UITEXT_SavedFile:                "Saved file:       "
+WRITER__UITEXT_UnableToSaveFile:         "Unable to save file: "
+WRITER__UITEXT_UnableToBackupFile:       "Unable to backup file: "
+WRITER__UITEXT_ToBackupFolder:           " to backup folder: "
+WRITER__UITEXT_BackupFolderColon:        "Backup folder: "
+WRITER__UITEXT_BackupFolderExistFailure: " does not exist and cannot be created."
+WRITER__UITEXT_BackupFolderNotAFolder:   " is not a folder."
+WRITER__UITEXT_BackupFolderNotWritable:  " is not writable."
+WRITER__UITEXT_CodeWriterState:          "Code Writer State: "
+WRITER__UITEXT_GetFileIndexEquals:       "^/_getFileIndex()    "
+WRITER__UITEXT_GetFullFileNameEquals:    "^/_getFullFileName() "
+WRITER__UITEXT_GetOutputFolderEquals:    "^/_getOutputFolder() "
+WRITER__UITEXT_ErrorHeader:              "^/^/--- CodeWriter Error Description Start ---^/^/"
+WRITER__UITEXT_ErrorFooter:              "^/--- CodeWriter Error Description End -----^/^/"
+WRITER__UITEXT_PlaceHolderException:     "This placeholder Exception should never be thrown: there is an error in the WriterFormat."
+
+; String constants
+WRITER__STRING_empty:                    ""
+WRITER__STRING_dot:                      "."
+WRITER__STRING_separator:                "$<\jostraca.system.fileSeparator>"
+
+; Constants >> ;
+
+
+
+
+; Writer Variables << ;
+
+writer__iFileNameRoots:      []                   ; generated file name roots
+writer__iNumFiles:           0                    ; number of generated files
+  
+writer__iFileNamePrefix:     WRITER__STRING_empty ; failsafe default
+writer__iFileNameSuffix:     WRITER__STRING_empty ; failsafe default
+
+writer__iBackupPrefix:       WRITER__STRING_empty ; failsafe default
+writer__iBackupSuffix:       WRITER__STRING_empty ; failsafe default
+
+writer__iCurrentText:        WRITER__STRING_empty ; current text
+writer__iCurrentFileIndex:   0                    ; current file index
+
+writer__iArgs:               []                   ; cmd line args
+writer__iNumArgs:            0                    ; number of cmd line args
+
+writer__iSave:               true                 ; save generated code to disk
+writer__iBackup:             true                 ; make backups
+
+writer__iOutputFolder:       WRITER__STRING_dot   ; written code is output to this folder
+writer__iBackupFolder:       WRITER__STRING_dot   ; overwritten files are placed here
+
+writer__iProperties:         []                   ; lookup table for compile time properties
+writer__iPropertiesInit:     false                ; true => lookup table initialiased
+
+; Writer Variables >> ;
+
+
+
+
+!<{declare>; section:declare <<
+;
+
+!<declare>
+
+;
+; section:declare >> !<}declare>
+
+
+
+
+; Template Services (File Generation) << ;
+
+; Set the prefix of the files to be generated. 
+_setFileNamePrefix: func [ pPrefix ] [
+   writer__iFileNamePrefix: pPrefix
+]
+
+
+
+; Get prefix of files to be generated.
+_getFileNamePrefix: func [][
+  writer__iFileNamePrefix
+]
+
+
+
+; Set the suffix of the files to be generated. 
+_setFileNameSuffix: func [ pSuffix ] [
+  writer__iFileNameSuffix: pSuffix
+]
+
+
+
+; Get suffix of files to be generated.
+_getFileNameSuffix: func[] [
+  writer__iFileNameSuffix
+]
+
+
+
+; Set the full name of the file to be generated. 
+; Prefix and Suffix are set to empty.
+_setFullFileName: func [ pName ] [
+  _setFileNamePrefix  WRITER__STRING_empty
+  _setFileNameRoot    pName
+  _setFileNameSuffix  WRITER__STRING_empty
+]
+
+
+
+; Get the full name of current file being generated.
+_getFullFileName: func[] [
+   rejoin reduce [ _getFileNamePrefix _getFileNameRoot _getFileNameSuffix ]
+]
+
+
+
+; Set the names of the files to be generated. 
+; Prefix and Suffix are set to empty.
+_setFullFileNames: func [ pNames ] [
+  _setFileNamePrefix WRITER__STRING_empty
+  _setFileNameRoots  pNames
+  _setFileNameSuffix WRITER__STRING_empty
+]
+
+
+
+; Get the full names of the files to be generated.
+_getFullFileNames: func [ /local fileNameRoot fileNameRoots fullFileNames fileNamePrefix fileNameSuffix ] [
+
+  fileNameRoots:  _getFileNameRoots
+  fullFileNames:  copy []
+  fileNamePrefix: _getFileNamePrefix
+  fileNameSuffix: _getFileNameSuffix
+
+  foreach fileNameRoot fileNameRoots [
+    append fullFileNames   rejoin reduce [ fileNamePrefix fileNameRoot fileNameSuffix ]
+  ]
+
+  fullFileNames
+]
+
+
+
+; Set the root of the name of the file to be generated. 
+_setFileNameRoot: func [ pFileNameRoot ] [
+  _setFileNameRoots reduce [ pFileNameRoot ]
+]
+
+
+
+; Get the root of the name of current file being generated.
+_getFileNameRoot: func [] [
+   pick writer__iFileNameRoots ( writer__iCurrentFileIndex + 1 )
+]
+
+
+
+; Get roots of the names of files to be generated.
+_getFileNameRoots: func [] [
+  head writer__iFileNameRoots
+]
+
+
+
+; Set the roots of the names of the files to be generated. 
+_setFileNameRoots: func [ pFileNameRoots ] [
+  writer__iFileNameRoots: pFileNameRoots
+  writer__iNumFiles:      length? writer__iFileNameRoots
+]
+
+
+
+; Get index of file currently being generated. 
+_getFileIndex: func[] [
+  writer__iCurrentFileIndex
+]
+
+
+
+; Get number of files to generate.
+_getNumFiles: func [] [
+  writer__iNumFiles
+]
+
+
+
+; Set output folder.
+_setOutputFolder: func [ pFolder ] [
+  writer__iOutputFolder: pFolder
+]
+
+
+
+; Get output folder.
+_getOutputFolder: func [] [
+  writer__iOutputFolder
+]
+
+
+
+; Set backup folder.
+_setBackupFolder: func [ pBackupFolder ] [
+  writer__iBackupFolder: rejoin [ writer__iOutputFolder WRITER__STRING_separator  pBackupFolder ]
+]
+
+
+
+; Get backup folder.
+_getBackupFolder: func[] [
+  writer__iBackupFolder
+]
+
+
+
+; Set the prefix of backup files.
+_setBackupPrefix: func [ pBackupPrefix ] [
+  writer__iBackupPrefix: pBackupPrefix
+]
+
+
+
+; Set the suffix of backup files.
+_setBackupSuffix: func [ pBackupSuffix ] [
+  writer__iBackupSuffix: pBackupSuffix
+]
+
+
+
+; Set to true if generated files are to be backed up to disk automatically.
+_backup: func [ pBackup ] [
+  writer__iBackup: pBackup
+]
+
+
+
+; Set to true if generated files are to be saved to disk automatically. 
+_save: func [ pSave ] [
+  writer__iSave: pSave
+]
+
+
+
+; Save a text file.
+_saveTextFile: func [ pFilePath pContent ] [
+  write  make file! pFilePath pContent
+  true
+]
+
+
+
+; Load a text file.
+_loadTextFile: func [ pFilePath /local content ] [
+  content: read make file! pFilePath
+  content
+]
+
+; Template Services (File Generation) >> ;
+
+
+
+
+; Template Services (Control) << ;
+
+; Get the value of a compile-time property.
+_getProperty: func [ pName ] [
+  if not writer__iPropertiesInit [
+    writer__initProperties
+  ]
+
+  second find writer__iProperties pName
+]
+
+
+
+; Get first user arg.
+_getFirstUserArg: func [] [
+   _getUserArg 0
+]
+
+
+
+; Get second user arg.
+_getSecondUserArg: func [] [
+  _getUserArg 1
+]
+
+
+
+; Get third user arg.
+_getThirdUserArg: func [] [
+  _getUserArg 2
+]
+
+
+
+; Get nth (n=0,1,2,...) user arg (the nth arg with no WRITER__ARGUMENT_CONTROL_PREFIX).
+_getUserArg: func [ pOrdinal /local userArgs ] [
+  either pOrdinal < _getNumUserArgs [
+    userArgs: _getUserArgs
+    pick userArgs ( pOrdinal + 1 )
+  ][
+    WRITER__STRING_empty
+  ]
+]
+
+
+
+; Get user command line arguments to CodeWriter. 
+_getUserArgs: func [] [
+  writer__iUserArgs
+]
+
+
+
+; Get number of user command line arguments to CodeWriter.
+_getNumUserArgs: func [] [
+  writer__iNumUserArgs
+]
+
+
+
+; Get command line arguments to CodeWriter. 
+_getArgs: func [] [
+  writer__iArgs
+]
+
+
+
+; Get number of command line arguments to CodeWriter.
+_getNumArgs: func [] [
+  writer__iNumArgs;
+]
+
+; Template Services (Control) >> ;
+
+
+
+
+; Template Services (Text Production) << #
+
+; Insert text into generated file.
+_insert: func [ pText ] [
+  writer__iCurrentText:  rejoin [ writer__iCurrentText pText ]
+]
+
+
+
+; Create a String containing specified number of spaces.
+_spaces: func [ pNumSpaces ] [
+  numSpaces: either pNumSpaces < 0 [ -1 * pNumSpaces][ pNumSpaces ]
+  spaces:    copy WRITER__STRING_empty
+  while [ numSpaces > 0 ] [
+    spaces:    rejoin [ spaces " " ]
+    numSpaces: numSpaces - 1
+  ]
+  spaces
+]
+
+
+
+; Left align String with spaces. 
+_left: func [ pText pColWidth ] [
+  _align pText " " pColWidth "l"
+] 
+
+
+
+; Right align String with spaces. 
+_right: func [ pText pColWidth ] [
+  _align pText " " pColWidth "r"
+] 
+
+
+; Center align String with spaces. 
+_center: func [ pText pColWidth ] [
+  _align pText " " pColWidth "c"
+] 
+
+
+
+; Align text within background text with specified column width.
+; Alignment can be 'l': left, 'c': center, 'r': right
+_align: func[ pText pBackText pColWidth pAlignment /local result 
+                                                          textLen 
+                                                          backTextLen
+                                                          remainWidth
+                                                          backTextRepeats
+                                                          backTextRemain
+                                                          back
+                                                          backTextI ] [
+
+  result: pText
+  
+  if error? e: try [
+    textLen: length? pText
+    if pColWidth > textLen [
+      backTextLen:     length? pBackText
+      remainWidth:     pColWidth - textLen
+      backTextRepeats: make integer! remainWidth / backTextLen
+      backTextRemain:  remainWidth // backTextLen
+      back:            WRITER__STRING_empty
+      backTextI:       0
+      while [ backTextI < backTextRepeats ] [
+        back:      rejoin [ back pBackText ]
+        backTextI: backTextI + 1
+      ]
+      if 0 < backTextRemain [
+        back: rejoin [ back copy/part pBackText backTextRemain ]
+      ]
+
+      if "l" = pAlignment [
+        result: rejoin [ result back ]
+      ]
+      if "c" = pAlignment [
+        result: rejoin [ copy/part back (make integer! divide length? back 2)  result  at back (1 + make integer! divide length? back 2) ]
+      ]
+      if "r" = pAlignment [
+        result: rejoin [ back result ]
+      ]
+    ]
+    true
+  ][
+    result: pText
+  ]
+
+  result
+]
+
+
+
+; Get text of file currently being generated.
+_getText: func [] [
+  writer__iCurrentText
+]
+
+
+
+; Set text of file currently being generated.
+_setText: func [ pText ] [
+  writer__iCurrentText: pText
+]
+
+; Template Services (Text Production) >> ;
+
+
+
+
+; Writer Services <<
+
+; Initialize.
+writer__initialize: func [] [
+  writer__iCurrentFileIndex: 0
+  writer__setDefaults
+]
+
+
+
+; Main file generation loop. Template script is placed here in the body section.
+writer__write: func [ /local writer__fileNameRoots 
+                             writer__numFiles 
+                             writer__fileI 
+                             writer__currentSection 
+                    ] [
+
+  ; initialize
+  writer__currentSection: "init"
+
+
+  if error? e: try [
+
+    !<{init>; section:init << 
+    ;
+
+    !<init>
+
+    ;
+    ; section:init >> !<}init> 
+
+
+    ; write files loop
+    writer__numFiles:      _getNumFiles
+    writer__fileI:         0
+    writer__fileNameRoots: _getFileNameRoots
+
+    forall writer__fileNameRoots [
+
+      if error? e: try [
+
+        !<{prewrite>; section:prewrite << 
+        ; 
+
+        writer__currentSection: "prewrite"
+        !<prewrite>
+
+        ;
+        ; section:prewrite >> !<}prewrite> 
+
+
+        if writer__startFile [
+
+          !<{body>; section:body << 
+          ;
+
+          writer__currentSection: "body"
+          !<body>
+
+          ;
+          ; section:body >> !<}body> 
+
+
+          if writer__endFile [ 
+
+
+            !<{postwrite>; section:postwrite << 
+            ; 
+
+            writer__currentSection: "postwrite"
+            !<postwrite>
+
+            ;
+            ; section:postwrite >> !<}postwrite> 
+
+          ] ; writer__endFile
+        ] ; writer__startFile
+
+        true
+      ][
+        writer__handleException  rejoin [ WRITER__UITEXT_ExceptionIn WRITER__UITEXT_Section writer__currentSection ]  disarm e      
+      ]
+
+      writer__nextFile
+    ]
+ 
+
+    !<{cleanup>; section:cleanup << 
+    ;
+ 
+    writer__currentSection: "cleanup"
+    !<cleanup>
+
+    ;
+    ; section:cleanup >> !<}cleanup> 
+
+    true
+  ][
+    writer__handleException rejoin [ WRITER__UITEXT_ExceptionIn WRITER__UITEXT_Section writer__currentSection ]  disarm e
+  ]
+]
+
+
+
+; Start writing a file.
+writer__startFile: func [] [
+  writer__iCurrentText: WRITER__STRING_empty
+  true
+]
+
+
+
+; End writing a file.
+writer__endFile: func [ /local endOK fileName filePath ] [
+  endOK: true
+
+  fileName: _getFullFileName
+  filePath: rejoin [ writer__iOutputFolder
+                     WRITER__STRING_separator
+                     fileName ]
+
+  if writer__iBackup [
+    if error? e: try [
+      writer__backup  filePath fileName writer__iBackupFolder
+      true
+    ][
+      writer__handleException  rejoin [ WRITER__UITEXT_UnableToBackupFile 
+                                        filePath 
+                                        WRITER__UITEXT_ToBackupFolder
+                                        writer__iBackupFolder ]
+                               disarm e
+      endOK: false
+    ]
+   ]
+ 
+  if all [ endOK writer__iSave ] [
+    either error? e: try [
+      _saveTextFile filePath writer__iCurrentText
+    ][
+      writer__handleException  rejoin [WRITER__UITEXT_UnableToSaveFile filePath ]  disarm e
+      endOK: false
+    ][
+      writer__userMessage  rejoin [ WRITER__UITEXT_SavedFile filePath WRITER__UITEXT_NewLine ]
+    ]
+  ]
+
+  endOK
+]
+
+
+
+; Move to next file
+writer__nextFile: func [] [
+  writer__iCurrentFileIndex: writer__iCurrentFileIndex + 1
+]
+
+
+
+; Handle command line arguments to CodeWriter.
+writer__handleArgs: func[ pArgs /local argName_OutputFolder
+                                       argName_BackupFolder
+                                       argName_NoBackup 
+                                       args ] [
+
+  ; set arg names
+  argName_OutputFolder: rejoin [ WRITER__ARGUMENT_CONTROL_PREFIX WRITER__ARGUMENT_OutputFolder ]
+  argName_BackupFolder: rejoin [ WRITER__ARGUMENT_CONTROL_PREFIX WRITER__ARGUMENT_BackupFolder ]
+  argName_NoBackup:     rejoin [ WRITER__ARGUMENT_CONTROL_PREFIX WRITER__ARGUMENT_NoBackup     ]
+
+  ; parse args
+  ; ...
+
+  foreach arg pArgs [
+    if find/match arg argName_OutputFolder [
+      _setOutputFolder  find/match arg argName_OutputFolder
+    ]
+    if find/match arg argName_BackupFolder [
+      _setBackupFolder  find/match arg argName_BackupFolder
+    ]
+    if argName_NoBackup = arg [
+      _backup $<lang.FalseString> ;; NOTE: -B => don't make backups
+    ]
+  ]
+
+  writer__initArgs  make integer! length? pArgs  pArgs
+]
+
+
+
+; Set defaults from configuration property set.
+writer__setDefaults: func [] [
+
+  $<{main.FileNameRoot>_setFileNameRoot "$<\main.FileNameRoot>" $<}main.FileNameRoot>
+  $<{main.FileNamePrefix>_setFileNamePrefix( "$<\main.FileNamePrefix>" );$<}main.FileNamePrefix>
+  $<{main.FileNameSuffix>_setFileNameSuffix( "$<\main.FileNameSuffix>" );$<}main.FileNameSufffix>
+
+  $<{main.OutputFolder>_setOutputFolder( "$<\main.OutputFolder>" );$<}main.OutputFolder>
+
+  $<{main.BackupFolder>_setBackupFolder( "$<\main.BackupFolder>" );$<}main.BackupFolder>
+  $<{main.BackupPrefix>_setBackupPrefix( "$<\main.BackupPrefix>" );$<}main.BackupPrefix>
+  $<{main.BackupSuffix>_setBackupSuffix( "$<\main.BackupSuffix>" );$<}main.BackupSufffix>
+  _backup( "$<lang.TrueString>" = "$<jostraca.MakeBackup>" );
+
+]
+
+
+
+; Initialize command line arguments.
+writer__initArgs: func [ pNumArgs pArgs /local argI userArgI ] [
+  argI:     0
+  userArgI: 0
+
+  writer__iNumArgs:     0 + pNumArgs
+  writer__iArgs:        pArgs
+  writer__iNumUserArgs: writer__iNumArgs
+
+  argI: 1
+  while [ argI <= writer__iNumArgs ] [
+    if find/match  make string! at writer__iArgs argI  WRITER__ARGUMENT_CONTROL_PREFIX [
+      writer__iNumUserArgs: writer__iNumUserArgs - 1
+    ]
+    argI: argI + 1
+  ]
+
+  writer__iUserArgs: copy []
+
+  argI: 1
+  while [ argI <= writer__iNumArgs ] [
+    if not find/match  make string! at writer__iArgs argI  WRITER__ARGUMENT_CONTROL_PREFIX [
+      append writer__iUserArgs pick writer__iArgs argI
+      userArgI: userArgI + 1
+    ]
+    argI: argI + 1
+  ]
+]
+
+
+
+; Print a user readable message.
+writer__userMessage: func [ pMessage ] [
+  prin pMessage
+]
+
+
+
+; Handle exceptions: print an explanation for user.
+writer__handleException: func [ pMessage pException /local userMsg ] [
+
+  userMsg: rejoin [ WRITER__UITEXT_ErrorHeader
+                    writer__describeState 
+                    pMessage 
+                    WRITER__UITEXT_ColonNewLine
+                    probe pException
+                    WRITER__UITEXT_ErrorFooter ]
+
+  writer__userMessage userMsg 
+]
+
+
+
+; Provide a concise description of the state of the CodeWriter.
+writer__describeState: func [ /local currentState ] [
+  currentState: rejoin [ 
+    WRITER__UITEXT_CodeWriterState
+    WRITER__UITEXT_GetFileIndexEquals    _getFileIndex
+    WRITER__UITEXT_GetFullFileNameEquals _getFullFileName
+    WRITER__UITEXT_GetOutputFolderEquals _getOutputFolder
+    WRITER__UITEXT_NewLine
+  ] 
+  currentState
+]
+
+
+
+; Backup overwritten files, if they exist.
+; Backups have the format: [YYYYMMDDhhmmss][prefix][filename][suffix].
+writer__backup: func[ pFilePath pFileName pBackupFolder /local backupFolder
+                                                               dateTime
+                                                               backupFileName
+                                                               backupFilePath 
+                                                               dateTimeNow
+                                                               year_yyyy
+                                                               month_mm 
+                                                               day_dd   
+                                                               hour_hh  
+                                                               minute_mm
+                                                               second_ss
+
+] [
+
+  backupFolder: make file! pBackupFolder
+
+  ; check backup folder ( create if necessary )
+  if not exists? backupFolder [
+    if error? e: try [    
+      make-dir backupFolder
+      true
+    ][
+      make error!  rejoin [ WRITER__UITEXT_BackupFolderColon
+                            backupFolder
+                            WRITER__UITEXT_BackupFolderExistFailure ]
+    ]
+  ]
+
+  if not dir? backupFolder [
+    make error! rejoin [ WRITER__UITEXT_BackupFolderColon 
+                         backupFolder
+                         WRITER__UITEXT_BackupFolderNotAFolder ]
+  ]
+
+;  don't know how to check if folder is writable
+;  if( !( -w $backupFolder ) ) {
+;    die( $WRITER__UITEXT_BackupFolderColon
+;         . $backupFolder
+;         . $WRITER__UITEXT_BackupFolderNotWritable );
+;  }
+
+
+  ; create backup file path
+  dateTimeNow: now
+  year_yyyy: _align make string! dateTimeNow/year     "0" 4 "r"
+  month_mm:  _align make string! dateTimeNow/month    "0" 2 "r"
+  day_dd:    _align make string! dateTimeNow/day      "0" 2 "r"
+  hour_hh:   _align make string! dateTimeNow/time/1   "0" 2 "r"
+  minute_mm: _align make string! dateTimeNow/time/2   "0" 2 "r"
+  second_ss: _align make string! dateTimeNow/time/3   "0" 2 "r"
+  dateTime:  rejoin [ year_yyyy month_mm day_dd hour_hh minute_mm second_ss ]
+  backupFileName: rejoin [ dateTime writer__iBackupPrefix pFileName writer__iBackupSuffix ]
+  backupFilePath: rejoin [ pBackupFolder WRITER__STRING_separator backupFileName ]
+
+  ; save backup file
+  if exists? make file! pFilePath [
+    _saveTextFile backupFilePath  read make file! pFilePath
+  ]
+]
+
+
+
+; set compile time properties
+writer__initProperties: func [] [
+  $<{jostraca.properties.NameValueList>
+  writer__iProperties: make hash! [ $<jostraca.properties.NameValueList> ]
+  writer__iPropertiesInit: true
+  $<}jostraca.properties.NameValueList>
+]
+
+; Writer Services >> ;
+
+
+
+
+; Execute.
+main: func [ pArgs /local e ] [
+
+  if error? e: try [
+    writer__initialize
+    writer__handleArgs pArgs
+    writer__write
+  ][
+    writer__handleException  rejoin [ WRITER__UITEXT_ExceptionIn WRITER__UITEXT_Method WRITER__UITEXT_Main ]  disarm e      
+  ]
+]
+
+
+
+; Start execution
+main system/options/args
+
+
+!<footer>
+

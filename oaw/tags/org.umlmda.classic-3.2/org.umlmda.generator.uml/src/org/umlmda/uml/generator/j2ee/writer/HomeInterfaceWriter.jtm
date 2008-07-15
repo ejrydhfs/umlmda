@@ -1,0 +1,40 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = HomeInterfaceWriter
+main.CodeWriterFormat	   = format\\ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.j2ee.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.j2ee.AbstractHomeInterfaceWriter
+%><% import!
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.uml.generator.java.*;
+import org.umlmda.uml.generator.j2ee.*;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %><%
+   J2EEModelClass genClass = (J2EEModelClass)getGenClass();
+   J2EEModel genModel = (J2EEModel)genClass.getGeneratorModel();
+   
+   genClass.resetImports();
+   genClass.registerImport(J2EEArtefacts.REMOTE_INTERFACE);
+%>//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+   
+package <%=getPackageName()%>;
+
+import java.rmi.RemoteException;
+import javax.ejb.EJBHome;
+import javax.ejb.CreateException;
+<%=genClass.registeredImports()%>
+
+/**
+ * EJB Home interface for @see <%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE)%>
+ */
+public interface <%=genClass.getGeneratedName()%> extends EJBHome
+{
+   public static final String JNDI_NAME="<%=genClass.getJndiName()%>";
+   public static final String COMP_NAME="java:comp/env/ejb/<%=genClass.getGeneratedName(J2EEArtefacts.REMOTE_INTERFACE)%>";
+
+   public <%=genClass.getScopedName(J2EEArtefacts.REMOTE_INTERFACE)%> create() throws RemoteException, CreateException;
+}
