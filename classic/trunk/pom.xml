@@ -8,7 +8,7 @@
       <version>3.3.0</version>
    </parent>
    <artifactId>org.umlmda.classic</artifactId>
-   <version>3.2</version>
+   <version>3.3-SNAPSHOT</version>
    <packaging>pom</packaging>
    <name>UMLMDA Classic</name>
    <description>UMLMDA maven project for umlmda classic modules.</description>
