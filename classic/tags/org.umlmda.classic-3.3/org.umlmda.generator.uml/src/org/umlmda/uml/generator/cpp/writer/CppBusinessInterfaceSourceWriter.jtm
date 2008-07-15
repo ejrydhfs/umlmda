@@ -1,0 +1,45 @@
+//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = CppBusinessInterfaceSourceWriter
+main.CodeWriterFormat	     = format\\ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.cpp.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.cpp.AbstractCppInterfaceWriter
+%>
+<% import!
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.uml.generator.cpp.*;
+// ==== End of generation header ===============================================
+%>
+<% @section declare %><%
+%><% @section %>
+
+
+#include <string>
+#include <vector>
+#include <<%=getClassName(getModelClass())%>.h>
+
+<%= beginUserSection("Include", COMMON) %>
+<%= endUserSection("Include", COMMON) %>
+
+using namespace <%=getNamespace(getModelClass())%>;
+
+<%=getClassName()%>::<%=getClassName()%>() {
+}
+
+<%=getClassName()%>::<%=getClassName()%>(const <%=getClassName()%> &rSrc) {
+}
+
+<%=getClassName()%> & <%=getClassName()%>::operator =(const <%=getClassName()%> &rSrc) {
+   return *this;
+}
+
+<%=getClassName()%>::~<%=getClassName()%>() {
+}
+
+//@@UserSection-Begin RCSLog
+<%=RcsHelper.writeLog("// ")%>
+//@@UserSection-End RCSLog

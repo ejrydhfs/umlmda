@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- @@Generated file, please edit UserSections only -->
+<openejb-jar xmlns="http://www.openejb.org/xml/ns/openejb-jar-2.1">
+
+	<dep:environment xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.1">
+		<dep:moduleId>
+			<dep:groupId>umlmda</dep:groupId>
+			<dep:artifactId>${genPackage.name}</dep:artifactId>
+			<dep:version>1.0.0</dep:version>
+			<dep:type>car</dep:type>
+		</dep:moduleId>
+		<dep:dependencies/>
+		<dep:hidden-classes/>
+		<dep:non-overridable-classes/>
+	</dep:environment>
+  
+  <enterprise-beans>
+
+    <!-- Session Beans -->
+#foreach( $class in ${genPackage.classes} )
+#if( ${class.hasStereotype("BusinessService")} && ${class.abstract} == false )	
+    <session>
+      <ejb-name>${class.name}</ejb-name>
+      <jndi-name>${class.jndiName}</jndi-name>
+<!-- UserSection-Begin ${class.name} -->
+<!-- UserSection-End ${class.name} -->
+    </session>
+  
+#end##if	  
+#end##for
+<!-- UserSection-Begin enterprise-beans -->
+<!-- UserSection-End enterprise-beans -->
+  </enterprise-beans>
+   
+<!-- UserSection-Begin openejb -->
+<!-- UserSection-End openejb -->
+   
+</openejb-jar>

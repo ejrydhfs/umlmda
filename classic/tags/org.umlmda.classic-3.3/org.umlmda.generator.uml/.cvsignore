@@ -1,0 +1,8 @@
+bin
+srcgen
+org.umlmda.generator.uml_*.jar
+UMLMDAGenerator.jar
+temp.bin
+UMLGeneratorSrc.zip
+temp.folder
+javaCompiler.runtime_org.umlmda.generator.uml.jar.args
