@@ -17,8 +17,8 @@
    <properties>
       <umlmda.uml2.profile.version>3.2.0</umlmda.uml2.profile.version>
       <umlmda.generator.profile.version>3.2.0</umlmda.generator.profile.version>
-      <umlmda.common.version>3.3.0-SNAPSHOT</umlmda.common.version>
-      <umlmda.oaw.version>3.3.0-SNAPSHOT</umlmda.oaw.version>
+      <umlmda.common.version>3.3</umlmda.common.version>
+      <umlmda.oaw.version>3.7</umlmda.oaw.version>
       <oaw.version>4.2.0</oaw.version>
       <jostraca.version>0.3.3</jostraca.version>
       <uml2.version>2.1.0</uml2.version>
