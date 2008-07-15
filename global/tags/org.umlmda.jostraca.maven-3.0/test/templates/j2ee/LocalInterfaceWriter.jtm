@@ -1,0 +1,77 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = LocalInterfaceWriter
+main.CodeWriterFormat	   = format\\ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.j2ee.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.j2ee.AbstractLocalInterfaceWriter
+%><% import!
+import java.util.Iterator;
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.uml.generator.java.*;
+import org.umlmda.uml.generator.j2ee.*;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %><%
+   J2EEModelClass genClass = (J2EEModelClass)getGenClass();
+   JavaModelClass genSuperClass = (JavaModelClass)genClass.getSuperClass();
+   J2EEModel genModel = (J2EEModel)genClass.getGeneratorModel();
+   
+   genClass.resetImports();
+   if ( genSuperClass != null ) {
+      genClass.registerImport(genModel.getArtefact().getName(), genSuperClass);
+   }
+%>//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+   
+package <%=getPackageName()%>;
+
+<%=genClass.registeredImports()%>
+<%= beginUserSection("Imports", COMMON) %>
+<%= endUserSection("Imports", COMMON) %>
+
+/**
+ * Local Interface for @see <%=genClass.getQualifiedName()%>
+ */
+public interface <%=genClass.getGeneratedName()%> extends <%if ( genSuperClass != null ) {%><%=genClass.getScopedName(genModel.getArtefact().getName(), genSuperClass)%><%} else { %>javax.ejb.EJBLocalObject<% } %> {
+<% // Setter/Getter
+   for ( Iterator ia = getModelClass().getAttributes().iterator(); ia.hasNext(); ) {
+      JavaModelAttribute attribute = (JavaModelAttribute)ia.next();
+%>   /**
+   * Get <%=attribute.getName()%>
+   */
+   public <%=attribute.getType()%> <%=attribute.getGetter()%>();
+   
+   /**
+   * Set <%=attribute.getName()%>
+   */
+   public void <%=attribute.getSetter()%>(<%=attribute.getType()%> <%=attribute.getName()%>);
+
+<% }%>
+<%   // Associations-Accessors
+   for ( Iterator ia = getModelClass().getAssociations().iterator(); ia.hasNext(); ) {
+      JavaModelAssociation association = (JavaModelAssociation)ia.next();
+      if ( !association.isUnspecified() ) {
+         if ( association.isMultiple() ) {
+%>
+   public java.util.Collection <%=association.getGetter()%>();
+
+<%       } else {
+%>
+   public <%=association.getTarget()%> <%=association.getGetter()%>();
+
+   public void <%=association.getSetter()%>(<%=association.getTarget()%> <%=association.getName()%>);
+<%       }
+     }
+   }
+   // Modelled Methods
+   for ( Iterator ia = getModelClass().getMethods().iterator(); ia.hasNext(); ) {
+      JavaModelMethod method = (JavaModelMethod)ia.next();
+%>   /**
+    * <%=method.getDocumentation()%>
+    */
+    <%=method.getSignature()%>;
+
+<% }%>      
+};
