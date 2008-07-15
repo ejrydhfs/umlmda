@@ -20,6 +20,13 @@
          <artifactId>org.umlmda.generator.core</artifactId>
          <version>${parent.version}</version>
       </dependency>
+      
+      <dependency>
+         <groupId>org.umlmda</groupId>
+         <artifactId>org.umlmda.umlmodel.nsuml</artifactId>
+         <version>${umlmda.common.version}</version>
+         <scope>test</scope>
+      </dependency>
    </dependencies>
 
    <build>
@@ -173,10 +180,27 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
+               <skip>true</skip>
                <systemProperties>
                   <property>
                      <name>org.umlmda.model.uml.ModelFactory</name>
-                     <value>TBD</value>
+                     <value>org.umlmda.model.uml.nsuml.ModelFactoryImpl</value>
+                  </property>
+                  <property>
+                     <name>test.org.umlmda.uml.generator.ValidatorTest.adapterFactory</name>
+                     <value></value>
+                  </property>   
+                  <property>
+                     <name>test.org.umlmda.uml.generator.ValidatorTest.model</name>
+                     <value>model/rose/UMLMDATestValidator.mdl</value>
+                  </property>
+                  <property>
+                     <name>test.org.umlmda.uml.generator.webservices.WSModelAdapterTest.model</name>
+                     <value>model/rose/UMLGeneratorTest.mdl</value>
+                  </property>
+                  <property>
+                     <name>test.org.umlmda.uml.generator.webservices.WSModelAdapterTest.adapterFactory</name>
+                     <value></value>
                   </property>
                </systemProperties>
             </configuration>

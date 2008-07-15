@@ -40,7 +40,7 @@ import org.umlmda.model.uml.impl.ModelAdapterFactoryImpl;
  * @author Dieter Moroff (02.05.2006), last change $Date$ $Name$
  * @version $Revision$
  */
-public class ModelTestCase extends TestCase {
+public abstract class ModelTestCase extends TestCase {
 
    private ModelBase testModelBase;
    private Model psmTestModel;
