@@ -3,14 +3,14 @@
    <parent>
       <artifactId>org.umlmda.classic</artifactId>
       <groupId>org.umlmda</groupId>
-      <version>3.2</version>
+      <version>3.2-SNAPSHOT</version>
    </parent>
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.umlmda</groupId>
    <artifactId>org.umlmda.jostraca.maven</artifactId>
    <packaging>maven-plugin</packaging>
    <name>org.umlmda.jostraca.maven Maven Mojo</name>
-   <version>3.2</version>
+   <version>3.2-SNAPSHOT</version>
    <url>http://maven.apache.org</url>
    <dependencies>
       <dependency>

@@ -4,13 +4,14 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.classic</artifactId>
-      <version>3.2</version>
+      <version>3.2-SNAPSHOT</version>
    </parent>
 
    <artifactId>org.umlmda.generator.uml</artifactId>
    <name>UMLMDA classic uml generator</name>
    <description />
 
+   
    <dependencies>
       <!-- UMLMDA Classic -->
       <dependency>
@@ -19,12 +20,21 @@
          <version>${parent.version}</version>
       </dependency>
       
+      <!-- UMLMDA Common for testing -->
       <dependency>
          <groupId>org.umlmda</groupId>
          <artifactId>org.umlmda.umlmodel.nsuml</artifactId>
          <version>${umlmda.common.version}</version>
          <scope>test</scope>
       </dependency>
+      <dependency>
+         <groupId>org.umlmda</groupId>
+         <artifactId>org.umlmda.crazybeans</artifactId>
+         <version>${umlmda.common.version}</version>
+         <scope>test</scope>
+      </dependency>
+      
+      
    </dependencies>
 
    <build>
@@ -45,7 +55,6 @@
          <plugin>
             <groupId>org.umlmda</groupId>
             <artifactId>org.umlmda.jostraca.maven</artifactId>
-            <version>${parent.version}</version>
             <executions>
                <execution>
                   <id>gen</id>
