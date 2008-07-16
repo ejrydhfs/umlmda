@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Generated file, please edit UserSections only -->
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = JBossXmlWriter
+main.CodeWriterFormat	   = format\\ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.j2ee.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.j2ee.AbstractPackageWriter
+%><% import!
+import org.umlmda.model.uml.*;
+import org.umlmda.profile.ModelStereotype;
+import java.util.Iterator;
+import org.umlmda.uml.generator.j2ee.*;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %>
+<jboss>
+
+   <enterprise-beans>
+
+      <!-- Session Beans -->
+<% 
+   for ( Iterator ia = getModelPackage().getClasses().iterator(); ia.hasNext(); ) {
+	   J2EEModelClass modelClass = (J2EEModelClass)ia.next();
+     String modelClassName = modelClass.getName();
+     
+     if ( modelClass.hasStereotype(ModelStereotype.BUSINESS_SERVICE) && modelClass.isAbstract() == false ) {
+%>      <session>
+         <ejb-name><%=modelClassName%></ejb-name>
+         <jndi-name><%=modelClass.getJndiName()%></jndi-name>
+<!-- UserSection-Begin <%=modelClassName%> -->
+<!-- UserSection-End <%=modelClassName%> -->
+      </session>
+
+<%   }     
+   } 
+%>    
+<!-- UserSection-Begin enterprise-beans -->
+<!-- UserSection-End enterprise-beans -->
+   </enterprise-beans>
+   
+   <resource-managers>
+<!-- UserSection-Begin resource-managers -->
+<!-- UserSection-End resource-managers -->
+   </resource-managers>
+   
+</jboss>
