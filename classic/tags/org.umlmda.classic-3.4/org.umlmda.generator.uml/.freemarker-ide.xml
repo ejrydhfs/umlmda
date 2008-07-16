@@ -1,9 +1,0 @@
-<config>
-	<context-values>
-		<resource path="src/templates/webservice/Mapping.ftl">
-			<value key="genClass" object-class="org.umlmda.uml.generator.webservices.WSModelClassAdapter"/>
-		</resource>
-	</context-values>
-	<macro-library>
-	</macro-library>
-</config>
