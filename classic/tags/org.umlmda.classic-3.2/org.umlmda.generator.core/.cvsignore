@@ -1,8 +1,0 @@
-bin
-.externalToolBuilders
-GeneratorBaseSrc.zip
-org.umlmda.generator.core_*.jar
-org.umlmda.generator.core_*.zip
-UMLMDAGeneratorCore.jar
-temp.folder
-javaCompiler.runtime_org.umlmda.generator.core.jar.args
