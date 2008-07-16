@@ -1,0 +1,87 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.classic</artifactId>
+      <version>3.5</version>
+   </parent>
+
+   <artifactId>org.umlmda.generator.core</artifactId>
+   <name>UMLMDA classic generator core</name>
+   <description />
+
+   <dependencies>
+      <!-- oAW -->
+      <dependency>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-core-expressions</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-core-workflow</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-core-xpand2</artifactId>
+      </dependency>
+      <!-- UMLMDA Common -->
+      <dependency>
+         <groupId>${parent.groupId}</groupId>
+         <artifactId>org.umlmda.generator.uml.psm</artifactId>
+      </dependency>
+      <!-- Apache stuff -->
+      <dependency>
+         <groupId>org.apache.velocity</groupId>
+         <artifactId>velocity</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>ant</groupId>
+         <artifactId>ant</artifactId>
+      </dependency>
+      <!-- Freemarker -->
+      <dependency>
+         <groupId>freemarker</groupId>
+         <artifactId>freemarker</artifactId>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <resources>
+         <resource>
+            <directory>${basedir}/src</directory>
+            <includes>
+               <include>**/*.oaw</include>
+            </includes>
+            <excludes>
+               <exclude>**.*.java</exclude>
+            </excludes>
+         </resource>
+      </resources>
+
+      <plugins>
+         <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <phase>generate-sources</phase>
+                  <configuration>
+                     <tasks>
+
+                        <!--
+                           Place any ant task here. You can add anything
+                           you can add between <target> and </target> in a
+                           build.xml.
+                        -->
+
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
+</project>

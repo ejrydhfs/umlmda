@@ -1,0 +1,76 @@
+//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = BeanUtilsWriter
+main.CodeWriterFormat	     = format\\ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.j2ee.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.j2ee.AbstractBeanUtilsWriter
+%>
+<% import!
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.uml.generator.java.*;
+import org.umlmda.uml.generator.j2ee.*;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %><%
+   J2EEModelClass genClass = (J2EEModelClass)getGenClass();
+   
+   genClass.resetImports();
+   genClass.registerImport(J2EEArtefacts.HOME_INTERFACE);
+   
+   String homeInterface = genClass.getScopedName(J2EEArtefacts.HOME_INTERFACE);
+%>
+package <%=getPackageName()%>;
+
+<%=genClass.registeredImports()%>
+
+/**
+ * EJB-Utility class for <%=getModelClass().getName()%>.
+ */
+public class <%=genClass.getGeneratedName()%>
+{
+   /** Cached remote home (EJBHome). Uses lazy loading to obtain its value (loaded by getHome() methods). */
+   private static <%=homeInterface%> cachedRemoteHome = null;
+
+   private static Object lookupHome(java.util.Hashtable environment, String jndiName, Class narrowTo) throws javax.naming.NamingException {
+      // Obtain initial context
+      javax.naming.InitialContext initialContext = new javax.naming.InitialContext(environment);
+      try {
+         Object objRef = initialContext.lookup(jndiName);
+         // only narrow if necessary
+         if (java.rmi.Remote.class.isAssignableFrom(narrowTo)) 
+            return javax.rmi.PortableRemoteObject.narrow(objRef, narrowTo);
+         else
+            return objRef;
+      } finally {
+         initialContext.close();
+      }
+   }
+
+   // Home interface lookup methods
+
+   /**
+    * Obtain remote home interface from default initial context
+    * @return Home interface for <%=getModelClass().getName()%>. Lookup using COMP_NAME
+    */
+   public static <%=homeInterface%> getHome() throws javax.naming.NamingException
+   {
+      if (cachedRemoteHome == null) { 
+         try { 
+            cachedRemoteHome = (<%=homeInterface%>) lookupHome(null, <%=homeInterface%>.COMP_NAME, <%=homeInterface%>.class); 
+         } catch (javax.naming.NamingException e){
+            // Eat exception, some implementation throws naming exceptions, return null 
+         }
+         // If not yet resolved try with JNDI name of component
+         if (cachedRemoteHome == null) { 
+            cachedRemoteHome = (<%=homeInterface%>) lookupHome(null, <%=homeInterface%>.JNDI_NAME, <%=homeInterface%>.class); 
+         } 
+      } 
+      return cachedRemoteHome;
+   }
+
+
+}

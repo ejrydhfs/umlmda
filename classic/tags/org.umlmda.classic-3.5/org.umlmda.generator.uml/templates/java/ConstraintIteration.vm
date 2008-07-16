@@ -1,0 +1,54 @@
+//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//   $Header: /cvsroot/umlmda/UMLGenerator/templates/java/Attic/ConstraintIteration.vm,v 1.1.2.1 2008/01/21 14:57:14 moroff Exp $
+//   $Source: /cvsroot/umlmda/UMLGenerator/templates/java/Attic/ConstraintIteration.vm,v $
+// $Revision: 1.1.2.1 $
+//     $Name:  $
+//     $Date: 2008/01/21 14:57:14 $
+//@@UserSection-End RCSHeader
+package ${genPackage.getQualifiedPackageName("java.ConstraintIteration")};
+
+import org.umlmda.runtime.constraint.ConstraintVisitorContext;
+import org.umlmda.runtime.visitor.AbstractVisitableIteration;
+import org.umlmda.runtime.visitor.VisitableIterator;
+
+${genPackage.resetImports()}##
+${genPackage.registerImport("java.VisitableIterator")}##
+#foreach( $package in ${genPackage.referencedPackages})
+#if( ${package.hasStereotype("BusinessComponent")} )	
+${genPackage.registerImport("java.ConstraintVisitor", ${package})}##
+#end
+#end
+${genPackage.registerImport("java.ConstraintVisitor", ${genPackage})}##
+${genPackage.registeredImports()}
+
+/**
+ * Constraint visitor for the business objects of ${genPackage.qualifiedName} 
+ */
+public class ${genPackage.generatedName} extends AbstractVisitableIteration {
+
+   /**
+    * Ctor to start the constraint check.
+    * @param object Startpoint of the iteration
+    */
+   public ${genPackage.generatedName}(Object object) {
+      this(new ${genPackage.getScopedName("java.VisitableIterator")}(object));
+   }
+
+   /**
+    * Ctor to continue the constraint check in a child element of the start point.
+	* Usually used only internal.
+    * @param iterator Iterator for the child element
+    */
+   public ${genPackage.generatedName}(VisitableIterator iterator) {
+      super(iterator, new ConstraintVisitorContext());
+      
+#foreach( $package in ${genPackage.referencedPackages})
+#if( ${package.hasStereotype("BusinessComponent")} )	
+      registerVisitor(new ${genPackage.getScopedName("java.ConstraintVisitor", ${package})}());
+#end	  
+#end
+      registerVisitor(new ${genPackage.getScopedName("java.ConstraintVisitor", ${genPackage})}());
+   }
+
+}

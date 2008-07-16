@@ -1,0 +1,1112 @@
+!<header>
+
+#include <stdio.h>
+#include <string.h>
+#include <dirent.h>
+#include <time.h>
+
+
+
+!<{include>/* section:include << */
+/**/
+
+!<include>
+
+/**/
+/* section:include << */!<}include>
+
+
+
+/* Constants << */ 
+
+/* Command line arguments */
+char* WRITER__ARGUMENT_CONTROL_PREFIX          = "$<main.CodeWriter.argument.ControlPrefix>";
+char* WRITER__ARGUMENT_OutputFolder            = "$<main.CodeWriter.argument.name.OutputFolder>";
+char* WRITER__ARGUMENT_BackupFolder            = "$<main.CodeWriter.argument.name.BackupFolder>";
+char* WRITER__ARGUMENT_NoBackup                = "$<main.CodeWriter.argument.name.NoBackup>";
+
+/* User Interface text message parts */
+char* WRITER__UITEXT_Method                    = "method ";
+char* WRITER__UITEXT_Main                      = "main ";
+char* WRITER__UITEXT_ExceptionIn               = "Exception in ";
+char* WRITER__UITEXT_ColonNewLine              = ":\n";
+char* WRITER__UITEXT_NewLine                   = "\n";
+char* WRITER__UITEXT_Section                   = "section ";
+char* WRITER__UITEXT_SavedFile                 = "Saved file:       ";
+char* WRITER__UITEXT_UnableToSaveFile          = "Unable to save file: ";
+char* WRITER__UITEXT_UnableToBackupFile        = "Unable to backup file: ";
+char* WRITER__UITEXT_ToBackupFolder            = " to backup folder: ";
+char* WRITER__UITEXT_BackupFolderColon         = "Backup folder: ";
+char* WRITER__UITEXT_BackupFolderExistFailure  = " does not exist and cannot be created.";
+char* WRITER__UITEXT_BackupFolderNotAFolder    = " is not a folder.";
+char* WRITER__UITEXT_BackupFolderNotWritable   = " is not writable.";
+char* WRITER__UITEXT_CodeWriterState           = "Code Writer State: ";
+char* WRITER__UITEXT_GetFileIndexEquals        = "\n_getFileIndex()    = ";
+char* WRITER__UITEXT_GetFullFileNameEquals     = "\n_getFullFileName() = ";
+char* WRITER__UITEXT_GetOutputFolderEquals     = "\n_getOutputFolder() = ";
+char* WRITER__UITEXT_ErrorHeader               = "\n\n--- CodeWriter Error Description Start ---\n\n";
+char* WRITER__UITEXT_ErrorFooter               = "\n--- CodeWriter Error Description End -----\n\n";
+char* WRITER__UITEXT_PlaceHolderException      = "This placeholder Exception should never be thrown: there is an error in the WriterFormat.";
+
+/* String constants */
+#define WRITER__STRING_empty                   ""
+#define WRITER__STRING_dot                     "."
+#define WRITER__STRING_separator               "$<\jostraca.system.fileSeparator>"
+
+#define WRITER__MAX_LINE_LEN 2222
+
+
+
+
+/* Constants >> */
+
+
+
+
+/* section:define << */
+/**/
+
+#define _insertf(f,v) { sprintf( writer__iSprintfInsertBuffer, f, v); _insert( writer__iSprintfInsertBuffer ); }
+!<define>
+
+/**/
+/* section:define >> */
+
+
+
+/* requires a NULL entry will empty line at end */
+struct writer__FileText {
+  char*                    line;
+  struct writer__FileText* next; 
+};
+
+
+
+/* Writer Variables << */
+
+char**    writer__iFileNameRoots                   = NULL;                     /* generated file name roots */
+int       writer__iNumFiles                        = 0;                        /* number of generated files */
+  
+char*     writer__iFileNamePrefix                  = WRITER__STRING_empty;     /* failsafe default */
+char*     writer__iFileNameSuffix                  = WRITER__STRING_empty;     /* failsafe default */
+
+char*     writer__iBackupPrefix                    = WRITER__STRING_empty;     /* failsafe default */
+char*     writer__iBackupSuffix                    = WRITER__STRING_empty;     /* failsafe default */
+
+struct writer__FileText* writer__iCurrentText      = NULL;                     /* current text */
+struct writer__FileText* writer__iCurrentTextLine  = NULL;                     /* current text line */
+int                      writer__iCurrentFileIndex = 0;                        /* current file index */
+
+char**    writer__iArgs                            = NULL;                     /* cmd line args */
+int       writer__iNumArgs                         = 0;                        /* number of cmd line args */
+char**    writer__iUserArgs                        = NULL;                     /* user cmd line args */
+int       writer__iNumUserArgs                     = 0;                        /* number of user cmd line args */
+
+int       writer__iSave                            = 1;                        /* save generated code to disk */
+int       writer__iBackup                          = 1;                        /* make backups */
+
+char*     writer__iOutputFolder                    = WRITER__STRING_dot;       /* written code is output to this folder */
+char*     writer__iBackupFolder                    = WRITER__STRING_dot;       /* overwritten files are placed here */
+
+char*     writer__iProperties[]                    = { $<jostraca.properties.NameValueList>, NULL, NULL };   
+int       writer__iPropertiesInit                  = 1;                        /* true => lookup table initialiased */
+
+int       writer__iException                       = 0;                        /* true => exception was thrown */
+char*     writer__iExceptionMessage                = WRITER__STRING_empty;     /* internal message describing the exception */
+
+
+char  writer__iSprintfInsertBuffer[ WRITER__MAX_LINE_LEN ];
+
+/* Writer Variables >> */
+
+
+
+void      writer__initialize();
+void      writer__write();
+int       writer__startFile();
+int       writer__endFile();
+void      writer__nextFile();
+void      writer__handleArgs( int argc, char *argv[] );
+void      writer__setDefaults();
+void      writer__initArgs(int argc, char** argv);
+void      writer__userMessage( char* pMessage );
+void      writer__handleException( char* pMessage, char* pException );
+char*     writer__describeState();
+void      writer__backup( char* pFilePath, char* pFileName, char* pBackupFolder );
+struct writer__FileText* writer__insert( char* pText, struct writer__FileText* pTextLine );
+void      writer__initProperties(); 
+
+
+void      _setFileNamePrefix(char* pPrefix);
+char*     _getFileNamePrefix();
+void      _setFileNameSuffix(char* pSuffix);
+char*     _getFileNameSuffix();
+void      _setFullFileName( char* pName );
+char*     _getFullFileName();
+void      _setFullFileNames( int pNumFileNames, char* pFullFileNames[] );
+char**    _getFullFileNames();
+void      _setFileNameRoot(char* pFileNameRoot);
+char*     _getFileNameRoot();
+void      _setFileNameRoots(int pNumFileNameRoots, char* pFileNameRoots[]);
+char**    _getFileNameRoots();
+int       _getFileIndex();
+int       _getNumFiles();
+void      _setOutputFolder(char* pOutputFolder);
+char*     _getOutputFolder();
+void      _setBackupFolder(char* pBackupFolder);
+char*     _getBackupFolder();
+void      _backup( int pBackup );
+void      _setBackupPrefix( char* pBackupPrefix );
+void      _setBackupSuffix( char* pBackupSuffix );
+void      _backup( int pBackup );
+void      _save( int pSave );
+void      _saveTextFile( char* pFilePath, struct writer__FileText* pFileText );
+struct writer__FileText* _loadTextFile( char* pFilePath );
+char*     _getProperty( char* pName );
+char*     _getFirstUserArg();
+char*     _getSecondUserArg();
+char*     _getThirdUserArg();
+char*     _getUserArg(int pOrdinal);
+char**    _getUserArgs();
+int       _getNumUserArgs();
+char**    _getArgs();
+int       _getNumArgs();
+void      _insert(char* pText);
+char*     _spaces(int pNumSpaces);
+char*     _left(char* pText, int pColWidth );
+char*     _right( char* pText, int pColWidth );
+char*     _center( char* pText, int pColWidth );
+char*     _align( char* pText, char* pBackText, int pColWidth, char pAlignment );
+struct writer__FileText* _getText();
+void      _setText( struct writer__FileText* pFileText );
+
+
+
+
+
+char*     _strcat( char* pFirst, char* pSecond );
+
+
+!<{support>
+// version 0.1 compatibility
+/* section:support << */
+/**/
+
+!<support>
+
+/**/
+/* section:support >> */!<}support>
+
+
+
+!<{declare>/* section:declare << */
+/**/
+
+!<declare>
+
+/**/
+/* section:declare << */!<}declare>
+
+
+
+/** Execute Write */
+int main( int argc, char *argv[] ) {
+
+  writer__initialize();
+  writer__handleArgs( argc, argv );
+  writer__write();
+
+  if( writer__iException ) {
+    writer__handleException( _strcat( WRITER__UITEXT_ExceptionIn, _strcat( WRITER__UITEXT_Method, WRITER__UITEXT_Main ) ),
+                             writer__iExceptionMessage );      
+    return 1;
+  }
+
+  return 0;
+}
+
+
+
+/* Writer Services << */
+
+/** Initialize. */
+void writer__initialize() {
+  writer__iCurrentFileIndex = 0;
+  writer__setDefaults();
+}
+
+
+
+/** Main file generation loop. Template script is placed here in the body section. */
+void writer__write() {
+
+  /* initialize */
+  int    writer__numFiles; 
+  int    writer__fileI;
+  char*  writer__currentSection = "init";
+
+
+  !<{init>/* section:init << */
+  /**/
+
+  !<init>
+
+  /**/
+  /* section:init << */!<}init>
+
+
+  /* write files loop */
+  writer__numFiles = _getNumFiles();
+  writer__fileI    = 0;
+  for( writer__fileI = 0; writer__fileI < writer__numFiles; writer__fileI++ ) {
+
+
+    !<{prewrite>/* section:prewrite << */
+    /**/
+
+    writer__currentSection = "prewrite";
+    !<prewrite>
+
+    /**/
+    /* section:prewrite >>  */!<}prewrite>
+
+
+    if( ! writer__startFile() ) { 
+      continue;
+    }
+
+
+    !<{body>/* section:body << */
+    /**/
+
+    writer__currentSection = "body";
+    !<body>
+
+    /**/
+    /* section:body << */!<}body>
+
+
+    if( ! writer__endFile() ) { 
+      continue;
+    }
+
+
+    !<{postwrite>/* section:postwrite << */
+    /**/ 
+
+    writer__currentSection = "postwrite";
+    !<postwrite>
+
+    /**/
+    /* section:postwrite << */!<}postwrite>
+
+
+    exception_for_this_file:
+    if( writer__iException ) {
+      writer__handleException( _strcat( WRITER__UITEXT_ExceptionIn, _strcat( WRITER__UITEXT_Section, writer__currentSection ) ), writer__iExceptionMessage );      
+    }
+
+    writer__nextFile();       
+  }
+ 
+
+  !<{cleanup>/* section:cleanup << */
+  /**/
+ 
+  writer__currentSection = "cleanup";
+  !<cleanup>
+
+  /**/
+  /* section:cleanup << */!<}cleanup>
+
+
+  exception_for_all_files:
+  if( writer__iException ) {
+    writer__handleException( _strcat( WRITER__UITEXT_ExceptionIn, _strcat( WRITER__UITEXT_Section, writer__currentSection ) ), writer__iExceptionMessage );      
+  }
+}
+
+
+
+/** Start writing a file. */
+int writer__startFile() {
+  writer__iCurrentTextLine       = (struct writer__FileText*) malloc(sizeof(struct writer__FileText));
+  writer__iCurrentTextLine->line = WRITER__STRING_empty;
+  writer__iCurrentTextLine->next = NULL;
+  writer__iCurrentText           = writer__iCurrentTextLine;
+  return 1;
+}
+
+
+
+/** End writing a file. */
+int writer__endFile() {
+
+  int   endOK        = 1;
+  char* outputFolder;
+  char* separator = WRITER__STRING_separator;
+  char* fileName;
+  char* filePath;
+  int   outputFolder_len;
+  int   separator_len;
+  int   fileName_len;
+
+  outputFolder     = _getOutputFolder();
+  fileName         = _getFullFileName();
+  outputFolder_len = strlen( outputFolder );
+  separator_len    = strlen( separator );
+  fileName_len     = strlen( fileName );
+
+  filePath = (char*) malloc( (unsigned) (outputFolder_len + separator_len + fileName_len + 1) );
+  strcpy( filePath, outputFolder );
+  strcat( filePath, separator );
+  strcat( filePath, fileName );
+
+  if( writer__iBackup ) {
+    writer__backup( filePath, fileName, writer__iBackupFolder );
+    if( writer__iException ) {
+       writer__handleException( _strcat( WRITER__UITEXT_UnableToBackupFile, _strcat( filePath, _strcat( WRITER__UITEXT_ToBackupFolder, writer__iBackupFolder ) ) ), writer__iExceptionMessage );
+       endOK = 0;
+    }
+  }
+
+  if( endOK && writer__iSave ) {
+    _saveTextFile( filePath, writer__iCurrentText );
+    if( writer__iException ) {
+      writer__handleException( _strcat( WRITER__UITEXT_UnableToSaveFile, filePath), writer__iExceptionMessage );
+      endOK = 0;
+    } else {
+      writer__userMessage( _strcat( WRITER__UITEXT_SavedFile, _strcat( filePath, WRITER__UITEXT_NewLine ) ) );
+    }
+  }
+
+  return endOK;
+}
+
+
+
+/** Move to next file */
+void writer__nextFile() {
+  writer__iCurrentFileIndex = writer__iCurrentFileIndex + 1;
+}
+
+
+
+/** Handle command line arguments to CodeWriter. */
+void writer__handleArgs( int argc, char *argv[] ) {
+
+  /* set arg names */
+  char* argName_OutputFolder           = _strcat( WRITER__ARGUMENT_CONTROL_PREFIX, WRITER__ARGUMENT_OutputFolder );
+  char* argName_BackupFolder           = _strcat( WRITER__ARGUMENT_CONTROL_PREFIX, WRITER__ARGUMENT_BackupFolder );
+  char* argName_NoBackup               = _strcat( WRITER__ARGUMENT_CONTROL_PREFIX, WRITER__ARGUMENT_NoBackup );
+
+  /* parse args */
+  /* ... */
+
+  int argI    = 0;
+  int numArgs = argc;
+  for( argI = 0; argI < numArgs; argI++ ) {
+    if( 0 == strncmp( argName_OutputFolder, argv[argI], strlen( argName_OutputFolder) ) ) {
+      _setOutputFolder( (char*) &argv[argI][ strlen( argName_OutputFolder ) ] );
+    }
+    else if( 0 == strncmp( argName_BackupFolder, argv[argI], strlen( argName_BackupFolder ) ) ) {
+      _setBackupFolder( (char*) &argv[argI][ strlen( argName_BackupFolder ) ] );
+    }
+    else if( 0 == strcmp( argName_NoBackup, argv[argI] ) ) {
+      _backup( $<lang.FalseString> ); /* NOTE: -B => don't make backups */
+    }
+  }
+
+  /* set options */
+  writer__initArgs( argc, argv );
+
+}
+
+
+
+/** Set defaults from configuration property set. */
+void writer__setDefaults() {
+
+  $<{main.FileNameRoot>_setFileNameRoot( "$<\main.FileNameRoot>" );$<}main.FileNameRoot>
+  $<{main.FileNamePrefix>_setFileNamePrefix( "$<\main.FileNamePrefix>" );$<}main.FileNamePrefix>
+  $<{main.FileNameSuffix>_setFileNameSuffix( "$<\main.FileNameSuffix>" );$<}main.FileNameSufffix>
+
+  $<{main.OutputFolder>_setOutputFolder( "$<\main.OutputFolder>" );$<}main.OutputFolder>
+
+  $<{main.BackupFolder>_setBackupFolder( "$<\main.BackupFolder>" );$<}main.BackupFolder>
+  $<{main.BackupPrefix>_setBackupPrefix( "$<\main.BackupPrefix>" );$<}main.BackupPrefix>
+  $<{main.BackupSuffix>_setBackupSuffix( "$<\main.BackupSuffix>" );$<}main.BackupSufffix>
+  _backup( 0 == strcmp( "$<lang.TrueString>", "$<jostraca.MakeBackup>" ) );
+
+}
+
+
+
+/** Store command line arguments */
+void writer__initArgs(int argc, char** argv) {
+  int      argI        = 0;
+  int      userArgI    = 0;
+
+  writer__iNumArgs     = argc;
+  writer__iArgs        = argv;
+  writer__iNumUserArgs = writer__iNumArgs - 1; /* program name is first arg */
+
+  for( argI = 1; argI < writer__iNumArgs; argI = argI + 1 ) {
+    if( 0 == strncmp( WRITER__ARGUMENT_CONTROL_PREFIX, writer__iArgs[argI], strlen(WRITER__ARGUMENT_CONTROL_PREFIX) ) ) {
+      writer__iNumUserArgs = writer__iNumUserArgs - 1;
+    }
+  }
+
+  writer__iUserArgs = (char**) malloc( writer__iNumUserArgs * sizeof(char**) );
+
+  for( argI = 1; argI < writer__iNumArgs; argI = argI + 1 ) {
+    if( 0 != strncmp( WRITER__ARGUMENT_CONTROL_PREFIX, writer__iArgs[argI], strlen(WRITER__ARGUMENT_CONTROL_PREFIX) ) ) {
+      writer__iUserArgs[ userArgI ] = writer__iArgs[ argI ];
+      userArgI = userArgI + 1;
+    }
+  }
+}
+
+
+
+/** Print a user readable message */
+void writer__userMessage( char* pMessage ) {
+  printf( pMessage );
+}
+
+
+
+/** Handle exceptions: print an explanation for user. */
+void writer__handleException( char* pMessage, char* pException ) {
+
+  char* userMsg = WRITER__UITEXT_ErrorHeader;
+
+  userMsg = _strcat( userMsg, writer__describeState() );
+  userMsg = _strcat( userMsg, pMessage );
+  userMsg = _strcat( userMsg, WRITER__UITEXT_ColonNewLine );
+  userMsg = _strcat( userMsg, pException );
+  userMsg = _strcat( userMsg, WRITER__UITEXT_ErrorFooter );
+
+  writer__userMessage( userMsg );
+
+  writer__iException = 0;
+}
+
+
+
+/** Provide a concise description of the state of the CodeWriter. */
+char* writer__describeState() {
+    char* currentState = WRITER__UITEXT_CodeWriterState;
+    char fileIndex[22]; 
+
+    sprintf( fileIndex, "%d", _getFileIndex() );
+
+    currentState = _strcat( currentState, WRITER__UITEXT_GetFileIndexEquals );
+    currentState = _strcat( currentState, fileIndex );
+    currentState = _strcat( currentState, WRITER__UITEXT_GetFullFileNameEquals );
+    currentState = _strcat( currentState, _getFullFileName() );
+    currentState = _strcat( currentState, WRITER__UITEXT_GetOutputFolderEquals );
+    currentState = _strcat( currentState, _getOutputFolder() );
+    currentState = _strcat( currentState, WRITER__UITEXT_NewLine );
+
+    return currentState;
+}
+
+
+
+/** Backup overwritten files, if they exist.
+ *  Backups have the format: [YYYYMMDDhhmmss][prefix][filename][suffix].
+ */
+void writer__backup( char* pFilePath, char* pFileName, char* pBackupFolder ) {
+
+  DIR*       backupFolder;
+  time_t     now;
+  struct tm* calendar;
+  char*      year_yyyy;
+  char*      month_mm;
+  char*      day_dd;
+  char*      hour_hh;
+  char*      minute_mm;
+  char*      second_ss;
+  char       buffer[11];
+  char*      dateTime;
+  char*      backupFileName;
+  char*      backupFilePath;
+  struct writer__FileText* fileContents;
+
+  /* check backup folder ( create if necessary ) */
+  /* ... */
+
+  backupFolder = opendir( pBackupFolder );   
+  if( NULL == backupFolder) {
+    if( -1 == mkdir( pBackupFolder, 0700 ) ) {
+      writer__iExceptionMessage = _strcat( WRITER__UITEXT_BackupFolderColon, _strcat( pBackupFolder, WRITER__UITEXT_BackupFolderExistFailure ) );
+      writer__iException = 1;
+      return;
+    }
+  }
+  if( NULL != backupFolder ) {
+    closedir( backupFolder );
+  }
+
+
+  /* create backup file path */
+  now      = (time_t) time( NULL );
+  calendar = (struct tm*) localtime( &now );
+
+  sprintf( buffer, "%d", 1900+(calendar->tm_year) );
+  year_yyyy = _align( buffer, "0", 4, 'r' );
+
+  sprintf( buffer, "%d", 1+(calendar->tm_mon) );
+  month_mm = _align( buffer, "0", 2, 'r' );
+
+  sprintf( buffer, "%d", calendar->tm_mday );
+  day_dd = _align( buffer, "0", 2, 'r' );
+
+  sprintf( buffer, "%d", calendar->tm_hour );
+  hour_hh = _align( buffer, "0", 2, 'r' );
+
+  sprintf( buffer, "%d", calendar->tm_min );
+  minute_mm = _align( buffer, "0", 2, 'r' );
+
+  sprintf( buffer, "%d", calendar->tm_sec );
+  second_ss = _align( buffer, "0", 2, 'r' );
+
+  dateTime       = _strcat( year_yyyy, _strcat( month_mm, _strcat( day_dd, _strcat( hour_hh, _strcat( minute_mm, second_ss ) ) ) ) );
+  backupFileName = _strcat( dateTime, _strcat( writer__iBackupPrefix, _strcat( pFileName, writer__iBackupSuffix ) ) );
+  backupFilePath = _strcat( pBackupFolder, _strcat( WRITER__STRING_separator, backupFileName ) );
+  
+  /* save backup file */
+  fileContents = _loadTextFile( pFilePath );
+  if( writer__iException ) { return; }
+
+  _saveTextFile( backupFilePath, fileContents );
+  if( writer__iException ) { return; }
+}
+
+
+
+/** set compile-time properties */
+void writer__initProperties() {
+  /* does nothing - properties are initialised when writer_iProperties is declared */
+}
+
+
+
+/** Store a line of text. */
+struct writer__FileText* writer__insert( char* pText, struct writer__FileText* pTextLine ) {
+  
+  struct writer__FileText* newtextline      = (struct writer__FileText*) malloc(sizeof(struct writer__FileText));
+  char*                    newtextlinechars = (char*) malloc( (unsigned) (strlen( pText )+1) );
+
+  strcpy(newtextlinechars, pText);
+  newtextline->next = NULL;
+  pTextLine->line   = newtextlinechars;
+  pTextLine->next   = newtextline;
+  return newtextline;
+}
+
+/* Writer Services >> */
+
+
+
+
+/* Template Services (File Generation) << */
+
+/** Set the prefix of the files to be generated. */
+void _setFileNamePrefix(char* pPrefix) {
+  writer__iFileNamePrefix = pPrefix;
+}
+
+
+
+/** Get prefix of files to be generated. */
+char* _getFileNamePrefix() {
+  return writer__iFileNamePrefix;
+}
+
+
+
+/** Set the suffix of the files to be generated. */
+void _setFileNameSuffix(char* pSuffix) {
+  writer__iFileNameSuffix = pSuffix;
+}
+
+
+
+/** Get suffix of files to be generated. */
+char* _getFileNameSuffix() {
+  return writer__iFileNameSuffix;
+}
+
+
+
+/** Set the full name of the file to be generated. 
+ *  Prefix and Suffix are set to empty.
+ */
+void _setFullFileName( char* pName ) {
+  _setFileNamePrefix( WRITER__STRING_empty );
+  _setFileNameRoot(   pName );
+  _setFileNameSuffix( WRITER__STRING_empty );
+}
+
+
+
+/** Get the full name of current file being generated. */
+char* _getFullFileName() {
+  char* fullFileName;
+  char* fileNameRoot; 
+  char* fileNamePrefix; 
+  char* fileNameSuffix; 
+
+  fileNamePrefix = _getFileNamePrefix();
+  fileNameRoot   = _getFileNameRoot();
+  fileNameSuffix = _getFileNameSuffix();  
+
+  fullFileName = _strcat( fileNamePrefix, fileNameRoot );
+  fullFileName = _strcat( fullFileName, fileNameSuffix );
+
+  return fullFileName;
+}
+
+
+
+/** Set the names of the files to be generated. 
+ *  Prefix and Suffix are set to empty.
+ */
+void _setFullFileNames( int pNumFileNames, char* pFullFileNames[] ) {
+  _setFileNamePrefix( WRITER__STRING_empty );
+  _setFileNameRoots(  pNumFileNames, pFullFileNames );
+  _setFileNameSuffix( WRITER__STRING_empty );
+}
+
+
+
+/** Get the full names of the files to be generated. */
+char** _getFullFileNames() {
+
+  char** fileNameRoots;
+  char** fullFileNames;
+  char*  fileNamePrefix; 
+  char*  fileNameSuffix; 
+  int    numFiles = 0;       
+  int    fileI    = 0;
+
+  fileNameRoots  = _getFileNameRoots();
+  numFiles       = _getNumFiles();
+  fileNamePrefix = _getFileNamePrefix();
+  fileNameSuffix = _getFileNameSuffix();
+
+  fullFileNames = (char**) malloc( numFiles * sizeof(char*) );
+
+  for( fileI = 0; fileI < numFiles; fileI++ ) {
+    fullFileNames[ fileI ] = _strcat( fileNamePrefix, _strcat( fileNameRoots[ fileI ], fileNameSuffix ) );
+  }
+
+  return fullFileNames;
+}
+
+
+
+/** Set the root of the name of the file to be generated. */
+void _setFileNameRoot( char* pFileNameRoot ) {
+  char** fileNameRoots = (char**) malloc( sizeof( char* ) );
+  fileNameRoots[0] = pFileNameRoot;
+  _setFileNameRoots( 1, fileNameRoots );
+}
+
+
+
+/** Get the root of the name of the current file being generated. */
+char* _getFileNameRoot() {
+  char* fileNameRoot = writer__iFileNameRoots[ writer__iCurrentFileIndex ];
+  return fileNameRoot;
+}
+
+
+
+/** Set the roots of the names of the files to be generated. */
+void _setFileNameRoots( int pNumFileNameRoots, char* pFileNameRoots[] ) {
+  writer__iNumFiles      = pNumFileNameRoots;
+  writer__iFileNameRoots = pFileNameRoots;
+}
+
+
+
+/** Get roots of the names of files to be generated. */
+char** _getFileNameRoots() {
+  return (char**) writer__iFileNameRoots;
+}
+
+
+
+/** Get index of file currently being generated. */
+int _getFileIndex() {
+  return writer__iCurrentFileIndex;
+}
+
+
+/** Get number of files to generate. */
+int _getNumFiles() {
+  return writer__iNumFiles;
+}
+
+
+
+/** Set output folder. */
+void _setOutputFolder( char* pOutputFolder ) {
+  writer__iOutputFolder = pOutputFolder;
+}
+
+
+
+/** Get output folder. */
+char* _getOutputFolder() {
+    return writer__iOutputFolder;
+}
+
+
+
+/** Set backup folder. */
+void _setBackupFolder( char* pBackupFolder ) {
+  writer__iBackupFolder = pBackupFolder;
+}
+
+
+
+/** Get backup folder. */
+char* _getBackupFolder() {
+    return writer__iBackupFolder;
+}
+
+
+
+/** Set the prefix of backup files. */
+void _setBackupPrefix( char* pBackupPrefix ) {
+  writer__iBackupPrefix = pBackupPrefix;
+}
+
+
+
+/** Set the suffix of backup files. */
+void _setBackupSuffix( char* pBackupSuffix ) {
+  writer__iBackupSuffix = pBackupSuffix;
+}
+
+
+
+/** Set to true if generated files are to be backed up to disk automatically. */
+void _backup( int pBackup )  {
+  writer__iBackup = pBackup;
+}
+
+
+
+/** Set to true if generated files are to be saved to disk automatically. */
+void _save(int pSave) {
+  writer__iSave = pSave;
+}
+
+
+
+/** Save a text file. */
+void _saveTextFile( char* pFullPath, struct writer__FileText* pFileText ) {
+
+  struct writer__FileText* fileline;
+  FILE* fp;
+
+  fileline = pFileText;
+  fp = fopen( pFullPath, "w");
+  if( NULL == fp ) {
+    writer__iExceptionMessage = (char*) malloc( 55 + sizeof( pFullPath ) );
+    sprintf( writer__iExceptionMessage, "Error writing: %s", pFullPath );
+    writer__iException = 1;
+    return;
+  }
+
+  while( NULL != fileline->next ) {
+    fprintf( fp, "%s", fileline->line );
+    fileline = fileline->next;
+  }
+
+  fclose( fp );
+}
+
+
+
+/** Load a text file. */
+struct writer__FileText* _loadTextFile( char* pFullPath ) {
+
+  struct writer__FileText* fileline = (struct writer__FileText*) malloc(sizeof(struct writer__FileText));
+  FILE*                    fp;
+  char                     line[ WRITER__MAX_LINE_LEN ];
+  struct writer__FileText* filetext;
+
+  fp = fopen( pFullPath, "r");
+  if( NULL == fp ) {
+    writer__iExceptionMessage = (char*) malloc( 55 + sizeof( pFullPath ) );
+    sprintf( writer__iExceptionMessage, "Error reading: %s", pFullPath );
+    writer__iException = 1;
+    return;
+  }
+
+  filetext = fileline;
+  fileline->line = WRITER__STRING_empty;
+  fileline->next = NULL;
+  while( NULL != fgets( line, WRITER__MAX_LINE_LEN, fp ) ) {
+    fileline = writer__insert( line, fileline );
+  }
+
+  fclose( fp );
+
+  return filetext;
+}
+
+/* Template Services (File Generation) >> */
+
+
+
+
+/* Template Services (Control) << */
+
+/** Get the value of a compile-time property. */
+char* _getProperty( char* pName ) {
+
+  int propI = 0;
+
+  if( 0 == writer__iPropertiesInit ) {
+    writer__initProperties();
+  }
+
+  while( NULL != writer__iProperties[ propI ] ) {
+    if( 0 == strcmp( pName, writer__iProperties[ propI ] ) ) {
+      return writer__iProperties[ propI+1 ];
+    }
+    propI += 2;
+  }
+
+  return NULL;
+}
+
+
+
+/** Get first user arg. */
+char* _getFirstUserArg() {
+  return _getUserArg(0);
+}
+
+
+
+/** Get second user arg. */
+char* _getSecondUserArg() {
+  return _getUserArg(1);
+}
+
+
+
+/** Get third user arg. */
+char* _getThirdUserArg() {
+  return _getUserArg(2);
+}
+
+
+
+/** Get nth (n=0,1,2,...) user arg (the nth arg with no WRITER__ARGUMENT_CONTROL_PREFIX). */
+char* _getUserArg( int pOrdinal ) {
+
+  int ordinal = 0;
+  int numArgs = _getNumArgs();
+  int argI    = 0;
+
+  /** ingore code writer name (first arg) */
+  for( argI = 1; argI < numArgs; argI++ ) {
+
+    if( 0 == strncmp( WRITER__ARGUMENT_CONTROL_PREFIX, writer__iArgs[argI], strlen(WRITER__ARGUMENT_CONTROL_PREFIX) ) ) {
+      continue;
+    } else {
+      if( ordinal == pOrdinal ) {
+        return writer__iArgs[argI];
+      } else {
+        ordinal++;
+      }
+    }
+  }
+  return NULL;
+}
+
+
+
+/** Get usercommand line arguments to CodeWriter. */
+char** _getUserArgs() {
+  return writer__iUserArgs;
+}
+
+
+
+/** Get number of user command line arguments to CodeWriter. */
+int _getNumUserArgs() {
+  return writer__iNumUserArgs;
+}
+
+
+
+/** Get command line arguments to CodeWriter. */
+char** _getArgs() {
+  return writer__iArgs;
+}
+
+
+
+/** Get number of command line arguments to CodeWriter. */
+int _getNumArgs() {
+  return writer__iNumArgs;
+}
+
+/* Template Services (Control) >> */
+
+
+
+
+/* Template Services (Text Production) << */
+
+
+/** Insert text into generated file. */
+void _insert( char* pText ) {
+  writer__iCurrentTextLine = writer__insert( pText, writer__iCurrentTextLine );
+}
+
+
+
+/** Create a String containing specified number of spaces. */
+char* _spaces( int pNumSpaces ) {
+
+  char* spaces    = NULL;
+  int   spaceI    = 0;
+  int   numSpaces = pNumSpaces;
+
+  if( numSpaces < 0 ) {
+    numSpaces = numSpaces * -1;
+  }
+  spaces = (char*) malloc( (unsigned) (numSpaces+1) );
+
+  *spaces = '\0';
+  for( spaceI = 0; spaceI < numSpaces; spaceI++ ) {
+    strcat( spaces, " ");
+  }
+
+  return spaces;
+}
+
+
+
+/** Left align String with spaces. */
+char* _left(char* pText, int pColWidth ) {
+  return _align( pText, " ", pColWidth, 'l' );
+} 
+
+
+
+/** Right align String with spaces. */
+char* _right( char* pText, int pColWidth ) {
+  return _align( pText, " ", pColWidth, 'r' );
+} 
+
+
+
+/** Center align String with spaces. */
+char* _center( char* pText, int pColWidth ) {
+  return _align( pText, " ", pColWidth, 'c' );
+} 
+
+
+
+/** Align text within background text with specified column width.
+ *  Alignment can be 'l': left, 'c': center, 'r': right
+ */
+char* _align( char* pText, char* pBackText, int pColWidth, char pAlignment ) {
+
+  char*  result;
+  int    textLen;
+  int    backTextLen;
+  int    remainWidth;
+  int    backTextRepeats;
+  int    backTextRemain;
+  int    backTextI = 0;
+  char*  back = WRITER__STRING_empty;
+  char   buffer[WRITER__MAX_LINE_LEN] = WRITER__STRING_empty;
+  int    backLen;
+
+  textLen = strlen( pText );
+  if( pColWidth > textLen ) {
+    backTextLen     = strlen( pBackText );
+    remainWidth     = pColWidth - textLen;
+    backTextRepeats = remainWidth / backTextLen;
+    backTextRemain  = remainWidth % backTextLen;
+    for( backTextI = 0; backTextI < backTextRepeats; backTextI++ ) {
+      back = _strcat( back, pBackText );
+    }
+    if( 0 < backTextRemain ) {
+      strncpy( buffer, pBackText, backTextRemain );
+      back = _strcat( back, buffer );
+    }
+
+    if( 'l' == pAlignment ) {
+      result = _strcat( pText, back );
+      
+    } else if( 'c' == pAlignment ) {
+      backLen = strlen( back );
+      result = _strcat( strncpy( buffer, back, (backLen/2) ) , pText) ;
+      result = _strcat( result, back+(backLen/2) );
+
+    } else if( 'r' == pAlignment ) {
+      result = _strcat( back, pText );
+    }
+  } 
+  else {
+    result = (char*) malloc( (textLen+1) * sizeof(char) );
+    strcpy( result, pText );
+  }
+
+  return result;
+}
+
+
+
+/* Get text of file currently being generated. */
+struct writer__FileText* _getText() {
+  return writer__iCurrentText;
+}
+
+
+
+/* Set text of file currently being generated. */
+void _setText( struct writer__FileText* pFileText ) {
+  writer__iCurrentText = pFileText;
+}
+
+/* Template Services (Text Production) >> */
+
+
+
+
+/* Language Specific Services << */
+
+/** Concatenate two strings, dynamically creating the needed memory. 
+ *  This is a nice little memory leaker...
+ */
+char * _strcat( char* pFirst, char* pSecond ) {
+  int   lenFirst  = strlen( pFirst );
+  int   lenSecond = strlen( pSecond );
+  char* result    = (char*) malloc( (lenFirst + lenSecond + 1) * sizeof(char) ); 
+
+  strcpy( result, pFirst );
+  strcat( result, pSecond );
+
+  return result;
+}
+
+/* Language Specific Services >> */
+
+
+
+!<footer>

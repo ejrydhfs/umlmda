@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xtools2_universal_type_manager-->
+<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:UMLMDAProfile_16="http:///_KMYvkJ03EdqnuJ2dpvbB2g.profile.uml2" xmlns:notation="http://www.ibm.com/xtools/1.5.0/Notation" xmlns:uml="http://www.eclipse.org/uml2/1.0.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.0/Umlnotation" xsi:schemaLocation="http:///_KMYvkJ03EdqnuJ2dpvbB2g.profile.uml2 pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx#_KMe2MJ03EdqnuJ2dpvbB2g?UMLMDAProfile/%3CEPackage%3E" xmi:id="_bmpVofLCEdmyduCk8dC3zA" name="UMLGenerator" appliedProfile="_bmpVpfLCEdmyduCk8dC3zA _bmpVqPLCEdmyduCk8dC3zA _bmpVq_LCEdmyduCk8dC3zA _bmpVrvLCEdmyduCk8dC3zA _bmpVsfLCEdmyduCk8dC3zA _fSWyYPLCEdmyduCk8dC3zA">
+  <eAnnotations xmi:id="_bmpVovLCEdmyduCk8dC3zA" source="uml2.diagrams"/>
+  <eAnnotations xmi:id="_CUabos3oEdqpZJnRvOvbXg" source="http://www.eclipse.org/emf/2002/Ecore"/>
+  <packageImport xmi:type="uml:ProfileApplication" xmi:id="_bmpVpfLCEdmyduCk8dC3zA">
+    <eAnnotations xmi:id="_bmpVpvLCEdmyduCk8dC3zA" source="attributes">
+      <details xmi:id="_bmpVp_LCEdmyduCk8dC3zA" key="version" value="0"/>
+    </eAnnotations>
+    <importedPackage xmi:type="uml:Profile" href="pathmap://UML2_PROFILES/Basic.profile.uml2#_6mFRgK86Edih9-GG5afQ0g"/>
+    <importedProfile href="pathmap://UML2_PROFILES/Basic.profile.uml2#_6mFRgK86Edih9-GG5afQ0g"/>
+  </packageImport>
+  <packageImport xmi:type="uml:ProfileApplication" xmi:id="_bmpVqPLCEdmyduCk8dC3zA">
+    <eAnnotations xmi:id="_bmpVqfLCEdmyduCk8dC3zA" source="attributes">
+      <details xmi:id="_bmpVqvLCEdmyduCk8dC3zA" key="version" value="0"/>
+    </eAnnotations>
+    <importedPackage xmi:type="uml:Profile" href="pathmap://UML2_PROFILES/Intermediate.profile.uml2#_Cz7csK87Edih9-GG5afQ0g"/>
+    <importedProfile href="pathmap://UML2_PROFILES/Intermediate.profile.uml2#_Cz7csK87Edih9-GG5afQ0g"/>
+  </packageImport>
+  <packageImport xmi:type="uml:ProfileApplication" xmi:id="_bmpVq_LCEdmyduCk8dC3zA">
+    <eAnnotations xmi:id="_bmpVrPLCEdmyduCk8dC3zA" source="attributes">
+      <details xmi:id="_bmpVrfLCEdmyduCk8dC3zA" key="version" value="0"/>
+    </eAnnotations>
+    <importedPackage xmi:type="uml:Profile" href="pathmap://UML2_PROFILES/Complete.profile.uml2#_M7pTkK87Edih9-GG5afQ0g"/>
+    <importedProfile href="pathmap://UML2_PROFILES/Complete.profile.uml2#_M7pTkK87Edih9-GG5afQ0g"/>
+  </packageImport>
+  <packageImport xmi:type="uml:ProfileApplication" xmi:id="_bmpVrvLCEdmyduCk8dC3zA">
+    <eAnnotations xmi:id="_bmpVr_LCEdmyduCk8dC3zA" source="attributes">
+      <details xmi:id="_bmpVsPLCEdmyduCk8dC3zA" key="version" value="0"/>
+    </eAnnotations>
+    <importedPackage xmi:type="uml:Profile" href="pathmap://UML2_MSL_PROFILES/Default.epx#_a_S3wNWLEdiy4IqP8whjFA?Default"/>
+    <importedProfile href="pathmap://UML2_MSL_PROFILES/Default.epx#_a_S3wNWLEdiy4IqP8whjFA?Default"/>
+  </packageImport>
+  <packageImport xmi:type="uml:ProfileApplication" xmi:id="_bmpVsfLCEdmyduCk8dC3zA">
+    <eAnnotations xmi:id="_bmpVsvLCEdmyduCk8dC3zA" source="attributes">
+      <details xmi:id="_bmpVs_LCEdmyduCk8dC3zA" key="version" value="0"/>
+    </eAnnotations>
+    <importedPackage xmi:type="uml:Profile" href="pathmap://UML2_MSL_PROFILES/Deployment.epx#_vjbuwOvHEdiDX5bji0iVSA?Deployment"/>
+    <importedProfile href="pathmap://UML2_MSL_PROFILES/Deployment.epx#_vjbuwOvHEdiDX5bji0iVSA?Deployment"/>
+  </packageImport>
+  <packageImport xmi:id="_bmpVtPLCEdmyduCk8dC3zA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML2_LIBRARIES/UML2PrimitiveTypes.library.uml2#_EfRZoK86EdieaYgxtVWN8Q"/>
+  </packageImport>
+  <packageImport xmi:type="uml:ProfileApplication" xmi:id="_fSWyYPLCEdmyduCk8dC3zA">
+    <eAnnotations xmi:id="_fSWyYfLCEdmyduCk8dC3zA" source="attributes">
+      <details xmi:id="_fSWyYvLCEdmyduCk8dC3zA" key="version" value="16"/>
+    </eAnnotations>
+    <importedPackage xmi:type="uml:Profile" href="pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx#_fgmLseO5Edm14clrpIgO7w?UMLMDAProfile"/>
+    <importedProfile href="pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx#_fgmLseO5Edm14clrpIgO7w?UMLMDAProfile"/>
+  </packageImport>
+  <packageImport xmi:id="_8JoAYPMJEdmrXqwlJJdHPg">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_ggMDAPK4EdmFXfbQyopNVQ?UMLMDATypes"/>
+  </packageImport>
+  <ownedMember xmi:type="uml:Package" xmi:id="_3mwi8M3jEdqpZJnRvOvbXg" name="org">
+    <ownedMember xmi:type="uml:Package" xmi:id="_4Zp_gM3jEdqpZJnRvOvbXg" name="umlmda">
+      <ownedMember xmi:type="uml:Package" xmi:id="_5kKDwM3jEdqpZJnRvOvbXg" name="uml">
+        <ownedMember xmi:type="uml:Package" xmi:id="_6iIu8M3jEdqpZJnRvOvbXg" name="generator">
+          <ownedMember xmi:type="uml:Package" xmi:id="_7bupYM3jEdqpZJnRvOvbXg" name="java">
+            <eAnnotations xmi:id="_8vMcYM3jEdqpZJnRvOvbXg" source="uml2.diagrams">
+              <contents xmi:type="notation:Diagram" xmi:id="_8vMcYc3jEdqpZJnRvOvbXg" type="Class" element="_7bupYM3jEdqpZJnRvOvbXg" name="Java-Modeladapter">
+                <children xmi:id="_V70K8M3mEdqpZJnRvOvbXg" type="shadowRectangle">
+                  <children xmi:id="_V70K883mEdqpZJnRvOvbXg" type="DiagramName"/>
+                  <children xmi:id="_V70K9M3mEdqpZJnRvOvbXg" type="Description"/>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_V70K8c3mEdqpZJnRvOvbXg" fillColor="13369343" lineColor="6737151"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_V70K8s3mEdqpZJnRvOvbXg" x="2037" y="2686" width="6983" height="10027"/>
+                </children>
+                <children xmi:id="_JwlkMM3mEdqpZJnRvOvbXg" type="shadowRectangle">
+                  <children xmi:id="_JwlkM83mEdqpZJnRvOvbXg" type="DiagramName"/>
+                  <children xmi:id="_JwlkNM3mEdqpZJnRvOvbXg" type="Description"/>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_JwlkMc3mEdqpZJnRvOvbXg" fillColor="13369343" lineColor="6737151"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JwlkMs3mEdqpZJnRvOvbXg" x="9162" y="2686" width="6032" height="10027"/>
+                </children>
+                <children xmi:id="_1nwNsM3lEdqpZJnRvOvbXg" type="shadowRectangle">
+                  <children xmi:id="_1nwNs83lEdqpZJnRvOvbXg" type="DiagramName"/>
+                  <children xmi:id="_1nwNtM3lEdqpZJnRvOvbXg" type="Description"/>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_1nwNsc3lEdqpZJnRvOvbXg" fillColor="13369343" lineColor="6737151"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1nwNss3lEdqpZJnRvOvbXg" x="15398" y="2672" width="10925" height="10027"/>
+                </children>
+                <children xmi:id="_BfkbIM3kEdqpZJnRvOvbXg" targetEdges="_CBL6cc3kEdqpZJnRvOvbXg _CBL6eM3kEdqpZJnRvOvbXg _CsW-YM3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_BfkbI83kEdqpZJnRvOvbXg" type="ImageCompartment">
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_Pm2KwM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifierBase"/>
+                    <layoutConstraint xmi:type="notation:Size" xmi:id="_BfkbJM3kEdqpZJnRvOvbXg" width="1320" height="1320"/>
+                  </children>
+                  <children xmi:id="_BfkbJc3kEdqpZJnRvOvbXg" type="Stereotype">
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_Pm2KwM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifierBase"/>
+                  </children>
+                  <children xmi:id="_BfkbJs3kEdqpZJnRvOvbXg" type="Name">
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_Pm2KwM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifierBase"/>
+                  </children>
+                  <children xmi:id="_BfkbJ83kEdqpZJnRvOvbXg" type="AttributeCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_BfkbKM3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_Pm2KwM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifierBase"/>
+                  </children>
+                  <children xmi:id="_BfkbKc3kEdqpZJnRvOvbXg" type="OperationCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_BfkbKs3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_Pm2KwM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifierBase"/>
+                  </children>
+                  <children xmi:id="_BfkbK83kEdqpZJnRvOvbXg" visible="false" type="SignalCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_BfkbLM3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_Pm2KwM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifierBase"/>
+                  </children>
+                  <children xmi:id="_BfkbLc3kEdqpZJnRvOvbXg" visible="false" type="StructureCompartment">
+                    <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_BfkbLs3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_Pm2KwM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifierBase"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_BfkbIc3kEdqpZJnRvOvbXg" showListSignature="true" showStereotype="Label"/>
+                  <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_Pm2KwM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifierBase"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BfkbIs3kEdqpZJnRvOvbXg" x="2275" y="4471"/>
+                </children>
+                <children xmi:id="_CBFz0M3kEdqpZJnRvOvbXg" sourceEdges="_CBL6cc3kEdqpZJnRvOvbXg _CBL6eM3kEdqpZJnRvOvbXg" targetEdges="_DduxAc3kEdqpZJnRvOvbXg _MLADEM3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_CBFz083kEdqpZJnRvOvbXg" type="ImageCompartment">
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_cLonYM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier"/>
+                    <layoutConstraint xmi:type="notation:Size" xmi:id="_CBFz1M3kEdqpZJnRvOvbXg" width="1320" height="1320"/>
+                  </children>
+                  <children xmi:id="_CBFz1c3kEdqpZJnRvOvbXg" type="Stereotype">
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_cLonYM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier"/>
+                  </children>
+                  <children xmi:id="_CBFz1s3kEdqpZJnRvOvbXg" type="Name">
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_cLonYM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier"/>
+                  </children>
+                  <children xmi:id="_CBFz183kEdqpZJnRvOvbXg" type="AttributeCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CBFz2M3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_cLonYM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier"/>
+                  </children>
+                  <children xmi:id="_CBFz2c3kEdqpZJnRvOvbXg" type="OperationCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CBFz2s3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_cLonYM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier"/>
+                  </children>
+                  <children xmi:id="_CBFz283kEdqpZJnRvOvbXg" visible="false" type="SignalCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CBFz3M3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_cLonYM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier"/>
+                  </children>
+                  <children xmi:id="_CBFz3c3kEdqpZJnRvOvbXg" visible="false" type="StructureCompartment">
+                    <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_CBFz3s3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_cLonYM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_CBFz0c3kEdqpZJnRvOvbXg" showListSignature="true" showStereotype="Label"/>
+                  <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_cLonYM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CBFz0s3kEdqpZJnRvOvbXg" x="9967" y="4456"/>
+                </children>
+                <children xmi:id="_Cr-j4M3kEdqpZJnRvOvbXg" sourceEdges="_CsQ3wM3kEdqpZJnRvOvbXg _CsW-YM3kEdqpZJnRvOvbXg" targetEdges="_CsQ3wM3kEdqpZJnRvOvbXg _Ddoqdc3kEdqpZJnRvOvbXg _DduxJs3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_Cr-j483kEdqpZJnRvOvbXg" type="ImageCompartment">
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_TSEfUM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase"/>
+                    <layoutConstraint xmi:type="notation:Size" xmi:id="_Cr-j5M3kEdqpZJnRvOvbXg" width="1320" height="1320"/>
+                  </children>
+                  <children xmi:id="_Cr-j5c3kEdqpZJnRvOvbXg" type="Stereotype">
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_TSEfUM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase"/>
+                  </children>
+                  <children xmi:id="_Cr-j5s3kEdqpZJnRvOvbXg" type="Name">
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_TSEfUM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase"/>
+                  </children>
+                  <children xmi:id="_Cr-j583kEdqpZJnRvOvbXg" type="AttributeCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Cr-j6M3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_TSEfUM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase"/>
+                  </children>
+                  <children xmi:id="_Cr-j6c3kEdqpZJnRvOvbXg" type="OperationCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Cr-j6s3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_TSEfUM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase"/>
+                  </children>
+                  <children xmi:id="_Cr-j683kEdqpZJnRvOvbXg" visible="false" type="SignalCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Cr-j7M3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_TSEfUM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase"/>
+                  </children>
+                  <children xmi:id="_Cr-j7c3kEdqpZJnRvOvbXg" visible="false" type="StructureCompartment">
+                    <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_Cr-j7s3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_TSEfUM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_Cr-j4c3kEdqpZJnRvOvbXg" showListSignature="true" showStereotype="Label"/>
+                  <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_TSEfUM3XEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Cr-j4s3kEdqpZJnRvOvbXg" x="2579" y="8690"/>
+                </children>
+                <children xmi:id="_DdcdEM3kEdqpZJnRvOvbXg" sourceEdges="_DdijtM3kEdqpZJnRvOvbXg _DdoqUM3kEdqpZJnRvOvbXg _Ddoqdc3kEdqpZJnRvOvbXg _DduxAc3kEdqpZJnRvOvbXg _DduxJs3kEdqpZJnRvOvbXg" targetEdges="_DdijtM3kEdqpZJnRvOvbXg _DdoqUM3kEdqpZJnRvOvbXg _LjFHcc3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_DdcdE83kEdqpZJnRvOvbXg" type="ImageCompartment">
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_4WLnAM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass"/>
+                    <layoutConstraint xmi:type="notation:Size" xmi:id="_DdcdFM3kEdqpZJnRvOvbXg" width="1320" height="1320"/>
+                  </children>
+                  <children xmi:id="_DdcdFc3kEdqpZJnRvOvbXg" type="Stereotype">
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_4WLnAM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass"/>
+                  </children>
+                  <children xmi:id="_DdcdFs3kEdqpZJnRvOvbXg" type="Name">
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_4WLnAM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass"/>
+                  </children>
+                  <children xmi:id="_DdcdF83kEdqpZJnRvOvbXg" type="AttributeCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_DdcdGM3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_4WLnAM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass"/>
+                  </children>
+                  <children xmi:id="_DdcdGc3kEdqpZJnRvOvbXg" type="OperationCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_DdcdGs3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_4WLnAM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass"/>
+                  </children>
+                  <children xmi:id="_DdcdG83kEdqpZJnRvOvbXg" visible="false" type="SignalCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_DdcdHM3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_4WLnAM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass"/>
+                  </children>
+                  <children xmi:id="_DdcdHc3kEdqpZJnRvOvbXg" visible="false" type="StructureCompartment">
+                    <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_DdcdHs3kEdqpZJnRvOvbXg"/>
+                    <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_4WLnAM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_DdcdEc3kEdqpZJnRvOvbXg" showListSignature="true" showStereotype="Label"/>
+                  <element xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_4WLnAM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DdcdEs3kEdqpZJnRvOvbXg" x="10112" y="8769"/>
+                </children>
+                <children xmi:id="_HOlzcs3kEdqpZJnRvOvbXg" sourceEdges="_MLADEM3kEdqpZJnRvOvbXg" targetEdges="_Kr-gUM3kEdqpZJnRvOvbXg" element="_Gw_RcM3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_HOlzdc3kEdqpZJnRvOvbXg" type="ImageCompartment" element="_Gw_RcM3kEdqpZJnRvOvbXg">
+                    <layoutConstraint xmi:type="notation:Size" xmi:id="_HOlzds3kEdqpZJnRvOvbXg" width="1320" height="1320"/>
+                  </children>
+                  <children xmi:id="_HOlzd83kEdqpZJnRvOvbXg" type="Stereotype" element="_Gw_RcM3kEdqpZJnRvOvbXg"/>
+                  <children xmi:id="_HOlzeM3kEdqpZJnRvOvbXg" type="Name" element="_Gw_RcM3kEdqpZJnRvOvbXg"/>
+                  <children xmi:id="_HOlzec3kEdqpZJnRvOvbXg" type="AttributeCompartment" element="_Gw_RcM3kEdqpZJnRvOvbXg">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_HOlzes3kEdqpZJnRvOvbXg"/>
+                  </children>
+                  <children xmi:id="_HOlze83kEdqpZJnRvOvbXg" type="OperationCompartment" element="_Gw_RcM3kEdqpZJnRvOvbXg">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_HOlzfM3kEdqpZJnRvOvbXg"/>
+                  </children>
+                  <children xmi:id="_HOlzfc3kEdqpZJnRvOvbXg" visible="false" type="SignalCompartment" element="_Gw_RcM3kEdqpZJnRvOvbXg">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_HOlzfs3kEdqpZJnRvOvbXg"/>
+                  </children>
+                  <children xmi:id="_HOlzf83kEdqpZJnRvOvbXg" visible="false" type="StructureCompartment" element="_Gw_RcM3kEdqpZJnRvOvbXg">
+                    <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_HOlzgM3kEdqpZJnRvOvbXg"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_HOlzc83kEdqpZJnRvOvbXg" showListSignature="true" showStereotype="Label"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_HOlzdM3kEdqpZJnRvOvbXg" x="17791" y="4404"/>
+                </children>
+                <children xmi:id="_I-zz4M3kEdqpZJnRvOvbXg" sourceEdges="_Kr-gUM3kEdqpZJnRvOvbXg _LjFHcc3kEdqpZJnRvOvbXg" element="_IsxBoM3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_I-zz483kEdqpZJnRvOvbXg" type="ImageCompartment" element="_IsxBoM3kEdqpZJnRvOvbXg">
+                    <layoutConstraint xmi:type="notation:Size" xmi:id="_I-zz5M3kEdqpZJnRvOvbXg" width="1320" height="1320"/>
+                  </children>
+                  <children xmi:id="_I-zz5c3kEdqpZJnRvOvbXg" type="Stereotype" element="_IsxBoM3kEdqpZJnRvOvbXg"/>
+                  <children xmi:id="_I-zz5s3kEdqpZJnRvOvbXg" type="Name" element="_IsxBoM3kEdqpZJnRvOvbXg"/>
+                  <children xmi:id="_I-zz583kEdqpZJnRvOvbXg" type="AttributeCompartment" element="_IsxBoM3kEdqpZJnRvOvbXg">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_I-zz6M3kEdqpZJnRvOvbXg"/>
+                  </children>
+                  <children xmi:id="_I-zz6c3kEdqpZJnRvOvbXg" type="OperationCompartment" element="_IsxBoM3kEdqpZJnRvOvbXg">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_I-zz6s3kEdqpZJnRvOvbXg"/>
+                  </children>
+                  <children xmi:id="_I-zz683kEdqpZJnRvOvbXg" visible="false" type="SignalCompartment" element="_IsxBoM3kEdqpZJnRvOvbXg">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_I-zz7M3kEdqpZJnRvOvbXg"/>
+                  </children>
+                  <children xmi:id="_I-zz7c3kEdqpZJnRvOvbXg" visible="false" type="StructureCompartment" element="_IsxBoM3kEdqpZJnRvOvbXg">
+                    <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_I-zz7s3kEdqpZJnRvOvbXg"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_I-zz4c3kEdqpZJnRvOvbXg" showListSignature="true" showStereotype="Label"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_I-zz4s3kEdqpZJnRvOvbXg" x="15648" y="8294"/>
+                </children>
+                <children xmi:id="_BN048M3mEdqpZJnRvOvbXg" type="Text">
+                  <children xmi:id="_BN04883mEdqpZJnRvOvbXg" type="DiagramName"/>
+                  <children xmi:id="_BN049M3mEdqpZJnRvOvbXg" type="Description"/>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_BN048c3mEdqpZJnRvOvbXg" bold="true" description="Java Model Adapter"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BN048s3mEdqpZJnRvOvbXg" x="15583" y="2830"/>
+                </children>
+                <children xmi:id="_KSrkoM3mEdqpZJnRvOvbXg" type="Text">
+                  <children xmi:id="_KSrko83mEdqpZJnRvOvbXg" type="DiagramName"/>
+                  <children xmi:id="_KSrkpM3mEdqpZJnRvOvbXg" type="Description"/>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_KSrkoc3mEdqpZJnRvOvbXg" bold="true" description="PIM Model Adapter"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_KSrkos3mEdqpZJnRvOvbXg" x="9550" y="2830"/>
+                </children>
+                <children xmi:id="_ZQaIMM3mEdqpZJnRvOvbXg" type="Text">
+                  <children xmi:id="_ZQaIM83mEdqpZJnRvOvbXg" type="DiagramName"/>
+                  <children xmi:id="_ZQaINM3mEdqpZJnRvOvbXg" type="Description"/>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_ZQaIMc3mEdqpZJnRvOvbXg" bold="true" description="Model Abstraction"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ZQaIMs3mEdqpZJnRvOvbXg" x="2301" y="2777"/>
+                </children>
+                <styles xmi:type="umlnotation:UMLDiagramStyle" xmi:id="_8vMcYs3jEdqpZJnRvOvbXg"/>
+                <edges xmi:id="_CBL6cc3kEdqpZJnRvOvbXg" source="_CBFz0M3kEdqpZJnRvOvbXg" target="_BfkbIM3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_CBL6dM3kEdqpZJnRvOvbXg" type="NameLabel">
+                    <children xmi:id="_CBL6ds3kEdqpZJnRvOvbXg" type="Stereotype">
+                      <element xmi:type="uml:Generalization" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_mVcwAM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier/%3CGeneralization%3E"/>
+                    </children>
+                    <children xmi:id="_CBL6d83kEdqpZJnRvOvbXg" type="Name">
+                      <element xmi:type="uml:Generalization" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_mVcwAM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier/%3CGeneralization%3E"/>
+                    </children>
+                    <element xmi:type="uml:Generalization" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_mVcwAM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier/%3CGeneralization%3E"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CBL6dc3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_CBL6cs3kEdqpZJnRvOvbXg" routing="Rectilinear" showStereotype="Text"/>
+                  <element xmi:type="uml:Generalization" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_mVcwAM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier/%3CGeneralization%3E"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_CBL6c83kEdqpZJnRvOvbXg" points="[-1746, -397, 6826, -397]$[-6456, -397, 2116, -397]"/>
+                </edges>
+                <edges xmi:id="_CBL6eM3kEdqpZJnRvOvbXg" source="_CBFz0M3kEdqpZJnRvOvbXg" target="_BfkbIM3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_CBL6e83kEdqpZJnRvOvbXg" type="NameLabel">
+                    <children xmi:id="_CBSBEM3kEdqpZJnRvOvbXg" type="Stereotype">
+                      <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0M3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    </children>
+                    <children xmi:id="_CBSBEc3kEdqpZJnRvOvbXg" type="Name">
+                      <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0M3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    </children>
+                    <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0M3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CBL6fM3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_CBSBEs3kEdqpZJnRvOvbXg" visible="false" type="ToMultiplicityLabel">
+                    <children xmi:id="_CBSBFM3kEdqpZJnRvOvbXg" type="ToMultiplicity">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0s3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0s3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CBSBE83kEdqpZJnRvOvbXg" y="397"/>
+                  </children>
+                  <children xmi:id="_CBSBFc3kEdqpZJnRvOvbXg" type="ToRoleLabel">
+                    <children xmi:id="_CBSBF83kEdqpZJnRvOvbXg" type="ToRole">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0s3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0s3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CBSBFs3kEdqpZJnRvOvbXg" y="-397"/>
+                  </children>
+                  <children xmi:id="_CBSBGM3kEdqpZJnRvOvbXg" type="FromMultiplicityLabel">
+                    <children xmi:id="_CBSBGs3kEdqpZJnRvOvbXg" type="FromMultiplicity">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0c3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier/modelClassifier"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0c3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier/modelClassifier"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CBSBGc3kEdqpZJnRvOvbXg" x="89" y="184"/>
+                  </children>
+                  <children xmi:id="_CBSBG83kEdqpZJnRvOvbXg" type="FromRoleLabel">
+                    <children xmi:id="_CBSBHc3kEdqpZJnRvOvbXg" type="FromRole">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0c3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier/modelClassifier"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0c3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier/modelClassifier"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CBSBHM3kEdqpZJnRvOvbXg" x="-757" y="-264"/>
+                  </children>
+                  <children xmi:id="_CBSBHs3kEdqpZJnRvOvbXg" type="ToQualifierLabel">
+                    <children xmi:id="_CBSBIM3kEdqpZJnRvOvbXg" type="QualifierCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CBSBIc3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0s3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0s3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CBSBH83kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_CBSBIs3kEdqpZJnRvOvbXg" type="FromQualifierLabel">
+                    <children xmi:id="_CBSBJM3kEdqpZJnRvOvbXg" type="QualifierCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CBSBJc3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0c3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier/modelClassifier"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0c3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier/modelClassifier"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CBSBI83kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_CBSBJs3kEdqpZJnRvOvbXg" type="ToRoleLabel">
+                    <eAnnotations xmi:id="_CBSBKM3kEdqpZJnRvOvbXg" source="ToConstraintLabel"/>
+                    <children xmi:id="_CBSBKc3kEdqpZJnRvOvbXg" visible="false" type="ToConstraintCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CBSBKs3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0s3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0s3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CBSBJ83kEdqpZJnRvOvbXg" y="1058"/>
+                  </children>
+                  <children xmi:id="_CBSBK83kEdqpZJnRvOvbXg" type="FromRoleLabel">
+                    <eAnnotations xmi:id="_CBSBLc3kEdqpZJnRvOvbXg" source="FromConstraintLabel"/>
+                    <children xmi:id="_CBSBLs3kEdqpZJnRvOvbXg" visible="false" type="FromConstraintCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CBSBL83kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0c3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier/modelClassifier"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0c3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier/modelClassifier"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CBSBLM3kEdqpZJnRvOvbXg" y="1058"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_CBL6ec3kEdqpZJnRvOvbXg" routing="Rectilinear" showStereotype="Text"/>
+                  <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_5f7A0M3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_CBL6es3kEdqpZJnRvOvbXg" points="[-1746, 450, 6826, 450]$[-6456, 450, 2116, 450]"/>
+                </edges>
+                <edges xmi:id="_CsQ3wM3kEdqpZJnRvOvbXg" source="_Cr-j4M3kEdqpZJnRvOvbXg" target="_Cr-j4M3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_CsQ3w83kEdqpZJnRvOvbXg" type="NameLabel">
+                    <children xmi:id="_CsQ3xc3kEdqpZJnRvOvbXg" type="Stereotype">
+                      <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQM3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    </children>
+                    <children xmi:id="_CsQ3xs3kEdqpZJnRvOvbXg" type="Name">
+                      <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQM3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    </children>
+                    <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQM3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CsQ3xM3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_CsQ3x83kEdqpZJnRvOvbXg" visible="false" type="ToMultiplicityLabel">
+                    <children xmi:id="_CsQ3yc3kEdqpZJnRvOvbXg" type="ToMultiplicity">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQs3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQs3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CsQ3yM3kEdqpZJnRvOvbXg" y="397"/>
+                  </children>
+                  <children xmi:id="_CsQ3ys3kEdqpZJnRvOvbXg" type="ToRoleLabel">
+                    <children xmi:id="_CsQ3zM3kEdqpZJnRvOvbXg" type="ToRole">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQs3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQs3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CsQ3y83kEdqpZJnRvOvbXg" y="-397"/>
+                  </children>
+                  <children xmi:id="_CsQ3zc3kEdqpZJnRvOvbXg" type="FromMultiplicityLabel">
+                    <children xmi:id="_CsQ3z83kEdqpZJnRvOvbXg" type="FromMultiplicity">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQc3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase/superClasses"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQc3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase/superClasses"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CsQ3zs3kEdqpZJnRvOvbXg" x="-610" y="-279"/>
+                  </children>
+                  <children xmi:id="_CsQ30M3kEdqpZJnRvOvbXg" type="FromRoleLabel">
+                    <children xmi:id="_CsQ30s3kEdqpZJnRvOvbXg" type="FromRole">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQc3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase/superClasses"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQc3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase/superClasses"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CsQ30c3kEdqpZJnRvOvbXg" x="-215" y="-310"/>
+                  </children>
+                  <children xmi:id="_CsQ3083kEdqpZJnRvOvbXg" type="ToQualifierLabel">
+                    <children xmi:id="_CsQ31c3kEdqpZJnRvOvbXg" type="QualifierCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CsQ31s3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQs3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQs3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CsQ31M3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_CsQ3183kEdqpZJnRvOvbXg" type="FromQualifierLabel">
+                    <children xmi:id="_CsQ32c3kEdqpZJnRvOvbXg" type="QualifierCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CsQ32s3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQc3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase/superClasses"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQc3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase/superClasses"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CsQ32M3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_CsQ3283kEdqpZJnRvOvbXg" type="ToRoleLabel">
+                    <eAnnotations xmi:id="_CsQ33c3kEdqpZJnRvOvbXg" source="ToConstraintLabel"/>
+                    <children xmi:id="_CsQ33s3kEdqpZJnRvOvbXg" visible="false" type="ToConstraintCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CsQ3383kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQs3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQs3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CsQ33M3kEdqpZJnRvOvbXg" y="1058"/>
+                  </children>
+                  <children xmi:id="_CsQ34M3kEdqpZJnRvOvbXg" type="FromRoleLabel">
+                    <eAnnotations xmi:id="_CsQ34s3kEdqpZJnRvOvbXg" source="FromConstraintLabel"/>
+                    <children xmi:id="_CsQ3483kEdqpZJnRvOvbXg" visible="false" type="FromConstraintCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CsQ35M3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQc3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase/superClasses"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQc3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase/superClasses"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_CsQ34c3kEdqpZJnRvOvbXg" y="1058"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_CsQ3wc3kEdqpZJnRvOvbXg" routing="Rectilinear" showStereotype="Text"/>
+                  <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_3PldQM3cEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_CsQ3ws3kEdqpZJnRvOvbXg" points="[714, 873, 714, 873]$[714, 2460, 714, 2460]$[-1164, 2460, -1164, 2460]$[-1164, 873, -1164, 873]"/>
+                </edges>
+                <edges xmi:id="_CsW-YM3kEdqpZJnRvOvbXg" source="_Cr-j4M3kEdqpZJnRvOvbXg" target="_BfkbIM3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_CsW-Y83kEdqpZJnRvOvbXg" type="NameLabel">
+                    <children xmi:id="_CsW-Zc3kEdqpZJnRvOvbXg" type="Stereotype">
+                      <element xmi:type="uml:Generalization" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_ZfGM0M3YEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase/%3CGeneralization%3E"/>
+                    </children>
+                    <children xmi:id="_CsW-Zs3kEdqpZJnRvOvbXg" type="Name">
+                      <element xmi:type="uml:Generalization" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_ZfGM0M3YEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase/%3CGeneralization%3E"/>
+                    </children>
+                    <element xmi:type="uml:Generalization" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_ZfGM0M3YEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase/%3CGeneralization%3E"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CsW-ZM3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_CsW-Yc3kEdqpZJnRvOvbXg" routing="Rectilinear" showStereotype="Text"/>
+                  <element xmi:type="uml:Generalization" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_ZfGM0M3YEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassBase/%3CGeneralization%3E"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_CsW-Ys3kEdqpZJnRvOvbXg" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+                </edges>
+                <edges xmi:id="_DdijtM3kEdqpZJnRvOvbXg" source="_DdcdEM3kEdqpZJnRvOvbXg" target="_DdcdEM3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_Ddijt83kEdqpZJnRvOvbXg" type="NameLabel">
+                    <children xmi:id="_Ddijuc3kEdqpZJnRvOvbXg" type="Stereotype">
+                      <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietkM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    </children>
+                    <children xmi:id="_Ddijus3kEdqpZJnRvOvbXg" type="Name">
+                      <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietkM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    </children>
+                    <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietkM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DdijuM3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_Ddiju83kEdqpZJnRvOvbXg" visible="false" type="ToMultiplicityLabel">
+                    <children xmi:id="_Ddijvc3kEdqpZJnRvOvbXg" type="ToMultiplicity">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietks3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietks3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DdijvM3kEdqpZJnRvOvbXg" y="397"/>
+                  </children>
+                  <children xmi:id="_Ddijvs3kEdqpZJnRvOvbXg" type="ToRoleLabel">
+                    <children xmi:id="_DdijwM3kEdqpZJnRvOvbXg" type="ToRole">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietks3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietks3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Ddijv83kEdqpZJnRvOvbXg" y="-397"/>
+                  </children>
+                  <children xmi:id="_Ddijwc3kEdqpZJnRvOvbXg" type="FromMultiplicityLabel">
+                    <children xmi:id="_Ddijw83kEdqpZJnRvOvbXg" type="FromMultiplicity">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietkc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedBy"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietkc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedBy"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Ddijws3kEdqpZJnRvOvbXg" x="-488" y="-209"/>
+                  </children>
+                  <children xmi:id="_DdijxM3kEdqpZJnRvOvbXg" type="FromRoleLabel">
+                    <children xmi:id="_Ddijxs3kEdqpZJnRvOvbXg" type="FromRole">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietkc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedBy"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietkc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedBy"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Ddijxc3kEdqpZJnRvOvbXg" x="-172" y="-477"/>
+                  </children>
+                  <children xmi:id="_Ddijx83kEdqpZJnRvOvbXg" type="ToQualifierLabel">
+                    <children xmi:id="_Ddijyc3kEdqpZJnRvOvbXg" type="QualifierCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Ddijys3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietks3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietks3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DdijyM3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_Ddijy83kEdqpZJnRvOvbXg" type="FromQualifierLabel">
+                    <children xmi:id="_Ddijzc3kEdqpZJnRvOvbXg" type="QualifierCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Ddijzs3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietkc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedBy"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietkc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedBy"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DdijzM3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_Ddijz83kEdqpZJnRvOvbXg" type="ToRoleLabel">
+                    <eAnnotations xmi:id="_Ddij0c3kEdqpZJnRvOvbXg" source="ToConstraintLabel"/>
+                    <children xmi:id="_Ddij0s3kEdqpZJnRvOvbXg" visible="false" type="ToConstraintCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Ddij083kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietks3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietks3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Ddij0M3kEdqpZJnRvOvbXg" y="1058"/>
+                  </children>
+                  <children xmi:id="_Ddij1M3kEdqpZJnRvOvbXg" type="FromRoleLabel">
+                    <eAnnotations xmi:id="_Ddij1s3kEdqpZJnRvOvbXg" source="FromConstraintLabel"/>
+                    <children xmi:id="_Ddij183kEdqpZJnRvOvbXg" visible="false" type="FromConstraintCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Ddij2M3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietkc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedBy"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietkc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedBy"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Ddij1c3kEdqpZJnRvOvbXg" y="1058"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_Ddijtc3kEdqpZJnRvOvbXg" routing="Rectilinear" showStereotype="Text"/>
+                  <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_yietkM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Ddijts3kEdqpZJnRvOvbXg" points="[1429, 820, 1429, 820]$[1429, 2434, 1429, 2434]$[291, 2434, 291, 2434]$[291, 820, 291, 820]"/>
+                </edges>
+                <edges xmi:id="_DdoqUM3kEdqpZJnRvOvbXg" source="_DdcdEM3kEdqpZJnRvOvbXg" target="_DdcdEM3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_DdoqU83kEdqpZJnRvOvbXg" type="NameLabel">
+                    <children xmi:id="_DdoqVc3kEdqpZJnRvOvbXg" type="Stereotype">
+                      <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pwM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    </children>
+                    <children xmi:id="_DdoqVs3kEdqpZJnRvOvbXg" type="Name">
+                      <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pwM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    </children>
+                    <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pwM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DdoqVM3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_DdoqV83kEdqpZJnRvOvbXg" visible="false" type="ToMultiplicityLabel">
+                    <children xmi:id="_DdoqWc3kEdqpZJnRvOvbXg" type="ToMultiplicity">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pws3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pws3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DdoqWM3kEdqpZJnRvOvbXg" y="397"/>
+                  </children>
+                  <children xmi:id="_DdoqWs3kEdqpZJnRvOvbXg" type="ToRoleLabel">
+                    <children xmi:id="_DdoqXM3kEdqpZJnRvOvbXg" type="ToRole">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pws3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pws3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DdoqW83kEdqpZJnRvOvbXg" y="-397"/>
+                  </children>
+                  <children xmi:id="_DdoqXc3kEdqpZJnRvOvbXg" type="FromMultiplicityLabel">
+                    <children xmi:id="_DdoqX83kEdqpZJnRvOvbXg" type="FromMultiplicity">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pwc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/subClasses"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pwc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/subClasses"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DdoqXs3kEdqpZJnRvOvbXg" x="-500" y="252"/>
+                  </children>
+                  <children xmi:id="_DdoqYM3kEdqpZJnRvOvbXg" type="FromRoleLabel">
+                    <children xmi:id="_DdoqYs3kEdqpZJnRvOvbXg" type="FromRole">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pwc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/subClasses"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pwc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/subClasses"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DdoqYc3kEdqpZJnRvOvbXg" x="-105" y="367"/>
+                  </children>
+                  <children xmi:id="_DdoqY83kEdqpZJnRvOvbXg" type="ToQualifierLabel">
+                    <children xmi:id="_DdoqZc3kEdqpZJnRvOvbXg" type="QualifierCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_DdoqZs3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pws3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pws3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DdoqZM3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_DdoqZ83kEdqpZJnRvOvbXg" type="FromQualifierLabel">
+                    <children xmi:id="_Ddoqac3kEdqpZJnRvOvbXg" type="QualifierCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Ddoqas3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pwc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/subClasses"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pwc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/subClasses"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DdoqaM3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_Ddoqa83kEdqpZJnRvOvbXg" type="ToRoleLabel">
+                    <eAnnotations xmi:id="_Ddoqbc3kEdqpZJnRvOvbXg" source="ToConstraintLabel"/>
+                    <children xmi:id="_Ddoqbs3kEdqpZJnRvOvbXg" visible="false" type="ToConstraintCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Ddoqb83kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pws3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pws3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DdoqbM3kEdqpZJnRvOvbXg" y="1058"/>
+                  </children>
+                  <children xmi:id="_DdoqcM3kEdqpZJnRvOvbXg" type="FromRoleLabel">
+                    <eAnnotations xmi:id="_Ddoqcs3kEdqpZJnRvOvbXg" source="FromConstraintLabel"/>
+                    <children xmi:id="_Ddoqc83kEdqpZJnRvOvbXg" visible="false" type="FromConstraintCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_DdoqdM3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pwc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/subClasses"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pwc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/subClasses"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Ddoqcc3kEdqpZJnRvOvbXg" y="1058"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_DdoqUc3kEdqpZJnRvOvbXg" routing="Rectilinear" showStereotype="Text"/>
+                  <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_QL3pwM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_DdoqUs3kEdqpZJnRvOvbXg" points="[-1270, 820, -1270, 820]$[-1270, 2436, -1270, 2436]$[-53, 2436, -53, 2436]$[-53, 820, -53, 820]"/>
+                </edges>
+                <edges xmi:id="_Ddoqdc3kEdqpZJnRvOvbXg" source="_DdcdEM3kEdqpZJnRvOvbXg" target="_Cr-j4M3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_DdoqeM3kEdqpZJnRvOvbXg" type="NameLabel">
+                    <children xmi:id="_Ddoqes3kEdqpZJnRvOvbXg" type="Stereotype">
+                      <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXoM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    </children>
+                    <children xmi:id="_Ddoqe83kEdqpZJnRvOvbXg" type="Name">
+                      <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXoM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    </children>
+                    <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXoM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ddoqec3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_DdoqfM3kEdqpZJnRvOvbXg" visible="false" type="ToMultiplicityLabel">
+                    <children xmi:id="_Ddoqfs3kEdqpZJnRvOvbXg" type="ToMultiplicity">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXos3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXos3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Ddoqfc3kEdqpZJnRvOvbXg" y="397"/>
+                  </children>
+                  <children xmi:id="_Ddoqf83kEdqpZJnRvOvbXg" type="ToRoleLabel">
+                    <children xmi:id="_Ddoqgc3kEdqpZJnRvOvbXg" type="ToRole">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXos3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXos3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DdoqgM3kEdqpZJnRvOvbXg" y="-397"/>
+                  </children>
+                  <children xmi:id="_Ddoqgs3kEdqpZJnRvOvbXg" type="FromMultiplicityLabel">
+                    <children xmi:id="_DdoqhM3kEdqpZJnRvOvbXg" type="FromMultiplicity">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXoc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/modelClass"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXoc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/modelClass"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Ddoqg83kEdqpZJnRvOvbXg" x="185" y="204"/>
+                  </children>
+                  <children xmi:id="_Ddoqhc3kEdqpZJnRvOvbXg" type="FromRoleLabel">
+                    <children xmi:id="_Ddoqh83kEdqpZJnRvOvbXg" type="FromRole">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXoc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/modelClass"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXoc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/modelClass"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Ddoqhs3kEdqpZJnRvOvbXg" x="-334" y="-191"/>
+                  </children>
+                  <children xmi:id="_DdoqiM3kEdqpZJnRvOvbXg" type="ToQualifierLabel">
+                    <children xmi:id="_Dduw8c3kEdqpZJnRvOvbXg" type="QualifierCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Dduw8s3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXos3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXos3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Dduw8M3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_Dduw883kEdqpZJnRvOvbXg" type="FromQualifierLabel">
+                    <children xmi:id="_Dduw9c3kEdqpZJnRvOvbXg" type="QualifierCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Dduw9s3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXoc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/modelClass"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXoc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/modelClass"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Dduw9M3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_Dduw983kEdqpZJnRvOvbXg" type="ToRoleLabel">
+                    <eAnnotations xmi:id="_Dduw-c3kEdqpZJnRvOvbXg" source="ToConstraintLabel"/>
+                    <children xmi:id="_Dduw-s3kEdqpZJnRvOvbXg" visible="false" type="ToConstraintCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Dduw-83kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXos3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXos3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Dduw-M3kEdqpZJnRvOvbXg" y="1058"/>
+                  </children>
+                  <children xmi:id="_Dduw_M3kEdqpZJnRvOvbXg" type="FromRoleLabel">
+                    <eAnnotations xmi:id="_Dduw_s3kEdqpZJnRvOvbXg" source="FromConstraintLabel"/>
+                    <children xmi:id="_Dduw_83kEdqpZJnRvOvbXg" visible="false" type="FromConstraintCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_DduxAM3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXoc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/modelClass"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXoc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/modelClass"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_Dduw_c3kEdqpZJnRvOvbXg" y="1058"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_Ddoqds3kEdqpZJnRvOvbXg" routing="Rectilinear" showStereotype="Text"/>
+                  <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_G3iXoM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Ddoqd83kEdqpZJnRvOvbXg" points="[-1587, 503, 6985, 529]$[-6747, 503, 1825, 529]"/>
+                </edges>
+                <edges xmi:id="_DduxAc3kEdqpZJnRvOvbXg" source="_DdcdEM3kEdqpZJnRvOvbXg" target="_CBFz0M3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_DduxBM3kEdqpZJnRvOvbXg" type="NameLabel">
+                    <children xmi:id="_DduxBs3kEdqpZJnRvOvbXg" type="Stereotype">
+                      <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    </children>
+                    <children xmi:id="_DduxB83kEdqpZJnRvOvbXg" type="Name">
+                      <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    </children>
+                    <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DduxBc3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_DduxCM3kEdqpZJnRvOvbXg" type="ToMultiplicityLabel">
+                    <children xmi:id="_DduxCs3kEdqpZJnRvOvbXg" type="ToMultiplicity">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIs3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIs3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DduxCc3kEdqpZJnRvOvbXg" y="397"/>
+                  </children>
+                  <children xmi:id="_DduxC83kEdqpZJnRvOvbXg" type="ToRoleLabel">
+                    <children xmi:id="_DduxDc3kEdqpZJnRvOvbXg" type="ToRole">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIs3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIs3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DduxDM3kEdqpZJnRvOvbXg" y="-397"/>
+                  </children>
+                  <children xmi:id="_DduxDs3kEdqpZJnRvOvbXg" type="FromMultiplicityLabel">
+                    <children xmi:id="_DduxEM3kEdqpZJnRvOvbXg" type="FromMultiplicity">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedTypes"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedTypes"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DduxD83kEdqpZJnRvOvbXg" x="191" y="216"/>
+                  </children>
+                  <children xmi:id="_DduxEc3kEdqpZJnRvOvbXg" type="FromRoleLabel">
+                    <children xmi:id="_DduxE83kEdqpZJnRvOvbXg" type="FromRole">
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedTypes"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedTypes"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DduxEs3kEdqpZJnRvOvbXg" x="-204" y="-357"/>
+                  </children>
+                  <children xmi:id="_DduxFM3kEdqpZJnRvOvbXg" type="ToQualifierLabel">
+                    <children xmi:id="_DduxFs3kEdqpZJnRvOvbXg" type="QualifierCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_DduxF83kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIs3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIs3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DduxFc3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_DduxGM3kEdqpZJnRvOvbXg" type="FromQualifierLabel">
+                    <children xmi:id="_DduxGs3kEdqpZJnRvOvbXg" type="QualifierCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_DduxG83kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedTypes"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedTypes"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DduxGc3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <children xmi:id="_DduxHM3kEdqpZJnRvOvbXg" type="ToRoleLabel">
+                    <eAnnotations xmi:id="_DduxHs3kEdqpZJnRvOvbXg" source="ToConstraintLabel"/>
+                    <children xmi:id="_DduxH83kEdqpZJnRvOvbXg" visible="false" type="ToConstraintCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_DduxIM3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIs3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIs3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E/%3CProperty%3E"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DduxHc3kEdqpZJnRvOvbXg" y="1058"/>
+                  </children>
+                  <children xmi:id="_DduxIc3kEdqpZJnRvOvbXg" type="FromRoleLabel">
+                    <eAnnotations xmi:id="_DduxI83kEdqpZJnRvOvbXg" source="FromConstraintLabel"/>
+                    <children xmi:id="_DduxJM3kEdqpZJnRvOvbXg" visible="false" type="FromConstraintCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_DduxJc3kEdqpZJnRvOvbXg"/>
+                      <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedTypes"/>
+                    </children>
+                    <element xmi:type="uml:Property" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIc3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/referencedTypes"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_DduxIs3kEdqpZJnRvOvbXg" y="1058"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_DduxAs3kEdqpZJnRvOvbXg" routing="Rectilinear" showStereotype="Text"/>
+                  <element xmi:type="uml:Association" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_qg9HIM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/%3CAssociation%3E"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_DduxA83kEdqpZJnRvOvbXg" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+                </edges>
+                <edges xmi:id="_DduxJs3kEdqpZJnRvOvbXg" source="_DdcdEM3kEdqpZJnRvOvbXg" target="_Cr-j4M3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_DduxKc3kEdqpZJnRvOvbXg" type="NameLabel">
+                    <children xmi:id="_DduxK83kEdqpZJnRvOvbXg" type="Stereotype">
+                      <element xmi:type="uml:Generalization" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_6s_GUM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/%3CGeneralization%3E"/>
+                    </children>
+                    <children xmi:id="_DduxLM3kEdqpZJnRvOvbXg" type="Name">
+                      <element xmi:type="uml:Generalization" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_6s_GUM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/%3CGeneralization%3E"/>
+                    </children>
+                    <element xmi:type="uml:Generalization" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_6s_GUM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/%3CGeneralization%3E"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DduxKs3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_DduxJ83kEdqpZJnRvOvbXg" routing="Rectilinear" showStereotype="Text"/>
+                  <element xmi:type="uml:Generalization" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_6s_GUM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass/%3CGeneralization%3E"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_DduxKM3kEdqpZJnRvOvbXg" points="[-1587, -503, 6985, -477]$[-6747, -503, 1825, -477]"/>
+                </edges>
+                <edges xmi:id="_Kr-gUM3kEdqpZJnRvOvbXg" element="_Kr4ZsM3kEdqpZJnRvOvbXg" source="_I-zz4M3kEdqpZJnRvOvbXg" target="_HOlzcs3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_Kr-gU83kEdqpZJnRvOvbXg" type="NameLabel" element="_Kr4ZsM3kEdqpZJnRvOvbXg">
+                    <children xmi:id="_Kr-gVc3kEdqpZJnRvOvbXg" type="Stereotype" element="_Kr4ZsM3kEdqpZJnRvOvbXg"/>
+                    <children xmi:id="_Kr-gVs3kEdqpZJnRvOvbXg" type="Name" element="_Kr4ZsM3kEdqpZJnRvOvbXg"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Kr-gVM3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_Kr-gUc3kEdqpZJnRvOvbXg" routing="Rectilinear" showStereotype="Text"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Kr-gUs3kEdqpZJnRvOvbXg" points="[-9, -31, -10, 132]$[-50, -140, -51, 23]"/>
+                </edges>
+                <edges xmi:id="_LjFHcc3kEdqpZJnRvOvbXg" element="_LjFHcM3kEdqpZJnRvOvbXg" source="_I-zz4M3kEdqpZJnRvOvbXg" target="_DdcdEM3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_LjFHdM3kEdqpZJnRvOvbXg" type="NameLabel" element="_LjFHcM3kEdqpZJnRvOvbXg">
+                    <children xmi:id="_LjFHds3kEdqpZJnRvOvbXg" type="Stereotype" element="_LjFHcM3kEdqpZJnRvOvbXg"/>
+                    <children xmi:id="_LjFHd83kEdqpZJnRvOvbXg" type="Name" element="_LjFHcM3kEdqpZJnRvOvbXg"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_LjFHdc3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_LjFHcs3kEdqpZJnRvOvbXg" routing="Rectilinear" showStereotype="Text"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_LjFHc83kEdqpZJnRvOvbXg" points="[-1800, 53, 5900, 53]$[-6112, 53, 1588, 53]"/>
+                </edges>
+                <edges xmi:id="_MLADEM3kEdqpZJnRvOvbXg" element="_MK58cM3kEdqpZJnRvOvbXg" source="_HOlzcs3kEdqpZJnRvOvbXg" target="_CBFz0M3kEdqpZJnRvOvbXg">
+                  <children xmi:id="_MLADE83kEdqpZJnRvOvbXg" type="NameLabel" element="_MK58cM3kEdqpZJnRvOvbXg">
+                    <children xmi:id="_MLADFc3kEdqpZJnRvOvbXg" type="Stereotype" element="_MK58cM3kEdqpZJnRvOvbXg"/>
+                    <children xmi:id="_MLADFs3kEdqpZJnRvOvbXg" type="Name" element="_MK58cM3kEdqpZJnRvOvbXg"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_MLADFM3kEdqpZJnRvOvbXg" y="-185"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_MLADEc3kEdqpZJnRvOvbXg" routing="Rectilinear" showStereotype="Text"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_MLADEs3kEdqpZJnRvOvbXg" points="[-80, -6, 239, -10]$[-253, -6, 66, -10]"/>
+                </edges>
+              </contents>
+            </eAnnotations>
+            <ownedMember xmi:type="uml:Class" xmi:id="_Gw_RcM3kEdqpZJnRvOvbXg" name="JavaModelClassifier">
+              <eAnnotations xmi:id="_HOlzcM3kEdqpZJnRvOvbXg" source="appliedStereotypes">
+                <contents xmi:type="UMLMDAProfile_16:UMLMDAProfile__NativeInterface" xmi:id="_HOlzcc3kEdqpZJnRvOvbXg"/>
+              </eAnnotations>
+              <generalization xmi:id="_MK58cM3kEdqpZJnRvOvbXg">
+                <general xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_cLonYM3fEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClassifier"/>
+              </generalization>
+              <ownedOperation xmi:id="_5TEeUM3kEdqpZJnRvOvbXg" name="getType">
+                <returnResult xmi:id="_8FXm0M3kEdqpZJnRvOvbXg" name="ReturnResult" direction="return">
+                  <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string"/>
+                </returnResult>
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string"/>
+                <ownedParameter xmi:id="_8FRgMM3kEdqpZJnRvOvbXg" name="artefact">
+                  <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string"/>
+                </ownedParameter>
+              </ownedOperation>
+            </ownedMember>
+            <ownedMember xmi:type="uml:Class" xmi:id="_IsxBoM3kEdqpZJnRvOvbXg" name="JavaModelClass">
+              <eAnnotations xmi:id="_I-ttQM3kEdqpZJnRvOvbXg" source="appliedStereotypes">
+                <contents xmi:type="UMLMDAProfile_16:UMLMDAProfile__NativeInterface" xmi:id="_I-ttQc3kEdqpZJnRvOvbXg"/>
+              </eAnnotations>
+              <generalization xmi:id="_Kr4ZsM3kEdqpZJnRvOvbXg" general="_Gw_RcM3kEdqpZJnRvOvbXg"/>
+              <generalization xmi:id="_LjFHcM3kEdqpZJnRvOvbXg">
+                <general xmi:type="uml:Class" href="platform:/resource/org.umlmda.umlmodel/model/rsm/UMLModel.emx#_4WLnAM3eEdqpZJnRvOvbXg?UMLMDA%20Model/org/umlmda/model/uml/ModelClass"/>
+              </generalization>
+              <ownedOperation xmi:id="_Dd7v0M3lEdqpZJnRvOvbXg" name="registerImport">
+                <ownedParameter xmi:id="_KCb-oM3lEdqpZJnRvOvbXg" name="reference" type="_IsxBoM3kEdqpZJnRvOvbXg"/>
+                <ownedParameter xmi:id="_KCb-oc3lEdqpZJnRvOvbXg" name="artefact">
+                  <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string"/>
+                </ownedParameter>
+              </ownedOperation>
+              <ownedOperation xmi:id="_OQPb0M3lEdqpZJnRvOvbXg" name="registerImport">
+                <ownedParameter xmi:id="_OQPb0c3lEdqpZJnRvOvbXg" name="reference" type="_TjqdQM3lEdqpZJnRvOvbXg"/>
+                <ownedParameter xmi:id="_OQPb0s3lEdqpZJnRvOvbXg" name="artefact">
+                  <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string"/>
+                </ownedParameter>
+              </ownedOperation>
+              <ownedOperation xmi:id="_nlnvsM3lEdqpZJnRvOvbXg" name="getRegisteredImport">
+                <returnResult xmi:id="_qVpAQM3lEdqpZJnRvOvbXg" name="ReturnResult" direction="return">
+                  <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string"/>
+                </returnResult>
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string"/>
+              </ownedOperation>
+            </ownedMember>
+            <ownedMember xmi:type="uml:Class" xmi:id="_TjqdQM3lEdqpZJnRvOvbXg" name="JavaModelPackage">
+              <eAnnotations xmi:id="_VpXlgM3lEdqpZJnRvOvbXg" source="appliedStereotypes">
+                <contents xmi:type="UMLMDAProfile_16:UMLMDAProfile__NativeInterface" xmi:id="_VpXlgc3lEdqpZJnRvOvbXg"/>
+              </eAnnotations>
+            </ownedMember>
+          </ownedMember>
+          <ownedMember xmi:type="uml:Package" xmi:id="_yS44wM3nEdqpZJnRvOvbXg" name="pattern"/>
+        </ownedMember>
+      </ownedMember>
+    </ownedMember>
+  </ownedMember>
+</uml:Model>
