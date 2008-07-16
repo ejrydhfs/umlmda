@@ -1,0 +1,134 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = ClassWriter
+main.CodeWriterFormat	     = format\\EmbeddedJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.docbook.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.docbook.AbstractClassWriter
+%><% import!
+import java.util.Iterator;
+import java.util.Collection;
+import org.umlmda.model.uml.*;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %>
+<section id="<%=getModelClass().getQualifiedName()%>" xreflabel="<%=getModelClass().getQualifiedName()%>">
+  <title>Klasse <%=getModelClass().getName()%></title>
+
+  <%=getDocumentation(getModelClass())%>
+<% if ( getModelClass().getSuperClasses().size() > 0 ) {
+%>  <section id="<%=getModelClass().getQualifiedName()%>.SuperClasses">
+    <title>Basis-Klassen</title>
+<%    for ( Iterator is = getModelClass().getSuperClasses().iterator(); is.hasNext(); ) {
+         ModelClass superClass = (ModelClass)is.next();
+%>      <para id="<%=getModelClass().getQualifiedName()%>.<%=superClass.getQualifiedName()%>">
+        <%=getType(superClass)%>
+      </para>
+<%    }
+%>  </section>
+<% }
+%>
+<% if ( getModelClass().getAttributes().size() > 0 ) {
+%>  <section id="<%=getModelClass().getQualifiedName()%>.Attributes">
+    <title>Attribute</title>
+    <informaltable role="attributes">
+      <tgroup cols="3">
+        <tbody>
+
+<% // Attributes
+   for ( Iterator ia = getModelClass().getAttributes().iterator(); ia.hasNext(); ) {
+	   ModelAttribute attribute = (ModelAttribute)ia.next();
+%>          <row id="<%=attribute.getQualifiedName()%>">
+            <entry><%=attribute.getName()%></entry>
+            <entry><% if ( attribute.getModelClassifier() != null ) {%><%=getType(attribute)%><%}%></entry>
+            <entry><%=getDocumentation(attribute)%></entry>
+          </row>
+<%}%>      </tbody>
+      </tgroup>
+    </informaltable>    
+  </section>
+<% }
+   if ( getModelClass().getMethods().size() > 0 ) {
+%>  <section id="<%=getModelClass().getQualifiedName()%>.Methods">
+    <title>Methoden</title>
+
+<% // Methods
+   for ( Iterator ia = getModelClass().getMethods().iterator(); ia.hasNext(); ) {
+     ModelMethod method = (ModelMethod)ia.next();
+%>    <simplesect>
+      <title><%=method.getName()%>(<%
+      for ( Iterator ip = method.getParameters().iterator(); ip.hasNext(); ) {
+        ModelParameter parameter = (ModelParameter)ip.next();
+%><%=parameter.getName()%> : <%=getType(parameter.getType())%><%
+        if ( ip.hasNext() ) {%>, <%
+        }
+      }%>)<%  
+      // Return type
+      if ( method.getReturnType() != null ) {
+%> : <%=getType(method.getReturnType())%><%
+      }
+%></title>
+      <%=getDocumentation(method)%>
+
+    </simplesect>
+<% }
+%>
+  </section>
+
+<% }
+   if ( getModelClass().getAssociations().size() > 0 ) {
+%>  <section id="<%=getModelClass().getQualifiedName()%>.Relations">
+    <title>Beziehungen</title>
+    <informaltable role="associations">
+      <tgroup cols="3">
+        <tbody>
+
+<%   // Associations-Accessors
+   for ( Iterator ia = getModelClass().getAssociations().iterator(); ia.hasNext(); ) {
+      ModelAssociation association = (ModelAssociation)ia.next();
+%>          <row id="<%=getModelClass().getQualifiedName()%>.<%=association.getName()%>">
+            <entry><%=association.getName()%></entry>
+		      <entry><%=getType(association.getTarget())%></entry>
+            <entry><%=getDocumentation(association)%></entry>
+          </row>
+<%}%>      </tbody>
+      </tgroup>
+    </informaltable>    
+  </section>
+<% }
+   if ( getModelClass().getReferencedBy().size() > 0 ) {
+%>  <section id="<%=getModelClass().getQualifiedName()%>.References">
+    <title>Referenzen</title>
+
+<%   // SubClasses
+     Collection subClasses = getModelClass().getReferencedBy(ModelClass.class);
+     if ( subClasses.size() > 0 ) {
+%>    <simplesect id="<%=getModelClass().getQualifiedName()%>.DerivedClasses">
+      <title>Ableitungen</title>
+<%      
+       for ( Iterator ia = subClasses.iterator(); ia.hasNext(); ) {
+         ModelClass modelClass = (ModelClass)ia.next();
+%>        <para id="<%=getModelClass().getQualifiedName()%>.<%=modelClass.getQualifiedName()%>">
+          <%=getType(modelClass)%>
+        </para>
+<%     }
+%>     </simplesect>
+<%   } 
+%>
+<%   // Associations-Accessors
+     Collection associations = getModelClass().getReferencedBy(ModelAssociation.class);
+     if ( associations.size() > 0 ) {
+%>    <simplesect id="<%=getModelClass().getQualifiedName()%>.Associations">
+      <title>Assocationen zu der Klasse</title>
+<%      
+       for ( Iterator ia = associations.iterator(); ia.hasNext(); ) {
+         ModelAssociation association = (ModelAssociation)ia.next();
+%>        <para id="<%=getModelClass().getQualifiedName()%>.<%=association.getSource().getQualifiedName()%>.<%=association.getName()%>">
+          Beziehung <%=association.getName()%> in <%=getType(association.getSource())%>
+        </para>
+<%     }
+%>     </simplesect>
+<%   } 
+%>
+  </section>
+<% }  
+%></section>

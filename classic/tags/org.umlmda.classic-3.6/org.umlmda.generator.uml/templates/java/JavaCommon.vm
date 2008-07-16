@@ -1,0 +1,12 @@
+## Standard java attribute declaration
+## ===================================
+#macro( javaAttrDecl $attribute )
+#if ( ${attribute.derived} == false )
+   private ${attribute.javaType} ${attribute.name}##
+#if ( ${attribute.initializer})   
+= ${attribute.initializer}##
+#end##if
+;
+#end
+#end##macro
+	

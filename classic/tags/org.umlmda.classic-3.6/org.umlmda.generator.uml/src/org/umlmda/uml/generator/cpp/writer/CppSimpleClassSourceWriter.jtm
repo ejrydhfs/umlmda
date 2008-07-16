@@ -1,0 +1,29 @@
+//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = CppSimpleClassSourceWriter
+main.CodeWriterFormat	   = format\\ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.cpp.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.cpp.AbstractCppClassWriter
+%><% import!
+import java.util.Iterator;
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.generator.model.util.StringUtil;
+import org.umlmda.model.uml.*;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+   /* (non-Javadoc)
+    * @see net.sourceforge.umlmda.generator.AbstractWriter#getFileExt()
+    */
+   public String getFileExt() {
+      return ".cpp";
+   }
+
+   public boolean hasBusinessInterface() {
+      return false;
+   }
+%><% @section %>
+<% @include CppClassBodySource.jtm template-relative %>

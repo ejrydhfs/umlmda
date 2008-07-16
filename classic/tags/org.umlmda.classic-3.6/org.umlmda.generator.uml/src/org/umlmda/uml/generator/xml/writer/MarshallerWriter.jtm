@@ -1,0 +1,175 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = MarshallerWriter
+main.CodeWriterFormat	   = format\\ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.xml.writer
+java.CodeWriter.extends    = AbstractXMLWriter
+%><%  import!
+import java.util.Iterator;
+import java.util.ListIterator;
+import org.umlmda.model.uml.*;
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.uml.generator.xml.*;
+import org.umlmda.uml.generator.java.*;
+
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %><%
+//
+// Writer is called once per business component a.k.a model package
+//
+JavaModelPackage genPackage = (JavaModelPackage)getGenPackage();
+
+for ( Iterator iter = getComplexTypes().iterator(); iter.hasNext(); ) {
+   JavaModelClass modelClass = (JavaModelClass)iter.next();
+      
+   genPackage.registerImport(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, modelClass);
+   genPackage.registerImport(XMLArtefacts.JAXB_TYPE, modelClass);
+   if (isPolymorph(modelClass, NM_BASE)) {
+      genPackage.registerImport(XMLArtefacts.JAXB_HIERARCHIE_TYPE, modelClass);
+   }
+}
+
+%>//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+
+package <%=getPackageName()%>;
+
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+
+import net.sourceforge.umlmda.xml.XMLUtils;
+<%=genPackage.registeredImports()%>
+
+import <%=genPackage.getQualifiedPackageName(XMLArtefacts.JAXB_TYPE)%>.ObjectFactory;
+import <%=genPackage.getQualifiedPackageName(XMLArtefacts.JAXB_TYPE)%>.RootType;
+
+public class <%=getBaseName()%> {
+
+   private ObjectFactory objectFactory = null;
+   private Map objectMap = null;
+   private RootType rootType = null;
+
+   private <%=getBaseName()%>() throws JAXBException {
+         ObjectFactory objectFactory = new ObjectFactory();
+         Map objectMap = new HashMap();
+
+         // create root element
+         RootType rootType = objectFactory.createRootType();
+
+         // create list elements
+<%    for (Iterator iter = getRootTypes().iterator(); iter.hasNext(); ) {
+         ModelClass cls = (ModelClass)iter.next();
+%>       rootType.set<%=getName(cls, NM_PLAIN)%>Items( objectFactory.create<%=getName(cls, NM_PLAIN)%>ItemsType());
+<%    } // for%>
+   }
+
+<% // generate the type converter functions
+	for ( Iterator iter = getComplexTypes().iterator(); iter.hasNext(); ) {
+	   JavaModelClass cls = (JavaModelClass)iter.next();
+      String businessInterface = genPackage.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, cls);
+      String jaxbType = genPackage.getScopedName(XMLArtefacts.JAXB_TYPE, cls);
+      
+%>   private void convert<%=cls.getName()%> (<%=jaxbType%> out, <%=businessInterface%> in) throws JAXBException {
+
+      // base classes<%
+      for (Iterator is = cls.getSuperClasses().iterator(); is.hasNext(); ) {
+         ModelClass superCls = (ModelClass)is.next();%>
+      convert<%=superCls.getName()%>(out, in);<%
+      }%>
+
+<%    for (Iterator ia = cls.getAttributes().iterator(); ia.hasNext(); ) {
+         ModelAttribute attr = (ModelAttribute)ia.next();
+         if (attr.isPrimitiveType()) {
+            // primitive attributes
+            if (attr.isOptional()) {
+%>      if( in.<%=getName(attr, NM_GETTER)%>() != null)
+	<%       }
+%>		out.<%=getName(attr, NM_SETTER)%>(XMLUtils.convertToXMLType(in.<%=getName(attr, NM_GETTER)%>()));
+<%       } else {
+            // complex type attributes
+%>		out.get<%=getName(attr, NM_SETTER)%>(convertObject(in.<%=getName(attr, NM_GETTER)%>());
+<%       }
+      } // for attributes
+
+		// associations
+      for (Iterator ia = cls.getAssociations().iterator(); ia.hasNext(); ) {
+         ModelAssociation assoc = (ModelAssociation)ia.next();
+         if (assoc.isMultiple()) {
+%>		for (Iterator iter = in.<%=getName(assoc, NM_GETTER)%>().iterator(); iter.hasNext(); ) {
+			ObjectType oref = convertObject( iter.next());
+			out.<%=getName(assoc, NM_GETTER)%>().add( oref);
+		}
+<%       } else {
+%>		out.<%=getName(assoc, NM_SETTER)%>( convertObject( in.<%=getName(assoc, NM_GETTER)%>()));
+<%       }
+      } // for associations%>
+   }
+<% } // for complex types %>
+
+	private ObjectType convertObject(Object in) throws JAXBException {
+
+		// check if object reference is contained in map
+		ObjectType oref = (ObjectType) objectMap.get(in);
+		if (oref == null) {
+
+			// create object reference 
+			oref = objectFactory.createObjectType();
+
+			// create referenced object
+			<%
+      for (ListIterator iter = getComplexTypes().listIterator(getComplexTypes().size()); iter.hasPrevious(); ) {
+	   ModelClass cls = (ModelClass)iter.previous();
+	   if (cls.isAbstract())
+	   	continue;
+	   ModelClass baseCls = getPolymorphBase(cls);
+	   if (!getRootTypes().contains(cls) && !getRootTypes().contains(baseCls))
+	      continue;
+%>if (in instanceof I<%=cls.getName()%>) {
+				<%=getName(cls, NM_BASE)%> item = objectFactory.create<%=getName(cls, NM_BASE)%>();
+				convert<%=cls.getName()%>( item, (I<%=cls.getName()%>)in);
+				item.setORef( oref);
+<%          if (baseCls != null) {
+%>				// handle choice
+				<%=getName(baseCls, NM_DERIVED)%> choice = objectFactory.create<%=getName(baseCls, NM_DERIVED)%>();
+				choice.set<%=getName(cls, NM_PLAIN)%>( item);
+				rootType.get<%=getName(baseCls, NM_PLAIN)%>Items().getItems().add(choice);
+<%				} else {
+%>				rootType.get<%=getName(cls, NM_PLAIN)%>Items().getItems().add(item);
+<%          }%>
+			} else <%
+      } // for
+%>{
+				throw new RuntimeException( "marshal request for unknown type: " + in.getClass().getName());
+			}
+			oref.setId("REF" + objectMap.size());
+			objectMap.put(in, oref);
+		}
+		return oref;
+	}
+
+	static public void marshal(List in, Writer writer) throws JAXBException {
+
+		JAXBContext context = JAXBContext.newInstance(getClass().getPackage().getName());
+      <%=getBaseName()%> self = new <%=getBaseName()%>();
+
+		// create XML types
+		for (Iterator iter = in.iterator(); iter.hasNext();) {
+			self.convertObject( iter.next(), objectMap, objectFactory);
+		}
+
+		// marshal root element
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE );
+		marshaller.marshal(self.rootType, writer);
+	}
+}

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- @@Generated file, please edit UserSections only -->
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = PackageWriter
+main.CodeWriterFormat	   = format\\ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.docbook.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.docbook.AbstractPackageWriter
+%><% import!
+import org.umlmda.model.uml.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import org.umlmda.generator.model.uml.GeneratorClass;
+
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %>
+<chapter id="<%=getModelPackage().getQualifiedName()%>" xreflabel="<%=getModelPackage().getQualifiedName()%>">
+  <title>Package <%=getModelPackage().getQualifiedName()%></title>
+
+<% if ( getModelPackage().getDocumentation().length() > 0 ) { 
+%>  <section>
+    <title>Beschreibung</title>
+		<%=getDocumentation(getModelPackage())%>
+  </section>		
+		
+<% } %>
+  <section>
+    <title>Klassendiagramme</title>
+
+<!-- @@UserSection-Begin Diagrams -->
+    <section>
+      <title>Diagramm Vertrag / Main</title>
+
+      <figure>
+        <title>Klassendiagramm: Vertrag / Main</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/XXX.png" format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <section>
+        <title>Beschreibung</title>
+
+        <para>DIAGRAMM-BESCHREIBUNG</para>
+      </section>
+    </section>
+
+<!-- @@UserSection-End Diagrams -->
+  </section>
+
+  <section>
+    <title>Klassen</title>
+
+<% 
+	 List classes = new ArrayList(getModelPackage().getClasses());
+	 Collections.sort(classes);
+	 
+   for ( Iterator ia = classes.iterator(); ia.hasNext(); ) {
+	   GeneratorClass modelClass = (GeneratorClass)ia.next();
+      runWriter(modelClass);
+   } 
+%>    
+  </section>
+</chapter>
