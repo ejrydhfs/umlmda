@@ -17,6 +17,7 @@
       <umlmda.generator.profile.version>3.2.0</umlmda.generator.profile.version>
       <umlmda.common.version>3.3</umlmda.common.version>
       <umlmda.oaw.version>3.7</umlmda.oaw.version>
+      <umlmda.jostraca.version>3.1</umlmda.jostraca.version>
       <oaw.version>4.2.0</oaw.version>
       <jostraca.version>0.3.3</jostraca.version>
       <uml2.version>2.1.0</uml2.version>
@@ -39,6 +40,11 @@
                <artifactId>maven-project-info-reports-plugin</artifactId>
                <version>2.0.1</version>
             </plugin>
+            <plugin>
+               <groupId>org.umlmda</groupId>
+               <artifactId>org.umlmda.jostraca.maven</artifactId>
+               <version>${umlmda.jostraca.version}</version>  
+            </plugin>
          </plugins>
       </pluginManagement>
 
@@ -46,7 +52,6 @@
    </build>
 
    <modules>
-      <module>org.umlmda.jostraca.maven</module>
       <module>org.umlmda.generator.core</module>
       <module>org.umlmda.generator.uml</module>
    </modules>
