@@ -1,0 +1,103 @@
+//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = AdapterWriter
+main.CodeWriterFormat	     = format\\ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.j2ee.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.j2ee.AbstractAdapterWriter
+%><% import!
+import java.util.Iterator;
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.generator.logging.LoggingWriter;
+import org.umlmda.model.uml.*;
+import org.umlmda.profile.ModelStereotype;
+import org.umlmda.uml.generator.java.*;
+import org.umlmda.uml.generator.j2ee.*;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %><%
+   JavaModelClass genClass = (JavaModelClass)getGenClass();
+   
+   JavaModelClass superClass = (JavaModelClass)genClass.getSuperClass();
+   JavaModel genModel = (JavaModel)genClass.getGeneratorModel();
+
+   ModelAdapterFactory delegateFactory = new J2EEModelAdapterFactory();
+   J2EEModel delegateModel = (J2EEModel)delegateFactory.createModel(genModel);
+
+   LoggingWriter logging = genModel.getLoggingWriter();
+   
+   genClass.resetImports();
+   genClass.registerImport(JavaArtefacts.BUSINESS_SERVICE_INTERFACE);
+   genClass.registerImport(J2EEArtefacts.REMOTE_INTERFACE);
+   genClass.registerImport(J2EEArtefacts.HOME_INTERFACE);
+   genClass.registerImport(J2EEArtefacts.BEAN_UTILS);
+   if ( superClass != null ) {
+      genClass.registerImport(J2EEArtefacts.ADAPTER, superClass);
+   }
+%>
+package <%=getPackageName()%>;
+
+import java.rmi.RemoteException;
+
+import javax.ejb.CreateException;
+import javax.ejb.EJBObject;
+import javax.naming.NamingException;
+<%=logging.importDeclaration()%>
+<%=genClass.registeredImports()%>
+
+/**
+ * implementation of a client adapter which delegates to J2EE remote interface
+ */
+public class <%=genClass.getGeneratedName()%> <%if ( superClass != null ) {%> extends <%=genClass.getScopedName(J2EEArtefacts.ADAPTER, superClass)%> <%}%> implements <%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE)%>
+{
+	private EJBObject delegate = null;
+	<%=logging.initDeclaration()%>
+
+	protected EJBObject getDelegate() {
+		if (delegate == null) {
+			try {
+				<%=genClass.getScopedName(J2EEArtefacts.HOME_INTERFACE)%> home = <%=genClass.getScopedName(J2EEArtefacts.BEAN_UTILS)%>.getHome();
+				delegate = home.create();
+			} catch (NamingException e) {
+	         throw new RuntimeException(e);
+	      } catch (RemoteException e) {
+	         throw new RuntimeException(e);
+	      } catch (CreateException e) {
+	         throw new RuntimeException(e);
+	      }
+		}
+		return delegate;
+	}
+<% // Modelled Methods
+  for ( Iterator ia = getModelClass().getMethods().iterator(); ia.hasNext(); ) {
+     JavaModelMethod method = (JavaModelMethod)ia.next();
+     J2EEModelMethod delegateMethod = (J2EEModelMethod)delegateFactory.createModelMethod((ModelMethodBase)method.getBase(), delegateModel);
+%>
+	/**
+	 * <%=method.getDocumentation()%>
+	 */
+   public <%=method.getSignature()%> {
+      <%=method.traceEntry(2)%>
+      try {
+<%    if ( method.hasStereotype(ModelStereotype.ASYNC_CALL) ) {
+%>         javax.jms.Queue queue = null;
+         
+         if ( listener instanceof org.umlmda.runtime.jms.J2EEListener ) {
+            queue = ((org.umlmda.runtime.jms.J2EEListener)listener).getQueue();
+         }
+
+<%    }
+%>         <%=getCallDelegateSignature("(("+genClass.getScopedName(J2EEArtefacts.REMOTE_INTERFACE)+")getDelegate())", delegateMethod)%>
+      } catch (RemoteException e) {
+         <%=logging.logException("e")%>
+         <%=method.logParameters(LoggingWriter.ERROR, 3)%>
+         throw new RuntimeException( e);
+      } finally {
+         <%=logging.traceMethodExit(method)%>
+      }
+   }
+<% } // for%>
+}

@@ -1,0 +1,89 @@
+ public:
+   // ctor / dtor / standard operations
+   <%=getClassName()%>();
+   <%=getClassName()%>(const <%=getClassName()%> &);
+   <%=getClassName()%> & operator =(const <%=getClassName()%> &);
+<% // Ctor with attributes as arguments
+   if ( generateAttributeCtor() && getModelClass().getAttributes(true).size() > 0 ) {
+%>   <%=getClassName()%>(<%
+      for ( Iterator ia = getModelClass().getAttributes(true).iterator(); ia.hasNext(); ) {
+         ModelAttribute attribute = (ModelAttribute)ia.next();
+%><%=getType(attribute)%> <%=attribute.getName()%><%
+         if ( ia.hasNext() ) {%>,<%}
+      }   
+%>);
+<% }
+   if ( hasBusinessInterface() ) {
+%>   <%=getClassName()%>(const I<%=getClassName()%> &);
+   <%=getClassName()%> & operator =(const I<%=getClassName()%> &);
+<% } %>
+   virtual ~<%=getClassName()%>();
+
+<% // Setter/Getter
+   for ( Iterator ia = getModelClass().getAttributes().iterator(); ia.hasNext(); ) {
+	   ModelAttribute attribute = (ModelAttribute)ia.next();
+%>   /**
+   * Get <%=attribute.getName()%>
+   */
+   virtual <%=getType(attribute)%> get<%=StringUtil.firstToUpperCase(attribute.getName())%>() const;
+
+   /**
+   * Set <%=attribute.getName()%>
+   */
+   virtual void set<%=StringUtil.firstToUpperCase(attribute.getName())%>(<%=getType(attribute)%> <%=attribute.getName()%>);
+
+<% }
+   // Associations-Accessors
+   for ( Iterator ia = getModelClass().getAssociations().iterator(); ia.hasNext(); ) {
+      ModelAssociation association = (ModelAssociation)ia.next();
+      ModelClassifier targetClass = association.getTarget();
+      if ( !association.isUnspecified() ) {
+         if ( association.isMultiple() ) {
+%>
+   virtual const std::list<<%=getType(targetClass)%> *> &get<%=StringUtil.firstToUpperCase(association.getName())%>List() const;
+   virtual       std::list<<%=getType(targetClass)%> *> &get<%=StringUtil.firstToUpperCase(association.getName())%>List();
+<%       } else {
+%>
+   virtual const <%=getType(targetClass)%> &get<%=StringUtil.firstToUpperCase(association.getName())%>() const;
+   virtual <%=getType(targetClass)%> *get<%=StringUtil.firstToUpperCase(association.getName())%>();
+   virtual void set<%=StringUtil.firstToUpperCase(association.getName())%>(<%=getType(targetClass)%> *);
+<%       }
+      }
+   } // for 
+   // Modelled Methods
+   for ( Iterator ia = getModelClass().getMethods().iterator(); ia.hasNext(); ) {
+	   ModelMethod method = (ModelMethod)ia.next();
+%>   /**
+   * <%=method.getDocumentation()%>
+   */
+   virtual <%=getMethodSignature(method)%>;
+
+<%  }%>
+ private:
+<% // Attributes
+   for ( Iterator ia = getModelClass().getAttributes().iterator(); ia.hasNext(); ) {
+	   ModelAttribute attribute = (ModelAttribute)ia.next();
+%>   /**
+   * <%=attribute.getName()%>
+   */
+   <%=getType(attribute)%> a_<%=attribute.getName()%>;
+
+<% }
+   // Associations-Accessors
+   for ( Iterator ia = getModelClass().getAssociations().iterator(); ia.hasNext(); ) {
+      ModelAssociation association = (ModelAssociation)ia.next();
+      ModelClassifier targetClass = association.getTarget();
+      if ( !association.isUnspecified() ) {
+         if ( association.isMultiple() ) {
+%>   std::list<<%=getType(targetClass)%> *> a_<%=StringUtil.firstToUpperCase(association.getName())%>List;
+<%       } else {
+%>   <%=getType(targetClass)%> *a_p<%=StringUtil.firstToUpperCase(association.getName())%>;
+<%       }
+     }
+   } // for 
+%>
+
+   void copyAssociations(const <%=getClassName()%> &);
+<% if ( hasBusinessInterface() ) {
+%>   void copyAssociations(const I<%=getClassName()%> &);
+<% } %>

@@ -1,0 +1,249 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = WSAdapterWriter
+main.CodeWriterFormat	   = format\\ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.webservices.writer
+java.CodeWriter.extends    = AbstractWSImplWriter
+%><% import!
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.generator.logging.LoggingWriter;
+import org.umlmda.model.uml.*;
+import org.umlmda.profile.ModelStereotype;
+import org.umlmda.uml.generator.webservices.*;
+import org.umlmda.uml.generator.java.*;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %><%
+   boolean wasSupport = Boolean.valueOf(getProperties().getProperty("wasSupport", "false")).booleanValue();
+   
+   WSModelClass genClass = (WSModelClass)getGenClass();
+   JavaModelClass genPIMClass = genClass.getPIMClass();
+   WSModelPackage genPackage = (WSModelPackage)genClass.getPackage();
+   WSModel genModel = (WSModel)genClass.getGeneratorModel();
+   LoggingWriter logging = genModel.getLoggingWriter();
+   final List classList = genClass.getSchemaTypes();
+   final List pimClassList = genClass.getReferencedPIMTypes();
+   final List packageList = UMLModelHelper.getPackagesFromClassList(classList);
+   final boolean isSoapWrapping = genModel.isSoapWrapping();
+
+   genClass.resetImports();
+   genClass.registerImport(WSArtefacts.WS_UTILS);
+   genClass.registerImport(WSArtefacts.WS_SERVICE_PORT);
+   genClass.registerImport(WSArtefacts.WS_SERVICE_LOCATOR);
+   genClass.registerImport(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, genPIMClass);
+   if ( wasSupport ) { 
+      genClass.registerImport(WSArtefacts.WS_SERVICE_SOAP_BINDING_STUB);
+   }
+   for ( Iterator iter = classList.iterator(); iter.hasNext(); ) {
+      WSModelClass modelClass = (WSModelClass)iter.next();
+       
+      if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_OBJECT) )
+         genClass.registerImport(WSArtefacts.WS_STUB, modelClass);
+      else if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_REQUEST) )
+         genClass.registerImport(WSArtefacts.WS_STUB, modelClass);
+      else if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE) )
+         genClass.registerImport(WSArtefacts.WS_STUB, modelClass);
+   } // for
+   for ( Iterator iter = pimClassList.iterator(); iter.hasNext(); ) {
+      JavaModelClass pimClass = (JavaModelClass)iter.next();
+        
+      if ( pimClass.hasStereotype(ModelStereotype.BUSINESS_OBJECT)  ) {
+         genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, pimClass);
+      }
+      else if ( pimClass.hasStereotype(ModelStereotype.BUSINESS_EXCEPTION)  ) {
+         genClass.registerImport(JavaArtefacts.BUSINESS_EXCEPTION, pimClass);
+      }
+   } // for   
+   for ( Iterator ip = packageList.iterator(); ip.hasNext(); ) {
+      WSModelPackage modelPackage = (WSModelPackage)ip.next();
+      JavaModelPackage modelPIMPackage = modelPackage.getPIMPackage();
+      
+      genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT_FACTORY_IMPL, modelPIMPackage);
+   }
+   
+%>//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+
+package <%=getPackageName()%>;
+
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.rmi.RemoteException;
+import java.util.Calendar;
+
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.naming.ConfigurationException;
+import javax.xml.rpc.ServiceException;
+
+<% if ( wasSupport ) {
+%>import com.ibm.ws.webservices.engine.WebServicesEngine;
+
+<% }
+%>import net.sourceforge.umlmda.webservice.WebserviceUtils;
+
+<%=logging.importDeclaration()%>
+<%=genClass.registeredImports()%>
+
+public class <%=getBaseName()%> implements <%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE)%> {
+   <%=logging.initDeclaration()%>
+   // Accessor Utilities
+   private final <%=genClass.getScopedName(WSArtefacts.WS_UTILS)%> utils = new <%=genClass.getScopedName(WSArtefacts.WS_UTILS)%>();
+   // Service port
+   private <%=genClass.getScopedName(WSArtefacts.WS_SERVICE_PORT)%> servicePort = null;
+   // Namespace entry containing the service URL
+   public final static String COMP_SERVICE_URL = "url/<%=genClass.getName()%>URL";
+   
+   /**
+    * Factory method invoked by factory
+    */
+   static <%=getBaseName()%> create<%=genClass.getName()%>(Context context) {
+      return new <%=getBaseName()%>(context);
+   }
+
+   /**
+    * Protect ctor, don't call directly use factory to create an instance
+    */
+   protected <%=getBaseName()%>(Context context) {
+      super();
+      
+      // Init accessor utilities
+<% for ( Iterator ip = packageList.iterator(); ip.hasNext(); ) {
+     WSModelPackage modelPackage = (WSModelPackage)ip.next();
+     JavaModelPackage modelPIMPackage = modelPackage.getPIMPackage();
+     String factoryName = StringUtils.capitalize(modelPIMPackage.getName());
+%>      utils.set<%=factoryName%>Factory(new <%=genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_FACTORY_IMPL, modelPIMPackage)%>());
+<% } // for
+%>      // Locate the service
+      String msg = "Trying to lookup "+COMP_SERVICE_URL+" with Context "+context;
+      <%=logging.debug("msg")%>
+      URL serviceURL = null;
+      try {
+         Object envEntry = context.lookup(COMP_SERVICE_URL);
+            
+         if ( envEntry instanceof URL ) {
+            serviceURL = (URL)envEntry;
+         }
+         else if ( envEntry instanceof String ) {
+            serviceURL = new URL((String)envEntry);
+         }
+         if ( serviceURL == null ) {
+            msg = "No entry in "+COMP_SERVICE_URL;
+            <%=logging.error("msg")%>
+            throw new RuntimeException(msg);
+         }
+
+         msg = "Using service at "+serviceURL.toExternalForm();
+         <%=logging.debug("msg")%>
+      } catch (ConfigurationException e) {
+         msg = "lookup failed "+COMP_SERVICE_URL+" with Context "+context;
+         <%=logging.error("msg")%>
+         throw new RuntimeException(msg, e);
+      } catch (NamingException e) {
+         msg = "lookup failed "+COMP_SERVICE_URL+" with Context "+context+" "+e.getMessage();
+         <%=logging.error("msg")%>
+         throw new RuntimeException(e);
+      } catch (MalformedURLException e) {
+         <%=logging.logException("e")%>
+         throw new RuntimeException(e);
+      }
+      
+      try {
+         <%=genClass.getScopedName(WSArtefacts.WS_SERVICE_LOCATOR)%> locator = new <%=genClass.getScopedName(WSArtefacts.WS_SERVICE_LOCATOR)%>();
+
+         servicePort = locator.get<%=genClass.getName()%>Port(serviceURL);
+<% if ( wasSupport ) { 
+%>         ((<%=genClass.getScopedName(WSArtefacts.WS_SERVICE_SOAP_BINDING_STUB)%>) servicePort)._setProperty(WebServicesEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+<% }         
+%>      } catch (ServiceException e) {
+         <%=logging.logException("e")%>
+         throw new RuntimeException(e);
+      }
+   }
+
+<% // Modelled Methods
+   for ( Iterator im = getModelClass().getMethods(true).iterator(); im.hasNext(); ) {
+     WSModelMethod method = (WSModelMethod)im.next();
+     JavaModelMethod pimMethod = method.getPIMMethod();
+%>   /**
+    * <%=pimMethod.getDocumentation()%>
+    */
+    public <%=pimMethod.getSignature()%> {
+       <%=pimMethod.traceEntry(2)%>
+       try {
+<% if ( genModel.isSoapWrapping() ) {
+      WSModelClass requestClass = (WSModelClass)((ModelParameter)method.getParameters().get(0)).getType();
+%>         <%=method.getRequestClass()%> request = new <%=method.getRequestClass()%>();
+         <%=method.getReponseClass()%> response;
+         
+<%    for ( Iterator ira = requestClass.getAttributes().iterator(); ira.hasNext(); ) {
+         WSModelAttribute attribute = (WSModelAttribute)ira.next();
+%>         request.<%=attribute.getSetter()%>(<%=attribute.getConvertParameterToWs()%>);
+<%    } //for         
+%>         utils.resolveReferences();
+         response = <%
+   }
+   else 
+     // Convert parameters
+     if ( method.getReturnType() != null ) {
+%>         <%=((WSModelClassifier)method.getReturnType()).getWSJavaType()%> response;
+         
+         utils.resolveReferences();
+         response = <% 
+     } else {
+%>
+         utils.resolveReferences();
+         <%
+     }
+%>servicePort.<%=method.getName()%>(request);
+         utils.resetReferences();
+<%   if ( genModel.isSoapWrapping() ) {
+        WSModelClass returnClass = (WSModelClass)method.getReturnType();
+
+        if ( pimMethod.getReturnType() instanceof ModelClass ) {
+           JavaModelClass returnPIMClass = (JavaModelClass)pimMethod.getReturnType();
+           String returnPIMClassName = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, returnPIMClass);
+%>         <%=returnPIMClassName%> convertedResult = utils.create<%=returnPIMClass.getName()%>(response.getReturnValue());
+         utils.resolveReferences();
+         return convertedResult;
+<%      }
+        else if ( pimMethod.getReturnType() instanceof ModelDataType ) {
+%>         return <%=method.getConvertFromWs()%>;
+<%      }
+     }
+     else if ( method.getReturnType() != null ) {
+        if ( method.getReturnType() instanceof ModelClass ) {
+           WSModelClass returnClass = (WSModelClass)method.getReturnType();
+           String returnClassName = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, returnClass);
+%>         <%=returnClassName%> convertedResult = utils.create<%=returnClass.getName()%>(response);
+         utils.resolveReferences();
+         return convertedResult;
+<%      } else {
+%>	     return <%=method.getConvertToWs()%>;
+<%      }
+     }
+     for ( Iterator ie = method.getExceptions().iterator(); ie.hasNext(); ) {
+       WSModelClass exception = (WSModelClass)ie.next();
+       JavaModelClass pimException = exception.getPIMClass();
+       String exceptionClass = genClass.getScopedName(WSArtefacts.WS_STUB, exception);
+%>      } catch (<%=exceptionClass%> e) {
+         throw utils.create<%=pimException.getName()%>(e);
+<%   }
+%>      } catch (RemoteException e) {
+         throw new RuntimeException(e);
+      } finally {
+         utils.resetReferences();
+         <%=logging.traceMethodExit(method)%>
+      }
+   }
+<%     
+   }%>    
+}
