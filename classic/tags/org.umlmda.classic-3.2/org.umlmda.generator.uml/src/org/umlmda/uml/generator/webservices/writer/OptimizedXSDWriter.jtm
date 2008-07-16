@@ -1,0 +1,69 @@
+<%// $Header: /cvsroot/umlmda/UMLGenerator/src/org/umlmda/uml/generator/webservices/writer/OptimizedWSDLWriter.jtm,v 1.4 2005/11/08 16:56:15 moroff Exp $
+//
+// Copyright (C) 2005 Dieter Moroff
+//
+// This file is part of UMLMDA (http://www.umlmda.org)
+// 
+// OptimizedWSDLWriter generates WSDL files from <<BusinessService>> model elements.
+//
+// optimization measures:
+// <<Out>> attributes are stripped from ingoing DTOs
+// <<In>> attributes are stripped from outgoing DTOs
+//
+%><% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = OptimizedXSDWriter
+main.CodeWriterFormat	   = format\\ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.webservices.writer
+java.CodeWriter.extends    = AbstractPackageWriter
+%><% import!
+import java.beans.Introspector;
+import java.util.*;
+
+import org.umlmda.model.uml.*;
+import org.umlmda.profile.ModelStereotype;
+import org.umlmda.uml.generator.webservices.*;
+
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+   /* (non-Javadoc)
+    * @see net.sourceforge.umlmda.generator.AbstractWriter#generateOutput()
+    */
+   public boolean generateOutput() {
+      return true;
+   }
+
+%><% @section %><%
+   WSModelPackage genPackage = (WSModelPackage)getGenPackage();
+   WSModel genModel = (WSModel)genPackage.getGeneratorModel();
+   WSModelClass genClass = null;
+   ModelPackage modelPackage = getModelPackage();
+   String xmlEncoding = getProperties().getProperty("xmlEncoding", "ISO-8859-1");
+//   String soapBindingTag = "";
+   String soapEncodingTag = "";
+//   String soapEncodingStyleTag = "";
+   String soapBinding = getProperties().getProperty("soapBinding", "rpc");
+//   String soapEncoding = "";
+   boolean soapWrapping = true;
+   boolean packageFilter = false;
+   Set classSet = new HashSet();
+   for ( Iterator ic = genPackage.getClasses().iterator(); ic.hasNext(); ) {
+      WSModelClass modelClass = (WSModelClass)ic.next();
+
+	  if ( modelClass.hasStereotype(ModelStereotype.BUSINESS_SERVICE) ) 
+	      classSet.addAll(modelClass.getSchemaTypes());
+   }
+   final List classList = new ArrayList(classSet);
+   Collections.sort(classList);
+   final List packageList = UMLModelHelper.getPackagesFromClassList( classList);
+%><?xml version="1.0" encoding="<%=xmlEncoding%>"?>
+<!-- @@Generated file, please edit UserSections only -->
+<xsd:schema targetNamespace="<%=genPackage.getNamespace()%>" 
+           elementFormDefault="qualified" 
+           attributeFormDefault="unqualified" 
+           version="1.1"
+           xmlns="http://www.w3.org/2001/XMLSchema" 
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns0="<%=genPackage.getNamespace()%>">
+<% @include OptimizedSchema.jti template-relative %>
+</xsd:schema>

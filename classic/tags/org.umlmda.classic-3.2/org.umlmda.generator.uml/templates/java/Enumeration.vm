@@ -1,0 +1,169 @@
+//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//   $Header: /cvsroot/umlmda/UMLGenerator/templates/java/Attic/Enumeration.vm,v 1.1.2.1 2008/01/21 14:57:14 moroff Exp $
+//   $Source: /cvsroot/umlmda/UMLGenerator/templates/java/Attic/Enumeration.vm,v $
+// $Revision: 1.1.2.1 $
+//     $Name:  $
+//     $Date: 2008/01/21 14:57:14 $
+//@@UserSection-End RCSHeader
+package ${genPackage.getQualifiedPackageName("java.Enumeration")};
+
+import java.io.ObjectStreamException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+#set( $type = ${genClass.attributes.iterator().next().modelClassifier.generatedName})
+#if( $type == "String" ) 
+#set( $interface = "StringEnumeration" )
+#elseif( $type == "int" )
+#set( $interface = "IntEnumeration" )
+#else
+#set( $interface = "Enumeration" )
+#end
+import org.umlmda.runtime.lang.${interface};
+
+/**
+ * Typesafe enumeration for ${genClass.name}. ${genClass.documentation}
+ */
+public class ${genClass.generatedName} implements ${interface} {
+
+   // Version information from BusinessComponent ${genClass.component.qualifiedName}
+   private static final String modelVersion = "${genClass.modelVersion}";
+//@@UserSection-Begin VersionInfo
+   private static final String interfaceVersion = "${genClass.modelVersion}";
+   private static final long serialVersionUID = ${genClass.serialVersionUID};
+//@@UserSection-End VersionInfo
+
+   // Qualified model name
+   public static final String QUALIFIED_MODEL_NAME = "${genClass.qualifiedName}";
+   
+#foreach( $attribute in ${genClass.attributes})
+#set( $type = ${attribute.modelClassifier.generatedName})
+#set( $typeClassifier = ${attribute.modelClassifier})
+   /**
+    * ${attribute.documentation}
+    */
+   public static final ${genClass.generatedName} ${attribute.name} = new ${genClass.generatedName}(${attribute.initialValue});
+#end
+   private final ${type} value;
+   private final static List values = new ArrayList();
+   
+   static {
+#foreach( $attribute in ${genClass.attributes})
+      values.add(${attribute.name});
+#end
+   }
+   
+   /**
+    * Never called from outside
+    */
+   private ${genClass.generatedName}(${type} value) {
+      super();
+      this.value = value;
+   }
+
+   /* 
+    * List containing all enumeration literals
+    */
+   public static List values() {
+      return new ArrayList(values);
+   }
+
+   /**
+    * Diagnostics
+    */
+   public String toString() {
+#foreach( $attribute in ${genClass.attributes})
+#if (  $velocityCount == 1 )
+      if ( this.equals(${attribute.name}) ) {
+#else
+      else if ( this.equals(${attribute.name}) ) {
+#end
+         return ${attribute.initialValue}+" (${attribute.name})";
+      }
+#end
+      else {
+         return "N/A";
+      }
+   }
+
+   /**
+    * Gets the internal value
+    * @return the internal value of the literal type
+    */
+   public ${type} getValue() {
+      return value;
+   }
+   
+   /**
+    * Gets the internal value as String
+    * @return the internal value of the literal type as string
+    */
+   public String getValueAsString() {
+#if( $type == "String" ) 
+      return value;
+#elseif( $type == "int" )
+      return Integer.toString(value);
+#elseif( $type == "double" )
+      return Double.toString(value);
+#else
+	  return value.toString();
+#end
+   }
+   
+   /**
+    * Correct handling of singletons in deserialization
+    */ 
+   private Object readResolve() throws ObjectStreamException { 
+      return fromValue(value); 
+   }
+   
+   /**
+    * Creates an enumeration instance from the value
+    * @param value of the literal type to be converted to an enumeration instance
+    * @return the enumeration instance
+    */
+   public static ${genClass.generatedName} fromValue(${type} value) {
+      for (Iterator iv = values.iterator(); iv.hasNext();) {
+         ${genClass.generatedName} literal = (${genClass.generatedName}) iv.next();
+
+#if( ${typeClassifier.javaPrimitiveType} == true )		 
+         if ( literal.getValue() == value ) {
+#else		 
+         if ( literal.getValue().equals(value) ) {
+#end		 
+            return literal;
+         }
+      }
+      
+      throw new IllegalArgumentException(""+value);
+   }
+   
+   /**
+    * test for equality of values in enumeration
+    */
+   public boolean equals( Object object) {
+      boolean result = false;
+      if (object instanceof ${genClass.generatedName}) {
+         ${genClass.generatedName} other = (${genClass.generatedName}) object;
+#if( ${typeClassifier.javaPrimitiveType} == true )		 
+         result = other.getValue() == value;
+#else		 
+         result = other.getValue().equals(value);
+#end		 
+      }
+      return result;
+   }
+   
+   /** 
+    * calculate hash code of value in enumeration
+    */
+   public int hashCode() {
+#if( ${typeClassifier.javaPrimitiveType} == true )		 
+      return value;
+#else		 
+      return value.hashCode();
+#end		 
+   }       
+}
