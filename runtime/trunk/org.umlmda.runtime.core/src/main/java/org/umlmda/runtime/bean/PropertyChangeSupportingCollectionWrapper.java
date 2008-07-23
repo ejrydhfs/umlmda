@@ -31,7 +31,7 @@ public abstract class PropertyChangeSupportingCollectionWrapper<T> implements Co
    void notifyChange(Collection<T> oldValue) {
       if ( owner.hasListeners(collectionPropertyName) ) {
          logger.debug("notifyChange of "+collectionPropertyName);
-         owner.firePropertyChange(collectionPropertyName, oldValue, this);
+         owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
       else {
          logger.debug("no notifyChange of "+collectionPropertyName+" bacuase no listeners available");
@@ -43,7 +43,7 @@ public abstract class PropertyChangeSupportingCollectionWrapper<T> implements Co
       boolean added = wrappedCollection.add(o);
 
       if ( added && oldValue != null ) {
-         owner.firePropertyChange(collectionPropertyName, oldValue, wrappedCollection);
+         owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
       return added;
    }
@@ -53,7 +53,7 @@ public abstract class PropertyChangeSupportingCollectionWrapper<T> implements Co
       boolean added = wrappedCollection.addAll(c);
       
       if ( added && oldValue != null ) {
-         owner.firePropertyChange(collectionPropertyName, oldValue, wrappedCollection);
+         owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
       return added;
    }
@@ -64,7 +64,7 @@ public abstract class PropertyChangeSupportingCollectionWrapper<T> implements Co
          
          wrappedCollection.clear();
          if ( oldValue != null ) {
-            owner.firePropertyChange(collectionPropertyName, oldValue, wrappedCollection);
+            owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
          }
       }
    }
@@ -98,7 +98,7 @@ public abstract class PropertyChangeSupportingCollectionWrapper<T> implements Co
       boolean removed = wrappedCollection.remove(o);
       
       if ( removed && oldValue != null ) {
-         owner.firePropertyChange(collectionPropertyName, oldValue, wrappedCollection);
+         owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
       return removed;
    }
@@ -108,7 +108,7 @@ public abstract class PropertyChangeSupportingCollectionWrapper<T> implements Co
       boolean removed = wrappedCollection.removeAll(c);
       
       if ( removed && oldValue != null ) {
-         owner.firePropertyChange(collectionPropertyName, oldValue, wrappedCollection);
+         owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
       return removed;
    }
@@ -118,7 +118,7 @@ public abstract class PropertyChangeSupportingCollectionWrapper<T> implements Co
       boolean retained = wrappedCollection.retainAll(c);
       
       if ( retained && oldValue != null ) {
-         owner.firePropertyChange(collectionPropertyName, oldValue, wrappedCollection);
+         owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
       return retained;
    }
