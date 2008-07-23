@@ -32,7 +32,7 @@ public class PropertyChangeSupportingListWrapper<T> extends PropertyChangeSuppor
       wrappedList.add(index, element);
 
       if ( oldValue != null ) {
-         owner.firePropertyChange(collectionPropertyName, oldValue, wrappedList);
+         owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
    }
 
@@ -41,7 +41,7 @@ public class PropertyChangeSupportingListWrapper<T> extends PropertyChangeSuppor
       boolean added = wrappedList.addAll(index, c);
       
       if ( added && oldValue != null ) {
-         owner.firePropertyChange(collectionPropertyName, oldValue, wrappedList);
+         owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
       return added;
    }
@@ -71,7 +71,7 @@ public class PropertyChangeSupportingListWrapper<T> extends PropertyChangeSuppor
       T removed = wrappedList.remove(index);
       
       if ( removed != null && oldValue != null ) {
-         owner.firePropertyChange(collectionPropertyName, oldValue, wrappedList);
+         owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
       return removed;
    }
@@ -81,7 +81,7 @@ public class PropertyChangeSupportingListWrapper<T> extends PropertyChangeSuppor
       T removed = wrappedList.set(index, element);
       
       if ( removed != null && oldValue != null ) {
-         owner.firePropertyChange(collectionPropertyName, oldValue, wrappedList);
+         owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
       return removed;
    }
