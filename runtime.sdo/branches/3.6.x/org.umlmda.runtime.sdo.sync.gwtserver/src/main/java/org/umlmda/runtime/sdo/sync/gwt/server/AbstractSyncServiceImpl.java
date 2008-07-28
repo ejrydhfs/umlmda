@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.umlmda.runtime.reflect.ReflectionInvocationFactory;
@@ -50,28 +51,34 @@ public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet imple
       super.init();
    }
 
-   @Override
-   public ServletContext getServletContext() {
-      ServletContext servletContext = super.getServletContext();
-
-      if (servletContext.getAttribute(SESSION_ATTR_SDO_PLAYER) == null) {
+   public HttpSession getSession() {
+      HttpSession session;
+      session = getThreadLocalRequest().getSession(false);
+      if ( session == null ) {
+         session = getThreadLocalRequest().getSession(true);
+         logger.info("creating new session with id " + session.getId());
+      } else {
+         logger.info("using existing sesion with id " + session.getId());
+      }
+      
+      if (session.getAttribute(SESSION_ATTR_SDO_PLAYER) == null) {
          SynchronizerImpl recorder = new SynchronizerImpl(null);
          SynchronizedObjectFactory factory = createRootFactory(recorder); 
          Player player = new PlayerImpl(Player.SERVER, factory, new ReflectionInvocationFactory());
 
          recorder.setPlayer(player);
-         servletContext.setAttribute(SESSION_ATTR_SDO_PLAYER, player);
-         servletContext.setAttribute(SESSION_ATTR_SDO_RECORDER, recorder);
+         session.setAttribute(SESSION_ATTR_SDO_PLAYER, player);
+         session.setAttribute(SESSION_ATTR_SDO_RECORDER, recorder);
       }
-      return servletContext;
+      return session;
    }
 
    private Player getPlayer() {
-      return (Player) getServletContext().getAttribute(SESSION_ATTR_SDO_PLAYER);
+      return (Player) getSession().getAttribute(SESSION_ATTR_SDO_PLAYER);
    }
 
    private Recorder getRecorder() {
-      return (Recorder) getServletContext().getAttribute(SESSION_ATTR_SDO_RECORDER);
+      return (Recorder) getSession().getAttribute(SESSION_ATTR_SDO_RECORDER);
    }
 
    public void startConversation() {
