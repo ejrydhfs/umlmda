@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.umlmda.eclipse.jdt.preferences.UMLMDAJdtPreferencePage"
+            category="org.umlmda.eclipse.preferences.UMLMDAPreferencePage"
+            name="Development"
+            id="org.umlmda.eclipse.jdt.preferences.UMLMDAJdtPreferencePage">
+      </page>
+   </extension>
+
+</plugin>

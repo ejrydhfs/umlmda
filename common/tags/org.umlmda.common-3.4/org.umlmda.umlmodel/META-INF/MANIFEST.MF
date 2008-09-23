@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: UMLMDA UMLModel-Interface Plug-in
+Bundle-SymbolicName: org.umlmda.umlmodel
+Bundle-Version: 3.2.0.qualifier
+Bundle-Vendor: www.umlmda.org
+Bundle-Localization: plugin
+Require-Bundle: org.apache.log4j,
+ org.apache.commons.lang,
+ org.junit,
+ org.umlmda.model.profile;visibility:=reexport
+Export-Package: org.umlmda.model.uml,
+ org.umlmda.model.uml.attributes,
+ org.umlmda.model.uml.impl,
+ org.umlmda.model.uml.internal.utils,
+ org.umlmda.model.uml.pattern,
+ org.umlmda.model.uml.utils,
+ org.umlmda.model.uml.validate,
+ org.umlmda.utils.observer
+Eclipse-LazyStart: true
