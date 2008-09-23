@@ -95,7 +95,7 @@ public class RecorderDummy implements Recorder {
 	public void recordRemove(SynchronizedCollection<?> collection, Object object) {
 	}
 
-	public void recordRemoveIndex(SynchronizedList<?> list, int index) {
+	public void recordRemoveIndex(SynchronizedList<?> list, int index, Object object) {
 	}
 
 	/*

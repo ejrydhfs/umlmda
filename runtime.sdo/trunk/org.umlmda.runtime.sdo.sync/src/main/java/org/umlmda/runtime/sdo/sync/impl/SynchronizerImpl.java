@@ -133,9 +133,9 @@ public class SynchronizerImpl implements Recorder {
 	}
 
 	public synchronized void recordRemoveIndex(SynchronizedList<?> list,
-			int index) {
+			int index, Object object) {
 		if (recording) {
-			addEntry(new ListRemoveEntry(list.getRecordObjectId(), index));
+			addEntry(new ListRemoveEntry(list.getRecordObjectId(), index, object));
 		}
 	}
 
@@ -242,12 +242,12 @@ public class SynchronizerImpl implements Recorder {
 						}
 						if (callback != null) {
 							callback.onSuccess();
+					      invocationStatus = InvocationStatus.IDLE;
 						}
 					}
 				});
 
 		serviceQueue.execute();
-		invocationStatus = InvocationStatus.IDLE;
 	}
 
 	private void playbackRemoteChanges(

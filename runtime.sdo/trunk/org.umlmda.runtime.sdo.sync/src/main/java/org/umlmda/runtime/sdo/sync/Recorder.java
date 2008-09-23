@@ -30,7 +30,7 @@ public interface Recorder {
    
    public abstract void recordRemove(SynchronizedCollection<?> collection, Object object);
    
-   public abstract void recordRemoveIndex(SynchronizedList<?> list, int index);
+   public abstract void recordRemoveIndex(SynchronizedList<?> list, int index, Object object);
    
    public abstract void recordAdd(SynchronizedSet<?> set, Object value);
    
