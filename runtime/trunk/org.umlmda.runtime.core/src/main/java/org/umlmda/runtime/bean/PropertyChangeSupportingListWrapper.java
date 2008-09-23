@@ -87,7 +87,10 @@ public class PropertyChangeSupportingListWrapper<T> extends PropertyChangeSuppor
    }
 
    public List<T> subList(int fromIndex, int toIndex) {
-      return wrappedList.subList(fromIndex, toIndex);
+      throw new UnsupportedOperationException("Support in GWT 1.5.x missing");
+      // TODO if back in GWT (see Issue http://code.google.com/p/google-web-toolkit/issues/detail?id=1791)
+      // add again.
+      //return wrappedList.subList(fromIndex, toIndex);
    }
 
 }
