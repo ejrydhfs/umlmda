@@ -67,7 +67,7 @@ public class JavaModelAttributeAdapter extends ModelAttributeAdapter implements 
     * @see org.umlmda.uml.generator.java.JavaModelStructuraleFeature#getGetter()
     */
    public String getGetter() {
-      if ( isMultivalue() == false && isOptional() == false && "boolean".equals(getJavaType()) ) {
+      if ( isMultivalue() == false && isOptional() == false && getDataType() != null && ModelDataType.BOOLEAN.equals(getDataType().getName()) ) {
          return "is"+StringUtils.capitalize(getName());
       }
       else {
