@@ -4,7 +4,7 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.releng</artifactId>
-      <version>3.5-SNAPSHOT</version>
+      <version>3.5.1</version>
    </parent>
    <artifactId>org.umlmda.oaw</artifactId>
    <version>3.8-SNAPSHOT</version>
@@ -16,7 +16,7 @@
    </description>
 
    <properties>
-      <umlmda.common.version>3.4-SNAPSHOT</umlmda.common.version>
+      <umlmda.common.version>3.4.1</umlmda.common.version>
       <oaw.version>4.2.0</oaw.version>
    </properties>
 
@@ -45,6 +45,12 @@
          </dependency>
          <dependency>
             <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-emftools</artifactId>
+            <version>${oaw.version}</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
             <artifactId>oaw-core-expressions</artifactId>
             <version>${oaw.version}</version>
             <scope>provided</scope>
@@ -58,6 +64,12 @@
          <dependency>
             <groupId>org.openarchitectureware</groupId>
             <artifactId>oaw-core-xpand2</artifactId>
+            <version>${oaw.version}</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-uml2-adapter</artifactId>
             <version>${oaw.version}</version>
             <scope>provided</scope>
          </dependency>
