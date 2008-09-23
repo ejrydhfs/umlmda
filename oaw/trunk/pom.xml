@@ -4,7 +4,7 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.releng</artifactId>
-      <version>3.2.0</version>
+      <version>3.5-SNAPSHOT</version>
    </parent>
    <artifactId>org.umlmda.oaw</artifactId>
    <version>3.8-SNAPSHOT</version>
@@ -16,7 +16,7 @@
    </description>
 
    <properties>
-      <umlmda.common.version>3.3</umlmda.common.version>
+      <umlmda.common.version>3.4-SNAPSHOT</umlmda.common.version>
       <oaw.version>4.2.0</oaw.version>
    </properties>
 
@@ -27,6 +27,7 @@
 
    <modules>
       <module>org.umlmda.generator.uml.oaw</module>
+      <module>org.umlmda.oaw.generator</module>
    </modules>
    
    <scm>
