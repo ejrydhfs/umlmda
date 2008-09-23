@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: UMLMDA Eclipse Plug-in
+Bundle-SymbolicName: org.umlmda.eclipse; singleton:=true
+Bundle-Version: 3.0.4.qualifier
+Bundle-Activator: org.umlmda.eclipse.UMLMDAPlugin
+Bundle-Vendor: www.umlmda.org
+Bundle-Localization: plugin
+Export-Package: org.umlmda.eclipse,
+ org.umlmda.eclipse.preferences,
+ org.umlmda.eclipse.ui,
+ org.umlmda.eclipse.util
+Require-Bundle: org.apache.commons.lang,
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.umlmda.generator.profile
+Eclipse-LazyStart: true

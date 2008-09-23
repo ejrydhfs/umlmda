@@ -1,0 +1,8 @@
+bin
+UMLMDAProfileSrc.zip
+org.umlmda.model.profile_*.jar
+UMLMDAProfile.jar
+temp.folder
+@dot
+src.zip
+target

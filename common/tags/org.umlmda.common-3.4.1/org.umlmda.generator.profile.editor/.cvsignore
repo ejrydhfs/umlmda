@@ -1,0 +1,8 @@
+org.umlmda.generator.profile.editor_*.zip
+org.umlmda.generator.profile.editor_*.jar
+runtime
+temp.folder
+javaCompiler.runtime_org.umlmda.generator.profile.editor.jar.args
+javaCompiler.*.args
+@dot
+src.zip

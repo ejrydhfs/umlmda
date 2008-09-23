@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: UMLMDA UMLModel for NSUML Plug-in
+Bundle-SymbolicName: org.umlmda.umlmodel.nsuml; singleton:=true
+Bundle-Version: 3.0.4.qualifier
+Bundle-Vendor: www.umlmda.org
+Bundle-Localization: plugin
+Export-Package: org.umlmda.model.uml.nsuml,
+ org.umlmda.model.uml.nsuml.xmi
+Require-Bundle: org.apache.commons.lang,
+ ru.novosoft.uml,
+ org.umlmda.crazybeans,
+ org.umlmda.eclipse,
+ org.umlmda.umlmodel
+Eclipse-LazyStart: true
