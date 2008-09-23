@@ -7,7 +7,7 @@
       <version>3.5.1</version>
    </parent>
    <artifactId>org.umlmda.oaw</artifactId>
-   <version>3.8</version>
+   <version>3.9-SNAPSHOT</version>
    <packaging>pom</packaging>
    <name>UMLMDA oaw</name>
    <description>
@@ -33,8 +33,8 @@
    </modules>
    
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/tags/org.umlmda.oaw-3.8</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/tags/org.umlmda.oaw-3.8</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/trunk</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/trunk</developerConnection>
    </scm>
 
    <dependencyManagement>
