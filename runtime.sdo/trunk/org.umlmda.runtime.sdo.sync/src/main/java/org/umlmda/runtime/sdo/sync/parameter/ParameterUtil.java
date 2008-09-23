@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.umlmda.runtime.lang.Enumeration;
+import org.umlmda.runtime.lang.StringEnumeration;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 
@@ -34,6 +36,10 @@ public class ParameterUtil {
          else if ( parameter instanceof Integer ) {
             parameterList.add(new IntegerParameter((Integer) parameter));
          }
+         else if ( parameter instanceof Enumeration ) {
+            parameterList.add(new EnumerationParameter((Enumeration) parameter));
+         }
+         
          else {
             throw new IllegalArgumentException(parameter.getClass()+ " not supported");
          }
