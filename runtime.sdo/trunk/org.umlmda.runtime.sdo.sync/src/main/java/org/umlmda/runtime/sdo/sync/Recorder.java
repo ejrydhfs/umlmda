@@ -52,4 +52,6 @@ public interface Recorder {
    public abstract void reset();
    
    public abstract void setSynchronizeStrategy(SynchronizeStrategy strategy);
+
+   public SynchronizeStrategy getSynchronizeStrategy();
 }

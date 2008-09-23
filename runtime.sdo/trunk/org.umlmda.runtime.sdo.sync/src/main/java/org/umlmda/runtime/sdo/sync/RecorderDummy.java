@@ -145,4 +145,8 @@ public class RecorderDummy implements Recorder {
 	public void setSynchronizeStrategy(SynchronizeStrategy strategy) {
 	}
 
+   public SynchronizeStrategy getSynchronizeStrategy() {
+      return null;
+   }
+
 }

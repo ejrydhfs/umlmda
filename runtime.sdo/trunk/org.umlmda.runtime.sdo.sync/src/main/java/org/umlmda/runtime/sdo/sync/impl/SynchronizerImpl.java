@@ -44,7 +44,7 @@ public class SynchronizerImpl implements Recorder {
 	private boolean recording = true;
 	private final SyncService service;
 	private Player player;
-	private SynchronizeStrategy strategy = SynchronizeStrategy.COLLECT;
+	public SynchronizeStrategy strategy = SynchronizeStrategy.COLLECT;
 	protected InvocationStatus invocationStatus = InvocationStatus.IDLE;
 
 	public SynchronizerImpl(SyncService service) {
@@ -306,4 +306,7 @@ public class SynchronizerImpl implements Recorder {
 		this.strategy = strategy;
 	}
 
+	public SynchronizeStrategy getSynchronizeStrategy() {
+      return strategy;
+   }
 }
