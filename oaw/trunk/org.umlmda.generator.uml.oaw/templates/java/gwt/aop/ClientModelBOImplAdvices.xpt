@@ -79,7 +79,9 @@ import org.umlmda.runtime.bean.BeanUtils;
 «ENDAROUND»
 
 «AROUND java::BOImpl::callPostSetMethod FOR JavaModelStructuraleFeature»
-	this.recorder.recordChange(this, PROPERTY_«upperCaseIdentifier», «name»);
+	«IF isSDOClientOnly() == false && isSDOServerOnly() == false »
+		this.recorder.recordChange(this, PROPERTY_«upperCaseIdentifier», «name»);
+	«ENDIF»
 	«targetDef.proceed()»
 «ENDAROUND»
 

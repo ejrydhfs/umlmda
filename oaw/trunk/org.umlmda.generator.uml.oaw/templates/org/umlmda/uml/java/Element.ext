@@ -8,6 +8,10 @@ cached boolean isSDOClientOnly(ModelElement feature) :
 	feature.hasStereotype("Client")
 ;				
 
+cached boolean isSDOClientOnly(ModelAssociation feature) :
+	feature.hasStereotype("Client")
+;				
+
 cached boolean isSDOServerOnly(ModelElement feature) :
 	feature.hasStereotype("Server")
 ;		
