@@ -18,6 +18,8 @@
    <properties>
       <umlmda.common.version>3.4.1</umlmda.common.version>
       <oaw.version>4.2.0</oaw.version>
+      <emf.version>2.3.0</emf.version>
+      <uml2.version>2.1.0</uml2.version>
    </properties>
 
    <build>
