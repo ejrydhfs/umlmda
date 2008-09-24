@@ -4,7 +4,7 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.releng</artifactId>
-      <version>3.3.0</version>
+      <version>3.5.1</version>
    </parent>
    <artifactId>org.umlmda.classic</artifactId>
    <version>3.3-SNAPSHOT</version>
@@ -15,8 +15,8 @@
    <properties>
       <umlmda.uml2.profile.version>3.2.0</umlmda.uml2.profile.version>
       <umlmda.generator.profile.version>3.2.0</umlmda.generator.profile.version>
-      <umlmda.common.version>3.3</umlmda.common.version>
-      <umlmda.oaw.version>3.7</umlmda.oaw.version>
+      <umlmda.common.version>3.4.1</umlmda.common.version>
+      <umlmda.oaw.version>3.8</umlmda.oaw.version>
       <umlmda.jostraca.version>3.1</umlmda.jostraca.version>
       <oaw.version>4.2.0</oaw.version>
       <jostraca.version>0.3.3</jostraca.version>
@@ -54,6 +54,7 @@
    <modules>
       <module>org.umlmda.generator.core</module>
       <module>org.umlmda.generator.uml</module>
+      <module>org.umlmda.classic.generator</module>
    </modules>
 
    <scm>
@@ -125,6 +126,12 @@
             </exclusions>
          </dependency>
          <!-- oAW -->
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-emftools</artifactId>
+            <version>${oaw.version}</version>
+            <scope>provided</scope>
+         </dependency>
          <dependency>
             <groupId>org.openarchitectureware</groupId>
             <artifactId>oaw-core-expressions</artifactId>
