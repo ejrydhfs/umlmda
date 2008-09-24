@@ -1,0 +1,869 @@
+!<header>
+$<{perl.use.strict>use strict;$<}perl.use.strict>
+
+
+!<{import># section:import <<
+#
+
+!<import>
+
+#
+# section:import >> !<}import>
+
+
+
+# Constants << #
+ 
+# Command line arguments
+my $WRITER__ARGUMENT_CONTROL_PREFIX         = "$<main.CodeWriter.argument.ControlPrefix>";
+my $WRITER__ARGUMENT_OutputFolder           = "$<main.CodeWriter.argument.name.OutputFolder>";
+my $WRITER__ARGUMENT_BackupFolder           = "$<main.CodeWriter.argument.name.BackupFolder>";
+my $WRITER__ARGUMENT_NoBackup               = "$<main.CodeWriter.argument.name.NoBackup>";
+
+# User Interface text message parts
+my $WRITER__UITEXT_Method                   = "method ";
+my $WRITER__UITEXT_Main                     = "main ";
+my $WRITER__UITEXT_ExceptionIn              = "Exception in ";
+my $WRITER__UITEXT_ColonNewLine             = ":\n";
+my $WRITER__UITEXT_NewLine                  = "\n";
+my $WRITER__UITEXT_Section                  = "section ";
+my $WRITER__UITEXT_SavedFile                = "Saved file:       ";
+my $WRITER__UITEXT_UnableToSaveFile         = "Unable to save file: ";
+my $WRITER__UITEXT_UnableToBackupFile       = "Unable to backup file: ";
+my $WRITER__UITEXT_ToBackupFolder           = " to backup folder: ";
+my $WRITER__UITEXT_BackupFolderColon        = "Backup folder: ";
+my $WRITER__UITEXT_BackupFolderExistFailure = " does not exist and cannot be created.";
+my $WRITER__UITEXT_BackupFolderNotAFolder   = " is not a folder.";
+my $WRITER__UITEXT_BackupFolderNotWritable  = " is not writable.";
+my $WRITER__UITEXT_CodeWriterState          = "Code Writer State: ";
+my $WRITER__UITEXT_GetFileIndexEquals       = "\n_getFileIndex()    = ";
+my $WRITER__UITEXT_GetFullFileNameEquals    = "\n_getFullFileName() = ";
+my $WRITER__UITEXT_GetOutputFolderEquals    = "\n_getOutputFolder() = ";
+my $WRITER__UITEXT_ErrorHeader              = "\n\n--- CodeWriter Error Description Start ---\n\n";
+my $WRITER__UITEXT_ErrorFooter              = "\n--- CodeWriter Error Description End -----\n\n";
+my $WRITER__UITEXT_PlaceHolderException     = "This placeholder Exception should never be thrown: there is an error in the WriterFormat.";
+
+# String constants
+my $WRITER__STRING_empty                    = "";
+my $WRITER__STRING_dot                      = ".";
+my $WRITER__STRING_separator                = "$<\jostraca.system.fileSeparator>";
+
+# Constants >> #
+
+
+
+# Writer Variables << #
+
+my @writer__iFileNameRoots;                             # generated file name roots
+my $writer__iNumFiles          = 0;                     # number of generated files
+  
+my $writer__iFileNamePrefix    = $WRITER__STRING_empty; # failsafe default
+my $writer__iFileNameSuffix    = $WRITER__STRING_empty; # failsafe default
+
+my $writer__iBackupPrefix      = $WRITER__STRING_empty; # failsafe default
+my $writer__iBackupSuffix      = $WRITER__STRING_empty; # failsafe default
+
+my $writer__iCurrentText       = $WRITER__STRING_empty; # current text
+my $writer__iCurrentFileIndex  = 0;                     # current file index
+
+my @writer__iArgs;                                      # cmd line args
+my $writer__iNumArgs           = 0;                     # number of cmd line args
+my @writer__iUserArgs;                                  # user cmd line args
+my $writer__iNumUserArgs       = 0;                     # number of user cmd line args
+
+my $writer__iSave              = 1;                     # save generated code to disk
+my $writer__iBackup            = 1;                     # make backups
+
+my $writer__iOutputFolder      = $WRITER__STRING_dot;   # written code is output to this folder
+my $writer__iBackupFolder      = $WRITER__STRING_dot;   # overwritten files are placed here
+
+my %writer__iProperties;                                # lookup table for compile time properties
+my $writer__iPropertiesInit    = 0;                     # true => lookup table initialiased
+
+# Writer Variables >> #
+
+
+
+!<{support>
+# version 0.1 compatibility
+# section:support << 
+#
+
+!<support>
+
+#
+# section:support >> !<}support>
+
+
+
+!<{declare># section:declare <<
+#
+
+!<declare>
+
+#
+# section:declare >> !<}declare>
+
+
+
+# Execute.
+sub main {
+  my @pArgs = @_;
+
+  eval {
+    writer__initialize();
+    writer__handleArgs( @pArgs );
+    writer__write();
+  };
+  if( $@ ) {
+    writer__handleException( $WRITER__UITEXT_ExceptionIn . $WRITER__UITEXT_Method . $WRITER__UITEXT_Main, $@ );      
+  }
+}
+
+
+
+# Writer Services << #
+
+# Initialize.
+sub writer__initialize() {
+  $writer__iCurrentFileIndex = 0;
+  writer__setDefaults();
+}
+
+
+
+# Main file generation loop. Template script is placed here in the body section.
+sub writer__write {
+
+  # initialize
+  my $writer__currentSection = "init";
+
+  eval {
+
+    !<{init># section:init << 
+    #
+
+    !<init>
+
+    #
+    # section:init >> !<}init> 
+
+
+    # write files loop
+    my $writer__numFiles = _getNumFiles();
+    my $writer__fileI    = 0;
+    writer__next_file: for( $writer__fileI = 0; $writer__fileI < $writer__numFiles; $writer__fileI = $writer__fileI + 1 ) {
+
+      eval {
+
+        !<{prewrite># section:prewrite << 
+        # 
+
+        $writer__currentSection = "prewrite";
+        !<prewrite>
+
+        #
+        # section:prewrite >> !<}prewrite> 
+
+
+        if( ! writer__startFile() ) { 
+          next writer__next_file; 
+        }
+
+
+        !<{body># section:body << 
+        #
+
+        $writer__currentSection = "body";
+        !<body>
+
+        #
+        # section:body >> !<}body> 
+
+
+        if( ! writer__endFile() ) { 
+          next writer__next_file; 
+        }
+
+
+        !<{postwrite># section:postwrite << 
+        # 
+
+        $writer__currentSection = "postwrite";
+        !<postwrite>
+
+        #
+        # section:postwrite >> !<}postwrite> 
+
+
+      };
+      if( $@ ) {
+        writer__handleException( $WRITER__UITEXT_ExceptionIn . $WRITER__UITEXT_Section . $writer__currentSection, $@ );
+      }
+
+      writer__nextFile();       
+    }
+ 
+
+    !<{cleanup># section:cleanup << 
+    #
+ 
+    $writer__currentSection = "cleanup";
+    !<cleanup>
+
+    #
+    # section:cleanup >> !<}cleanup> 
+
+  };
+  if( $@ ) {
+    writer__handleException( $WRITER__UITEXT_ExceptionIn . $WRITER__UITEXT_Section . $writer__currentSection, $@ );
+  }
+}
+
+
+
+# Start writing a file.
+sub writer__startFile {
+  $writer__iCurrentText = $WRITER__STRING_empty;
+  return 1;
+}
+
+
+
+# End writing a file.
+sub writer__endFile {
+  my $endOK = 1;
+
+  my $fileName = _getFullFileName();
+  my $filePath 
+    = $writer__iOutputFolder
+    . $WRITER__STRING_separator
+    . $fileName
+    ;
+
+  if( $writer__iBackup ) {
+    eval {
+      writer__backup( $filePath, $fileName, $writer__iBackupFolder );
+    };
+    if( $@ ) {
+       writer__handleException( $WRITER__UITEXT_UnableToBackupFile 
+                                . $filePath 
+                                . $WRITER__UITEXT_ToBackupFolder
+                                . $writer__iBackupFolder
+                                , $@
+                                );
+       $endOK = 0;
+    }
+  }
+ 
+  if( $endOK && $writer__iSave ) {
+    eval {
+      _saveTextFile( $filePath, $writer__iCurrentText );
+      writer__userMessage( $WRITER__UITEXT_SavedFile . $filePath . $WRITER__UITEXT_NewLine );
+    };
+    if( $@ ) {
+      writer__handleException( $WRITER__UITEXT_UnableToSaveFile . $filePath, $@ );
+      $endOK = 0;
+    }
+  }
+
+  return $endOK;
+}
+
+
+
+# Move to next file.
+sub writer__nextFile {
+  $writer__iCurrentFileIndex = $writer__iCurrentFileIndex + 1;
+}
+
+
+
+# Handle command line arguments to CodeWriter.
+sub writer__handleArgs {
+
+  my @pArgs = @_; 
+
+  # set arg names
+  my $argName_OutputFolder           = $WRITER__ARGUMENT_CONTROL_PREFIX . $WRITER__ARGUMENT_OutputFolder;
+  my $argName_BackupFolder           = $WRITER__ARGUMENT_CONTROL_PREFIX . $WRITER__ARGUMENT_BackupFolder;
+  my $argName_NoBackup               = $WRITER__ARGUMENT_CONTROL_PREFIX . $WRITER__ARGUMENT_NoBackup;
+
+  # parse args
+  # ...
+
+  my $numArgs = @pArgs;
+  my $argI;
+  for( $argI = 0; $argI < $numArgs; $argI = $argI + 1 ) {
+    if( $pArgs[$argI] =~ /^$argName_OutputFolder(.*)$/ ) {
+      _setOutputFolder( $1 );
+    }
+    elsif( $pArgs[$argI] =~ /^$argName_BackupFolder(.*)$/ ) {
+      _setBackupFolder( $1 );
+    }
+    elsif( $argName_NoBackup eq $pArgs[$argI] ) {
+      _backup( $<lang.FalseString> ); ## NOTE: -B => don't make backups
+    }
+  }
+
+  writer__initArgs( scalar(@pArgs), @pArgs );
+
+}
+
+
+
+# Set defaults from configuration property set.
+sub writer__setDefaults {
+
+  $<{main.FileNameRoot>_setFileNameRoot( "$<\main.FileNameRoot>" );$<}main.FileNameRoot>
+  $<{main.FileNamePrefix>_setFileNamePrefix( "$<\main.FileNamePrefix>" );$<}main.FileNamePrefix>
+  $<{main.FileNameSuffix>_setFileNameSuffix( "$<\main.FileNameSuffix>" );$<}main.FileNameSufffix>
+
+  $<{main.OutputFolder>_setOutputFolder( "$<\main.OutputFolder>" );$<}main.OutputFolder>
+
+  $<{main.BackupFolder>_setBackupFolder( "$<\main.BackupFolder>" );$<}main.BackupFolder>
+  $<{main.BackupPrefix>_setBackupPrefix( "$<\main.BackupPrefix>" );$<}main.BackupPrefix>
+  $<{main.BackupSuffix>_setBackupSuffix( "$<\main.BackupSuffix>" );$<}main.BackupSufffix>
+  _backup( "$<lang.TrueString>" eq "$<jostraca.MakeBackup>" );
+
+}
+
+
+
+# Initialize command line arguments.
+sub writer__initArgs {
+  my $argI        = 0;
+  my $userArgI    = 0;
+
+  $writer__iNumArgs     = shift;
+  @writer__iArgs        = @_;
+  $writer__iNumUserArgs = $writer__iNumArgs;
+
+  for( $argI = 0; $argI < $writer__iNumArgs; $argI = $argI + 1 ) {
+    if( $writer__iArgs[$argI] =~ /^$WRITER__ARGUMENT_CONTROL_PREFIX/ ) {
+      $writer__iNumUserArgs = $writer__iNumUserArgs - 1;
+    }
+  }
+
+  for( $argI = 0; $argI < $writer__iNumArgs; $argI = $argI + 1 ) {
+    if( $writer__iArgs[$argI] =~ /^$WRITER__ARGUMENT_CONTROL_PREFIX/ ) {
+      next;
+    } 
+    else {
+      $writer__iUserArgs[ $userArgI ] = $writer__iArgs[ $argI ];
+      $userArgI = $userArgI + 1;
+    }
+  }
+}
+
+
+
+# Print a user readable message.
+sub writer__userMessage {
+  my $pMessage = shift;
+  print( $pMessage );
+}
+
+
+
+# Handle exceptions: print an explanation for user.
+sub writer__handleException {
+  my $pMessage   = shift;
+  my $pException = shift;
+
+  my $userMsg = $WRITER__UITEXT_ErrorHeader;
+
+  $userMsg .= writer__describeState() . $pMessage . $WRITER__UITEXT_ColonNewLine;
+  $userMsg .= $pException;
+  $userMsg .= $WRITER__UITEXT_ErrorFooter;
+
+  writer__userMessage( $userMsg );
+}
+
+
+
+# Provide a concise description of the state of the CodeWriter.
+sub writer__describeState {
+  my $currentState 
+    = $WRITER__UITEXT_CodeWriterState
+    . $WRITER__UITEXT_GetFileIndexEquals    . _getFileIndex()
+    . $WRITER__UITEXT_GetFullFileNameEquals . _getFullFileName()
+    . $WRITER__UITEXT_GetOutputFolderEquals . _getOutputFolder()
+    . $WRITER__UITEXT_NewLine
+    ; 
+  return $currentState;
+}
+
+
+
+# Backup overwritten files, if they exist.
+# Backups have the format: [YYYYMMDDhhmmss][prefix][filename][suffix].
+sub writer__backup {
+  my $pFilePath     = shift;
+  my $pFileName     = shift;
+  my $pBackupFolder = shift;
+
+  my $backupFolder = $pBackupFolder;
+
+  # check backup folder ( create if necessary )
+  if( !( -e $backupFolder) ) {
+    if( !( mkdir( $backupFolder, 0700 ) ) ) {
+      die( $WRITER__UITEXT_BackupFolderColon
+           . $backupFolder
+           . $WRITER__UITEXT_BackupFolderExistFailure );
+    }
+  }
+  if( !( -d $backupFolder ) ) {
+    die( $WRITER__UITEXT_BackupFolderColon 
+         . $backupFolder
+         . $WRITER__UITEXT_BackupFolderNotAFolder );
+  }
+  if( !( -w $backupFolder ) ) {
+    die( $WRITER__UITEXT_BackupFolderColon
+         . $backupFolder
+         . $WRITER__UITEXT_BackupFolderNotWritable );
+  }
+
+  # create backup file path
+  my @calendar = localtime();
+  my $year_yyyy = _align( 1900+$calendar[5], "0", 4, 'r' );
+  my $month_mm  = _align( 1+$calendar[4],    "0", 2, 'r' );
+  my $day_dd    = _align( $calendar[3],      "0", 2, 'r' );
+  my $hour_hh   = _align( $calendar[2],      "0", 2, 'r' );
+  my $minute_mm = _align( $calendar[1],      "0", 2, 'r' );
+  my $second_ss = _align( $calendar[0],      "0", 2, 'r' );
+  my $dateTime = $year_yyyy.$month_mm.$day_dd.$hour_hh.$minute_mm.$second_ss;
+  my $backupFileName = $dateTime . $writer__iBackupPrefix . $pFileName . $writer__iBackupSuffix;
+  my $backupFilePath = $pBackupFolder . $WRITER__STRING_separator . $backupFileName;
+  
+  # save backup file
+  if( -e $pFilePath ) {
+    my $fileContents = _loadTextFile( $pFilePath );
+    _saveTextFile( $backupFilePath, $fileContents );
+  }
+}
+
+
+
+# Set compile time properties.
+sub writer__initProperties {
+  $<{jostraca.properties.NameValueList>
+  %writer__iProperties = ( $<jostraca.properties.NameValueList> );
+  $writer__iPropertiesInit = 1;
+  $<}jostraca.properties.NameValueList>
+}
+
+# Writer Services >> #
+
+
+
+
+# Template Services (File Generation) << #
+
+# Set the prefix of the files to be generated. 
+sub _setFileNamePrefix {
+  my $pPrefix = shift;
+  $writer__iFileNamePrefix = $pPrefix;
+}
+
+
+
+# Get prefix of files to be generated.
+sub _getFileNamePrefix {
+  return $writer__iFileNamePrefix;
+}
+
+
+
+# Set the suffix of the files to be generated.
+sub _setFileNameSuffix {
+  my $pSuffix = shift;
+  $writer__iFileNameSuffix = $pSuffix;
+}
+
+
+
+# Get suffix of files to be generated.
+sub _getFileNameSuffix {
+  return $writer__iFileNameSuffix;
+}
+
+
+
+# Set the full name of the file to be generated. 
+# Prefix and Suffix are set to empty.
+sub _setFullFileName {
+  my $pName = shift;
+  _setFileNamePrefix( $WRITER__STRING_empty );
+  _setFileNameRoot(   $pName );
+  _setFileNameSuffix( $WRITER__STRING_empty );
+}
+
+
+
+# Get the full name of current file being generated.
+sub _getFullFileName {
+  return _getFileNamePrefix() . _getFileNameRoot() . _getFileNameSuffix();
+}
+
+
+
+# Set the names of the files to be generated. 
+# Prefix and Suffix are set to empty.
+sub _setFullFileNames {
+  my @pNames = @_;
+  _setFileNamePrefix( $WRITER__STRING_empty );
+  _setFileNameRoots(  @pNames );
+  _setFileNameSuffix( $WRITER__STRING_empty );
+}
+
+
+
+# Get the full names of the files to be generated.
+sub _getFullFileNames {
+
+  my @fileNameRoots  = _getFileNameRoots();
+  my $numFiles       = @fileNameRoots;
+  my @fullFileNames;
+  my $fileNamePrefix = _getFileNamePrefix();
+  my $fileNameSuffix = _getFileNameSuffix();
+
+  my $fileI;
+  for( $fileI = 0; $fileI < $numFiles; $fileI = $fileI + 1 ) {
+    $fullFileNames[ $fileI ] = $fileNamePrefix . $fileNameRoots[ $fileI ] . $fileNameSuffix;
+  }
+
+  return @fullFileNames;
+}
+
+
+
+# Set the root of the name of the file to be generated. 
+sub _setFileNameRoot {
+  my $pFileNameRoot = shift;
+  _setFileNameRoots( ($pFileNameRoot) );
+}
+
+
+
+# Get the root of the name of current file being generated.
+sub _getFileNameRoot {
+  return $writer__iFileNameRoots[ $writer__iCurrentFileIndex ];
+}
+
+
+
+# Set the roots of the names of the files to be generated. 
+sub _setFileNameRoots {
+  my @pFileNameRoots = @_;
+
+  @writer__iFileNameRoots = @pFileNameRoots;
+  $writer__iNumFiles      = @writer__iFileNameRoots;
+}
+
+
+# Get roots of the names of files to be generated.
+sub _getFileNameRoots {
+  return @writer__iFileNameRoots;
+}
+
+
+
+# Get index of file currently being generated. 
+sub _getFileIndex {
+  return $writer__iCurrentFileIndex;
+}
+
+
+
+# Get number of files to generate.
+sub _getNumFiles {
+  return $writer__iNumFiles;
+}
+
+
+
+# Set output folder.
+sub _setOutputFolder {
+  $writer__iOutputFolder = shift;
+}
+
+
+
+# Get output folder.
+sub _getOutputFolder {
+  return $writer__iOutputFolder;
+}
+
+
+
+# Set backup folder.
+sub _setBackupFolder {
+  my $pBackupFolder = shift;
+  $writer__iBackupFolder = $writer__iOutputFolder . $WRITER__STRING_separator . $pBackupFolder;
+}
+
+
+
+# Get backup folder.
+sub _getBackupFolder {
+  return $writer__iBackupFolder;
+}
+
+
+
+# Set the prefix of backup files.
+sub _setBackupPrefix {
+  $writer__iBackupPrefix = shift;
+}
+
+
+
+# Set the suffix of backup files.
+# @param rSuffix Backup files suffix.
+sub _setBackupSuffix {
+  $writer__iBackupSuffix = shift;
+}
+
+
+
+# Set to true if generated files are to be backed up to disk automatically. 
+sub _backup {
+  $writer__iBackup = shift;
+}
+
+
+
+# Set to true if generated files are to be saved to disk automatically. 
+sub _save {
+  $writer__iSave = shift;
+}
+
+
+
+# Save a text file.
+sub _saveTextFile {
+  my $pFilePath = shift;
+  my $pContent  = shift;
+
+  open( FILE, '>'.$pFilePath ) or die "Unable to write file: ".$pFilePath;
+  print FILE $pContent;
+  close( FILE );
+}
+
+
+
+# Load a text file.
+sub _loadTextFile {
+  my $pFilePath = shift;
+
+  open( FILE, $pFilePath ) or die "Unable to read file: ".$pFilePath;
+  my $content = join('',@_=<FILE>);
+  close( FILE );
+  
+  return $content;
+}
+
+# Template Services (File Generation) >> #
+
+
+
+
+# Template Services (Control) << #
+
+# Get the value of a compile-time property.
+sub _getProperty {
+  my $pName = shift;
+
+  if( ! $writer__iPropertiesInit ) {
+    writer__initProperties();
+  }
+
+  return $writer__iProperties{ $pName };
+}
+
+
+
+# Get first user arg.
+sub _getFirstUserArg {
+  return _getUserArg(0);
+}
+
+
+
+# Get second user arg.
+sub _getSecondUserArg {
+  return _getUserArg(1);
+}
+
+
+
+# Get third user arg.
+sub _getThirdUserArg {
+  return _getUserArg(2);
+}
+
+
+
+# Get nth (n=0,1,2,...) user arg (the nth arg with no WRITER__ARGUMENT_CONTROL_PREFIX).
+sub _getUserArg {
+  my $pOrdinal = shift;
+
+  if( $pOrdinal < _getNumUserArgs() ) {
+      my @userargs = _getUserArgs();
+      return $userargs[$pOrdinal];
+  }
+  else {
+    return $WRITER__STRING_empty;
+  }
+}
+
+
+
+# Get user command line arguments to CodeWriter.
+sub _getUserArgs {
+  return @writer__iUserArgs;
+}
+
+
+
+# Get number of user command line arguments to CodeWriter.
+sub _getNumUserArgs {
+  return $writer__iNumUserArgs;
+}
+
+
+
+# Get all command line arguments to CodeWriter. 
+sub _getArgs() {
+  return @writer__iArgs;
+}
+
+
+
+# Get total number of command line arguments to CodeWriter.
+sub _getNumArgs() {
+  return $writer__iNumArgs;
+}
+
+# Template Services (Control) >> #
+
+
+
+
+# Template Services (Text Production) << */
+
+# Insert text into generated file. 
+sub _insert {
+  my $pText = shift;
+  $writer__iCurrentText .= $pText;
+}
+
+
+
+# Create a String containing specified number of spaces.
+sub _spaces {
+  my $pNumSpaces = shift;
+  return ' ' x abs($pNumSpaces);
+}
+
+
+
+# Left align String with spaces. 
+sub _left {
+  my $pText     = shift;
+  my $pColWidth = shift;
+  return _align( $pText, " ", $pColWidth, 'l' );
+} 
+
+
+
+# Right align String with spaces. 
+sub _right {
+  my $pText     = shift;
+  my $pColWidth = shift;
+  return _align( $pText, " ", $pColWidth, 'r' );
+} 
+
+
+
+# Center align String with spaces. 
+sub _center {
+  my $pText     = shift;
+  my $pColWidth = shift;
+  return _align( $pText, " ", $pColWidth, 'c' );
+} 
+
+
+
+# Align text within background text with specified column width.
+# Alignment can be 'l': left, 'c': center, 'r': right
+sub _align {
+  my $pText      = shift;
+  my $pBackText  = shift;
+  my $pColWidth  = shift;
+  my $pAlignment = shift;
+
+  my $result = $pText;
+  
+
+  eval {
+    my $textLen = length( $pText );
+    if( $pColWidth > $textLen ) {
+      my $backTextLen     = length( $pBackText );
+      my $remainWidth     = $pColWidth - $textLen;
+      my $backTextRepeats = int( $remainWidth / $backTextLen );
+      my $backTextRemain  = $remainWidth % $backTextLen;
+      my $back            = $WRITER__STRING_empty;
+      my $backTextI;
+      for( $backTextI = 0; $backTextI < $backTextRepeats; $backTextI = $backTextI + 1 ) {
+        $back = $back . $pBackText;
+      }
+      if( 0 < $backTextRemain ) {
+        $back = $back . substr( $pBackText, 0, $backTextRemain );
+      }                       
+
+      if( 'l' eq $pAlignment ) {
+        $result = $result . $back;
+
+      } elsif( 'c' eq $pAlignment ) {
+        $result = substr( $back, 0, (length($back)/2) ) . $result . substr( $back, (length($back)/2) );
+
+      } elsif( 'r' eq $pAlignment ) {
+        $result = $back . $result;
+      }
+    }
+  };
+  if( $@ ) {
+    $result = $pText;
+  }
+
+  return $result;
+}
+
+
+
+# Set the text of file currently being generated.
+sub _setText {
+  $writer__iCurrentText = shift;
+}
+
+
+
+# Get the text of file currently being generated.
+sub _getText {
+  return $writer__iCurrentText;
+}
+
+# Template Services (Text Production) >> */
+
+
+
+
+# Start execution
+main( @ARGV );
+exit( 0 );
+
+
+
+!<footer>
