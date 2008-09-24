@@ -158,12 +158,48 @@
       <plugins>
          <!-- Assembly -->
          <plugin>
+            <executions>
+               <execution>
+                  <id></id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>assembly</goal>
+                  </goals>
+                  <inherited>false</inherited>
+                  <configuration></configuration>
+               </execution>
+            </executions>
             <artifactId>maven-assembly-plugin</artifactId>
             <configuration>
                <descriptors>
                   <descriptor>assembly.xml</descriptor>
                </descriptors>
             </configuration>
+         </plugin>
+
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>attach-artifacts</id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>attach-artifact</goal>
+                  </goals>
+                  <configuration>
+                     <artifacts>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/${pom.artifactId}-${pom.version}-bin.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>bin</classifier>
+                        </artifact>
+                     </artifacts>
+                  </configuration>
+               </execution>
+            </executions>
          </plugin>
 
       </plugins>
