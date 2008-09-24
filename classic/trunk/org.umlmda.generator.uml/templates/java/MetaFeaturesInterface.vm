@@ -24,6 +24,7 @@ extends ##
 #end
 ${genClass.getScopedName("java.MetaFeaturesInterface", $superClass)}##
 #end 
+
 {
 	// Constants for attributes
 #foreach( $attribute in ${genClass.declaredAttributes} )

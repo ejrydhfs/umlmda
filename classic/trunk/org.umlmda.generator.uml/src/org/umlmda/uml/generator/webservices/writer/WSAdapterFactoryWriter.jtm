@@ -1,7 +1,7 @@
 <% @conf 
 main.JostracaVersion       = 0.3
 main.CodeWriter            = WSAdapterFactoryWriter
-main.CodeWriterFormat	   = format\\ParentJavaWriterFormat.jwf
+main.CodeWriterFormat	   = format/ParentJavaWriterFormat.jwf
 java.CodeWriter.package    = org.umlmda.uml.generator.webservices.writer
 java.CodeWriter.extends    = org.umlmda.uml.generator.java.AbstractBusinessFactoryWriter
 %><% import!

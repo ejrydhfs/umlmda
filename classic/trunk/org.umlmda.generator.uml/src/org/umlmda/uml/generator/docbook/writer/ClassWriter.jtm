@@ -1,7 +1,7 @@
 <% @conf 
 main.JostracaVersion       = 0.3
 main.CodeWriter            = ClassWriter
-main.CodeWriterFormat	     = format\\EmbeddedJavaWriterFormat.jwf
+main.CodeWriterFormat	     = format/EmbeddedJavaWriterFormat.jwf
 java.CodeWriter.package    = org.umlmda.uml.generator.docbook.writer
 java.CodeWriter.extends    = org.umlmda.uml.generator.docbook.AbstractClassWriter
 %><% import!

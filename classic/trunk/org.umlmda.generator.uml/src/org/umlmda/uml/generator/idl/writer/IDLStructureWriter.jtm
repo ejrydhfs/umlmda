@@ -1,7 +1,7 @@
 <% @conf 
 main.JostracaVersion       = 0.3
 main.CodeWriter            = IDLStructureWriter
-main.CodeWriterFormat	     = format\\EmbeddedJavaWriterFormat.jwf
+main.CodeWriterFormat	     = format/EmbeddedJavaWriterFormat.jwf
 java.CodeWriter.package    = org.umlmda.uml.generator.idl.writer
 java.CodeWriter.extends    = org.umlmda.uml.generator.idl.AbstractIDLElementWriter
 %>

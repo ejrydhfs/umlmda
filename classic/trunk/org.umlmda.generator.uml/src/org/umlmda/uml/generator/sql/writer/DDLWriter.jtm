@@ -5,7 +5,7 @@ REM @@UserSection-End RCSHeader
 <% @conf 
 main.JostracaVersion       = 0.3
 main.CodeWriter            = DDLWriter
-main.CodeWriterFormat	     = format\\ParentJavaWriterFormat.jwf
+main.CodeWriterFormat	     = format/ParentJavaWriterFormat.jwf
 java.CodeWriter.package    = org.umlmda.uml.generator.sql.writer
 java.CodeWriter.extends    = org.umlmda.uml.generator.sql.AbstractDDLWriter
 %><% import!
