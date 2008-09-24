@@ -7,7 +7,7 @@
       <version>3.5.1</version>
    </parent>
    <artifactId>org.umlmda.classic</artifactId>
-   <version>3.3</version>
+   <version>3.4-SNAPSHOT</version>
    <packaging>pom</packaging>
    <name>UMLMDA Classic</name>
    <description>UMLMDA maven project for umlmda classic modules.</description>
@@ -58,8 +58,8 @@
    </modules>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/tags/org.umlmda.classic-3.3</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/tags/org.umlmda.classic-3.3</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/trunk</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/trunk</developerConnection>
    </scm>
 
    <dependencyManagement>
