@@ -9,6 +9,15 @@
 «EXTENSION org::umlmda::uml::java::Element»
 «EXTENSION org::umlmda::uml::java::StructuralFeature»
 
+«AROUND java::BOImpl::standardBody FOR JavaBusinessObject»
+	«targetDef.proceed()»
+	«EXPAND java::DeepCopy::deepCopyMethods FOR this»
+«ENDAROUND»
+
+«AROUND java::BOImpl::standardBOInterfaces FOR JavaModelClass»
+	«targetDef.proceed()», org.umlmda.runtime.util.CopyCluster
+«ENDAROUND»
+
 // =================
 // Avoid jmi support
 // =================
@@ -34,6 +43,12 @@
 	«targetDef.proceed()»
 	
 	import org.umlmda.runtime.sdo.sync.gwt.server.SyncContext;
+			
+	import java.util.Collection;
+	import java.util.IdentityHashMap;
+	
+	import org.umlmda.runtime.util.CopyCluster;
+	import org.umlmda.runtime.util.CopyClusterUtil;
 «ENDAROUND»
 
 «AROUND java::BOImpl::handleAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
@@ -97,3 +112,26 @@
 	«ENDIF»
 «ENDAROUND»
 
+«AROUND java::DeepCopy::deepCopyMethods FOR JavaBusinessObject»
+	«REM»«IF this.isSDOClientOnly() == false»«ENDREM»
+		«targetDef.proceed()»
+	«REM»«ENDIF»«ENDREM»
+«ENDAROUND»
+
+«AROUND java::DeepCopy::immutableObjectsDecl FOR JavaModelAttribute»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::DeepCopy::mutableObjectsDecl FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::DeepCopy::mutableCollectObjects FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»

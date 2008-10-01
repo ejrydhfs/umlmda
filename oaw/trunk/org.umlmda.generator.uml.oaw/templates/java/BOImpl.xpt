@@ -41,6 +41,13 @@ public
 abstract
 «ENDIF»
 class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»  {
+	«EXPAND standardBody FOR this»
+}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE standardBody FOR JavaBusinessObject»
 	«EXPAND versionInfo FOR this»
 	«EXPAND propertyChangeSupportAttr FOR this»
 	«EXPAND persistenceImpl FOR this»
@@ -63,9 +70,6 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 	«EXPAND java::JmiReflect::Impl FOR this»
 	«EXPAND visitorAcceptMethod FOR this»
 	«EXPAND xmlSerializationMethods FOR this»
-}
-«ENDFILE»
-«ENDLET»
 «ENDDEFINE»
 
 «DEFINE standardImports FOR JavaBusinessObject»
