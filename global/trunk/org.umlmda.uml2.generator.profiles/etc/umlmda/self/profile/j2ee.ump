@@ -7,10 +7,6 @@
     <mappings artefact="//@artefacts.3"/>
     <mappings artefact="//@artefacts.4"/>
     <mappings artefact="//@artefacts.5"/>
-    <mappings artefact="//@artefacts.6"/>
-  </stereotypes>
-  <stereotypes name="BusinessComponent">
-    <mappings artefact="//@artefacts.7"/>
   </stereotypes>
   <artefacts name="j2ee.BeanUtils" postfix="" namespacePostfix=".ejb.utils" replacement="$1Utils" replacementPattern="(.*)" writer="org.umlmda.uml.generator.j2ee.writer.BeanUtilsWriter"/>
   <artefacts name="j2ee.RemoteInterface" namespacePostfix=".ejb.bean" replacementPattern="" writer="org.umlmda.uml.generator.j2ee.writer.RemoteInterfaceWriter"/>
