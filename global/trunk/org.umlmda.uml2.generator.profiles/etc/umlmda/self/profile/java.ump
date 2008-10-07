@@ -34,13 +34,13 @@
   <artefacts name="java.BusinessObjectFactory" prefix="" postfix="" namespacePostfix=".dto" replacement="\u$1Factory" replacementPattern="(.*)" writer="org.umlmda.uml.generator.java.writer.BusinessObjectFactoryWriter"/>
   <artefacts name="java.BusinessException" namespacePostfix=".exception" writer="org.umlmda.uml.generator.java.writer.BusinessExceptionWriter"/>
   <artefacts name="java.BusinessObjectInterface" prefix="" namespacePostfix=".dto" writer="org.umlmda.uml.generator.java.writer.BusinessInterfaceWriter">
-    <defaultProperties name="PropertyChangeSupport" value="true"/>
+    <defaultProperties name="PropertyChangeSupport" value="false"/>
     <defaultProperties name="SupportDeprecatedMethods" value="false"/>
   </artefacts>
   <artefacts name="java.BusinessServiceInterface" prefix="" namespacePostfix="" writer="org.umlmda.uml.generator.java.writer.BusinessInterfaceWriter"/>
   <artefacts name="java.BusinessObject" prefix="" postfix="Impl" namespacePostfix=".dto.impl" replacement="" replacementPattern="" writer="org.umlmda.uml.generator.java.writer.SimpleBeanWriter">
     <defaultProperties name="NoneGeneratedCodeStrategy" value="Delegate"/>
-    <defaultProperties name="PropertyChangeSupport" value="true"/>
+    <defaultProperties name="PropertyChangeSupport" value="false"/>
     <defaultProperties name="SupportDeprecatedMethods" value="false"/>
   </artefacts>
   <artefacts name="java.DelegateInterface" fileExtension="java" postfix="Delegate" namespacePostfix=".dto" type="Velocity" writer="java/DelegateInterface.vm" generationStrategy="org.umlmda.uml.generator.java.DelegationGenerationStrategy"/>
