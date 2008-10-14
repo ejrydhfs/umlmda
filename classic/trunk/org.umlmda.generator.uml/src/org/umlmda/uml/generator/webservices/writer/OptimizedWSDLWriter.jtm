@@ -31,12 +31,12 @@ import org.umlmda.uml.generator.webservices.*;
    WSModelClass genClass = (WSModelClass)getGenClass();
    WSModelPackage genPackage = (WSModelPackage)genClass.getGeneratorPackage();
    WSModel genModel = (WSModel)genClass.getGeneratorModel();
-   String xmlEncoding = getProperties().getProperty("xmlEncoding", "ISO-8859-1");
+   String xmlEncoding = genModel.getArtefact().getProperties().getProperty("xmlEncoding", "ISO-8859-1");
    String soapBindingTag = "";
    String soapEncodingTag = "";
    String soapEncodingStyleTag = "";
-   String soapBinding = getProperties().getProperty("soapBinding", "rpc");
-   String soapEncoding = getProperties().getProperty("soapEncoding", "encoded");
+   String soapBinding = genModel.getArtefact().getProperties().getProperty("soapBinding", "rpc");
+   String soapEncoding = genModel.getArtefact().getProperties().getProperty("soapEncoding", "encoded");
    boolean soapWrapping = genModel.isSoapWrapping();
    boolean packageFilter = true;
 
