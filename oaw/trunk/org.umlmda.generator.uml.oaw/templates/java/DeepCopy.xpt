@@ -15,14 +15,16 @@
 
 «DEFINE deepCopyMethods FOR JavaBusinessObject»
 «IF this.abstract == false»
-	public Object copyCluster(java.util.IdentityHashMap clusterObjectsToMap) throws CloneNotSupportedException 
+	public Object copyCluster(java.util.IdentityHashMap clusterObjectsToMap) 
+		throws CloneNotSupportedException 
 	{
 		«generatedName» copy = new «generatedName»(getRecorder());
-		org.umlmda.runtime.util.CopyClusterUtil.setClone(this, copy, clusterObjectsToMap);
+		CopyClusterUtil.setClone(this, copy, clusterObjectsToMap);
    	 	((«generatedName») copy).copyProperties(this, clusterObjectsToMap);
   	  	return copy;
 	}
-«ENDIF»
+«ENDIF» 	
+ 	 
 	public void copyProperties(«generatedName» original, java.util.IdentityHashMap clusterObjectsToMap) throws CloneNotSupportedException
  	{
  	«FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr-»
@@ -38,16 +40,18 @@
  	
 	public java.util.IdentityHashMap collectCompositeObjects(java.util.IdentityHashMap collectedObjects)
 	{    
-    if(collectedObjects.containsKey(this)) 
-    {
-    	return collectedObjects;
-     }
-    collectedObjects.put(this, null);  
+   		if(collectedObjects.containsKey(this)) 
+   		{
+    		return collectedObjects;
+     	 }
+  		 
+  		collectedObjects.put(this, null);  
 	«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc-»
-		«EXPAND mutableCollectObjects FOR assoc»
-	«ENDFOREACH»
-	return collectedObjects;
-  }
+		«EXPAND mutableCollectObjects FOR assoc-»
+	«ENDFOREACH-»
+		return collectedObjects;
+ 	}
+
 «ENDDEFINE»
 
 «DEFINE immutableObjectsDecl FOR JavaModelAttribute»
@@ -63,19 +67,19 @@
 		«IF this.composition»
 			«IF this.multiple»
 				«IF this.interfaceType.startsWith("java.util.List")»
-		«this.setter»((«this.interfaceType») org.umlmda.runtime.util.CopyClusterUtil.getClones(
+		«this.setter»((«this.interfaceType») CopyClusterUtil.getClones(
         	original.«this.getter»(),
-        	new org.umlmda.runtime.sdo.sync.SynchronizedListWrapper(this.recorder, new java.util.ArrayList()),
+        	new java.util.ArrayList(),
             clusterObjectsToMap)); 
             	«ELSEIF this.interfaceType.startsWith("java.util.Set")»
-        «this.setter»((«this.interfaceType») org.umlmda.runtime.util.CopyClusterUtil.getClones(
+        «this.setter»((«this.interfaceType») CopyClusterUtil.getClones(
             original.«this.getter»(),
-            new org.umlmda.runtime.sdo.sync.SynchronizedSetWrapper(this.recorder, new java.util.HashSet()),
+            new java.util.HashSet(),
             clusterObjectsToMap));
 				«ENDIF»
 			«ELSEIF this.multiple == false»
-		//Einzelne Kompositionreferenz. 
-      	«this.setter»((«this.interfaceType») org.umlmda.runtime.util.CopyClusterUtil.getClone(original.«this.getter»(), clusterObjectsToMap));
+		//Einzelne Kompositionsreferenz. 
+      	«this.setter»((«this.interfaceType») CopyClusterUtil.getClone(original.«this.getter»(), clusterObjectsToMap));
 			«ENDIF»
 		«ELSE»
 		//Keine Komposition.
@@ -85,11 +89,13 @@
 «ENDDEFINE»
 
 «DEFINE mutableCollectObjects FOR JavaModelAssociation»
-	«IF this.multiple && this.composition-»
-  	  for ( org.umlmda.runtime.util.CopyCluster composite : (java.util.Collection<org.umlmda.runtime.util.CopyCluster>)«this.getter»() ) 
-  	  {
-         composite.collectCompositeObjects(collectedObjects);
-      }
-    «ENDIF»
+	«IF this.multiple-»
+		«IF this.composition-»
+		for(CopyCluster composite : (java.util.Collection<CopyCluster>)«this.getter»()) 
+		{
+			composite.collectCompositeObjects(collectedObjects);
+		}
+      	«ENDIF-»
+    «ENDIF-»
 «ENDDEFINE»
 
