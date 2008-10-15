@@ -1,0 +1,173 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::Enumeration»
+
+«DEFINE Enumeration FOR JavaEnumeration»
+«LET generatedName(this, getDefaultArtefact("Enumeration")) AS className»
+«FILE generatedPath+"/"+className+".java"»
+package «generatorPackage.getQualifiedPackageName(getDefaultArtefact("Enumeration"))»;
+
+import java.io.ObjectStreamException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.umlmda.runtime.lang.«this.enumInterface()»;
+
+/**
+ * Typesafe enumeration for «className». «documentation»
+ */
+public class «className» implements «this.enumInterface()» {
+   // Version information from BusinessComponent «component.qualifiedName»
+   private static final String modelVersion = "«modelVersion»";
+
+//@@UserSection-Begin VersionInfo
+   private static final String interfaceVersion = "«modelVersion»";
+   private static final long   serialVersionUID = «serialVersionUID»;
+//@@UserSection-End VersionInfo
+
+   // Qualified model name
+   public static final String QUALIFIED_MODEL_NAME = "«qualifiedName»";
+
+«FOREACH javaAttributes.typeSelect(JavaModelAttribute) AS attr»
+   /**
+    * «attr.documentation»
+    */
+   public static final «className» «attr.name» = new «className»(«attr.initialValue()»);
+«ENDFOREACH»
+   private final «enumType()» value;
+   private final static List values = new ArrayList();
+
+   static {
+«FOREACH attributes.typeSelect(JavaModelAttribute) AS attr»
+      values.add(«attr.name»);
+«ENDFOREACH»
+   }
+
+   /*
+    * Private ctor, never called from outside.
+    */
+   private «className»(«enumType()» value) {
+      super();
+      this.value = value;
+   }
+
+   /* 
+    * List containing all enumeration literals
+    */
+   public static List values() {
+      return new ArrayList(values);
+   }
+
+   /**
+    * Diagnostics
+    */
+   public String toString() {
+«FOREACH attributes.typeSelect(JavaModelAttribute) AS attr ITERATOR ia»
+«IF ia.counter0 == 0»
+      if ( this.equals(«attr.name») ) {
+«ELSE»      
+      } else if ( this.equals(«attr.name») ) {
+«ENDIF»
+         return «attr.initialValue()»+" («attr.name»)";
+«ENDFOREACH»
+      } else {
+         return "N/A";
+      }
+   }
+
+   /**
+    * Gets the internal value
+    * @return the internal value of the literal type
+    */
+   public «javaValueType» getValue() {
+      return value;
+   }
+   
+   /**
+    * Gets the internal value as String
+    * @return the internal value of the literal type as string
+    */
+   public String getValueAsString() {
+«IF enumType() == "String"»
+      return value;
+«ELSEIF enumType() == "int"»
+      return Integer.toString(value);
+«ENDIF»   
+   }
+   
+   
+   /**
+    * Correct handling of singletons in deserialization
+    */
+   private Object readResolve() throws ObjectStreamException
+   {
+      return fromValue(value);
+   }
+   
+   /**
+    * Creates an enumeration instance from the value
+    * @param value 
+    *    of the literal type to be converted to an enumeration instance
+    * @return the enumeration instance
+    */
+   public static «className» fromValue(«javaValueType» value) {
+      for (Iterator iv = values.iterator(); iv.hasNext();) {
+         «className» literal = («className») iv.next();
+
+«IF valuePrimitive»
+         if ( literal.getValue() == value ) {
+«ELSE»         
+         if ( literal.getValue().equals(value) ) {
+«ENDIF»
+            return literal;
+         }
+      }
+      
+      throw new IllegalArgumentException(""+value);
+   }
+
+«LET this.attributes.typeSelect(JavaModelAttribute).get(0).modelClassifier AS typeClassifier»
+   /**
+    * test for equality of values in enumeration
+    */
+   public boolean equals(Object object)
+   {
+      boolean result = false;
+
+      if (object instanceof «className») {
+         «className» other = («className») object;
+«IF ((JavaModelClassifier)typeClassifier).javaPrimitiveType == true»
+         result = other.getValue() == value;
+«ELSE»		 
+         result = other.getValue().equals(value);
+«ENDIF»
+      }
+
+      return result;
+   }
+
+   /**
+    * calculate hash code of value in enumeration
+    */
+   public int hashCode()
+   {
+«IF ((JavaModelClassifier)typeClassifier).javaPrimitiveType == true»
+      return value;
+«ELSE»		 
+      return value.hashCode();
+«ENDIF»
+   }
+
+}
+«ENDLET»
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»

@@ -1,0 +1,114 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelDataType.
+ */
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator::java;
+
+extension org::umlmda::utils::String;
+ 
+private String decimalMapping() : 
+    GLOBALVAR decimalMapping;
+
+private String dateMapping() : 
+    GLOBALVAR dateMapping;
+
+private String dateTimeMapping() : 
+    GLOBALVAR dateTimeMapping;
+
+private String timestampMapping() : 
+    GLOBALVAR timestampMapping;
+
+/**
+ * Definition of the mapping of date can be controlled by
+ * the global variable dateMapping, default is set to <b>java.util.Date</b>.
+ */    	 
+cached String javaDateType() :
+	isEmpty(dateMapping()) ? "java.util.Date" : dateMapping();  
+ 
+cached String javaDateTimeType() :
+	isEmpty(dateTimeMapping()) ? "java.util.Date" : dateTimeMapping();  
+ 
+cached String javaTimestampType() :
+	isEmpty(timestampMapping()) ? "java.util.Date" : timestampMapping();  
+
+cached String javaDecimalType() :
+	isEmpty(decimalMapping()) ? "java.math.BigDecimnal" : decimalMapping();  
+ 
+ 
+/**
+ * Mapping of UMLMDA type to java types
+ */ 
+cached String javaTypeName (ModelDataType type) :
+	switch (type.name) {
+		case "int"       : "int"
+		case "long"      : "long"
+		case "short"     : "short"
+		case "float"     : "float"
+		case "double"    : "double"
+		case "decimal"   : javaDecimalType()
+		case "char"      : "char"
+		case "string"    : "String"
+		case "date"      : javaDateType()
+		case "dateTime"  : javaDateType()
+		case "timestamp" : javaDateType()
+		case "boolean"   : "boolean"
+		case "binary"    : "byte[]"
+		default          : "Unsupported type mapping for "+type.name
+	}
+;
+
+/**
+ * Mapping of UMLMDA nullable type to java types
+ */ 
+private String optionalJavaTypeName (ModelDataType type) :
+	switch (type.name) {
+		case "int"       : "Integer"
+		case "long"      : "Long"
+		case "short"     : "Short"
+		case "float"     : "Float"
+		case "double"    : "Double"
+		case "decimal"   : javaDecimalType()
+		case "char"      : "Character"
+		case "string"    : "String"
+		case "date"      : javaDateType()
+		case "dateTime"  : javaDateType()
+		case "timestamp" : javaDateType()
+		case "boolean"   : "Boolean"
+		case "binary"    : "byte[]"
+		default          : "Unsupported nullable type mapping for "+type.name
+	}
+;
+
+/**
+ * Mapping of UMLMDA type to java types
+ */ 
+cached String javaTypeName (ModelDataType type, boolean optional) :
+	optional ? optionalJavaTypeName(type) : javaTypeName(type)
+;
+
+cached String javaTypeWrapper (ModelDataType type) :
+	switch (type.name) {
+		case "int"       : "Integer"
+		case "long"      : "Long"
+		case "short"     : "Short"
+		case "float"     : "Float"
+		case "double"    : "Double"
+		case "char"      : "Character"
+		case "boolean"   : "Boolean"
+		default          : "Unsupported type for wrapping "+type.name
+	}
+;
+
+cached String javaTypeWrapperValue (ModelDataType type) :
+	switch (type.name) {
+		case "int"       : "intValue"
+		case "long"      : "longValue"
+		case "short"     : "shortValue"
+		case "float"     : "floatValue"
+		case "double"    : "doubleValue"
+		case "char"      : "charValue"
+		case "boolean"   : "booleanValue"
+		default          : "Unsupported type for wrapping "+type.name
+	}
+;
+

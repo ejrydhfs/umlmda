@@ -1,0 +1,42 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::j2ee»
+«EXTENSION java::UMLMDA»
+
+«DEFINE LocalInterface FOR J2EEBusinessService»
+«LET generatedName(this, "j2ee.LocalInterface") AS interfaceName»
+«FILE generatedPath+"/"+interfaceName+".java"»//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//@@UserSection-End RCSHeader
+
+package «generatorPackage.getQualifiedPackageName("j2ee.LocalInterface")»;
+
+/**
+ * J2EE remote interface for businessservice «getScopedName("java.BusinessServiceInterface")»
+ */
+public interface «interfaceName» extends
+«IF superClass != null»
+«getScopedName("j2ee.LocalInterface", (JavaModelClass)superClass)»
+«ELSE»
+javax.ejb.EJBLocalObject
+«ENDIF» 
+{
+	«FOREACH attributes.typeSelect(JavaModelAttribute) AS attr»
+		«EXPAND java::BOInterface::attrGetterDecl FOR attr»;
+		«EXPAND java::BOInterface::attrSetterDecl FOR attr»;
+	«ENDFOREACH»
+	
+	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+		«EXPAND java::BOInterface::assocGetterDecl FOR assoc»;
+		«EXPAND java::BOInterface::assocSetterDecl FOR assoc»;
+	«ENDFOREACH»
+	
+	«FOREACH methods.typeSelect(JavaModelMethod) AS method»
+		«EXPAND java::BOInterface::methodDecl FOR method»;
+	«ENDFOREACH»
+	
+}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»

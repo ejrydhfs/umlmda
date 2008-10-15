@@ -1,0 +1,93 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+
+«AROUND java::BOImpl::standardBOInterfaces FOR JavaModelClass»
+	, Serializable
+«ENDAROUND»
+
+// ==========================
+// Avoid persistence
+// ==========================
+«AROUND java::BOImpl::persistenceImpl FOR JavaBusinessObject»
+«ENDAROUND»
+
+// ==========================
+// Avoid XML serialization
+// ==========================
+«AROUND java::BOImpl::xmlSerializationMethods FOR JavaBusinessObject»
+«ENDAROUND»
+
+«AROUND java::BOImpl::xmlSerializationImports FOR JavaBusinessObject»
+«ENDAROUND»
+
+// ==========================
+// Avoid visitor interaction
+// ==========================
+«AROUND java::BOImpl::ImportVisitorBase FOR JavaBusinessObject»
+«ENDAROUND»
+
+«AROUND java::BOImpl::visitorAcceptMethod FOR JavaBusinessObject»
+«ENDAROUND»
+
+// ===============
+// Avoid delegates
+// ===============
+«AROUND java::BOImpl::getAbstractDelegate FOR JavaModelClass»
+«ENDAROUND»
+
+«AROUND java::BOImpl::delegateFactory FOR JavaBusinessObject»
+«ENDAROUND»
+
+// =============================
+// Avoid property change support
+// =============================
+«AROUND java::BOImpl::propertyChangeImports FOR JavaModelClass»
+«ENDAROUND»
+
+«AROUND java::BOImpl::propertyChangeSupportAttr FOR JavaModelClass»
+«ENDAROUND»
+
+«AROUND java::BOImpl::propertyChangeSupportMethods FOR JavaModelClass»
+«ENDAROUND»
+
+«AROUND java::BOImpl::setterAssignment FOR JavaModelStructuraleFeature»
+		this.«name» = «name»;
+«ENDAROUND»
+
+«AROUND java::BOImpl::firePropertyChange(JavaModelAssociation feature) FOR JavaBusinessObject»
+«ENDAROUND»
+
+«AROUND java::BOImpl::firePropertyChange(ModelStructuralFeature feature) FOR JavaBusinessObject»
+«ENDAROUND»
+
+«AROUND java::BOImpl::firePropertyChange(ModelStructuralFeature feature) FOR JavaModelClass»
+«ENDAROUND»
+
+// ==============================
+// Only none derived members used
+// ==============================
+«AROUND java::BOImpl::handleAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
+	«IF this.derived == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOImpl::handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
+	«IF this.derived == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+// =================
+// Avoid jmi support
+// =================
+«AROUND java::JmiReflect::Impl FOR JavaModelClass»
+«ENDAROUND»
+
+«AROUND java::JmiReflect::Imports FOR JavaModelClass»
+«ENDAROUND»
