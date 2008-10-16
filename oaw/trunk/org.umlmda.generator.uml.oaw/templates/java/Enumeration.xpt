@@ -42,7 +42,7 @@ public class «className» implements «this.enumInterface()» {
     */
    public static final «className» «attr.name» = new «className»(«attr.initialValue()»);
 «ENDFOREACH»
-   private final transient «enumType()» value;
+   private final «enumType()» value;
    private final static List values = new ArrayList();
 
    static {
