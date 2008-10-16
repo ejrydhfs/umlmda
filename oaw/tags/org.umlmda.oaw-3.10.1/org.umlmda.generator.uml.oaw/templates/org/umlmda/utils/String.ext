@@ -1,0 +1,12 @@
+/* 
+ * Functions like Apache Commons Lang library
+ */
+
+boolean isEmpty(String item):
+	(item == null || item == "");
+	
+boolean isNotEmpty(String item):
+	!isEmpty(item);
+	
+boolean booleanValue(String value):
+	value.toUpperCase() == "TRUE" ? true : false;		

@@ -1,0 +1,67 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+«EXTENSION org::umlmda::uml::java::Parameter»
+
+«DEFINE BODelegateInterface FOR JavaModelClass»
+«IF this.delegationInterfaceNeeded»
+«LET generatedName(this, "java.DelegateInterface") AS interfaceName»
+
+«FILE generatedPath+"/"+interfaceName+".java"»
+package «generatorPackage.getQualifiedPackageName("java.DelegateInterface")»;
+
+«this.resetImports()»
+«this.registerImports("java.Enumeration", referencedTypes, "Enumeration")»
+«this.registeredImports()»
+
+/**
+ * Interface for delegate to implement the methods and derived attributes of
+ * «qualifiedName».
+ * @see «getScopedName("java.BusinessObjectInterface")»
+ */
+ public interface «interfaceName» extends org.umlmda.runtime.lang.Delegate
+	«FOREACH allSuperClasses.typeSelect(JavaModelClass) AS superClass»
+		«IF superClass.delegationInterfaceNeeded»
+			, «this.getScopedName("java.DelegateInterface", superClass)»
+		«ENDIF»
+	«ENDFOREACH»
+{
+	«FOREACH javaAttributes() AS attr»
+		«EXPAND BODelegateInterface::derivedAttrGetterSetterDecl FOR attr»
+	«ENDFOREACH»
+
+	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+		«IF assoc.derived»
+			«EXPAND handleDerivedAssociation FOR assoc»
+		«ENDIF»
+	«ENDFOREACH»
+
+	«FOREACH methods.typeSelect(JavaModelMethod) AS method»
+		«EXPAND handleMethod FOR method»;
+	«ENDFOREACH»
+}
+«ENDFILE»
+«ENDLET»
+«ENDIF»
+«ENDDEFINE»
+
+«DEFINE derivedAttrGetterSetterDecl FOR JavaModelAttribute»
+	«IF this.derived»
+		«EXPAND BOInterface::attrGetterDecl(" derived") FOR this»;
+		«EXPAND BOInterface::attrSetterDecl(" derived") FOR this»;
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE handleDerivedAssociation FOR JavaModelAssociation»
+	«EXPAND BOInterface::assocGetterDecl FOR this»;
+	«EXPAND BOInterface::assocSetterDecl FOR this»;
+«ENDDEFINE»
+
+«DEFINE handleMethod FOR JavaModelMethod»
+	«EXPAND BOInterface::methodDecl FOR this»;
+«ENDDEFINE»
