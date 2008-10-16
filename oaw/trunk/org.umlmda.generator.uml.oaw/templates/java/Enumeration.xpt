@@ -42,7 +42,7 @@ public class «className» implements «this.enumInterface()» {
     */
    public static final «className» «attr.name» = new «className»(«attr.initialValue()»);
 «ENDFOREACH»
-   private final «enumType()» value;
+   private final transient «enumType()» value;
    private final static List values = new ArrayList();
 
    static {
@@ -164,6 +164,13 @@ public class «className» implements «this.enumInterface()» {
 «ELSE»		 
       return value.hashCode();
 «ENDIF»
+   }
+
+   /**
+    * Returns the qualified model name of the enumeration class
+    */
+   public String getQualifiedModelName() {
+   	  return QUALIFIED_MODEL_NAME;
    }
 
 }
