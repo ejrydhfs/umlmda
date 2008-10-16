@@ -34,4 +34,9 @@ import java.io.Serializable;
  */
 public interface Enumeration extends Serializable {
 
+   /**
+    * Returns the qualified model name of the enumeration class
+    * @return
+    */
+   public abstract String getQualifiedModelName();
 }
