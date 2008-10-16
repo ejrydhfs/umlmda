@@ -1,0 +1,169 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::JmiReflect»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::Association»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+
+«REM»
+	Implementation for javax.jmi.reflect interfaces
+«ENDREM»
+«DEFINE Impl FOR JavaModelClass»
+	«EXPAND jmiRefGetValueImpl FOR this»
+	«EXPAND jmiRefSetValueImpl FOR this»
+	«EXPAND jmiRefInvokeOperationImpl FOR this»
+	«EXPAND jmiRefStandardImpl FOR this»
+«ENDDEFINE»
+
+«DEFINE Imports FOR JavaModelClass»
+	import «jmiPackage()».InvalidNameException;
+	import «jmiPackage()».RefBaseObject;
+	import «jmiPackage()».RefException;
+	import «jmiPackage()».RefObject;
+	import «jmiPackage()».RefPackage;
+«ENDDEFINE»
+
+«DEFINE jmiRefGetValueImpl FOR JavaModelClass»
+	public Object refGetValue(RefObject feature) {
+      throw new UnsupportedOperationException("not implemented");
+	}
+	
+	/**
+	 * Reflective read access to the class features.
+	 * @param featureName
+	 *    Name of the feature to be read
+	 * @return
+	 *    Value of the feature or null if not set
+	 */
+	public Object refGetValue(String featureName) {
+		Object retObj = null;
+		
+		«FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr SEPARATOR "else"»
+			if (featureName.equals(«EXPAND java::BOInterface::propertyNameConstant FOR attr»)){
+			    «IF attr.javaPrimitiveType»
+			    	retObj = new «attr.dataType.javaTypeWrapper()» ( «attr.getter»() );
+			    «ELSE»
+					retObj = «attr.getter»();
+			    «ENDIF»
+			}
+		«ENDFOREACH»
+		«IF attributes.size > 0 && associations.size > 0  »
+			else
+		«ENDIF»
+		«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc SEPARATOR "else"»
+			if (featureName.equals(«EXPAND java::BOInterface::propertyNameConstant FOR assoc»)){
+				retObj = «assoc.getter»();
+			}
+		«ENDFOREACH»
+		«IF attributes.size > 0 || associations.size > 0  »
+		    else {
+		«ENDIF»
+    	«IF superClass != null»
+    		retObj = super.refGetValue(featureName);
+    	«ELSE»
+	    	throw new InvalidNameException(featureName);
+    	«ENDIF»
+		«IF attributes.size > 0 || associations.size > 0  »
+		    }
+		«ENDIF»
+	    
+		«IF attributes.size > 0 || associations.size > 0 || superClass != null »
+	    	return retObj;
+	    «ENDIF»	
+	}
+«ENDDEFINE»
+
+«DEFINE jmiRefSetValueImpl FOR JavaModelClass»
+	public void refSetValue(RefObject feature, Object value) {
+      throw new UnsupportedOperationException("not implemented");
+	}
+
+	/**
+	 * Reflective write access to the class features.
+	 * @param featureName
+	 *    Name of the feature to be read
+	 * @param value
+	 *    Value of the feature or null to be set
+	 */
+	public void refSetValue(String featureName, Object value) {
+		«FOREACH javaWriteableImplementedAttributes() AS attr SEPARATOR "else"»
+			if (featureName.equals(«EXPAND java::BOInterface::propertyNameConstant FOR attr»)){
+  				«IF attr.javaPrimitiveType»
+	   				«attr.setter»(((«attr.dataType.javaTypeWrapper()»)value).«attr.dataType.javaTypeWrapperValue()»());
+  				«ELSE»
+	   				«attr.setter»((«attr.javaTypeName()»)value);
+	   			«ENDIF»
+	   		}
+	   	«ENDFOREACH»	
+		«IF javaWriteableImplementedAttributes().size > 0 && javaWriteableImplementedAssociations().size > 0  »
+			else
+		«ENDIF»
+		«FOREACH javaWriteableImplementedAssociations() AS assoc SEPARATOR "else"»
+			if (featureName.equals(«EXPAND java::BOInterface::propertyNameConstant FOR assoc»)){
+   				«assoc.setter»((«assoc.interfaceType»)value);
+			}
+		«ENDFOREACH»
+		«IF javaWriteableImplementedAttributes().size > 0 || javaWriteableImplementedAssociations().size > 0  »
+		    else {
+	    «ENDIF»
+    	«IF superClass != null»
+    		super.refSetValue(featureName, value);
+    	«ELSE»
+	    	throw new InvalidNameException(featureName);
+    	«ENDIF»
+		«IF javaWriteableImplementedAttributes().size > 0 || javaWriteableImplementedAssociations().size > 0  »
+		    }
+	    «ENDIF»
+	}
+«ENDDEFINE»
+
+«DEFINE jmiRefInvokeOperationImpl FOR JavaModelClass»
+	public Object refInvokeOperation(RefObject requestedOperation, java.util.List args) {
+      throw new UnsupportedOperationException("not implemented");
+	}
+	
+	/**
+	 * Reflective operation call to the class methods.
+	 * @param requestedOperation
+	 *    Name of the method to be called
+	 * @param args
+	 *    Methods arguments 
+	 * @return
+	 *	  Methods return 	
+	 */
+	public Object refInvokeOperation(String requestedOperation, java.util.List args) throws RefException {
+       throw new UnsupportedOperationException("not implemented");
+	}
+«ENDDEFINE»
+
+«DEFINE jmiRefStandardImpl FOR JavaModelClass»
+	// Implementation of interface «jmiPackage()».RefBaseObject
+   public RefPackage refImmediatePackage() {
+      throw new UnsupportedOperationException("not implemented");
+   }
+
+   public RefObject refMetaObject() {
+      throw new UnsupportedOperationException("not implemented");
+   }
+
+   public String refMofId() {
+      throw new UnsupportedOperationException("not implemented");
+   }
+
+   public RefPackage refOutermostPackage() {
+      throw new UnsupportedOperationException("not implemented");
+   }
+
+   public java.util.Collection refVerifyConstraints(boolean deepVerify) {
+      throw new UnsupportedOperationException("not implemented");
+   }
+   
+   // Implementation of «jmiPackage()».RefFeatured
+«ENDDEFINE»
