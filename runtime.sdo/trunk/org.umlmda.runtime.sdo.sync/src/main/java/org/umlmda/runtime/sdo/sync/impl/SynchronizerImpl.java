@@ -2,10 +2,10 @@ package org.umlmda.runtime.sdo.sync.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.umlmda.runtime.bean.ManagedPropertyChangeSupportHelper;
 import org.umlmda.runtime.bean.PropertyChangeEventManager;
 import org.umlmda.runtime.lang.GenericEnumeration;
 import org.umlmda.runtime.sdo.sync.InvocationStatus;
@@ -32,6 +32,7 @@ import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeToNull;
 import org.umlmda.runtime.sdo.sync.entries.CollectionClearEntry;
 import org.umlmda.runtime.sdo.sync.entries.CollectionRemoveEntry;
+import org.umlmda.runtime.sdo.sync.entries.InvokeEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListAddEntry;
 import org.umlmda.runtime.sdo.sync.entries.ListRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
@@ -164,30 +165,30 @@ public class SynchronizerImpl implements Recorder {
 		return recording;
 	}
 
-	public void recordInvoke(final SynchronizedObject recordedObject,
-			final String methodName, final Object... parameters) {
+	public void recordInvoke(final SynchronizedObject recordedObject, final String methodName, final Object... parameters) {
+      // Translate parameters
+      final Object transferParameter[] = new Object[parameters.length];
+
+      for (int i = 0; i < parameters.length; i++) {
+         Object parameter = parameters[i];
+
+         if (parameter instanceof SynchronizedObject) {
+            transferParameter[i] = new SynchronizedObjectProxy(((SynchronizedObject) parameter).getRecordObjectId());
+         } else {
+            transferParameter[i] = parameter;
+         }
+      }
+
+      // If in running mode queue the invoke for later invocation
 	   if (invocationStatus.equals(InvocationStatus.RUNNING)) {
-	      throw new RuntimeException("we are currently in invocation and can't do another one!");
+	      changeEntries.add(new InvokeEntry(recordedObject.getRecordObjectId(), methodName, transferParameter));
+	      return;
 	   }
+	   
 	   invocationStatus = InvocationStatus.RUNNING;
 	   
-		// Translate parameters
-		final Object transferParameter[] = new Object[parameters.length];
-
-		for (int i = 0; i < parameters.length; i++) {
-			Object parameter = parameters[i];
-
-			if (parameter instanceof SynchronizedObject) {
-				transferParameter[i] = new SynchronizedObjectProxy(
-						((SynchronizedObject) parameter).getRecordObjectId());
-			} else {
-				transferParameter[i] = parameter;
-			}
-		}
-
 		if (logger.isDebugEnabled()) {
-			logger.debug("About to invoke " + methodName
-					+ " pushd changes to remote peer");
+			logger.debug("About to invoke " + methodName + " pushd changes to remote peer");
 			for (AbstractChangeLogEntry entry : changeEntries) {
 				logger.debug(entry);
 			}
@@ -195,71 +196,109 @@ public class SynchronizerImpl implements Recorder {
 
 		ServiceQueue serviceQueue = new ServiceQueue();
 
-		// Write pending changes to remote peer
-		if (changeEntries.size() > 0) {
-			serviceQueue
-					.addServiceCall(new AbstractServiceCall<List<AbstractChangeLogEntry>>() {
-
-						public void onExecute(
-								ServiceCallWrapperImpl<List<AbstractChangeLogEntry>> wrapper) {
-							service.synchronizeChanges(changeEntries, wrapper);
-						}
-
-						public void onSucess(
-								List<AbstractChangeLogEntry> remoteChanges,
-								SyncServiceCallback callback) {
-							// Get remote results put to local objects
-							if (player != null && remoteChanges != null
-									&& remoteChanges.size() > 0) {
-								playbackRemoteChanges(remoteChanges);
-							}
-							changeEntries.clear();
-						}
-
-					});
-		}
-
-		// Call the service
-		serviceQueue
-				.addServiceCall(new AbstractServiceCall<AbstractInvocationResult>() {
-
-					public void onExecute(
-							ServiceCallWrapperImpl<AbstractInvocationResult> wrapper) {
-						SynchronizedObjectProxy objectProxy = new SynchronizedObjectProxy(
-								recordedObject.getRecordObjectId());
-						service.invokeMethod(objectProxy, methodName,
-								transferParameter, wrapper);
-					}
-
-					public void onSucess(
-							AbstractInvocationResult invocationResult,
-							SyncServiceCallback callback) {
-						if (player != null
-								&& invocationResult.getRemoteChanges() != null
-								&& invocationResult.getRemoteChanges().size() > 0) {
-							playbackRemoteChanges(invocationResult
-									.getRemoteChanges());
-						}
-						if (callback != null) {
-							callback.onSuccess();
-					      invocationStatus = InvocationStatus.IDLE;
-						}
-					}
-				});
-
+		generateServiceEntries(serviceQueue, recordedObject.getRecordObjectId(), methodName, transferParameter);
 		serviceQueue.execute();
 	}
 
-	private void playbackRemoteChanges(
-			List<AbstractChangeLogEntry> remoteChanges) {
+	/**
+	 * Generates the service request entries
+	 * @param serviceQueue
+	 * @param recordedObject
+	 * @param methodName
+	 * @param transferParameter
+	 */
+   private void generateServiceEntries(final ServiceQueue serviceQueue, final int recordedObjectId,
+         final String methodName, final Object[] transferParameter) {
+
+      // Write pending changes to remote peer
+		if (changeEntries.size() > 0) {
+			serviceQueue.addServiceCall(new AbstractServiceCall<List<AbstractChangeLogEntry>>() {
+
+				public void onExecute(ServiceCallWrapperImpl<List<AbstractChangeLogEntry>> wrapper) {
+					service.synchronizeChanges(extractChangeEntries(changeEntries), wrapper);
+				}
+
+				public void onSucess(List<AbstractChangeLogEntry> remoteChanges, SyncServiceCallback callback) {
+					// Get remote results put to local objects
+					if (player != null && remoteChanges != null && remoteChanges.size() > 0) {
+						playbackRemoteChanges(remoteChanges);
+					}
+				}
+
+			});
+		}
+
+		// Call the service
+		serviceQueue.addServiceCall(new AbstractServiceCall<AbstractInvocationResult>() {
+
+				public void onExecute(ServiceCallWrapperImpl<AbstractInvocationResult> wrapper) {
+					SynchronizedObjectProxy objectProxy = new SynchronizedObjectProxy(recordedObjectId);
+					service.invokeMethod(objectProxy, methodName, transferParameter, wrapper);
+				}
+
+				public void onSucess(AbstractInvocationResult invocationResult, SyncServiceCallback callback) {
+					if (player != null
+							&& invocationResult.getRemoteChanges() != null
+							&& invocationResult.getRemoteChanges().size() > 0) {
+						playbackRemoteChanges(invocationResult.getRemoteChanges());
+					}
+					if (callback != null) {
+						InvokeEntry invokeEntry = getNextInvokeEntry(changeEntries);
+						
+                  if ( invokeEntry == null ) {
+                     callback.onSuccess();
+						   invocationStatus = InvocationStatus.IDLE;
+						}
+						
+						// Put queued invokes to service queue
+						else {
+						   generateServiceEntries(serviceQueue, invokeEntry.getRecordId(), invokeEntry.getMethodName(), invokeEntry.getTransferParameters());
+						}
+					}
+				}
+			});
+   }
+
+	private InvokeEntry getNextInvokeEntry(List<AbstractChangeLogEntry> allLogEntries) {
+	   for ( Iterator<AbstractChangeLogEntry> ile = allLogEntries.iterator(); ile.hasNext(); ) {
+         AbstractChangeLogEntry logEntry = ile.next();
+
+         if ( logEntry instanceof InvokeEntry ) {
+            ile.remove();
+            return (InvokeEntry)logEntry;
+         }
+      }
+      return null;
+   }
+
+   /**
+	 * Returns a sublist containing "real" change log entries until the next invoke entry
+	 */
+	private List<AbstractChangeLogEntry> extractChangeEntries(List<AbstractChangeLogEntry> allLogEntries) {
+	   List<AbstractChangeLogEntry> changeEntries = new ArrayList<AbstractChangeLogEntry>();
+	   
+	   for ( Iterator<AbstractChangeLogEntry> ile = allLogEntries.iterator(); ile.hasNext(); ) {
+         AbstractChangeLogEntry logEntry = ile.next();
+         
+         if ( logEntry instanceof InvokeEntry ) {
+            return changeEntries;
+         }
+         else {
+            changeEntries.add(logEntry);
+            ile.remove();
+         }
+      }
+      return changeEntries;
+   }
+
+   private void playbackRemoteChanges(List<AbstractChangeLogEntry> remoteChanges) {
 		SynchronizeStrategy oldStrategy = strategy;
 
 		// Temporary switch to collect strategy
 		setSynchronizeStrategy(SynchronizeStrategy.COLLECT);
 
 		// Switch property change events off while doing the playback
-		boolean startQueuing = PropertyChangeEventManager.INSTANCE
-				.startQueuing();
+		boolean startQueuing = PropertyChangeEventManager.INSTANCE.startQueuing();
 
 		try {
 			player.playback(remoteChanges, null);
@@ -279,8 +318,7 @@ public class SynchronizerImpl implements Recorder {
 
 	}
 
-	public synchronized void recordInvoke(
-			final SynchronizedObject recordedObject, final String methodName) {
+	public synchronized void recordInvoke(final SynchronizedObject recordedObject, final String methodName) {
 		recordInvoke(recordedObject, methodName, new Object[] {});
 	}
 
@@ -298,6 +336,9 @@ public class SynchronizerImpl implements Recorder {
 
 	private void addEntry(AbstractChangeLogEntry entry) {
 		changeEntries.add(entry);
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("Recorded to ("+changeEntries.size()+"): "+entry);
+      }
 		strategy.postRecordAction();
 	}
 
