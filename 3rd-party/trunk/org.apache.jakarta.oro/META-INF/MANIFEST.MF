@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Apache Ora Plug-in
+Bundle-SymbolicName: org.apache.jakarta.oro
+Bundle-Version: 2.0.8
+Bundle-ClassPath: lib/jakarta-oro-2.0.8.jar
+Bundle-Vendor: www.umlmda.org
+Bundle-Localization: plugin
+Export-Package: org.apache.oro.io,
+ org.apache.oro.text,
+ org.apache.oro.text.awk,
+ org.apache.oro.text.perl,
+ org.apache.oro.text.regex,
+ org.apache.oro.util
+Eclipse-LazyStart: true

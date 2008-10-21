@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Apache Commons Logging Plug-in
+Bundle-SymbolicName: org.apache.commons.logging
+Bundle-Version: 1.0.4
+Bundle-ClassPath: lib/commons-logging-1.0.4.jar
+Bundle-Vendor: www.umlmda.org
+Bundle-Localization: plugin
+Export-Package: org.apache.commons.logging,
+ org.apache.commons.logging.impl

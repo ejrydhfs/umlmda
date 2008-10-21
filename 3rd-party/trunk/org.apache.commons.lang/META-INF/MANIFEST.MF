@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Apache Commons Lang Plug-in
+Bundle-SymbolicName: org.apache.commons.lang
+Bundle-Version: 2.0.0
+Bundle-ClassPath: lib/commons-lang-2.0.jar
+Bundle-Vendor: www.umlmda.org
+Bundle-Localization: plugin
+Export-Package: org.apache.commons.lang,
+ org.apache.commons.lang.builder,
+ org.apache.commons.lang.exception,
+ org.apache.commons.lang.math,
+ org.apache.commons.lang.time
