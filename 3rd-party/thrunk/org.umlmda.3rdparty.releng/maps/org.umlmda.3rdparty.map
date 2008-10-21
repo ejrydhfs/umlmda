@@ -1,0 +1,9 @@
+!*******************************************************************************************
+! SVN map files format
+! <type>@<id>=SVN,<tag>[:revision],<svnRepositoryURL>,<preTagPath>,<postTagPath>
+!*******************************************************************************************
+!***************  SVN PDE BUILD CONTRIBUTION  ********************************************** 
+
+feature@org.umlmda.3rdparty.feature=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/3rd-party,,org.umlmda.3rdparty.feature
+
+plugin@org.apache.commons.collection=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/3rd-party,,org.apache.commons.collection
