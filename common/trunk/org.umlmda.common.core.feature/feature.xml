@@ -39,12 +39,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.umlmda.umlmodel.mdr"
-         download-size="0"
-         install-size="0"
-         version="3.5.0.qualifier"/>
-
-   <plugin
          id="org.umlmda.umlmodel.nsuml"
          download-size="0"
          install-size="0"
