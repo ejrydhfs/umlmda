@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.umlmda.eclipse.feature"
-      label="org.umlmda.eclipse.feature"
-      version="3.2.0.qualifier"
+      id="org.umlmda.common.feature"
+      label="org.umlmda.common.feature"
+      version="3.5.0.qualifier"
       provider-name="www.umlmda.org">
 
    <description url="readme.html">
@@ -42,35 +42,84 @@ transformations using UMLMDA.
          id="org.umlmda.model.profile"
          download-size="0"
          install-size="0"
-         version="3.2.0.qualifier"
+         version="3.5.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.umlmda.umlmodel"
          download-size="0"
          install-size="0"
-         version="3.2.0.qualifier"
+         version="3.5.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.umlmda.generator.profile"
          download-size="0"
          install-size="0"
-         version="3.2.0.qualifier"
+         version="3.5.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.umlmda.generator.profile.edit"
          download-size="0"
          install-size="0"
-         version="3.2.0.qualifier"
+         version="3.5.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.umlmda.generator.profile.editor"
          download-size="0"
          install-size="0"
-         version="3.2.0.qualifier"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.crazybeans"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.eclipse"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.eclipse.jdt"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.generator.model"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.generator.uml.psm"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.umlmodel.nsuml"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.umlmodel.uml2"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
          unpack="false"/>
 
 </feature>
