@@ -411,13 +411,14 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
 
 	               public void process(ModelElement modelElement) {
 	                  ModelClass modelClass = (ModelClass) modelElement;
+
 	                  
-	                  attributes.addAll(modelClass.getAttributes(false));
+	                  addNoneExistierungAttributes(attributes, modelClass.getAttributes(false));
 	               }
                });
             
             // Add own attributes
-            attributes.addAll(super.getAttributes());
+            addNoneExistierungAttributes(attributes, super.getAttributes());
          }
          else {
             attributes = super.getAttributes();
@@ -426,6 +427,28 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
       return attributes;
    }
 
+   private static void addNoneExistierungAttributes(List attributes, List attributesToAdd) {
+      for (Iterator iaa = attributesToAdd.iterator(); iaa.hasNext();) {
+         ModelAttribute attributeToAdd = (ModelAttribute) iaa.next();
+         boolean alreadyExisting = false;
+         
+         for (Iterator ia = attributes.iterator(); ia.hasNext();) {
+            ModelAttribute attribute = (ModelAttribute) ia.next();
+            
+            if ( attribute.getName().equals(attributeToAdd.getName())) {
+               if ( attribute.getDataType() != null && attribute.getDataType().equals(attributeToAdd.getDataType()) == false ) {
+                  logger.warn(attribute.getQualifiedName()+" has different type than "+attributeToAdd.getQualifiedName()+" in derived class");
+               }
+               alreadyExisting = true;
+            }
+         }
+         
+         if ( alreadyExisting == false ) {
+            attributes.add(attributeToAdd);
+         }
+      }
+   }
+   
    private static void iterateNoneExtendedBaseClasses(ModelClass modelClass, List allExtendedClasses, ModelIterator.Action action) {
       // Add attributes from none <<Extends>> generalizations
       for (Iterator ig = modelClass.getGeneralizations().iterator(); ig.hasNext();) {
