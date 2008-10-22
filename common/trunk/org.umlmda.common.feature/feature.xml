@@ -53,6 +53,27 @@ transformations using UMLMDA.
          unpack="false"/>
 
    <plugin
+         id="org.umlmda.crazybeans"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.umlmodel.nsuml"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.umlmodel.uml2"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
          id="org.umlmda.generator.profile"
          download-size="0"
          install-size="0"
@@ -68,13 +89,6 @@ transformations using UMLMDA.
 
    <plugin
          id="org.umlmda.generator.profile.editor"
-         download-size="0"
-         install-size="0"
-         version="3.5.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.crazybeans"
          download-size="0"
          install-size="0"
          version="3.5.0.qualifier"
@@ -108,18 +122,5 @@ transformations using UMLMDA.
          version="3.5.0.qualifier"
          unpack="false"/>
 
-   <plugin
-         id="org.umlmda.umlmodel.nsuml"
-         download-size="0"
-         install-size="0"
-         version="3.5.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.umlmodel.uml2"
-         download-size="0"
-         install-size="0"
-         version="3.5.0.qualifier"
-         unpack="false"/>
 
 </feature>
