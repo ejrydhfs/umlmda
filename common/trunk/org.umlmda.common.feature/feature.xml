@@ -22,6 +22,10 @@ transformations using UMLMDA.
       <discovery label="UMLMDA Update Site" url="http://www.umlmda.org/update"/>
    </url>
 
+   <includes
+         id="org.umlmda.common.core.feature"
+         version="0.0.0"/>
+
    <requires>
       <import plugin="org.apache.log4j"/>
       <import plugin="org.apache.commons.lang"/>
@@ -37,41 +41,6 @@ transformations using UMLMDA.
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.umlmda.generator.profile.edit"/>
    </requires>
-
-   <plugin
-         id="org.umlmda.model.profile"
-         download-size="0"
-         install-size="0"
-         version="3.5.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.umlmodel"
-         download-size="0"
-         install-size="0"
-         version="3.5.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.crazybeans"
-         download-size="0"
-         install-size="0"
-         version="3.5.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.umlmodel.nsuml"
-         download-size="0"
-         install-size="0"
-         version="3.5.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.umlmda.umlmodel.uml2"
-         download-size="0"
-         install-size="0"
-         version="3.5.0.qualifier"
-         unpack="false"/>
 
    <plugin
          id="org.umlmda.generator.profile"
@@ -121,6 +90,5 @@ transformations using UMLMDA.
          install-size="0"
          version="3.5.0.qualifier"
          unpack="false"/>
-
 
 </feature>
