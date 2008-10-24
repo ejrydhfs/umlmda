@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.umlmda.common.core.feature"
+      label="UMLMDA Common Core"
+      version="3.5.0.qualifier"
+      provider-name="www.umlmda.org">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <plugin
+         id="org.umlmda.crazybeans"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.model.profile"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.umlmodel"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.umlmodel.nsuml"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.umlmda.umlmodel.uml2"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.qualifier"
+         unpack="false"/>
+
+</feature>

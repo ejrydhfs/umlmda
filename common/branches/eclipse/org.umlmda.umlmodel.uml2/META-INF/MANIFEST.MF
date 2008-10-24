@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: UMLMDA UMLModel for UML2 Plug-in
+Bundle-SymbolicName: org.umlmda.umlmodel.uml2
+Bundle-Version: 3.5.0.qualifier
+Bundle-Vendor: www.umlmda.org
+Bundle-Localization: plugin
+Export-Package: org.umlmda.model.uml.uml2
+Require-Bundle: org.apache.commons.lang,org.apache.log4j,org.eclipse.uml2.uml,org.eclipse.uml2.uml.resources,org.umlmda.umlmodel,org.umlmda.generator.profile
+Eclipse-LazyStart: true

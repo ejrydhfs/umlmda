@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: UMLMDA Generator Model Plug-in
+Bundle-SymbolicName: org.umlmda.generator.model
+Bundle-Version: 3.5.0.qualifier
+Bundle-Vendor: www.umlmda.org
+Bundle-Localization: plugin
+Export-Package: org.umlmda.generator.annotation,org.umlmda.generator.logging,org.umlmda.generator.model.uml,org.umlmda.generator.model.util
+Require-Bundle: org.apache.log4j,
+ org.apache.commons.collection,
+ org.apache.commons.lang,
+ org.apache.jakarta.oro,
+ org.apache.velocity,
+ org.openarchitectureware.core.expressions,
+ org.openarchitectureware.core.workflow,
+ org.openarchitectureware.core.xpand2,
+ org.umlmda.umlmodel,
+ org.umlmda.generator.profile
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-LazyStart: true
