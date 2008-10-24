@@ -11,7 +11,7 @@
  	<target name="allElementsDelegator">
  		<ant antfile="${genericTargets}" target="${target}">
 	 		<property name="type" value="feature" />
-	 		<property name="id" value="org.umlmda.common.core.feature" />
+	 		<property name="id" value="org.umlmda.rsdp.uml2.feature" />
  		</ant>
  	</target>
  
@@ -22,7 +22,7 @@
  	<!-- Add one target for each root element and each configuration           -->
  	<!-- Replace element.id with the id of the top level element being built   -->
  	<!-- ===================================================================== -->
- 	<target name="assemble.org.umlmda.common.core.feature">
+ 	<target name="assemble.org.umlmda.rsdp.uml2.feature">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/>
  	</target>
 </project>
