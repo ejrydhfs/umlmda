@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="lib/jmi.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jmiuml-1.4di.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jmiutils.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/mdrapi.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/mof.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/nbmdr.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/openide-util.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

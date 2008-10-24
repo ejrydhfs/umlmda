@@ -2,6 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mdr
 Bundle-SymbolicName: org.umlmda.umlmodel.mdr
-Bundle-Version: 1.0.0
+Bundle-Version: 3.5.0.qualifier
 Export-Package: .,
  org.umlmda.model.uml.mdr
+Require-Bundle: org.netbeans.mdr.uml,
+ org.apache.commons.lang,
+ org.apache.commons.logging,
+ org.umlmda.umlmodel
