@@ -1,7 +1,0 @@
-bin
-org.umlmda.eclipse.jdt_*.jar
-temp.folder
-javaCompiler.runtime_org.umlmda.eclipse.jdt.jar.args
-@dot
-src.zip
-javaCompiler.*.args
