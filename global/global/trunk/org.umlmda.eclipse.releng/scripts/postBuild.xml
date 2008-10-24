@@ -21,10 +21,10 @@
         	   <feature url="features/org.umlmda.3rdparty.feature_${org.umlmda.3rdparty.feature}.jar" id="org.umlmda.3rdparty.feature" version="${org.umlmda.3rdparty.feature}">
         	      <category name="UMLMDA3"/>
         	   </feature>
-        	   <feature url="features/org.umlmda.common.core_${org.umlmda.common.core.feature}.jar" id="org.umlmda.common.core.feature" version="${org.umlmda.common.core.feature}">
+        	   <feature url="features/org.umlmda.common.core.feature_${org.umlmda.common.core.feature}.jar" id="org.umlmda.common.core.feature" version="${org.umlmda.common.core.feature}">
         	      <category name="UMLMDA3"/>
         	   </feature>
-	     	   <feature url="features/org.umlmda.common_${org.umlmda.common.feature}.jar" id="org.umlmda.common.feature" version="${org.umlmda.common.feature}">
+	     	   <feature url="features/org.umlmda.common.feature_${org.umlmda.common.feature}.jar" id="org.umlmda.common.feature" version="${org.umlmda.common.feature}">
 	     	      <category name="UMLMDA3"/>
 	     	   </feature>
         	   <!--
