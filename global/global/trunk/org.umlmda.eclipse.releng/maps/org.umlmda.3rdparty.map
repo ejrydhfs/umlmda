@@ -1,0 +1,18 @@
+!*******************************************************************************************
+! SVN map files format
+! <type>@<id>=SVN,<tag>[:revision],<svnRepositoryURL>,<preTagPath>,<postTagPath>
+!*******************************************************************************************
+!***************  SVN PDE BUILD CONTRIBUTION  ********************************************** 
+
+feature@org.umlmda.3rdparty.feature=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,3rd-party,org.umlmda.3rdparty.feature
+
+plugin@org.apache.commons.collection=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,3rd-party,org.apache.commons.collection
+plugin@org.apache.commons.lang=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,3rd-party,org.apache.commons.lang
+plugin@org.apache.commons.logging=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,3rd-party,org.apache.commons.logging
+plugin@org.apache.jakarta.oro=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,3rd-party,org.apache.jakarta.oro
+plugin@org.apache.log4j=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,3rd-party,org.apache.log4j
+plugin@org.apache.velocity=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,3rd-party,org.apache.velocity
+plugin@org.apache.log4j=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,3rd-party,org.apache.log4j
+plugin@org.netbeans.mdr.uml=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,3rd-party,org.netbeans.mdr.uml
+plugin@org.freemarker=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,3rd-party,org.freemarker
+plugin@ru.novosoft.uml=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,3rd-party,ru.novosoft.uml

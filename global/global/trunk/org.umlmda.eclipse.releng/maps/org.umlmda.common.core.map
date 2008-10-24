@@ -1,0 +1,13 @@
+!*******************************************************************************************
+! SVN map files format
+! <type>@<id>=SVN,<tag>[:revision],<svnRepositoryURL>,<preTagPath>,<postTagPath>
+!*******************************************************************************************
+!***************  SVN PDE BUILD CONTRIBUTION  ********************************************** 
+
+feature@org.umlmda.common.core.feature=SVN,branches/eclipse,https://umlmda.svn.sourceforge.net/svnroot/umlmda,common,org.umlmda.common.core.feature
+
+plugin@org.umlmda.crazybeans=SVN,branches/eclipse,https://umlmda.svn.sourceforge.net/svnroot/umlmda,common,org.umlmda.crazybeans
+plugin@org.umlmda.model.profile=SVN,branches/eclipse,https://umlmda.svn.sourceforge.net/svnroot/umlmda,common,org.umlmda.model.profile
+plugin@org.umlmda.umlmodel=SVN,branches/eclipse,https://umlmda.svn.sourceforge.net/svnroot/umlmda,common,org.umlmda.umlmodel
+plugin@org.umlmda.umlmodel.nsuml=SVN,branches/eclipse,https://umlmda.svn.sourceforge.net/svnroot/umlmda,common,org.umlmda.umlmodel.nsuml
+plugin@org.umlmda.umlmodel.uml2=SVN,branches/eclipse,https://umlmda.svn.sourceforge.net/svnroot/umlmda,common,org.umlmda.umlmodel.uml2

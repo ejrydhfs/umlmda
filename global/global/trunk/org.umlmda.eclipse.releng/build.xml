@@ -1,0 +1,108 @@
+<project default="build.all" name="org.umlmda.eclipse.releng">
+
+   <property name="basebuilder" value="${basedir}/../releng/org.eclipse.releng.basebuilder" />
+   <property name="buildDirectory" value="${basedir}/../build" />
+   <property name="mapsDirectory" value="${buildDirectory}/maps" />
+   <property name="pluginsDirectory" value="${buildDirectory}/plugins" />
+   <property name="featuresDirectory" value="${buildDirectory}/features" />
+
+   <!-- ================================= 
+          target: build.all              
+         ================================= -->
+   <target name="build.all" depends="cleanup, build.3rdparty, build.common.core, build.common" description="Build all features">
+
+   </target>
+
+   <!-- ================================= 
+          target: cleanup              
+         ================================= -->
+   <target name="cleanup" depends="cleanup.plugins" description="Cleanup all stuff">
+      <!-- Delete stuff from previous builds -->
+      <delete>
+         <fileset dir="${buildDirectory}">
+            <include name="*Versions.properties" />
+            <include name="*Versions.ANY_ANY_ANY.properties" />
+            <include name="assemble.*.feature*.xml" />
+            <include name="fetch_*.xml" />
+            <include name="directory.txt" />
+            <include name="package.*.feature*.xml" />
+            <include name="maps/*.map" />
+         </fileset>
+      </delete>
+
+      <!-- Copy map files --> 
+      <mkdir dir="${mapsDirectory}" />
+      <copy todir="${mapsDirectory}">
+         <fileset dir="${basedir}/maps">
+            <include name="*.map" />
+         </fileset>
+      </copy>
+      
+      <!-- Create some required folders -->
+      <mkdir dir="${buildDirectory}/I.TestBuild/update-site"/>
+      
+   </target>
+
+   <!-- - - - - - - - - - - - - - - - - - 
+          target: cleanup.plugins                      
+         - - - - - - - - - - - - - - - - - -->
+      <target name="cleanup.plugins" unless="no.cleanup.plugins">
+         <delete dir="${pluginsDirectory}"/>
+         <mkdir dir="${pluginsDirectory}"/>
+         <delete dir="${featuresDirectory}"/>
+         <mkdir dir="${featuresDirectory}"/>
+      </target>
+
+      <!-- - - - - - - - - - - - - - - - - - 
+          target: init                      
+         - - - - - - - - - - - - - - - - - -->
+      <target name="init.check">
+         <condition property="is.basebuilder.defined">
+            <isset property="basebuilder" />
+         </condition>
+      </target>
+
+      <target name="init" depends="init.check" unless="">
+         <tstamp prefix="timestamp" />
+      </target>
+
+      <!-- ================================= 
+          target: build.3rdparty              
+         ================================= -->
+      <target name="build.3rdparty" depends="init" description="Build 3rd-party feature">
+         <pde.build component="3rdparty" />
+      </target>
+
+      <!-- ================================= 
+          target: build.3rdparty              
+         ================================= -->
+      <target name="build.common.core" depends="init" description="Build common core feature">
+         <pde.build component="common.core" />
+      </target>
+
+      <!-- ================================= 
+          target: build.3rdparty              
+         ================================= -->
+      <target name="build.common" depends="init" description="Build common feature">
+         <pde.build component="common" />
+      </target>
+
+      <macrodef name="pde.build">
+         <attribute name="component" />
+         <sequential>
+            <delete file="${buildDirectory}/I.TestBuild/org.umlmda.@{component}.feature-TestBuild.zip" />
+            <java fork="true" classname="org.eclipse.equinox.launcher.Main" failonerror="true" taskname="pde.build">
+               <classpath>
+                  <pathelement location="${basebuilder}/startup.jar" />
+               </classpath>
+               <arg value="-application" />
+               <arg value="org.eclipse.ant.core.antRunner" />
+               <arg value="-buildfile" />
+               <arg value="${basebuilder}/plugins/org.eclipse.pde.build/scripts/build.xml" />
+               <arg value="-Dbuilder=${basedir}/scripts/@{component}" />
+               <arg value="-DforceContextQualifier=${timestamp.DSTAMP}-${timestamp.TSTAMP}" />
+               <arg value="-DbuildDirectory=${basedir}/../build" />
+            </java>
+         </sequential>
+      </macrodef>
+   </project>
