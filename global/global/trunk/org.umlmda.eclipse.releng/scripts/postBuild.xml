@@ -38,7 +38,7 @@
         	      <category name="UMLMDA3"/>
         	   </feature>
         	   -->
-        	   <feature url="features/org.umlmda.rsdp.uml2_2.1.0.200801142220.jar" id="org.umlmda.rsdp.uml2" version="2.1.0.200801142220">
+        	   <feature url="features/org.umlmda.rsdp.uml2_${org.umlmda.rsdp.uml2.feature}.jar" id="org.umlmda.rsdp.uml2" version="${org.umlmda.rsdp.uml2.feature}">
         	      <category name="UMLMDA3_MODELING"/>
         	   </feature>
         	   <!--

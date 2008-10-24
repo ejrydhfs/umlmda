@@ -10,7 +10,7 @@
    <!-- ================================= 
           target: build.all              
          ================================= -->
-   <target name="build.all" depends="cleanup, build.3rdparty, build.common.core, build.common" description="Build all features">
+   <target name="build.all" depends="cleanup, build.3rdparty, build.common.core, build.common, build.rsdp.uml2" description="Build all features">
 
    </target>
 
@@ -31,18 +31,22 @@
          </fileset>
       </delete>
 
-      <!-- Copy map files -->
-      <mkdir dir="${mapsDirectory}" />
-      <copy todir="${mapsDirectory}">
-         <fileset dir="${basedir}/maps">
-            <include name="*.map" />
-         </fileset>
-      </copy>
-
       <!-- Create some required folders -->
       <mkdir dir="${buildDirectory}/I.TestBuild/update-site" />
 
    </target>
+
+   <!-- - - - - - - - - - - - - - - - - - 
+          target: copyMaps, copies the map files                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="copyMaps">
+       <mkdir dir="${mapsDirectory}" />
+       <copy todir="${mapsDirectory}">
+          <fileset dir="${basedir}/maps">
+             <include name="*.map" />
+          </fileset>
+       </copy>
+    </target>
 
    <!-- - - - - - - - - - - - - - - - - - 
           target: cleanup.plugins                      
@@ -63,7 +67,7 @@
       </condition>
    </target>
 
-   <target name="init" depends="init.check" unless="">
+   <target name="init" depends="init.check, copyMaps" unless="">
       <tstamp prefix="timestamp" />
    </target>
 
@@ -107,6 +111,13 @@
          ================================= -->
    <target name="build.common" depends="init" description="Build common feature">
       <pde.build component="common" />
+   </target>
+
+   <!-- ================================= 
+          target: build.rsdp.uml2
+         ================================= -->
+   <target name="build.rsdp.uml2" depends="init" description="Build rsdp uml2 feature">
+      <pde.build component="rsdp.uml2" />
    </target>
 
    <macrodef name="pde.build">

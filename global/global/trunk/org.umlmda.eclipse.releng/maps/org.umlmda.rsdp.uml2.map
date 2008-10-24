@@ -1,0 +1,9 @@
+!*******************************************************************************************
+! SVN map files format
+! <type>@<id>=SVN,<tag>[:revision],<svnRepositoryURL>,<preTagPath>,<postTagPath>
+!*******************************************************************************************
+!***************  SVN PDE BUILD CONTRIBUTION  ********************************************** 
+
+feature@org.umlmda.rsdp.uml2.feature=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,global,org.umlmda.rsdp.uml2.feature
+
+plugin@org.umlmda.uml2.profile=SVN,trunk,https://umlmda.svn.sourceforge.net/svnroot/umlmda,global,org.umlmda.uml2.profile
