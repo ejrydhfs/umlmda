@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.profile:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.profile="http:///org/umlmda/generator/profile.ecore" name="wsdlRpcLiteral" description="Profile for generating WSDLs" adapterFactory="org.umlmda.uml.generator.webservices.WSModelAdapterFactory">
+  <stereotypes name="WebService">
+    <mappings artefact="//@artefacts.0"/>
+  </stereotypes>
+  <artefacts name="webservices.OptimizedWSDL" fileExtension="wsdl" useNamespace="false" replacement="$2" replacementPattern="(.*)/(.*)" writer="org.umlmda.uml.generator.webservices.writer.OptimizedWSDLWriter">
+    <defaultProperties name="soapBinding" value="rpc"/>
+    <defaultProperties name="soapEncoding" value="literal"/>
+  </artefacts>
+  <defaultProperties name="soapWrapping" value="false"/>
+</org.umlmda.generator.profile:Profile>
