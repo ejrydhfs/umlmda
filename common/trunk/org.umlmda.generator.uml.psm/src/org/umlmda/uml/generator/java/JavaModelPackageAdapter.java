@@ -23,7 +23,9 @@
  */
 package org.umlmda.uml.generator.java;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.umlmda.generator.model.uml.GeneratorClass;
@@ -188,6 +190,17 @@ public class JavaModelPackageAdapter extends DefaultPackageAdapter implements Ja
       return StringUtil.toUpperCaseIdentifier(getName());
    }
    
+   public List<JavaModelClass> getClasses(String stereotypeName) {
+      List<JavaModelClass> result = new ArrayList<JavaModelClass>();
+      
+      for (JavaModelClass javaModelClass : (List<JavaModelClass>)getClasses()) {
+         if ( javaModelClass.hasStereotype(stereotypeName)) {
+            result.add(javaModelClass);
+         }
+      }
+      
+      return result;
+   }
 }
 
 
