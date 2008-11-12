@@ -1,0 +1,336 @@
+<%
+// $Header: /cvsroot/umlmda/UMLGenerator/src/org/umlmda/uml/generator/webservices/writer/WSImplCreate.jti,v 1.13 2007/07/31 13:07:32 moroff Exp $
+//
+// Copyright (C) 2005 Dieter Moroff
+//
+// This file is part of UMLMDA (http://www.umlmda.org)
+// 
+// WSImplCreate is used as a template include by WSUtilsWriter
+//
+// generates the create functions in the web service "Utils" class
+//
+  JavaModelClass pimClass = modelClass.getPIMClass();
+  boolean isOptimized = isOptimized(modelClass);
+  String arg = StringUtils.uncapitalize(pimClass.getName());
+  String interfaceName = "";
+  String stubName = genClass.getScopedName(WSArtefacts.WS_STUB, modelClass);
+ 
+  if ( pimClass.hasStereotype(ModelStereotype.BUSINESS_EXCEPTION) )
+    interfaceName = genClass.getScopedName(JavaArtefacts.BUSINESS_EXCEPTION, pimClass);
+  else if ( pimClass.hasStereotype(ModelStereotype.ENUMERATION) )
+    interfaceName = genClass.getScopedName(JavaArtefacts.ENUMERATION, pimClass);
+  else
+    interfaceName = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, pimClass);
+
+  // Handling hierarchy dtos
+  if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO_HIERARCHY) ) {
+     String wsHierarchie = pimClass.getName() + "Hierarchie";
+     List hierarchie = new ArrayList(modelClass.getAssociations().size());
+     for ( Iterator ia = modelClass.getAssociations().iterator(); ia.hasNext(); ) {
+        ModelAssociation assoc = (ModelAssociation)ia.next();
+        hierarchie.add(assoc.getTarget());
+     }
+     Collections.sort(hierarchie, ModelClassAdapter.getHierachyComparator());
+%>   // create <%=pimClass.getName()%> hierarchical web service DTO from interface DTO  
+   public <%=stubName%> create<%=modelClass.getName()%>(<%=interfaceName%> <%=arg%>) {
+      <%=stubName%> <%=wsHierarchie%> = new <%=stubName%>();
+      
+<%    // Loop associations of the hierarchy class
+      for ( Iterator ia = hierarchie.iterator(); ia.hasNext(); ) {
+        WSModelClass derivedClass = (WSModelClass)ia.next();
+        JavaModelClass derivedPIMClass = derivedClass.getPIMClass();
+        String derivedClassName = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, derivedPIMClass);
+%>      if ( <%=arg%> instanceof <%=derivedClassName%> ) {
+         <%=wsHierarchie%>.set<%=derivedClass.getName()%>(create<%=derivedClass.getName()%>((<%=derivedClassName%>)<%=arg%>));
+      }   
+<%       if ( ia.hasNext() ) {
+%>      else <%
+         } 
+      } // for
+%>            registry.put(<%=arg%>, <%=wsHierarchie%>);
+      return <%=wsHierarchie%>;
+   }
+
+   /**
+    * create <%=pimClass.getName()%> interface DTO from hierarchical web service DTO
+    */
+   public <%=interfaceName%> create<%=pimClass.getName()%>(<%=stubName%> src) {
+<%    // Loop associations of the hierarchy class
+      for ( Iterator ia = hierarchie.iterator(); ia.hasNext(); ) {
+        WSModelClass derivedClass = (WSModelClass)ia.next();
+        JavaModelClass derivedPIMClass = derivedClass.getPIMClass();
+%>      if ( src.get<%=derivedClass.getName()%>() != null )
+         return create<%=derivedPIMClass.getName()%>(src.get<%=derivedClass.getName()%>());
+<%      if ( ia.hasNext() ) {
+%>      else <% 
+        }
+      } // for
+%>      else
+         return null;
+   }
+
+<%}
+
+  // Handling simple (none hierarchy) dtos
+  else {
+     if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_EXCEPTION) )  {
+%>   // create <%=pimClass.getName()%> web service exception from business service exception
+   public <%=stubName%> create<%=modelClass.getName()%>(final <%=interfaceName%> from) {
+      int ii;
+      
+      if ( from != null ) {
+<% // Attributes        
+   for ( Iterator ia = modelClass.getAttributes(true).iterator(); ia.hasNext(); ) {
+      WSModelAttribute attribute = (WSModelAttribute)ia.next();
+      
+      if ( attribute.getModelClassifier().hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION) && attribute.isOptional() == false ) {
+%>      if ( from.<%=attribute.getGetter()%>() == null ) {
+         throw new IllegalArgumentException("None optional attribute <%=attribute.getQualifiedName()%> is null");
+      }
+<%    } 
+%>      <%=attribute.getWSJavaType()%> _<%=attribute.getName()%> = <%=attribute.getConvertToWs()%>;
+<% } // for 
+   // Associations
+   for ( Iterator ia = modelClass.getAssociations(true).iterator(); ia.hasNext(); ) {
+      WSModelAssociation association = (WSModelAssociation)ia.next();
+      WSModelClass assocClass = (WSModelClass)association.getTarget();
+      String assocName = association.getName();
+      String assocType = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, assocClass.getPIMClass());
+      String assocWsType = genClass.getScopedName(WSArtefacts.WS_STUB, assocClass);
+
+      if ( association.isComposition() ) {
+         if ( association.isMultiple() ) {
+%>      <%=assocWsType%> _<%=assocName%>[] = new <%=assocWsType%>[from.<%=association.getGetter()%>().size()];
+      ii=0;
+      for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ++ii) {
+         _<%=assocName%>[ii] = create<%=assocClass.getName()%>((<%=assocType%>)i.next());
+      }
+<%       }
+         else {
+%>      <%=assocWsType%> _<%=assocName%> = create<%=assocClass.getName()%>(from.<%=association.getGetter()%>());
+<%       }
+      }
+      else {
+         if ( association.isMultiple() ) {
+%>      final <%=assocWsType%> _<%=assocName%>[] = new <%=assocWsType%>[from.<%=association.getGetter()%>().size()];
+      register(new ResolveReference() {
+         void resolve() {
+            int ii=0;
+            for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ++ii) {
+               <%=assocType%> from<%=assocName%> = (<%=assocType%>) i.next();
+               <%=assocWsType%> <%=assocName%>Ws = (<%=assocWsType%>)lookup(from<%=assocName%>);
+            
+               if ( <%=assocName%>Ws == null ) 
+                  <%=assocName%>Ws = create<%=assocClass.getName()%>(from<%=assocName%>);
+               _<%=assocName%>[ii] = <%=assocName%>Ws;
+            }
+         }   
+     });
+<%       }
+         else {
+%>      final <%=assocWsType%> _<%=assocName%>;
+      register(new ResolveReference() {
+         void resolve() {
+            <%=assocWsType%> <%=assocName%>Ws = (<%=assocWsType%>)lookup(from.<%=association.getGetter()%>());
+            
+            if ( <%=assocName%>Ws == null ) 
+              <%=assocName%>Ws = create<%=assocClass.getName()%>(from.<%=association.getGetter()%>());
+            _<%=assocName%> = <%=assocName%>Ws;
+         }
+      });      
+<%       }
+      }
+   }
+%>         <%=stubName%> dest = new <%=stubName%>(<%
+   // Attributes        
+     for ( Iterator ia = modelClass.getAttributes(true).iterator(); ia.hasNext(); ) {
+        ModelStructuralFeature attribute = (ModelStructuralFeature)ia.next();
+%>_<%=attribute.getName()%><%if ( ia.hasNext() ) {%>, <%}
+     } // for
+     if ( modelClass.getAttributes(true).size() > 0 && modelClass.getAssociations(true).size() > 0 ) {%>, <%} 
+
+     // Associations
+     for ( Iterator ia = modelClass.getAssociations(true).iterator(); ia.hasNext(); ) {
+        ModelStructuralFeature feature = (ModelStructuralFeature)ia.next();
+%>_<%=feature.getName()%><%if ( ia.hasNext() ) {%>, <%}
+     } // for 
+         %>);
+         registry.put(from, dest);
+         return dest;
+      }
+      else {
+         return null;
+      }
+   }      
+
+<%   } else {
+%>
+   // create <%=pimClass.getName()%> web service DTO from interface DTO  
+   public <%=stubName%> create<%=modelClass.getName()%>(<%=interfaceName%> src) {
+      if ( src != null ) {
+         <%=stubName%> dest = new <%=stubName%>();
+      
+         registry.put(src, dest);
+         copy<%=pimClass.getName()%>(src, dest);
+         return dest;
+      }
+      else {
+         return null;
+      }
+   }      
+
+   // copy interface DTO to web service DTO 
+   private void copy<%=pimClass.getName()%>(final <%=interfaceName%> from, final <%=stubName%> to) {
+      int ii;
+<% if ( modelClass.getSuperClass() != null ) {
+      WSModelClass superClass = (WSModelClass)modelClass.getSuperClass();
+%>      copy<%=superClass.getPIMClass().getName()%>(from, to);
+<% }
+   // Attributes        
+   for ( Iterator ia = modelClass.getAttributes().iterator(); ia.hasNext(); ) {
+      WSModelAttribute attribute = (WSModelAttribute)ia.next();
+      
+      if ( attribute.getModelClassifier().hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION) && attribute.isOptional() == false ) {
+%>      if ( from.<%=attribute.getGetter()%>() == null ) {
+         throw new IllegalArgumentException("None optional attribute <%=attribute.getQualifiedName()%> is null");
+      }
+<%    } 
+%>      to.<%=attribute.getSetter()%>(<%=attribute.getConvertToWs()%>);
+<% } // for 
+   // Associations
+   for ( Iterator ia = modelClass.getAssociations().iterator(); ia.hasNext(); ) {
+      WSModelAssociation association = (WSModelAssociation)ia.next();
+      WSModelClass assocClass = (WSModelClass)association.getTarget();
+      String assocName = StringUtils.capitalize(association.getName());
+      String assocType = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, assocClass.getPIMClass());
+      String assocWsType = genClass.getScopedName(WSArtefacts.WS_STUB, assocClass);
+
+      if ( association.isComposition() ) {
+         if ( association.isMultiple() ) {
+%>      to.set<%=assocName%>(new <%=assocWsType%>[from.<%=association.getGetter()%>().size()]);
+      ii=0;
+      for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ++ii) {
+         to.get<%=assocName%>()[ii] = create<%=assocClass.getName()%>((<%=assocType%>)i.next());
+      }
+<%       }
+         else {
+%>      to.set<%=assocName%>(create<%=assocClass.getName()%>(from.get<%=assocName%>()));
+<%       }
+      }
+      else {
+         if ( association.isMultiple() ) {
+%>      register(new ResolveReference() {
+         void resolve() {
+            int ii=0;
+            for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ++ii) {
+               <%=assocType%> from<%=assocName%> = (<%=assocType%>) i.next();
+               <%=assocWsType%> <%=assocName%>Ws = (<%=assocWsType%>)lookup(from<%=assocName%>);
+            
+               if ( <%=assocName%>Ws == null ) 
+                  <%=assocName%>Ws = create<%=assocClass.getName()%>(from<%=assocName%>);
+               to.get<%=assocName%>()[ii] = <%=assocName%>Ws;
+            }
+         }   
+     });
+<%       }
+         else {
+%>      register(new ResolveReference() {
+         void resolve() {
+            <%=assocWsType%> <%=assocName%>Ws = (<%=assocWsType%>)lookup(from.get<%=assocName%>());
+            
+            if ( <%=assocName%>Ws == null ) 
+              <%=assocName%>Ws = create<%=assocClass.getName()%>(from.get<%=assocName%>());
+            to.set<%=assocName%>(<%=assocName%>Ws);
+         }
+      });      
+<%       }
+      }
+   }
+%>   }
+
+<% }
+
+   if ( modelClass.isAbstract() == false ) {
+%>   // create <%=pimClass.getName()%> interface DTO from web service DTO
+   public <%=interfaceName%> create<%=pimClass.getName()%>(<%=stubName%> src) {
+      if ( src != null ) {
+         <%=interfaceName%> dest = (<%=interfaceName%>)registry.get(src);
+         
+         if ( dest == null ) {
+<%    if ( pimClass.hasStereotype(ModelStereotype.BUSINESS_EXCEPTION) ) {
+%>            dest = new <%=interfaceName%>();
+<%    } else {
+%>            dest = <%=getFactoryMember(modelClass.getPackage())%>.create<%=pimClass.getName()%>();
+<%    } %>
+      
+            registry.put(src, dest);
+            copy<%=pimClass.getName()%>(src, dest);
+         }   
+         return dest;
+      }
+      else {
+         return null;
+      }
+   }
+<% 
+      if ( isOptimized ) {
+%>   // create <%=pimClass.getName()%> interface DTO from web service DTO
+   public <%=interfaceName%> create<%=pimClass.getName()%>(<%=stubName%> src) {
+      if ( src != null ) {
+<%      if ( modelClass.hasStereotype(ModelStereotype.BUSINESS_EXCEPTION) ) {
+%>         <%=interfaceName%> dest = new <%=interfaceName%>();
+<%      } else {
+%>         <%=interfaceName%> dest = <%=getFactoryMember(modelClass.getPackage())%>.create<%=pimClass.getName()%>();
+<%      } %>
+      
+         registry.put(src, dest);
+         copy<%=pimClass.getName()%>(src, dest);
+         return dest;
+      }
+      else {
+         return null;
+      }
+   }      
+<%    } // if
+   }
+%>   // copy web service DTO to interface DTO
+   private void copy<%=pimClass.getName()%>(final <%=stubName%> from, final <%=interfaceName%> to) {
+<% if ( modelClass.getSuperClass() != null ) {
+      WSModelClass superClass = (WSModelClass)modelClass.getSuperClass();
+%>      copy<%=superClass.getPIMClass().getName()%>(from, to);
+<% }
+   // Attributes        
+   for ( Iterator ia = modelClass.getAttributes().iterator(); ia.hasNext(); ) {
+      WSModelAttribute attribute = (WSModelAttribute)ia.next();
+
+      if ( attribute.isReadOnly() || attribute.isDerived() )
+         continue;
+%>      to.<%=attribute.getSetter()%>(<%=attribute.getConvertFromWs("from")%>);
+<%
+   }
+
+   // Associations
+   for ( Iterator ia = modelClass.getAssociations().iterator(); ia.hasNext(); ) {
+      WSModelAssociation assoc = (WSModelAssociation)ia.next();
+      WSModelClass assocClass = (WSModelClass)assoc.getTarget();
+      ModelAssociation pimAssoc = assoc.getPIMAssociation();
+      String pimTargetClass = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, (JavaModelClass)pimAssoc.getTarget());
+      JavaModelClass assocPIMClass = assocClass.getPIMClass();
+      String assocName = StringUtils.capitalize(assoc.getName());
+
+      if ( assoc.isMultiple() == false ) {
+         if ( assoc.isOptional() ) {
+%>      if ( from.get<%=assocName%>() != null )
+   <%    }
+%>      to.set<%=assocName%>((<%=pimTargetClass%>)create<%=assocPIMClass.getName()%>(from.get<%=assocName%>()));
+<%    } else {
+%>      if ( from.get<%=assocName%>() != null ) {
+         for (int i = 0; i < from.get<%=assocName%>().length; i++) {
+            to.<%=assoc.getGetter()%>().add(create<%=assocPIMClass.getName()%>(from.get<%=assocName%>(i)));
+         }
+      }
+<%    } // else
+   } // for
+%>   }   
+<%}
+%>

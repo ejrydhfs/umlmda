@@ -1,0 +1,25 @@
+//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//   $Header: /cvsroot/umlmda/UMLGenerator/templates/java/Attic/Visitor.vm,v 1.1.2.1 2008/01/21 14:57:14 moroff Exp $
+//   $Source: /cvsroot/umlmda/UMLGenerator/templates/java/Attic/Visitor.vm,v $
+// $Revision: 1.1.2.1 $
+//     $Name:  $
+//     $Date: 2008/01/21 14:57:14 $
+//@@UserSection-End RCSHeader
+package ${genPackage.getQualifiedPackageName("java.Visitor")};
+
+import org.umlmda.runtime.visitor.Visitor;
+${genPackage.resetImports()}##
+${genPackage.registerImports("java.BusinessObjectInterface", ${genPackage.classes}, "BusinessObject")}##
+${genPackage.registeredImports()}
+
+/**
+ * Visitor interface for the business object of ${genPackage.qualifiedName} 
+ */
+public interface ${genPackage.generatedName} extends Visitor {
+
+#foreach( $genClass in ${genPackage.getClasses("BusinessObject")} )
+   public void visit(${genPackage.getScopedName("java.BusinessObjectInterface", ${genClass})} a${genClass.name});
+   
+#end
+}

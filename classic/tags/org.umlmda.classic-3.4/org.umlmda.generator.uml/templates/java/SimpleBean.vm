@@ -1,0 +1,540 @@
+##parse( "JavaCommon.vm" )
+## Standard java attribute declaration
+## ===================================
+#macro( javaAttrDecl $attribute )
+#javaAttrDeclIdent( $attribute "")
+#end	
+#macro( javaAttrDeclIdent $attribute $ident )
+#if ( ${attribute.derived} == false )
+   ${ident}private ${attribute.javaType} ${attribute.name}##
+#if ( ${attribute.initializer})   
+= ${attribute.initializer}##
+#end##if
+;
+#end
+#end##macro
+## 
+## Ctor signature with keys
+## ========================
+#macro( pkeyCtorParameterSignature $class )
+#foreach( $attribute in ${class.keyAttributes} )
+#if($velocityCount > 1)
+, ##
+#end
+${attribute.javaType} ${attribute.name}##
+#end##for
+#end##macro
+##
+## Ctor parameters with keys
+## ========================
+#macro( pkeyCtorParameters $class )
+#foreach( $attribute in ${class.keyAttributes} )
+#if($velocityCount > 1)
+, ##
+#end
+${attribute.name}##
+#end##for
+#end##macro	
+##
+## Attributes getter/setter
+## ========================
+#macro( attrGetterSetterImpls $genClass $attributes $handlePKey)
+#foreach( $attribute in ${attributes} )
+#attrGetterImpl( $genClass $attribute $handlePKey )
+#attrSetterImpl( $genClass $attribute $handlePKey )
+
+#end##for
+#end##macro
+##
+## Attribute getter
+## ================
+#macro( attrGetterImpl $genClass $attribute $handlePKey )
+#set( $attrName = ${attribute.name} )##
+#set( $attrType = ${attribute.javaType} )##
+#set( $attrGetter = ${attribute.getter} )##
+#if ( ${attribute.derived} == false || ${genClass.abstract} == false )##
+   /**
+   * Get $attrName
+   */
+   public $attrType $attrGetter() {
+#if ( ${attribute.derived} )##
+//@@UserSection-Begin ${genClass.name}.${attrGetter}
+      //@@@ TODO Insert implementation
+//@@UserSection-End ${genClass.name}.${attrGetter}
+#elseif ( $handlePKey && $hasCompositeKey && ${attribute.hasStereotype("PKey")} )##
+      return pkey.$attrGetter();
+#else
+      return $attrName;
+#end##if
+   }
+#end##if
+#end##macro
+##
+## Attribute setter
+## ================
+#macro( attrSetterImpl $genClass $attribute $handlePKey )
+#set( $attrName = ${attribute.name} )##
+#set( $attrType = ${attribute.javaType} )##
+#set( $attrSetter = ${attribute.setter} )##
+#set( $hasCompositeKey = ${genClass.owningAPKey} )##
+#if ( ${attribute.readOnly} == false )##
+   /**
+   * Set $attrName
+   */
+   public void $attrSetter($attrType $attrName) {
+#if ( ${attribute.derived} )##
+//@@UserSection-Begin ${genClass.name}.${attrSetter}
+      //@@@ TODO Insert implementation
+//@@UserSection-End ${genClass.name}.${attrSetter}
+#elseif ( ${attribute.dataType.name.equals("date")} && ${attrType.equals("java.util.Date")} )##
+#if ( $handlePKey && $hasCompositeKey && ${attribute.hasStereotype("PKey")} )##
+      this.pkey.$attrSetter($attrName);
+#else
+	if ( $attrName != null ) {
+         this.$attrName = new java.util.Date($attrName.getTime());
+         this.$attrName.setHours(0);
+         this.$attrName.setMinutes(0);
+         this.$attrName.setSeconds(0);
+      }
+      else {
+         this.$attrName = null;
+      }
+#end
+#elseif ( $handlePKey && $hasCompositeKey && ${attribute.hasStereotype("PKey")} )##
+      this.pkey.${attrSetter}($attrName);
+#else
+      this.$attrName = $attrName;
+#end##if
+   }
+#end##if
+#end##macro	
+##
+## ==================================================================================================
+#set( $hasCompositeKey = ${genClass.owningAPKey} )##
+//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//   $Header: /cvsroot/umlmda/UMLGenerator/templates/java/Attic/SimpleBean.vm,v 1.1.2.1 2008/01/21 14:57:14 moroff Exp $
+//   $Source: /cvsroot/umlmda/UMLGenerator/templates/java/Attic/SimpleBean.vm,v $
+// $Revision: 1.1.2.1 $
+//     $Name:  $
+//     $Date: 2008/01/21 14:57:14 $
+//@@UserSection-End RCSHeader
+
+package ${genPackage.getQualifiedPackageName("java.BusinessObject")};
+
+import java.io.Serializable;
+import java.util.Iterator;
+
+import org.umlmda.runtime.xml.XMLMarshalContext;
+import org.umlmda.runtime.xml.XMLSerializable;
+
+${genClass.resetImports()}##
+${genClass.registerImport("java.BusinessObjectInterface")}##
+#if ( ${genClass.superClass} )
+${genClass.registerImport("java.BusinessObject", ${genClass.superClass})}##
+#end## if
+${genClass.registerImports("java.BusinessObjectInterface", ${genClass.referencedTypes}, "BusinessObject")}##
+${genClass.registerImports("java.Enumeration", ${genClass.referencedTypes}, "Enumeration")}##
+${genClass.registerImports("java.BusinessException", ${genClass.referencedTypes}, "BusinessException")}##
+${genClass.registerImport("java.Visitor", ${genPackage})}##
+${genClass.registeredImports()}
+//@@UserSection-Begin ${genClass.name}.Imports
+//@@UserSection-End ${genClass.name}.Imports
+
+/**
+ * ${genClass.documentation}
+ */
+public ##
+#if ( ${genClass.abstract} )##
+abstract ##
+#end
+class ${genClass.generatedName} ##
+#if ( ${genClass.superClass} ) 
+extends ${genClass.getScopedName("java.BusinessObject", ${genClass.superClass})} ##
+#end
+implements ${genClass.getScopedName("java.BusinessObjectInterface")}, Serializable, XMLSerializable##
+#if ( ${genClass.abstract} == false )
+, org.umlmda.runtime.visitor.Visitable##
+#end
+
+{
+   // Version information from BusinessComponent ${genClass.component.qualifiedName}
+   private static final String modelVersion = "${genClass.modelVersion}";
+//@@UserSection-Begin VersionInfo
+   private static final String interfaceVersion = "${genClass.modelVersion}";
+   private static final long serialVersionUID = ${genClass.serialVersionUID};
+//@@UserSection-End VersionInfo
+
+## Key
+## ===
+#if ( $hasCompositeKey )
+   public static class PKey implements ${genClass.getScopedName("java.BusinessObjectInterface")}.PKey {
+#foreach( $attribute in ${genClass.keyAttributes})
+#javaAttrDeclIdent( $attribute "   " )
+#end
+
+      public PKey() {
+        super();
+      }
+      
+      public PKey(#pkeyCtorParameterSignature($genClass)) {
+#foreach( $attribute in ${genClass.keyAttributes})
+         this.${attribute.name} = ${attribute.name}; 
+#end
+      }
+	  
+#attrGetterSetterImpls( $genClass ${genClass.keyAttributes} false)
+   
+      public boolean equals(Object obj) {
+         if ( obj instanceof ${genClass.javaType}.PKey ) {
+            ${genClass.javaType}.PKey pkey = (${genClass.javaType}.PKey)obj;
+         
+            return ##
+#foreach( $attribute in $genClass.keyAttributes )
+#if($velocityCount > 1)
+
+                && ##
+#end
+#if( ${attribute.dataType.javaPrimitiveType} == false )       
+${attribute.name}.equals(pkey.${attribute.getter}())##
+#else
+${attribute.name} == pkey.${attribute.getter}()##
+#end
+#end##for
+;
+         }
+         else {
+            return super.equals(obj);
+         }
+      }
+
+      public int hashCode() {
+         int hashCode = 0;
+         
+#foreach( $attribute in $genClass.keyAttributes )
+#if( ${attribute.dataType.javaPrimitiveType} == false )       
+         hashCode = hashCode * 29 + ${attribute.name}.hashCode();
+#else	 
+         hashCode = hashCode * 29 + (int)${attribute.name};
+#end#end##for
+         return hashCode;
+      }
+   }
+
+   private ${genClass.javaType}.PKey pkey = new PKey();
+
+   /**
+    * Getter for the primaryKey
+    */   
+   public ${genClass.javaType}.PKey get${genClass.name}Pkey() {
+      return pkey;
+   }
+   /**
+    * Setter for the primaryKey
+    */   
+   public void set${genClass.name}Pkey(${genClass.javaType}.PKey pkey) {
+      this.pkey = pkey;
+   }
+
+## Inherited key attributes
+#if ( ${genClass.pKeyInheritedFromParent} )
+#foreach( $attribute in ${genClass.parentComposition.source.keyAttributes})	
+   /**
+   * Get parent key attribute ${attribute.name}, ${attribute.documentation}
+   */
+   public ${attribute.javaType} ${attribute.getter}() {
+      return get${genClass.name}Pkey().${attribute.getter}();
+   }
+   
+#end##for
+#end##if
+#end
+   
+## Attributes declarations
+#foreach( $attribute in ${genClass.implementedAttributes} )
+#javaAttrDecl(${attribute})	
+#end##for	
+#foreach( $association in ${genClass.implementedAssociations} )
+#if ( ${association.navigatableToTarget} && ${association.derived} == false )
+#if ( ${association.multiple} )
+   private ${association.interfaceType} ${association.name} = new ${association.implementationType}();
+#else
+   private ${association.interfaceType} ${association.name} = null;
+#end##if
+#end##if	
+#end##for	
+
+## Constructors
+## ============
+   /**
+    * Default Ctor
+    */
+   public ${genClass.generatedName}() {
+      super();
+   }
+
+#if ( ${genClass.keyAttributes.size()} > 0 )
+   public ${genClass.generatedName}(#pkeyCtorParameterSignature($genClass)) {
+      super(#pkeyCtorParameters(${genClass.superClass}));
+#if ( $hasCompositeKey )##
+      pkey = new PKey(#pkeyCtorParameters(${genClass}));
+#elseif ( ${genClass.getOwnedKeyAttributes(false).size()} == 1 )
+#set( $keyAttribute = ${genClass.getOwnedKeyAttributes(false).get(0)} )
+      this.${keyAttribute.name} = ${keyAttribute.name};
+#end
+   }  
+#end
+   
+## Attribute getter/setter
+## =======================
+#attrGetterSetterImpls( $genClass ${genClass.implementedAttributes} true)
+## Associations getter/setter
+## ==========================
+#foreach( $association in ${genClass.implementedAssociations} )##
+#set( $assocType = ${association.interfaceType})##
+#set( $assocGetter = ${association.getter})##
+#set( $assocName = ${association.name})##
+#if ( ${association.multiple} && (${association.derived} == false || ${genClass.abstract} == false) )##
+   public $assocType $assocGetter() {
+#if ( ${association.derived} )##
+//@@UserSection-Begin ${genClass.name}.${assocGetter}
+      //@@@ TODO Insert implementation
+//@@UserSection-End ${genClass.name}.${assocGetter}
+#else
+      return ${assocName};
+#end##if
+   }
+   /**
+    * @deprecated used $assocGetter
+    */
+   public java.util.Collection ${assocGetter}List() {
+      return $assocGetter();
+   }
+#if ( ${association.readOnly} == false )##
+#set( $assocSetter = ${association.setter})##
+   public void $assocSetter($assocType ${assocName}) {
+#if ( ${association.derived} ) {
+//@@UserSection-Begin ${genClass.name}.${assocSetter}
+      //@@@ TODO Insert implementation
+//@@UserSection-End ${genClass.name}.${assocSetter}
+#else
+      ${assocSetter}Internal(${assocName});
+#end
+   }
+   /**
+    * @deprecated used ${assocSetter}
+    */
+   public void ${assocSetter}List(java.util.Collection ${assocName}) {
+      ${assocSetter}Internal(${assocName});
+   }
+   private void ${assocSetter}Internal(java.util.Collection ${assocName}) {
+      if ( ${assocName} != null ) {
+         if ( this.${assocName} == null ) {
+            this.${assocName} = new ${association.implementationType}();
+         }
+         this.${assocName}.clear();
+         this.${assocName}.addAll(${assocName});
+      }
+      else if ( this.${assocName} != null ) {
+         this.${assocName}.clear();
+         this.${assocName} = null;
+      }
+   }
+#end## if readOnly
+#elseif ( ${association.multiple} == false && (${association.derived} == false || ${genClass.abstract()} == false) )##
+#set( $assocClass = ${association.target})##
+   public $assocType $assocGetter() {
+#if ( ${association.derived} )##
+//@@UserSection-Begin ${genClass.name}.${assocGetter}
+      //@@@ TODO Insert implementation
+//@@UserSection-End ${genClass.name}.${assocGetter}
+#else
+      return ${assocName};
+#end
+   }
+
+#if ( ${association.readOnly} == false )##
+#set( $assocSetter = ${association.setter})##
+   public void $assocSetter($assocType ${assocName}) {
+#if ( ${association.derived} )##
+//@@UserSection-Begin ${genClass.name}.${assocSetter}
+      //@@@ TODO Insert implementation
+//@@UserSection-End ${genClass.name}.${assocSetter}
+#else
+      this.${assocName} = ${assocName};
+#end
+   }
+#end## readOnly
+#end##
+
+#end##for
+
+## Modelled Methods
+## ================
+#foreach( $method in ${genClass.implementedMethods})
+   /**
+    * ${method.documentation}
+    */
+    public ${method.signature} {
+//@@UserSection-Begin ${genClass.name}.${method.name}
+       //@@@TODO Insert implementation
+//@@UserSection-End ${genClass.name}.${method.name}
+    }
+
+#end##for
+
+//@@UserSection-Begin ${genClass.name}.NonGeneratedMembers
+//@@UserSection-End ${genClass.name}.NonGeneratedMembers
+
+## Factory methods
+## ===============
+#if ( ${genClass.abstract} == false )
+   /**
+    * Factory method, only called by the factory implementation in the same package
+    */
+   static ${genClass.generatedName} create${genClass.generatedName}() {
+      return new ${genClass.generatedName}();
+   }
+   
+## Handle Objects with multiple <<PKey>> attributes
+#if ( ${genClass.keyAttributes.size()} > 0 )
+   static ${genClass.generatedName} create${genClass.generatedName}(##
+#foreach( $attribute in ${genClass.keyAttributes} )
+#if($velocityCount > 1)
+, ##
+#end
+${attribute.javaType} ${attribute.name}##
+#end##for
+) {
+       return new ${genClass.generatedName}(##
+#foreach( $attribute in ${genClass.keyAttributes} )
+#if($velocityCount > 1)
+, ##
+#end
+${attribute.name}##
+#end##for
+);
+   }
+#end##if
+#end
+
+#set( $visitor = ${genClass.getScopedName("java.Visitor", ${genPackage})})##
+   /** 
+    * Accept the visitor
+    * @param visitor
+    *           must be instance of @link ${genPackage.getQualifiedName("java.Visitor")}
+	*/
+    public void accept(org.umlmda.runtime.visitor.Visitor visitor) {
+       if ( visitor instanceof $visitor ) {
+          $visitor aVisitor = ($visitor)visitor;
+          
+          aVisitor.visit(this);
+       }
+    }
+
+   /**
+    * Diagnostics
+    */
+   public String toString() {
+//@@UserSection-Begin toString
+		return toXmlString();
+//@@UserSection-End toString
+   }
+
+   /**
+    * XML serialization
+    */
+   public String toXmlString() {
+      XMLMarshalContext context = new XMLMarshalContext();
+      
+      marshal("${genClass.getGeneratedName("java.BusinessObject")}", context, true);
+      return context.toString();
+   }
+   
+   /**
+    * XML serialization of the elements and all children
+    */
+   public void marshal(String elementName, XMLMarshalContext context, boolean isRoot) {
+      context.startElement(elementName, this, isRoot);
+      marshalAttributes(context);
+      marshalChildren(context);
+      marshalReferences(context);
+      context.endElement(elementName, this, isRoot);
+   }
+
+   /**
+    * Marshal attributes
+    */
+   protected void marshalAttributes(XMLMarshalContext context) {
+#if ( ${genClass.superClass} ) 
+      super.marshalAttributes(context);
+#end
+#foreach( $attribute in ${genClass.implementedAttributes} )##
+#if ( ${attribute.modelClassifier.hasStereotype("Enumeration")} )
+      if ( ${attribute.getter}() != null ) {
+         context.simpleElement("${attribute.getName()}", ${attribute.getter}().getValue());
+      }
+#else	  
+      context.simpleElement("${attribute.getName()}", ${attribute.getter}());
+#end##if
+#end##for
+   }
+
+   /**
+    * Marshal children
+    */
+   protected void marshalChildren(XMLMarshalContext context) {
+#if ( ${genClass.superClass} ) 
+      super.marshalChildren(context);
+#end
+#foreach( $association in ${genClass.implementedAssociations} )##
+#set( $assocClass = ${association.target})##
+#set( $assocType = ${genClass.getScopedName("java.BusinessObject", $assocClass)})##
+#if ( ${association.composition} && ${association.multiple} )##
+      for (Iterator i = ${association.getter}().iterator(); i.hasNext();) {
+         $assocType child = ($assocType) i.next();
+         
+         if ( child instanceof XMLSerializable )
+            ((XMLSerializable)child).marshal("${association.name}", context, false);
+      }
+#elseif ( ${association.composition} && ${association.multiple} == false )##
+         if ( ${association.name} instanceof XMLSerializable )
+            ((XMLSerializable)${association.name}).marshal("${association.name}", context, false);
+#end##if
+#end##for	
+   }
+   
+   /**
+    * @param context
+    */
+   protected void marshalReferences(XMLMarshalContext context) {
+#if ( ${genClass.superClass} ) 
+      super.marshalReferences(context);
+#end
+#foreach( $association in ${genClass.implementedAssociations} )##
+#set( $assocClass = ${association.target})##
+#set( $assocType = ${genClass.getScopedName("java.BusinessObject", $assocClass)})##
+#set( $assocName = ${association.name})##
+#set( $assocGetter = ${association.getter})##
+#if ( ${association.composition} == false && ${association.multiple} )##
+      for (Iterator i = $assocGetter().iterator(); i.hasNext();) {
+         $assocType child = ($assocType) i.next();
+         
+         if ( child instanceof XMLSerializable )
+            context.elementRef("${assocName}", (XMLSerializable)child);
+      }
+#elseif ( ${association.composition} == false && ${association.multiple} == false )##
+      if ( $assocGetter() instanceof XMLSerializable )
+         context.elementRef("${assocName}", (XMLSerializable)$assocGetter());
+#end##if
+#end##for
+   }
+
+}
+
+//@@UserSection-Begin RCSLog
+// $Log: SimpleBean.vm,v $
+// Revision 1.1.2.1  2008/01/21 14:57:14  moroff
+// UMLMDA 3.x/RSM 7.x/PDEBuild
+//
+//@@UserSection-End RCSLog

@@ -1,0 +1,45 @@
+//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//   $Header: /cvsroot/umlmda/UMLGenerator/templates/java/Attic/AbstractVisitor.vm,v 1.1.2.1 2008/01/21 14:57:15 moroff Exp $
+//   $Source: /cvsroot/umlmda/UMLGenerator/templates/java/Attic/AbstractVisitor.vm,v $
+// $Revision: 1.1.2.1 $
+//     $Name:  $
+//     $Date: 2008/01/21 14:57:15 $
+//@@UserSection-End RCSHeader
+package ${genPackage.getQualifiedPackageName("java.AbstractVisitor")};
+
+import org.umlmda.runtime.visitor.AbstractVisitor;
+${genPackage.resetImports()}
+${genPackage.registerImport("java.Visitor")}
+${genPackage.registerImports("java.BusinessObjectInterface", ${genPackage.classes}, "BusinessObject")}
+${genPackage.registeredImports()}
+
+/**
+ * Abtract base class for all visitor interface implementations for the 
+ * business objects of ${genPackage.qualifiedName} 
+ */
+public abstract class ${genPackage.generatedName} extends AbstractVisitor implements ${genPackage.getScopedName("java.Visitor")} {
+
+   /* (non-Javadoc)
+    * @see org.umlmda.runtime.visitor.Visitor\#isApplicable(java.lang.Class)
+    */
+   public boolean isApplicable(Class visitableClass) {
+#if ( ${genPackage.getClasses("BusinessObject").size()} > 0 )   
+#foreach( $genClass in ${genPackage.getClasses("BusinessObject")} )
+#if( $velocityCount == 1 )	
+      if ( ${genPackage.getScopedName("java.BusinessObjectInterface", ${genClass})}.class.isAssignableFrom(visitableClass)
+#else	  
+      ||   ${genPackage.getScopedName("java.BusinessObjectInterface", ${genClass})}.class.isAssignableFrom(visitableClass)
+#end
+#end
+      ) {
+         return true;
+      }
+      else {
+         return false;
+      }
+#else
+	  return false;
+#end	  
+   }
+}
