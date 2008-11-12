@@ -11,7 +11,11 @@ package ${genPackage.getQualifiedPackageName("java.VisitableIterator")};
 import org.umlmda.runtime.visitor.AbstractVisitableIterator;
 ${genPackage.resetImports()}##
 ${genPackage.registerImports("java.BusinessObjectInterface", ${genPackage.classes}, "BusinessObject")}##
-${genPackage.registerImports("java.VisitableIterator", ${genPackage.referencedPackages}, "BusinessComponent")}##
+#foreach( $refPackage in ${genPackage.referencedPackages} )
+	#if ( ${refPackage.getClasses("BusinessObject").size} > 0 )
+		${genPackage.registerImport("java.VisitableIterator", $refPackage)}##
+	#end##if
+#end##foreach		
 ${genPackage.registeredImports()}
 
 /**
