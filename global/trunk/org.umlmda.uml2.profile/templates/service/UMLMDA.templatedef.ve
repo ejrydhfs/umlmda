@@ -16,14 +16,14 @@
 #  Boston, MA  02111-1307, USA. The text of license can be also found
 #  at http://www.gnu.org/copyleft/lgpl.html
 
-name=UMLMDA Model
-description=Create a blank UMLMDA model.
+name=UMLMDA Service Model
+description=Create a blank UMLMDA service model.
 
 #
 # START NON-TRANSLATABLE
 #
-id=org.umlmda.modeler.ui.wizards.templates.blankmodel
-templateFile=UMLMDA.emx
+id=org.umlmda.modeler.ui.wizards.templates.blankmodel.service
+templateFile=UMLMDAService.emx
 icon=UMLMDA.gif
 #
 # END NON-TRANSLATABLE

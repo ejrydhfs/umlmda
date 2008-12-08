@@ -43,6 +43,11 @@
                               <include name="UMLMDASDOProfile.epx" />
                            </fileset>
                         </zip>
+                        <zip destfile="${project.build.directory}/umlmda-domain-profiles.zip">
+                           <fileset dir="${basedir}/profiles">
+                              <include name="UMLMDADomainProfile.epx" />
+                           </fileset>
+                        </zip>
                      </tasks>
                   </configuration>
                   <goals>
@@ -78,6 +83,13 @@
                            <type>zip</type>
                            <classifier>sdo</classifier>
                         </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/umlmda-domain-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>domain</classifier>
+                        </artifact>
                      </artifacts>
                   </configuration>
                </execution>
@@ -99,7 +111,7 @@
       </repository>
       <repository>
          <id>cor-artifactory</id>
-         <url>http://cor-health-dev1:8090/artifactory/repo</url>
+         <url>http://cor-health-dev1/artifactory/repo</url>
          <releases>
             <enabled>true</enabled>
          </releases>

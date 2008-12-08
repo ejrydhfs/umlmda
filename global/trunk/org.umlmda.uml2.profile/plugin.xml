@@ -9,16 +9,31 @@
       <UMLProfile
             visible="true"
             path="pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx"
-            name="UMLMDA RSM/RSA Profile"/>
+            name="UMLMDA RSM/RSA Classic Profile"/>
       <UMLProfile
             name="UMLMDA RSM/RSA SDO Profile"
             path="pathmap://UMLMDA_PROFILE/UMLMDASDOProfile.epx"
-            visible="true">
-      </UMLProfile>
+            visible="true"/>
+      <UMLProfile
+            name="UMLMDA RSM/RSA Common Modelling Profile"
+            path="pathmap://UMLMDA_PROFILE/UMLMDACommonProfile.epx"
+            visible="true"/>
+      <UMLProfile
+            name="UMLMDA RSM/RSA Domain Modelling Profile"
+            path="pathmap://UMLMDA_PROFILE/UMLMDADomainProfile.epx"
+            visible="true"/>
+      <UMLProfile
+            name="UMLMDA RSM/RSA Persistence Modelling Profile"
+            path="pathmap://UMLMDA_PROFILE/UMLMDAPersistenceProfile.epx"
+            visible="true"/>
+      <UMLProfile
+            name="UMLMDA RSM/RSA Service Modelling Profile"
+            path="pathmap://UMLMDA_PROFILE/UMLMDAServiceProfile.epx"
+            visible="true"/>
       <UMLProfile
             visible="true"
             path="pathmap://UMLMDA_PROFILE/UMLMDAProfile.profile.uml2"
-            name="UMLMDA UML2 Profile"/>
+            name="UMLMDA UML2 Profile (deprecated)"/>
    </extension>
 
    <extension
@@ -41,10 +56,30 @@
    </extension>
 
    <extension
-         name="UMLMDA model template"
+         id="org.umlmda.rsx.template.classic"
+         name="UMLMDA model template (deprecated)"
          point="com.ibm.xtools.modeler.ui.wizards.template">
-      <directory path="templates"/>
+      <directory path="templates/classic"/>
    </extension>
+   <extension
+         id="org.umlmda.rsx.template.domain"
+         name="UMLMDA domain model template"
+         point="com.ibm.xtools.modeler.ui.wizards.template">
+      <directory path="templates/domain"/>
+   </extension>
+   <extension
+         id="org.umlmda.rsx.template.persistence"
+         name="UMLMDA persistent model template"
+         point="com.ibm.xtools.modeler.ui.wizards.template">
+      <directory path="templates/persistence"/>
+   </extension>
+   <extension
+         id="org.umlmda.rsx.template.service"
+         name="UMLMDA service model template"
+         point="com.ibm.xtools.modeler.ui.wizards.template">
+      <directory path="templates/service"/>
+   </extension>
+   
    <extension
          point="org.eclipse.gmf.runtime.emf.core.Pathmaps">
       <pathmap
