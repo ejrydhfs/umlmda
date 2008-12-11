@@ -189,17 +189,22 @@ public class JavaModelPackageAdapter extends DefaultPackageAdapter implements Ja
    public String getUpperCaseIdentifier() {
       return StringUtil.toUpperCaseIdentifier(getName());
    }
-   
-   public List<JavaModelClass> getClasses(String stereotypeName) {
-      List<JavaModelClass> result = new ArrayList<JavaModelClass>();
+
+   public <T extends JavaModelClass> List<T> getClasses(Class<T> clazz, String stereotypeName) {
+      List<T> result = new ArrayList<T>();
       
       for (JavaModelClass javaModelClass : (List<JavaModelClass>)getClasses()) {
          if ( javaModelClass.hasStereotype(stereotypeName)) {
-            result.add(javaModelClass);
+            result.add((T)javaModelClass);
          }
       }
       
       return result;
+      
+   }
+
+   public List<JavaModelClass> getClasses(String stereotypeName) {
+      return getClasses(JavaModelClass.class, stereotypeName);
    }
 }
 
