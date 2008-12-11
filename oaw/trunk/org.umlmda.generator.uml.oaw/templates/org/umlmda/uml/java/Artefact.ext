@@ -1,5 +1,10 @@
 import org::umlmda::model::uml;
 
+// and we also load the io extensions, for the purpose of
+// debugging, in case we need it   
+extension org::openarchitectureware::util::stdlib::io;   
+extension org::openarchitectureware::util::stdlib::issues;   
+
 String scopeInterface() :
 	JAVA org.umlmda.uml.generator.util.ArtefactUtils.getScopeInterface()
 ;
@@ -15,7 +20,12 @@ Void resetDefaultArtefacts() :
 String getDefaultArtefact(ModelElement element)	:
    let stereotypeName = element.stereotypes.typeSelect(String).first() :
    
-   getDefaultArtefact(stereotypeName)
+   stereotypeName != null ? (
+        getDefaultArtefact(stereotypeName)
+   ) : (
+        error("No artefact for "+((NamedElement)element).qualifiedName) ->
+        null
+   )             
 ;
    
 String getDefaultArtefact(ModelElement element, String scope)	:
