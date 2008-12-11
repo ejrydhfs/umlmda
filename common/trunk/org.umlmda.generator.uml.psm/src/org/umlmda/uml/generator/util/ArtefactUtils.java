@@ -1,8 +1,10 @@
 package org.umlmda.uml.generator.util;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.umlmda.profile.ModelStereotype;
 import org.umlmda.uml.generator.java.JavaArtefacts;
 
@@ -14,6 +16,7 @@ import org.umlmda.uml.generator.java.JavaArtefacts;
 public class ArtefactUtils {
    public static final String SCOPE_IMPLEMENTATION = "Implementation";
    public static final String SCOPE_INTERFACE = "Interface";
+   private static Logger logger = Logger.getLogger(ArtefactUtils.class);
 
    static {
 	   defaultMappings = new HashMap<String, Entry>();
@@ -49,6 +52,22 @@ public class ArtefactUtils {
       setDefaultMapping(ModelStereotype.NATIVE_INTERFACE, JavaArtefacts.PLAIN_INTERFACE);
    }
    
+   public static String getDefaultMapping(List<String> stereotypeNames, String scope) {
+      for (String stereotypeName : stereotypeNames) {
+         String artefactName = getDefaultMapping(stereotypeName, scope);
+         
+         if ( artefactName != null ) {
+            return artefactName;
+         }
+      }
+      logger.warn("No mapping found for <<"+stereotypeNames+">> in scope \""+scope+"\"");
+      return null;
+      
+   }
+   public static String getDefaultMapping(List<String> stereotypeNames) {
+      return getDefaultMapping(stereotypeNames, SCOPE_INTERFACE);
+   }
+
    public static String getDefaultMapping(String stereotypeName) {
       return getDefaultMapping(stereotypeName, SCOPE_INTERFACE);
    }
@@ -59,8 +78,9 @@ public class ArtefactUtils {
       if ( entry != null ) {
          return entry.get(scope);
       }
-      else
+      else {
          return null;
+      }
    }
    
    public static void setDefaultMapping(String stereotypeName, String artefactName) {
