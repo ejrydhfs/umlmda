@@ -47,12 +47,12 @@ public class JavaBusinessComponentAdapter extends JavaModelPackageAdapter implem
 
    @SuppressWarnings("unchecked")
    public List<JavaBusinessObject> getBusinessObjects() {
-      return new ArrayList<JavaBusinessObject>(getClasses(ModelStereotype.BUSINESS_OBJECT));
+      return new ArrayList<JavaBusinessObject>(getClasses(JavaBusinessObject.class, ModelStereotype.BUSINESS_OBJECT));
    }
 
    @SuppressWarnings("unchecked")
    public List<JavaBusinessService> getBusinessServices() {
-      return new ArrayList<JavaBusinessService>(getClasses(ModelStereotype.BUSINESS_SERVICE));
+      return new ArrayList<JavaBusinessService>(getClasses(JavaBusinessService.class, ModelStereotype.BUSINESS_SERVICE));
    }
 
 }
