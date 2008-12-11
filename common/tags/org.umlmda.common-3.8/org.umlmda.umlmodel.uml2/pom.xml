@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.common</artifactId>
+      <version>3.8</version>
+   </parent>
+
+   <artifactId>org.umlmda.umlmodel.uml2</artifactId>
+   <name>UMLMDA umlmodel uml2</name>
+   <description />
+
+   <dependencies>
+      <dependency>
+         <groupId>commons-lang</groupId>
+         <artifactId>commons-lang</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>log4j</groupId>
+         <artifactId>log4j</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.eclipse.uml2</groupId>
+         <artifactId>resources</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.eclipse.uml2</groupId>
+         <artifactId>uml</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>${parent.groupId}</groupId>
+         <artifactId>org.umlmda.umlmodel</artifactId>
+         <version>${parent.version}</version>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+               <failIfNoTests>false</failIfNoTests>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+</project>
