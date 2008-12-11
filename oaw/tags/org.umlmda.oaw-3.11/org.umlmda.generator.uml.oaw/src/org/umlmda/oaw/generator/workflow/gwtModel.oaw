@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+
+    <!-- Verify the model -->
+   <component id="umlIntegrityCheck" class="org.umlmda.oaw.generator.workflow.ModelIntegrityChecker">
+      <modelSlot value="uml_model_${slotPostfix}"/>
+   </component>
+   
+	<!-- Generate UMLMDA Pim from uml model -->
+	<component id="pimLoader_${slotPostfix}"
+			class="org.umlmda.oaw.generator.workflow.ModelLoader">
+		<modelFactory class="org.umlmda.oaw.generator.workflow.Uml2ModelFactory">
+		   <umlmodelSlot value="uml_model_${slotPostfix}"/>
+		</modelFactory>   
+		<modelSlot value="umlmda_pim_${slotPostfix}"/>
+	</component>
+
+</workflow>

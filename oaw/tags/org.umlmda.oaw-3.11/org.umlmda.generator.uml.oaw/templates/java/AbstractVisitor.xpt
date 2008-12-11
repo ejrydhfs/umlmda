@@ -1,0 +1,53 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION java::Visitor»
+
+«DEFINE Root FOR JavaBusinessComponent»
+«LET generatedName(this, "java.AbstractVisitor") AS className»
+«FILE generatedPath+"/"+className+".java"»
+	package «getQualifiedPackageName("java.AbstractVisitor")»;
+	
+	import org.umlmda.runtime.visitor.AbstractVisitor;
+	«resetImports()»
+	«registerImport("java.Visitor")»
+	«registerImports("java.BusinessObjectInterface", classes, "BusinessObject")»
+	«registeredImports()»
+	
+	/**
+	 * Abtract base class for all visitor interface implementations for the 
+	 * business objects of ${genPackage.qualifiedName} 
+	 */
+	public abstract class «className» extends AbstractVisitor implements «getScopedName("java.Visitor")» {
+
+		/* (non-Javadoc)
+		 * @see org.umlmda.runtime.visitor.Visitor\#isApplicable(java.lang.Class)
+		 */
+		public boolean isApplicable(Class visitableClass) {
+			«IF this.visitedClasses().size > 0»
+				if (
+					«FOREACH this.visitedClasses() AS genClass SEPARATOR "||"»
+	      				«getScopedName("java.BusinessObjectInterface", genClass)».class.isAssignableFrom(visitableClass)
+					«ENDFOREACH»
+	      		) {
+	         		return true;
+				}
+				else {
+					return false;
+				}
+			«ELSE»
+				return false;
+			«ENDIF»	  
+   		}
+	}
+	«ENDFILE»
+	«ENDLET»
+«ENDDEFINE»
+
+«DEFINE ImportVisitorBaseIface FOR JavaBusinessComponent»
+import org.umlmda.runtime.visitor.Visitor;
+«ENDDEFINE»

@@ -1,0 +1,107 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::j2ee»
+«EXTENSION java::UMLMDA»
+
+«DEFINE Adapter FOR J2EEBusinessService»
+«LET generatedName(this, "j2ee.Adapter") AS interfaceName»
+«FILE generatedPath+"/"+interfaceName+".java"»//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//@@UserSection-End RCSHeader
+
+package «generatorPackage.getQualifiedPackageName("j2ee.Adapter")»;
+
+import java.rmi.RemoteException;
+
+import javax.ejb.CreateException;
+import javax.ejb.EJBObject;
+import javax.naming.NamingException;
+
+«EXPAND java::Logging::loggingImports FOR this»
+
+«this.resetImports()»
+«this.registerImport("j2ee.HomeInterface")»
+«this.registeredImports()»
+
+/**
+ * J2EE client adapter businessservice «getScopedName("java.BusinessServiceInterface")»
+ */
+public class «interfaceName» 
+«IF superClass != null»
+	extends «getScopedName("j2ee.Adapter", (JavaModelClass)superClass)»
+«ENDIF»
+implements «getScopedName("java.BusinessServiceInterface", this)»
+{
+	«EXPAND java::Logging::loggingDeclaration FOR this»
+	
+	private EJBObject delegate = null;
+
+	protected EJBObject getDelegate() {
+		if (delegate == null) {
+			try {
+				«getScopedName("j2ee.HomeInterface")» home = «getScopedName("j2ee.BeanUtils")».getHome();
+				delegate = home.create();
+			} catch (NamingException e) {
+	         throw new RuntimeException(e);
+	      } catch (RemoteException e) {
+	         throw new RuntimeException(e);
+	      } catch (CreateException e) {
+	         throw new RuntimeException(e);
+	      }
+		}
+		return delegate;
+	}
+
+	«FOREACH attributes.typeSelect(JavaModelAttribute) AS attr»
+		«EXPAND java::BOInterface::attrGetterDecl FOR attr»{
+		   // TODO Template not finished
+		}
+		«EXPAND java::BOInterface::attrSetterDecl FOR attr»{
+		   // TODO Template not finished
+		}
+	«ENDFOREACH»
+	
+	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+		«EXPAND java::BOInterface::assocGetterDecl FOR assoc»{
+		   // TODO Template not finished
+		}
+		«EXPAND java::BOInterface::assocSetterDecl FOR assoc»{
+		   // TODO Template not finished
+		}
+	«ENDFOREACH»
+	
+	«FOREACH methods.typeSelect(JavaModelMethod) AS method»
+		«EXPAND java::BOInterface::methodDecl FOR method» { 
+			«EXPAND java::Logging::logMethodEntry FOR method»     
+
+      		try {
+      			«IF method.hasStereotype("AsyncCall")»
+      				javax.jms.Queue queue = null;
+         
+         			if ( listener instanceof org.umlmda.runtime.jms.J2EEListener ) {
+            			queue = ((org.umlmda.runtime.jms.J2EEListener)listener).getQueue();
+         			}
+      			«ENDIF»
+      			«IF method.returnType != null»
+					return 
+				«ENDIF»      
+				((«getScopedName("j2ee.RemoteInterface")»)getDelegate()).«method.name»(
+				«FOREACH method.parameters.typeSelect(ModelParameter) AS param SEPARATOR "," »
+					«param.name»
+				«ENDFOREACH»
+				);
+			} catch (RemoteException e) {
+				«EXPAND java::Logging::logMethodExeception FOR method»
+				throw new RuntimeException( e);
+      		} finally {
+				«EXPAND java::Logging::logMethodExit FOR method»
+      		}
+		}
+	«ENDFOREACH»
+	
+}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»

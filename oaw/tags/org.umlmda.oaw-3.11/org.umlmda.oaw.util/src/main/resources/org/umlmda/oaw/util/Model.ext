@@ -1,0 +1,29 @@
+import uml;
+
+// and we also load the io extensions, for the purpose of
+// debugging, in case we need it   
+extension org::openarchitectureware::util::stdlib::io;   
+extension org::openarchitectureware::util::stdlib::issues;   
+
+// ==== Find a specific datatype ==== 
+cached DataType findDatatype (Model model, String typeName) :
+    lookupDatatype(model, typeName).typeSelect(DataType).first()
+;
+
+cached Class findClass (Model model, String typeName) :
+    lookupDatatype(model, typeName).typeSelect(Class).first()
+;
+
+// Find a specific datatype 
+private List[Type] lookupDatatype (Namespace namespace, String typeName) :
+    let types = namespace.eAllContents.typeSelect(DataType).select(e|e.name==typeName) :
+    
+    types.isEmpty ? (
+        info("Lookup datatype in imported models "+typeName) ->
+        namespace.ownedElement.typeSelect(PackageImport).importedPackage.lookupDatatype(typeName)
+    ) : (   
+        info("Found datatype "+typeName+" in "+((NamedElement)namespace).name) ->
+        types
+    )   
+;
+
