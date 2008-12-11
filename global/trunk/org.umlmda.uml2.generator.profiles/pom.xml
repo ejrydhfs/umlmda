@@ -8,13 +8,13 @@
    </parent>
    <artifactId>org.umlmda.uml2.generator.profiles</artifactId>
    <name>UMLMDA generator profiles</name>
-   <version>3.4.0</version>
+   <version>3.5-SNAPSHOT</version>
    <description />
    <packaging>pom</packaging>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.generator.profiles-3.4.0</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.generator.profiles-3.4.0</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/trunk/org.umlmda.uml2.generator.profiles</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/trunk/org.umlmda.uml2.generator.profiles</developerConnection>
    </scm>
 
    <build>
