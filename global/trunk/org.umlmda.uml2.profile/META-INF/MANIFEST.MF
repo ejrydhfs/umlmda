@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: UMLMDA UML2-Profile Plug-in
 Bundle-SymbolicName: org.umlmda.uml2.profile; singleton:=true
-Bundle-Version: 4.0.0.qualifier
+Bundle-Version: 4.1.1
 Bundle-ClassPath: runtime/org.umlmda.uml2.profile.jar
 Bundle-Activator: org.umlmda.uml2.profile.ProfilePlugin
 Bundle-Vendor: www.umlmda.org
