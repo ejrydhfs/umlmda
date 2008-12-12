@@ -30,13 +30,13 @@
   </profileApplication>
   <profileApplication xmi:id="_chJfAMUTEd2V4aoOrpeVJQ">
     <eAnnotations xmi:id="_chJfAcUTEd2V4aoOrpeVJQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
-      <references xmi:type="ecore:EPackage" href="../../profiles/UMLMDACommonProfile.epx#_hfJyccUFEd28n7ofFGqNfw?UMLMDACommonProfile/UMLMDACommonProfile?"/>
+      <references xmi:type="ecore:EPackage" href="../../profiles/UMLMDACommonProfile.epx#_4kDsscgfEd27b5iuD2bDog?UMLMDACommonProfile/UMLMDACommonProfile?"/>
     </eAnnotations>
     <appliedProfile href="../../profiles/UMLMDACommonProfile.epx#_LKQ_oMT7Ed28n7ofFGqNfw?UMLMDACommonProfile?"/>
   </profileApplication>
   <profileApplication xmi:id="_dnVD8MUTEd2V4aoOrpeVJQ">
     <eAnnotations xmi:id="_dnVD8cUTEd2V4aoOrpeVJQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
-      <references xmi:type="ecore:EPackage" href="../../profiles/UMLMDAServiceProfile.epx#_rl7J8cUMEd28n7ofFGqNfw?UMLMDAServiceProfile/UMLMDAServiceProfile?"/>
+      <references xmi:type="ecore:EPackage" href="../../profiles/UMLMDAServiceProfile.epx#_WZX28MgdEd27b5iuD2bDog?UMLMDAServiceProfile/UMLMDAServiceProfile?"/>
     </eAnnotations>
     <appliedProfile href="../../profiles/UMLMDAServiceProfile.epx#_QNnkwMT7Ed28n7ofFGqNfw?UMLMDAServiceProfile?"/>
   </profileApplication>
