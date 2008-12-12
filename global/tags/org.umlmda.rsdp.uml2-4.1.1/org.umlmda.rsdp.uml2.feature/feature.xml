@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.umlmda.rsdp.uml2.feature"
+      label="UMLMDA RSM/RSM Modeling"
+      version="4.1.1"
+      provider-name="www.umlmda.org">
+   <install-handler/>
+
+   <description url="[Enter Feature URL here.]">
+      UMLMDA UML2-Profiles for business service modelling.
+   </description>
+
+   <copyright url="[Enter Copyright URL here.]">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="[Enter License URL here.]">
+      [Enter License Description here.]
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+   </requires>
+
+   <plugin
+         id="org.umlmda.uml2.profile"
+         download-size="0"
+         install-size="0"
+         version="4.1.1"/>
+
+</feature>
