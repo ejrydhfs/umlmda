@@ -1,0 +1,139 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.releng</artifactId>
+      <version>3.5.1</version>
+   </parent>
+   <artifactId>org.umlmda.oaw</artifactId>
+   <version>3.12</version>
+   <packaging>pom</packaging>
+   <name>UMLMDA oaw</name>
+   <description>UMLMDA maven project for umlmda openarchitectureware integration modules.</description>
+
+   <properties>
+      <umlmda.common.version>3.9</umlmda.common.version>
+      <oaw.version>4.2.0</oaw.version>
+      <emf.version>2.3.0</emf.version>
+      <uml2.version>2.1.0</uml2.version>
+   </properties>
+
+   <build>
+      <sourceDirectory>src</sourceDirectory>
+      <testSourceDirectory>test</testSourceDirectory>
+
+      <plugins>
+         <!-- compiler -->
+         <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+               <source>1.5</source>
+               <target>1.5</target>
+               <debug>true</debug>
+               <optimize>false</optimize>
+               <fork>true</fork>
+               <meminitial>128m</meminitial>
+               <maxmem>512m</maxmem>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+
+   <modules>
+      <module>org.umlmda.oaw.util</module>
+      <module>org.umlmda.generator.uml.oaw</module>
+      <module>org.umlmda.oaw.generator</module>
+   </modules>
+
+   <scm>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/tags/org.umlmda.oaw-3.12</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/tags/org.umlmda.oaw-3.12</developerConnection>
+   </scm>
+
+   <dependencyManagement>
+      <dependencies>
+         <dependency>
+            <groupId>org.eclipse.uml2</groupId>
+            <artifactId>uml</artifactId>
+            <version>2.1.0</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-emftools</artifactId>
+            <version>${oaw.version}</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-expressions</artifactId>
+            <version>${oaw.version}</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-workflow</artifactId>
+            <version>${oaw.version}</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-xpand2</artifactId>
+            <version>${oaw.version}</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-uml2-adapter</artifactId>
+            <version>${oaw.version}</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-util-stdlib</artifactId>
+            <version>${oaw.version}</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>${parent.groupId}</groupId>
+            <artifactId>org.umlmda.umlmodel.uml2</artifactId>
+            <version>${umlmda.common.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>${parent.groupId}</groupId>
+            <artifactId>org.umlmda.umlmodel.nsuml</artifactId>
+            <version>${umlmda.common.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>${parent.groupId}</groupId>
+            <artifactId>org.umlmda.generator.uml.psm</artifactId>
+            <version>${umlmda.common.version}</version>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
+
+   <repositories>
+      <repository>
+         <id>artifactory</id>
+         <url>http://coding.ds2k.de/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+      <repository>
+         <id>cor-artifactory</id>
+         <url>http://cor-health-dev1:8090/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
+
+</project>
