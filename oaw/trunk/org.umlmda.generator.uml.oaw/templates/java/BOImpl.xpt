@@ -287,8 +287,7 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 		«interfaceType» oldValue;
 		
 		if ( this.«name» != null ) {
-    		oldValue = new «implementationType»();
-    		oldValue.addAll(this.«name»);
+    		oldValue = new «implementationType»(this.«name»);
     	}
     	else {
     		oldValue = null;
@@ -311,7 +310,7 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 
 «DEFINE internalSetMethod FOR JavaModelAssociation»
 	«IF multiple && derived == false && readOnly == false»
-	   private void «setter»Internal(java.util.Collection «name») {
+	   private void «setter»Internal(«interfaceType» «name») {
 	   		«EXPAND saveOldValue FOR this»
 	      
 	      if ( «name» != null ) {
