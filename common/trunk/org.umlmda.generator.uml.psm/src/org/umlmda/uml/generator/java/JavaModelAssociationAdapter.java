@@ -31,6 +31,7 @@ import org.umlmda.model.uml.impl.ModelAssociationAdapter;
  */
 public class JavaModelAssociationAdapter extends ModelAssociationAdapter implements JavaModelAssociation {
    private final JavaModelElementHelper delegate;
+   private final boolean genericSupport;
    
    /**
     * @param modelAssociation
@@ -39,6 +40,7 @@ public class JavaModelAssociationAdapter extends ModelAssociationAdapter impleme
    public JavaModelAssociationAdapter(ModelAssociationBase modelAssociation, Model model) {
       super(modelAssociation, model);
       delegate = new JavaModelElementHelper(this);
+      genericSupport = Boolean.parseBoolean(((GeneratorModel)model).getProperties().getProperty("genericSupport", "true"));
    }
 
    /* (non-Javadoc)
@@ -100,29 +102,32 @@ public class JavaModelAssociationAdapter extends ModelAssociationAdapter impleme
     */
    public String getType(String artefact) {
       if ( isMultiple() ) {
-         return Collection.class.getName();
+         if ( genericSupport ) {
+            return Collection.class.getName() + "<" + getTargetType(artefact) + ">";
+         }
+         else {
+            return Collection.class.getName();
+         }
       }
       else {
-         String type;
-         GeneratorModelElement element = getGeneratorModel().getContext().getCurrentModelElement();
-         
-         if ( element instanceof GeneratorClass ) {
-            GeneratorClass genClass = (GeneratorClass) element;
-            
-            type = genClass.getScopedName(artefact, (JavaModelClass)getTarget());
-         }
-         // TODO Check for package
-//         else if ( element instanceof GeneratorPackage ) {
-//            GeneratorPackage genPackage = (GeneratorPackage)  element;
-//            
-//            type = genPackage.getScopedName(artefact, (JavaModelClass)getTarget());
-//         }
-         else {
-            type = ((JavaModelClass)getTarget()).getScopedName(artefact);
-         }
-
-         return type;
+         return getTargetType(artefact);
       }
+   }
+
+   public String getTargetType(String artefact) {
+      String type;
+      GeneratorModelElement element = getGeneratorModel().getContext().getCurrentModelElement();
+      
+      if ( element instanceof GeneratorClass ) {
+         GeneratorClass genClass = (GeneratorClass) element;
+         
+         type = genClass.getScopedName(artefact, (JavaModelClass)getTarget());
+      }
+      else {
+         type = ((JavaModelClass)getTarget()).getScopedName(artefact);
+      }
+
+      return type;
    }
 
    public void setAsCurrentArtefact(String artefact) {
@@ -134,19 +139,35 @@ public class JavaModelAssociationAdapter extends ModelAssociationAdapter impleme
     * @see org.umlmda.uml.generator.java.JavaModelAssociation#getInterfaceType()
     */
    public String getInterfaceType() {
+      String targetType = ((JavaModelClass)getTarget()).getJavaType();
+
       if ( isMultiple() ) {
-         if ( isUnique() ) {
-            return Set.class.getName();
-         }
-         else if ( isOrdered() ) {
-            return List.class.getName();
+         if (genericSupport) {
+            if (isUnique()) {
+               return Set.class.getName() + "<" + targetType + ">";
+            }
+            else if (isOrdered()) {
+               return List.class.getName() + "<" + targetType + ">";
+            }
+            else {
+               return Collection.class.getName() + "<" + targetType + ">";
+            }
          }
          else {
-            return Collection.class.getName();
+            if (isUnique()) {
+               return Set.class.getName();
+            }
+            else if (isOrdered()) {
+               return List.class.getName();
+            }
+            else {
+               return Collection.class.getName();
+            }
+            
          }
       }
       else {
-         return ((JavaModelClass)getTarget()).getJavaType();
+         return targetType;
       }
    }
 
@@ -154,21 +175,37 @@ public class JavaModelAssociationAdapter extends ModelAssociationAdapter impleme
     * @see org.umlmda.uml.generator.java.JavaModelAssociation#getImplementationType()
     */
    public String getImplementationType() {
+      JavaModelClass target = (JavaModelClass) getTarget();
+      String targetType = target.getScopedName(JavaArtefacts.BUSINESS_OBJECT);
+      
       if ( isMultiple() ) {
-         if ( isUnique() && !isOrdered() ) {
-            return HashSet.class.getName();
-         }
-         else if ( isUnique() && isOrdered() ) {
-            return LinkedHashSet.class.getName();
+         if (genericSupport) {
+            String targetInterfaceType = target.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE);
+
+            if (isUnique() && !isOrdered()) {
+               return HashSet.class.getName() + "<" + targetInterfaceType + ">";
+            }
+            else if (isUnique() && isOrdered()) {
+               return LinkedHashSet.class.getName() + "<" + targetInterfaceType + ">";
+            }
+            else {
+               return ArrayList.class.getName() + "<" + targetInterfaceType + ">";
+            }
          }
          else {
-            return ArrayList.class.getName();
+            if (isUnique() && !isOrdered()) {
+               return HashSet.class.getName();
+            }
+            else if (isUnique() && isOrdered()) {
+               return LinkedHashSet.class.getName();
+            }
+            else {
+               return ArrayList.class.getName();
+            }
          }
       }
       else {
-         JavaModelClass target = (JavaModelClass) getTarget();
-         
-         return target.getScopedName(JavaArtefacts.BUSINESS_OBJECT);
+         return targetType;
       }
    }
 
