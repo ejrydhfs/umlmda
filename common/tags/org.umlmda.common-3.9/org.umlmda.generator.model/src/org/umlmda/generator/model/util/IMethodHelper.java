@@ -1,0 +1,61 @@
+// jUMLMDA, GeneratorBase-API
+//  
+//   $Header$
+//   $Source$
+// $Revision$
+//    $State$
+//     $Name$
+//     $Date$
+//   $Locker$
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Library General Public
+// License as published by the Free Software Foundation; either
+// version 2 of the License, or (at your option) any later version.
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Library General Public License for more details.
+//
+// You should have received a copy of the GNU Library General Public
+// License along with this library; if not, write to the
+// Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+// Boston, MA  02111-1307, USA. The text of license can be also found
+// at http://www.gnu.org/copyleft/lgpl.html
+// 
+// Original author: Dieter Moroff (moroff@users.sourceforge.net)
+// Created on:      06.10.2004
+package org.umlmda.generator.model.util;
+
+import org.umlmda.model.uml.ModelMethod;
+
+/**
+ * Interface of the method helper classes
+ * @author moroff
+ */
+public interface IMethodHelper {
+   public abstract String getMethodSignature(ModelMethod method);
+   
+   public IClassHelper getClassHelper();
+
+   public void setClassHelper(IClassHelper helper);
+
+}
+
+//-------------------------------------------------------------------------
+//$Log$
+//Revision 1.1  2006/07/10 15:32:34  moroff
+//Refactoring base functionality to org.umlmda.generator.model
+//
+//Revision 1.2  2005/10/27 10:52:45  moroff
+//*** empty log message ***
+//
+//Revision 1.1  2005/10/26 13:03:37  moroff
+//* Refactoring package names to org.umlmda
+//* Generator configuration based on profiles and sets
+//
+//Revision 1.1  2004/10/06 19:33:14  moroff
+//* Target language specific signatures put in help-classes, delegating to these 
+//   classes inside the writer classes
+//
+//-------------------------------------------------------------------------
