@@ -165,5 +165,13 @@ public class ${genClass.generatedName} implements ${interface} {
 #else		 
       return value.hashCode();
 #end		 
-   }       
+   } 
+   
+   /**
+    * Returns the qualified model name of the enumeration class
+    */
+   public String getQualifiedModelName() {
+      return QUALIFIED_MODEL_NAME;
+   }
+         
 }
