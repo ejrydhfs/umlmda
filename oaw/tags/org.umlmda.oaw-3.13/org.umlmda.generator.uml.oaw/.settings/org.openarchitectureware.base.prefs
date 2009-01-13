@@ -1,0 +1,6 @@
+#Mon Apr 07 10:30:36 CEST 2008
+eclipse.preferences.version=1
+instance/org.eclipse.core.net/org.eclipse.core.net.hasMigrated=true
+metamodel=org.openarchitectureware.core.metamodel.jdt.javabean.JavaBeanMetamodelContributor,
+metamodelContributor=org.openarchitectureware.core.metamodel.jdt.javabean.JavaBeanMetamodelContributor,org.openarchitectureware.uml2.Uml2MetamodelContributor
+project.specific.metamodel=true

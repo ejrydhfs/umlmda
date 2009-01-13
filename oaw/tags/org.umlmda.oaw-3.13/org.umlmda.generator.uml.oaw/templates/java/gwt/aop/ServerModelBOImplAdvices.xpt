@@ -1,0 +1,137 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION org::umlmda::uml::java::Element»
+«EXTENSION org::umlmda::uml::java::StructuralFeature»
+
+«AROUND java::BOImpl::standardBody FOR JavaBusinessObject»
+	«targetDef.proceed()»
+	«EXPAND java::DeepCopy::deepCopyMethods FOR this»
+«ENDAROUND»
+
+«AROUND java::BOImpl::standardBOInterfaces FOR JavaModelClass»
+	«targetDef.proceed()», org.umlmda.runtime.util.CopyCluster
+«ENDAROUND»
+
+// =================
+// Avoid jmi support
+// =================
+«AROUND java::JmiReflect::Impl FOR JavaModelClass»
+«ENDAROUND»
+
+«AROUND java::JmiReflect::Imports FOR JavaModelClass»
+«ENDAROUND»
+
+// =================
+// Avoid persistence
+// =================
+«AROUND java::BOImpl::persistenceInterface FOR JavaBusinessObject»
+«ENDAROUND»
+
+«AROUND java::BOImpl::persistenceImpl FOR JavaBusinessObject»
+«ENDAROUND»
+
+// ===========================
+// Skip <<SDOClient>> features
+// ===========================
+«AROUND java::BOImpl::standardImports FOR JavaBusinessObject»
+	«targetDef.proceed()»
+	
+	import org.umlmda.runtime.sdo.sync.gwt.server.SyncContext;
+			
+	import java.util.Collection;
+	import java.util.IdentityHashMap;
+	
+	import org.umlmda.runtime.util.CopyCluster;
+	import org.umlmda.runtime.util.CopyClusterUtil;
+«ENDAROUND»
+
+«AROUND java::BOImpl::handleAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOImpl::handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOImpl::handleMethod(JavaModelClass modelClass) FOR JavaModelMethod»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOImpl::callPostSetMethod FOR JavaModelStructuraleFeature»
+	Recorder recorder = SyncContext.recorderHolder.get();
+	
+    recorder.recordChange(this, PROPERTY_«upperCaseIdentifier», «name»);
+	«IF postSetMethod() != null && postSetMethod().isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOImpl::xmlMarshalAttribute FOR JavaModelAttribute»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOImpl::xmlMarshalChild FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOImpl::xmlMarshalReference FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::BOImpl::assocDecl FOR JavaModelAssociation»
+	«IF derived == false»
+		«IF multiple»
+			«IF interfaceType.startsWith("java.util.List")»
+			   private «interfaceType» «name» = new org.umlmda.runtime.sdo.sync.SynchronizedListWrapper(this.recorder,  
+			   					new «implementationType»());
+			«ELSE»   
+			   private «interfaceType» «name» = new org.umlmda.runtime.sdo.sync.SynchronizedSetWrapper(this.recorder, 
+			   					new «implementationType»());
+			«ENDIF»
+		«ELSE»
+		   private «interfaceType» «name»;
+		«ENDIF»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::DeepCopy::deepCopyMethods FOR JavaBusinessObject»
+	«REM»«IF this.isSDOClientOnly() == false»«ENDREM»
+		«targetDef.proceed()»
+	«REM»«ENDIF»«ENDREM»
+«ENDAROUND»
+
+«AROUND java::DeepCopy::immutableObjectsDecl FOR JavaModelAttribute»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::DeepCopy::mutableObjectsDecl FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»
+
+«AROUND java::DeepCopy::mutableCollectObjects FOR JavaModelAssociation»
+	«IF this.isSDOClientOnly() == false»
+		«targetDef.proceed()»
+	«ENDIF»
+«ENDAROUND»

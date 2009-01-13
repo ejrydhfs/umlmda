@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xtools2_universal_type_manager-->
+<?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.mmi.ui.signatures.diagram" version="7.0.0"><feature description="" name="Rational Modeling Platform (com.ibm.xtools.rmp)" url="" version="7.0.0"/></signature>?>
+<?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.uml.msl.model" version="7.0.0"><feature description="" name="com.ibm.xtools.ruml.feature" url="" version="7.0.0"/></signature>?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:UMLMDAProfile="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation" xsi:schemaLocation="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22 pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx#_m4nosa87Edy5F6gxEi6kNw?UMLMDAProfile/UMLMDAProfile?">
+  <uml:Model xmi:id="_bmpVofLCEdmyduCk8dC3zA" name="ReferencedModel">
+    <eAnnotations xmi:id="_bmpVovLCEdmyduCk8dC3zA" source="uml2.diagrams"/>
+    <packageImport xmi:id="_bmpVtPLCEdmyduCk8dC3zA">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packageImport xmi:id="_8JoAYPMJEdmrXqwlJJdHPg">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_ggMDAPK4EdmFXfbQyopNVQ?UMLMDATypes?"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_ilXY8OuCEdydHqpMKq5jmA" name="org">
+      <packagedElement xmi:type="uml:Package" xmi:id="_y_54wOuCEdyuk6TETm35Jw" name="umlmda">
+        <packagedElement xmi:type="uml:Package" xmi:id="_0ypBsOuCEdyuk6TETm35Jw" name="test">
+          <packagedElement xmi:type="uml:Package" xmi:id="_7MkYMOuCEdyuk6TETm35Jw" name="ref">
+            <eAnnotations xmi:id="_BRDDIOuDEdyuk6TETm35Jw" source="uml2.diagrams">
+              <contents xmi:type="notation:Diagram" xmi:id="_BRDDIeuDEdyuk6TETm35Jw" type="Class" name="ClassDiagram1">
+                <children xmi:id="_CDaUMOuDEdyuk6TETm35Jw">
+                  <children xmi:id="_CDaUM-uDEdyuk6TETm35Jw" type="ImageCompartment">
+                    <layoutConstraint xmi:type="notation:Size" xmi:id="_CDaUNOuDEdyuk6TETm35Jw" width="1320" height="1320"/>
+                  </children>
+                  <children xmi:id="_CDaUNeuDEdyuk6TETm35Jw" type="Stereotype"/>
+                  <children xmi:id="_CDaUNuuDEdyuk6TETm35Jw" type="Name"/>
+                  <children xmi:id="_CDaUN-uDEdyuk6TETm35Jw" type="Parent"/>
+                  <children xmi:id="_CDaUOOuDEdyuk6TETm35Jw" type="AttributeCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CDaUOeuDEdyuk6TETm35Jw"/>
+                  </children>
+                  <children xmi:id="_CDaUOuuDEdyuk6TETm35Jw" type="OperationCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CDaUO-uDEdyuk6TETm35Jw"/>
+                  </children>
+                  <children xmi:id="_CDaUPOuDEdyuk6TETm35Jw" visible="false" type="SignalCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_CDaUPeuDEdyuk6TETm35Jw"/>
+                  </children>
+                  <children xmi:id="_CDaUPuuDEdyuk6TETm35Jw" visible="false" type="StructureCompartment">
+                    <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_CDaUP-uDEdyuk6TETm35Jw"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_CDaUMeuDEdyuk6TETm35Jw" showListSignature="true" showStereotype="Label"/>
+                  <element xmi:type="uml:Class" href="BaseModel.emx#_l434cOt_EdydHqpMKq5jmA?BaseModel/org/umlmda/test/base/TestBaseClass?"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CDaUMuuDEdyuk6TETm35Jw" x="4352" y="3915"/>
+                </children>
+                <children xmi:id="_Dktu4OuDEdyuk6TETm35Jw" element="_DDobEOuDEdyuk6TETm35Jw">
+                  <children xmi:id="_Dktu4-uDEdyuk6TETm35Jw" type="ImageCompartment">
+                    <layoutConstraint xmi:type="notation:Size" xmi:id="_Dktu5OuDEdyuk6TETm35Jw" width="1320" height="1320"/>
+                  </children>
+                  <children xmi:id="_Dktu5euDEdyuk6TETm35Jw" type="Stereotype"/>
+                  <children xmi:id="_Dktu5uuDEdyuk6TETm35Jw" type="Name"/>
+                  <children xmi:id="_Dktu5-uDEdyuk6TETm35Jw" type="Parent"/>
+                  <children xmi:id="_Dk3f4OuDEdyuk6TETm35Jw" type="AttributeCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Dk3f4euDEdyuk6TETm35Jw"/>
+                  </children>
+                  <children xmi:id="_Dk3f4uuDEdyuk6TETm35Jw" type="OperationCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Dk3f4-uDEdyuk6TETm35Jw"/>
+                  </children>
+                  <children xmi:id="_Dk3f5OuDEdyuk6TETm35Jw" visible="false" type="SignalCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Dk3f5euDEdyuk6TETm35Jw"/>
+                  </children>
+                  <children xmi:id="_Dk3f5uuDEdyuk6TETm35Jw" visible="false" type="StructureCompartment">
+                    <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_Dk3f5-uDEdyuk6TETm35Jw"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_Dktu4euDEdyuk6TETm35Jw" showStereotype="Label"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Dktu4uuDEdyuk6TETm35Jw" x="6720" y="8400"/>
+                </children>
+                <styles xmi:type="umlnotation:UMLDiagramStyle" xmi:id="_BRDDIuuDEdyuk6TETm35Jw"/>
+                <element xsi:nil="true"/>
+                <edges xmi:id="_FcODEOuDEdyuk6TETm35Jw" element="_FcE5IOuDEdyuk6TETm35Jw" source="_Dktu4OuDEdyuk6TETm35Jw" target="_CDaUMOuDEdyuk6TETm35Jw">
+                  <children xmi:id="_FcX0EOuDEdyuk6TETm35Jw" type="NameLabel">
+                    <children xmi:id="_FcX0EuuDEdyuk6TETm35Jw" type="Stereotype"/>
+                    <children xmi:id="_FcX0E-uDEdyuk6TETm35Jw" type="Name"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_FcX0EeuDEdyuk6TETm35Jw" y="-186"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_FcODEeuDEdyuk6TETm35Jw" routing="Rectilinear" showStereotype="Text"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_FcODEuuDEdyuk6TETm35Jw" points="[52, -846, 52, 3572]$[52, -3439, 52, 979]"/>
+                </edges>
+              </contents>
+            </eAnnotations>
+            <packagedElement xmi:type="uml:Class" xmi:id="_DDobEOuDEdyuk6TETm35Jw" name="TestClass">
+              <generalization xmi:id="_FcE5IOuDEdyuk6TETm35Jw">
+                <general xmi:type="uml:Class" href="BaseModel.emx#_l434cOt_EdydHqpMKq5jmA?BaseModel/org/umlmda/test/base/TestBaseClass?"/>
+              </generalization>
+              <ownedAttribute xmi:id="_GILxMOuDEdyuk6TETm35Jw" name="b" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string?"/>
+              </ownedAttribute>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:id="_bmpVq_LCEdmyduCk8dC3zA">
+      <eAnnotations xmi:id="_bmpVrPLCEdmyduCk8dC3zA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+    </profileApplication>
+    <profileApplication xmi:id="_bmpVrvLCEdmyduCk8dC3zA">
+      <eAnnotations xmi:id="_bmpVr_LCEdmyduCk8dC3zA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML2_MSL_PROFILES/Default.epx#_IN8k8MmBEdqBcN1R6EvWUw?Default/Default?"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML2_MSL_PROFILES/Default.epx#_a_S3wNWLEdiy4IqP8whjFA?Default?"/>
+    </profileApplication>
+    <profileApplication xmi:id="_bmpVsfLCEdmyduCk8dC3zA">
+      <eAnnotations xmi:id="_bmpVsvLCEdmyduCk8dC3zA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML2_MSL_PROFILES/Deployment.epx#_IrdAUMmBEdqBcN1R6EvWUw?Deployment/Deployment?"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML2_MSL_PROFILES/Deployment.epx#_vjbuwOvHEdiDX5bji0iVSA?Deployment?"/>
+    </profileApplication>
+    <profileApplication xmi:id="_fSWyYPLCEdmyduCk8dC3zA">
+      <eAnnotations xmi:id="_fSWyYfLCEdmyduCk8dC3zA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx#_m4nosa87Edy5F6gxEi6kNw?UMLMDAProfile/UMLMDAProfile?"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx#_fgmLseO5Edm14clrpIgO7w?UMLMDAProfile?"/>
+    </profileApplication>
+  </uml:Model>
+  <UMLMDAProfile:BusinessObject xmi:id="_Dkj94OuDEdyuk6TETm35Jw" base_Class="_DDobEOuDEdyuk6TETm35Jw"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_GILxMeuDEdyuk6TETm35Jw" base_Property="_GILxMOuDEdyuk6TETm35Jw"/>
+</xmi:XMI>

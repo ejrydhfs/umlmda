@@ -1,0 +1,55 @@
+<project name="Run as part of postBuild" default="main">
+    
+	<property file="${buildDirectory}/finalFeaturesVersions.properties"/>
+		
+    <target name="main">
+        <property name="UpdateSiteStagingLocation" value="${buildDirectory}/${buildLabel}/update-site"/>
+        <antcall target="-generateUpdateSite"/>
+    </target>
+    
+    <target name="-generateUpdateSite">
+        <!-- site.xml files for integration and release builds are handled elsewhere -->
+        <antcall target="-createNightlyBuildSiteXml"/>
+    </target>
+    
+    <target name="-createNightlyBuildSiteXml">
+        <echo file="${UpdateSiteStagingLocation}/site.xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+        	<site>
+        	   <description url="http://www.umlmda.org/rsX-7/update">
+        	      Update site for UMLMDA intergration for RSM/RSA 7.x
+        	   </description>
+        	   <feature url="features/org.umlmda.3rdparty.feature_${org.umlmda.3rdparty.feature}.jar" id="org.umlmda.3rdparty.feature" version="${org.umlmda.3rdparty.feature}">
+        	      <category name="UMLMDA3"/>
+        	   </feature>
+        	   <feature url="features/org.umlmda.common.sdk_${org.umlmda.common.sdk}.jar" id="org.umlmda.eclipse.feature" version="${org.umlmda.common.sdk}">
+        	      <category name="UMLMDA3"/>
+        	   </feature>
+        	   <feature url="features/org.umlmda.generator.uml.oaw.feature_${org.umlmda.generator.uml.oaw.feature}.jar" id="org.umlmda.generator.uml.oaw.feature" version="${org.umlmda.generator.uml.oaw.feature}">
+        	      <category name="UMLMDA3"/>
+        	   </feature>
+	     	   <feature url="features/org.umlmda.oaw.sdk_${org.umlmda.generator.uml.oaw.feature}.jar" id="org.umlmda.oaw.sdk" version="${org.umlmda.oaw.sdk}">
+	     	      <category name="UMLMDA3"/>
+	     	   </feature>
+        	   <feature url="features/org.umlmda.classic.feature_${org.umlmda.classic.feature}.jar" id="org.umlmda.classic.feature" version="${org.umlmda.classic.feature}">
+        	      <category name="UMLMDA3"/>
+        	   </feature>
+        	   <feature url="features/org.umlmda.rsdp.feature_${org.umlmda.rsdp.feature}.jar" id="org.umlmda.rsdp.feature" version="${org.umlmda.rsdp.feature}">
+        	      <category name="UMLMDA3"/>
+        	   </feature>
+        	   <feature url="features/org.umlmda.rsdp.uml2_2.1.0.200801142220.jar" id="org.umlmda.rsdp.uml2" version="2.1.0.200801142220">
+        	      <category name="UMLMDA3_MODELING"/>
+        	   </feature>
+        	   <feature url="features/ch.css.umlmda.generator.bsfw_${ch.css.umlmda.generator.bsfw}.jar" id="ch.css.umlmda.generator.bsfw" version="${ch.css.umlmda.generator.bsfw}">
+        	      <category name="UMLMDA3_BSFW"/>
+        	   </feature>
+        	   <feature url="features/ch.css.vertrag.umlmda.gui.feature_${ch.css.vertrag.umlmda.gui.feature}.jar" id="ch.css.vertrag.umlmda.gui.feature" version="${ch.css.vertrag.umlmda.gui.feature}">
+        	      <category name="UMLMDA3_GUI"/>
+        	   </feature>
+        	   <category-def name="UMLMDA3" label="UMLMDA Release 3"/>
+        	   <category-def name="UMLMDA3_BSFW" label="UMLMDA Release 3 CSS Business-Service Framework"/>
+        	   <category-def name="UMLMDA3_GUI" label="UMLMDA Release 3 GUI-Modelling"/>
+        	   <category-def name="UMLMDA3_MODELING" label="UMLMDA Release 3.x / RSM Release 7.x Modeling"/>
+        	</site>]]></echo>
+    </target>
+    
+</project>
