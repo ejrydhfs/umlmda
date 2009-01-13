@@ -13,7 +13,7 @@
    <description>UMLMDA maven project for umlmda openarchitectureware integration modules.</description>
 
    <properties>
-      <umlmda.common.version>3.9</umlmda.common.version>
+      <umlmda.common.version>3.10</umlmda.common.version>
       <oaw.version>4.2.0</oaw.version>
       <emf.version>2.3.0</emf.version>
       <uml2.version>2.1.0</uml2.version>
