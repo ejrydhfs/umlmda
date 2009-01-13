@@ -7,7 +7,7 @@
       <version>3.5.1</version>
    </parent>
    <artifactId>org.umlmda.oaw</artifactId>
-   <version>3.13-SNAPSHOT</version>
+   <version>3.13</version>
    <packaging>pom</packaging>
    <name>UMLMDA oaw</name>
    <description>UMLMDA maven project for umlmda openarchitectureware integration modules.</description>
@@ -47,8 +47,8 @@
    </modules>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/trunk</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/trunk</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/tags/org.umlmda.oaw-3.13</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/tags/org.umlmda.oaw-3.13</developerConnection>
    </scm>
 
    <dependencyManagement>
