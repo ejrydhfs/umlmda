@@ -1,0 +1,32 @@
+//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//   $Header: /cvsroot/umlmda/UMLGenerator/templates/webservice/Attic/ServletInterface.vm,v 1.1.2.1 2008/01/21 14:57:11 moroff Exp $
+//   $Source: /cvsroot/umlmda/UMLGenerator/templates/webservice/Attic/ServletInterface.vm,v $
+// $Revision: 1.1.2.1 $
+//     $Name:  $
+//     $Date: 2008/01/21 14:57:11 $
+//@@UserSection-End RCSHeader
+
+package ${genPackage.getQualifiedPackageName("ws.ServletInterface")};
+${genClass.resetImports()}##
+#foreach( $class in ${genClass.referencedTypes})
+#if ( ${class.hasStereotype("WebServiceObject")} )
+${genClass.registerImport("ws.Stub", ${class})}##
+#end ## if
+#end ## foreach
+
+${genClass.registeredImports()}##
+
+/**
+ * Webservice implementation interface
+ */
+public interface ${genClass.generatedName} {
+
+#foreach ( $method in ${genClass.getMethods(true)} )
+   /**
+    * ${method.documentation}
+    */
+    public abstract ${method.webServiceSignature};
+
+#end ## foreach
+}

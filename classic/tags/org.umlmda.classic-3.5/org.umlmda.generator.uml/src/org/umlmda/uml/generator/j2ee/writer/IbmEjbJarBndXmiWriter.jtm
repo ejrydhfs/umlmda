@@ -1,0 +1,41 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = IbmEjbJarBndXmiWriter
+main.CodeWriterFormat	   = format/ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.j2ee.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.j2ee.AbstractPackageWriter
+%><% import!
+import java.util.Iterator;
+import org.umlmda.profile.ModelStereotype;
+import org.umlmda.uml.generator.j2ee.*;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %><?xml version="1.0" encoding="ISO-8859-1"?>
+<ejbbnd:EJBJarBinding xmi:version="2.0"
+	xmlns:xmi="http://www.omg.org/XMI"
+	xmlns:ejbbnd="ejbbnd.xmi"
+	xmlns:ejb="ejb.xmi"
+	xmlns:commonbnd="commonbnd.xmi"
+	xmlns:common="common.xmi"
+	xmi:id="EJBJarBinding_1">
+	<ejbJar href="META-INF/ejb-jar.xml#ejb-jar_ID"/>
+
+    <!-- Session Beans -->
+<% 
+   for ( Iterator ia = getModelPackage().getClasses().iterator(); ia.hasNext(); ) {
+	   J2EEModelClass modelClass = (J2EEModelClass)ia.next();
+     String modelClassName = modelClass.getName();
+     String packageName = modelClass.getPackage().getQualifiedName();
+     
+     if ( modelClass.hasStereotype(ModelStereotype.BUSINESS_SERVICE) && modelClass.isAbstract() == false ) {
+%>    	<ejbBindings
+		xmi:id="<%=modelClassName%>"
+		jndiName="<%=modelClass.getJndiName()%>">
+		<enterpriseBean xmi:type="ejb:Session"
+			href="META-INF/ejb-jar.xml#<%=modelClassName%>"/>		
+		</ejbBindings>
+
+<%   }     
+   } 
+%>    
+</ejbbnd:EJBJarBinding>

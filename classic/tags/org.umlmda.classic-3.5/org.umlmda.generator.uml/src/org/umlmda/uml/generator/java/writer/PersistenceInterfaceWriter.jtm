@@ -1,0 +1,97 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = PersistenceInterfaceWriter
+main.CodeWriterFormat	     = format/ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.java.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.java.AbstractPersistenceInterfaceWriter
+%><% import!
+import java.util.Iterator;
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.model.uml.*;
+import org.umlmda.profile.ModelStereotype;
+import org.umlmda.uml.generator.java.*;
+// ==== End of generation header ===============================================
+%><%
+   JavaModelClass genClass = (JavaModelClass)getGenClass();
+   JavaModelClass genSuperClass = (JavaModelClass)genClass.getSuperClass();
+   String superClass = null;
+   JavaModel genModel = (JavaModel)genClass.getGeneratorModel();
+   
+   genClass.resetImports();
+   genClass.registerImport(JavaArtefacts.BUSINESS_SERVICE_INTERFACE);
+   genClass.registerImports(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, genClass.getReferencedTypes(), ModelStereotype.BUSINESS_OBJECT);
+   if ( genSuperClass != null ) {
+      genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT, genSuperClass);
+      superClass = genClass.getScopedName(JavaArtefacts.BUSINESS_EXCEPTION, genSuperClass);
+   }
+%>//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+
+package <%=getPackageName()%>;
+
+<%=genClass.registeredImports()%>
+<%= beginUserSection("Imports", COMMON) %>
+<%= endUserSection("Imports", COMMON) %>
+
+/**
+ * <%=getModelClass().getDocumentation()%>
+ */
+public interface <%=getBaseName()%> extends <%if ( superClass != null ) {%><%=superClass%><%} else {%>net.sourceforge.umlmda.persistence.IPersistenceService<%}%>
+{
+<% // Constants
+   for ( Iterator ia = getModelClass().getConstants().iterator(); ia.hasNext(); ) {
+     ModelAttribute attribute = (ModelAttribute)ia.next();
+%>   /**
+   * Constant <%=attribute.getName()%>
+   */
+   public static final <%=getType(attribute)%> <%=attribute.getName()%> = <%=getInitializer(attribute)%>;
+<% 
+   }
+   
+   // Associations-Accessors
+   for ( Iterator ia = getModelClass().getAssociations().iterator(); ia.hasNext(); ) {
+      ModelAssociation association = (ModelAssociation)ia.next();
+      if ( association.isNavigatableToTarget() ) {
+         if ( association.isMultiple() ) {
+%>
+   /**
+   * Reads a persistant object by primary key
+   */
+   public <%=readSignatur(association)%>;
+   /**
+   * Delete a persistent object by primary key
+   */
+   public <%=deleteSignatur(association)%>;
+   /**
+   * Inserts a new object
+   */
+   public void insert(<%=getType(association.getTarget())%> toInsert);
+   /**
+   * Inserts or updates an object
+   */
+   public void save(<%=getType(association.getTarget())%> toSave);
+   /**
+   * Updates an object
+   */
+   public void update(<%=getType(association.getTarget())%> toUpdate);
+   /**
+   * Deletes an object
+   */
+   public void delete(<%=getType(association.getTarget())%> toDelete);
+
+<%       }
+     }
+   }
+   // Modelled Methods
+   for ( Iterator ia = getModelClass().getMethods().iterator(); ia.hasNext(); ) {
+	   JavaModelMethod method = (JavaModelMethod)ia.next();
+%>   /**
+   * <%=method.getDocumentation()%>
+   */
+   public <%=method.getSignature()%>;
+
+<% }%>		
+
+};
