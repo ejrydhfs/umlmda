@@ -28,10 +28,12 @@ package org.umlmda.model.uml.uml2;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.ValueSpecification;
 import org.umlmda.model.uml.ModelAttributeBase;
 import org.umlmda.model.uml.ModelClassBase;
+import org.umlmda.model.uml.ModelDataType;
 import org.umlmda.model.uml.ModelDataTypeBase;
 import org.umlmda.model.uml.attributes.Multiplicity;
 
@@ -118,8 +120,14 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
 
    public String getInitialValue() {
       ValueSpecification expr = attribute.getDefaultValue();
-
-      return expr != null ? expr.stringValue() : "";
+      String initialValue = expr != null ? expr.stringValue() : "";
+      
+      if ( getDataTypeBase() != null && getDataTypeBase().getName().equals(ModelDataType.STRING) && expr instanceof LiteralString ) {
+         return "\"" + initialValue + "\"";
+      }
+      else {
+         return initialValue;
+      }
    }
    
    static boolean isConstant(Property attribute) {
