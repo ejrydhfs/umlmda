@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.umlmda.rsdp.uml2.feature"
-      label="UMLMDA RSM/RSM Modeling"
-      version="4.1.1"
+      label="UMLMDA Classic RSM/RSM Modeling"
+      version="4.1.4"
       provider-name="www.umlmda.org">
    <install-handler/>
 
@@ -27,6 +27,6 @@
          id="org.umlmda.uml2.profile"
          download-size="0"
          install-size="0"
-         version="4.1.1"/>
+         version="4.1.4"/>
 
 </feature>
