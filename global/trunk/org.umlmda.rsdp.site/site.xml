@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.umlmda.rsdp.uml2_2.1.0.200801142220.jar" id="org.umlmda.rsdp.uml2" version="2.1.0.200801142220">
+      <category name="UMLMDA_MODELING_3"/>
+   </feature>
+   <feature url="features/org.umlmda.rsdp.uml2.new.feature_4.1.5.jar" id="org.umlmda.rsdp.uml2.new.feature" version="4.1.5">
+      <category name="UMLMDA_MODELING_4"/>
+   </feature>
+   <feature url="features/org.umlmda.rsdp.uml2.feature_4.1.4.jar" id="org.umlmda.rsdp.uml2.feature" version="4.1.4">
+      <category name="UMLMDA_MODELING_4"/>
+   </feature>
+   <category-def name="UMLMDA_MODELING_3" label="UMLMDA 3.x / RSM 7.x Modelling"/>
+   <category-def name="UMLMDA_MODELING_4" label="UMLMDA 4.x / RSM 7.x Modelling"/>
+   <category-def name="UMLMDA_CORE" label="UMLMDA 3.x Core"/>
+</site>
