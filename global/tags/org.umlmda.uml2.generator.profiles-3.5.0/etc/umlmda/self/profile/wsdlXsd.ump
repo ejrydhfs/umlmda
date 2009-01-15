@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.profile:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.profile="http:///org/umlmda/generator/profile.ecore" name="wsdlXsd" description="Profile for generating WSDL-Style XML Schema" adapterFactory="org.umlmda.uml.generator.webservices.WSModelAdapterFactory">
+  <stereotypes name="BusinessComponent">
+    <mappings artefact="//@artefacts.0"/>
+  </stereotypes>
+  <artefacts name="webservices.OptimizedXSD" description="WSDL-Generation with style document/literal wrapped" fileExtension="xsd" useNamespace="false" replacement="" replacementPattern="" writer="org.umlmda.uml.generator.webservices.writer.OptimizedXSDWriter"/>
+</org.umlmda.generator.profile:Profile>
