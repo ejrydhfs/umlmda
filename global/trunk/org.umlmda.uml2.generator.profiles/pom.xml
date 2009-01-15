@@ -112,7 +112,7 @@
       </repository>
       <repository>
          <id>cor-artifactory</id>
-         <url>http://cor-health-dev1:8090/artifactory/repo</url>
+         <url>http://cor-health-dev1.corag.de/artifactory/repo</url>
          <releases>
             <enabled>true</enabled>
          </releases>
