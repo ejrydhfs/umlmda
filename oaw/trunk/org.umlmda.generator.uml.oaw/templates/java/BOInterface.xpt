@@ -16,7 +16,7 @@
 	«LET generatedName(this, getDefaultArtefact()) AS interfaceName»
 	«this.resetImports()»
 	«IF superClass != null»
-		«this.registerImport(interfaceArtefact(this), (JavaModelClass)superClass)»
+		«this.registerImport(superClass.getDefaultArtefact(), (JavaModelClass)superClass)»
 	«ENDIF»
 	«this.registerImports(getDefaultArtefact("BusinessObject"), referencedTypes, "BusinessObject")»
 	«this.registerImports(getDefaultArtefact("BusinessException"), referencedTypes, "BusinessException")»
@@ -82,7 +82,7 @@
 	extends
 	«IF superClasses.size > 0» 
 		«FOREACH superClasses.typeSelect(JavaModelClass) AS superClass SEPARATOR ","»
-			«this.getScopedName(getDefaultArtefact(this), superClass)»
+			«this.getScopedName(superClass.getDefaultArtefact(scopeInterface()), superClass)»
 		«ENDFOREACH»
 	«ELSE»
 		«EXPAND standardBaseInterface FOR this»

@@ -17,7 +17,7 @@
 «LET generatedName(this, getDefaultArtefact("BusinessObject", scopeImplementation())) AS className»
 «this.resetImports()»
 «this.registerImport(getDefaultArtefact("BusinessObject"))»
-«IF javaSuperClass != null»
+«IF javaSuperClass != null && javaSuperClass.hasStereotype("NativeInterface") == false»
 	«this.registerImport(getDefaultArtefact(javaSuperClass), javaSuperClass)»
 «ENDIF»
 «this.registerImports(getDefaultArtefact("BusinessObject"), implementationReferencedTypes, "BusinessObject")»
@@ -111,7 +111,8 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 «ENDDEFINE»
 
 «DEFINE extendsDecl FOR JavaModelClass»
-	«IF superClass != null »
+	«IF superClass != null && superClass.hasStereotype("NativeInterface") == false»
+	  
 		extends «getScopedName(getDefaultArtefact(javaSuperClass, scopeImplementation()), javaSuperClass)»
 	«ELSE»
 		«EXPAND standardExtendsDecl FOR this»	
@@ -436,34 +437,12 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 «ENDDEFINE»
 
 «DEFINE persistenceInterface FOR JavaBusinessObject»
-	«IF this.persistable() && superClass == null»
-		, org.umlmda.runtime.persistence.IPersistentObject
-	«ENDIF»
 «ENDDEFINE»
 
 «DEFINE persistenceImpl FOR ModelClass»
 «ENDDEFINE»
 
 «DEFINE persistenceImpl FOR JavaBusinessObject»
-	«IF this.persistable() && superClass == null»
-		private boolean persistent = false;
-		
-		/**
-		 * Returns wheather the object is already persistent
-		 */
-		public boolean isPersistent()
-		{
-			return persistent;
-		}
-
-		/**
-		 * Sets the businessobjekt to persistent
-		 */
-		public void setPersistent()
-		{
-			this.persistent = true;
-		}
-	«ENDIF»
 «ENDDEFINE»
 
 
@@ -661,7 +640,7 @@ import org.umlmda.runtime.bean.BeanUtils;
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-	«IF superClass != null»
+   «IF superClass != null && superClass.hasStereotype("NativeInterface") == false»
 		super.marshalAttributes(context);
 	«ENDIF»   
 	«FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr»
@@ -673,7 +652,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 	 * Marshal children
 	 */
 	protected void marshalChildren(XMLMarshalContext context) {
-		«IF superClass != null»
+   «IF superClass != null && superClass.hasStereotype("NativeInterface") == false»
 			super.marshalChildren(context);
 		«ENDIF»
 		«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
@@ -685,7 +664,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 	 * Marshal references
 	 */
 	protected void marshalReferences(XMLMarshalContext context) {
-	«IF superClass != null»
+	«IF superClass != null && superClass.hasStereotype("NativeInterface") == false»
 		super.marshalReferences(context);
 	«ENDIF»
 	«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
