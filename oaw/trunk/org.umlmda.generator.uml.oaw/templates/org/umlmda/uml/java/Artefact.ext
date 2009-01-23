@@ -17,13 +17,13 @@ Void resetDefaultArtefacts() :
 	JAVA org.umlmda.uml.generator.util.ArtefactUtils.resetDefaultMappings()
 ;
 
-String getDefaultArtefact(ModelElement element)	:
+cached String getDefaultArtefact(ModelElement element)	:
    let stereotypeName = element.stereotypes.typeSelect(String).first() :
    
    stereotypeName != null ? (
         getDefaultArtefact(stereotypeName)
    ) : (
-        error("No artefact for "+((NamedElement)element).qualifiedName) ->
+        error("No artefact for "+element.qualifiedName) ->
         null
    )             
 ;
