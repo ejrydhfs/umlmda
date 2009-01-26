@@ -16,7 +16,7 @@
 «DEFINE Root FOR JavaBusinessObject»
     «ERROR "Root called on <<JavaBusinessObject>> "+qualifiedName»
 	«EXPAND java::BOInterface::BOInterface»
-	«EXPAND java::BOImpl::BOImpl»
+	«EXPAND java::persistence::EntityImpl::EntityImpl»
 	«EXPAND java::BODelegate::Impl»
 	«EXPAND java::BODelegateInterface::BODelegateInterface»
 «ENDDEFINE»

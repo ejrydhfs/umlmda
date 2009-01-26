@@ -1,0 +1,201 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::Association»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+«EXTENSION org::umlmda::uml::java::StructuralFeature»
+
+«DEFINE EntityImpl FOR JavaBusinessObject»
+«LET generatedName(this, getDefaultArtefact("BusinessObject", scopeImplementation())) AS className»
+«this.resetImports()»
+«this.registerImport(getDefaultArtefact("BusinessObject"))»
+«IF javaSuperClass != null && !javaSuperClass.isNative()»
+    «this.registerImport(getDefaultArtefact(javaSuperClass), javaSuperClass)»
+«ENDIF»
+«this.registerImports(getDefaultArtefact("BusinessObject"), implementationReferencedTypes, "BusinessObject")»
+«this.registerImports(getDefaultArtefact("BusinessException"), implementationReferencedTypes, "BusinessException")»
+«this.registerImports(getDefaultArtefact("Enumeration"), implementationReferencedTypes, "Enumeration")»
+«EXPAND java::BOImpl::ImportVisitorBase FOR this»
+«FILE generatedPath+"/"+className+".java"»
+	package «generatorPackage.getQualifiedPackageName(getDefaultArtefact("BusinessObject", scopeImplementation()))»;
+	
+	«EXPAND standardImports FOR this»
+	«EXPAND java::BOImpl::xmlSerializationImports FOR this»
+	«this.registeredImports()»
+	
+	/**
+	 * Business implementation of «qualifiedName».
+	 */
+	«EXPAND entityAnnotation FOR this» 
+	public 
+	«IF abstract»
+	abstract
+	«ENDIF»
+	class «className» «EXPAND java::BOImpl::extendsDecl FOR this» «EXPAND java::BOImpl::implementsDecl FOR this»  {
+	    «EXPAND standardBody FOR this»
+	}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE standardImports FOR JavaBusinessObject»
+   «EXPAND java::BOImpl::standardImports FOR this»
+   
+   import javax.persistence.Entity;
+   import javax.persistence.Column;
+   import javax.persistence.Transient;
+«ENDDEFINE»
+
+«DEFINE entityAnnotation FOR JavaBusinessObject»
+   «IF hasStereotype("PersistentEntity")»
+      @Entity
+   «ENDIF»
+«ENDDEFINE»
+
+«DEFINE attrAnnotation FOR JavaModelAttribute»
+   «IF hasStereotype("TransientAttribute")»
+      @Transient   
+   «ELSE»
+      @Column
+   «ENDIF»
+«ENDDEFINE»
+
+«DEFINE standardBody FOR JavaBusinessObject»
+    «EXPAND java::BOImpl::versionInfo FOR this»
+    «EXPAND java::BOImpl::delegateFactory FOR this»
+    «EXPAND keyImpl FOR this»
+    «EXPAND java::BOImpl::standardCtor FOR this»
+    «EXPAND handleAttributes FOR this»  
+    
+    «FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
+        «EXPAND handleAssociation(this) FOR assoc»
+    «ENDFOREACH»
+    
+    «FOREACH implementedMethods.typeSelect(JavaModelMethod) AS method»
+        «EXPAND java::BOImpl::handleMethod(this) FOR method»
+    «ENDFOREACH»
+    
+    «EXPAND java::BOImpl::modelMetaInformation FOR this»
+    «EXPAND java::BOImpl::visitorAcceptMethod FOR this»
+    «EXPAND java::BOImpl::xmlSerializationMethods FOR this»
+«ENDDEFINE»
+
+«DEFINE handleAttributes FOR JavaModelClass»
+   «FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr»
+      «EXPAND handleAttribute(this) FOR attr»
+   «ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE handleAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
+   «EXPAND attrAnnotation FOR this»
+   «EXPAND java::BOImpl::attrDecl FOR this»
+
+   «EXPAND java::BOInterface::attrGetterDecl FOR this»
+   «EXPAND java::BOImpl::getterBody(modelClass) FOR this»
+   
+   «EXPAND java::BOInterface::attrSetterDecl FOR this» 
+   «EXPAND java::BOImpl::setterBody(modelClass) FOR this»
+«ENDDEFINE»
+
+«DEFINE handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
+   «EXPAND java::BOImpl::handleAssociation(modelClass) FOR this»
+«ENDDEFINE»
+
+«DEFINE keyImpl FOR JavaModelClass»
+«LET getScopedName("java.BusinessObjectInterface")+".PKey" AS pkeyInterface»
+   «IF this.owningAPKey »
+       /**
+        * Primary key implementation
+        */
+         public class PKey implements «pkeyInterface» {
+         «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr»
+            «EXPAND java::BOImpl::attrDecl FOR attr»
+         «ENDFOREACH»
+         
+         public PKey() {
+         super();
+         }
+      
+         public PKey(
+         «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr SEPARATOR ", "»
+            «attr.javaTypeName()» «attr.name»
+         «ENDFOREACH»
+         ) {
+         «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr»
+            this.«attr.name» = «attr.name»;
+         «ENDFOREACH»
+         }
+
+         «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
+         «EXPAND java::BOInterface::attrGetterDecl("key attribute") FOR keyAttr»
+         «EXPAND java::BOImpl::getterBody(this) FOR keyAttr»
+         «EXPAND java::BOInterface::attrSetterDecl("key attribute") FOR keyAttr»
+         «EXPAND java::BOImpl::setterBody(this) FOR keyAttr»
+      «ENDFOREACH»   
+         
+      public boolean equals(Object obj) {
+            if ( obj instanceof «pkeyInterface» ) {
+               «pkeyInterface» pkey = («pkeyInterface»)obj;
+         
+               return 
+                  «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr SEPARATOR "&&"»
+                  «IF attr.javaPrimitiveType»
+                     «attr.name» == pkey.«attr.getter»()
+                  «ELSE»
+                     «attr.name».equals(pkey.«attr.getter»())
+                  «ENDIF»
+                  «ENDFOREACH»;
+            }
+            else {
+               return super.equals(obj);
+            }
+         }
+                
+        public int hashCode() {
+         int hashCode = 0;
+         
+            «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr»
+            «IF attr.javaPrimitiveType»
+               hashCode = hashCode * 29 + (int)«attr.name»;
+            «ELSE»
+               hashCode = hashCode * 29 + «attr.name».hashCode();
+            «ENDIF»
+            «ENDFOREACH»
+         return hashCode;
+      }
+                        
+         }
+         
+         // The primary key
+         private «pkeyInterface» pkey = new PKey();
+
+      /**
+       * Getter for the primary key
+       */   
+      public «pkeyInterface» get«name»Pkey() {
+         return pkey;
+      }
+   
+      /**
+       * Setter for the primary key
+       */   
+         public void set«name»Pkey(«pkeyInterface» pkey) {
+            this.pkey = pkey;
+         }
+         
+         «FOREACH this.inheritedKeyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
+         «EXPAND java::BOInterface::attrGetterDecl("parent key attribute") FOR keyAttr» {
+             return pkey.«keyAttr.getter»();
+         }
+         «ENDFOREACH»
+   «ENDIF»
+«ENDLET»
+«ENDDEFINE»

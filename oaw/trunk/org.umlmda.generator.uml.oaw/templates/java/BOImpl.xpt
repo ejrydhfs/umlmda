@@ -52,7 +52,6 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 	«EXPAND propertyChangeSupportAttr FOR this»
 	«EXPAND persistenceImpl FOR this»
 	«EXPAND delegateFactory FOR this»
-	«EXPAND keyImpl FOR this»
 	«EXPAND standardCtor FOR this»
 
 	«EXPAND handleAttributes FOR this»	
@@ -331,96 +330,6 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 «ENDDEFINE»
 
 // Key if at least one attribute with stereotype <<PKey>>
-«DEFINE keyImpl FOR JavaModelClass»
-«LET getScopedName("java.BusinessObjectInterface")+".PKey" AS pkeyInterface»
-	«IF this.owningAPKey »
-	    /**
-	     * Primary key implementation
-	     */
-   		public class PKey implements «pkeyInterface» {
-   		«FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr»
-   			«EXPAND attrDecl FOR attr»
-   		«ENDFOREACH»
-   		
-   		public PKey() {
-        	super();
-      	}
-      
-      	public PKey(
-      	«FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr SEPARATOR ", "»
-      		«attr.javaTypeName()» «attr.name»
-      	«ENDFOREACH»
-      	) {
-      	«FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr»
-      		this.«attr.name» = «attr.name»;
-      	«ENDFOREACH»
-      	}
-
-   		«FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
-			«EXPAND BOInterface::attrGetterDecl("key attribute") FOR keyAttr»
-			«EXPAND getterBody(this) FOR keyAttr»
-			«EXPAND BOInterface::attrSetterDecl("key attribute") FOR keyAttr»
-			«EXPAND setterBody(this) FOR keyAttr»
-		«ENDFOREACH»   
-   		
-		public boolean equals(Object obj) {
-         	if ( obj instanceof «pkeyInterface» ) {
-            	«pkeyInterface» pkey = («pkeyInterface»)obj;
-         
-            	return 
-			      	«FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr SEPARATOR "&&"»
-			      	«IF attr.javaPrimitiveType»
-			      		«attr.name» == pkey.«attr.getter»()
-			      	«ELSE»
-			      		«attr.name».equals(pkey.«attr.getter»())
-			      	«ENDIF»
-			      	«ENDFOREACH»;
-	      	}
-	      	else {
-	      		return super.equals(obj);
-	      	}
-      	}
-            	 
-        public int hashCode() {
-			int hashCode = 0;
-         
-         	«FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr»
-	      	«IF attr.javaPrimitiveType»
-	      		hashCode = hashCode * 29 + (int)«attr.name»;
-	      	«ELSE»
-	      		hashCode = hashCode * 29 + «attr.name».hashCode();
-	      	«ENDIF»
-	      	«ENDFOREACH»
-			return hashCode;
-		}
-            	      	
-   		}
-   		
-   		// The primary key
-   		private «pkeyInterface» pkey = new PKey();
-
-		/**
-		 * Getter for the primary key
-		 */   
-		public «pkeyInterface» get«name»Pkey() {
-			return pkey;
-		}
-   
-		/**
-		 * Setter for the primary key
-		 */   
-   		public void set«name»Pkey(«pkeyInterface» pkey) {
-      		this.pkey = pkey;
-   		}
-   		
-   		«FOREACH this.inheritedKeyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
-			«EXPAND BOInterface::attrGetterDecl("parent key attribute") FOR keyAttr» {
-			    return pkey.«keyAttr.getter»();
-			}
-   		«ENDFOREACH»
-	«ENDIF»
-«ENDLET»
-«ENDDEFINE»
 
 «DEFINE methodBody(ModelClass generatedClass) FOR ModelMethod»
 	«IF returnType != null »
