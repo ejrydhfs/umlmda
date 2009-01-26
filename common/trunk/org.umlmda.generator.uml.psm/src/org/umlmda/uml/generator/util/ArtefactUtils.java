@@ -49,6 +49,7 @@ public class ArtefactUtils {
       setDefaultMapping(ModelStereotype.BUSINESS_EXCEPTION, JavaArtefacts.BUSINESS_EXCEPTION);
       setDefaultMapping(ModelStereotype.ENUMERATION, JavaArtefacts.ENUMERATION);
       setDefaultMapping(ModelStereotype.NATIVE_CLASS, JavaArtefacts.PLAIN_CLASS);
+      setDefaultMapping(ModelStereotype.NATIVE_CLASS, JavaArtefacts.PLAIN_CLASS, SCOPE_IMPLEMENTATION);
       setDefaultMapping(ModelStereotype.NATIVE_INTERFACE, JavaArtefacts.PLAIN_INTERFACE);
    }
    
