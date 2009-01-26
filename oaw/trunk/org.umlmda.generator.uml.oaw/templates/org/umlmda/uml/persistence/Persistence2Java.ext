@@ -17,8 +17,9 @@ Object m2m( uml::Model m ) :
     m.setName(m.name+"_java_psm") ->
 
     // Starting conversions    
-    m.allOwnedElements().typeSelect(uml::Property).replaceAliasType() ->
-    m.allOwnedElements().typeSelect(uml::Class).applyGenerationStereotypes() ->
+    m.allOwnedElements().typeSelect(uml::Element).process() ->
+    
+    // Process packages after conversion
     m.allOwnedElements().typeSelect(uml::Package).applyGenerationStereotypes() ->
     
     // Destroy all collected elements
@@ -26,6 +27,48 @@ Object m2m( uml::Model m ) :
     m
 ;
 
+// Unprocessed elements
+cached Void process(uml::Element element) :
+	debug("Nothing to do on "+element.metaType)
+;
+
+cached Void process(uml::NamedElement element) :
+	debug("Nothing to do on "+element.qualifiedName+" ("+element.metaType+")")
+;
+	
+// Ignored elements
+cached Void process(uml::Comment common) :
+	true
+;
+
+cached Void process(uml::LiteralSpecification literal) :
+	true
+;
+
+cached Void process(uml::ProfileApplication profileApplication) :
+	true
+;
+
+// Processing classes
+cached Void process(uml::Class class) :
+    class.applyGenerationStereotypes()
+;
+
+cached Void process(uml::Package package) :
+    package.applyGenerationStereotypes()
+;    
+	
+cached Void process(uml::Property property) :
+    property.replaceAliasType()
+;    
+	
+cached Void process(uml::Generalization generalization) :
+	let general = generalization.general :
+	let generalModel = general.getModel() :
+	
+	general.process()
+;
+		
 /**
  * Replace the type of properties, using an <<Alias>> type.
  */
@@ -68,7 +111,7 @@ cached Void applyGenerationStereotypes(UMLMDAPersistenceProfile::PersistentEntit
    cls.addObjectStereotype()
 ;
 
-cached Void applyGenerationStereotypes(Package pkg) :
+Void applyGenerationStereotypes(Package pkg) :
     let packageStereotype = packageStereotype() :
     let objectStereotype = objectStereotype() :
     let ownedBusinessObjects = pkg.ownedElement.typeSelect(Class).select(e|e.hasObjectStereotype()) :
@@ -86,7 +129,7 @@ private Boolean hasObjectStereotype(Class cls) :
     let objectStereotype = objectStereotype() :
     let stereotypes = cls.getAppliedStereotypes() :
 
-    debug("Checking for objectStereotype in"+cls.qualifiedName) ->
+    debug("Checking for objectStereotype in "+cls.qualifiedName) ->
     stereotypes.select(e|e == objectStereotype).size > 0
 ;
     
