@@ -1,0 +1,24 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelAssociation
+ */
+import java::util;
+import org::umlmda::generator::model::uml;
+import org::umlmda::profile;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+cached List[String] persistenceAttributes(JavaModelAssociation assoc) :
+    let attributes = createList() :
+
+    assoc.composition ? attributes.add("cascade=CascadeType.ALL") : true ->
+    assoc.composition ? attributes.add("fetch=FetchType.EAGER") : attributes.add("fetch=FetchType.LAZY") ->
+    assoc.optional ? true : attributes.add("optional=false") ->
+    attributes
+;    
+
+create List[String] createList() :
+    this
+;    

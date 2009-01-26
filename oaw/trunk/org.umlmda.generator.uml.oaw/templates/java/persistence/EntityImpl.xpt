@@ -12,6 +12,7 @@
 «EXTENSION org::umlmda::uml::java::DataType»
 «EXTENSION org::umlmda::uml::java::ModelClass»
 «EXTENSION org::umlmda::uml::java::StructuralFeature»
+«EXTENSION org::umlmda::uml::persistence::Association»
 
 «DEFINE EntityImpl FOR JavaBusinessObject»
 «LET generatedName(this, getDefaultArtefact("BusinessObject", scopeImplementation())) AS className»
@@ -49,9 +50,7 @@
 «DEFINE standardImports FOR JavaBusinessObject»
    «EXPAND java::BOImpl::standardImports FOR this»
    
-   import javax.persistence.Entity;
-   import javax.persistence.Column;
-   import javax.persistence.Transient;
+   import javax.persistence.*;
 «ENDDEFINE»
 
 «DEFINE entityAnnotation FOR JavaBusinessObject»
@@ -66,6 +65,36 @@
    «ELSE»
       @Column
    «ENDIF»
+   «IF dataType.name == "date" || dataType.name == "dateTime"»
+      @Temporal(
+         «IF dataType.name == "date"»
+            TemporalType.DATE
+         «ELSE»
+            TemporalType.TIMESTAMP
+         «ENDIF»
+      )   
+   «ENDIF»
+   «IF hasStereotype("VersionAttribute")»
+      @Version
+   «ENDIF»
+«ENDDEFINE»
+
+«DEFINE assocAnnotation FOR JavaModelAssociation»
+	«IF !derived»
+	   «IF multiple && !reverse.multiple»
+	      @OneToMany(
+	        «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
+	           «attr»
+	        «ENDFOREACH»
+	      )
+	   «ELSEIF !multiple && !reverse.multiple»
+         @OneToMany(
+           «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
+              «attr»
+           «ENDFOREACH»
+         )
+	   «ENDIF»
+	«ENDIF»
 «ENDDEFINE»
 
 «DEFINE standardBody FOR JavaBusinessObject»
@@ -106,7 +135,15 @@
 «ENDDEFINE»
 
 «DEFINE handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
-   «EXPAND java::BOImpl::handleAssociation(modelClass) FOR this»
+   «EXPAND assocAnnotation FOR this»
+   «EXPAND java::BOImpl::assocDecl FOR this»
+   
+   «EXPAND java::BOInterface::assocGetterDecl FOR this»
+   «EXPAND java::BOImpl::getterBody(modelClass) FOR this»
+   
+   «EXPAND java::BOInterface::assocSetterDecl FOR this»
+   «EXPAND java::BOImpl::setterBody(modelClass) FOR this»
+   «EXPAND java::BOImpl::internalSetMethod FOR this»
 «ENDDEFINE»
 
 «DEFINE keyImpl FOR JavaModelClass»
@@ -175,6 +212,7 @@
          }
          
          // The primary key
+         @EmbeddedId
          private «pkeyInterface» pkey = new PKey();
 
       /**
