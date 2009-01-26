@@ -640,7 +640,7 @@ import org.umlmda.runtime.bean.BeanUtils;
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-   «IF superClass != null && superClass.hasStereotype("NativeInterface") == false»
+   «IF superClass != null && superClass.isNative() == false»
 		super.marshalAttributes(context);
 	«ENDIF»   
 	«FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr»
@@ -652,7 +652,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 	 * Marshal children
 	 */
 	protected void marshalChildren(XMLMarshalContext context) {
-   «IF superClass != null && superClass.hasStereotype("NativeInterface") == false»
+   «IF superClass != null && superClass.isNative() == false»
 			super.marshalChildren(context);
 		«ENDIF»
 		«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
@@ -664,7 +664,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 	 * Marshal references
 	 */
 	protected void marshalReferences(XMLMarshalContext context) {
-	«IF superClass != null && superClass.hasStereotype("NativeInterface") == false»
+	«IF superClass != null && superClass.isNative() == false»
 		super.marshalReferences(context);
 	«ENDIF»
 	«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»

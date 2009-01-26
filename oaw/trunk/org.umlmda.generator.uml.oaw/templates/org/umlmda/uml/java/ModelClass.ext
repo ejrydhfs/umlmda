@@ -27,3 +27,9 @@ String javaTypeName(ModelClass clazz) :
 	
 JavaModelMethod initializerMethod(ModelClass clazz) :
 	clazz.methods.typeSelect(JavaModelMethod).select(m|m.stereotypes.typeSelect(String).exists(s|s == "Initializer")).first();		
+	
+cached List[JavaModelClass] javaExtentedInterfaces(ModelClass clazz) :
+	clazz.superClasses.typeSelect(JavaModelClass).select(e|e.hasStereotype("NativeClass") == false);
+		
+cached Boolean isNative(ModelClass clazz) :
+	clazz.hasStereotype("NativeClass") || clazz.hasStereotype("NativeInterface");	

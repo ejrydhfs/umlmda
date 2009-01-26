@@ -80,8 +80,8 @@
 // Superclasses
 «DEFINE extendsDecl FOR JavaBusinessObject»
 	extends
-	«IF superClasses.size > 0» 
-		«FOREACH superClasses.typeSelect(JavaModelClass) AS superClass SEPARATOR ","»
+	«IF javaExtentedInterfaces().size > 0» 
+		«FOREACH javaExtentedInterfaces() AS superClass SEPARATOR ","»
 			«this.getScopedName(superClass.getDefaultArtefact(scopeInterface()), superClass)»
 		«ENDFOREACH»
 	«ELSE»
@@ -90,10 +90,12 @@
 «ENDDEFINE»
 
 «DEFINE extendsDecl FOR JavaModelClass»
-	«IF superClasses.size > 0» 
+	«IF javaExtentedInterfaces().size > 0» 
 		extends
-		«FOREACH superClasses.typeSelect(JavaModelClass) AS superClass SEPARATOR ","»
-			«this.getScopedName(getDefaultArtefact(this), superClass)»
+		«FOREACH javaExtentedInterfaces() AS superClass SEPARATOR ","»
+			«IF superClass.hasStereotype("NativeClass") == false»
+				«this.getScopedName(getDefaultArtefact(this), superClass)»
+			«ENDIF»
 		«ENDFOREACH»
 	«ENDIF»
 «ENDDEFINE»
