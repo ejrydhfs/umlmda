@@ -156,7 +156,7 @@
         * Primary key implementation
         */
         @Embeddable
-         public class PKey implements «pkeyInterface» {
+         public static class PKey implements «pkeyInterface» {
          «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr»
             «EXPAND java::BOImpl::attrDecl FOR attr»
          «ENDFOREACH»
