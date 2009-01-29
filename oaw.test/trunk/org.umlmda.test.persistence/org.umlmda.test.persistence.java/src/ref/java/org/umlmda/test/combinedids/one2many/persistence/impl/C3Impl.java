@@ -174,7 +174,7 @@ public class C3Impl implements C3, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
-   @OneToMany(fetch = FetchType.LAZY, fetch = FetchType.LAZY, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @OneToMany(fetch = FetchType.LAZY)
    private java.util.Set<D3> ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D3>();
 
    /**

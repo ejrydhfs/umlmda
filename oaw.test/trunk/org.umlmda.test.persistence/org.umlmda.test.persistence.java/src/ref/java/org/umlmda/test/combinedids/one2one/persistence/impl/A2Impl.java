@@ -174,7 +174,7 @@ public class A2Impl implements A2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
-   @OneToMany(fetch = FetchType.LAZY, fetch = FetchType.LAZY, cascade = CascadeType.ALL, fetch = FetchType.EAGER, cascade = CascadeType.ALL, fetch = FetchType.EAGER, fetch = FetchType.LAZY, fetch = FetchType.LAZY)
+   @OneToMany()
    private B2 b;
 
    /**

@@ -42,7 +42,7 @@
                   </goals>
                   <configuration>
                      <sources>
-                        <source>${basedir}/src/generated/java</source>
+                        <source>${basedir}/src/ref/java</source>
                      </sources>
                   </configuration>
                </execution>

@@ -174,7 +174,7 @@ public class B4Impl implements B4, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.bAttr;
       this.bAttr = bAttr;
    }
-   @OneToMany(fetch = FetchType.LAZY, fetch = FetchType.LAZY, cascade = CascadeType.ALL, fetch = FetchType.EAGER, cascade = CascadeType.ALL, fetch = FetchType.EAGER, fetch = FetchType.LAZY, fetch = FetchType.LAZY, cascade = CascadeType.ALL, fetch = FetchType.EAGER, cascade = CascadeType.ALL, fetch = FetchType.EAGER, fetch = FetchType.LAZY, fetch = FetchType.LAZY, optional = false)
+   @OneToMany()
    private A4 a;
 
    /**

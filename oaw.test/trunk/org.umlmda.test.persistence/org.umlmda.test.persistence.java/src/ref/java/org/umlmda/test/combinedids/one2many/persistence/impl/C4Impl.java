@@ -174,7 +174,7 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
-   @OneToMany(fetch = FetchType.LAZY, fetch = FetchType.LAZY, cascade = CascadeType.ALL, fetch = FetchType.EAGER, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @OneToMany()
    private java.util.Set<D4> ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D4>();
 
    /**
