@@ -157,6 +157,7 @@
         */
         @Embeddable
          public static class PKey implements «pkeyInterface» {
+         	private static final long serialVersionUID = «serialVersionUID»;
          «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr»
             «EXPAND java::BOImpl::attrDecl FOR attr»
          «ENDFOREACH»
