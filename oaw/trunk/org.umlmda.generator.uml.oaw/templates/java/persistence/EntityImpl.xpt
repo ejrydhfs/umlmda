@@ -56,6 +56,9 @@
 «DEFINE entityAnnotation FOR JavaBusinessObject»
    «IF hasStereotype("PersistentEntity")»
       @Entity
+      «IF getStereotypeProperty("table") != null»
+      @Table(name="«getStereotypeProperty("table")»")
+      «ENDIF»
    «ENDIF»
 «ENDDEFINE»
 
@@ -152,6 +155,7 @@
        /**
         * Primary key implementation
         */
+        @Embeddable
          public class PKey implements «pkeyInterface» {
          «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr»
             «EXPAND java::BOImpl::attrDecl FOR attr»
