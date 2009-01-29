@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+
+    <property file="workflow.properties"/>
+
+    <!-- initializes resourcemaps, urimaps, etc. -->
+    <component class="org.openarchitectureware.adapter.rsdp.workflow.RSASetup" >
+        <!-- Standard profiles -->
+        <pathMapEntry>
+            <alias value="UMLMDA_PROFILE"/>
+            <path value="${basedir}/profiles/rsm/3rd/umlmda/profiles"/>
+        </pathMapEntry>
+        <pathMapEntry>
+            <alias value="UMLMDA4_PROFILE"/>
+            <path value="${basedir}/profiles/rsm/3rd/umlmda/profiles"/>
+        </pathMapEntry>
+        <pathMapEntry>
+            <alias value="UML2_MSL_PROFILES"/>
+            <path value="${basedir}/profiles/rsm/3rd/ibm"/>
+        </pathMapEntry>
+        
+        <init value="true"/>
+    </component> 
+
+    <!-- Loading UMLMDA generation sets -->
+    <component id="generationSetLoader"
+            class="org.umlmda.oaw.generator.workflow.GenerationSetLoader">
+        <generationSet value="${model.project}/etc/umlmda/self/set/${ums.java}"/>
+        <generationSetSlot value="gs"/>
+    </component>
+
+    <!-- Read the uml model -->
+    <component class="org.openarchitectureware.emf.XmiReader">
+        <modelFile value="${model}" />
+        <outputSlot value="persistence_model_pim" />
+    </component>
+
+    <!-- Read the uml model -->
+    <component class="org.openarchitectureware.emf.XmiReader">
+        <modelFile value="${basedir}/profiles/rsm/3rd/umlmda/profiles/UMLMDAProfile.epx" />
+        <outputSlot value="umlmda_profile" />
+    </component>
+
+    <!-- Verify the model -->
+   <component id="umlIntegrityCheck" class="org.umlmda.oaw.generator.workflow.ModelIntegrityChecker">
+      <modelSlot value="persistence_model_pim"/>
+   </component>
+   
+    <!-- Transform Persistence-PIM to UMLMDA-Standard-PIM -->
+    <component id="domainPimCreator" class="oaw.xtend.XtendComponent">
+        <!-- Metamodelle -->
+        <metaModel id="mm.UML2" class="oaw.uml2.UML2MetaModel"/>
+        <metaModel id="UMLMDACommonProfile" class="oaw.uml2.profile.ProfileMetaModel">
+            <profile value="file://${basedir}/profiles/rsm/3rd/umlmda/profiles/UMLMDACommonProfile.epx"/>
+        </metaModel>     
+        <metaModel id="UMLMDAPersistenceProfile" class="oaw.uml2.profile.ProfileMetaModel">
+            <profile value="file://${basedir}/profiles/rsm/3rd/umlmda/profiles/UMLMDAPersistenceProfile.epx"/>
+        </metaModel>     
+        
+        <invoke value="org::umlmda::uml::persistence::Persistence2Java::m2m(persistence_model_pim)"/>
+        <globalVarDef name="generationProfile" value="umlmda_profile"/>
+        <globalVarDef name="objectStereotype" value="'BusinessObject'"/>
+        <globalVarDef name="packageStereotype" value="'BusinessComponent'"/>
+        <outputSlot value="umlmda_model_pim"/>
+    </component>
+
+    <!-- Zu Testzwecken das PIM Modell wegschreiben -->
+    <!-- 
+    <component class="org.openarchitectureware.adapter.rsdp.workflow.AdvancedEMXWriter">
+        <modelSlot value="umlmda_model_pim"/>
+        <uri value="${basedir}/model/rsm/self/${persistence_test_psm}_m2m.emx"/>
+    </component>
+     -->
+     
+	<!-- Generate UMLMDA Pim from uml model -->
+	<component id="pimLoader_domain" class="org.umlmda.oaw.generator.workflow.ModelLoader">
+		<modelFactory class="org.umlmda.oaw.generator.workflow.Uml2ModelFactory">
+		   <umlmodelSlot value="umlmda_model_pim"/>
+		</modelFactory>   
+		<modelSlot value="umlmda_domain_model_pim"/>
+	</component>
+
+    <!-- Creating UMLMDA Java PSM -->
+	<component id="javaPsmCreator_domain" class="org.umlmda.oaw.generator.workflow.PsmCreator">
+		<adapterFactory value="org.umlmda.oaw.generator.model.java.JavaModelAdapterFactory"/>
+		<pimModelSlot value="umlmda_domain_model_pim"/>
+		<psmModelSlot value="umlmda_domain_model_java_psm"/>
+		<generationSetSlot value="gs"/>
+		<generationProfile value="${profile}"/>
+	</component>
+
+	<component id="dirCleaner"
+			class="org.openarchitectureware.workflow.common.DirectoryCleaner" skipOnErrors="true">
+		<directory value="${javaGenPath}"/>
+	</component>
+
+	<component adviceTarget="generator_server_domain" id="reflectionAdvice" class="oaw.xpand2.GeneratorAdvice">
+		<advices value="java::aop::NoPropertyChangeAdvices"/>
+        <advices value="java::aop::NoJmiReflectAdvices"/>
+    </component>	
+
+	<component id="generator_server_domain" class="oaw.xpand2.Generator" skipOnErrors="true">
+	   <metaModel class="org.openarchitectureware.type.impl.java.JavaMetaModel">
+	   		<typeStrategy class="org.openarchitectureware.type.impl.java.beans.JavaBeansStrategy" />
+	   </metaModel>
+	   <fileEncoding value="ISO-8859-1"/>
+	   <expand value="java::persistence::Root::Root FOR umlmda_domain_model_java_psm"/>
+
+		<!-- Generated sources -->
+ 		<outlet path="${javaGenPath}/">
+	    	<postprocessor class="org.openarchitectureware.xpand2.output.JavaBeautifier">
+	    		<configFile value="${basedir}/etc/eclipse/formatting.xml"/>
+	    	</postprocessor>
+		</outlet>
+		<!-- Templates for manual writen sources -->
+		<outlet name="delegateImpl" path="${javaNoGenPath}/" overwrite="false">
+	    	<postprocessor class="org.openarchitectureware.xpand2.output.JavaBeautifier">
+	    		<configFile value="${basedir}/etc/eclipse/formatting.xml"/>
+	    	</postprocessor>
+		</outlet>
+
+	   	<globalVarDef name="dateMapping" value="${dateMapping}"/>
+	   	<globalVarDef name="decimalMapping" value="${decimalMapping}"/>
+
+	   <!-- Protected Regions (not used) -->	
+       <prSrcPaths value="${javaGenPath}/"/>
+       <prDefaultExcludes value="false"/>
+	   
+	</component>
+     
+</workflow>

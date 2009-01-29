@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.set:GenerationSet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.set="http:///org/umlmda/generator/set.ecore" name="persistence_test">
+  <GenerationProfile destination="" packagePrefix="org.umlmda.test">
+    <profile href="../../3rd/profile/javaPersistenceArtefacts.ump#javaPersistenceArtefacts"/>
+  </GenerationProfile>
+</org.umlmda.generator.set:GenerationSet>
