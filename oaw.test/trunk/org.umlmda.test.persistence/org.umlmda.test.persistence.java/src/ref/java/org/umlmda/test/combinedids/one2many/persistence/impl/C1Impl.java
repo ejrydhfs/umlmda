@@ -32,7 +32,7 @@ public class C1Impl implements C1, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
-   public class PKey implements C1.PKey {
+   public static class PKey implements C1.PKey {
       private String groupId = "";
       private String aId     = "";
 

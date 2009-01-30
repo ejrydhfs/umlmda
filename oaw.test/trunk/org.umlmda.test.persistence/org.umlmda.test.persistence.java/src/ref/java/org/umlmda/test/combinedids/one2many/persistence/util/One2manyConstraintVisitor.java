@@ -35,8 +35,8 @@ public class One2manyConstraintVisitor extends AbstractOne2manyVisitor implement
    }
 
    public void visit(C2 aC2) {
-      getConstraintContext().checkMultiplicityContraint(aC2.getClass().getName() + ".groupId", 1, 1, aC2.getGroupId());
-      getConstraintContext().checkMultiplicityContraint(aC2.getClass().getName() + ".aId", 1, 1, aC2.getAId());
+      getConstraintContext().checkMultiplicityContraint(aC2.getClass().getName() + ".groupId", 1, 1, aC2.getC2Pkey().getGroupId());
+      getConstraintContext().checkMultiplicityContraint(aC2.getClass().getName() + ".aId", 1, 1, aC2.getC2Pkey().getAId());
       getConstraintContext().checkMultiplicityContraint(aC2.getClass().getName() + ".aAttr", 0, 1, aC2.getAAttr());
    }
 
@@ -59,8 +59,8 @@ public class One2manyConstraintVisitor extends AbstractOne2manyVisitor implement
    }
 
    public void visit(D2 aD2) {
-      getConstraintContext().checkMultiplicityContraint(aD2.getClass().getName() + ".groupId", 1, 1, aD2.getGroupId());
-      getConstraintContext().checkMultiplicityContraint(aD2.getClass().getName() + ".bId", 1, 1, aD2.getBId());
+      getConstraintContext().checkMultiplicityContraint(aD2.getClass().getName() + ".groupId", 1, 1, aD2.getD2Pkey().getGroupId());
+      getConstraintContext().checkMultiplicityContraint(aD2.getClass().getName() + ".bId", 1, 1, aD2.getD2Pkey().getBId());
       getConstraintContext().checkMultiplicityContraint(aD2.getClass().getName() + ".bAttr", 0, 1, aD2.getBAttr());
       getConstraintContext().checkMultiplicityContraint(aD2.getClass().getName() + ".a", 1, 1, aD2.getA());
    }

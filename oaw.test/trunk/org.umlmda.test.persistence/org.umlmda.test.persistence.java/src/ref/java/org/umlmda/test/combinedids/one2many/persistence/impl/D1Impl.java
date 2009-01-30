@@ -31,7 +31,7 @@ public class D1Impl implements D1, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
-   public class PKey implements D1.PKey {
+   public static class PKey implements D1.PKey {
       private String groupId = "";
       private String bId     = "";
 

@@ -25,7 +25,21 @@
          <groupId>javax.persistence</groupId>
          <artifactId>persistence-api</artifactId>
       </dependency>
-   </dependencies>
+      
+      <!--  HSQLDB -->
+      <dependency>
+         <groupId>hsqldb</groupId>
+         <artifactId>hsqldb</artifactId>
+      </dependency>
+
+      <!-- Entitymanager -->
+      <dependency>
+      	  <groupId>org.hibernate</groupId>
+      	  <artifactId>hibernate-entitymanager</artifactId>
+      </dependency>
+      </dependencies>
+      
+      
 
    <build>
 

@@ -32,7 +32,7 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
-   public class PKey implements C2.PKey {
+   public static class PKey implements C2.PKey {
       private String groupId = "";
       private String aId     = "";
 
@@ -93,12 +93,13 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
       }
    }
    // The primary key
-   @EmbeddedId
-   private C2.PKey pkey = new PKey();
+//   private C2ImplId pkey;
+   private C2.PKey pkey; // = new PKey();
 
    /**
     * Getter for the primary key
     */
+   @EmbeddedId
    public C2.PKey getC2Pkey() {
       return pkey;
    }
@@ -123,40 +124,41 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
       super();
       this.pkey = new PKey(groupId, aId);
    }
-   @Column
-   private String groupId = "";
+//   @Column
+//   private String groupId = "";
+//
+//   /**
+//    * Get groupId, 
+//    */
+//   public String getGroupId() {
+//      return groupId;
+//   }
+//
+//   /**
+//    * Set groupId, 
+//    */
+//   public void setGroupId(String groupId) {
+//      String oldValue = this.groupId;
+//      this.groupId = groupId;
+//   }
 
-   /**
-    * Get groupId, 
-    */
-   public String getGroupId() {
-      return groupId;
-   }
-
-   /**
-    * Set groupId, 
-    */
-   public void setGroupId(String groupId) {
-      String oldValue = this.groupId;
-      this.groupId = groupId;
-   }
-   @Column
-   private String aId = "";
-
-   /**
-    * Get aId, 
-    */
-   public String getAId() {
-      return aId;
-   }
-
-   /**
-    * Set aId, 
-    */
-   public void setAId(String aId) {
-      String oldValue = this.aId;
-      this.aId = aId;
-   }
+//   @Column
+//   private String aId = "";
+//
+//   /**
+//    * Get aId, 
+//    */
+//   public String getAId() {
+//      return aId;
+//   }
+//
+//   /**
+//    * Set aId, 
+//    */
+//   public void setAId(String aId) {
+//      String oldValue = this.aId;
+//      this.aId = aId;
+//   }
    @Column
    private String aAttr = null;
 
@@ -174,15 +176,16 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
-   @OneToMany(fetch = FetchType.LAZY)
-   private java.util.Set<D2> ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D2>();
+
+   private java.util.Set<D2Impl> ds; // = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D2>();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public java.util.Set<D2> getDs() {
+   @OneToMany(fetch = FetchType.LAZY)
+   public java.util.Set<D2Impl> getDs() {
       return ds;
    }
 
@@ -194,35 +197,37 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
     * @param ds
     *		New value for assocation ds 
     */
-   public void setDs(java.util.Set<D2> ds) {
-      setDsInternal(ds);
+   public void setDs(java.util.Set<D2Impl> ds) {
+//      setDsInternal(ds);
    }
 
    private void setDsInternal(java.util.Set<D2> ds) {
-      java.util.Set<D2> oldValue;
-      if (this.ds != null) {
-         oldValue = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D2>(this.ds);
-      }
-      else {
-         oldValue = null;
-      }
-      if (ds != null) {
-         if (this.ds == null) {
-            this.ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D2>();
-         }
-         this.ds.clear();
-         this.ds.addAll(ds);
-      }
-      else if (this.ds != null) {
-         this.ds.clear();
-         this.ds = null;
-      }
+//      java.util.Set<D2> oldValue;
+//      if (this.ds != null) {
+//         oldValue = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D2>(this.ds);
+//      }
+//      else {
+//         oldValue = null;
+//      }
+//      if (ds != null) {
+//         if (this.ds == null) {
+//            this.ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D2>();
+//         }
+//         this.ds.clear();
+//         this.ds.addAll(ds);
+//      }
+//      else if (this.ds != null) {
+//         this.ds.clear();
+//         this.ds = null;
+//      }
    }
 
+   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
+   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -273,8 +278,8 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", getGroupId());
-      context.simpleElement("aId", getAId());
+      context.simpleElement("groupId", getC2Pkey().getGroupId());
+      context.simpleElement("aId", getC2Pkey().getAId());
       context.simpleElement("aAttr", getAAttr());
    }
 

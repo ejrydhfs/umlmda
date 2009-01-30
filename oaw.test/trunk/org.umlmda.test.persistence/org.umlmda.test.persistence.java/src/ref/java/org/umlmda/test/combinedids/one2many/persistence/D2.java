@@ -40,25 +40,25 @@ public interface D2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    public static final String PROPERTY_B_ATTR   = "bAttr";
    public static final String PROPERTY_A        = "a";       ;
 
-   /**
-    * Get groupId, 
-    */
-   public String getGroupId();
+//   /**
+//    * Get groupId, 
+//    */
+//   public String getGroupId();
+//
+//   /**
+//    * Set groupId, 
+//    */
+//   public void setGroupId(String groupId);
 
-   /**
-    * Set groupId, 
-    */
-   public void setGroupId(String groupId);
-
-   /**
-    * Get bId, 
-    */
-   public String getBId();
-
-   /**
-    * Set bId, 
-    */
-   public void setBId(String bId);
+//   /**
+//    * Get bId, 
+//    */
+//   public String getBId();
+//
+//   /**
+//    * Set bId, 
+//    */
+//   public void setBId(String bId);
 
    /**
     * Get bAttr, 

@@ -1,5 +1,7 @@
 package org.umlmda.test.combinedids.one2many.persistence;
 
+import org.umlmda.test.combinedids.one2many.persistence.impl.D2Impl;
+
 /**
  * 
  */
@@ -40,25 +42,25 @@ public interface C2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    public static final String PROPERTY_A_ATTR   = "aAttr";
    public static final String PROPERTY_DS       = "ds";      ;
 
-   /**
-    * Get groupId, 
-    */
-   public String getGroupId();
-
-   /**
-    * Set groupId, 
-    */
-   public void setGroupId(String groupId);
-
-   /**
-    * Get aId, 
-    */
-   public String getAId();
-
-   /**
-    * Set aId, 
-    */
-   public void setAId(String aId);
+//   /**
+//    * Get groupId, 
+//    */
+//   public String getGroupId();
+//
+//   /**
+//    * Set groupId, 
+//    */
+//   public void setGroupId(String groupId);
+//
+//   /**
+//    * Get aId, 
+//    */
+//   public String getAId();
+//
+//   /**
+//    * Set aId, 
+//    */
+//   public void setAId(String aId);
 
    /**
     * Get aAttr, 
@@ -75,7 +77,7 @@ public interface C2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public java.util.Set<D2> getDs();
+   public java.util.Set<D2Impl> getDs();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
@@ -85,5 +87,5 @@ public interface C2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
     * @param ds
     *		New value for assocation ds 
     */
-   public void setDs(java.util.Set<D2> ds);
+   public void setDs(java.util.Set<D2Impl> ds);
 }

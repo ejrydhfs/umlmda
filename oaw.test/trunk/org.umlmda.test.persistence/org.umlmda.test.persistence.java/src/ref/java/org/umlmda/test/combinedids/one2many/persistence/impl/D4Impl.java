@@ -32,7 +32,7 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
-   public class PKey implements D4.PKey {
+   public static class PKey implements D4.PKey {
       private String groupId = "";
       private String bId     = "";
 
