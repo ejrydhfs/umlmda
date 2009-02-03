@@ -95,12 +95,12 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
       }
    }
    // The primary key
+   @EmbeddedId
    private D2Impl.PKey pkey; // = new PKey();
 
    /**
     * Getter for the primary key
     */
-   @EmbeddedId
    public D2Impl.PKey getD2Pkey() {
       return pkey;
    }
@@ -177,6 +177,7 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.bAttr;
       this.bAttr = bAttr;
    }
+   @ManyToOne
    private C2Impl a;
 
    /**
@@ -184,7 +185,6 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   @ManyToOne
    public C2Impl getA() {
       return a;
    }

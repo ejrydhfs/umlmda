@@ -93,12 +93,12 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
       }
    }
    // The primary key
+   @EmbeddedId
    private C2Impl.PKey pkey; // = new PKey();
 
    /**
     * Getter for the primary key
     */
-   @EmbeddedId
    public PKey getC2Pkey() {
       return pkey;
    }
@@ -176,6 +176,7 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
       this.aAttr = aAttr;
    }
 
+   @OneToMany(fetch = FetchType.LAZY, mappedBy="a")
    private java.util.Set<D2Impl> ds; // = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D2>();
 
    /**
@@ -183,7 +184,6 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   @OneToMany(fetch = FetchType.LAZY, mappedBy="a")
    public java.util.Set<D2Impl> getDs() {
       return ds;
    }
