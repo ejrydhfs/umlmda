@@ -115,11 +115,11 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
    
 
     */
-   protected C4Impl() {
+   public C4Impl() {
       super();
    }
 
-   protected C4Impl(String groupId, String aId) {
+   public C4Impl(String groupId, String aId) {
       super();
       this.pkey = new PKey(groupId, aId);
    }

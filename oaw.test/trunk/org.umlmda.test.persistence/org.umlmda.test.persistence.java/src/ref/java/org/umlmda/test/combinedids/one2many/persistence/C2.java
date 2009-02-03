@@ -1,5 +1,6 @@
 package org.umlmda.test.combinedids.one2many.persistence;
 
+import org.umlmda.test.combinedids.one2many.persistence.impl.C2Impl;
 import org.umlmda.test.combinedids.one2many.persistence.impl.D2Impl;
 
 /**
@@ -31,12 +32,12 @@ public interface C2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    /**
     * Getter for the primaryKey
     */
-   public PKey getC2Pkey();
+   public C2Impl.PKey getC2Pkey();
 
    /**
     * Setter for the primaryKey
     */
-   public void setC2Pkey(PKey pkey);
+   public void setC2Pkey(C2Impl.PKey pkey);
    public static final String PROPERTY_GROUP_ID = "groupId";
    public static final String PROPERTY_A_ID     = "aId";
    public static final String PROPERTY_A_ATTR   = "aAttr";

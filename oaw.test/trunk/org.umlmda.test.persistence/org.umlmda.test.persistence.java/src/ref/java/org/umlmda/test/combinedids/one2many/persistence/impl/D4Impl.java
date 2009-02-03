@@ -115,11 +115,11 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    
 
     */
-   protected D4Impl() {
+   public D4Impl() {
       super();
    }
 
-   protected D4Impl(String groupId, String bId) {
+   public D4Impl(String groupId, String bId) {
       super();
       this.pkey = new PKey(groupId, bId);
    }

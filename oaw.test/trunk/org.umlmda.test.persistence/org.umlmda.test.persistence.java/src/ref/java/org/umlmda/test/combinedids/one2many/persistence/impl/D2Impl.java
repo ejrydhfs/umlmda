@@ -17,7 +17,9 @@ import org.umlmda.test.combinedids.one2many.persistence.One2manyVisitor;
  */
 @Entity
 public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
-   /**
+
+	
+	/**
     * Name in die UML model persistence_test_pim_java_psm
     */
    public static final String  MODEL_NAME       = "org.umlmda.test.combinedids.one2many.D2";
@@ -93,20 +95,20 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
       }
    }
    // The primary key
-   private D2.PKey pkey; // = new PKey();
+   private D2Impl.PKey pkey; // = new PKey();
 
    /**
     * Getter for the primary key
     */
    @EmbeddedId
-   public D2.PKey getD2Pkey() {
+   public D2Impl.PKey getD2Pkey() {
       return pkey;
    }
 
    /**
     * Setter for the primary key
     */
-   public void setD2Pkey(D2.PKey pkey) {
+   public void setD2Pkey(D2Impl.PKey pkey) {
       this.pkey = pkey;
    }
 
@@ -115,11 +117,11 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    
 
     */
-   protected D2Impl() {
+   public D2Impl() {
       super();
    }
 
-   protected D2Impl(String groupId, String bId) {
+   public D2Impl(String groupId, String bId) {
       super();
       this.pkey = new PKey(groupId, bId);
    }
@@ -175,14 +177,15 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.bAttr;
       this.bAttr = bAttr;
    }
-   private C2 a;
+   private C2Impl a;
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public C2 getA() {
+   @ManyToOne
+   public C2Impl getA() {
       return a;
    }
 
@@ -194,7 +197,7 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
     * @param a
     *		New value for assocation a 
     */
-   public void setA(C2 a) {
+   public void setA(C2Impl a) {
       C2 oldValue = this.a;
       this.a = a;
    }

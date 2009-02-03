@@ -93,21 +93,20 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
       }
    }
    // The primary key
-//   private C2ImplId pkey;
-   private C2.PKey pkey; // = new PKey();
+   private C2Impl.PKey pkey; // = new PKey();
 
    /**
     * Getter for the primary key
     */
    @EmbeddedId
-   public C2.PKey getC2Pkey() {
+   public PKey getC2Pkey() {
       return pkey;
    }
 
    /**
     * Setter for the primary key
     */
-   public void setC2Pkey(C2.PKey pkey) {
+   public void setC2Pkey(PKey pkey) {
       this.pkey = pkey;
    }
 
@@ -116,11 +115,11 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
    
 
     */
-   protected C2Impl() {
+   public C2Impl() {
       super();
    }
 
-   protected C2Impl(String groupId, String aId) {
+   public C2Impl(String groupId, String aId) {
       super();
       this.pkey = new PKey(groupId, aId);
    }
@@ -184,7 +183,7 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   @OneToMany(fetch = FetchType.LAZY)
+   @OneToMany(fetch = FetchType.LAZY, mappedBy="a")
    public java.util.Set<D2Impl> getDs() {
       return ds;
    }
@@ -199,27 +198,28 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setDs(java.util.Set<D2Impl> ds) {
 //      setDsInternal(ds);
+	   this.ds = ds;
    }
 
-   private void setDsInternal(java.util.Set<D2> ds) {
-//      java.util.Set<D2> oldValue;
-//      if (this.ds != null) {
-//         oldValue = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D2>(this.ds);
-//      }
-//      else {
-//         oldValue = null;
-//      }
-//      if (ds != null) {
-//         if (this.ds == null) {
-//            this.ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D2>();
-//         }
-//         this.ds.clear();
-//         this.ds.addAll(ds);
-//      }
-//      else if (this.ds != null) {
-//         this.ds.clear();
-//         this.ds = null;
-//      }
+   private void setDsInternal(java.util.Set<D2Impl> ds) {
+      java.util.Set<D2Impl> oldValue;
+      if (this.ds != null) {
+         oldValue = new java.util.HashSet<D2Impl>(this.ds);
+      }
+      else {
+         oldValue = null;
+      }
+      if (ds != null) {
+         if (this.ds == null) {
+            this.ds = new java.util.HashSet<D2Impl>();
+         }
+         this.ds.clear();
+         this.ds.addAll(ds);
+      }
+      else if (this.ds != null) {
+         this.ds.clear();
+         this.ds = null;
+      }
    }
 
    @Transient
