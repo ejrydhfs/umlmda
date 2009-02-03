@@ -5,7 +5,7 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.oaw</artifactId>
-      <version>3.14-SNAPSHOT</version>
+      <version>3.13</version>
    </parent>
    <artifactId>org.umlmda.test.persistence</artifactId>
    <version>1.0-SNAPSHOT</version>
@@ -38,6 +38,17 @@
          <artifactId>org.umlmda.runtime.common</artifactId>
          <version>${umlmda.runtime.version}</version>
       </dependency>
+      <dependency>
+         <groupId>hsqldb</groupId>
+         <artifactId>hsqldb</artifactId>
+         <version>1.8.0.10</version>
+      </dependency>
+       <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-entitymanager</artifactId>
+          <version>3.3.2.GA</version>
+       </dependency>
+      
       </dependencies>
    </dependencyManagement>
 
