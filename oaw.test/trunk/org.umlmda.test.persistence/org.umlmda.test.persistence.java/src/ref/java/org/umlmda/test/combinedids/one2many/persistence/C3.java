@@ -43,22 +43,22 @@ public interface C3 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    /**
     * Get groupId, 
     */
-   public String getGroupId();
+//   public String getGroupId();
 
    /**
     * Set groupId, 
     */
-   public void setGroupId(String groupId);
+//   public void setGroupId(String groupId);
 
    /**
     * Get aId, 
     */
-   public String getAId();
+//   public String getAId();
 
    /**
     * Set aId, 
     */
-   public void setAId(String aId);
+//   public void setAId(String aId);
 
    /**
     * Get aAttr, 
@@ -75,7 +75,7 @@ public interface C3 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Simple One2One composition.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public java.util.Set<D3> getDs();
+   public <T> java.util.Set<T>  getDs();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
@@ -85,5 +85,5 @@ public interface C3 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
     * @param ds
     *		New value for assocation ds 
     */
-   public void setDs(java.util.Set<D3> ds);
+   public <T> void setDs( java.util.Set<T> ds);
 }

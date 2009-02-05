@@ -2,6 +2,7 @@ package org.umlmda.test.combinedids.one2many.persistence.impl;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -94,20 +95,20 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
    }
    // The primary key
    @EmbeddedId
-   private C2Impl.PKey pkey; // = new PKey();
+   private PKey pkey; // = new PKey();
 
    /**
     * Getter for the primary key
     */
-   public PKey getC2Pkey() {
+   public C2.PKey getC2Pkey() {
       return pkey;
    }
 
    /**
     * Setter for the primary key
     */
-   public void setC2Pkey(PKey pkey) {
-      this.pkey = pkey;
+   public void setC2Pkey(C2.PKey pkey) {
+      this.pkey = (PKey) pkey;
    }
 
    /**
@@ -177,14 +178,14 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
    }
 
    @OneToMany(fetch = FetchType.LAZY, mappedBy="a")
-   private java.util.Set<D2Impl> ds; // = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D2>();
+   private java.util.Set<D2Impl> ds = new java.util.HashSet<D2Impl>();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public java.util.Set<D2Impl> getDs() {
+   public java.util.Set<? extends D2> getDs() {
       return ds;
    }
 
@@ -196,31 +197,31 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
     * @param ds
     *		New value for assocation ds 
     */
-   public void setDs(java.util.Set<D2Impl> ds) {
+   public <T> void setDs(java.util.Set<T> ds) {
 //      setDsInternal(ds);
-	   this.ds = ds;
+	   this.ds = (Set<D2Impl>) ds;
    }
 
-   private void setDsInternal(java.util.Set<D2Impl> ds) {
-      java.util.Set<D2Impl> oldValue;
-      if (this.ds != null) {
-         oldValue = new java.util.HashSet<D2Impl>(this.ds);
-      }
-      else {
-         oldValue = null;
-      }
-      if (ds != null) {
-         if (this.ds == null) {
-            this.ds = new java.util.HashSet<D2Impl>();
-         }
-         this.ds.clear();
-         this.ds.addAll(ds);
-      }
-      else if (this.ds != null) {
-         this.ds.clear();
-         this.ds = null;
-      }
-   }
+//   private void setDsInternal(java.util.Set<D2Impl> ds) {
+//      java.util.Set<D2Impl> oldValue;
+//      if (this.ds != null) {
+//         oldValue = new java.util.HashSet<D2Impl>(this.ds);
+//      }
+//      else {
+//         oldValue = null;
+//      }
+//      if (ds != null) {
+//         if (this.ds == null) {
+//            this.ds = new java.util.HashSet<D2Impl>();
+//         }
+//         this.ds.clear();
+//         this.ds.addAll(ds);
+//      }
+//      else if (this.ds != null) {
+//         this.ds.clear();
+//         this.ds = null;
+//      }
+//   }
 
    @Transient
    public String getModelName() {

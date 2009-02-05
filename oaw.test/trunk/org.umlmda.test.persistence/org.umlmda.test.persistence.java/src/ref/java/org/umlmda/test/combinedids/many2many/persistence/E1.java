@@ -43,22 +43,22 @@ public interface E1 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    /**
     * Get groupId, 
     */
-   public String getGroupId();
+//   public String getGroupId();
 
    /**
     * Set groupId, 
     */
-   public void setGroupId(String groupId);
+//   public void setGroupId(String groupId);
 
    /**
     * Get aId, 
     */
-   public String getAId();
+//   public String getAId();
 
    /**
     * Set aId, 
     */
-   public void setAId(String aId);
+//   public void setAId(String aId);
 
    /**
     * Get aAttr, 
@@ -75,7 +75,7 @@ public interface E1 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Simple One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public java.util.Set<F1> getFs();
+   public <T> java.util.Set<T> getFs();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
@@ -85,5 +85,5 @@ public interface E1 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
     * @param fs
     *		New value for assocation fs 
     */
-   public void setFs(java.util.Set<F1> fs);
+   public <T> void setFs(java.util.Set<T> fs);
 }

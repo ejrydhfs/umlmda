@@ -2,6 +2,7 @@ package org.umlmda.test.combinedids.many2many.persistence.impl;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -32,7 +33,7 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
-   public class PKey implements F2.PKey {
+   public static class PKey implements F2.PKey {
       private String groupId = "";
       private String bId     = "";
 
@@ -94,7 +95,7 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
    }
    // The primary key
    @EmbeddedId
-   private F2.PKey pkey = new PKey();
+   private PKey pkey = new PKey();
 
    /**
     * Getter for the primary key
@@ -107,7 +108,7 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
     * Setter for the primary key
     */
    public void setF2Pkey(F2.PKey pkey) {
-      this.pkey = pkey;
+      this.pkey = (PKey) pkey;
    }
 
    /**
@@ -115,48 +116,48 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
    
 
     */
-   protected F2Impl() {
+   public F2Impl() {
       super();
    }
 
-   protected F2Impl(String groupId, String bId) {
+   public F2Impl(String groupId, String bId) {
       super();
       this.pkey = new PKey(groupId, bId);
    }
-   @Column
-   private String groupId = "";
-
-   /**
-    * Get groupId, 
-    */
-   public String getGroupId() {
-      return groupId;
-   }
-
-   /**
-    * Set groupId, 
-    */
-   public void setGroupId(String groupId) {
-      String oldValue = this.groupId;
-      this.groupId = groupId;
-   }
-   @Column
-   private String bId = "";
-
-   /**
-    * Get bId, 
-    */
-   public String getBId() {
-      return bId;
-   }
-
-   /**
-    * Set bId, 
-    */
-   public void setBId(String bId) {
-      String oldValue = this.bId;
-      this.bId = bId;
-   }
+//   @Column
+//   private String groupId = "";
+//
+//   /**
+//    * Get groupId, 
+//    */
+//   public String getGroupId() {
+//      return groupId;
+//   }
+//
+//   /**
+//    * Set groupId, 
+//    */
+//   public void setGroupId(String groupId) {
+//      String oldValue = this.groupId;
+//      this.groupId = groupId;
+//   }
+//   @Column
+//   private String bId = "";
+//
+//   /**
+//    * Get bId, 
+//    */
+//   public String getBId() {
+//      return bId;
+//   }
+//
+//   /**
+//    * Set bId, 
+//    */
+//   public void setBId(String bId) {
+//      String oldValue = this.bId;
+//      this.bId = bId;
+//   }
    @Column
    private String bAttr = null;
 
@@ -174,15 +175,16 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.bAttr;
       this.bAttr = bAttr;
    }
-   private java.util.Set<E2> es = new java.util.HashSet<E2>();
+   @ManyToMany
+   private java.util.Set<E2Impl> es = new java.util.HashSet<E2Impl>();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public java.util.Set<E2> getEs() {
-      return es;
+   public <T> java.util.Set<T> getEs() {
+      return (Set<T>) es;
    }
 
    /**
@@ -193,35 +195,37 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
     * @param es
     *		New value for assocation es 
     */
-   public void setEs(java.util.Set<E2> es) {
-      setEsInternal(es);
+   public <T> void setEs(java.util.Set<T> es) {
+	   this.es = (Set<E2Impl>) es;
    }
 
-   private void setEsInternal(java.util.Set<E2> es) {
-      java.util.Set<E2> oldValue;
-      if (this.es != null) {
-         oldValue = new java.util.HashSet<E2>(this.es);
-      }
-      else {
-         oldValue = null;
-      }
-      if (es != null) {
-         if (this.es == null) {
-            this.es = new java.util.HashSet<E2>();
-         }
-         this.es.clear();
-         this.es.addAll(es);
-      }
-      else if (this.es != null) {
-         this.es.clear();
-         this.es = null;
-      }
-   }
+//   private void setEsInternal(java.util.Set<E2> es) {
+//      java.util.Set<E2> oldValue;
+//      if (this.es != null) {
+//         oldValue = new java.util.HashSet<E2>(this.es);
+//      }
+//      else {
+//         oldValue = null;
+//      }
+//      if (es != null) {
+//         if (this.es == null) {
+//            this.es = new java.util.HashSet<E2>();
+//         }
+//         this.es.clear();
+//         this.es.addAll(es);
+//      }
+//      else if (this.es != null) {
+//         this.es.clear();
+//         this.es = null;
+//      }
+//   }
 
+   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
+   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -272,8 +276,8 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", getGroupId());
-      context.simpleElement("bId", getBId());
+      context.simpleElement("groupId", pkey.getGroupId());
+      context.simpleElement("bId", pkey.getBId());
       context.simpleElement("bAttr", getBAttr());
    }
 

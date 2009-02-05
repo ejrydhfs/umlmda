@@ -96,20 +96,20 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    }
    // The primary key
    @EmbeddedId
-   private D2Impl.PKey pkey; // = new PKey();
+   private PKey pkey; // = new PKey();
 
    /**
     * Getter for the primary key
     */
-   public D2Impl.PKey getD2Pkey() {
+   public D2.PKey getD2Pkey() {
       return pkey;
    }
 
    /**
     * Setter for the primary key
     */
-   public void setD2Pkey(D2Impl.PKey pkey) {
-      this.pkey = pkey;
+   public void setD2Pkey(D2.PKey pkey) {
+      this.pkey = (PKey) pkey;
    }
 
    /**
@@ -185,7 +185,7 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public C2Impl getA() {
+   public C2 getA() {
       return a;
    }
 
@@ -197,9 +197,9 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
     * @param a
     *		New value for assocation a 
     */
-   public void setA(C2Impl a) {
+   public void setA(C2 a) {
       C2 oldValue = this.a;
-      this.a = a;
+      this.a = (C2Impl) a;
    }
 
    @Transient

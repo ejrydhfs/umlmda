@@ -2,6 +2,7 @@ package org.umlmda.test.combinedids.one2many.persistence.impl;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -94,7 +95,7 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
    }
    // The primary key
    @EmbeddedId
-   private C4.PKey pkey = new PKey();
+   private PKey pkey = new PKey();
 
    /**
     * Getter for the primary key
@@ -107,7 +108,7 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
     * Setter for the primary key
     */
    public void setC4Pkey(C4.PKey pkey) {
-      this.pkey = pkey;
+      this.pkey = (PKey) pkey;
    }
 
    /**
@@ -123,40 +124,40 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
       super();
       this.pkey = new PKey(groupId, aId);
    }
-   @Column
-   private String groupId = "";
+//   @Column
+//   private String groupId = "";
 
    /**
     * Get groupId, 
     */
-   public String getGroupId() {
-      return groupId;
-   }
+//   public String getGroupId() {
+//      return groupId;
+//   }
 
    /**
     * Set groupId, 
     */
-   public void setGroupId(String groupId) {
-      String oldValue = this.groupId;
-      this.groupId = groupId;
-   }
-   @Column
-   private String aId = "";
+//   public void setGroupId(String groupId) {
+//      String oldValue = this.groupId;
+//      this.groupId = groupId;
+//   }
+//   @Column
+//   private String aId = "";
 
    /**
     * Get aId, 
     */
-   public String getAId() {
-      return aId;
-   }
+//   public String getAId() {
+//      return aId;
+//   }
 
    /**
     * Set aId, 
     */
-   public void setAId(String aId) {
-      String oldValue = this.aId;
-      this.aId = aId;
-   }
+//   public void setAId(String aId) {
+//      String oldValue = this.aId;
+//      this.aId = aId;
+//   }
    @Column
    private String aAttr = null;
 
@@ -174,16 +175,16 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
-   @OneToMany()
-   private java.util.Set<D4> ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D4>();
+   @OneToMany(fetch = FetchType.LAZY, mappedBy="a", cascade = CascadeType.REMOVE)
+   private java.util.Set<D4Impl> ds = new java.util.HashSet<D4Impl>();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One composition.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public java.util.Set<D4> getDs() {
-      return ds;
+   public <T> java.util.Set<T> getDs() {
+      return (Set<T>) ds;
    }
 
    /**
@@ -194,35 +195,38 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
     * @param ds
     *		New value for assocation ds 
     */
-   public void setDs(java.util.Set<D4> ds) {
-      setDsInternal(ds);
+   public <T> void setDs(java.util.Set<T> ds) {
+	   this.ds = (Set<D4Impl>) ds;
+//      setDsInternal(ds);
    }
 
-   private void setDsInternal(java.util.Set<D4> ds) {
-      java.util.Set<D4> oldValue;
-      if (this.ds != null) {
-         oldValue = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D4>(this.ds);
-      }
-      else {
-         oldValue = null;
-      }
-      if (ds != null) {
-         if (this.ds == null) {
-            this.ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D4>();
-         }
-         this.ds.clear();
-         this.ds.addAll(ds);
-      }
-      else if (this.ds != null) {
-         this.ds.clear();
-         this.ds = null;
-      }
-   }
+//   private void setDsInternal(java.util.Set<D4> ds) {
+//      java.util.Set<D4> oldValue;
+//      if (this.ds != null) {
+//         oldValue = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D4>(this.ds);
+//      }
+//      else {
+//         oldValue = null;
+//      }
+//      if (ds != null) {
+//         if (this.ds == null) {
+//            this.ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D4>();
+//         }
+//         this.ds.clear();
+//         this.ds.addAll(ds);
+//      }
+//      else if (this.ds != null) {
+//         this.ds.clear();
+//         this.ds = null;
+//      }
+//   }
 
+   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
+   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -273,8 +277,8 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", getGroupId());
-      context.simpleElement("aId", getAId());
+      context.simpleElement("groupId", pkey.getGroupId());
+      context.simpleElement("aId", pkey.getAId());
       context.simpleElement("aAttr", getAAttr());
    }
 

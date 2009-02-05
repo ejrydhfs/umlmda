@@ -43,22 +43,22 @@ public interface F2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    /**
     * Get groupId, 
     */
-   public String getGroupId();
+//   public String getGroupId();
 
    /**
     * Set groupId, 
     */
-   public void setGroupId(String groupId);
+//   public void setGroupId(String groupId);
 
    /**
     * Get bId, 
     */
-   public String getBId();
+//   public String getBId();
 
    /**
     * Set bId, 
     */
-   public void setBId(String bId);
+//   public void setBId(String bId);
 
    /**
     * Get bAttr, 
@@ -75,7 +75,7 @@ public interface F2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public java.util.Set<E2> getEs();
+   public <T> java.util.Set<T> getEs();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
@@ -85,5 +85,5 @@ public interface F2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
     * @param es
     *		New value for assocation es 
     */
-   public void setEs(java.util.Set<E2> es);
+   public <T> void setEs(java.util.Set<T> es);
 }

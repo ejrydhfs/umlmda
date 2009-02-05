@@ -2,12 +2,20 @@ package org.umlmda.test.combinedids.one2many.persistence.impl;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.umlmda.runtime.xml.XMLMarshalContext;
 import org.umlmda.runtime.xml.XMLSerializable;
-
 import org.umlmda.test.combinedids.one2many.persistence.C3;
 import org.umlmda.test.combinedids.one2many.persistence.D3;
 import org.umlmda.test.combinedids.one2many.persistence.One2manyVisitor;
@@ -94,7 +102,7 @@ public class C3Impl implements C3, Serializable, XMLSerializable, org.umlmda.run
    }
    // The primary key
    @EmbeddedId
-   private C3.PKey pkey = new PKey();
+   private PKey pkey = new PKey();
 
    /**
     * Getter for the primary key
@@ -107,7 +115,7 @@ public class C3Impl implements C3, Serializable, XMLSerializable, org.umlmda.run
     * Setter for the primary key
     */
    public void setC3Pkey(C3.PKey pkey) {
-      this.pkey = pkey;
+      this.pkey = (PKey) pkey;
    }
 
    /**
@@ -115,48 +123,48 @@ public class C3Impl implements C3, Serializable, XMLSerializable, org.umlmda.run
    
 
     */
-   protected C3Impl() {
+   public C3Impl() {
       super();
    }
 
-   protected C3Impl(String groupId, String aId) {
+   public C3Impl(String groupId, String aId) {
       super();
       this.pkey = new PKey(groupId, aId);
    }
-   @Column
-   private String groupId = "";
-
-   /**
-    * Get groupId, 
-    */
-   public String getGroupId() {
-      return groupId;
-   }
-
-   /**
-    * Set groupId, 
-    */
-   public void setGroupId(String groupId) {
-      String oldValue = this.groupId;
-      this.groupId = groupId;
-   }
-   @Column
-   private String aId = "";
-
-   /**
-    * Get aId, 
-    */
-   public String getAId() {
-      return aId;
-   }
-
-   /**
-    * Set aId, 
-    */
-   public void setAId(String aId) {
-      String oldValue = this.aId;
-      this.aId = aId;
-   }
+//   @Column
+//   private String groupId = "";
+//
+//   /**
+//    * Get groupId, 
+//    */
+//   public String getGroupId() {
+//      return groupId;
+//   }
+//
+//   /**
+//    * Set groupId, 
+//    */
+//   public void setGroupId(String groupId) {
+//      String oldValue = this.groupId;
+//      this.groupId = groupId;
+//   }
+//   @Column
+//   private String aId = "";
+//
+//   /**
+//    * Get aId, 
+//    */
+//   public String getAId() {
+//      return aId;
+//   }
+//
+//   /**
+//    * Set aId, 
+//    */
+//   public void setAId(String aId) {
+//      String oldValue = this.aId;
+//      this.aId = aId;
+//   }
    @Column
    private String aAttr = null;
 
@@ -174,16 +182,19 @@ public class C3Impl implements C3, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
-   @OneToMany(fetch = FetchType.LAZY)
-   private java.util.Set<D3> ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D3>();
+   @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.REMOVE)
+   // not possible without jointable
+//   @JoinColumns({ @JoinColumn(name = "groupId", table="D3Impl"),@JoinColumn(name = "bId", table = "D3Impl")})
+//	 org.hibernate.cfg.NotYetImplementedException: Collections having FK in secondary table
+   private java.util.Set<D3Impl> ds = new java.util.HashSet<D3Impl>();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Simple One2One composition.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public java.util.Set<D3> getDs() {
-      return ds;
+   public <T> java.util.Set<T> getDs() {
+      return (Set<T>) ds;
    }
 
    /**
@@ -194,35 +205,38 @@ public class C3Impl implements C3, Serializable, XMLSerializable, org.umlmda.run
     * @param ds
     *		New value for assocation ds 
     */
-   public void setDs(java.util.Set<D3> ds) {
-      setDsInternal(ds);
+   public <T> void setDs(java.util.Set<T> ds) {
+	   this.ds = (Set<D3Impl>) ds;
+//      setDsInternal(ds);
    }
 
-   private void setDsInternal(java.util.Set<D3> ds) {
-      java.util.Set<D3> oldValue;
-      if (this.ds != null) {
-         oldValue = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D3>(this.ds);
-      }
-      else {
-         oldValue = null;
-      }
-      if (ds != null) {
-         if (this.ds == null) {
-            this.ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D3>();
-         }
-         this.ds.clear();
-         this.ds.addAll(ds);
-      }
-      else if (this.ds != null) {
-         this.ds.clear();
-         this.ds = null;
-      }
-   }
+//   private void setDsInternal(java.util.Set<D3> ds) {
+//      java.util.Set<D3> oldValue;
+//      if (this.ds != null) {
+//         oldValue = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D3>(this.ds);
+//      }
+//      else {
+//         oldValue = null;
+//      }
+//      if (ds != null) {
+//         if (this.ds == null) {
+//            this.ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D3>();
+//         }
+//         this.ds.clear();
+//         this.ds.addAll(ds);
+//      }
+//      else if (this.ds != null) {
+//         this.ds.clear();
+//         this.ds = null;
+//      }
+//   }
 
+   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
+   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -273,8 +287,8 @@ public class C3Impl implements C3, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", getGroupId());
-      context.simpleElement("aId", getAId());
+      context.simpleElement("groupId", pkey.getGroupId());
+      context.simpleElement("aId", pkey.getAId());
       context.simpleElement("aAttr", getAAttr());
    }
 

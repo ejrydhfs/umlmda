@@ -31,7 +31,7 @@ public class F1Impl implements F1, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
-   public class PKey implements F1.PKey {
+   public static class PKey implements F1.PKey {
       private String groupId = "";
       private String bId     = "";
 
@@ -93,7 +93,7 @@ public class F1Impl implements F1, Serializable, XMLSerializable, org.umlmda.run
    }
    // The primary key
    @EmbeddedId
-   private F1.PKey pkey = new PKey();
+   private PKey pkey = new PKey();
 
    /**
     * Getter for the primary key
@@ -106,7 +106,7 @@ public class F1Impl implements F1, Serializable, XMLSerializable, org.umlmda.run
     * Setter for the primary key
     */
    public void setF1Pkey(F1.PKey pkey) {
-      this.pkey = pkey;
+      this.pkey = (PKey) pkey;
    }
 
    /**
@@ -114,48 +114,48 @@ public class F1Impl implements F1, Serializable, XMLSerializable, org.umlmda.run
    
 
     */
-   protected F1Impl() {
+   public F1Impl() {
       super();
    }
 
-   protected F1Impl(String groupId, String bId) {
+   public F1Impl(String groupId, String bId) {
       super();
       this.pkey = new PKey(groupId, bId);
    }
-   @Column
-   private String groupId = "";
-
-   /**
-    * Get groupId, 
-    */
-   public String getGroupId() {
-      return groupId;
-   }
-
-   /**
-    * Set groupId, 
-    */
-   public void setGroupId(String groupId) {
-      String oldValue = this.groupId;
-      this.groupId = groupId;
-   }
-   @Column
-   private String bId = "";
-
-   /**
-    * Get bId, 
-    */
-   public String getBId() {
-      return bId;
-   }
-
-   /**
-    * Set bId, 
-    */
-   public void setBId(String bId) {
-      String oldValue = this.bId;
-      this.bId = bId;
-   }
+//   @Column
+//   private String groupId = "";
+//
+//   /**
+//    * Get groupId, 
+//    */
+//   public String getGroupId() {
+//      return groupId;
+//   }
+//
+//   /**
+//    * Set groupId, 
+//    */
+//   public void setGroupId(String groupId) {
+//      String oldValue = this.groupId;
+//      this.groupId = groupId;
+//   }
+//   @Column
+//   private String bId = "";
+//
+//   /**
+//    * Get bId, 
+//    */
+//   public String getBId() {
+//      return bId;
+//   }
+//
+//   /**
+//    * Set bId, 
+//    */
+//   public void setBId(String bId) {
+//      String oldValue = this.bId;
+//      this.bId = bId;
+//   }
    @Column
    private String bAttr = null;
 
@@ -174,10 +174,12 @@ public class F1Impl implements F1, Serializable, XMLSerializable, org.umlmda.run
       this.bAttr = bAttr;
    }
 
+   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
+   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -228,8 +230,8 @@ public class F1Impl implements F1, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", getGroupId());
-      context.simpleElement("bId", getBId());
+      context.simpleElement("groupId", pkey.getGroupId());
+      context.simpleElement("bId", pkey.getBId());
       context.simpleElement("bAttr", getBAttr());
    }
 

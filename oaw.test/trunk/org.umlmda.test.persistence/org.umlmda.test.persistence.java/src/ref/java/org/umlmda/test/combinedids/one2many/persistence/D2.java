@@ -1,8 +1,5 @@
 package org.umlmda.test.combinedids.one2many.persistence;
 
-import org.umlmda.test.combinedids.one2many.persistence.impl.C2Impl;
-import org.umlmda.test.combinedids.one2many.persistence.impl.D2Impl;
-
 /**
  * 
  */
@@ -32,12 +29,12 @@ public interface D2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    /**
     * Getter for the primaryKey
     */
-   public D2Impl.PKey getD2Pkey();
+   public D2.PKey getD2Pkey();
 
    /**
     * Setter for the primaryKey
     */
-   public void setD2Pkey(D2Impl.PKey pkey);
+   public void setD2Pkey(D2.PKey pkey);
    public static final String PROPERTY_GROUP_ID = "groupId";
    public static final String PROPERTY_B_ID     = "bId";
    public static final String PROPERTY_B_ATTR   = "bAttr";
@@ -78,7 +75,7 @@ public interface D2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public C2Impl getA();
+   public C2 getA();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
@@ -88,5 +85,5 @@ public interface D2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
     * @param a
     *		New value for assocation a 
     */
-   public void setA(C2Impl a);
+   public void setA(C2 a);
 }

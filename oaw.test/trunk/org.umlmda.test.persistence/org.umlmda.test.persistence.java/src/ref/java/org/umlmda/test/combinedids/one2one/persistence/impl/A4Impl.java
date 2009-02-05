@@ -32,7 +32,7 @@ public class A4Impl implements A4, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
-   public class PKey implements A4.PKey {
+   public static class PKey implements A4.PKey {
       private String groupId = "";
       private String aId     = "";
 
@@ -94,7 +94,7 @@ public class A4Impl implements A4, Serializable, XMLSerializable, org.umlmda.run
    }
    // The primary key
    @EmbeddedId
-   private A4.PKey pkey = new PKey();
+   private PKey pkey = new PKey();
 
    /**
     * Getter for the primary key
@@ -107,7 +107,7 @@ public class A4Impl implements A4, Serializable, XMLSerializable, org.umlmda.run
     * Setter for the primary key
     */
    public void setA4Pkey(A4.PKey pkey) {
-      this.pkey = pkey;
+      this.pkey = (PKey) pkey;
    }
 
    /**
@@ -115,48 +115,48 @@ public class A4Impl implements A4, Serializable, XMLSerializable, org.umlmda.run
    
 
     */
-   protected A4Impl() {
+   public A4Impl() {
       super();
    }
 
-   protected A4Impl(String groupId, String aId) {
+   public A4Impl(String groupId, String aId) {
       super();
       this.pkey = new PKey(groupId, aId);
    }
-   @Column
-   private String groupId = "";
-
-   /**
-    * Get groupId, 
-    */
-   public String getGroupId() {
-      return groupId;
-   }
-
-   /**
-    * Set groupId, 
-    */
-   public void setGroupId(String groupId) {
-      String oldValue = this.groupId;
-      this.groupId = groupId;
-   }
-   @Column
-   private String aId = "";
-
-   /**
-    * Get aId, 
-    */
-   public String getAId() {
-      return aId;
-   }
-
-   /**
-    * Set aId, 
-    */
-   public void setAId(String aId) {
-      String oldValue = this.aId;
-      this.aId = aId;
-   }
+//   @Column
+//   private String groupId = "";
+//
+//   /**
+//    * Get groupId, 
+//    */
+//   public String getGroupId() {
+//      return groupId;
+//   }
+//
+//   /**
+//    * Set groupId, 
+//    */
+//   public void setGroupId(String groupId) {
+//      String oldValue = this.groupId;
+//      this.groupId = groupId;
+//   }
+//   @Column
+//   private String aId = "";
+//
+//   /**
+//    * Get aId, 
+//    */
+//   public String getAId() {
+//      return aId;
+//   }
+//
+//   /**
+//    * Set aId, 
+//    */
+//   public void setAId(String aId) {
+//      String oldValue = this.aId;
+//      this.aId = aId;
+//   }
    @Column
    private String aAttr = null;
 
@@ -174,8 +174,8 @@ public class A4Impl implements A4, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
-   @OneToMany()
-   private B4 b;
+   @OneToOne(mappedBy="a", cascade=CascadeType.REMOVE)
+   private B4Impl b;
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
@@ -196,13 +196,15 @@ public class A4Impl implements A4, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setB(B4 b) {
       B4 oldValue = this.b;
-      this.b = b;
+      this.b = (B4Impl) b;
    }
 
+   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
+   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -253,8 +255,8 @@ public class A4Impl implements A4, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", getGroupId());
-      context.simpleElement("aId", getAId());
+      context.simpleElement("groupId", pkey.getGroupId());
+      context.simpleElement("aId", pkey.getAId());
       context.simpleElement("aAttr", getAAttr());
    }
 

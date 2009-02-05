@@ -29,8 +29,8 @@ public class One2manyConstraintVisitor extends AbstractOne2manyVisitor implement
    }
 
    public void visit(C1 aC1) {
-      getConstraintContext().checkMultiplicityContraint(aC1.getClass().getName() + ".groupId", 1, 1, aC1.getGroupId());
-      getConstraintContext().checkMultiplicityContraint(aC1.getClass().getName() + ".aId", 1, 1, aC1.getAId());
+      getConstraintContext().checkMultiplicityContraint(aC1.getClass().getName() + ".groupId", 1, 1, aC1.getC1Pkey().getGroupId());
+      getConstraintContext().checkMultiplicityContraint(aC1.getClass().getName() + ".aId", 1, 1, aC1.getC1Pkey().getAId());
       getConstraintContext().checkMultiplicityContraint(aC1.getClass().getName() + ".aAttr", 0, 1, aC1.getAAttr());
    }
 
@@ -41,20 +41,20 @@ public class One2manyConstraintVisitor extends AbstractOne2manyVisitor implement
    }
 
    public void visit(C3 aC3) {
-      getConstraintContext().checkMultiplicityContraint(aC3.getClass().getName() + ".groupId", 1, 1, aC3.getGroupId());
-      getConstraintContext().checkMultiplicityContraint(aC3.getClass().getName() + ".aId", 1, 1, aC3.getAId());
+      getConstraintContext().checkMultiplicityContraint(aC3.getClass().getName() + ".groupId", 1, 1, aC3.getC3Pkey().getGroupId());
+      getConstraintContext().checkMultiplicityContraint(aC3.getClass().getName() + ".aId", 1, 1, aC3.getC3Pkey().getAId());
       getConstraintContext().checkMultiplicityContraint(aC3.getClass().getName() + ".aAttr", 0, 1, aC3.getAAttr());
    }
 
    public void visit(C4 aC4) {
-      getConstraintContext().checkMultiplicityContraint(aC4.getClass().getName() + ".groupId", 1, 1, aC4.getGroupId());
-      getConstraintContext().checkMultiplicityContraint(aC4.getClass().getName() + ".aId", 1, 1, aC4.getAId());
+      getConstraintContext().checkMultiplicityContraint(aC4.getClass().getName() + ".groupId", 1, 1, aC4.getC4Pkey().getGroupId());
+      getConstraintContext().checkMultiplicityContraint(aC4.getClass().getName() + ".aId", 1, 1, aC4.getC4Pkey().getAId());
       getConstraintContext().checkMultiplicityContraint(aC4.getClass().getName() + ".aAttr", 0, 1, aC4.getAAttr());
    }
 
    public void visit(D1 aD1) {
-      getConstraintContext().checkMultiplicityContraint(aD1.getClass().getName() + ".groupId", 1, 1, aD1.getGroupId());
-      getConstraintContext().checkMultiplicityContraint(aD1.getClass().getName() + ".bId", 1, 1, aD1.getBId());
+      getConstraintContext().checkMultiplicityContraint(aD1.getClass().getName() + ".groupId", 1, 1, aD1.getD1Pkey().getGroupId());
+      getConstraintContext().checkMultiplicityContraint(aD1.getClass().getName() + ".bId", 1, 1, aD1.getD1Pkey().getBId());
       getConstraintContext().checkMultiplicityContraint(aD1.getClass().getName() + ".bAttr", 0, 1, aD1.getBAttr());
    }
 
@@ -66,14 +66,14 @@ public class One2manyConstraintVisitor extends AbstractOne2manyVisitor implement
    }
 
    public void visit(D3 aD3) {
-      getConstraintContext().checkMultiplicityContraint(aD3.getClass().getName() + ".groupId", 1, 1, aD3.getGroupId());
-      getConstraintContext().checkMultiplicityContraint(aD3.getClass().getName() + ".bId", 1, 1, aD3.getBId());
+      getConstraintContext().checkMultiplicityContraint(aD3.getClass().getName() + ".groupId", 1, 1, aD3.getD3Pkey().getGroupId());
+      getConstraintContext().checkMultiplicityContraint(aD3.getClass().getName() + ".bId", 1, 1, aD3.getD3Pkey().getBId());
       getConstraintContext().checkMultiplicityContraint(aD3.getClass().getName() + ".bAttr", 0, 1, aD3.getBAttr());
    }
 
    public void visit(D4 aD4) {
-      getConstraintContext().checkMultiplicityContraint(aD4.getClass().getName() + ".groupId", 1, 1, aD4.getGroupId());
-      getConstraintContext().checkMultiplicityContraint(aD4.getClass().getName() + ".bId", 1, 1, aD4.getBId());
+      getConstraintContext().checkMultiplicityContraint(aD4.getClass().getName() + ".groupId", 1, 1, aD4.getD4Pkey().getGroupId());
+      getConstraintContext().checkMultiplicityContraint(aD4.getClass().getName() + ".bId", 1, 1, aD4.getD4Pkey().getBId());
       getConstraintContext().checkMultiplicityContraint(aD4.getClass().getName() + ".bAttr", 0, 1, aD4.getBAttr());
       getConstraintContext().checkMultiplicityContraint(aD4.getClass().getName() + ".a", 1, 1, aD4.getA());
    }

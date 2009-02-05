@@ -32,7 +32,7 @@ public class B2Impl implements B2, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
-   public class PKey implements B2.PKey {
+   public static class PKey implements B2.PKey {
       private String groupId = "";
       private String bId     = "";
 
@@ -94,7 +94,7 @@ public class B2Impl implements B2, Serializable, XMLSerializable, org.umlmda.run
    }
    // The primary key
    @EmbeddedId
-   private B2.PKey pkey = new PKey();
+   private PKey pkey = new PKey();
 
    /**
     * Getter for the primary key
@@ -107,7 +107,7 @@ public class B2Impl implements B2, Serializable, XMLSerializable, org.umlmda.run
     * Setter for the primary key
     */
    public void setB2Pkey(B2.PKey pkey) {
-      this.pkey = pkey;
+      this.pkey = (PKey) pkey;
    }
 
    /**
@@ -115,48 +115,48 @@ public class B2Impl implements B2, Serializable, XMLSerializable, org.umlmda.run
    
 
     */
-   protected B2Impl() {
+   public B2Impl() {
       super();
    }
 
-   protected B2Impl(String groupId, String bId) {
+   public B2Impl(String groupId, String bId) {
       super();
       this.pkey = new PKey(groupId, bId);
    }
-   @Column
-   private String groupId = "";
-
-   /**
-    * Get groupId, 
-    */
-   public String getGroupId() {
-      return groupId;
-   }
-
-   /**
-    * Set groupId, 
-    */
-   public void setGroupId(String groupId) {
-      String oldValue = this.groupId;
-      this.groupId = groupId;
-   }
-   @Column
-   private String bId = "";
-
-   /**
-    * Get bId, 
-    */
-   public String getBId() {
-      return bId;
-   }
-
-   /**
-    * Set bId, 
-    */
-   public void setBId(String bId) {
-      String oldValue = this.bId;
-      this.bId = bId;
-   }
+//   @Column
+//   private String groupId = "";
+//
+//   /**
+//    * Get groupId, 
+//    */
+//   public String getGroupId() {
+//      return groupId;
+//   }
+//
+//   /**
+//    * Set groupId, 
+//    */
+//   public void setGroupId(String groupId) {
+//      String oldValue = this.groupId;
+//      this.groupId = groupId;
+//   }
+//   @Column
+//   private String bId = "";
+//
+//   /**
+//    * Get bId, 
+//    */
+//   public String getBId() {
+//      return bId;
+//   }
+//
+//   /**
+//    * Set bId, 
+//    */
+//   public void setBId(String bId) {
+//      String oldValue = this.bId;
+//      this.bId = bId;
+//   }
    @Column
    private String bAttr = null;
 
@@ -174,8 +174,8 @@ public class B2Impl implements B2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.bAttr;
       this.bAttr = bAttr;
    }
-   @OneToMany()
-   private A2 a;
+   @OneToOne
+   private A2Impl a;
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
@@ -196,13 +196,15 @@ public class B2Impl implements B2, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setA(A2 a) {
       A2 oldValue = this.a;
-      this.a = a;
+      this.a = (A2Impl) a;
    }
 
+   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
+   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -253,8 +255,8 @@ public class B2Impl implements B2, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", getGroupId());
-      context.simpleElement("bId", getBId());
+      context.simpleElement("groupId", pkey.getGroupId());
+      context.simpleElement("bId", pkey.getBId());
       context.simpleElement("bAttr", getBAttr());
    }
 

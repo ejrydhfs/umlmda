@@ -2,6 +2,7 @@ package org.umlmda.test.combinedids.many2many.persistence.impl;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -32,7 +33,7 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
-   public class PKey implements E1.PKey {
+   public static class PKey implements E1.PKey {
       private String groupId = "";
       private String aId     = "";
 
@@ -94,7 +95,7 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
    }
    // The primary key
    @EmbeddedId
-   private E1.PKey pkey = new PKey();
+   private PKey pkey = new PKey();
 
    /**
     * Getter for the primary key
@@ -107,7 +108,7 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
     * Setter for the primary key
     */
    public void setE1Pkey(E1.PKey pkey) {
-      this.pkey = pkey;
+      this.pkey = (PKey) pkey;
    }
 
    /**
@@ -115,48 +116,48 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
    
 
     */
-   protected E1Impl() {
+   public E1Impl() {
       super();
    }
 
-   protected E1Impl(String groupId, String aId) {
+   public E1Impl(String groupId, String aId) {
       super();
       this.pkey = new PKey(groupId, aId);
    }
-   @Column
-   private String groupId = "";
-
-   /**
-    * Get groupId, 
-    */
-   public String getGroupId() {
-      return groupId;
-   }
-
-   /**
-    * Set groupId, 
-    */
-   public void setGroupId(String groupId) {
-      String oldValue = this.groupId;
-      this.groupId = groupId;
-   }
-   @Column
-   private String aId = "";
-
-   /**
-    * Get aId, 
-    */
-   public String getAId() {
-      return aId;
-   }
-
-   /**
-    * Set aId, 
-    */
-   public void setAId(String aId) {
-      String oldValue = this.aId;
-      this.aId = aId;
-   }
+//   @Column
+//   private String groupId = "";
+//
+//   /**
+//    * Get groupId, 
+//    */
+//   public String getGroupId() {
+//      return groupId;
+//   }
+//
+//   /**
+//    * Set groupId, 
+//    */
+//   public void setGroupId(String groupId) {
+//      String oldValue = this.groupId;
+//      this.groupId = groupId;
+//   }
+//   @Column
+//   private String aId = "";
+//
+//   /**
+//    * Get aId, 
+//    */
+//   public String getAId() {
+//      return aId;
+//   }
+//
+//   /**
+//    * Set aId, 
+//    */
+//   public void setAId(String aId) {
+//      String oldValue = this.aId;
+//      this.aId = aId;
+//   }
    @Column
    private String aAttr = null;
 
@@ -174,15 +175,16 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
-   private java.util.Set<F1> fs = new java.util.HashSet<org.umlmda.test.combinedids.many2many.persistence.F1>();
+   @ManyToMany
+   private java.util.Set<F1Impl> fs = new java.util.HashSet<F1Impl>();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Simple One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public java.util.Set<F1> getFs() {
-      return fs;
+   public <T> java.util.Set<T> getFs() {
+      return (Set<T>) fs;
    }
 
    /**
@@ -193,35 +195,37 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
     * @param fs
     *		New value for assocation fs 
     */
-   public void setFs(java.util.Set<F1> fs) {
-      setFsInternal(fs);
+   public <T> void setFs(java.util.Set<T> fs) {
+	   this.fs = (Set<F1Impl>) fs;
    }
 
-   private void setFsInternal(java.util.Set<F1> fs) {
-      java.util.Set<F1> oldValue;
-      if (this.fs != null) {
-         oldValue = new java.util.HashSet<org.umlmda.test.combinedids.many2many.persistence.F1>(this.fs);
-      }
-      else {
-         oldValue = null;
-      }
-      if (fs != null) {
-         if (this.fs == null) {
-            this.fs = new java.util.HashSet<org.umlmda.test.combinedids.many2many.persistence.F1>();
-         }
-         this.fs.clear();
-         this.fs.addAll(fs);
-      }
-      else if (this.fs != null) {
-         this.fs.clear();
-         this.fs = null;
-      }
-   }
+//   private void setFsInternal(java.util.Set<F1> fs) {
+//      java.util.Set<F1> oldValue;
+//      if (this.fs != null) {
+//         oldValue = new java.util.HashSet<org.umlmda.test.combinedids.many2many.persistence.F1>(this.fs);
+//      }
+//      else {
+//         oldValue = null;
+//      }
+//      if (fs != null) {
+//         if (this.fs == null) {
+//            this.fs = new java.util.HashSet<org.umlmda.test.combinedids.many2many.persistence.F1>();
+//         }
+//         this.fs.clear();
+//         this.fs.addAll(fs);
+//      }
+//      else if (this.fs != null) {
+//         this.fs.clear();
+//         this.fs = null;
+//      }
+//   }
 
+   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
+   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -272,8 +276,8 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", getGroupId());
-      context.simpleElement("aId", getAId());
+      context.simpleElement("groupId", pkey.getGroupId());
+      context.simpleElement("aId", pkey.getAId());
       context.simpleElement("aAttr", getAAttr());
    }
 
