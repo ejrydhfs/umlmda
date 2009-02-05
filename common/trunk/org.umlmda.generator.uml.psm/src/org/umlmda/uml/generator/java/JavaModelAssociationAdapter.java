@@ -144,13 +144,13 @@ public class JavaModelAssociationAdapter extends ModelAssociationAdapter impleme
       if ( isMultiple() ) {
          if (genericSupport) {
             if (isUnique()) {
-               return Set.class.getName() + "<" + targetType + ">";
+               return Set.class.getName() + "<? extends " + targetType + ">";
             }
             else if (isOrdered()) {
-               return List.class.getName() + "<" + targetType + ">";
+               return List.class.getName() + "<? extends " + targetType + ">";
             }
             else {
-               return Collection.class.getName() + "<" + targetType + ">";
+               return Collection.class.getName() + "<? extends " + targetType + ">";
             }
          }
          else {
@@ -180,16 +180,14 @@ public class JavaModelAssociationAdapter extends ModelAssociationAdapter impleme
       
       if ( isMultiple() ) {
          if (genericSupport) {
-            String targetInterfaceType = target.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE);
-
             if (isUnique() && !isOrdered()) {
-               return HashSet.class.getName() + "<" + targetInterfaceType + ">";
+               return HashSet.class.getName() + "<" + targetType + ">";
             }
             else if (isUnique() && isOrdered()) {
-               return LinkedHashSet.class.getName() + "<" + targetInterfaceType + ">";
+               return LinkedHashSet.class.getName() + "<" + targetType + ">";
             }
             else {
-               return ArrayList.class.getName() + "<" + targetInterfaceType + ">";
+               return ArrayList.class.getName() + "<" + targetType + ">";
             }
          }
          else {
@@ -202,6 +200,42 @@ public class JavaModelAssociationAdapter extends ModelAssociationAdapter impleme
             else {
                return ArrayList.class.getName();
             }
+         }
+      }
+      else {
+         return targetType;
+      }
+   }
+
+   /* (non-Javadoc)
+    * @see org.umlmda.uml.generator.java.JavaModelAssociation#getImplementationType()
+    */
+   public String getImplementationInterfaceType() {
+      JavaModelClass target = (JavaModelClass) getTarget();
+      String targetType = target.getScopedName(JavaArtefacts.BUSINESS_OBJECT);
+      
+      if ( isMultiple() ) {
+         if (genericSupport) {
+            if (isUnique()) {
+               return Set.class.getName() + "<" + targetType + ">";
+            }
+            else if (isOrdered()) {
+               return List.class.getName() + "<" + targetType + ">";
+            }
+            else {
+                return Collection.class.getName() + "<" + targetType + ">";
+             }
+         }
+         else {
+             if (isUnique()) {
+                 return Set.class.getName();
+              }
+              else if (isOrdered()) {
+                 return List.class.getName();
+              }
+              else {
+                  return Collection.class.getName();
+               }
          }
       }
       else {
