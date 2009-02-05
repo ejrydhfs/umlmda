@@ -33,3 +33,6 @@ cached List[JavaModelClass] javaExtentedInterfaces(ModelClass clazz) :
 		
 cached Boolean isNative(ModelClass clazz) :
 	clazz.hasStereotype("NativeClass") || clazz.hasStereotype("NativeInterface");	
+	
+cached Boolean hasCompositeKey(ModelClass clazz) :
+    clazz.keyAttributes.size > 1;	

@@ -11,14 +11,21 @@ import org::umlmda::oaw::generator::util;
 import org::umlmda::oaw::generator::model::java;
 
 cached List[String] persistenceAttributes(JavaModelAssociation assoc) :
-    let attributes = createList() :
+    let attributes = {} :
 
     assoc.composition ? attributes.add("cascade=CascadeType.ALL") : true ->
     assoc.composition ? attributes.add("fetch=FetchType.EAGER") : attributes.add("fetch=FetchType.LAZY") ->
-    assoc.optional ? true : attributes.add("optional=false") ->
+    // optional only on OneToOne
+    assoc.optional || assoc.multiple ? true : attributes.add("optional=false") ->
+    // mapped by
+    assoc.isBidirectional() && assoc.isOwner() ? attributes.add("mappedBy=\""+assoc.reverse.name+"\"") : true ->
     attributes
 ;    
 
-create List[String] createList() :
-    this
+cached Boolean isBidirectional(JavaModelAssociation assoc) :
+    assoc.navigatableToTarget && assoc.reverse.navigatableToTarget
 ;    
+
+cached Boolean isOwner(JavaModelAssociation assoc) :
+    assoc.composition || assoc.aggregation
+;     

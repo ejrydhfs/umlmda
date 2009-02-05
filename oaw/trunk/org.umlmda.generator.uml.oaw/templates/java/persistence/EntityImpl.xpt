@@ -91,7 +91,19 @@
 	        «ENDFOREACH»
 	      )
 	   «ELSEIF !multiple && !reverse.multiple»
-         @OneToMany(
+         @OneToOne(
+           «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
+              «attr»
+           «ENDFOREACH»
+         )
+       «ELSEIF !multiple && reverse.multiple»
+         @ManyToOne(
+           «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
+              «attr»
+           «ENDFOREACH»
+         )
+       «ELSEIF multiple && reverse.multiple»
+         @ManyToMany(
            «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
               «attr»
            «ENDFOREACH»
@@ -104,7 +116,7 @@
     «EXPAND java::BOImpl::versionInfo FOR this»
     «EXPAND java::BOImpl::delegateFactory FOR this»
     «EXPAND keyImpl FOR this»
-    «EXPAND java::BOImpl::standardCtor FOR this»
+    «EXPAND java::BOImpl::standardCtor("public") FOR this»
     «EXPAND handleAttributes FOR this»  
     
     «FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
@@ -121,8 +133,12 @@
 «ENDDEFINE»
 
 «DEFINE handleAttributes FOR JavaModelClass»
-   «FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr»
-      «EXPAND handleAttribute(this) FOR attr»
+   «FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr»		
+        «IF this.hasCompositeKey() && attr.hasStereotype("PKey")»
+            «EXPAND handleKeyAttribute(this) FOR attr»
+        «ELSE»    
+            «EXPAND handleAttribute(this) FOR attr»
+		«ENDIF»		   		
    «ENDFOREACH»
 «ENDDEFINE»
 
@@ -137,16 +153,36 @@
    «EXPAND java::BOImpl::setterBody(modelClass) FOR this»
 «ENDDEFINE»
 
+«DEFINE handleKeyAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
+   «EXPAND java::BOInterface::attrGetterDecl FOR this» {
+        return pkey.«getter»();
+   }     
+   
+   «EXPAND java::BOInterface::attrSetterDecl FOR this» {
+        pkey.«setter»(«name»);
+   }
+«ENDDEFINE»
+
 «DEFINE handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
    «EXPAND assocAnnotation FOR this»
-   «EXPAND java::BOImpl::assocDecl FOR this»
+   «EXPAND assocDecl FOR this»
    
    «EXPAND java::BOInterface::assocGetterDecl FOR this»
    «EXPAND java::BOImpl::getterBody(modelClass) FOR this»
    
-   «EXPAND java::BOInterface::assocSetterDecl FOR this»
-   «EXPAND java::BOImpl::setterBody(modelClass) FOR this»
-   «EXPAND java::BOImpl::internalSetMethod FOR this»
+   «EXPAND java::BOInterface::assocSetterDecl FOR this» {
+        this.«name» = («implementationInterfaceType»)«name»;
+   }
+«ENDDEFINE»
+
+«DEFINE assocDecl FOR JavaModelAssociation»
+    «IF derived == false»
+        «IF multiple»
+           private «implementationInterfaceType» «name» = new «implementationType»();
+        «ELSE»
+           private «implementationInterfaceType» «name»;
+        «ENDIF»
+    «ENDIF»
 «ENDDEFINE»
 
 «DEFINE keyImpl FOR JavaModelClass»
@@ -218,7 +254,7 @@
          
          // The primary key
          @EmbeddedId
-         private «pkeyInterface» pkey = new PKey();
+         private PKey pkey = new PKey();
 
       /**
        * Getter for the primary key
@@ -231,7 +267,7 @@
        * Setter for the primary key
        */   
          public void set«name»Pkey(«pkeyInterface» pkey) {
-            this.pkey = pkey;
+            this.pkey = (PKey)pkey;
          }
          
          «FOREACH this.inheritedKeyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»

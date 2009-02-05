@@ -74,8 +74,10 @@ cached Void process(uml::Generalization generalization) :
  */
 cached Void replaceAliasType(Property prop) :
 	let propType = prop.type :
+	let isAlias = propType.hasStereotype("Alias") :
+	let dummy = propType.hasStereotype("Alias") :
 	
-	propType.hasStereotype("Alias") ? (
+	isAlias ? (
 	   debug("Replacing alias on "+prop.qualifiedName) ->
 	   prop.setType(propType.ownedElement.typeSelect(Property).first().type) ->
 	   propType.destroyLater(prop.getModel().qualifiedName)

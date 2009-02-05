@@ -170,18 +170,23 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 	}
 «ENDDEFINE»
 
+
 «DEFINE standardCtor FOR JavaBusinessObject»
+   «EXPAND standardCtor("protected") FOR this»
+«ENDDEFINE»
+
+«DEFINE standardCtor(String visibility) FOR JavaBusinessObject»
 	/**
 	 * Default Ctor. «EXPAND docInitializer FOR this»
 	 */
-	protected «generatedName»()
+	«visibility» «generatedName»()
 	{
 		super();
 		«EXPAND callInitializer FOR this»
 	}
 
 	«IF keyAttributes.isEmpty == false»
-		protected «generatedName»(
+		«visibility» «generatedName»(
 		«FOREACH (List[JavaModelAttribute])keyAttributes AS attr SEPARATOR ","»
 			«attr.javaTypeName()» «attr.name»
 		«ENDFOREACH»
