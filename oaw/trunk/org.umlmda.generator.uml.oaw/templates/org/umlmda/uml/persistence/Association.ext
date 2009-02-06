@@ -10,8 +10,12 @@ import org::umlmda::uml::generator::java;
 import org::umlmda::oaw::generator::util;
 import org::umlmda::oaw::generator::model::java;
 
+extension org::umlmda::uml::java::Artefact;
+
 cached List[String] persistenceAttributes(JavaModelAssociation assoc) :
     let attributes = {} :
+    let targetArtefact = assoc.target.getDefaultArtefact(scopeImplementation()) :
+    let targetImpl = ((JavaModelClass)assoc.target).getScopedName(targetArtefact) :
 
     assoc.composition ? attributes.add("cascade=CascadeType.ALL") : true ->
     assoc.composition ? attributes.add("fetch=FetchType.EAGER") : attributes.add("fetch=FetchType.LAZY") ->
@@ -19,9 +23,14 @@ cached List[String] persistenceAttributes(JavaModelAssociation assoc) :
     assoc.optional || assoc.multiple ? true : attributes.add("optional=false") ->
     // mapped by
     assoc.isBidirectional() && assoc.isOwner() ? attributes.add("mappedBy=\""+assoc.reverse.name+"\"") : true ->
+    assoc.multiple ? attributes.add("targetEntity="+targetImpl+".class") : true ->
     attributes
 ;    
 
+cached String implDeclType(JavaModelAssociation assoc) :
+    assoc.multiple ? assoc.collectionInterfaceType : assoc.implementationInterfaceType
+;
+    
 cached Boolean isBidirectional(JavaModelAssociation assoc) :
     assoc.navigatableToTarget && assoc.reverse.navigatableToTarget
 ;    

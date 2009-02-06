@@ -167,20 +167,28 @@
    «EXPAND assocAnnotation FOR this»
    «EXPAND assocDecl FOR this»
    
+   «IF multiple»
+        @SuppressWarnings("unchecked")   
+   «ENDIF»
    «EXPAND java::BOInterface::assocGetterDecl FOR this»
    «EXPAND java::BOImpl::getterBody(modelClass) FOR this»
    
    «EXPAND java::BOInterface::assocSetterDecl FOR this» {
-        this.«name» = («implementationInterfaceType»)«name»;
+        «IF multiple»
+            this.«name» = «name»;
+        «ELSE»
+            this.«name» = («implDeclType()»)«name»;
+        «ENDIF»
    }
 «ENDDEFINE»
 
 «DEFINE assocDecl FOR JavaModelAssociation»
     «IF derived == false»
         «IF multiple»
-           private «implementationInterfaceType» «name» = new «implementationType»();
+           @SuppressWarnings("unchecked")
+           private «implDeclType()» «name» = new «collectionImplementationType»();
         «ELSE»
-           private «implementationInterfaceType» «name»;
+           private «implDeclType()» «name»;
         «ENDIF»
     «ENDIF»
 «ENDDEFINE»
