@@ -1072,7 +1072,7 @@
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_sf-hvu2AEd24CprL6yJ3YQ" name="a" visibility="private" type="_sf-hr-2AEd24CprL6yJ3YQ" association="_sgISxu2AEd24CprL6yJ3YQ">
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sf-hv-2AEd24CprL6yJ3YQ" value="1"/>
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sf-hwO2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sf-hwO2AEd24CprL6yJ3YQ"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_sgISoO2AEd24CprL6yJ3YQ" name="C3">
@@ -1147,7 +1147,7 @@
                 </ownedComment>
                 <ownedEnd xmi:id="_sgISw-2AEd24CprL6yJ3YQ" name="" visibility="private" type="_sf-hoO2AEd24CprL6yJ3YQ" association="_sgISwe2AEd24CprL6yJ3YQ">
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sgISxO2AEd24CprL6yJ3YQ" value="1"/>
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sgISxe2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sgISxe2AEd24CprL6yJ3YQ"/>
                 </ownedEnd>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_sgISxu2AEd24CprL6yJ3YQ" memberEnd="_sf-hte2AEd24CprL6yJ3YQ _sf-hvu2AEd24CprL6yJ3YQ">
