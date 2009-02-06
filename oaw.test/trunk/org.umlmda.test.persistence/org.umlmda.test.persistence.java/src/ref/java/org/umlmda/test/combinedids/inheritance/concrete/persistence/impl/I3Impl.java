@@ -31,9 +31,11 @@ public class I3Impl implements I3, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
-   public class PKey implements I3.PKey {
-      private String groupId = "";
-      private String iId     = "";
+   @Embeddable
+   public static class PKey implements I3.PKey {
+      private static final long serialVersionUID = 1000L;
+      private String            groupId          = "";
+      private String            iId              = "";
 
       public PKey() {
          super();
@@ -93,7 +95,7 @@ public class I3Impl implements I3, Serializable, XMLSerializable, org.umlmda.run
    }
    // The primary key
    @EmbeddedId
-   private I3.PKey pkey = new PKey();
+   private PKey pkey = new PKey();
 
    /**
     * Getter for the primary key
@@ -106,7 +108,7 @@ public class I3Impl implements I3, Serializable, XMLSerializable, org.umlmda.run
     * Setter for the primary key
     */
    public void setI3Pkey(I3.PKey pkey) {
-      this.pkey = pkey;
+      this.pkey = (PKey) pkey;
    }
 
    /**
@@ -114,47 +116,41 @@ public class I3Impl implements I3, Serializable, XMLSerializable, org.umlmda.run
    
 
     */
-   protected I3Impl() {
+   public I3Impl() {
       super();
    }
 
-   protected I3Impl(String groupId, String iId) {
+   public I3Impl(String groupId, String iId) {
       super();
       this.pkey = new PKey(groupId, iId);
    }
-   @Column
-   private String groupId = "";
 
    /**
     * Get groupId, 
     */
    public String getGroupId() {
-      return groupId;
+      return pkey.getGroupId();
    }
 
    /**
     * Set groupId, 
     */
    public void setGroupId(String groupId) {
-      String oldValue = this.groupId;
-      this.groupId = groupId;
+      pkey.setGroupId(groupId);
    }
-   @Column
-   private String iId = "";
 
    /**
     * Get iId, 
     */
    public String getIId() {
-      return iId;
+      return pkey.getIId();
    }
 
    /**
     * Set iId, 
     */
    public void setIId(String iId) {
-      String oldValue = this.iId;
-      this.iId = iId;
+      pkey.setIId(iId);
    }
    @Column
    private String i1Attr = null;

@@ -17,9 +17,7 @@ import org.umlmda.test.combinedids.one2many.persistence.One2manyVisitor;
  */
 @Entity
 public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
-
-	
-	/**
+   /**
     * Name in die UML model persistence_test_pim_java_psm
     */
    public static final String  MODEL_NAME       = "org.umlmda.test.combinedids.one2many.D2";
@@ -34,9 +32,11 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
+   @Embeddable
    public static class PKey implements D2.PKey {
-      private String groupId = "";
-      private String bId     = "";
+      private static final long serialVersionUID = 1000L;
+      private String            groupId          = "";
+      private String            bId              = "";
 
       public PKey() {
          super();
@@ -96,7 +96,7 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    }
    // The primary key
    @EmbeddedId
-   private PKey pkey; // = new PKey();
+   private PKey pkey = new PKey();
 
    /**
     * Getter for the primary key
@@ -125,41 +125,34 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
       super();
       this.pkey = new PKey(groupId, bId);
    }
-//   @Column
-//   private String groupId = "";
-//
-//   /**
-//    * Get groupId, 
-//    */
-//   public String getGroupId() {
-//      return groupId;
-//   }
-//
-//   /**
-//    * Set groupId, 
-//    */
-//   public void setGroupId(String groupId) {
-//      String oldValue = this.groupId;
-//      this.groupId = groupId;
-//   }
-// Spalte schon im PK enthalten
-//   @Column
-//   private String bId = "";
-//
-//   /**
-//    * Get bId, 
-//    */
-//   public String getBId() {
-//      return bId;
-//   }
-//
-//   /**
-//    * Set bId, 
-//    */
-//   public void setBId(String bId) {
-//      String oldValue = this.bId;
-//      this.bId = bId;
-//   }
+
+   /**
+    * Get groupId, 
+    */
+   public String getGroupId() {
+      return pkey.getGroupId();
+   }
+
+   /**
+    * Set groupId, 
+    */
+   public void setGroupId(String groupId) {
+      pkey.setGroupId(groupId);
+   }
+
+   /**
+    * Get bId, 
+    */
+   public String getBId() {
+      return pkey.getBId();
+   }
+
+   /**
+    * Set bId, 
+    */
+   public void setBId(String bId) {
+      pkey.setBId(bId);
+   }
    @Column
    private String bAttr = null;
 
@@ -177,7 +170,7 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.bAttr;
       this.bAttr = bAttr;
    }
-   @ManyToOne
+   @ManyToOne(fetch = FetchType.LAZY)
    private C2Impl a;
 
    /**
@@ -198,16 +191,13 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
     *		New value for assocation a 
     */
    public void setA(C2 a) {
-      C2 oldValue = this.a;
       this.a = (C2Impl) a;
    }
 
-   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
-   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -258,8 +248,8 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", pkey.getGroupId());
-      context.simpleElement("bId", pkey.getBId());
+      context.simpleElement("groupId", getGroupId());
+      context.simpleElement("bId", getBId());
       context.simpleElement("bAttr", getBAttr());
    }
 

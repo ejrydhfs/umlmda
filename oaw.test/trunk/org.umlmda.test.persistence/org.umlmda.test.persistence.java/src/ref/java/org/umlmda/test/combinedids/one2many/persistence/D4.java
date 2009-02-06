@@ -1,6 +1,5 @@
 package org.umlmda.test.combinedids.one2many.persistence;
 
-
 /**
  * 
  */
@@ -44,22 +43,22 @@ public interface D4 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    /**
     * Get groupId, 
     */
-//   public String getGroupId();
+   public String getGroupId();
 
    /**
     * Set groupId, 
     */
-//   public void setGroupId(String groupId);
+   public void setGroupId(String groupId);
 
    /**
     * Get bId, 
     */
-//   public String getBId();
+   public String getBId();
 
    /**
     * Set bId, 
     */
-//   public void setBId(String bId);
+   public void setBId(String bId);
 
    /**
     * Get bAttr, 

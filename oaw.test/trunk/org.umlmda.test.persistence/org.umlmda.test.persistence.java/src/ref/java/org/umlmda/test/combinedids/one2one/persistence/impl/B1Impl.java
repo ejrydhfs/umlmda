@@ -31,9 +31,11 @@ public class B1Impl implements B1, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
+   @Embeddable
    public static class PKey implements B1.PKey {
-      private String groupId = "";
-      private String bId     = "";
+      private static final long serialVersionUID = 1000L;
+      private String            groupId          = "";
+      private String            bId              = "";
 
       public PKey() {
          super();
@@ -122,40 +124,34 @@ public class B1Impl implements B1, Serializable, XMLSerializable, org.umlmda.run
       super();
       this.pkey = new PKey(groupId, bId);
    }
-//   @Column
-//   private String groupId = "";
-//
-//   /**
-//    * Get groupId, 
-//    */
-//   public String getGroupId() {
-//      return groupId;
-//   }
-//
-//   /**
-//    * Set groupId, 
-//    */
-//   public void setGroupId(String groupId) {
-//      String oldValue = this.groupId;
-//      this.groupId = groupId;
-//   }
-//   @Column
-//   private String bId = "";
-//
-//   /**
-//    * Get bId, 
-//    */
-//   public String getBId() {
-//      return bId;
-//   }
-//
-//   /**
-//    * Set bId, 
-//    */
-//   public void setBId(String bId) {
-//      String oldValue = this.bId;
-//      this.bId = bId;
-//   }
+
+   /**
+    * Get groupId, 
+    */
+   public String getGroupId() {
+      return pkey.getGroupId();
+   }
+
+   /**
+    * Set groupId, 
+    */
+   public void setGroupId(String groupId) {
+      pkey.setGroupId(groupId);
+   }
+
+   /**
+    * Get bId, 
+    */
+   public String getBId() {
+      return pkey.getBId();
+   }
+
+   /**
+    * Set bId, 
+    */
+   public void setBId(String bId) {
+      pkey.setBId(bId);
+   }
    @Column
    private String bAttr = null;
 
@@ -173,13 +169,11 @@ public class B1Impl implements B1, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.bAttr;
       this.bAttr = bAttr;
    }
-   
-   @Transient
+
    public String getModelName() {
       return MODEL_NAME;
    }
 
-   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -230,8 +224,8 @@ public class B1Impl implements B1, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", pkey.getGroupId());
-      context.simpleElement("bId", pkey.getBId());
+      context.simpleElement("groupId", getGroupId());
+      context.simpleElement("bId", getBId());
       context.simpleElement("bAttr", getBAttr());
    }
 

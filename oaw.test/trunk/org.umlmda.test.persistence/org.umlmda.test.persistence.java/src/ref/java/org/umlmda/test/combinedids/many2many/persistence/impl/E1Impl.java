@@ -2,7 +2,6 @@ package org.umlmda.test.combinedids.many2many.persistence.impl;
 
 import java.io.Serializable;
 import java.util.Iterator;
-import java.util.Set;
 
 import javax.persistence.*;
 
@@ -33,9 +32,11 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
+   @Embeddable
    public static class PKey implements E1.PKey {
-      private String groupId = "";
-      private String aId     = "";
+      private static final long serialVersionUID = 1000L;
+      private String            groupId          = "";
+      private String            aId              = "";
 
       public PKey() {
          super();
@@ -124,40 +125,34 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
       super();
       this.pkey = new PKey(groupId, aId);
    }
-//   @Column
-//   private String groupId = "";
-//
-//   /**
-//    * Get groupId, 
-//    */
-//   public String getGroupId() {
-//      return groupId;
-//   }
-//
-//   /**
-//    * Set groupId, 
-//    */
-//   public void setGroupId(String groupId) {
-//      String oldValue = this.groupId;
-//      this.groupId = groupId;
-//   }
-//   @Column
-//   private String aId = "";
-//
-//   /**
-//    * Get aId, 
-//    */
-//   public String getAId() {
-//      return aId;
-//   }
-//
-//   /**
-//    * Set aId, 
-//    */
-//   public void setAId(String aId) {
-//      String oldValue = this.aId;
-//      this.aId = aId;
-//   }
+
+   /**
+    * Get groupId, 
+    */
+   public String getGroupId() {
+      return pkey.getGroupId();
+   }
+
+   /**
+    * Set groupId, 
+    */
+   public void setGroupId(String groupId) {
+      pkey.setGroupId(groupId);
+   }
+
+   /**
+    * Get aId, 
+    */
+   public String getAId() {
+      return pkey.getAId();
+   }
+
+   /**
+    * Set aId, 
+    */
+   public void setAId(String aId) {
+      pkey.setAId(aId);
+   }
    @Column
    private String aAttr = null;
 
@@ -175,16 +170,18 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
-   @ManyToMany
-   private java.util.Set<F1Impl> fs = new java.util.HashSet<F1Impl>();
+   @ManyToMany(fetch = FetchType.LAZY, targetEntity = F1Impl.class)
+   @SuppressWarnings("unchecked")
+   private java.util.Set fs = new java.util.HashSet();
 
+   @SuppressWarnings("unchecked")
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Simple One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public <T> java.util.Set<T> getFs() {
-      return (Set<T>) fs;
+   public java.util.Set<F1> getFs() {
+      return fs;
    }
 
    /**
@@ -195,37 +192,14 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
     * @param fs
     *		New value for assocation fs 
     */
-   public <T> void setFs(java.util.Set<T> fs) {
-	   this.fs = (Set<F1Impl>) fs;
+   public void setFs(java.util.Set<F1> fs) {
+      this.fs = fs;
    }
 
-//   private void setFsInternal(java.util.Set<F1> fs) {
-//      java.util.Set<F1> oldValue;
-//      if (this.fs != null) {
-//         oldValue = new java.util.HashSet<org.umlmda.test.combinedids.many2many.persistence.F1>(this.fs);
-//      }
-//      else {
-//         oldValue = null;
-//      }
-//      if (fs != null) {
-//         if (this.fs == null) {
-//            this.fs = new java.util.HashSet<org.umlmda.test.combinedids.many2many.persistence.F1>();
-//         }
-//         this.fs.clear();
-//         this.fs.addAll(fs);
-//      }
-//      else if (this.fs != null) {
-//         this.fs.clear();
-//         this.fs = null;
-//      }
-//   }
-
-   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
-   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -276,8 +250,8 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", pkey.getGroupId());
-      context.simpleElement("aId", pkey.getAId());
+      context.simpleElement("groupId", getGroupId());
+      context.simpleElement("aId", getAId());
       context.simpleElement("aAttr", getAAttr());
    }
 

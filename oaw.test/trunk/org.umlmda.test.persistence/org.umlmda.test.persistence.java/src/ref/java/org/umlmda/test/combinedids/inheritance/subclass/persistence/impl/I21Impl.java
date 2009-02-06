@@ -35,11 +35,11 @@ public class I21Impl extends I2Impl implements I21, Serializable, XMLSerializabl
    
 
     */
-   protected I21Impl() {
+   public I21Impl() {
       super();
    }
 
-   protected I21Impl(String groupId, String iId) {
+   public I21Impl(String groupId, String iId) {
       super(groupId, iId);
    }
    @Column

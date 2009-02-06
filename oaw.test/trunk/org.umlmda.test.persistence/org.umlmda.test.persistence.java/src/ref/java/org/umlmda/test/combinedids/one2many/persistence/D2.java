@@ -29,36 +29,36 @@ public interface D2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    /**
     * Getter for the primaryKey
     */
-   public D2.PKey getD2Pkey();
+   public PKey getD2Pkey();
 
    /**
     * Setter for the primaryKey
     */
-   public void setD2Pkey(D2.PKey pkey);
+   public void setD2Pkey(PKey pkey);
    public static final String PROPERTY_GROUP_ID = "groupId";
    public static final String PROPERTY_B_ID     = "bId";
    public static final String PROPERTY_B_ATTR   = "bAttr";
    public static final String PROPERTY_A        = "a";       ;
 
-//   /**
-//    * Get groupId, 
-//    */
-//   public String getGroupId();
-//
-//   /**
-//    * Set groupId, 
-//    */
-//   public void setGroupId(String groupId);
+   /**
+    * Get groupId, 
+    */
+   public String getGroupId();
 
-//   /**
-//    * Get bId, 
-//    */
-//   public String getBId();
-//
-//   /**
-//    * Set bId, 
-//    */
-//   public void setBId(String bId);
+   /**
+    * Set groupId, 
+    */
+   public void setGroupId(String groupId);
+
+   /**
+    * Get bId, 
+    */
+   public String getBId();
+
+   /**
+    * Set bId, 
+    */
+   public void setBId(String bId);
 
    /**
     * Get bAttr, 

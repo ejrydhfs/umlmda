@@ -22,6 +22,7 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 	
    
       @Entity
+      
    
  
 	public 
@@ -74,7 +75,7 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 	
 
 	 */
-	protected DatatypeTestImpl()
+	public DatatypeTestImpl()
 	{
 		super();
 		
@@ -83,7 +84,7 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 	}
 
 	
-		protected DatatypeTestImpl(
+		public DatatypeTestImpl(
 		
 			String id
 		
@@ -96,8 +97,9 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 	
 
     
-   
-      
+   		
+            
+            
    
    
       @Column
@@ -161,8 +163,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -226,8 +230,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -289,8 +295,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -354,8 +362,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -367,7 +377,7 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 	
 		private char charAttr
 		
-			= ' '
+			= ''
 		
 		;
 	
@@ -419,8 +429,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -484,8 +496,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -553,8 +567,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -624,8 +640,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -693,8 +711,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -764,8 +784,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -827,8 +849,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -892,8 +916,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -955,8 +981,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -1020,8 +1048,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -1083,8 +1113,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -1148,8 +1180,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -1211,8 +1245,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -1276,8 +1312,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -1341,8 +1379,10 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
-   
-      
+				   		
+   		
+            
+            
    
    
       @Column
@@ -1406,6 +1446,7 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
 
 
 
+				   		
    
   
     

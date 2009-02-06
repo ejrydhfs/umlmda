@@ -29,36 +29,36 @@ public interface C2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    /**
     * Getter for the primaryKey
     */
-   public C2.PKey getC2Pkey();
+   public PKey getC2Pkey();
 
    /**
     * Setter for the primaryKey
     */
-   public void setC2Pkey(C2.PKey pkey);
+   public void setC2Pkey(PKey pkey);
    public static final String PROPERTY_GROUP_ID = "groupId";
    public static final String PROPERTY_A_ID     = "aId";
    public static final String PROPERTY_A_ATTR   = "aAttr";
    public static final String PROPERTY_DS       = "ds";      ;
 
-//   /**
-//    * Get groupId, 
-//    */
-//   public String getGroupId();
-//
-//   /**
-//    * Set groupId, 
-//    */
-//   public void setGroupId(String groupId);
-//
-//   /**
-//    * Get aId, 
-//    */
-//   public String getAId();
-//
-//   /**
-//    * Set aId, 
-//    */
-//   public void setAId(String aId);
+   /**
+    * Get groupId, 
+    */
+   public String getGroupId();
+
+   /**
+    * Set groupId, 
+    */
+   public void setGroupId(String groupId);
+
+   /**
+    * Get aId, 
+    */
+   public String getAId();
+
+   /**
+    * Set aId, 
+    */
+   public void setAId(String aId);
 
    /**
     * Get aAttr, 
@@ -75,7 +75,7 @@ public interface C2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public <T> java.util.Set<T> getDs();
+   public java.util.Set<D2> getDs();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
@@ -85,5 +85,5 @@ public interface C2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
     * @param ds
     *		New value for assocation ds 
     */
-   public <T> void setDs(java.util.Set<T> ds);
+   public void setDs(java.util.Set<D2> ds);
 }

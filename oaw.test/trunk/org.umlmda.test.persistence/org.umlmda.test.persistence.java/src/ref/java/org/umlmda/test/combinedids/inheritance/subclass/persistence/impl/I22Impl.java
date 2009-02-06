@@ -35,11 +35,11 @@ public class I22Impl extends I2Impl implements I22, Serializable, XMLSerializabl
    
 
     */
-   protected I22Impl() {
+   public I22Impl() {
       super();
    }
 
-   protected I22Impl(String groupId, String iId) {
+   public I22Impl(String groupId, String iId) {
       super(groupId, iId);
    }
    @Column

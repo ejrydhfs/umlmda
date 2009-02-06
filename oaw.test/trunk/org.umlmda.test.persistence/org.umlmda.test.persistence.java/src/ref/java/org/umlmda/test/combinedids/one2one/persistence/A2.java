@@ -43,22 +43,22 @@ public interface A2 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    /**
     * Get groupId, 
     */
-//   public String getGroupId();
+   public String getGroupId();
 
    /**
     * Set groupId, 
     */
-//   public void setGroupId(String groupId);
+   public void setGroupId(String groupId);
 
    /**
     * Get aId, 
     */
-//   public String getAId();
+   public String getAId();
 
    /**
     * Set aId, 
     */
-//   public void setAId(String aId);
+   public void setAId(String aId);
 
    /**
     * Get aAttr, 

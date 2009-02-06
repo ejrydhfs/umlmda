@@ -2,7 +2,6 @@ package org.umlmda.test.combinedids.one2many.persistence.impl;
 
 import java.io.Serializable;
 import java.util.Iterator;
-import java.util.Set;
 
 import javax.persistence.*;
 
@@ -33,9 +32,11 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
+   @Embeddable
    public static class PKey implements C4.PKey {
-      private String groupId = "";
-      private String aId     = "";
+      private static final long serialVersionUID = 1000L;
+      private String            groupId          = "";
+      private String            aId              = "";
 
       public PKey() {
          super();
@@ -124,40 +125,34 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
       super();
       this.pkey = new PKey(groupId, aId);
    }
-//   @Column
-//   private String groupId = "";
 
    /**
     * Get groupId, 
     */
-//   public String getGroupId() {
-//      return groupId;
-//   }
+   public String getGroupId() {
+      return pkey.getGroupId();
+   }
 
    /**
     * Set groupId, 
     */
-//   public void setGroupId(String groupId) {
-//      String oldValue = this.groupId;
-//      this.groupId = groupId;
-//   }
-//   @Column
-//   private String aId = "";
+   public void setGroupId(String groupId) {
+      pkey.setGroupId(groupId);
+   }
 
    /**
     * Get aId, 
     */
-//   public String getAId() {
-//      return aId;
-//   }
+   public String getAId() {
+      return pkey.getAId();
+   }
 
    /**
     * Set aId, 
     */
-//   public void setAId(String aId) {
-//      String oldValue = this.aId;
-//      this.aId = aId;
-//   }
+   public void setAId(String aId) {
+      pkey.setAId(aId);
+   }
    @Column
    private String aAttr = null;
 
@@ -175,16 +170,18 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
-   @OneToMany(fetch = FetchType.LAZY, mappedBy="a", cascade = CascadeType.REMOVE)
-   private java.util.Set<D4Impl> ds = new java.util.HashSet<D4Impl>();
+   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "a", targetEntity = D4Impl.class)
+   @SuppressWarnings("unchecked")
+   private java.util.Set ds = new java.util.HashSet();
 
+   @SuppressWarnings("unchecked")
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One composition.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public <T> java.util.Set<T> getDs() {
-      return (Set<T>) ds;
+   public java.util.Set<D4> getDs() {
+      return ds;
    }
 
    /**
@@ -195,38 +192,14 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
     * @param ds
     *		New value for assocation ds 
     */
-   public <T> void setDs(java.util.Set<T> ds) {
-	   this.ds = (Set<D4Impl>) ds;
-//      setDsInternal(ds);
+   public void setDs(java.util.Set<D4> ds) {
+      this.ds = ds;
    }
 
-//   private void setDsInternal(java.util.Set<D4> ds) {
-//      java.util.Set<D4> oldValue;
-//      if (this.ds != null) {
-//         oldValue = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D4>(this.ds);
-//      }
-//      else {
-//         oldValue = null;
-//      }
-//      if (ds != null) {
-//         if (this.ds == null) {
-//            this.ds = new java.util.HashSet<org.umlmda.test.combinedids.one2many.persistence.D4>();
-//         }
-//         this.ds.clear();
-//         this.ds.addAll(ds);
-//      }
-//      else if (this.ds != null) {
-//         this.ds.clear();
-//         this.ds = null;
-//      }
-//   }
-
-   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
-   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -277,8 +250,8 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", pkey.getGroupId());
-      context.simpleElement("aId", pkey.getAId());
+      context.simpleElement("groupId", getGroupId());
+      context.simpleElement("aId", getAId());
       context.simpleElement("aAttr", getAAttr());
    }
 

@@ -35,11 +35,11 @@ public class I32Impl extends I3Impl implements I32, Serializable, XMLSerializabl
    
 
     */
-   protected I32Impl() {
+   public I32Impl() {
       super();
    }
 
-   protected I32Impl(String groupId, String iId) {
+   public I32Impl(String groupId, String iId) {
       super(groupId, iId);
    }
    @Column

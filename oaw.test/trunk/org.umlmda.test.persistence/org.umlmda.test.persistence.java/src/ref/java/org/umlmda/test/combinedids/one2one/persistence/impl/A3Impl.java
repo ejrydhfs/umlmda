@@ -32,9 +32,11 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
+   @Embeddable
    public static class PKey implements A3.PKey {
-      private String groupId = "";
-      private String aId     = "";
+      private static final long serialVersionUID = 1000L;
+      private String            groupId          = "";
+      private String            aId              = "";
 
       public PKey() {
          super();
@@ -123,40 +125,34 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
       super();
       this.pkey = new PKey(groupId, aId);
    }
-//   @Column
-//   private String groupId = "";
-//
-//   /**
-//    * Get groupId, 
-//    */
-//   public String getGroupId() {
-//      return groupId;
-//   }
-//
-//   /**
-//    * Set groupId, 
-//    */
-//   public void setGroupId(String groupId) {
-//      String oldValue = this.groupId;
-//      this.groupId = groupId;
-//   }
-//   @Column
-//   private String aId = "";
-//
-//   /**
-//    * Get aId, 
-//    */
-//   public String getAId() {
-//      return aId;
-//   }
-//
-//   /**
-//    * Set aId, 
-//    */
-//   public void setAId(String aId) {
-//      String oldValue = this.aId;
-//      this.aId = aId;
-//   }
+
+   /**
+    * Get groupId, 
+    */
+   public String getGroupId() {
+      return pkey.getGroupId();
+   }
+
+   /**
+    * Set groupId, 
+    */
+   public void setGroupId(String groupId) {
+      pkey.setGroupId(groupId);
+   }
+
+   /**
+    * Get aId, 
+    */
+   public String getAId() {
+      return pkey.getAId();
+   }
+
+   /**
+    * Set aId, 
+    */
+   public void setAId(String aId) {
+      pkey.setAId(aId);
+   }
    @Column
    private String aAttr = null;
 
@@ -174,7 +170,7 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
-   @OneToOne(cascade=CascadeType.REMOVE)
+   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    private B3Impl b;
 
    /**
@@ -195,16 +191,13 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
     *		New value for assocation b 
     */
    public void setB(B3 b) {
-      B3 oldValue = this.b;
       this.b = (B3Impl) b;
    }
 
-   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
-   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -255,8 +248,8 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", pkey.getGroupId());
-      context.simpleElement("aId", pkey.getAId());
+      context.simpleElement("groupId", getGroupId());
+      context.simpleElement("aId", getAId());
       context.simpleElement("aAttr", getAAttr());
    }
 

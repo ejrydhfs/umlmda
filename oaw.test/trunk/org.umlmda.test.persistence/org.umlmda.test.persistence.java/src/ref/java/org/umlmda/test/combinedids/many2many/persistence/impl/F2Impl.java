@@ -2,7 +2,6 @@ package org.umlmda.test.combinedids.many2many.persistence.impl;
 
 import java.io.Serializable;
 import java.util.Iterator;
-import java.util.Set;
 
 import javax.persistence.*;
 
@@ -33,9 +32,11 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Primary key implementation
     */
+   @Embeddable
    public static class PKey implements F2.PKey {
-      private String groupId = "";
-      private String bId     = "";
+      private static final long serialVersionUID = 1000L;
+      private String            groupId          = "";
+      private String            bId              = "";
 
       public PKey() {
          super();
@@ -124,40 +125,34 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
       super();
       this.pkey = new PKey(groupId, bId);
    }
-//   @Column
-//   private String groupId = "";
-//
-//   /**
-//    * Get groupId, 
-//    */
-//   public String getGroupId() {
-//      return groupId;
-//   }
-//
-//   /**
-//    * Set groupId, 
-//    */
-//   public void setGroupId(String groupId) {
-//      String oldValue = this.groupId;
-//      this.groupId = groupId;
-//   }
-//   @Column
-//   private String bId = "";
-//
-//   /**
-//    * Get bId, 
-//    */
-//   public String getBId() {
-//      return bId;
-//   }
-//
-//   /**
-//    * Set bId, 
-//    */
-//   public void setBId(String bId) {
-//      String oldValue = this.bId;
-//      this.bId = bId;
-//   }
+
+   /**
+    * Get groupId, 
+    */
+   public String getGroupId() {
+      return pkey.getGroupId();
+   }
+
+   /**
+    * Set groupId, 
+    */
+   public void setGroupId(String groupId) {
+      pkey.setGroupId(groupId);
+   }
+
+   /**
+    * Get bId, 
+    */
+   public String getBId() {
+      return pkey.getBId();
+   }
+
+   /**
+    * Set bId, 
+    */
+   public void setBId(String bId) {
+      pkey.setBId(bId);
+   }
    @Column
    private String bAttr = null;
 
@@ -175,16 +170,18 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.bAttr;
       this.bAttr = bAttr;
    }
-   @ManyToMany
-   private java.util.Set<E2Impl> es = new java.util.HashSet<E2Impl>();
+   @ManyToMany(fetch = FetchType.LAZY, targetEntity = E2Impl.class)
+   @SuppressWarnings("unchecked")
+   private java.util.Set es = new java.util.HashSet();
 
+   @SuppressWarnings("unchecked")
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
-   public <T> java.util.Set<T> getEs() {
-      return (Set<T>) es;
+   public java.util.Set<E2> getEs() {
+      return es;
    }
 
    /**
@@ -195,37 +192,14 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
     * @param es
     *		New value for assocation es 
     */
-   public <T> void setEs(java.util.Set<T> es) {
-	   this.es = (Set<E2Impl>) es;
+   public void setEs(java.util.Set<E2> es) {
+      this.es = es;
    }
 
-//   private void setEsInternal(java.util.Set<E2> es) {
-//      java.util.Set<E2> oldValue;
-//      if (this.es != null) {
-//         oldValue = new java.util.HashSet<E2>(this.es);
-//      }
-//      else {
-//         oldValue = null;
-//      }
-//      if (es != null) {
-//         if (this.es == null) {
-//            this.es = new java.util.HashSet<E2>();
-//         }
-//         this.es.clear();
-//         this.es.addAll(es);
-//      }
-//      else if (this.es != null) {
-//         this.es.clear();
-//         this.es = null;
-//      }
-//   }
-
-   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
-   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
@@ -276,8 +250,8 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", pkey.getGroupId());
-      context.simpleElement("bId", pkey.getBId());
+      context.simpleElement("groupId", getGroupId());
+      context.simpleElement("bId", getBId());
       context.simpleElement("bAttr", getBAttr());
    }
 

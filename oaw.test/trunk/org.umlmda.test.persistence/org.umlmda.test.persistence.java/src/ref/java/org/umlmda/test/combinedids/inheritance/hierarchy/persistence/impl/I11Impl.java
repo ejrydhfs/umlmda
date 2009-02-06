@@ -35,11 +35,11 @@ public class I11Impl extends I1Impl implements I11, Serializable, XMLSerializabl
    
 
     */
-   protected I11Impl() {
+   public I11Impl() {
       super();
    }
 
-   protected I11Impl(String groupId, String iId) {
+   public I11Impl(String groupId, String iId) {
       super(groupId, iId);
    }
    @Column
