@@ -19,10 +19,14 @@ public interface JavaModelAssociation extends JavaModelStructuraleFeature, Model
     */
    String getInterfaceType();
    
+   String getCollectionInterfaceType();
+   
    /**
     * Returns the implementation type for the assocation
     */
    String getImplementationType();
+   
+   String getCollectionImplementationType();
    
    /**
     * Returns the implementation interface type for the assocation

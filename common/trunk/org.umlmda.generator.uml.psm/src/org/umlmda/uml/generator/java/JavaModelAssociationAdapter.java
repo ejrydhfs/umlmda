@@ -143,26 +143,10 @@ public class JavaModelAssociationAdapter extends ModelAssociationAdapter impleme
 
       if ( isMultiple() ) {
          if (genericSupport) {
-            if (isUnique()) {
-               return Set.class.getName() + "<? extends " + targetType + ">";
-            }
-            else if (isOrdered()) {
-               return List.class.getName() + "<? extends " + targetType + ">";
-            }
-            else {
-               return Collection.class.getName() + "<? extends " + targetType + ">";
-            }
+        	 return getCollectionInterfaceType() + "<" + targetType + ">";
          }
          else {
-            if (isUnique()) {
-               return Set.class.getName();
-            }
-            else if (isOrdered()) {
-               return List.class.getName();
-            }
-            else {
-               return Collection.class.getName();
-            }
+            return getCollectionInterfaceType();
             
          }
       }
@@ -170,6 +154,18 @@ public class JavaModelAssociationAdapter extends ModelAssociationAdapter impleme
          return targetType;
       }
    }
+
+public String getCollectionInterfaceType() {
+	if (isUnique()) {
+	   return Set.class.getName();
+	}
+	else if (isOrdered()) {
+	   return List.class.getName();
+	}
+	else {
+	   return Collection.class.getName();
+	}
+}
 
    /* (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelAssociation#getImplementationType()
@@ -180,32 +176,28 @@ public class JavaModelAssociationAdapter extends ModelAssociationAdapter impleme
       
       if ( isMultiple() ) {
          if (genericSupport) {
-            if (isUnique() && !isOrdered()) {
-               return HashSet.class.getName() + "<" + targetType + ">";
-            }
-            else if (isUnique() && isOrdered()) {
-               return LinkedHashSet.class.getName() + "<" + targetType + ">";
-            }
-            else {
-               return ArrayList.class.getName() + "<" + targetType + ">";
-            }
+        	 return getCollectionImplementationType() + "<" + targetType + ">";
          }
          else {
-            if (isUnique() && !isOrdered()) {
-               return HashSet.class.getName();
-            }
-            else if (isUnique() && isOrdered()) {
-               return LinkedHashSet.class.getName();
-            }
-            else {
-               return ArrayList.class.getName();
-            }
+            return getCollectionImplementationType();
          }
       }
       else {
          return targetType;
       }
    }
+
+	public String getCollectionImplementationType() {
+		if (isUnique() && !isOrdered()) {
+		   return HashSet.class.getName();
+		}
+		else if (isUnique() && isOrdered()) {
+		   return LinkedHashSet.class.getName();
+		}
+		else {
+		   return ArrayList.class.getName();
+		}
+	}
 
    /* (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelAssociation#getImplementationType()
@@ -227,15 +219,7 @@ public class JavaModelAssociationAdapter extends ModelAssociationAdapter impleme
              }
          }
          else {
-             if (isUnique()) {
-                 return Set.class.getName();
-              }
-              else if (isOrdered()) {
-                 return List.class.getName();
-              }
-              else {
-                  return Collection.class.getName();
-               }
+             return getCollectionInterfaceType();
          }
       }
       else {
