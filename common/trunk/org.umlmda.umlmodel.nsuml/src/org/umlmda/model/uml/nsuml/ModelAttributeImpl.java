@@ -122,7 +122,7 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
    public String getInitialValue() {
       MExpression expr = attribute.getInitialValue();
 
-      return expr != null ? expr.getBody() : "";
+      return expr != null ? expr.getBody() : null;
    }
    
    static boolean isConstant(MAttribute attribute) {

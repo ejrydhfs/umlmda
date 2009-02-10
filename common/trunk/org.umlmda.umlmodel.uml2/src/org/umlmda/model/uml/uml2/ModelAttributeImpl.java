@@ -120,7 +120,7 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
 
    public String getInitialValue() {
       ValueSpecification expr = attribute.getDefaultValue();
-      String initialValue = expr != null ? expr.stringValue() : "";
+      String initialValue = expr != null ? expr.stringValue() : null;
       
       if ( getDataTypeBase() != null && getDataTypeBase().getName().equals(ModelDataType.STRING) && expr instanceof LiteralString ) {
          return "\"" + initialValue + "\"";
