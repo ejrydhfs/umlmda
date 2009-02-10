@@ -100,8 +100,8 @@
 
       <!-- oAW -->
       <dependency>
-         <groupId>org.openarchitectureware.adapter</groupId>
-         <artifactId>adapter-rsdp</artifactId>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-rsdp-adapter</artifactId>
          <version>${oaw.version}</version>
          <scope>runtime</scope>
       </dependency>
@@ -126,17 +126,17 @@
       </dependency>
       <dependency>
          <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-core-workflow</artifactId>
+         <scope>runtime</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.openarchitectureware</groupId>
          <artifactId>oaw-core-emftools</artifactId>
          <scope>runtime</scope>
       </dependency>
       <dependency>
          <groupId>org.openarchitectureware</groupId>
          <artifactId>oaw-core-expressions</artifactId>
-         <scope>runtime</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.openarchitectureware</groupId>
-         <artifactId>oaw-core-workflow</artifactId>
          <scope>runtime</scope>
       </dependency>
       <dependency>
@@ -148,7 +148,7 @@
          <groupId>org.openarchitectureware</groupId>
          <artifactId>oaw-util-stdlib</artifactId>
          <version>${oaw.version}</version>
-         <scope>provided</scope>
+         <scope>runtime</scope>
       </dependency>
    </dependencies>
 
