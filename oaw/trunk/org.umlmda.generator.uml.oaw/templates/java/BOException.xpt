@@ -31,7 +31,7 @@ public class «className» extends «javaSuperClass.javaType» {
 		«EXPAND BOImpl::setterBody(this) FOR attr»
 	«ENDFOREACH»
 
-s	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
 		«EXPAND BOImpl::assocDecl FOR assoc»
 	
 		«EXPAND BOInterface::assocGetterDecl FOR assoc»
