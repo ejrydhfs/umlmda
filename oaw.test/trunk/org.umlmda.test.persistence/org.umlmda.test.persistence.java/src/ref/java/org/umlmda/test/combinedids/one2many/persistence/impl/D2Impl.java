@@ -95,13 +95,13 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
       }
    }
    // The primary key
-   @EmbeddedId
    private PKey pkey = new PKey();
 
    /**
     * Getter for the primary key
     */
-   public D2.PKey getD2Pkey() {
+   @EmbeddedId
+   public PKey getD2Pkey() {
       return pkey;
    }
 
@@ -129,6 +129,7 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Get groupId, 
     */
+   @Transient
    public String getGroupId() {
       return pkey.getGroupId();
    }
@@ -143,6 +144,7 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Get bId, 
     */
+   @Transient
    public String getBId() {
       return pkey.getBId();
    }
@@ -153,12 +155,12 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    public void setBId(String bId) {
       pkey.setBId(bId);
    }
-   @Column
    private String bAttr = null;
 
    /**
     * Get bAttr, 
     */
+   @Column
    public String getBAttr() {
       return bAttr;
    }
@@ -170,7 +172,6 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.bAttr;
       this.bAttr = bAttr;
    }
-   @ManyToOne(fetch = FetchType.LAZY)
    private C2Impl a;
 
    /**
@@ -178,10 +179,25 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
    &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
+   @ManyToOne(fetch = FetchType.LAZY, targetEntity=C2Impl.class)
+	@JoinColumns( {
+			@JoinColumn(name = "aId", nullable = true, insertable = false, updatable = false),
+			@JoinColumn(name = "groupId", nullable = true, insertable = false, updatable = false) })
    public C2 getA() {
       return a;
    }
 
+   @Column
+   public String getAId(){
+	   if(a!=null && a.getC2Pkey()!=null){
+		   return a.getC2Pkey().getAId();
+	   }
+	   return null;
+   }
+   
+   public void setAId(String aId){
+   }
+   
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
@@ -194,10 +210,12 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
       this.a = (C2Impl) a;
    }
 
+   @Transient
    public String getModelName() {
       return MODEL_NAME;
    }
 
+   @Transient
    public String getModelVersion() {
       return MODEL_VERSION;
    }
