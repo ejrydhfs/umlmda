@@ -14,7 +14,6 @@ public class E1Test extends AbstractTest{
 	}
 
 	private void doInserts(){
-		Query q;
 		E1Impl e1;
 		E1Impl e1Second;
 		F1Impl f1;
