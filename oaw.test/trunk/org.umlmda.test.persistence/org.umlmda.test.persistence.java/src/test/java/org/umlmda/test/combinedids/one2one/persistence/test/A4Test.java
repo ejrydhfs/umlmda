@@ -2,7 +2,6 @@ package org.umlmda.test.combinedids.one2one.persistence.test;
 
 import javax.persistence.Query;
 
-import org.umlmda.test.combinedids.one2many.persistence.impl.D3Impl;
 import org.umlmda.test.combinedids.one2one.persistence.impl.A4Impl;
 import org.umlmda.test.combinedids.one2one.persistence.impl.B4Impl;
 import org.umlmda.test.combinedids.test.AbstractTest;
@@ -15,7 +14,6 @@ public class A4Test extends AbstractTest{
 	}
 
 	private void doInserts(){
-		Query q;
 		A4Impl a4;
 		B4Impl b4;
 		
@@ -44,7 +42,6 @@ public class A4Test extends AbstractTest{
 	private void doDeletes(){
 		Query q;
 		A4Impl a4;
-		B4Impl b4;
 		
 		//remove a4 (delete cascade)
 		a4 = em.find(A4Impl.class, new A4Impl.PKey("Group 1", "Id 1"));

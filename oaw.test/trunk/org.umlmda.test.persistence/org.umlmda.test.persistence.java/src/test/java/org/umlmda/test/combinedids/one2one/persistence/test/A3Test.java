@@ -2,7 +2,6 @@ package org.umlmda.test.combinedids.one2one.persistence.test;
 
 import javax.persistence.Query;
 
-import org.umlmda.test.combinedids.one2many.persistence.impl.D3Impl;
 import org.umlmda.test.combinedids.one2one.persistence.impl.A3Impl;
 import org.umlmda.test.combinedids.one2one.persistence.impl.B3Impl;
 import org.umlmda.test.combinedids.test.AbstractTest;
@@ -15,7 +14,6 @@ public class A3Test extends AbstractTest{
 	}
 
 	private void doInserts(){
-		Query q;
 		A3Impl a3;
 		B3Impl b3;
 		
