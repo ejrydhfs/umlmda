@@ -46,4 +46,15 @@ public interface Formatter {
     */
    boolean format(File sourceToFormat);
    
+   /**
+    * Formats to string
+    * @param targetfilePath
+    * @param unformattedInput
+    * @return
+    */
+   public String format(String targetfilePath, String unformattedInput);
+   
+   public boolean isBufferFormattingSupported();
+   
+   public boolean isFileFormattingSupported();
 }

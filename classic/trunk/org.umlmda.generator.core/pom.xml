@@ -12,6 +12,18 @@
    <description />
 
    <dependencies>
+      <!-- Eclipse Stuff -->
+      <dependency>
+         <groupId>org.eclipse</groupId>
+         <artifactId>text</artifactId>
+         <version>3.4.0</version>
+      </dependency>
+      <dependency>
+         <groupId>org.eclipse.jdt</groupId>
+         <artifactId>core</artifactId>
+         <version>3.4.0</version>
+      </dependency>
+
       <!-- oAW -->
       <dependency>
          <groupId>org.openarchitectureware</groupId>

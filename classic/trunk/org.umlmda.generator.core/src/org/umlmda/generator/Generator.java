@@ -94,6 +94,7 @@ import org.umlmda.model.uml.validate.ValidationResult;
  * Generic generator for UML models
  * @author Dieter Moroff
  */
+@SuppressWarnings("unchecked")
 public class Generator {
 //   private InputStream modelStream;
    private File modelFile;
@@ -105,11 +106,9 @@ public class Generator {
    private List additionalClassLoaders = new ArrayList();
    private List generatedFile = new ArrayList();
    private File outputFolder = new File(".");
-   private static String generateSubfolder = "generated";
    private static String mergeSubfolder = "merged";
    private String modelFactoryName = "org.umlmda.model.uml.nsuml.ModelFactoryImpl";
    private ModelFactory modelFactory = null;
-	private final String defaultModelAdapterFactoryName = "org.umlmda.model.uml.impl.ModelAdapterFactoryImpl";
    private static boolean keepFiles = false;
    private GeneratorRuntimeConfig config = new GeneratorRuntimeConfig();
    private Map pathMap = new HashMap();
@@ -122,8 +121,8 @@ public class Generator {
    private final GeneratorRuntime runtime = GeneratorRuntime.getInstance();
    private GenerationProfile currentProfile = null;
    private Logger logger = Logger.getLogger(getClass().getName());
-   private List formatterProviders = new ArrayList();
-   private Map formatters = new HashMap();
+   private List<FormatterProvider> formatterProviders = new ArrayList<FormatterProvider>();
+   private Map<String, Formatter> formatters = new HashMap<String, Formatter>();
 
    public static void main(String[] args) {
       Generator generator = new Generator(new Feedback() {
@@ -240,7 +239,7 @@ public class Generator {
          for (Iterator genFileIterator = generatedFile.iterator(); genFileIterator.hasNext();) {
             File generatedFile = new File((String) genFileIterator.next());
             String ext = FileUtils.getExtension(generatedFile);
-            Formatter formatter = (Formatter) formatters.get(ext);
+            Formatter formatter = formatters.get(ext);
           
             if ( formatter != null ) {
                if ( formatter.format(generatedFile) ) {
