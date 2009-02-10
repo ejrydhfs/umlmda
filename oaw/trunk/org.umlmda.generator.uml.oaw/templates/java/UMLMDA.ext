@@ -33,11 +33,11 @@ String interfaceArtefact(JavaBusinessException elem) :
 String defaultInitializer(JavaModelAttribute attr) :
 	 switch { 
 			case attr.primitiveType && attr.optional :
-				(attr.initialValue.length == 0 ? "null" : attr.initialValue)
+				(attr.initialValue == null && attr.initialValue.length == 0 ? "null" : attr.initialValue)
 			case attr.primitiveType && !attr.optional && !attr.multivalue :
 				(switch ( attr.dataType.name ) {
 					case "string":
-						'"'+attr.initialValue+'"'
+						(attr.initialValue == null ? "" : attr.initialValue)
 					case "char":
 						(attr.initialValue == null ? null : "'"+attr.initialValue+"'")
 					case "int":

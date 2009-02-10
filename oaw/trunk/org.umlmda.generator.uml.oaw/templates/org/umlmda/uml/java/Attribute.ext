@@ -26,9 +26,9 @@ private String javaAttributeTypeName(JavaModelAttribute attr, boolean optional) 
  * value doesn't contaits quotes, the quotes are added
  */	
 cached String initialValue(JavaModelAttribute attr) :
-	attr.javaTypeName() == "String" && attr.initialValue.startsWith('"') == false ?
-		'"'+attr.initialValue+'"'
-	:	
+//	attr.javaTypeName() == "String" && attr.initialValue.startsWith('"') == false ?
+//		'"'+attr.initialValue+'"'
+//	:	
 		attr.initialValue
 ;
 
