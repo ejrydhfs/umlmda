@@ -189,7 +189,7 @@ public abstract class GeneratorModelImpl implements GeneratorModel {
       String qualifiedName = modelElement.getQualifiedName();
       Artefact artefact = null;
       
-      if ( StringUtils.isNotEmpty(qualifiedName) && qualifiedName.startsWith(profile.getPackagePrefix()))
+      if ( StringUtils.isNotEmpty(qualifiedName) && (StringUtils.isEmpty(profile.getPackagePrefix()) || qualifiedName.startsWith(profile.getPackagePrefix())))
          artefact = getArtefact(artefactName, profile, modelElement);
       else {
          for (Iterator irs = generationSet.getReferencedSets().iterator(); artefact == null && irs.hasNext();) {
