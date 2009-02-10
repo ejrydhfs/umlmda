@@ -22,25 +22,25 @@ public class C2Test extends AbstractTest{
 		
 		
 		// c2 mit "C2groupId1", "C2aId1" anlegen
-		c2 = new C2Impl("C2groupId1", "C2aId1");
+		c2 = new C2Impl("Group 1", "Id 1");
 		em.persist(c2);
-		c2 = em.find(C2Impl.class, new C2Impl.PKey("C2groupId1", "C2aId1"));
+		c2 = em.find(C2Impl.class, new C2Impl.PKey("Group 1", "Id 1"));
 		assertNotNull(c2);
 
 		// d2 mit Beziehung zu c2 anlegen
-		d2 = new D2Impl("D2GroupId1", "D2bId1");
+		d2 = new D2Impl("Group 1", "Id 2");
 		d2.setA(c2);
 		d2.setBAttr(Long.toString(System.currentTimeMillis()));
 		em.persist(d2);
 
 		//d2 mit Beziehung zu c2 anlegen
-		d2 = new D2Impl("D2GroupId1", "D2bId2");
+		d2 = new D2Impl("Group 1", "Id 3");
 		d2.setA(c2);
 		d2.setBAttr("zweite Zuordnung");
 		em.persist(d2);
 
 		//d2 ohne Beziehung zu c2 anlegen
-		d2 = new D2Impl("D2GroupId2", "D2bId1");
+		d2 = new D2Impl("Group 2", "Id 4");
 		d2.setBAttr("nicht zugeordnet");
 		em.persist(d2);
 		
@@ -58,7 +58,7 @@ public class C2Test extends AbstractTest{
 		C2Impl c2;
 		
 		//Alle Beziehungen zu c2 auf null setzen
-		c2 = em.find(C2Impl.class, new C2Impl.PKey("C2groupId1", "C2aId1"));
+		c2 = em.find(C2Impl.class, new C2Impl.PKey("Group 1", "Id 1"));
 		assertNotNull(c2);
 		removeParentRelation(c2.getDs());
 
