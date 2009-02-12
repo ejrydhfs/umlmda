@@ -10,6 +10,7 @@
    <name>UMLMDA generator profile</name>
    <description />
 
+
    <dependencies>
       <dependency>
          <groupId>org.eclipse.emf</groupId>
@@ -48,4 +49,15 @@
       </dependency>
    </dependencies>
 
+   <build>
+      <sourceDirectory>src</sourceDirectory>
+      <resources>
+         <resource>
+            <directory>src</directory>
+            <excludes>
+               <exclude>*.java</exclude>
+            </excludes>
+         </resource>
+      </resources>
+   </build>
 </project>

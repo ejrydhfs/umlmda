@@ -57,22 +57,33 @@ public class PathMapURIConverter implements URIConverter {
       URI normalizedURI = null;
       
       if ( uri.scheme().equals("pathmap")) {
-         String host = uri.host();
-         String mappedPath = (String) pathMap.get(host);
-         
-         if ( mappedPath != null ) {
-            String path = uri.path();
-            normalizedURI = URI.createFileURI(mappedPath+path);
-         }
-         else {
-            normalizedURI = converter.normalize(uri);
-         }
+         normalizedURI = createPathMapURI(uri);
       }
       else {
          normalizedURI = converter.normalize(uri); 
       }
       
       return normalizedURI; 
+   }
+
+   private URI createPathMapURI(URI uri) {
+      URI normalizedURI;
+      String host = uri.host();
+      String mappedPath = (String) pathMap.get(host);
+      
+      if ( mappedPath != null ) {
+         if ( mappedPath.startsWith("jar:") ) {
+            normalizedURI = URI.createURI(mappedPath+uri.path());
+         }
+         else {
+            String path = uri.path();
+            normalizedURI = URI.createFileURI(mappedPath+path);
+         }
+      }
+      else {
+         normalizedURI = converter.normalize(uri);
+      }
+      return normalizedURI;
    }
 
    /* (non-Javadoc)
@@ -93,9 +104,8 @@ public class PathMapURIConverter implements URIConverter {
          String mappedPath = (String) pathMap.get(host);
          
          if ( mappedPath != null ) {
-            String path = uri.path();
+            URI normalizedURI = createPathMapURI(uri);
 
-            URI normalizedURI = URI.createFileURI(mappedPath+path);
             inputStream = createInputStream(normalizedURI);
             logger.info("loaded "+normalizedURI.toString());
          }
