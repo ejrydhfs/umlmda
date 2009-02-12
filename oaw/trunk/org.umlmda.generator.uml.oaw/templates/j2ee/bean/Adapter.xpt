@@ -74,34 +74,36 @@ implements «getScopedName("java.BusinessServiceInterface", this)»
 	
 	«FOREACH methods.typeSelect(JavaModelMethod) AS method»
 		«EXPAND java::BOInterface::methodDecl FOR method» { 
-			«EXPAND java::Logging::logMethodEntry FOR method»     
-
-      		try {
-      			«IF method.hasStereotype("AsyncCall")»
-      				javax.jms.Queue queue = null;
-         
-         			if ( listener instanceof org.umlmda.runtime.jms.J2EEListener ) {
-            			queue = ((org.umlmda.runtime.jms.J2EEListener)listener).getQueue();
-         			}
-      			«ENDIF»
-      			«IF method.returnType != null»
-					return 
-				«ENDIF»      
-				((«getScopedName("j2ee.RemoteInterface")»)getDelegate()).«method.name»(
-				«FOREACH method.parameters.typeSelect(ModelParameter) AS param SEPARATOR "," »
-					«param.name»
-				«ENDFOREACH»
-				);
-			} catch (RemoteException e) {
-				«EXPAND java::Logging::logMethodExeception FOR method»
-				throw new RuntimeException( e);
-      		} finally {
-				«EXPAND java::Logging::logMethodExit FOR method»
-      		}
+			«EXPAND java::Logging::logMethodEntry FOR method»
+			«EXPAND methodBody(this) FOR method»     
 		}
 	«ENDFOREACH»
 	
 }
 «ENDFILE»
 «ENDLET»
+«ENDDEFINE»
+
+«DEFINE methodBody(JavaModelClass owner) FOR JavaModelMethod»
+   try {
+      «IF this.hasStereotype("AsyncCall")»
+         javax.jms.Queue queue = null;
+         
+         if ( listener instanceof org.umlmda.runtime.jms.J2EEListener ) {
+            queue = ((org.umlmda.runtime.jms.J2EEListener)listener).getQueue();
+         }
+      «ENDIF»
+      «IF this.returnType != null»
+         return 
+      «ENDIF»      
+      ((«owner.getScopedName("j2ee.RemoteInterface")»)getDelegate()).«this.name»(
+      «FOREACH this.parameters.typeSelect(ModelParameter) AS param SEPARATOR "," »
+         «param.name»
+      «ENDFOREACH»);
+   } catch (RemoteException e) {
+      «EXPAND java::Logging::logMethodExeception FOR this»
+      throw new RuntimeException( e);
+   } finally {
+      «EXPAND java::Logging::logMethodExit FOR this»
+   }
 «ENDDEFINE»
