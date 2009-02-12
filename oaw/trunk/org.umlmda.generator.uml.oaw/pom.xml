@@ -61,10 +61,7 @@
             <directory>${basedir}/templates</directory>
          </resource>
          <resource>
-            <directory>${basedir}/src</directory>
-            <includes>
-               <include>**/*.oaw</include>
-            </includes>
+            <directory>${basedir}/src/main/resources</directory>
          </resource>
       </resources>
    </build>
