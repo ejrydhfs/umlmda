@@ -19,16 +19,16 @@ public class StereotypeUtils {
 
    static public List<Stereotype> getApplicableStereotypes(Element element) {
       if (element != null) {
-         EList result = element.getApplicableStereotypes();
+         List<Stereotype> result = element.getApplicableStereotypes();
          List<Stereotype> stereotypes = new ArrayList<Stereotype>(result.size());
-         for (Iterator is = result.iterator(); is.hasNext();) {
-            Stereotype stereotype = (Stereotype) is.next();
+         for (Iterator<Stereotype> is = result.iterator(); is.hasNext();) {
+            Stereotype stereotype = is.next();
 
             stereotypes.add(stereotype);
          }
          return stereotypes;
       } else {
-         return Collections.EMPTY_LIST;
+         return Collections.emptyList();
       }
    }
 
