@@ -92,8 +92,8 @@
 
       <!-- oAW -->
       <dependency>
-         <groupId>org.openarchitectureware.adapter</groupId>
-         <artifactId>adapter-rsdp</artifactId>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-rsdp-adapter</artifactId>
          <version>${oaw.version}</version>
          <scope>runtime</scope>
       </dependency>
