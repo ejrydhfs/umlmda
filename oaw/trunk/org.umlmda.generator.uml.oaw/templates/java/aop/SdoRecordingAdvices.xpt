@@ -34,8 +34,10 @@
 
 «AROUND java::BOImpl::standardImports FOR JavaBusinessObject»
 	«targetDef.proceed()»
-	
-	import org.umlmda.runtime.sdo.sync.Recorder;
-	import org.umlmda.runtime.sdo.sync.impl.AbstractSynchronizedObject;
+   «EXPAND sdoImports FOR this»	
 «ENDAROUND»
 
+«DEFINE sdoImports FOR JavaBusinessObject»
+   import org.umlmda.runtime.sdo.sync.Recorder;
+   import org.umlmda.runtime.sdo.sync.impl.AbstractSynchronizedObject;
+«ENDDEFINE»

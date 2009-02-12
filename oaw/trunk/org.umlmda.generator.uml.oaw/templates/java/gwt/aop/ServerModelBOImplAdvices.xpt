@@ -39,16 +39,15 @@
 // ===========================
 // Skip <<SDOClient>> features
 // ===========================
-«AROUND java::BOImpl::standardImports FOR JavaBusinessObject»
+«AROUND java::aop::SdoRecordingAdvices::sdoImports FOR JavaBusinessObject»
 	«targetDef.proceed()»
 	
-	import org.umlmda.runtime.sdo.sync.gwt.server.SyncContext;
-			
-	import java.util.Collection;
-	import java.util.IdentityHashMap;
-	
-	import org.umlmda.runtime.util.CopyCluster;
-	import org.umlmda.runtime.util.CopyClusterUtil;
+   import java.util.Collection;
+   import java.util.IdentityHashMap;
+
+   import org.umlmda.runtime.util.CopyCluster;
+   import org.umlmda.runtime.util.CopyClusterUtil;
+   import org.umlmda.runtime.sdo.sync.gwt.server.SyncContext;
 «ENDAROUND»
 
 «AROUND java::BOImpl::handleAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»

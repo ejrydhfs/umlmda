@@ -16,12 +16,12 @@
 	</component>
 
 	<component adviceTarget="generator_server_${slotPostfix}" id="reflectionAdvice" class="oaw.xpand2.GeneratorAdvice">
-		<advices value="java::aop::NoPropertyChangeAdvices"/>
-        <advices value="java::aop::SdoRecordingAdvices"/>
         <advices value="java::gwt::aop::ServerModelBOInterfaceAdvices"/>
         <advices value="java::gwt::aop::ServerModelBOImplAdvices"/>
         <advices value="java::gwt::aop::ServerModelBOFactoryImplAdvices"/>
         <advices value="java::gwt::aop::ServerModelBODelegateInterfaceAdvices"/>
+        <advices value="java::aop::NoPropertyChangeAdvices"/>
+        <advices value="java::aop::SdoRecordingAdvices"/>
     </component>	
 
 	<component id="generator_server_${slotPostfix}" class="org.openarchitectureware.xpand2.Generator" skipOnErrors="true">
