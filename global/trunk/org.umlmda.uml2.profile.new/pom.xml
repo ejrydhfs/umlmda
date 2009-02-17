@@ -94,7 +94,6 @@
                            <type>zip</type>
                            <classifier>persistence</classifier>
                         </artifact>
-                     </artifacts>
                         <artifact>
                            <file>
                               ${project.build.directory}/umlmda-service-profiles.zip
@@ -102,6 +101,7 @@
                            <type>zip</type>
                            <classifier>service</classifier>
                         </artifact>
+                     </artifacts>
                   </configuration>
                </execution>
             </executions>
