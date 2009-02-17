@@ -9,6 +9,9 @@
    <feature url="features/org.umlmda.rsdp.uml2.new.feature_4.2.2.200902130916.jar" id="org.umlmda.rsdp.uml2.new.feature" version="4.2.2.200902130916">
       <category name="UMLMDA_MODELING_4"/>
    </feature>
+   <feature url="features/org.umlmda.rsdp.uml2.new.feature_4.2.3.200902171438.jar" id="org.umlmda.rsdp.uml2.new.feature" version="4.2.3.200902171438">
+      <category name="UMLMDA_MODELING_4"/>
+   </feature>
    <category-def name="UMLMDA_MODELING_3" label="UMLMDA 3.x / RSM 7.x Modelling"/>
    <category-def name="UMLMDA_MODELING_4" label="UMLMDA 4.x / RSM 7.x Modelling"/>
 </site>
