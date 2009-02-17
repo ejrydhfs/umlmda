@@ -19,13 +19,13 @@ public class A2Test extends AbstractTest{
 		
 		
 		// new a2 row
-		a2 = new A2Impl("A2groupId1", "A2aId1");
+		a2 = new A2Impl("Group 1", "Id 1");
 		em.persist(a2);
-		a2 = em.find(A2Impl.class, new A2Impl.PKey("A2groupId1", "A2aId1"));
+		a2 = em.find(A2Impl.class, new A2Impl.PKey("Group 1", "Id 1"));
 		assertNotNull(a2);
 
 		// new b2 row with relation to a2
-		b2 = new B2Impl("B2GroupId1", "B2bId1");
+		b2 = new B2Impl("Group 1", "Id 2");
 		b2.setA(a2);
 		b2.setBAttr(Long.toString(System.currentTimeMillis()));
 		em.persist(b2);
@@ -33,7 +33,7 @@ public class A2Test extends AbstractTest{
 		em.flush();
 
 		//new b2 without any relation
-		b2 = new B2Impl("B2GroupId2", "B2bId1");
+		b2 = new B2Impl("Group 2", "Id 3");
 		b2.setBAttr("no relation");
 		em.persist(b2);
 		
@@ -51,7 +51,7 @@ public class A2Test extends AbstractTest{
 		A2Impl a2;
 		
 		//remove a2
-		a2 = em.find(A2Impl.class, new A2Impl.PKey("A2groupId1", "A2aId1"));
+		a2 = em.find(A2Impl.class, new A2Impl.PKey("Group 1", "Id 1"));
 		assertNotNull(a2);
 		a2.getB().setA(null);
 		em.remove(a2);

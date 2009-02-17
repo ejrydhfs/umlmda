@@ -3,7 +3,6 @@ package org.umlmda.test.combinedids.test;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 import junit.framework.TestCase;
 
@@ -20,16 +19,15 @@ public abstract class AbstractTest extends TestCase {
 		em = emf.createEntityManager();
 		em.getTransaction().begin();
 		assertFalse(em.getTransaction().getRollbackOnly());
+        boolean assertsEnabled = false;
+        assert assertsEnabled = true; // Intentional side effect!!!
+        if (!assertsEnabled){
+            throw new RuntimeException("Asserts must be enabled!!!");
+        }
 	}
 
 	protected void tearDown() {
 		em.getTransaction().commit();
-	}
-	
-	protected boolean isTableEmpty(Class c){
-		Query q;
-		q = em.createQuery("SELECT o FROM "+c.getName()+" o");
-		return q.getResultList().size()==0;
 	}
 	
 }

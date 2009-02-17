@@ -10,7 +10,6 @@ public class AllOneToOneTests extends TestCase {
       TestSuite suite = new TestSuite( "OneToOne" );
       suite.addTest( new TestSuite( A1Test.class ) );
       suite.addTest( new TestSuite( A2Test.class ) );
-      suite.addTest( new TestSuite( A3Test.class ) );
       suite.addTest( new TestSuite( A4Test.class ) );
       return suite;
    }

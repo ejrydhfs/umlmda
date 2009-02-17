@@ -148,13 +148,6 @@ public class C2Test extends AbstractTest{
 	
 	public void testC2() throws Exception {
 		try {
-	        boolean assertsEnabled = false;
-	        assert assertsEnabled = true; // Intentional side effect!!!
-	        if (!assertsEnabled){
-	            throw new RuntimeException("Asserts must be enabled!!!");
-	        }
-			
-			
 			doNegativeTests();
 			doInserts();
 			doDeletes();

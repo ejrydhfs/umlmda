@@ -202,7 +202,7 @@ public class B4Impl implements B4, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Unshared pkey column of association {@link #getA()} to {@link A4}
     */
-   @Column()
+   @Column(nullable=false)
    @SuppressWarnings("unused")
    // Used by jpa
    private String aId;
