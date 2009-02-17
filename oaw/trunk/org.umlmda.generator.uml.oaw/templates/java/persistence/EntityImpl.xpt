@@ -13,6 +13,8 @@
 «EXTENSION org::umlmda::uml::java::ModelClass»
 «EXTENSION org::umlmda::uml::java::StructuralFeature»
 «EXTENSION org::umlmda::uml::persistence::Association»
+«EXTENSION org::umlmda::uml::persistence::Attribute»
+«EXTENSION org::umlmda::uml::persistence::Class»
 
 «DEFINE EntityImpl FOR JavaBusinessObject»
 «LET generatedName(this, getDefaultArtefact("BusinessObject", scopeImplementation())) AS className»
@@ -96,20 +98,32 @@
               «attr»
            «ENDFOREACH»
          )
+         «EXPAND joinColumns FOR this»
        «ELSEIF !multiple && reverse.multiple»
          @ManyToOne(
            «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
               «attr»
            «ENDFOREACH»
          )
+         «EXPAND joinColumns FOR this»
        «ELSEIF multiple && reverse.multiple»
          @ManyToMany(
            «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
               «attr»
            «ENDFOREACH»
          )
-	   «ENDIF»
+       «ENDIF»
 	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE joinColumns FOR JavaModelAssociation»
+         «IF joinColumns().isEmpty == false»
+             @JoinColumns( {
+                «FOREACH joinColumns() AS keyAttr SEPARATOR ","»
+                    @JoinColumn(name = "«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
+                «ENDFOREACH»
+             })         
+         «ENDIF»
 «ENDDEFINE»
 
 «DEFINE standardBody FOR JavaBusinessObject»
@@ -178,8 +192,54 @@
             this.«name» = «name»;
         «ELSE»
             this.«name» = («implDeclType()»)«name»;
+            «IF hasUnSharedJoinColumns()»
+            if ( «name» == null ) {
+                «FOREACH unsharedJoinColumns() AS attr»
+                    «attr.name» = null;
+                «ENDFOREACH»
+            }
+            «ENDIF»
         «ENDIF»
    }
+
+    «IF isBidirectional() && !isOwner() && !multiple»
+       «EXPAND handleJoinColumns FOR this»   
+    «ENDIF»
+«ENDDEFINE»
+
+«DEFINE handleJoinColumns FOR JavaModelAssociation»
+   «FOREACH unsharedJoinColumns() AS attr»
+        /**
+         * Unshared pkey column of association {@link #«getter»()} to {@link «((JavaModelClass)target).javaType»}
+         */
+        @Column()
+        @SuppressWarnings("unused") // Used by jpa
+        private «attr.javaType» «attr.name»; 
+   «ENDFOREACH»
+   
+   «IF unsharedJoinColumns().isEmpty == false»
+        /**
+         * Sync unshared pkey columms of association {@link #«getter»()} to {@link «((JavaModelClass)target).javaType»}
+         */
+        @PrePersist
+        @PreRemove
+        @PreUpdate
+        @SuppressWarnings("unused") // Used by jpa
+        private void sync«name.toFirstUpper()»(){
+            if( «name» != null){
+           «FOREACH unsharedJoinColumns() AS attr»
+                «attr.name» = «name».«((JavaModelClass)target).pkeyGetter()»().«attr.getter»();
+           «ENDFOREACH»
+           «FOREACH sharedJoinColumns() AS attr»
+                assert «name».«((JavaModelClass)target).pkeyGetter()»().«attr.getter»().equals(pkey.«attr.getter»()) : "different «attr.name»";
+           «ENDFOREACH»    
+           }else{
+           «FOREACH unsharedJoinColumns() AS attr»
+                «attr.name» = null;
+           «ENDFOREACH»
+           }
+       }   
+   «ENDIF»    
 «ENDDEFINE»
 
 «DEFINE assocDecl FOR JavaModelAssociation»
@@ -194,13 +254,12 @@
 «ENDDEFINE»
 
 «DEFINE keyImpl FOR JavaModelClass»
-«LET getScopedName("java.BusinessObjectInterface")+".PKey" AS pkeyInterface»
    «IF this.owningAPKey »
        /**
         * Primary key implementation
         */
         @Embeddable
-         public static class PKey implements «pkeyInterface» {
+         public static class PKey implements «pkeyInterface()» {
          	private static final long serialVersionUID = «serialVersionUID»;
          «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr»
             «EXPAND java::BOImpl::attrDecl FOR attr»
@@ -228,8 +287,8 @@
       «ENDFOREACH»   
          
       public boolean equals(Object obj) {
-            if ( obj instanceof «pkeyInterface» ) {
-               «pkeyInterface» pkey = («pkeyInterface»)obj;
+            if ( obj instanceof «pkeyInterface()» ) {
+               «pkeyInterface()» pkey = («pkeyInterface()»)obj;
          
                return 
                   «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr SEPARATOR "&&"»
@@ -267,14 +326,14 @@
       /**
        * Getter for the primary key
        */   
-      public «pkeyInterface» get«name»Pkey() {
+      public «pkeyInterface()» «pkeyGetter()»() {
          return pkey;
       }
    
       /**
        * Setter for the primary key
        */   
-         public void set«name»Pkey(«pkeyInterface» pkey) {
+         public void set«name»Pkey(«pkeyInterface()» pkey) {
             this.pkey = (PKey)pkey;
          }
          
@@ -284,5 +343,4 @@
          }
          «ENDFOREACH»
    «ENDIF»
-«ENDLET»
 «ENDDEFINE»

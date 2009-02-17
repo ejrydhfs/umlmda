@@ -37,4 +37,41 @@ cached Boolean isBidirectional(JavaModelAssociation assoc) :
 
 cached Boolean isOwner(JavaModelAssociation assoc) :
     assoc.composition || assoc.aggregation
-;     
+;
+
+cached List[JavaModelAttribute] joinColumns(JavaModelAssociation assoc) :
+    assoc.target.keyAttributes.typeSelect(ModelAttribute)
+;
+
+cached List[JavaModelAttribute] unsharedJoinColumns(JavaModelAssociation assoc) :
+    let sourceColumns = assoc.source.keyAttributes.typeSelect(ModelAttribute).name :
+    
+    assoc.joinColumns().reject(e|sourceColumns.contains(e.name))
+;
+
+cached List[JavaModelAttribute] sharedJoinColumns(JavaModelAssociation assoc) :
+    let sourceColumns = assoc.source.keyAttributes.typeSelect(ModelAttribute).name :
+    
+    assoc.joinColumns().select(e|sourceColumns.contains(e.name))
+;
+
+cached Boolean hasSharedKey(JavaModelAssociation assoc) :
+    
+    let targetKeys = assoc.target.keyAttributes.typeSelect(ModelAttribute) :
+    let sourceKeys = assoc.source.keyAttributes.typeSelect(ModelAttribute) :
+    let commonKeys = targetKeys.select(tk|sourceKeys.exists(sk|tk.name == sk.name)) :
+    
+    commonKeys.size > 0
+;
+
+private List[String] keyNames(ModelClass class) :
+    class.keyAttributes.typeSelect(ModelAttribute).collect(e|e.name)
+;    
+
+cached Boolean hasSharedJoinColumns(JavaModelAssociation assoc) :
+    !assoc.multiple && assoc.reverse.multiple
+;
+
+cached Boolean hasUnSharedJoinColumns(JavaModelAssociation assoc) :
+    assoc.isBidirectional() && !assoc.isOwner() && !assoc.multiple && !assoc.unsharedJoinColumns().isEmpty
+;    
