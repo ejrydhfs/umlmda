@@ -35,8 +35,8 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    @Embeddable
    public static class PKey implements D2.PKey {
       private static final long serialVersionUID = 1000L;
-      private String            groupId          = "";
-      private String            bId              = "";
+      private String            groupId;
+      private String            bId;
 
       public PKey() {
          super();
@@ -154,7 +154,7 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
       pkey.setBId(bId);
    }
    @Column
-   private String bAttr = null;
+   private String bAttr;
 
    /**
     * Get bAttr, 
@@ -171,9 +171,8 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
       this.bAttr = bAttr;
    }
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumns( {
-			@JoinColumn(name = "aId", nullable = true, insertable = false, updatable = false),
-			@JoinColumn(name = "groupId", nullable = true, insertable = false, updatable = false) })
+   @JoinColumns( { @JoinColumn(name = "groupId", nullable = true, insertable = false, updatable = false),
+         @JoinColumn(name = "aId", nullable = true, insertable = false, updatable = false) })
    private C2Impl a;
 
    /**
@@ -195,27 +194,32 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setA(C2 a) {
       this.a = (C2Impl) a;
-      
-      //Update
-      if(a==null){
-    	  aId=null;
-      }
    }
-   
-   @Column
+   /**
+    * Unshared pkey column of association {@link #getA()} to {@link C2}
+    */
+   @Column()
+   @SuppressWarnings("unused")
+   // Used by jpa
    private String aId;
-   
+
+   /**
+    * Sync unshared pkey columms of association {@link #getA()} to {@link C2}
+    */
    @PrePersist
    @PreRemove
    @PreUpdate
-   private void beforeDML(){
-	   if(a!=null){
-		   aId = a.getC2Pkey().getAId();
-		   assert a.getC2Pkey().getGroupId().equals(pkey.getGroupId()):"different groupId's";
-	   }else{
-		   aId = null;
-	   }
-   }   
+   @SuppressWarnings("unused")
+   // Used by jpa
+   private void syncA() {
+      if (a != null) {
+         aId = a.getC2Pkey().getAId();
+         assert a.getC2Pkey().getGroupId().equals(pkey.getGroupId()) : "different groupId";
+      }
+      else {
+         aId = null;
+      }
+   }
 
    public String getModelName() {
       return MODEL_NAME;
