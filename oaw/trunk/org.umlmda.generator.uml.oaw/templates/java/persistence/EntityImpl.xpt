@@ -59,7 +59,17 @@
    «IF hasStereotype("PersistentEntity")»
       @Entity
       «IF getStereotypeProperty("table") != null»
-      @Table(name="«getStereotypeProperty("table")»")
+      @Table(name="«getStereotypeProperty("table")»"
+      	«IF getStereotypeProperty("schema") != null», schema="«getStereotypeProperty("schema")»"«ENDIF»)
+      «ENDIF»
+      «IF getStereotypeProperty("mapping") != null»
+	      «IF getStereotypeProperty("mapping").toString() == "ClassHierarchy"»
+	      @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+	      «ELSEIF getStereotypeProperty("mapping").toString() == "ConcreteClass"»
+	      @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+	      «ELSEIF getStereotypeProperty("mapping").toString() == "SubClass"»
+	      @Inheritance(strategy = InheritanceType.JOINED)
+	      «ENDIF»
       «ENDIF»
    «ENDIF»
 «ENDDEFINE»
