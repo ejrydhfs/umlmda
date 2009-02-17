@@ -14,6 +14,8 @@ public interface One2manyVisitor extends Visitor {
 
    public void visit(C4 aC4);
 
+   public void visit(C5 aC5);
+
    public void visit(D1 aD1);
 
    public void visit(D2 aD2);
@@ -21,4 +23,6 @@ public interface One2manyVisitor extends Visitor {
    public void visit(D3 aD3);
 
    public void visit(D4 aD4);
+
+   public void visit(D5 aD5);
 }

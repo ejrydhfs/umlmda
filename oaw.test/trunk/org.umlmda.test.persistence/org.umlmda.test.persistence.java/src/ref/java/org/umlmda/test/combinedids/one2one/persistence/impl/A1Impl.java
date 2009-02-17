@@ -35,8 +35,8 @@ public class A1Impl implements A1, Serializable, XMLSerializable, org.umlmda.run
    @Embeddable
    public static class PKey implements A1.PKey {
       private static final long serialVersionUID = 1000L;
-      private String            groupId          = "";
-      private String            aId              = "";
+      private String            groupId;
+      private String            aId;
 
       public PKey() {
          super();
@@ -154,7 +154,7 @@ public class A1Impl implements A1, Serializable, XMLSerializable, org.umlmda.run
       pkey.setAId(aId);
    }
    @Column
-   private String aAttr = null;
+   private String aAttr;
 
    /**
     * Get aAttr, 
@@ -171,6 +171,9 @@ public class A1Impl implements A1, Serializable, XMLSerializable, org.umlmda.run
       this.aAttr = aAttr;
    }
    @OneToOne(fetch = FetchType.LAZY)
+   @JoinColumns( {
+         @JoinColumn(name = "groupId", referencedColumnName = "groupId", nullable = true, insertable = false, updatable = false),
+         @JoinColumn(name = "bId", referencedColumnName = "bId", nullable = true, insertable = false, updatable = false) })
    private B1Impl b;
 
    /**

@@ -34,8 +34,8 @@ public class D1Impl implements D1, Serializable, XMLSerializable, org.umlmda.run
    @Embeddable
    public static class PKey implements D1.PKey {
       private static final long serialVersionUID = 1000L;
-      private String            groupId          = "";
-      private String            bId              = "";
+      private String            groupId;
+      private String            bId;
 
       public PKey() {
          super();
@@ -153,7 +153,7 @@ public class D1Impl implements D1, Serializable, XMLSerializable, org.umlmda.run
       pkey.setBId(bId);
    }
    @Column
-   private String bAttr = null;
+   private String bAttr;
 
    /**
     * Get bAttr, 

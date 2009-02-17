@@ -171,8 +171,9 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
       this.bAttr = bAttr;
    }
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumns( { @JoinColumn(name = "groupId", nullable = true, insertable = false, updatable = false),
-         @JoinColumn(name = "aId", nullable = true, insertable = false, updatable = false) })
+   @JoinColumns( {
+         @JoinColumn(name = "groupId", referencedColumnName = "groupId", nullable = true, insertable = false, updatable = false),
+         @JoinColumn(name = "aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
    private C2Impl a;
 
    /**
@@ -194,6 +195,9 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setA(C2 a) {
       this.a = (C2Impl) a;
+      if (a == null) {
+         aId = null;
+      }
    }
    /**
     * Unshared pkey column of association {@link #getA()} to {@link C2}

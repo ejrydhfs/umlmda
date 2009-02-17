@@ -6,10 +6,12 @@ import org.umlmda.test.combinedids.one2many.persistence.C1;
 import org.umlmda.test.combinedids.one2many.persistence.C2;
 import org.umlmda.test.combinedids.one2many.persistence.C3;
 import org.umlmda.test.combinedids.one2many.persistence.C4;
+import org.umlmda.test.combinedids.one2many.persistence.C5;
 import org.umlmda.test.combinedids.one2many.persistence.D1;
 import org.umlmda.test.combinedids.one2many.persistence.D2;
 import org.umlmda.test.combinedids.one2many.persistence.D3;
 import org.umlmda.test.combinedids.one2many.persistence.D4;
+import org.umlmda.test.combinedids.one2many.persistence.D5;
 import org.umlmda.test.combinedids.one2many.persistence.impl.AbstractOne2manyVisitor;
 
 /**
@@ -52,6 +54,12 @@ public class One2manyConstraintVisitor extends AbstractOne2manyVisitor implement
       getConstraintContext().checkMultiplicityContraint(aC4.getClass().getName() + ".aAttr", 0, 1, aC4.getAAttr());
    }
 
+   public void visit(C5 aC5) {
+      getConstraintContext().checkMultiplicityContraint(aC5.getClass().getName() + ".groupId", 1, 1, aC5.getGroupId());
+      getConstraintContext().checkMultiplicityContraint(aC5.getClass().getName() + ".id", 1, 1, aC5.getId());
+      getConstraintContext().checkMultiplicityContraint(aC5.getClass().getName() + ".aAttr", 0, 1, aC5.getAAttr());
+   }
+
    public void visit(D1 aD1) {
       getConstraintContext().checkMultiplicityContraint(aD1.getClass().getName() + ".groupId", 1, 1, aD1.getGroupId());
       getConstraintContext().checkMultiplicityContraint(aD1.getClass().getName() + ".bId", 1, 1, aD1.getBId());
@@ -75,5 +83,12 @@ public class One2manyConstraintVisitor extends AbstractOne2manyVisitor implement
       getConstraintContext().checkMultiplicityContraint(aD4.getClass().getName() + ".bId", 1, 1, aD4.getBId());
       getConstraintContext().checkMultiplicityContraint(aD4.getClass().getName() + ".bAttr", 0, 1, aD4.getBAttr());
       getConstraintContext().checkMultiplicityContraint(aD4.getClass().getName() + ".a", 1, 1, aD4.getA());
+   }
+
+   public void visit(D5 aD5) {
+      getConstraintContext().checkMultiplicityContraint(aD5.getClass().getName() + ".groupId", 1, 1, aD5.getGroupId());
+      getConstraintContext().checkMultiplicityContraint(aD5.getClass().getName() + ".id", 1, 1, aD5.getId());
+      getConstraintContext().checkMultiplicityContraint(aD5.getClass().getName() + ".bAttr", 0, 1, aD5.getBAttr());
+      getConstraintContext().checkMultiplicityContraint(aD5.getClass().getName() + ".a", 1, 1, aD5.getA());
    }
 }

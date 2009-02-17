@@ -43,7 +43,7 @@ public class I21Impl extends I2Impl implements I21, Serializable, XMLSerializabl
       super(groupId, iId);
    }
    @Column
-   private String i2Attr = null;
+   private String i2Attr;
 
    /**
     * Get i2Attr, 

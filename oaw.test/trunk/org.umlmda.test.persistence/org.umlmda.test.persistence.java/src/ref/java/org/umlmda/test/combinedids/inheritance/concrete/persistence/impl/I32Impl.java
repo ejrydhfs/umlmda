@@ -43,7 +43,7 @@ public class I32Impl extends I3Impl implements I32, Serializable, XMLSerializabl
       super(groupId, iId);
    }
    @Column
-   private String i3Attr = null;
+   private String i3Attr;
 
    /**
     * Get i3Attr, 

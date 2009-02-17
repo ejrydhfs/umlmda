@@ -35,8 +35,8 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
    @Embeddable
    public static class PKey implements C2.PKey {
       private static final long serialVersionUID = 1000L;
-      private String            groupId          = "";
-      private String            aId              = "";
+      private String            groupId;
+      private String            aId;
 
       public PKey() {
          super();
@@ -154,7 +154,7 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
       pkey.setAId(aId);
    }
    @Column
-   private String aAttr = null;
+   private String aAttr;
 
    /**
     * Get aAttr, 

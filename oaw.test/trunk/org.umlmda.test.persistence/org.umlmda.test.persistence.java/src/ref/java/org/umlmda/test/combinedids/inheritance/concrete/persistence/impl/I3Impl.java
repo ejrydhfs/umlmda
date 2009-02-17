@@ -34,8 +34,8 @@ public class I3Impl implements I3, Serializable, XMLSerializable, org.umlmda.run
    @Embeddable
    public static class PKey implements I3.PKey {
       private static final long serialVersionUID = 1000L;
-      private String            groupId          = "";
-      private String            iId              = "";
+      private String            groupId;
+      private String            iId;
 
       public PKey() {
          super();
@@ -153,7 +153,7 @@ public class I3Impl implements I3, Serializable, XMLSerializable, org.umlmda.run
       pkey.setIId(iId);
    }
    @Column
-   private String i1Attr = null;
+   private String i1Attr;
 
    /**
     * Get i1Attr, 

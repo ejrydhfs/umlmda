@@ -43,7 +43,7 @@ public class I12Impl extends I1Impl implements I12, Serializable, XMLSerializabl
       super(groupId, iId);
    }
    @Column
-   private String i3Attr = null;
+   private String i3Attr;
 
    /**
     * Get i3Attr, 

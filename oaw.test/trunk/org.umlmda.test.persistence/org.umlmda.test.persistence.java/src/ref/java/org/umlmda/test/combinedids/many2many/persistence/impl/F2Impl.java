@@ -35,8 +35,8 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
    @Embeddable
    public static class PKey implements F2.PKey {
       private static final long serialVersionUID = 1000L;
-      private String            groupId          = "";
-      private String            bId              = "";
+      private String            groupId;
+      private String            bId;
 
       public PKey() {
          super();
@@ -154,7 +154,7 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
       pkey.setBId(bId);
    }
    @Column
-   private String bAttr = null;
+   private String bAttr;
 
    /**
     * Get bAttr, 

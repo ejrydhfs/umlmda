@@ -43,7 +43,7 @@ public class I22Impl extends I2Impl implements I22, Serializable, XMLSerializabl
       super(groupId, iId);
    }
    @Column
-   private String i3Attr = null;
+   private String i3Attr;
 
    /**
     * Get i3Attr, 

@@ -35,8 +35,8 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    @Embeddable
    public static class PKey implements D4.PKey {
       private static final long serialVersionUID = 1000L;
-      private String            groupId          = "";
-      private String            bId              = "";
+      private String            groupId;
+      private String            bId;
 
       public PKey() {
          super();
@@ -154,7 +154,7 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
       pkey.setBId(bId);
    }
    @Column
-   private String bAttr = null;
+   private String bAttr;
 
    /**
     * Get bAttr, 
@@ -171,6 +171,9 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
       this.bAttr = bAttr;
    }
    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+   @JoinColumns( {
+         @JoinColumn(name = "groupId", referencedColumnName = "groupId", nullable = true, insertable = false, updatable = false),
+         @JoinColumn(name = "aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
    private C4Impl a;
 
    /**
@@ -192,6 +195,34 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setA(C4 a) {
       this.a = (C4Impl) a;
+      if (a == null) {
+         aId = null;
+      }
+   }
+   /**
+    * Unshared pkey column of association {@link #getA()} to {@link C4}
+    */
+   @Column()
+   @SuppressWarnings("unused")
+   // Used by jpa
+   private String aId;
+
+   /**
+    * Sync unshared pkey columms of association {@link #getA()} to {@link C4}
+    */
+   @PrePersist
+   @PreRemove
+   @PreUpdate
+   @SuppressWarnings("unused")
+   // Used by jpa
+   private void syncA() {
+      if (a != null) {
+         aId = a.getC4Pkey().getAId();
+         assert a.getC4Pkey().getGroupId().equals(pkey.getGroupId()) : "different groupId";
+      }
+      else {
+         aId = null;
+      }
    }
 
    public String getModelName() {
