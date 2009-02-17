@@ -124,8 +124,8 @@ public class C2Test extends AbstractTest{
 	}
 
 	private void doNegativeTests() {
-		C2 c2 = new C2Impl("Group 1","Id 1");
-		D2 d2 = new D2Impl("Group 2", "Id 2");
+		C2 c2 = new C2Impl("Group 888","Id 1");
+		D2 d2 = new D2Impl("Group 999", "Id 2");
 		
 		c2.getDs().add(d2);
 		try{
@@ -142,10 +142,19 @@ public class C2Test extends AbstractTest{
 		em.clear();
 		em.close();
 		setUp();
+		
+		
 	}
 	
 	public void testC2() throws Exception {
 		try {
+	        boolean assertsEnabled = false;
+	        assert assertsEnabled = true; // Intentional side effect!!!
+	        if (!assertsEnabled){
+	            throw new RuntimeException("Asserts must be enabled!!!");
+	        }
+			
+			
 			doNegativeTests();
 			doInserts();
 			doDeletes();
