@@ -83,7 +83,7 @@ public class C2Test extends AbstractTest{
 			log.info("Group ID: "+((D2Impl)o).getGroupId());
 		}
 		assertTrue(q.getResultList().size()==3);
-		
+		em.flush();
 	}
 	
 	private void doDeletes(){
@@ -136,7 +136,7 @@ public class C2Test extends AbstractTest{
 		}catch (RuntimeException e) {
 			//ok
 			log.info(e.getMessage());
-			assertTrue(e.getMessage().equals("java.lang.AssertionError: different groupId's"));
+			assertTrue(e.getMessage().equals("java.lang.AssertionError: different groupId"));
 		}
 		
 		em.clear();
@@ -146,7 +146,7 @@ public class C2Test extends AbstractTest{
 	
 	public void testC2() throws Exception {
 		try {
-//			doNegativeTests();
+			doNegativeTests();
 			doInserts();
 			doDeletes();
 			doInserts();

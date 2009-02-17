@@ -25,24 +25,19 @@ public class C4Test extends AbstractTest{
 		assertNotNull(c4);
 
 		// D4 with relatin to C4
-		d4 = new D4Impl("D4GroupId1", "D4bId1");
+		d4 = new D4Impl("C4groupId1", "D4bId1");
 		d4.setA(c4);
 		d4.setBAttr(Long.toString(System.currentTimeMillis()));
 		em.persist(d4);
 
 		// D4 with relatin to C4
-		d4 = new D4Impl("D4GroupId1", "D4bId2");
+		d4 = new D4Impl("C4groupId1", "D4bId2");
 		d4.setA(c4);
 		d4.setBAttr("zweite Zuordnung");
 		em.persist(d4);
 
 		em.flush();
 
-		// D4 without relation
-		d4 = new D4Impl("D4GroupId2", "D4bId1");
-		d4.setBAttr("nicht zugeordnet");
-
-		em.persist(c4);
 		// check relations
 		em.refresh(c4);
 		assertTrue(c4.getDs().size() == 2);

@@ -173,7 +173,7 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    @ManyToOne(fetch = FetchType.LAZY, optional = false)
    @JoinColumns( {
          @JoinColumn(name = "groupId", referencedColumnName = "groupId", nullable = true, insertable = false, updatable = false),
-         @JoinColumn(name = "aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
+         @JoinColumn(name = "a_aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
    private C4Impl a;
 
    /**
@@ -196,16 +196,16 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    public void setA(C4 a) {
       this.a = (C4Impl) a;
       if (a == null) {
-         aId = null;
+         a_aId = null;
       }
    }
    /**
     * Unshared pkey column of association {@link #getA()} to {@link C4}
     */
-   @Column()
+   @Column(nullable=false)
    @SuppressWarnings("unused")
    // Used by jpa
-   private String aId;
+   private String a_aId;
 
    /**
     * Sync unshared pkey columms of association {@link #getA()} to {@link C4}
@@ -217,11 +217,11 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    // Used by jpa
    private void syncA() {
       if (a != null) {
-         aId = a.getC4Pkey().getAId();
+         a_aId = a.getC4Pkey().getAId();
          assert a.getC4Pkey().getGroupId().equals(pkey.getGroupId()) : "different groupId";
       }
       else {
-         aId = null;
+         a_aId = null;
       }
    }
 
