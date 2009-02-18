@@ -1,13 +1,17 @@
 package org.umlmda.test.combinedids.inheritance.subclass.persistence.impl;
 
 import java.io.Serializable;
-import java.util.Iterator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 import org.umlmda.runtime.xml.XMLMarshalContext;
 import org.umlmda.runtime.xml.XMLSerializable;
-
 import org.umlmda.test.combinedids.inheritance.subclass.persistence.I2;
 import org.umlmda.test.combinedids.inheritance.subclass.persistence.SubclassVisitor;
 
@@ -15,7 +19,8 @@ import org.umlmda.test.combinedids.inheritance.subclass.persistence.SubclassVisi
  * Business implementation of org.umlmda.test.combinedids.inheritance.subclass.I2.
  */
 @Entity
-public class I2Impl implements I2, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
+@Inheritance(strategy=InheritanceType.JOINED)
+public abstract class I2Impl implements I2, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
    /**
     * Name in die UML model persistence_test_pim_java_psm
     */

@@ -16,6 +16,7 @@ import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I11;
  * Business implementation of org.umlmda.test.combinedids.inheritance.hierarchy.I11.
  */
 @Entity
+@DiscriminatorValue(value="I11Impl")
 public class I11Impl extends I1Impl implements I11, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
    /**
     * Name in die UML model persistence_test_pim_java_psm

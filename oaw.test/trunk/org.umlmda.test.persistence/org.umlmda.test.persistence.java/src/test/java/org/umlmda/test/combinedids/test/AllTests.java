@@ -1,5 +1,6 @@
 package org.umlmda.test.combinedids.test;
 
+import org.umlmda.test.combinedids.inheritance.persistence.test.AllInheritanceTests;
 import org.umlmda.test.combinedids.many2many.persistence.test.AllManyToManyTests;
 import org.umlmda.test.combinedids.one2many.persistence.test.AllOneToManyTests;
 import org.umlmda.test.combinedids.one2one.persistence.test.AllOneToOneTests;
@@ -12,9 +13,10 @@ public class AllTests {
     {
       TestSuite suite = new TestSuite( "All Tests" );
       
-      suite.addTest( AllOneToManyTests.suite() );
       suite.addTest( AllOneToOneTests.suite() );
+      suite.addTest( AllOneToManyTests.suite() );
       suite.addTest( AllManyToManyTests.suite() );
+      suite.addTest( AllInheritanceTests.suite());
 
       return suite;
    }

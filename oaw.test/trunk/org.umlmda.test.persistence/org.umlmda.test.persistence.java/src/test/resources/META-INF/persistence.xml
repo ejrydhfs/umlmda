@@ -9,8 +9,6 @@
 		<class>org.umlmda.test.combinedids.one2one.persistence.impl.B1Impl</class>
 		<class>org.umlmda.test.combinedids.one2one.persistence.impl.A2Impl</class>
 		<class>org.umlmda.test.combinedids.one2one.persistence.impl.B2Impl</class>
-		<class>org.umlmda.test.combinedids.one2one.persistence.impl.A3Impl</class>
-		<class>org.umlmda.test.combinedids.one2one.persistence.impl.B3Impl</class>
 		<class>org.umlmda.test.combinedids.one2one.persistence.impl.A4Impl</class>
 		<class>org.umlmda.test.combinedids.one2one.persistence.impl.B4Impl</class>
 
@@ -18,8 +16,6 @@
 		<class>org.umlmda.test.combinedids.one2many.persistence.impl.D1Impl</class>
 		<class>org.umlmda.test.combinedids.one2many.persistence.impl.C2Impl</class>
 		<class>org.umlmda.test.combinedids.one2many.persistence.impl.D2Impl</class>
-		<class>org.umlmda.test.combinedids.one2many.persistence.impl.C3Impl</class>
-		<class>org.umlmda.test.combinedids.one2many.persistence.impl.D3Impl</class>
 		<class>org.umlmda.test.combinedids.one2many.persistence.impl.C4Impl</class>
 		<class>org.umlmda.test.combinedids.one2many.persistence.impl.D4Impl</class>
 
@@ -27,6 +23,15 @@
 		<class>org.umlmda.test.combinedids.many2many.persistence.impl.F1Impl</class>
 		<class>org.umlmda.test.combinedids.many2many.persistence.impl.E2Impl</class>
 		<class>org.umlmda.test.combinedids.many2many.persistence.impl.F2Impl</class>
+		
+		<class>org.umlmda.test.combinedids.inheritance.hierarchy.persistence.impl.I11Impl</class>
+		<class>org.umlmda.test.combinedids.inheritance.hierarchy.persistence.impl.I12Impl</class>
+
+		<class>org.umlmda.test.combinedids.inheritance.subclass.persistence.impl.I21Impl</class>
+		<class>org.umlmda.test.combinedids.inheritance.subclass.persistence.impl.I22Impl</class>
+
+		<class>org.umlmda.test.combinedids.inheritance.concrete.persistence.impl.I31Impl</class>
+		<class>org.umlmda.test.combinedids.inheritance.concrete.persistence.impl.I32Impl</class>
 
 		<properties>
 			<property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver" />
@@ -35,7 +40,9 @@
 			<property name="hibernate.connection.url" value="jdbc:hsqldb:mem:test"/>
 			<!-- property name="hibernate.connection.url" value="jdbc:hsqldb:hsql://localhost/xdb"/-->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
-			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			
+			
+			<!-- property name="hibernate.hbm2ddl.auto" value="create-drop" /-->
 	        <property name="hibernate.show_sql" value="true"/>
 	        
 	        <!-- Failed Batch Exception workaround for better error messages -->

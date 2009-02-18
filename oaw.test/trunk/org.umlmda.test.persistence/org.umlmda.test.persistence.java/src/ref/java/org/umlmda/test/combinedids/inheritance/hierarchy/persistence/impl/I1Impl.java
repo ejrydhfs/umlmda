@@ -15,7 +15,9 @@ import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I1;
  * Business implementation of org.umlmda.test.combinedids.inheritance.hierarchy.I1.
  */
 @Entity
-public class I1Impl implements I1, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="DTYPE")
+public abstract class I1Impl implements I1, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
    /**
     * Name in die UML model persistence_test_pim_java_psm
     */
