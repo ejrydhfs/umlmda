@@ -5,7 +5,6 @@ import java.util.Set;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 import org.umlmda.test.combinedids.one2many.persistence.C2;
 import org.umlmda.test.combinedids.one2many.persistence.D2;
 import org.umlmda.test.combinedids.one2many.persistence.impl.C2Impl;

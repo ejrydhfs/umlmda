@@ -78,7 +78,6 @@ public class A4Test extends AbstractTest{
 		a4.setB(b4);
 		em.persist(a4);
 		em.persist(b4);
-		em.flush();
 		a4.setB(null);
 		b4.setA(null);
 		try{
