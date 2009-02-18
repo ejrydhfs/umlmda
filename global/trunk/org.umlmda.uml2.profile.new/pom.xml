@@ -8,7 +8,7 @@
    </parent>
    
    <artifactId>org.umlmda.uml2.profiles.new</artifactId>
-   <version>4.2.5</version>
+   <version>4.2.5-SNAPSHOT</version>
    <name>UMLMDA uml2 profiles new 4.x</name>
    <description />
    <packaging>pom</packaging>
