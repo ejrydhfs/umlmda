@@ -16,7 +16,7 @@ import org.umlmda.test.combinedids.inheritance.concrete.persistence.I3;
  */
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public abstract class I3Impl implements I3, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
+public class I3Impl implements I3, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
    /**
     * Name in die UML model persistence_test_pim_java_psm
     */

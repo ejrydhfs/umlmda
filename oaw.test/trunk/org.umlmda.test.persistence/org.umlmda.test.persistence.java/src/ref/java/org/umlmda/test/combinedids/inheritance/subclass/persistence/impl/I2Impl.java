@@ -20,7 +20,7 @@ import org.umlmda.test.combinedids.inheritance.subclass.persistence.SubclassVisi
  */
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public abstract class I2Impl implements I2, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
+public class I2Impl implements I2, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
    /**
     * Name in die UML model persistence_test_pim_java_psm
     */
