@@ -59,7 +59,8 @@ cached Void process(uml::Package package) :
 ;    
 	
 cached Void process(uml::Property property) :
-    property.replaceAliasType()
+	true
+//    property.replaceAliasType()
 ;    
 	
 cached Void process(uml::Generalization generalization) :
@@ -108,7 +109,7 @@ cached Void applyGenerationStereotypes(Class cls) :
 /**
  * Adds standard UMLMDA generation stereotypes
  */
-cached Void applyGenerationStereotypes(UMLMDAPersistenceProfile::PersistentEntity cls) :
+cached Void applyGenerationStereotypes(UMLMDAPersistenceProfile::PersistenceClass cls) :
    cls.addObjectStereotype()
 ;
 
