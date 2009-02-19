@@ -18,10 +18,12 @@ Void resetDefaultArtefacts() :
 ;
 
 cached String getDefaultArtefact(ModelElement element)	:
-   let stereotypeName = element.stereotypes.typeSelect(String).first() :
-   
-   stereotypeName != null ? (
-        getDefaultArtefact(stereotypeName)
+   let artefacts = element.stereotypes.typeSelect(String).collect(e|getDefaultArtefact(e)).reject(e|e == "" || e == null) :
+
+   (artefacts != null && artefacts.size == 1) ? (
+   		let artefact = artefacts.first() :
+        debug("Artefact for "+element.qualifiedName+" is "+artefact) ->
+        artefact
    ) : (
         error("No artefact for "+element.qualifiedName) ->
         null
@@ -29,9 +31,16 @@ cached String getDefaultArtefact(ModelElement element)	:
 ;
    
 String getDefaultArtefact(ModelElement element, String scope)	:
-   let stereotypeName = element.stereotypes.typeSelect(String).first() :
-   
-   getDefaultArtefact(stereotypeName, scope)
+   let artefacts = element.stereotypes.typeSelect(String).collect(e|getDefaultArtefact(e,scope)).reject(e|e == "" || e == null) :
+
+   (artefacts != null && artefacts.size == 1) ? (
+   		let artefact = artefacts.first() :
+        debug("Artefact for "+element.qualifiedName+" with scope "+scope+" is "+artefact) ->
+        artefact
+   ) : (
+        error("No artefact for "+element.qualifiedName+" with scope "+scope) ->
+        null
+   )             
 ;
    
 String getDefaultArtefact(String stereotypeName)	:
