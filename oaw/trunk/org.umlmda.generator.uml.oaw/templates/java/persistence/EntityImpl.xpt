@@ -78,6 +78,11 @@
 «ENDDEFINE»
 
 «DEFINE attrAnnotation FOR JavaModelAttribute»
+«REM»
+	TODO:
+
+	Take care of the @Id annotation for entities without compound key.
+«ENDREM»
    «IF hasStereotype("TransientAttribute")»
       @Transient   
    «ELSE»
@@ -143,6 +148,13 @@
     «EXPAND java::BOImpl::versionInfo FOR this»
     «EXPAND java::BOImpl::delegateFactory FOR this»
     «EXPAND keyImpl FOR this»
+    
+«REM»
+    TODO:
+		Default constructor definition includes a part with regard to a PKey initialization.
+		This must not be generated for !PersistentEntity
+«ENDREM»
+    
     «EXPAND java::BOImpl::standardCtor("public") FOR this»
     «EXPAND handleAttributes FOR this»  
     
@@ -160,11 +172,15 @@
 «ENDDEFINE»
 
 «DEFINE handleAttributes FOR JavaModelClass»
-   «FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr»		
-        «IF this.hasCompositeKey() && attr.hasStereotype("PKey")»
-            «EXPAND handleKeyAttribute(this) FOR attr»
-        «ELSE»    
-            «EXPAND handleAttribute(this) FOR attr»
+   «FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr»
+   		«REM»PKey attributes only for PersistentEntity«ENDREM»		
+        «IF this.hasStereotype("PersistentEntity") && attr.hasStereotype("PKey")»
+        	«REM»But only if we don't have a compound key«ENDREM»
+        	«IF ! this.hasCompositeKey()»
+	            «EXPAND handleAttribute(this) FOR attr»
+            «ENDIF»
+        «ELSEIF ! attr.hasStereotype("PKey")»
+        	«EXPAND handleAttribute(this) FOR attr»
 		«ENDIF»		   		
    «ENDFOREACH»
 «ENDDEFINE»
@@ -215,7 +231,7 @@
         «ENDIF»
    }
 
-    «IF isBidirectional() && !isOwner() && !multiple»
+    «IF !derived && isBidirectional() && !isOwner() && !multiple»
        «EXPAND handleJoinColumns FOR this»   
     «ENDIF»
 «ENDDEFINE»
@@ -271,14 +287,8 @@
 «ENDDEFINE»
 
 «DEFINE keyImpl FOR JavaModelClass»
-«REM»
-TODO: 
-
-Only concrete persistent entities should get a key implementation
-
-add this condition ->  && this.hasStereotype("PersistentEntity")
-«ENDREM»
-   «IF this.owningAPKey»
+«REM»Only concrete persistent entities should get a key implementation«ENDREM»
+   «IF this.owningAPKey && this.hasStereotype("PersistentEntity")»
        /**
         * Primary key implementation
         */
@@ -360,6 +370,10 @@ add this condition ->  && this.hasStereotype("PersistentEntity")
          public void set«name»Pkey(«pkeyInterface()» pkey) {
             this.pkey = (PKey)pkey;
          }
+
+         «FOREACH this.keyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
+         	«EXPAND handleKeyAttribute(this) FOR keyAttr»
+         «ENDFOREACH»
          
          «FOREACH this.inheritedKeyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
          «EXPAND java::BOInterface::attrGetterDecl("parent key attribute") FOR keyAttr» {
