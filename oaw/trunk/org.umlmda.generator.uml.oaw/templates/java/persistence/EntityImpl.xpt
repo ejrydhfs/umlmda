@@ -222,7 +222,11 @@
         /**
          * Unshared pkey column of association {@link #«getter»()} to {@link «((JavaModelClass)target).javaType»}
          */
-        @Column()
+        @Column(
+        «IF !optional»
+            nullable=false
+        «ENDIF»
+        )
         @SuppressWarnings("unused") // Used by jpa
         private «attr.javaType» «attr.name»; 
    «ENDFOREACH»
