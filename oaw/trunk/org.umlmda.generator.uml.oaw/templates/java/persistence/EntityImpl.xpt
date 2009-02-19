@@ -56,6 +56,9 @@
 «ENDDEFINE»
 
 «DEFINE entityAnnotation FOR JavaBusinessObject»
+   «IF hasStereotype("PersistableSuperClass")»
+      @MappedSuperclass
+   «ENDIF»
    «IF hasStereotype("PersistentEntity")»
       @Entity
       «IF getStereotypeProperty("table") != null»
@@ -268,7 +271,14 @@
 «ENDDEFINE»
 
 «DEFINE keyImpl FOR JavaModelClass»
-   «IF this.owningAPKey »
+«REM»
+TODO: 
+
+Only concrete persistent entities should get a key implementation
+
+add this condition ->  && this.hasStereotype("PersistentEntity")
+«ENDREM»
+   «IF this.owningAPKey»
        /**
         * Primary key implementation
         */
