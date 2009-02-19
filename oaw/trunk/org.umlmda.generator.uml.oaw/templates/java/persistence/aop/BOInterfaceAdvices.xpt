@@ -1,0 +1,12 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«AROUND java::BOInterface::keyDecl FOR JavaModelClass»
+	«REM»Don't generate interface key declaration abstract super classes«ENDREM»
+	«IF ! this.hasStereotype("PersistableSuperClass")»
+		«targetDef.proceed()» 
+	«ENDIF»
+«ENDAROUND»
