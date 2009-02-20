@@ -185,21 +185,26 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 		«EXPAND callInitializer FOR this»
 	}
 
-	«IF keyAttributes.isEmpty == false»
-		«visibility» «generatedName»(
-		«FOREACH (List[JavaModelAttribute])keyAttributes AS attr SEPARATOR ","»
-			«attr.javaTypeName()» «attr.name»
-		«ENDFOREACH»
-		) {
-			super(«superClass.keyAttributes.nameList()»);
-			«IF this.owningAPKey »
-			     this.pkey = new PKey(«keyAttributes.nameList()»);
-			«ELSEIF this.keyAttributes.size == 1»
-				«((JavaModelAttribute)this.keyAttributes.get(0)).setter»(«((JavaModelAttribute)this.keyAttributes.get(0)).name»);
-			«ENDIF»
-		}
-	«ENDIF»
+   «EXPAND standardCtorWithKeys(visibility) FOR this»
 «ENDDEFINE»
+
+«DEFINE standardCtorWithKeys(String visibility) FOR JavaBusinessObject»
+   «IF ! keyAttributes.isEmpty»
+      «visibility» «generatedName»(
+      «FOREACH (List[JavaModelAttribute])keyAttributes AS attr SEPARATOR ","»
+         «attr.javaTypeName()» «attr.name»
+      «ENDFOREACH»
+      ) {
+         super(«superClass.keyAttributes.nameList()»);
+         «IF this.owningAPKey»
+              this.pkey = new PKey(«keyAttributes.nameList()»);
+         «ELSEIF this.keyAttributes.size == 1»
+            «((JavaModelAttribute)this.keyAttributes.get(0)).setter»(«((JavaModelAttribute)this.keyAttributes.get(0)).name»);
+         «ENDIF»
+      }
+   «ENDIF»
+«ENDDEFINE»
+
 
 «DEFINE callInitializer FOR JavaModelClass»
 	«IF initializerMethod() != null»
