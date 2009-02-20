@@ -78,11 +78,9 @@
 «ENDDEFINE»
 
 «DEFINE attrAnnotation FOR JavaModelAttribute»
-«REM»
-	TODO:
-
-	Take care of the @Id annotation for entities without compound key.
-«ENDREM»
+	«IF hasStereotype("PKey") && owningClass.hasStereotype("PersistentEntity") && ! owningClass.hasCompositeKey()»
+		@Id
+	«ENDIF»
    «IF hasStereotype("TransientAttribute")»
       @Transient   
    «ELSE»
@@ -148,12 +146,6 @@
     «EXPAND java::BOImpl::versionInfo FOR this»
     «EXPAND java::BOImpl::delegateFactory FOR this»
     «EXPAND keyImpl FOR this»
-    
-«REM»
-    TODO:
-		Default constructor definition includes a part with regard to a PKey initialization.
-		This must not be generated for !PersistentEntity
-«ENDREM»
     
     «EXPAND java::BOImpl::standardCtor("public") FOR this»
     «EXPAND handleAttributes FOR this»  
@@ -287,7 +279,7 @@
 «ENDDEFINE»
 
 «DEFINE keyImpl FOR JavaModelClass»
-«REM»Only concrete persistent entities should get a key implementation«ENDREM»
+   «REM»Only concrete persistent entities should get a key implementation«ENDREM»
    «IF this.owningAPKey && this.hasStereotype("PersistentEntity")»
        /**
         * Primary key implementation
