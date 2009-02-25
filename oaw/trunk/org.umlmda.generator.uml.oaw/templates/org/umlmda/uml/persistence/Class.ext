@@ -17,3 +17,15 @@ String pkeyInterface(JavaModelClass class) :
 String pkeyGetter(JavaModelClass class) :
     "get"+class.name+"Pkey"
 ;    
+
+cached List[ModelAttribute] domainKeys(ModelClass class) :
+/*
+   TODO:
+
+    This is wrong!    
+    Normally we shouldn't check with "attr.owningClass==class" but with getStereotypeProperty("domainAttribute").
+    Only problem is: this doesn't really work... !?!
+*/
+
+    class.keyAttributes.typeSelect(ModelAttribute).select(attr | attr.owningClass == class)
+;
