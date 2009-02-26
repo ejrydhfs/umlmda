@@ -268,7 +268,7 @@
 «ENDDEFINE»
 
 «DEFINE assocDecl FOR JavaModelAssociation»
-    «IF derived == false»
+    «IF !derived»
         «IF multiple»
            @SuppressWarnings("unchecked")
            private «implDeclType()» «name» = new «collectionImplementationType»();
