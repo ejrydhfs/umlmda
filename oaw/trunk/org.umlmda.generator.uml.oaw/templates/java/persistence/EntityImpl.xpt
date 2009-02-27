@@ -202,7 +202,7 @@
    «EXPAND assocAnnotation FOR this»
    «EXPAND assocDecl FOR this»
    
-   «IF multiple»
+   «IF !derived && multiple»
         @SuppressWarnings("unchecked")   
    «ENDIF»
    «EXPAND java::BOInterface::assocGetterDecl FOR this»
