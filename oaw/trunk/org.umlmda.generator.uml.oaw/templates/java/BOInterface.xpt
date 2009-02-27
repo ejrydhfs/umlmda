@@ -24,6 +24,7 @@
 	«FILE generatedPath+"/"+interfaceName+".java"»
 		package «generatorPackage.getQualifiedPackageName(getDefaultArtefact())»;
 		
+		«EXPAND standardImports FOR this»
 		«this.registeredImports()»
 		
 		/**
@@ -49,6 +50,9 @@
 		}
 	«ENDFILE»
 	«ENDLET»
+«ENDDEFINE»
+
+«DEFINE standardImports FOR JavaModelClass»
 «ENDDEFINE»
 
 «DEFINE handleAttributes FOR JavaModelClass»
