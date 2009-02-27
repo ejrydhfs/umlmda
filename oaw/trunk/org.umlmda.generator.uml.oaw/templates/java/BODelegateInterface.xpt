@@ -15,9 +15,7 @@
 «FILE generatedPath+"/"+interfaceName+".java"»
 package «generatorPackage.getQualifiedPackageName("java.DelegateInterface")»;
 
-«this.resetImports()»
-«this.registerImports("java.Enumeration", referencedTypes, "Enumeration")»
-«this.registeredImports()»
+«EXPAND handleImports FOR this»
 
 /**
  * Interface for delegate to implement the methods and derived attributes of
@@ -48,6 +46,12 @@ package «generatorPackage.getQualifiedPackageName("java.DelegateInterface")»;
 «ENDFILE»
 «ENDLET»
 «ENDIF»
+«ENDDEFINE»
+
+«DEFINE handleImports FOR JavaModelClass»
+«this.resetImports()»
+«this.registerImports("java.Enumeration", referencedTypes, "Enumeration")»
+«this.registeredImports()»
 «ENDDEFINE»
 
 «DEFINE derivedAttrGetterSetterDecl FOR JavaModelAttribute»
