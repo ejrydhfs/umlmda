@@ -16,69 +16,48 @@
    <properties>
       <umlmda.oaw.version>3.14-SNAPSHOT</umlmda.oaw.version>
       <umlmda.uml2.profile.version>4.1.0</umlmda.uml2.profile.version>
-      <umlmda.uml2.profile.new.version>4.2.0</umlmda.uml2.profile.new.version>
+      <umlmda.uml2.profile.new.version>4.2.6</umlmda.uml2.profile.new.version>
       <umlmda.generator.profile.version>3.6</umlmda.generator.profile.version>
       <umlmda.runtime.version>3.8</umlmda.runtime.version>
    </properties>
 
    <dependencyManagement>
       <dependencies>
-      <dependency>
-         <groupId>javax.persistence</groupId>
-         <artifactId>persistence-api</artifactId>
-         <version>1.0</version>
-      </dependency>
-      <dependency>
-         <groupId>org.umlmda</groupId>
-         <artifactId>org.umlmda.runtime.core</artifactId>
-         <version>${umlmda.runtime.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>org.umlmda</groupId>
-         <artifactId>org.umlmda.runtime.common</artifactId>
-         <version>${umlmda.runtime.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>hsqldb</groupId>
-         <artifactId>hsqldb</artifactId>
-         <version>1.8.0.10</version>
-      </dependency>
-       <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-entitymanager</artifactId>
-          <version>3.3.2.GA</version>
-       </dependency>
-      
+         <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
+         </dependency>
+         <dependency>
+            <groupId>org.umlmda</groupId>
+            <artifactId>org.umlmda.runtime.core</artifactId>
+            <version>${umlmda.runtime.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.umlmda</groupId>
+            <artifactId>org.umlmda.runtime.common</artifactId>
+            <version>${umlmda.runtime.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.10</version>
+            <scope>test</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.3.2.GA</version>
+            <scope>test</scope>
+         </dependency>
+         <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
+            <scope>test</scope>
+         </dependency>
       </dependencies>
    </dependencyManagement>
-
-   <build>
-      <sourceDirectory>src/main/java</sourceDirectory>
-      <testSourceDirectory>src/test/java</testSourceDirectory>
-      <resources>
-         <resource>
-            <directory>src/main/resources</directory>
-            <excludes>
-               <exclude>*.java</exclude>
-            </excludes>
-         </resource>
-      </resources>
-      <plugins>
-         <!-- compiler -->
-         <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-               <source>1.5</source>
-               <target>1.5</target>
-               <debug>true</debug>
-               <optimize>false</optimize>
-               <fork>true</fork>
-               <meminitial>128m</meminitial>
-               <maxmem>512m</maxmem>
-            </configuration>
-         </plugin>
-      </plugins>
-   </build>
 
    <modules>
       <module>org.umlmda.test.persistence.pim</module>
@@ -86,8 +65,10 @@
    </modules>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/trunk</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/trunk</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw.test/trunk
+      </connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw.test/trunk
+      </developerConnection>
    </scm>
 
    <repositories>
