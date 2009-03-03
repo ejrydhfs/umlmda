@@ -180,29 +180,32 @@
 «ENDDEFINE»
 
 «DEFINE keyDecl FOR JavaModelClass»
-«IF this.owningAPKey»
-   public interface PKey extends java.io.Serializable {
-«FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
-	«EXPAND attrGetterDecl(" key attribute") FOR keyAttr»;
-	«EXPAND attrSetterDecl(" key attribute") FOR keyAttr»;
-«ENDFOREACH»   
-   }
+	«IF this.owningAPKey»
+	   «EXPAND keyInterfaceDecl FOR this»
+	«ENDIF»
+«ENDDEFINE»
 
-«FOREACH inheritedKeyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
-	«EXPAND attrGetterDecl(" parent key attribute") FOR keyAttr»;
-«ENDFOREACH»
-
-   /**
-    * Getter for the primaryKey
-    */   
-   public PKey get«name»Pkey();
-   
-   /**
-    * Setter for the primaryKey
-    */   
-   public void set«name»Pkey(PKey pkey);
-   
-«ENDIF»
+«DEFINE keyInterfaceDecl FOR JavaModelClass»
+    public interface PKey extends java.io.Serializable {
+        «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
+            «EXPAND attrGetterDecl(" key attribute") FOR keyAttr»;
+            «EXPAND attrSetterDecl(" key attribute") FOR keyAttr»;
+        «ENDFOREACH»   
+    }
+    
+    «FOREACH inheritedKeyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
+        «EXPAND attrGetterDecl(" parent key attribute") FOR keyAttr»;
+    «ENDFOREACH»
+    
+    /**
+     * Getter for the primaryKey
+     */   
+    public PKey get«name»Pkey();
+       
+    /**
+     * Setter for the primaryKey
+     */   
+    public void set«name»Pkey(PKey pkey);
 «ENDDEFINE»
 
 «DEFINE propertyNameConstantDecl FOR JavaModelStructuraleFeature»

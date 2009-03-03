@@ -27,5 +27,12 @@ cached List[ModelAttribute] domainKeys(ModelClass class) :
     Only problem is: this doesn't really work... !?!
 */
 
-    class.keyAttributes.typeSelect(ModelAttribute).select(attr | attr.owningClass == class)
+    class.keyAttributes.typeSelect(ModelAttribute).select(attr | attr.owningClass == class && attr.getStereotypeProperty("domainAttribute", "true") == "true")
+;
+
+/**
+ * Checks if a key class is required
+ */
+cached Boolean isKeyClassRequired(JavaModelClass class) :
+   class.keyAttributes.size > 1 && (class.superClass == null || !class.superClass.hasStereotype("PersistentEntity")) && class.hasStereotype("PersistentEntity")
 ;

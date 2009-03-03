@@ -280,7 +280,7 @@
 
 «DEFINE keyImpl FOR JavaModelClass»
    «REM»Only concrete persistent entities should get a key implementation«ENDREM»
-   «IF this.owningAPKey && this.hasStereotype("PersistentEntity")»
+   «IF this.isKeyClassRequired()»
        /**
         * Primary key implementation
         */

@@ -4,11 +4,13 @@
 «IMPORT org::umlmda::oaw::generator::util»
 «IMPORT org::umlmda::oaw::generator::model::java»
 
+«EXTENSION org::umlmda::uml::persistence::Class»
+
 «REM»
    Don't generate interface key declaration for non-persistant super classes.
 «ENDREM»
 «AROUND java::BOInterface::keyDecl FOR JavaModelClass»
-	«IF ! this.hasStereotype("PersistableSuperClass")»
-		«targetDef.proceed()» 
+   «IF this.isKeyClassRequired()»
+       «EXPAND java::BOInterface::keyInterfaceDecl FOR this»
 	«ENDIF»
 «ENDAROUND»
