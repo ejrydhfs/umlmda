@@ -113,20 +113,6 @@ public class B4Impl implements B4, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public B4Impl() {
-      super();
-   }
-
-   public B4Impl(String groupId, String bId) {
-      super();
-      this.pkey = new PKey(groupId, bId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -152,6 +138,19 @@ public class B4Impl implements B4, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setBId(String bId) {
       pkey.setBId(bId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public B4Impl() {
+      super();
+   }
+
+   public B4Impl(String groupId, String bId) {
+      this.pkey = new PKey(groupId, bId);
    }
    @Column
    private String bAttr;
@@ -202,7 +201,7 @@ public class B4Impl implements B4, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Unshared pkey column of association {@link #getA()} to {@link A4}
     */
-   @Column(nullable=false)
+   @Column(nullable = false)
    @SuppressWarnings("unused")
    // Used by jpa
    private String aId;

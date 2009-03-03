@@ -73,14 +73,14 @@ public interface D4 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
-   &lt;BODY&gt;Bidirectional&nbsp;One2One composition.&lt;/BODY&gt;&lt;/HTML&gt;
+   &lt;BODY&gt;Bidirectional&nbsp;One2Many composition.&lt;/BODY&gt;&lt;/HTML&gt;
     */
    public C4 getA();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
-   &lt;BODY&gt;Bidirectional&nbsp;One2One composition.&lt;/BODY&gt;&lt;/HTML&gt;
+   &lt;BODY&gt;Bidirectional&nbsp;One2Many composition.&lt;/BODY&gt;&lt;/HTML&gt;
     *
     * @param a
     *		New value for assocation a 

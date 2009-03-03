@@ -113,20 +113,6 @@ public class A2Impl implements A2, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public A2Impl() {
-      super();
-   }
-
-   public A2Impl(String groupId, String aId) {
-      super();
-      this.pkey = new PKey(groupId, aId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -152,6 +138,19 @@ public class A2Impl implements A2, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setAId(String aId) {
       pkey.setAId(aId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public A2Impl() {
+      super();
+   }
+
+   public A2Impl(String groupId, String aId) {
+      this.pkey = new PKey(groupId, aId);
    }
    @Column
    private String aAttr;

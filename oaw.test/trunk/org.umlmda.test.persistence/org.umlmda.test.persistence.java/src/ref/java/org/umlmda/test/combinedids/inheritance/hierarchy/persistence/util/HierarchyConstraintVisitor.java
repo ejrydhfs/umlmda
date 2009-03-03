@@ -2,6 +2,9 @@ package org.umlmda.test.combinedids.inheritance.hierarchy.persistence.util;
 
 import org.umlmda.runtime.constraint.ConstraintVisitorContext;
 
+import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I0;
+import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I01;
+import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I02;
 import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I1;
 import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I11;
 import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I12;
@@ -21,6 +24,20 @@ public class HierarchyConstraintVisitor extends AbstractHierarchyVisitor impleme
 
    public ConstraintVisitorContext getConstraintContext() {
       return (ConstraintVisitorContext) getContext();
+   }
+
+   public void visit(I0 aI0) {
+      getConstraintContext().checkMultiplicityContraint(aI0.getClass().getName() + ".groupId", 1, 1, aI0.getGroupId());
+      getConstraintContext().checkMultiplicityContraint(aI0.getClass().getName() + ".iId", 1, 1, aI0.getIId());
+      getConstraintContext().checkMultiplicityContraint(aI0.getClass().getName() + ".i1Attr", 0, 1, aI0.getI1Attr());
+   }
+
+   public void visit(I01 aI01) {
+      getConstraintContext().checkMultiplicityContraint(aI01.getClass().getName() + ".i2Attr", 0, 1, aI01.getI2Attr());
+   }
+
+   public void visit(I02 aI02) {
+      getConstraintContext().checkMultiplicityContraint(aI02.getClass().getName() + ".i3Attr", 0, 1, aI02.getI3Attr());
    }
 
    public void visit(I1 aI1) {

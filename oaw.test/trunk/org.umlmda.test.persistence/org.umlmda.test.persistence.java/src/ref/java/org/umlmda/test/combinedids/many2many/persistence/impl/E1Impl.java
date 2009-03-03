@@ -113,20 +113,6 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public E1Impl() {
-      super();
-   }
-
-   public E1Impl(String groupId, String aId) {
-      super();
-      this.pkey = new PKey(groupId, aId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -152,6 +138,19 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setAId(String aId) {
       pkey.setAId(aId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public E1Impl() {
+      super();
+   }
+
+   public E1Impl(String groupId, String aId) {
+      this.pkey = new PKey(groupId, aId);
    }
    @Column
    private String aAttr;
@@ -265,10 +264,10 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
     * Marshal references
     */
    protected void marshalReferences(XMLMarshalContext context) {
-      for (Iterator i = getFs().iterator(); i.hasNext();) {
-         Object child = i.next();
-         if (child instanceof XMLSerializable)
+      for (F1 child : getFs()) {
+         if (child instanceof XMLSerializable) {
             context.elementRef("fs", (XMLSerializable) child);
+         }
       }
    }
 }

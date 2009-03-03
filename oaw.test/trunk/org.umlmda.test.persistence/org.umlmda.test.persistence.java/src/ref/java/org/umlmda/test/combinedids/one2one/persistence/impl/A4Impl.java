@@ -113,20 +113,6 @@ public class A4Impl implements A4, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public A4Impl() {
-      super();
-   }
-
-   public A4Impl(String groupId, String aId) {
-      super();
-      this.pkey = new PKey(groupId, aId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -152,6 +138,19 @@ public class A4Impl implements A4, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setAId(String aId) {
       pkey.setAId(aId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public A4Impl() {
+      super();
+   }
+
+   public A4Impl(String groupId, String aId) {
+      this.pkey = new PKey(groupId, aId);
    }
    @Column
    private String aAttr;
@@ -260,15 +259,17 @@ public class A4Impl implements A4, Serializable, XMLSerializable, org.umlmda.run
     * Marshal children
     */
    protected void marshalChildren(XMLMarshalContext context) {
-      if (b instanceof XMLSerializable)
+      if (b instanceof XMLSerializable) {
          ((XMLSerializable) b).marshal("b", context, false);
+      }
    }
 
    /**
     * Marshal references
     */
    protected void marshalReferences(XMLMarshalContext context) {
-      if (b instanceof XMLSerializable)
+      if (b instanceof XMLSerializable) {
          context.elementRef("b", (XMLSerializable) getB());
+      }
    }
 }

@@ -15,8 +15,7 @@ import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I1;
  * Business implementation of org.umlmda.test.combinedids.inheritance.hierarchy.I1.
  */
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="DTYPE")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class I1Impl implements I1, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
    /**
     * Name in die UML model persistence_test_pim_java_psm
@@ -114,20 +113,6 @@ public class I1Impl implements I1, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public I1Impl() {
-      super();
-   }
-
-   public I1Impl(String groupId, String iId) {
-      super();
-      this.pkey = new PKey(groupId, iId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -153,6 +138,19 @@ public class I1Impl implements I1, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setIId(String iId) {
       pkey.setIId(iId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public I1Impl() {
+      super();
+   }
+
+   public I1Impl(String groupId, String iId) {
+      this.pkey = new PKey(groupId, iId);
    }
    @Column
    private String i1Attr;

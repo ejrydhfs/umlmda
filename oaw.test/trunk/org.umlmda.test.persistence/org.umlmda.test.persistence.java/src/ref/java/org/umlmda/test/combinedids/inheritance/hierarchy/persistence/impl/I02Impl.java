@@ -1,4 +1,4 @@
-package org.umlmda.test.combinedids.one2one.persistence.impl;
+package org.umlmda.test.combinedids.inheritance.hierarchy.persistence.impl;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -8,21 +8,21 @@ import javax.persistence.*;
 import org.umlmda.runtime.xml.XMLMarshalContext;
 import org.umlmda.runtime.xml.XMLSerializable;
 
-import org.umlmda.test.combinedids.one2one.persistence.A3;
-import org.umlmda.test.combinedids.one2one.persistence.B3;
-import org.umlmda.test.combinedids.one2one.persistence.One2oneVisitor;
+import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.HierarchyVisitor;
+import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I0;
+import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I02;
 
 /**
- * Business implementation of org.umlmda.test.combinedids.one2one.A3.
+ * Business implementation of org.umlmda.test.combinedids.inheritance.hierarchy.I02.
  */
 @Entity
-public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
+public class I02Impl extends I0Impl implements I02, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
    /**
     * Name in die UML model persistence_test_pim_java_psm
     */
-   public static final String  MODEL_NAME       = "org.umlmda.test.combinedids.one2one.A3";
+   public static final String  MODEL_NAME       = "org.umlmda.test.combinedids.inheritance.hierarchy.I02";
    /**
-    * Version information from BusinessComponent org.umlmda.test.combinedids.one2one
+    * Version information from BusinessComponent org.umlmda.test.combinedids.inheritance.hierarchy
     */
    public static final String  MODEL_VERSION    = "1.0";
    //@@UserSection-Begin VersionInfo
@@ -33,18 +33,18 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
     * Primary key implementation
     */
    @Embeddable
-   public static class PKey implements A3.PKey {
+   public static class PKey implements I02.PKey {
       private static final long serialVersionUID = 1000L;
       private String            groupId;
-      private String            aId;
+      private String            iId;
 
       public PKey() {
          super();
       }
 
-      public PKey(String groupId, String aId) {
+      public PKey(String groupId, String iId) {
          this.groupId = groupId;
-         this.aId = aId;
+         this.iId = iId;
       }
 
       /**
@@ -63,24 +63,24 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
       }
 
       /**
-       * Getkey attribute aId, 
+       * Getkey attribute iId, 
        */
-      public String getAId() {
-         return aId;
+      public String getIId() {
+         return iId;
       }
 
       /**
-       * Setkey attribute aId, 
+       * Setkey attribute iId, 
        */
-      public void setAId(String aId) {
-         String oldValue = this.aId;
-         this.aId = aId;
+      public void setIId(String iId) {
+         String oldValue = this.iId;
+         this.iId = iId;
       }
 
       public boolean equals(Object obj) {
-         if (obj instanceof A3.PKey) {
-            A3.PKey pkey = (A3.PKey) obj;
-            return groupId.equals(pkey.getGroupId()) && aId.equals(pkey.getAId());
+         if (obj instanceof I02.PKey) {
+            I02.PKey pkey = (I02.PKey) obj;
+            return groupId.equals(pkey.getGroupId()) && iId.equals(pkey.getIId());
          }
          else {
             return super.equals(obj);
@@ -90,7 +90,7 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
       public int hashCode() {
          int hashCode = 0;
          hashCode = hashCode * 29 + groupId.hashCode();
-         hashCode = hashCode * 29 + aId.hashCode();
+         hashCode = hashCode * 29 + iId.hashCode();
          return hashCode;
       }
    }
@@ -101,29 +101,15 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Getter for the primary key
     */
-   public A3.PKey getA3Pkey() {
+   public I02.PKey getI02Pkey() {
       return pkey;
    }
 
    /**
     * Setter for the primary key
     */
-   public void setA3Pkey(A3.PKey pkey) {
+   public void setI02Pkey(I02.PKey pkey) {
       this.pkey = (PKey) pkey;
-   }
-
-   /**
-    * Default Ctor. 
-   
-
-    */
-   public A3Impl() {
-      super();
-   }
-
-   public A3Impl(String groupId, String aId) {
-      super();
-      this.pkey = new PKey(groupId, aId);
    }
 
    /**
@@ -141,60 +127,46 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Get aId, 
+    * Get iId, 
     */
-   public String getAId() {
-      return pkey.getAId();
+   public String getIId() {
+      return pkey.getIId();
    }
 
    /**
-    * Set aId, 
+    * Set iId, 
     */
-   public void setAId(String aId) {
-      pkey.setAId(aId);
+   public void setIId(String iId) {
+      pkey.setIId(iId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public I02Impl() {
+      super();
+   }
+
+   public I02Impl(String groupId, String iId) {
    }
    @Column
-   private String aAttr;
+   private String i3Attr;
 
    /**
-    * Get aAttr, 
+    * Get i3Attr, 
     */
-   public String getAAttr() {
-      return aAttr;
+   public String getI3Attr() {
+      return i3Attr;
    }
 
    /**
-    * Set aAttr, 
+    * Set i3Attr, 
     */
-   public void setAAttr(String aAttr) {
-      String oldValue = this.aAttr;
-      this.aAttr = aAttr;
-   }
-   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-   @JoinColumns( {
-         @JoinColumn(name = "groupId", referencedColumnName = "groupId", nullable = true, insertable = false, updatable = false),
-         @JoinColumn(name = "bId", referencedColumnName = "bId", nullable = true, insertable = false, updatable = false) })
-   private B3Impl b;
-
-   /**
-    * &lt;HTML&gt;&lt;HEAD&gt;
-   &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
-   &lt;BODY&gt;Simple One2One composition.&lt;/BODY&gt;&lt;/HTML&gt;
-    */
-   public B3 getB() {
-      return b;
-   }
-
-   /**
-    * &lt;HTML&gt;&lt;HEAD&gt;
-   &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
-   &lt;BODY&gt;Simple One2One composition.&lt;/BODY&gt;&lt;/HTML&gt;
-    *
-    * @param b
-    *		New value for assocation b 
-    */
-   public void setB(B3 b) {
-      this.b = (B3Impl) b;
+   public void setI3Attr(String i3Attr) {
+      String oldValue = this.i3Attr;
+      this.i3Attr = i3Attr;
    }
 
    public String getModelName() {
@@ -208,12 +180,12 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
    /** 
     * Accept the visitor
     * @param visitor
-    *           must be instance of org.umlmda.test.combinedids.one2one.persistence.One2oneVisitor.
-    * @see org.umlmda.test.combinedids.one2one.persistence.One2oneVisitor.
+    *           must be instance of org.umlmda.test.combinedids.inheritance.hierarchy.persistence.HierarchyVisitor.
+    * @see org.umlmda.test.combinedids.inheritance.hierarchy.persistence.HierarchyVisitor.
     */
    public void accept(org.umlmda.runtime.visitor.Visitor visitor) {
-      if (visitor instanceof One2oneVisitor) {
-         One2oneVisitor aVisitor = (One2oneVisitor) visitor;
+      if (visitor instanceof HierarchyVisitor) {
+         HierarchyVisitor aVisitor = (HierarchyVisitor) visitor;
          aVisitor.visit(this);
       }
    }
@@ -232,7 +204,7 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
     */
    public String toXmlString() {
       XMLMarshalContext context = new XMLMarshalContext();
-      marshal("A3Impl", context, true);
+      marshal("I02Impl", context, true);
       return context.toString();
    }
 
@@ -251,24 +223,21 @@ public class A3Impl implements A3, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", getGroupId());
-      context.simpleElement("aId", getAId());
-      context.simpleElement("aAttr", getAAttr());
+      super.marshalAttributes(context);
+      context.simpleElement("i3Attr", getI3Attr());
    }
 
    /**
     * Marshal children
     */
    protected void marshalChildren(XMLMarshalContext context) {
-      if (b instanceof XMLSerializable)
-         ((XMLSerializable) b).marshal("b", context, false);
+      super.marshalChildren(context);
    }
 
    /**
     * Marshal references
     */
    protected void marshalReferences(XMLMarshalContext context) {
-      if (b instanceof XMLSerializable)
-         context.elementRef("b", (XMLSerializable) getB());
+      super.marshalReferences(context);
    }
 }

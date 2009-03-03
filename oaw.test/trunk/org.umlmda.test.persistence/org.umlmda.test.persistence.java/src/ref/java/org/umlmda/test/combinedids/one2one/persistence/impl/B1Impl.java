@@ -112,20 +112,6 @@ public class B1Impl implements B1, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public B1Impl() {
-      super();
-   }
-
-   public B1Impl(String groupId, String bId) {
-      super();
-      this.pkey = new PKey(groupId, bId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -151,6 +137,19 @@ public class B1Impl implements B1, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setBId(String bId) {
       pkey.setBId(bId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public B1Impl() {
+      super();
+   }
+
+   public B1Impl(String groupId, String bId) {
+      this.pkey = new PKey(groupId, bId);
    }
    @Column
    private String bAttr;

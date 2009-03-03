@@ -113,20 +113,6 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public F2Impl() {
-      super();
-   }
-
-   public F2Impl(String groupId, String bId) {
-      super();
-      this.pkey = new PKey(groupId, bId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -152,6 +138,19 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setBId(String bId) {
       pkey.setBId(bId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public F2Impl() {
+      super();
+   }
+
+   public F2Impl(String groupId, String bId) {
+      this.pkey = new PKey(groupId, bId);
    }
    @Column
    private String bAttr;
@@ -265,10 +264,10 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
     * Marshal references
     */
    protected void marshalReferences(XMLMarshalContext context) {
-      for (Iterator i = getEs().iterator(); i.hasNext();) {
-         Object child = i.next();
-         if (child instanceof XMLSerializable)
+      for (E2 child : getEs()) {
+         if (child instanceof XMLSerializable) {
             context.elementRef("es", (XMLSerializable) child);
+         }
       }
    }
 }

@@ -40,9 +40,9 @@ public class DatatypeTestImpl implements DatatypeTest, Serializable, XMLSerializ
    }
 
    public DatatypeTestImpl(String id) {
-      super();
       setId(id);
    }
+   @Id
    @Column
    private String id;
 

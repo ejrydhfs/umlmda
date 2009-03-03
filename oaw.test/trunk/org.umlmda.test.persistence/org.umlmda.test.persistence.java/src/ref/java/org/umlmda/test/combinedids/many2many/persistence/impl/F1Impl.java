@@ -112,20 +112,6 @@ public class F1Impl implements F1, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public F1Impl() {
-      super();
-   }
-
-   public F1Impl(String groupId, String bId) {
-      super();
-      this.pkey = new PKey(groupId, bId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -151,6 +137,19 @@ public class F1Impl implements F1, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setBId(String bId) {
       pkey.setBId(bId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public F1Impl() {
+      super();
+   }
+
+   public F1Impl(String groupId, String bId) {
+      this.pkey = new PKey(groupId, bId);
    }
    @Column
    private String bAttr;

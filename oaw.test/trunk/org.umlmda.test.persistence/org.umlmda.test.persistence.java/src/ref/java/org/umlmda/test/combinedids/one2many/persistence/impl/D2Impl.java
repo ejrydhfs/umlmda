@@ -113,20 +113,6 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public D2Impl() {
-      super();
-   }
-
-   public D2Impl(String groupId, String bId) {
-      super();
-      this.pkey = new PKey(groupId, bId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -152,6 +138,19 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setBId(String bId) {
       pkey.setBId(bId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public D2Impl() {
+      super();
+   }
+
+   public D2Impl(String groupId, String bId) {
+      this.pkey = new PKey(groupId, bId);
    }
    @Column
    private String bAttr;
@@ -179,7 +178,7 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
-   &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
+   &lt;BODY&gt;Bidirectional&nbsp;One2Many association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
    public C2 getA() {
       return a;
@@ -188,7 +187,7 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
-   &lt;BODY&gt;Bidirectional&nbsp;One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
+   &lt;BODY&gt;Bidirectional&nbsp;One2Many association.&lt;/BODY&gt;&lt;/HTML&gt;
     *
     * @param a
     *		New value for assocation a 

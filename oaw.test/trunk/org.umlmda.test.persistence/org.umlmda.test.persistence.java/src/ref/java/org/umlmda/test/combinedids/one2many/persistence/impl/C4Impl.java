@@ -113,20 +113,6 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public C4Impl() {
-      super();
-   }
-
-   public C4Impl(String groupId, String aId) {
-      super();
-      this.pkey = new PKey(groupId, aId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -153,6 +139,19 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
    public void setAId(String aId) {
       pkey.setAId(aId);
    }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public C4Impl() {
+      super();
+   }
+
+   public C4Impl(String groupId, String aId) {
+      this.pkey = new PKey(groupId, aId);
+   }
    @Column
    private String aAttr;
 
@@ -178,7 +177,7 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
-   &lt;BODY&gt;Bidirectional&nbsp;One2One composition.&lt;/BODY&gt;&lt;/HTML&gt;
+   &lt;BODY&gt;Bidirectional&nbsp;One2Many composition.&lt;/BODY&gt;&lt;/HTML&gt;
     */
    public java.util.Set<D4> getDs() {
       return ds;
@@ -187,7 +186,7 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
-   &lt;BODY&gt;Bidirectional&nbsp;One2One composition.&lt;/BODY&gt;&lt;/HTML&gt;
+   &lt;BODY&gt;Bidirectional&nbsp;One2Many composition.&lt;/BODY&gt;&lt;/HTML&gt;
     *
     * @param ds
     *		New value for assocation ds 
@@ -259,10 +258,10 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
     * Marshal children
     */
    protected void marshalChildren(XMLMarshalContext context) {
-      for (Iterator i = getDs().iterator(); i.hasNext();) {
-         Object child = i.next();
-         if (child instanceof XMLSerializable)
+      for (D4 child : getDs()) {
+         if (child instanceof XMLSerializable) {
             ((XMLSerializable) child).marshal("ds", context, false);
+         }
       }
    }
 

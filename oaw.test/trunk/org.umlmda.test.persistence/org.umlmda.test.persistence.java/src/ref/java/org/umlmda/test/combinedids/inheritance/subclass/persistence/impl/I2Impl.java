@@ -1,17 +1,13 @@
 package org.umlmda.test.combinedids.inheritance.subclass.persistence.impl;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
 import org.umlmda.runtime.xml.XMLMarshalContext;
 import org.umlmda.runtime.xml.XMLSerializable;
+
 import org.umlmda.test.combinedids.inheritance.subclass.persistence.I2;
 import org.umlmda.test.combinedids.inheritance.subclass.persistence.SubclassVisitor;
 
@@ -19,7 +15,7 @@ import org.umlmda.test.combinedids.inheritance.subclass.persistence.SubclassVisi
  * Business implementation of org.umlmda.test.combinedids.inheritance.subclass.I2.
  */
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class I2Impl implements I2, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
    /**
     * Name in die UML model persistence_test_pim_java_psm
@@ -117,20 +113,6 @@ public class I2Impl implements I2, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public I2Impl() {
-      super();
-   }
-
-   public I2Impl(String groupId, String iId) {
-      super();
-      this.pkey = new PKey(groupId, iId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -156,6 +138,19 @@ public class I2Impl implements I2, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setIId(String iId) {
       pkey.setIId(iId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public I2Impl() {
+      super();
+   }
+
+   public I2Impl(String groupId, String iId) {
+      this.pkey = new PKey(groupId, iId);
    }
    @Column
    private String i1Attr;

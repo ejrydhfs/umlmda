@@ -4,11 +4,9 @@ import org.umlmda.runtime.constraint.ConstraintVisitorContext;
 
 import org.umlmda.test.combinedids.one2one.persistence.A1;
 import org.umlmda.test.combinedids.one2one.persistence.A2;
-import org.umlmda.test.combinedids.one2one.persistence.A3;
 import org.umlmda.test.combinedids.one2one.persistence.A4;
 import org.umlmda.test.combinedids.one2one.persistence.B1;
 import org.umlmda.test.combinedids.one2one.persistence.B2;
-import org.umlmda.test.combinedids.one2one.persistence.B3;
 import org.umlmda.test.combinedids.one2one.persistence.B4;
 import org.umlmda.test.combinedids.one2one.persistence.impl.AbstractOne2oneVisitor;
 
@@ -40,12 +38,6 @@ public class One2oneConstraintVisitor extends AbstractOne2oneVisitor implements
       getConstraintContext().checkMultiplicityContraint(aA2.getClass().getName() + ".aAttr", 0, 1, aA2.getAAttr());
    }
 
-   public void visit(A3 aA3) {
-      getConstraintContext().checkMultiplicityContraint(aA3.getClass().getName() + ".groupId", 1, 1, aA3.getGroupId());
-      getConstraintContext().checkMultiplicityContraint(aA3.getClass().getName() + ".aId", 1, 1, aA3.getAId());
-      getConstraintContext().checkMultiplicityContraint(aA3.getClass().getName() + ".aAttr", 0, 1, aA3.getAAttr());
-   }
-
    public void visit(A4 aA4) {
       getConstraintContext().checkMultiplicityContraint(aA4.getClass().getName() + ".groupId", 1, 1, aA4.getGroupId());
       getConstraintContext().checkMultiplicityContraint(aA4.getClass().getName() + ".aId", 1, 1, aA4.getAId());
@@ -62,12 +54,6 @@ public class One2oneConstraintVisitor extends AbstractOne2oneVisitor implements
       getConstraintContext().checkMultiplicityContraint(aB2.getClass().getName() + ".groupId", 1, 1, aB2.getGroupId());
       getConstraintContext().checkMultiplicityContraint(aB2.getClass().getName() + ".bId", 1, 1, aB2.getBId());
       getConstraintContext().checkMultiplicityContraint(aB2.getClass().getName() + ".bAttr", 0, 1, aB2.getBAttr());
-   }
-
-   public void visit(B3 aB3) {
-      getConstraintContext().checkMultiplicityContraint(aB3.getClass().getName() + ".groupId", 1, 1, aB3.getGroupId());
-      getConstraintContext().checkMultiplicityContraint(aB3.getClass().getName() + ".bId", 1, 1, aB3.getBId());
-      getConstraintContext().checkMultiplicityContraint(aB3.getClass().getName() + ".bAttr", 0, 1, aB3.getBAttr());
    }
 
    public void visit(B4 aB4) {

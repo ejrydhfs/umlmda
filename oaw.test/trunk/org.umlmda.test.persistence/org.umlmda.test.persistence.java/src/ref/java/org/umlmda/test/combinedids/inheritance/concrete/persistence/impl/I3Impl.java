@@ -15,7 +15,7 @@ import org.umlmda.test.combinedids.inheritance.concrete.persistence.I3;
  * Business implementation of org.umlmda.test.combinedids.inheritance.concrete.I3.
  */
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class I3Impl implements I3, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
    /**
     * Name in die UML model persistence_test_pim_java_psm
@@ -113,20 +113,6 @@ public class I3Impl implements I3, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public I3Impl() {
-      super();
-   }
-
-   public I3Impl(String groupId, String iId) {
-      super();
-      this.pkey = new PKey(groupId, iId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -152,6 +138,19 @@ public class I3Impl implements I3, Serializable, XMLSerializable, org.umlmda.run
     */
    public void setIId(String iId) {
       pkey.setIId(iId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public I3Impl() {
+      super();
+   }
+
+   public I3Impl(String groupId, String iId) {
+      this.pkey = new PKey(groupId, iId);
    }
    @Column
    private String i1Attr;

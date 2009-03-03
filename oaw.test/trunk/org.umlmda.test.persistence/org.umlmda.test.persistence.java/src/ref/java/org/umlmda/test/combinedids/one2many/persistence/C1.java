@@ -73,14 +73,14 @@ public interface C1 extends org.umlmda.runtime.model.ModeledElement, java.io.Ser
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
-   &lt;BODY&gt;Simple One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
+   &lt;BODY&gt;Simple One2Many association.&lt;/BODY&gt;&lt;/HTML&gt;
     */
    public java.util.Set<D1> getDs();
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
-   &lt;BODY&gt;Simple One2One association.&lt;/BODY&gt;&lt;/HTML&gt;
+   &lt;BODY&gt;Simple One2Many association.&lt;/BODY&gt;&lt;/HTML&gt;
     *
     * @param ds
     *		New value for assocation ds 

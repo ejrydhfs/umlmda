@@ -113,20 +113,6 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Default Ctor. 
-   
-
-    */
-   public D4Impl() {
-      super();
-   }
-
-   public D4Impl(String groupId, String bId) {
-      super();
-      this.pkey = new PKey(groupId, bId);
-   }
-
-   /**
     * Get groupId, 
     */
    public String getGroupId() {
@@ -153,6 +139,19 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    public void setBId(String bId) {
       pkey.setBId(bId);
    }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public D4Impl() {
+      super();
+   }
+
+   public D4Impl(String groupId, String bId) {
+      this.pkey = new PKey(groupId, bId);
+   }
    @Column
    private String bAttr;
 
@@ -173,13 +172,13 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    @ManyToOne(fetch = FetchType.LAZY, optional = false)
    @JoinColumns( {
          @JoinColumn(name = "groupId", referencedColumnName = "groupId", nullable = true, insertable = false, updatable = false),
-         @JoinColumn(name = "a_aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
+         @JoinColumn(name = "aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
    private C4Impl a;
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
-   &lt;BODY&gt;Bidirectional&nbsp;One2One composition.&lt;/BODY&gt;&lt;/HTML&gt;
+   &lt;BODY&gt;Bidirectional&nbsp;One2Many composition.&lt;/BODY&gt;&lt;/HTML&gt;
     */
    public C4 getA() {
       return a;
@@ -188,7 +187,7 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
    &lt;META content="MSHTML 6.00.2900.3199" name=GENERATOR&gt;&lt;/HEAD&gt;
-   &lt;BODY&gt;Bidirectional&nbsp;One2One composition.&lt;/BODY&gt;&lt;/HTML&gt;
+   &lt;BODY&gt;Bidirectional&nbsp;One2Many composition.&lt;/BODY&gt;&lt;/HTML&gt;
     *
     * @param a
     *		New value for assocation a 
@@ -196,16 +195,16 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    public void setA(C4 a) {
       this.a = (C4Impl) a;
       if (a == null) {
-         a_aId = null;
+         aId = null;
       }
    }
    /**
     * Unshared pkey column of association {@link #getA()} to {@link C4}
     */
-   @Column(nullable=false)
+   @Column(nullable = false)
    @SuppressWarnings("unused")
    // Used by jpa
-   private String a_aId;
+   private String aId;
 
    /**
     * Sync unshared pkey columms of association {@link #getA()} to {@link C4}
@@ -217,11 +216,11 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    // Used by jpa
    private void syncA() {
       if (a != null) {
-         a_aId = a.getC4Pkey().getAId();
+         aId = a.getC4Pkey().getAId();
          assert a.getC4Pkey().getGroupId().equals(pkey.getGroupId()) : "different groupId";
       }
       else {
-         a_aId = null;
+         aId = null;
       }
    }
 

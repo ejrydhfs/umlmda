@@ -1,4 +1,4 @@
-package org.umlmda.test.combinedids.one2many.persistence.impl;
+package org.umlmda.test.combinedids.inheritance.hierarchy.persistence.impl;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -8,20 +8,21 @@ import javax.persistence.*;
 import org.umlmda.runtime.xml.XMLMarshalContext;
 import org.umlmda.runtime.xml.XMLSerializable;
 
-import org.umlmda.test.combinedids.one2many.persistence.D3;
-import org.umlmda.test.combinedids.one2many.persistence.One2manyVisitor;
+import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.HierarchyVisitor;
+import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I0;
+import org.umlmda.test.combinedids.inheritance.hierarchy.persistence.I01;
 
 /**
- * Business implementation of org.umlmda.test.combinedids.one2many.D3.
+ * Business implementation of org.umlmda.test.combinedids.inheritance.hierarchy.I01.
  */
 @Entity
-public class D3Impl implements D3, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
+public class I01Impl extends I0Impl implements I01, Serializable, XMLSerializable, org.umlmda.runtime.visitor.Visitable {
    /**
     * Name in die UML model persistence_test_pim_java_psm
     */
-   public static final String  MODEL_NAME       = "org.umlmda.test.combinedids.one2many.D3";
+   public static final String  MODEL_NAME       = "org.umlmda.test.combinedids.inheritance.hierarchy.I01";
    /**
-    * Version information from BusinessComponent org.umlmda.test.combinedids.one2many
+    * Version information from BusinessComponent org.umlmda.test.combinedids.inheritance.hierarchy
     */
    public static final String  MODEL_VERSION    = "1.0";
    //@@UserSection-Begin VersionInfo
@@ -32,18 +33,18 @@ public class D3Impl implements D3, Serializable, XMLSerializable, org.umlmda.run
     * Primary key implementation
     */
    @Embeddable
-   public static class PKey implements D3.PKey {
+   public static class PKey implements I01.PKey {
       private static final long serialVersionUID = 1000L;
       private String            groupId;
-      private String            bId;
+      private String            iId;
 
       public PKey() {
          super();
       }
 
-      public PKey(String groupId, String bId) {
+      public PKey(String groupId, String iId) {
          this.groupId = groupId;
-         this.bId = bId;
+         this.iId = iId;
       }
 
       /**
@@ -62,24 +63,24 @@ public class D3Impl implements D3, Serializable, XMLSerializable, org.umlmda.run
       }
 
       /**
-       * Getkey attribute bId, 
+       * Getkey attribute iId, 
        */
-      public String getBId() {
-         return bId;
+      public String getIId() {
+         return iId;
       }
 
       /**
-       * Setkey attribute bId, 
+       * Setkey attribute iId, 
        */
-      public void setBId(String bId) {
-         String oldValue = this.bId;
-         this.bId = bId;
+      public void setIId(String iId) {
+         String oldValue = this.iId;
+         this.iId = iId;
       }
 
       public boolean equals(Object obj) {
-         if (obj instanceof D3.PKey) {
-            D3.PKey pkey = (D3.PKey) obj;
-            return groupId.equals(pkey.getGroupId()) && bId.equals(pkey.getBId());
+         if (obj instanceof I01.PKey) {
+            I01.PKey pkey = (I01.PKey) obj;
+            return groupId.equals(pkey.getGroupId()) && iId.equals(pkey.getIId());
          }
          else {
             return super.equals(obj);
@@ -89,7 +90,7 @@ public class D3Impl implements D3, Serializable, XMLSerializable, org.umlmda.run
       public int hashCode() {
          int hashCode = 0;
          hashCode = hashCode * 29 + groupId.hashCode();
-         hashCode = hashCode * 29 + bId.hashCode();
+         hashCode = hashCode * 29 + iId.hashCode();
          return hashCode;
       }
    }
@@ -100,29 +101,15 @@ public class D3Impl implements D3, Serializable, XMLSerializable, org.umlmda.run
    /**
     * Getter for the primary key
     */
-   public D3.PKey getD3Pkey() {
+   public I01.PKey getI01Pkey() {
       return pkey;
    }
 
    /**
     * Setter for the primary key
     */
-   public void setD3Pkey(D3.PKey pkey) {
+   public void setI01Pkey(I01.PKey pkey) {
       this.pkey = (PKey) pkey;
-   }
-
-   /**
-    * Default Ctor. 
-   
-
-    */
-   public D3Impl() {
-      super();
-   }
-
-   public D3Impl(String groupId, String bId) {
-      super();
-      this.pkey = new PKey(groupId, bId);
    }
 
    /**
@@ -140,34 +127,46 @@ public class D3Impl implements D3, Serializable, XMLSerializable, org.umlmda.run
    }
 
    /**
-    * Get bId, 
+    * Get iId, 
     */
-   public String getBId() {
-      return pkey.getBId();
+   public String getIId() {
+      return pkey.getIId();
    }
 
    /**
-    * Set bId, 
+    * Set iId, 
     */
-   public void setBId(String bId) {
-      pkey.setBId(bId);
+   public void setIId(String iId) {
+      pkey.setIId(iId);
+   }
+
+   /**
+    * Default Ctor. 
+   
+
+    */
+   public I01Impl() {
+      super();
+   }
+
+   public I01Impl(String groupId, String iId) {
    }
    @Column
-   private String bAttr;
+   private String i2Attr;
 
    /**
-    * Get bAttr, 
+    * Get i2Attr, 
     */
-   public String getBAttr() {
-      return bAttr;
+   public String getI2Attr() {
+      return i2Attr;
    }
 
    /**
-    * Set bAttr, 
+    * Set i2Attr, 
     */
-   public void setBAttr(String bAttr) {
-      String oldValue = this.bAttr;
-      this.bAttr = bAttr;
+   public void setI2Attr(String i2Attr) {
+      String oldValue = this.i2Attr;
+      this.i2Attr = i2Attr;
    }
 
    public String getModelName() {
@@ -181,12 +180,12 @@ public class D3Impl implements D3, Serializable, XMLSerializable, org.umlmda.run
    /** 
     * Accept the visitor
     * @param visitor
-    *           must be instance of org.umlmda.test.combinedids.one2many.persistence.One2manyVisitor.
-    * @see org.umlmda.test.combinedids.one2many.persistence.One2manyVisitor.
+    *           must be instance of org.umlmda.test.combinedids.inheritance.hierarchy.persistence.HierarchyVisitor.
+    * @see org.umlmda.test.combinedids.inheritance.hierarchy.persistence.HierarchyVisitor.
     */
    public void accept(org.umlmda.runtime.visitor.Visitor visitor) {
-      if (visitor instanceof One2manyVisitor) {
-         One2manyVisitor aVisitor = (One2manyVisitor) visitor;
+      if (visitor instanceof HierarchyVisitor) {
+         HierarchyVisitor aVisitor = (HierarchyVisitor) visitor;
          aVisitor.visit(this);
       }
    }
@@ -205,7 +204,7 @@ public class D3Impl implements D3, Serializable, XMLSerializable, org.umlmda.run
     */
    public String toXmlString() {
       XMLMarshalContext context = new XMLMarshalContext();
-      marshal("D3Impl", context, true);
+      marshal("I01Impl", context, true);
       return context.toString();
    }
 
@@ -224,20 +223,21 @@ public class D3Impl implements D3, Serializable, XMLSerializable, org.umlmda.run
     * Marshal attributes
     */
    protected void marshalAttributes(XMLMarshalContext context) {
-      context.simpleElement("groupId", getGroupId());
-      context.simpleElement("bId", getBId());
-      context.simpleElement("bAttr", getBAttr());
+      super.marshalAttributes(context);
+      context.simpleElement("i2Attr", getI2Attr());
    }
 
    /**
     * Marshal children
     */
    protected void marshalChildren(XMLMarshalContext context) {
+      super.marshalChildren(context);
    }
 
    /**
     * Marshal references
     */
    protected void marshalReferences(XMLMarshalContext context) {
+      super.marshalReferences(context);
    }
 }
