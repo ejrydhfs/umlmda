@@ -97,6 +97,8 @@
 	<component adviceTarget="generator_server_domain" id="reflectionAdvice" class="oaw.xpand2.GeneratorAdvice">
 		<advices value="java::aop::NoPropertyChangeAdvices"/>
         <advices value="java::aop::NoJmiReflectAdvices"/>
+        <advices value="java::persistence::aop::BOInterfaceAdvices"/>
+        <advices value="java::persistence::aop::BOImplAdvices"/>
     </component>	
 
 	<component id="generator_server_domain" class="oaw.xpand2.Generator" skipOnErrors="true">
