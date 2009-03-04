@@ -82,3 +82,7 @@ cached Boolean hasSharedJoinColumns(JavaModelAssociation assoc) :
 cached Boolean hasUnSharedJoinColumns(JavaModelAssociation assoc) :
     assoc.isBidirectional() && !assoc.isOwner() && !assoc.multiple && !assoc.unsharedJoinColumns().isEmpty
 ;    
+
+cached Boolean isJoinAssociation(JavaModelAssociation assoc) :
+    assoc.isBidirectional() && !assoc.isOwner() && !assoc.multiple && !assoc.derived
+;
