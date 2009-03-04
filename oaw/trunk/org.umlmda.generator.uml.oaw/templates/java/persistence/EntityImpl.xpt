@@ -17,36 +17,40 @@
 «EXTENSION org::umlmda::uml::persistence::Class»
 
 «DEFINE EntityImpl FOR JavaBusinessObject»
-«LET generatedName(this, getDefaultArtefact("BusinessObject", scopeImplementation())) AS className»
-«this.resetImports()»
-«this.registerImport(getDefaultArtefact("BusinessObject"))»
-«IF javaSuperClass != null && !javaSuperClass.isNative()»
-    «this.registerImport(getDefaultArtefact(javaSuperClass), javaSuperClass)»
-«ENDIF»
-«this.registerImports(getDefaultArtefact("BusinessObject"), implementationReferencedTypes, "BusinessObject")»
-«this.registerImports(getDefaultArtefact("BusinessException"), implementationReferencedTypes, "BusinessException")»
-«this.registerImports(getDefaultArtefact("Enumeration"), implementationReferencedTypes, "Enumeration")»
-«EXPAND java::BOImpl::ImportVisitorBase FOR this»
-«FILE generatedPath+"/"+className+".java"»
-	package «generatorPackage.getQualifiedPackageName(getDefaultArtefact("BusinessObject", scopeImplementation()))»;
-	
-	«EXPAND standardImports FOR this»
-	«EXPAND java::BOImpl::xmlSerializationImports FOR this»
-	«this.registeredImports()»
-	
-	/**
-	 * Business implementation of «qualifiedName».
-	 */
-	«EXPAND entityAnnotation FOR this» 
-	public 
-	«IF abstract»
-	abstract
+	«LET generatedName(this, getDefaultArtefact("BusinessObject", scopeImplementation())) AS className»
+	«this.resetImports()»
+	«this.registerImport(getDefaultArtefact("BusinessObject"))»
+	«IF javaSuperClass != null && !javaSuperClass.isNative()»
+	    «this.registerImport(getDefaultArtefact(javaSuperClass), javaSuperClass)»
 	«ENDIF»
-	class «className» «EXPAND java::BOImpl::extendsDecl FOR this» «EXPAND java::BOImpl::implementsDecl FOR this»  {
-	    «EXPAND standardBody FOR this»
-	}
-«ENDFILE»
-«ENDLET»
+	«this.registerImports(getDefaultArtefact("BusinessObject"), implementationReferencedTypes, "BusinessObject")»
+	«this.registerImports(getDefaultArtefact("BusinessException"), implementationReferencedTypes, "BusinessException")»
+	«this.registerImports(getDefaultArtefact("Enumeration"), implementationReferencedTypes, "Enumeration")»
+	«REM» Import parent class for non-navigable composition «ENDREM»
+   «IF parentComposition != null && ((JavaModelAssociation)parentComposition).isOwner() && ! parentComposition.navigatableToSource»
+      «this.registerImport(getDefaultArtefact(parentComposition.source), (JavaBusinessObject)parentComposition.source)»
+   «ENDIF»
+	«EXPAND java::BOImpl::ImportVisitorBase FOR this»
+	«FILE generatedPath+"/"+className+".java"»
+		package «generatorPackage.getQualifiedPackageName(getDefaultArtefact("BusinessObject", scopeImplementation()))»;
+		
+		«EXPAND standardImports FOR this»
+		«EXPAND java::BOImpl::xmlSerializationImports FOR this»
+		«this.registeredImports()»
+		
+		/**
+		 * Business implementation of «qualifiedName».
+		 */
+		«EXPAND entityAnnotation FOR this» 
+		public 
+		«IF abstract»
+		abstract
+		«ENDIF»
+		class «className» «EXPAND java::BOImpl::extendsDecl FOR this» «EXPAND java::BOImpl::implementsDecl FOR this»  {
+		    «EXPAND standardBody FOR this»
+		}
+	«ENDFILE»
+	«ENDLET»
 «ENDDEFINE»
 
 «DEFINE standardImports FOR JavaBusinessObject»
@@ -75,6 +79,29 @@
 	      «ENDIF»
       «ENDIF»
    «ENDIF»
+«ENDDEFINE»
+
+«DEFINE standardBody FOR JavaBusinessObject»
+   «EXPAND java::BOImpl::versionInfo FOR this»
+   «EXPAND java::BOImpl::delegateFactory FOR this»
+   «EXPAND keyImpl FOR this»
+   
+   «EXPAND java::BOImpl::standardCtor("public") FOR this»
+   «EXPAND handleAttributes FOR this»  
+   
+   «FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
+     «EXPAND handleAssociation(this) FOR assoc»
+   «ENDFOREACH»
+   «EXPAND compositionHandling FOR this»
+   «EXPAND jpaSyncMethod FOR this»
+
+   «FOREACH implementedMethods.typeSelect(JavaModelMethod) AS method»
+      «EXPAND java::BOImpl::handleMethod(this) FOR method»
+   «ENDFOREACH»
+
+   «EXPAND java::BOImpl::modelMetaInformation FOR this»
+   «EXPAND java::BOImpl::visitorAcceptMethod FOR this»
+   «EXPAND java::BOImpl::xmlSerializationMethods FOR this»
 «ENDDEFINE»
 
 «DEFINE attrAnnotation FOR JavaModelAttribute»
@@ -133,34 +160,13 @@
 «ENDDEFINE»
 
 «DEFINE joinColumns FOR JavaModelAssociation»
-         «IF joinColumns().isEmpty == false»
-             @JoinColumns( {
-                «FOREACH joinColumns() AS keyAttr SEPARATOR ","»
-                    @JoinColumn(name = "«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
-                «ENDFOREACH»
-             })         
-         «ENDIF»
-«ENDDEFINE»
-
-«DEFINE standardBody FOR JavaBusinessObject»
-    «EXPAND java::BOImpl::versionInfo FOR this»
-    «EXPAND java::BOImpl::delegateFactory FOR this»
-    «EXPAND keyImpl FOR this»
-    
-    «EXPAND java::BOImpl::standardCtor("public") FOR this»
-    «EXPAND handleAttributes FOR this»  
-    
-    «FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
-        «EXPAND handleAssociation(this) FOR assoc»
-    «ENDFOREACH»
-    
-    «FOREACH implementedMethods.typeSelect(JavaModelMethod) AS method»
-        «EXPAND java::BOImpl::handleMethod(this) FOR method»
-    «ENDFOREACH»
-    
-    «EXPAND java::BOImpl::modelMetaInformation FOR this»
-    «EXPAND java::BOImpl::visitorAcceptMethod FOR this»
-    «EXPAND java::BOImpl::xmlSerializationMethods FOR this»
+   «IF joinColumns().isEmpty == false»
+      @JoinColumns( {
+         «FOREACH joinColumns() AS keyAttr SEPARATOR ","»
+            @JoinColumn(name = "«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
+         «ENDFOREACH»
+      })         
+   «ENDIF»
 «ENDDEFINE»
 
 «DEFINE handleAttributes FOR JavaModelClass»
@@ -198,6 +204,39 @@
    }
 «ENDDEFINE»
 
+«DEFINE compositionHandling FOR JavaBusinessObject»
+   «REM» Special handling for non-navigable compositions. Expect only one parent composition here! «ENDREM»
+   «IF parentComposition != null && ! parentComposition.navigatableToSource && parentComposition.target == this»
+      // -----------------------------------------------------------------------------------------------
+      // Technical relation to composition parent "«parent.name»"
+      «EXPAND handleAssociation(this) FOR (JavaModelAssociation)parentComposition.reverse»
+      «EXPAND handleJoinColumns FOR (JavaModelAssociation)parentComposition.reverse»
+   «ENDIF»
+«ENDDEFINE»
+
+«DEFINE jpaSyncMethod FOR JavaBusinessObject»
+   «REM» JPA sync method for FKs to non-navigable, related entities «ENDREM»
+   «IF (parentComposition != null && ! parentComposition.navigatableToSource && parentComposition.target == this) || implementedAssociations.typeSelect(JavaModelAssociation).select(a|a.isJoinAssociation()).size > 0»
+      /**
+       * Sync technical foreign key columns to related objects or the parent.
+       */
+      @PrePersist
+      @PreRemove
+      @PreUpdate
+      @SuppressWarnings("unused") // Used by JPA implementation
+      private void syncTechnicalForeignKeys() {
+         «IF parentComposition != null && ! parentComposition.navigatableToSource»
+            // Parent "«parent.name»"
+            sync«parentComposition.reverse.name.toFirstUpper()»();
+         «ENDIF»
+         «FOREACH implementedAssociations.typeSelect(JavaModelAssociation).select(a|a.isJoinAssociation()) AS assoc»
+            // Relation "«assoc.name»" to "«assoc.target.name»" 
+            sync«assoc.name.toFirstUpper()»();
+         «ENDFOREACH»
+      }
+   «ENDIF»
+«ENDDEFINE»
+
 «DEFINE handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
    «EXPAND assocAnnotation FOR this»
    «EXPAND assocDecl FOR this»
@@ -216,55 +255,57 @@
             «IF hasUnSharedJoinColumns()»
             if ( «name» == null ) {
                 «FOREACH unsharedJoinColumns() AS attr»
-                    «attr.name» = null;
+                    «target.name.toFirstLower()»_«attr.name» = null;
                 «ENDFOREACH»
             }
             «ENDIF»
         «ENDIF»
    }
 
-    «IF !derived && isBidirectional() && !isOwner() && !multiple»
-       «EXPAND handleJoinColumns FOR this»   
+    «IF isJoinAssociation()»
+       «EXPAND handleJoinColumns FOR this»
     «ENDIF»
 «ENDDEFINE»
 
 «DEFINE handleJoinColumns FOR JavaModelAssociation»
-   «FOREACH unsharedJoinColumns() AS attr»
-        /**
-         * Unshared pkey column of association {@link #«getter»()} to {@link «((JavaModelClass)target).javaType»}
-         */
-        @Column(
-        «IF !optional»
-            nullable=false
-        «ENDIF»
-        )
-        @SuppressWarnings("unused") // Used by jpa
-        private «attr.javaType» «attr.name»; 
-   «ENDFOREACH»
-   
-   «IF unsharedJoinColumns().isEmpty == false»
-        /**
-         * Sync unshared pkey columms of association {@link #«getter»()} to {@link «((JavaModelClass)target).javaType»}
-         */
-        @PrePersist
-        @PreRemove
-        @PreUpdate
-        @SuppressWarnings("unused") // Used by jpa
-        private void sync«name.toFirstUpper()»(){
-            if( «name» != null){
-           «FOREACH unsharedJoinColumns() AS attr»
-                «attr.name» = «name».«((JavaModelClass)target).pkeyGetter()»().«attr.getter»();
-           «ENDFOREACH»
-           «FOREACH sharedJoinColumns() AS attr»
-                assert «name».«((JavaModelClass)target).pkeyGetter()»().«attr.getter»().equals(pkey.«attr.getter»()) : "different «attr.name»";
-           «ENDFOREACH»    
-           }else{
-           «FOREACH unsharedJoinColumns() AS attr»
-                «attr.name» = null;
-           «ENDFOREACH»
-           }
-       }   
+   «IF ! unsharedJoinColumns().isEmpty»
+      // -----------------------------------------------------------------------------------------------
+      // Foreign keys for association "«name»" to "«target.name»"
+      // -----------------------------------------------------------------------------------------------
+
+      /**
+       * Sync unshared pkey columms of association {@link #«getter»()} to {@link «((JavaModelClass)target).javaType»}
+       */
+      private void sync«name.toFirstUpper()»() {
+         if( «name» != null) {
+         «FOREACH unsharedJoinColumns().select(a|domainKeys(target).contains(a)) AS attr»
+            «target.name.toFirstLower()»_«attr.name» = «name».«((JavaModelClass)target).pkeyGetter()»().«attr.getter»();
+         «ENDFOREACH»
+         «FOREACH sharedJoinColumns().select(a|domainKeys(target).contains(a)) AS attr»
+            assert «name».«((JavaModelClass)target).pkeyGetter()»().«attr.getter»().equals(pkey.«attr.getter»()) : "different «attr.name»";
+         «ENDFOREACH»    
+         } else {
+         «FOREACH unsharedJoinColumns().select(a|domainKeys(target).contains(a)) AS attr»
+            «target.name.toFirstLower()»_«attr.name» = null;
+         «ENDFOREACH»
+         }
+      }   
    «ENDIF»    
+
+   «FOREACH unsharedJoinColumns() AS attr»
+		/**
+		 * Unshared pkey column of association {@link #«getter»()} to {@link «((JavaModelClass)target).javaType»}
+		 */
+		@Column(
+		«IF !optional»
+         nullable=false
+		«ENDIF»
+		)
+
+		@SuppressWarnings("unused") // Used by JPA implementation
+		private «attr.javaType» «target.name.toFirstLower()»_«attr.name»; 
+		
+   «ENDFOREACH»
 «ENDDEFINE»
 
 «DEFINE assocDecl FOR JavaModelAssociation»
