@@ -195,7 +195,23 @@ public class B2Impl implements B2, Serializable, XMLSerializable, org.umlmda.run
    public void setA(A2 a) {
       this.a = (A2Impl) a;
       if (a == null) {
-         aId = null;
+         a2_aId = null;
+      }
+   }
+
+   // -----------------------------------------------------------------------------------------------
+   // Foreign keys for association "a" to "A2"
+   // -----------------------------------------------------------------------------------------------
+   /**
+    * Sync unshared pkey columms of association {@link #getA()} to {@link A2}
+    */
+   private void syncA() {
+      if (a != null) {
+         a2_aId = a.getA2Pkey().getAId();
+         assert a.getA2Pkey().getGroupId().equals(pkey.getGroupId()) : "different groupId";
+      }
+      else {
+         a2_aId = null;
       }
    }
    /**
@@ -203,25 +219,20 @@ public class B2Impl implements B2, Serializable, XMLSerializable, org.umlmda.run
     */
    @Column()
    @SuppressWarnings("unused")
-   // Used by jpa
-   private String aId;
+   // Used by JPA implementation
+   private String a2_aId;
 
    /**
-    * Sync unshared pkey columms of association {@link #getA()} to {@link A2}
+    * Sync technical foreign key columns to related objects or the parent.
     */
    @PrePersist
    @PreRemove
    @PreUpdate
    @SuppressWarnings("unused")
-   // Used by jpa
-   private void syncA() {
-      if (a != null) {
-         aId = a.getA2Pkey().getAId();
-         assert a.getA2Pkey().getGroupId().equals(pkey.getGroupId()) : "different groupId";
-      }
-      else {
-         aId = null;
-      }
+   // Used by JPA implementation
+   private void syncTechnicalForeignKeys() {
+      // Relation "a" to "A2" 
+      syncA();
    }
 
    public String getModelName() {
