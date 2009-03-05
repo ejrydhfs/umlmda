@@ -133,7 +133,7 @@ public class ModelElementImpl implements ModelConstants, ModelElementBase {
     * @param taggedValues
     */
    private static void getTaggedValues(Element modelElement, Stereotype stereotype, Properties taggedValues) {
-      for (Iterator ip = stereotype.getAttributes().iterator(); ip.hasNext();) {
+      for (Iterator ip = stereotype.getAllAttributes().iterator(); ip.hasNext();) {
          Property property = (Property) ip.next();
          
          if ( !(property.getName().startsWith("base$") || property.getName().startsWith("base_")) ) {

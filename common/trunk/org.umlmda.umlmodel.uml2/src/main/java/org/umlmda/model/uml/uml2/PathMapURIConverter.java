@@ -56,7 +56,7 @@ public class PathMapURIConverter implements URIConverter {
    public URI normalize(URI uri) {
       URI normalizedURI = null;
       
-      if ( uri.scheme().equals("pathmap")) {
+      if ( uri.scheme() != null && uri.scheme().equals("pathmap")) {
          normalizedURI = createPathMapURI(uri);
       }
       else {
@@ -99,7 +99,7 @@ public class PathMapURIConverter implements URIConverter {
    public InputStream createInputStream(URI uri) throws IOException {
       InputStream inputStream = null;
       
-      if ( uri.scheme().equals("pathmap") ) {
+      if ( uri.scheme() != null && uri.scheme().equals("pathmap") ) {
          String host = uri.host();
          String mappedPath = (String) pathMap.get(host);
          
