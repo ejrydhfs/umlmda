@@ -2,10 +2,11 @@ package org.umlmda.model.uml.uml2;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EPackage;
@@ -17,13 +18,10 @@ import org.umlmda.model.uml.Model;
 import org.umlmda.model.uml.ModelAdapterFactory;
 import org.umlmda.model.uml.ModelBase;
 import org.umlmda.model.uml.ModelClass;
-import org.umlmda.model.uml.ModelFactory;
 import org.umlmda.model.uml.ModelPackage;
 import org.umlmda.model.uml.impl.ModelAdapterFactoryImpl;
 import org.umlmda.model.uml.validate.ModelValidationException;
 import org.umlmda.profile.ModelStereotype;
-
-import junit.framework.TestCase;
 
 public class ModelFactoryTest extends TestCase {
    private Logger logger = Logger.getLogger(getClass()); 

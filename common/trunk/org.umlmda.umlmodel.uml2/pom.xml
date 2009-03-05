@@ -109,6 +109,7 @@
             <configuration>
                <excludes>
                   <exclude>**/ModelFactoryTest.java</exclude>
+                  <exclude>**/StereotypeTest.java</exclude>
                </excludes>
 
             </configuration>
