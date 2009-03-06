@@ -1,0 +1,30 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelAssociation
+ */
+import java::util;
+import org::umlmda::generator::model::uml;
+import org::umlmda::profile;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+String pkeyInterface(JavaModelClass class) :
+    class.getScopedName("java.BusinessObjectInterface")+".PKey"
+;
+
+String pkeyGetter(JavaModelClass class) :
+    "get"+class.name+"Pkey"
+;    
+
+cached List[ModelAttribute] domainKeys(ModelClass class) :
+    class.keyAttributes.typeSelect(ModelAttribute).select(attr | attr.owningClass == class && attr.getStereotypeProperty("domainAttribute", "true") == "true")
+;
+
+/**
+ * Checks if a key class is required
+ */
+cached Boolean isKeyClassRequired(JavaModelClass class) :
+   class.keyAttributes.size > 1 && (class.superClass == null || !class.superClass.hasStereotype("PersistentEntity")) && class.hasStereotype("PersistentEntity")
+;

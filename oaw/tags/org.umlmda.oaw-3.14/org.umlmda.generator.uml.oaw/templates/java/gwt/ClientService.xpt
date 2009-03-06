@@ -1,0 +1,59 @@
+«REM»
+   Standard generation process for google webtoolkit (GWT) remote services.
+«ENDREM»
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION org::umlmda::uml::java::Artefact»
+
+«DEFINE Root FOR JavaModel»
+    «ERROR "Root called on <<Model>> "+name»
+    «REM» Define standard GWT Artefacts«ENDREM»
+    «resetDefaultArtefacts()»
+    «setDefaultArtefact("BusinessObject", "gwt.ObjectInterface")»
+    «setDefaultArtefact("BusinessObject", "gwt.ObjectImpl", scopeImplementation())»
+    «setDefaultArtefact("BusinessException", "gwt.Exception")»
+    «setDefaultArtefact("BusinessService", "gwt.ServiceInterface")»
+	«EXPAND Root FOREACH this.modelElements.typeSelect(ModelElement)»
+«ENDDEFINE»
+
+«DEFINE Root FOR JavaBusinessException»
+	«EXPAND java::BOException::BOException»
+«ENDDEFINE»
+
+«DEFINE Root FOR JavaBusinessObject»
+	«EXPAND java::BOInterface::BOInterface»
+	«EXPAND java::BOImpl::BOImpl»
+«REM»
+	«EXPAND java::BODelegate::Impl»
+	«EXPAND java::BODelegateInterface::BODelegateInterface»
+«ENDREM»
+«ENDDEFINE»
+
+«DEFINE Root FOR JavaBusinessService»
+	«EXPAND java::gwt::ServiceInterface::Root»
+«ENDDEFINE»
+
+«DEFINE Root FOR JavaEnumeration»
+	«EXPAND java::Enumeration::Enumeration»
+«ENDDEFINE»
+
+«REM»
+«DEFINE Root FOR JavaBusinessComponent»
+	«EXPAND Root FOREACH classes»
+	«EXPAND java::BOFactory::BOFactory FOR this»
+	«EXPAND java::BOFactoryImpl::BOFactoryImpl FOR this»
+	«EXPAND java::BFactory::BFactory FOR this»
+«ENDDEFINE»
+«ENDREM»
+
+«DEFINE Root FOR JavaModelPackage»
+    «ERROR "Root called on <<Package>> "+qualifiedName»
+	«EXPAND Root FOREACH classes.typeSelect(ModelClass)»
+«ENDDEFINE»
+
+«DEFINE Root FOR ModelElement»
+	«ERROR "Nothing to do for: "+qualifiedName+" ("+metaType+")"»
+«ENDDEFINE»

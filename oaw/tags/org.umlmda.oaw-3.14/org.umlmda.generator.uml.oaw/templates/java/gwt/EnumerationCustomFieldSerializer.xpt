@@ -1,0 +1,39 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::Enumeration»
+
+«DEFINE Root FOR JavaEnumeration»
+«LET generatedName(this, "gwt.EnumerationCustomFieldSerializer") AS className»
+«FILE generatedPath+"/"+className+".java"»
+package «generatorPackage.getQualifiedPackageName("gwt.EnumerationCustomFieldSerializer")»;
+
+import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.client.rpc.SerializationStreamReader;
+import com.google.gwt.user.client.rpc.SerializationStreamWriter;
+
+/**
+ * Custom field serializer for GWT for the type {@link «name»}.
+ */
+public class «name»_CustomFieldSerializer
+{
+   public static «name» instantiate(SerializationStreamReader reader) throws SerializationException {
+      return «name».fromValue(reader.read«this.enumType().toFirstUpper()»());
+   }
+
+   public static void serialize(SerializationStreamWriter writer, «name» instance) throws SerializationException {
+      writer.write«this.enumType().toFirstUpper()»(instance.getValue());
+   }
+
+   public static void deserialize(SerializationStreamReader reader, «name» instance) throws SerializationException {
+   }
+}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»

@@ -1,0 +1,218 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION java::JmiReflect»
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+«EXTENSION org::umlmda::uml::java::Parameter»
+
+«DEFINE BOInterface FOR JavaModelClass»
+	«LET generatedName(this, getDefaultArtefact()) AS interfaceName»
+	«this.resetImports()»
+	«IF superClass != null»
+		«this.registerImport(superClass.getDefaultArtefact(), (JavaModelClass)superClass)»
+	«ENDIF»
+	«this.registerImports(getDefaultArtefact("BusinessObject"), referencedTypes, "BusinessObject")»
+	«this.registerImports(getDefaultArtefact("BusinessException"), referencedTypes, "BusinessException")»
+	«this.registerImports(getDefaultArtefact("Enumeration"), referencedTypes, "Enumeration")»
+	«FILE generatedPath+"/"+interfaceName+".java"»
+		package «generatorPackage.getQualifiedPackageName(getDefaultArtefact())»;
+		
+		«EXPAND standardImports FOR this»
+		«this.registeredImports()»
+		
+		/**
+		 * «documentation»
+		 */
+		public interface «interfaceName» «EXPAND extendsDecl FOR this»
+		{
+		«EXPAND keyDecl FOR this»
+		
+		«FOREACH javaAttributes() AS attr»
+			«EXPAND propertyNameConstantDecl FOR attr»
+		«ENDFOREACH»
+		«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+			«EXPAND propertyNameConstantDecl FOR assoc»;
+		«ENDFOREACH»
+
+		«EXPAND handleAttributes FOR this»
+		«EXPAND handleAssociations FOR this»		
+		
+		«FOREACH methods.typeSelect(JavaModelMethod) AS method»
+			«EXPAND handleMethod FOR method»
+		«ENDFOREACH»
+		}
+	«ENDFILE»
+	«ENDLET»
+«ENDDEFINE»
+
+«DEFINE standardImports FOR JavaModelClass»
+«ENDDEFINE»
+
+«DEFINE handleAttributes FOR JavaModelClass»
+	«FOREACH javaAttributes() AS attr»
+		«EXPAND handleAttribute FOR attr»
+	«ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE handleAttribute FOR JavaModelAttribute»
+	«EXPAND attrGetterDecl FOR this»;
+	«EXPAND attrSetterDecl FOR this»;
+«ENDDEFINE»
+
+«DEFINE handleMethod FOR JavaModelMethod»
+	«EXPAND methodDecl FOR this»;
+«ENDDEFINE»
+
+«DEFINE handleAssociations FOR JavaModelClass»
+	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+		«EXPAND handleAssociation FOR assoc»
+	«ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE handleAssociation FOR JavaModelAssociation»
+	«EXPAND assocGetterDecl FOR this»;
+	«EXPAND assocSetterDecl FOR this»;
+«ENDDEFINE»
+
+// Superclasses
+«DEFINE extendsDecl FOR JavaBusinessObject»
+	extends
+	«IF javaExtentedInterfaces().size > 0» 
+		«FOREACH javaExtentedInterfaces() AS superClass SEPARATOR ","»
+			«this.getScopedName(superClass.getDefaultArtefact(scopeInterface()), superClass)»
+		«ENDFOREACH»
+	«ELSE»
+		«EXPAND standardBaseInterface FOR this»
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE extendsDecl FOR JavaModelClass»
+	«IF javaExtentedInterfaces().size > 0» 
+		extends
+		«FOREACH javaExtentedInterfaces() AS superClass SEPARATOR ","»
+			«IF superClass.hasStereotype("NativeClass") == false»
+				«this.getScopedName(getDefaultArtefact(this), superClass)»
+			«ENDIF»
+		«ENDFOREACH»
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE standardBaseInterface FOR JavaBusinessObject»
+	org.umlmda.runtime.model.ModeledElement, «EXPAND propertyChangeBaseInterface FOR this»
+«ENDDEFINE»
+
+«DEFINE propertyChangeBaseInterface FOR JavaBusinessObject»
+	org.umlmda.runtime.bean.IPropertyChangeSupport
+«ENDDEFINE»
+
+
+// Constants
+«DEFINE constantDecl FOR JavaModelAttribute»
+   /**
+   * Constant «name», «documentation»
+   */
+   public static final «javaTypeName()» «name» = «initialValue»;
+«ENDDEFINE»
+
+«DEFINE attrGetterDecl FOR JavaModelAttribute»
+	«EXPAND attrGetterDecl("") FOR this»
+«ENDDEFINE»
+«DEFINE attrGetterDecl(String context) FOR JavaModelAttribute»
+   /**
+   * Get«context» «name», «getDocumentation("GETTER")»
+   */
+   public «javaTypeName()» «getter»()
+«ENDDEFINE»
+
+«DEFINE attrSetterDecl FOR JavaModelAttribute»
+	«EXPAND attrSetterDecl("") FOR this»
+«ENDDEFINE»
+«DEFINE attrSetterDecl(String context) FOR JavaModelAttribute»
+«IF readOnly == false»
+  /**
+   * Set«context» «name», «getDocumentation("SETTER")»
+   */
+   public void «setter»(«javaTypeName()» «name»)
+«ENDIF»
+«ENDDEFINE»
+
+«DEFINE assocGetterDecl FOR JavaModelAssociation»
+   /**
+    * «getDocumentation("GETTER")»
+    */
+   public «interfaceType» «getter»()
+«ENDDEFINE»
+
+«DEFINE assocSetterDecl FOR JavaModelAssociation»
+«IF readOnly == false»
+	/**
+	 * «getDocumentation("SETTER")»
+	 *
+	 * @param «name»
+	 *		New value for assocation «name» 
+	 */
+     public void «setter»(«interfaceType» «name»)
+«ENDIF»
+«ENDDEFINE»
+
+«DEFINE methodDecl FOR JavaModelMethod»
+   /**
+    * «documentation»
+    */
+   public «javaType» «name»(
+	«FOREACH parameters.typeSelect(JavaModelParameter) AS parameter SEPARATOR "," »
+	    «parameter.javaTypeName()» «parameter.name»
+	«ENDFOREACH»   
+   )
+   «IF exceptions.size > 0»
+   		throws 
+   		«FOREACH exceptions.typeSelect(JavaModelClass) AS e SEPARATOR  "," »
+   			«((JavaModelClass)owner).getScopedName("java.BusinessException", e)»
+   		«ENDFOREACH»
+   «ENDIF»
+«ENDDEFINE»
+
+«DEFINE keyDecl FOR JavaModelClass»
+	«IF this.owningAPKey»
+	   «EXPAND keyInterfaceDecl FOR this»
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE keyInterfaceDecl FOR JavaModelClass»
+    public interface PKey extends java.io.Serializable {
+        «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
+            «EXPAND attrGetterDecl(" key attribute") FOR keyAttr»;
+            «EXPAND attrSetterDecl(" key attribute") FOR keyAttr»;
+        «ENDFOREACH»   
+    }
+    
+    «FOREACH inheritedKeyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
+        «EXPAND attrGetterDecl(" parent key attribute") FOR keyAttr»;
+    «ENDFOREACH»
+    
+    /**
+     * Getter for the primaryKey
+     */   
+    public PKey get«name»Pkey();
+       
+    /**
+     * Setter for the primaryKey
+     */   
+    public void set«name»Pkey(PKey pkey);
+«ENDDEFINE»
+
+«DEFINE propertyNameConstantDecl FOR JavaModelStructuraleFeature»
+	public static final String «EXPAND java::BOInterface::propertyNameConstant FOR this» = "«name»";
+«ENDDEFINE»»
+
+«DEFINE propertyNameConstant FOR JavaModelStructuraleFeature»
+	PROPERTY_«upperCaseIdentifier»
+«ENDDEFINE»
+
