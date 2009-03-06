@@ -2,7 +2,7 @@
 <!--xtools2_universal_type_manager-->
 <?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.uml.msl.model" version="7.0.0"><feature description="" name="com.ibm.xtools.ruml.feature" url="" version="7.0.0"/></signature>?>
 <?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.mmi.ui.signatures.diagram" version="7.0.0"><feature description="" name="Rational Modeling Platform (com.ibm.xtools.rmp)" url="" version="7.0.0"/></signature>?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:UMLMDAProfile="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation" xsi:schemaLocation="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22 pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx#_m4nosa87Edy5F6gxEi6kNw?UMLMDAProfile/UMLMDAProfile?">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:UMLMDACommonProfile="http:///schemas/UMLMDACommonProfile/_k-qQgOxoEd20l8kTFJG5bw/10" xmlns:UMLMDAServiceProfile="http:///schemas/UMLMDAServiceProfile/_WZEU8MgdEd27b5iuD2bDog/3" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation" xsi:schemaLocation="http:///schemas/UMLMDACommonProfile/_k-qQgOxoEd20l8kTFJG5bw/10 pathmap://UMLMDA4_PROFILE/UMLMDACommonProfile.epx#_k-qQgexoEd20l8kTFJG5bw?UMLMDACommonProfile/UMLMDACommonProfile? http:///schemas/UMLMDAServiceProfile/_WZEU8MgdEd27b5iuD2bDog/3 pathmap://UMLMDA4_PROFILE/UMLMDAServiceProfile.epx#_WZX28MgdEd27b5iuD2bDog?UMLMDAServiceProfile/UMLMDAServiceProfile?">
   <uml:Model xmi:id="_e1lU4I6tEdu_38fAI0Hi1w" name="UMLMDADemo">
     <packageImport xmi:id="_e1lU546tEdu_38fAI0Hi1w">
       <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
@@ -317,18 +317,14 @@
               <body>Common used business exceptions and objects.</body>
             </ownedComment>
             <packagedElement xmi:type="uml:Class" xmi:id="_419D11490052419D11990134" name="NotFoundException">
-              <eAnnotations xmi:id="_ew0Juo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
-                <details xmi:id="_ew0Ju46tEdu_38fAI0Hi1w" key="BusinessException"/>
-              </eAnnotations>
+              <eAnnotations xmi:id="_ew0Juo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <ownedComment xmi:id="_ew0Jt46tEdu_38fAI0Hi1w" annotatedElement="_419D11490052419D11990134">
                 <body>Exception thrown when business object was not found as expected.</body>
               </ownedComment>
               <generalization xmi:id="_419D1149005241A6E4F30261" general="_419D1149005241A6E4A60274"/>
             </packagedElement>
             <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005241A6E4A60274" name="CommonException">
-              <eAnnotations xmi:id="_ew9TlI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
-                <details xmi:id="_ew9TlY6tEdu_38fAI0Hi1w" key="BusinessException"/>
-              </eAnnotations>
+              <eAnnotations xmi:id="_ew9TlI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <ownedComment xmi:id="_ew0JvY6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241A6E4A60274">
                 <body>Base of all exceptions.</body>
               </ownedComment>
@@ -399,9 +395,7 @@
               </ownedAttribute>
             </packagedElement>
             <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005242F707B801FE" name="CommonService" isAbstract="true">
-              <eAnnotations xmi:id="_exHEoo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
-                <details xmi:id="_exHEo46tEdu_38fAI0Hi1w" key="BusinessService"/>
-              </eAnnotations>
+              <eAnnotations xmi:id="_exHEoo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <ownedComment xmi:id="_exHEno6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005242F707B801FE">
                 <body>Sample for an abstract business service used as base class for other services.</body>
               </ownedComment>
@@ -412,9 +406,7 @@
               </ownedOperation>
             </packagedElement>
             <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005243F4FD8C01D0" name="Note">
-              <eAnnotations xmi:id="_exHEp46tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
-                <details xmi:id="_exHEqI6tEdu_38fAI0Hi1w" key="BusinessObject"/>
-              </eAnnotations>
+              <eAnnotations xmi:id="_exHEp46tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <ownedAttribute xmi:id="_419D1149005243F4FDA802B7" name="usage" visibility="private">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string?"/>
               </ownedAttribute>
@@ -693,7 +685,7 @@
                     <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_e0ZCOo6tEdu_38fAI0Hi1w" canonical="false"/>
                   </children>
                   <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_e0ZCLI6tEdu_38fAI0Hi1w" showListStereotype="Text" showListSignature="true" lineColor="3342489" showStereotype="Text"/>
-                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_e0ZCLY6tEdu_38fAI0Hi1w" x="13868" y="17034"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_e0ZCLY6tEdu_38fAI0Hi1w" x="13314" y="17118"/>
                 </children>
                 <children xmi:id="_e0ZCRI6tEdu_38fAI0Hi1w" element="_419D1149005241FE3CB10078">
                   <children xmi:id="_e0ZCR46tEdu_38fAI0Hi1w" type="ImageCompartment">
@@ -892,6 +884,28 @@
                   </children>
                   <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_7CkPQT3iEd2TXIc2w3nvmA" showListStereotype="Text" showListSignature="true" lineColor="0" showParent="QualifiedName" showStereotype="Text"/>
                   <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7CkPQj3iEd2TXIc2w3nvmA" x="8216" y="3796"/>
+                </children>
+                <children xmi:id="_jvwBYQo4Ed6Ve7K2FjU0DA" element="_jSuHIAo4Ed6Ve7K2FjU0DA">
+                  <children xmi:id="_jv5yYAo4Ed6Ve7K2FjU0DA" type="ImageCompartment">
+                    <layoutConstraint xmi:type="notation:Size" xmi:id="_jv5yYQo4Ed6Ve7K2FjU0DA" width="1320" height="1320"/>
+                  </children>
+                  <children xmi:id="_jv5yYgo4Ed6Ve7K2FjU0DA" type="Stereotype"/>
+                  <children xmi:id="_jv5yYwo4Ed6Ve7K2FjU0DA" type="Name"/>
+                  <children xmi:id="_jv5yZAo4Ed6Ve7K2FjU0DA" type="Parent"/>
+                  <children xmi:id="_jv5yZQo4Ed6Ve7K2FjU0DA" type="AttributeCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_jv5yZgo4Ed6Ve7K2FjU0DA"/>
+                  </children>
+                  <children xmi:id="_jv5yZwo4Ed6Ve7K2FjU0DA" type="OperationCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_jv5yaAo4Ed6Ve7K2FjU0DA"/>
+                  </children>
+                  <children xmi:id="_jv5yaQo4Ed6Ve7K2FjU0DA" visible="false" type="SignalCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_jv5yago4Ed6Ve7K2FjU0DA"/>
+                  </children>
+                  <children xmi:id="_jv5yawo4Ed6Ve7K2FjU0DA" visible="false" type="StructureCompartment">
+                    <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_jv5ybAo4Ed6Ve7K2FjU0DA"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_jvwBYgo4Ed6Ve7K2FjU0DA" showListSignature="true" showStereotype="Label"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_jvwBYwo4Ed6Ve7K2FjU0DA" x="28213" y="15216"/>
                 </children>
                 <styles xmi:type="umlnotation:UMLDiagramStyle" xmi:id="_eymSdI6tEdu_38fAI0Hi1w" description="The full telephone number including country and area code. Sample for a dreived settable attribute."/>
                 <element xsi:nil="true"/>
@@ -2363,9 +2377,7 @@ Different types can be distinguished:
                 <details xmi:id="_ex2rkI6tEdu_38fAI0Hi1w" key="BusinessObject"/>
               </eAnnotations>
               <generalization xmi:id="_419D1149005241FE3CAE007E" general="_419D1149005241FE3C4B0325"/>
-              <ownedAttribute xmi:id="_419D1149005241FE3D060306" name="countryCode" visibility="private">
-                <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string?"/>
-              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005241FE3D060306" name="countryCode" visibility="private" type="_jSuHIAo4Ed6Ve7K2FjU0DA"/>
               <ownedAttribute xmi:id="_419D1149005241FE3D1200DC" name="areaCode" visibility="private">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string?"/>
               </ownedAttribute>
@@ -2545,6 +2557,11 @@ Different types can be distinguished:
                 </defaultValue>
               </ownedAttribute>
             </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_jSuHIAo4Ed6Ve7K2FjU0DA" name="CountryCode">
+              <ownedAttribute xmi:id="_rOdOoAo4Ed6Ve7K2FjU0DA" name="code" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string?"/>
+              </ownedAttribute>
+            </packagedElement>
           </packagedElement>
           <packagedElement xmi:type="uml:Package" xmi:id="_419D11490052445764E403BF" name="service">
             <eAnnotations xmi:id="_ey5NSI6tEdu_38fAI0Hi1w" source="uml2.diagrams" references="_419D11490052445765030161">
@@ -2612,116 +2629,28 @@ Different types can be distinguished:
       </eAnnotations>
       <appliedProfile href="pathmap://UML2_MSL_PROFILES/Deployment.epx#_vjbuwOvHEdiDX5bji0iVSA?Deployment?"/>
     </profileApplication>
-    <profileApplication xmi:id="_F9i7AJBzEdugQZgPS72wTA">
-      <eAnnotations xmi:id="_F-Sh4JBzEdugQZgPS72wTA" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx#_m4nosa87Edy5F6gxEi6kNw?UMLMDAProfile/UMLMDAProfile?"/>
+    <profileApplication xmi:id="_tZDlUAo1Ed6Ve7K2FjU0DA">
+      <eAnnotations xmi:id="_tZDlUQo1Ed6Ve7K2FjU0DA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UMLMDA4_PROFILE/UMLMDACommonProfile.epx#_k-qQgexoEd20l8kTFJG5bw?UMLMDACommonProfile/UMLMDACommonProfile?"/>
       </eAnnotations>
-      <appliedProfile href="pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx#_fgmLseO5Edm14clrpIgO7w?UMLMDAProfile?"/>
+      <appliedProfile href="pathmap://UMLMDA4_PROFILE/UMLMDACommonProfile.epx#_LKQ_oMT7Ed28n7ofFGqNfw?UMLMDACommonProfile?"/>
+    </profileApplication>
+    <profileApplication xmi:id="_wocScAo1Ed6Ve7K2FjU0DA">
+      <eAnnotations xmi:id="_wocScQo1Ed6Ve7K2FjU0DA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UMLMDA4_PROFILE/UMLMDAServiceProfile.epx#_WZX28MgdEd27b5iuD2bDog?UMLMDAServiceProfile/UMLMDAServiceProfile?"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UMLMDA4_PROFILE/UMLMDAServiceProfile.epx#_QNnkwMT7Ed28n7ofFGqNfw?UMLMDAServiceProfile?"/>
     </profileApplication>
   </uml:Model>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoYDuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241A6E4BF02DE"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoYTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243E9E80802F8"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoYjuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052423014BC0239"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoYzuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052423014CA0243"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoZDuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241E25D6D0381"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoZTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241E25D8201F0"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoZjuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052437206CA03BF"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoZzuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524372245501BC"/>
-  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzoaDuKEd2N3qQqZ9pYfQ" base_Operation="_419D1149005242F707EA01C4"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoaTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243F4FDA802B7"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoajuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243F4FDBA0280"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoazuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052445A086302D7"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzobDuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052445A090300CD"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzobTuKEd2N3qQqZ9pYfQ" base_Property="_K26dsJBzEdugQZgPS72wTA"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzobjuKEd2N3qQqZ9pYfQ" base_Property="_M0-s4JBzEdugQZgPS72wTA"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzobzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6EEB0000B"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzocDuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419D12010332"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzocTuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419D1244008F"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzocjuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419E53610065"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoczuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3D65026C"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzodDuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524215C5650251"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzodTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243A2DE2F01AE"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzodjuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243F4FDFF0262"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzodzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005244154A9E001E"/>
-  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzoeDuKEd2N3qQqZ9pYfQ" base_Operation="_419D1149005242159B150165"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoeTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B7059F0343"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoejuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419D12250167"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoezuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419D122D03C1"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzofDuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419D1233006D"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzofTuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419E71580052"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzofjuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419E716100A5"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzofzuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052426E044F039B"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzogDuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052439404B900E7"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzogTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6E6070075"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzogjuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524231C442037B"/>
-  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzogzuKEd2N3qQqZ9pYfQ" base_Operation="_419D114900524242BA1301A6"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzohDuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6EC07011A"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzohTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6EC070124"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzohjuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524450BF9300BA"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzohzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243F1DEFF0046"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoiDuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005242243CC902AF"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoiTuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524242B38402BF"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoijuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052436BB6DD0360"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoizuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243A2B4E4017C"/>
-  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzojDuKEd2N3qQqZ9pYfQ" base_Operation="_419D114900524215A1A50110"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzojTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6EC38023D"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzojjuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052443B9826025A"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzojzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6EC6A01E4"/>
-  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzokDuKEd2N3qQqZ9pYfQ" base_Operation="_419D1149005241C97F650120"/>
-  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzokTuKEd2N3qQqZ9pYfQ" base_Operation="_419D1149005241F77254038F"/>
-  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzokjuKEd2N3qQqZ9pYfQ" base_Operation="_419D11490052444FE2B60305"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzokzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3CD402D2"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzolDuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3D060306"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzolTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3D1200DC"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZYDuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3D170007"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZYTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243F1E5CA032F"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZYjuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3D280296"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZYzuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524242BA7C0125"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZZDuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524231C3FE014C"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZZTuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524231C40E03A8"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZZjuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524231C46600F2"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZZzuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052434FD1F90161"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZaDuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052434FD2240031"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZaTuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052434FD2050343"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZajuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243A2B5320228"/>
-  <UMLMDAProfile:TransactionalMethod xmi:id="_md9ZazuKEd2N3qQqZ9pYfQ" base_Operation="_419D1149005244047C89013D"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZbDuKEd2N3qQqZ9pYfQ" base_Association="_419D11490052419D124302B5"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZbTuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419D12440099"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZbjuKEd2N3qQqZ9pYfQ" base_Association="_419D11490052419E536000F0"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZbzuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419E5361006F"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZcDuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005241B6E606018C"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZcTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6E6070077"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZcjuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005241B6EC690161"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZczuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6EC6A01E6"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZdDuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005241FE3D6401CA"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZdTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3D65026E"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZdjuKEd2N3qQqZ9pYfQ" base_Association="_419D114900524215C5630316"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZdzuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524215C5650253"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZeDuKEd2N3qQqZ9pYfQ" base_Association="_419D114900524231C4420082"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZeTuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524231C442037D"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZejuKEd2N3qQqZ9pYfQ" base_Association="_419D114900524231C465024F"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZezuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524231C46600F4"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZfDuKEd2N3qQqZ9pYfQ" base_Association="_419D114900524242BA7B021E"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZfTuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524242BA7C012F"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZfjuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005243A2B4E3018E"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZfzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243A2B4E4017E"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZgDuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005243A2DE2E01AD"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZgTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243A2DE2F01B0"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZgjuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005243F4FDFE03E7"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZgzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243F4FDFF0264"/>
-  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZhDuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005244154A9A0068"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZhTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005244154A9E0020"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZhjuKEd2N3qQqZ9pYfQ" base_Property="_eGf4AJBzEdugQZgPS72wTA"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZhzuKEd2N3qQqZ9pYfQ" base_Property="_h76qYJBzEdugQZgPS72wTA"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZiDuKEd2N3qQqZ9pYfQ" base_Property="_jceeMJBzEdugQZgPS72wTA"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZiTuKEd2N3qQqZ9pYfQ" base_Property="_xhG2kJBzEdugQZgPS72wTA"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZijuKEd2N3qQqZ9pYfQ" base_Property="_yzgSkJBzEdugQZgPS72wTA"/>
-  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZizuKEd2N3qQqZ9pYfQ" base_Property="_0oCLQJBzEdugQZgPS72wTA"/>
-  <UMLMDAProfile:TransactionalMethod xmi:id="_md9ZjDuKEd2N3qQqZ9pYfQ" base_Operation="_419D114900524457653C019F"/>
-  <UMLMDAProfile:Enumeration xmi:id="_Fv9nQDuMEd2kXoe9DnY4hA" base_Class="_JX13oJBzEdugQZgPS72wTA"/>
-  <UMLMDAProfile:Enumeration xmi:id="_IWaFEDuMEd2kXoe9DnY4hA" base_Class="_vjCnYJBzEdugQZgPS72wTA"/>
-  <UMLMDAProfile:Enumeration xmi:id="_IWaFETuMEd2kXoe9DnY4hA" base_Class="_clCsUJBzEdugQZgPS72wTA"/>
-  <UMLMDAProfile:BusinessComponent xmi:id="_7l7loAozEd6Ve7K2FjU0DA" WSNamespacePrefix="cmn" WSNamespace="http://www.umlmda.org/demo/common" base_Package="_419D11490052419D117F00C8"/>
-  <UMLMDAProfile:BusinessComponent xmi:id="_-E7-sAozEd6Ve7K2FjU0DA" WSNamespacePrefix="par" WSNamespace="http://www.umlmda.org/demo/partner" base_Package="_419D11490052419D118503B6"/>
-  <UMLMDAProfile:BusinessComponent xmi:id="_BYPigAo0Ed6Ve7K2FjU0DA" WSNamespacePrefix="srv" WSNamespace="http://www.umlmda.org/demo/service" base_Package="_419D11490052445764E403BF"/>
+  <UMLMDAServiceProfile:BusinessComponent xmi:id="_yve3cAo1Ed6Ve7K2FjU0DA" CORBAModule="" WSNamespacePrefix="cmn" WSNamespace="http://www.umlmda.org/demo/common" base_Package="_419D11490052419D117F00C8"/>
+  <UMLMDAServiceProfile:BusinessComponent xmi:id="_zTu0AAo1Ed6Ve7K2FjU0DA" WSNamespacePrefix="par" WSNamespace="http://www.umlmda.org/demo/partner" base_Package="_419D11490052419D118503B6"/>
+  <UMLMDAServiceProfile:BusinessComponent xmi:id="_z8bywAo1Ed6Ve7K2FjU0DA" WSNamespacePrefix="srv" WSNamespace="http://www.umlmda.org/demo/service" base_Package="_419D11490052445764E403BF"/>
+  <UMLMDACommonProfile:Enumeration xmi:id="_PEcP8Ao4Ed6Ve7K2FjU0DA" base_Class="_vjCnYJBzEdugQZgPS72wTA"/>
+  <UMLMDACommonProfile:Enumeration xmi:id="_PwWTsAo4Ed6Ve7K2FjU0DA" base_Class="_clCsUJBzEdugQZgPS72wTA"/>
+  <UMLMDACommonProfile:Enumeration xmi:id="_VPrDIAo4Ed6Ve7K2FjU0DA" base_Class="_JX13oJBzEdugQZgPS72wTA"/>
+  <UMLMDACommonProfile:Alias xmi:id="_jvwBYAo4Ed6Ve7K2FjU0DA" base_Class="_jSuHIAo4Ed6Ve7K2FjU0DA"/>
+  <UMLMDAServiceProfile:BusinessException xmi:id="_1fi8kAo7Ed6Ve7K2FjU0DA" base_Class="_419D1149005241A6E4A60274"/>
+  <UMLMDAServiceProfile:BusinessService xmi:id="_3QxCkAo7Ed6Ve7K2FjU0DA" base_Class="_419D1149005242F707B801FE"/>
+  <UMLMDAServiceProfile:BusinessException xmi:id="_5emMEAo7Ed6Ve7K2FjU0DA" base_Class="_419D11490052419D11990134"/>
+  <UMLMDAServiceProfile:BusinessObject xmi:id="_7_NHoAo7Ed6Ve7K2FjU0DA" base_Class="_419D1149005243F4FD8C01D0"/>
 </xmi:XMI>
