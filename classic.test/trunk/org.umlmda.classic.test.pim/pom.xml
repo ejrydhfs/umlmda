@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
    <parent>
-      <artifactId>org.umlmda.classic</artifactId>
+      <artifactId>org.umlmda.classic.test</artifactId>
       <groupId>org.umlmda</groupId>
-      <version>3.2.0-SNAPSHOT</version>
+      <version>3.6-SNAPSHOT</version>
    </parent>
    <modelVersion>4.0.0</modelVersion>
-   <groupId>org.umlmda</groupId>
+   <groupId>org.umlmda.classic.test</groupId>
    <artifactId>org.umlmda.classic.test.pim</artifactId>
    <packaging>pom</packaging>
-   <name>UMLMDA Classic test</name>
+   <name>UMLMDA Classic test pim</name>
    <description />
 
    <dependencyManagement>
@@ -32,30 +32,11 @@
       <!-- Classic stuff -->
       <dependency>
          <groupId>${parent.groupId}</groupId>
-         <artifactId>org.umlmda.generator.uml</artifactId>
+         <artifactId>org.umlmda.classic.generator</artifactId>
          <version>${parent.version}</version>
-      </dependency>
-
-      <!-- Classic stuff -->
-      <dependency>
-         <groupId>${parent.groupId}</groupId>
-         <artifactId>org.umlmda.generator.uml.oaw</artifactId>
-         <version>${umlmda.oaw.version}</version>
-      </dependency>
-
-      <!-- oAW -->
-      <dependency>
-         <groupId>org.fornax.openarchitectureware</groupId>
-         <artifactId>oaw-uml2</artifactId>
-         <version>${oaw.version}</version>
          <type>pom</type>
+         <scope>import</scope>
       </dependency>
-      <dependency>
-         <groupId>org.openarchitectureware.adapter</groupId>
-         <artifactId>adapter-rsdp</artifactId>
-         <version>${oaw.version}</version>
-      </dependency>
-
    </dependencies>
 
    <build>
@@ -134,7 +115,6 @@
          <plugin>
             <groupId>org.fornax.toolsupport</groupId>
             <artifactId>fornax-oaw-m2-plugin</artifactId>
-            <version>2.0.0</version>
             <executions>
                <execution>
                   <id>run-oaw-workflow-base</id>
@@ -143,7 +123,7 @@
                      <goal>run-workflow</goal>
                   </goals>
                   <configuration>
-                     <defaultOawResourceDir>${basedir}/src</defaultOawResourceDir>
+                     <defaultOawResourceDir>${basedir}/src/main/resources</defaultOawResourceDir>
                   </configuration>
                </execution>
             </executions>
@@ -163,11 +143,6 @@
                   <fileset>
                      <directory>profiles/rsm/3rd</directory>
                   </fileset>
-                  <!-- 
-                     <fileset>
-                     <directory>../vertrag_pnc_oap_gui_base_gwt/src-gen</directory>
-                     </fileset>
-                  -->
                </filesets>
             </configuration>
          </plugin>
