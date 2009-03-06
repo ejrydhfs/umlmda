@@ -15,22 +15,19 @@
    <dependencies>
       <!-- UMLMDA Classic -->
       <dependency>
-         <groupId>${parent.groupId}</groupId>
+         <groupId>org.umlmda</groupId>
          <artifactId>org.umlmda.generator.core</artifactId>
-         <version>${parent.version}</version>
       </dependency>
       
       <!-- UMLMDA Common for testing -->
       <dependency>
          <groupId>org.umlmda</groupId>
          <artifactId>org.umlmda.umlmodel.nsuml</artifactId>
-         <version>${umlmda.common.version}</version>
          <scope>test</scope>
       </dependency>
       <dependency>
          <groupId>org.umlmda</groupId>
          <artifactId>org.umlmda.crazybeans</artifactId>
-         <version>${umlmda.common.version}</version>
          <scope>test</scope>
       </dependency>
       

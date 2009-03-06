@@ -39,7 +39,7 @@
       </dependency>
       <!-- UMLMDA Common -->
       <dependency>
-         <groupId>${parent.groupId}</groupId>
+         <groupId>org.umlmda</groupId>
          <artifactId>org.umlmda.generator.uml.psm</artifactId>
       </dependency>
       <!-- Apache stuff -->
@@ -53,7 +53,7 @@
       </dependency>
       <!-- Freemarker -->
       <dependency>
-         <groupId>freemarker</groupId>
+         <groupId>org.freemarker</groupId>
          <artifactId>freemarker</artifactId>
       </dependency>
    </dependencies>

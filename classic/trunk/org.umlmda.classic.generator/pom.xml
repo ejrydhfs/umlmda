@@ -31,14 +31,12 @@
       <dependency>
          <groupId>${parent.groupId}</groupId>
          <artifactId>org.umlmda.generator.uml</artifactId>
-         <version>${parent.version}</version>
       </dependency>
 
       <!-- UMLMDA Classic stuff -->
       <dependency>
          <groupId>${parent.groupId}</groupId>
          <artifactId>org.umlmda.generator.uml.oaw</artifactId>
-         <version>${umlmda.oaw.version}</version>
       </dependency>
 
       <!-- Additional UMLMDA Common stuff -->

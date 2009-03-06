@@ -1,10 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
    <parent>
       <groupId>org.umlmda</groupId>
-      <artifactId>org.umlmda.releng</artifactId>
-      <version>3.5.1</version>
+      <artifactId>org.umlmda.oaw</artifactId>
+      <version>3.14</version>
    </parent>
    <artifactId>org.umlmda.classic</artifactId>
    <version>3.6-SNAPSHOT</version>
@@ -13,15 +14,11 @@
    <description>UMLMDA maven project for umlmda classic modules.</description>
 
    <properties>
-      <umlmda.uml2.profile.version>3.2.0</umlmda.uml2.profile.version>
-      <umlmda.generator.profile.version>3.4.0</umlmda.generator.profile.version>
-      <umlmda.common.version>3.11-SNAPSHOT</umlmda.common.version>
-      <umlmda.oaw.version>3.14-SNAPSHOT</umlmda.oaw.version>
+      <umlmda.uml2.profile.version>4.1.0</umlmda.uml2.profile.version>
+      <umlmda.uml2.profile.new.version>4.2.6</umlmda.uml2.profile.new.version>
+      <umlmda.generator.profile.version>3.6</umlmda.generator.profile.version>
       <umlmda.jostraca.version>3.1</umlmda.jostraca.version>
-      <oaw.version>4.3.1</oaw.version>
       <jostraca.version>0.3.3</jostraca.version>
-      <uml2.version>2.1.0</uml2.version>
-      <emf.version>2.3.0</emf.version>
    </properties>
 
    <build>
@@ -43,7 +40,7 @@
             <plugin>
                <groupId>org.umlmda</groupId>
                <artifactId>org.umlmda.jostraca.maven</artifactId>
-               <version>${umlmda.jostraca.version}</version>  
+               <version>${umlmda.jostraca.version}</version>
             </plugin>
          </plugins>
       </pluginManagement>
@@ -77,7 +74,7 @@
          </dependency>
          <!-- Freemarker -->
          <dependency>
-            <groupId>freemarker</groupId>
+            <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>2.3.9</version>
          </dependency>
@@ -166,21 +163,21 @@
                </exclusions> -->
          </dependency>
 
-         <!-- UMLMDA Common -->
+         <!-- own stuff -->
          <dependency>
-            <groupId>${parent.groupId}</groupId>
-            <artifactId>org.umlmda.umlmodel.uml2</artifactId>
-            <version>${umlmda.common.version}</version>
+            <groupId>org.umlmda</groupId>
+            <artifactId>org.umlmda.generator.core</artifactId>
+            <version>3.6-SNAPSHOT</version>
          </dependency>
          <dependency>
-            <groupId>${parent.groupId}</groupId>
-            <artifactId>org.umlmda.umlmodel.nsuml</artifactId>
-            <version>${umlmda.common.version}</version>
+            <groupId>org.umlmda</groupId>
+            <artifactId>org.umlmda.generator.uml</artifactId>
+            <version>3.6-SNAPSHOT</version>
          </dependency>
          <dependency>
-            <groupId>${parent.groupId}</groupId>
-            <artifactId>org.umlmda.generator.uml.psm</artifactId>
-            <version>${umlmda.common.version}</version>
+            <groupId>org.umlmda</groupId>
+            <artifactId>org.umlmda.classic.generator</artifactId>
+            <version>3.6-SNAPSHOT</version>
          </dependency>
 
       </dependencies>
