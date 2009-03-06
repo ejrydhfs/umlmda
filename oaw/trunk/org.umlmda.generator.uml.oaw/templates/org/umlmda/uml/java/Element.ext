@@ -4,6 +4,11 @@
 import org::umlmda::model::uml;
 import org::umlmda::uml::generator::java;
 
+// and we also load the io extensions, for the purpose of
+// debugging, in case we need it   
+extension org::openarchitectureware::util::stdlib::io;   
+extension org::openarchitectureware::util::stdlib::issues;   
+
 cached boolean isSDOClientOnly(ModelElement feature) :
 	feature.hasStereotype("Client")
 ;				
@@ -16,5 +21,6 @@ cached boolean isSDOServerOnly(ModelElement feature) :
 	feature.hasStereotype("Server")
 ;		
 
-
-	
+Void logStereotypeProperties(ModelElement feature) :
+    JAVA org.umlmda.oaw.generator.util.ElementUtils.logStereotypeProperties(org.umlmda.model.uml.ModelElement)
+;	
