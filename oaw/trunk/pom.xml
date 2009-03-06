@@ -5,7 +5,7 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.common</artifactId>
-      <version>3.11-SNAPSHOT</version>
+      <version>3.11</version>
    </parent>
    <artifactId>org.umlmda.oaw</artifactId>
    <version>3.14-SNAPSHOT</version>
@@ -13,11 +13,6 @@
    <name>UMLMDA oaw</name>
    <description>UMLMDA maven project for umlmda openarchitectureware integration modules.</description>
 
-   <properties>
-      <umlmda.common.version>3.11-SNAPSHOT</umlmda.common.version>
-      <umlmda.oaw.version>${pom.version}</umlmda.oaw.version>
-   </properties>
-   
    <modules>
       <module>org.umlmda.oaw.util</module>
       <module>org.umlmda.generator.uml.oaw</module>
@@ -67,15 +62,27 @@
          <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.oaw.util</artifactId>
-            <version>${umlmda.oaw.version}</version>
+            <version>3.14-SNAPSHOT</version>
          </dependency>
          <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.generator.uml.oaw</artifactId>
-            <version>${umlmda.oaw.version}</version>
+            <version>3.14-SNAPSHOT</version>
          </dependency>
       </dependencies>
    </dependencyManagement>
+
+   <build>
+      <pluginManagement>
+         <plugins>
+            <plugin>
+               <groupId>org.fornax.toolsupport</groupId>
+               <artifactId>fornax-oaw-m2-plugin</artifactId>
+               <version>2.1.1</version>
+            </plugin>
+         </plugins>
+      </pluginManagement>
+   </build>
 
    <repositories>
       <repository>
