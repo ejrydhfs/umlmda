@@ -172,7 +172,7 @@ public class A1Impl implements A1, Serializable, XMLSerializable, org.umlmda.run
    @OneToOne(fetch = FetchType.LAZY)
    @JoinColumns( {
          @JoinColumn(name = "groupId", referencedColumnName = "groupId", nullable = true, insertable = false, updatable = false),
-         @JoinColumn(name = "bId", referencedColumnName = "bId", nullable = true, insertable = false, updatable = false) })
+         @JoinColumn(name = "b1_bId", referencedColumnName = "bId", nullable = true, insertable = false, updatable = false) })
    private B1Impl b;
 
    /**

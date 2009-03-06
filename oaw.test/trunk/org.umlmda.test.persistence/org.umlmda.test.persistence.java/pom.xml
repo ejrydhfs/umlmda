@@ -25,21 +25,36 @@
          <groupId>javax.persistence</groupId>
          <artifactId>persistence-api</artifactId>
       </dependency>
-      
+
       <!--  HSQLDB -->
       <dependency>
          <groupId>hsqldb</groupId>
          <artifactId>hsqldb</artifactId>
       </dependency>
 
-      <!-- Entitymanager -->
+      <!-- Hibernate Entitymanager -->
       <dependency>
-      	  <groupId>org.hibernate</groupId>
-      	  <artifactId>hibernate-entitymanager</artifactId>
+         <groupId>org.hibernate</groupId>
+         <artifactId>hibernate-entitymanager</artifactId>
       </dependency>
-      </dependencies>
-      
-      
+
+      <!-- ORACLE -->
+      <dependency>
+         <groupId>com.oracle</groupId>
+         <artifactId>ojdbc</artifactId>
+         <version>10.2.0.3</version>
+         <scope>test</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>c3p0</groupId>
+         <artifactId>c3p0</artifactId>
+         <scope>test</scope>
+      </dependency>
+
+   </dependencies>
+
+
 
    <build>
 
@@ -62,6 +77,14 @@
                </execution>
             </executions>
          </plugin>
+
+         <!-- Coverage -->
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <version>2.2</version>
+         </plugin>
+
       </plugins>
    </build>
 </project>

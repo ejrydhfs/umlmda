@@ -218,8 +218,6 @@ public class B2Impl implements B2, Serializable, XMLSerializable, org.umlmda.run
     * Unshared pkey column of association {@link #getA()} to {@link A2}
     */
    @Column()
-   @SuppressWarnings("unused")
-   // Used by JPA implementation
    private String a2_aId;
 
    /**

@@ -15,6 +15,7 @@ import org.umlmda.test.datatypes.persistence.DatatypesVisitor;
  * Business implementation of org.umlmda.test.datatypes.DatatypeTest.
  */
 @Entity
+@Table(name = "_DATATYPE_TEST")
 public class DatatypeTestImpl implements DatatypeTest, Serializable, XMLSerializable,
       org.umlmda.runtime.visitor.Visitable {
    /**

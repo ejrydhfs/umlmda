@@ -218,8 +218,6 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
     * Unshared pkey column of association {@link #getA()} to {@link C4}
     */
    @Column(nullable = false)
-   @SuppressWarnings("unused")
-   // Used by JPA implementation
    private String c4_aId;
 
    /**

@@ -96,7 +96,7 @@
             <executions>
                <!-- Auspacken von UML Profilen, UMLMDA Generatorprofilen und -sets -->
                <execution>
-                  <id>unpack</id>
+                  <id>default</id>
                   <phase>initialize</phase>
                   <goals>
                      <goal>unpack</goal>

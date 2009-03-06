@@ -218,8 +218,6 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
     * Unshared pkey column of association {@link #getA()} to {@link C2}
     */
    @Column()
-   @SuppressWarnings("unused")
-   // Used by JPA implementation
    private String c2_aId;
 
    /**

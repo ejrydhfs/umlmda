@@ -2,7 +2,7 @@
 <!--xtools2_universal_type_manager-->
 <?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.uml.msl.model" version="7.0.0"><feature description="" name="com.ibm.xtools.ruml.feature" url="" version="7.0.0"/></signature>?>
 <?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.mmi.ui.signatures.diagram" version="7.0.0"><feature description="" name="Rational Modeling Platform (com.ibm.xtools.rmp)" url="" version="7.0.0"/></signature>?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Default="http:///schemas/Default/1" xmlns:UMLMDAPersistenceProfile="http:///schemas/UMLMDAPersistenceProfile/_zklWEP2VEd23TNIOegu-ag/14" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation" xsi:schemaLocation="http:///schemas/Default/1 pathmap://UML2_MSL_PROFILES/Default.epx#_IN8k8MmBEdqBcN1R6EvWUw?Default/Default? http:///schemas/UMLMDAPersistenceProfile/_zklWEP2VEd23TNIOegu-ag/14 pathmap://UMLMDA4_PROFILE/UMLMDAPersistenceProfile.epx#_zklWEf2VEd23TNIOegu-ag?UMLMDAPersistenceProfile/UMLMDAPersistenceProfile?">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Default="http:///schemas/Default/1" xmlns:UMLMDAPersistenceProfile="http:///schemas/UMLMDAPersistenceProfile/_12xLUP5qEd2pB7xmJlWsyg/15" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation" xsi:schemaLocation="http:///schemas/Default/1 pathmap://UML2_MSL_PROFILES/Default.epx#_IN8k8MmBEdqBcN1R6EvWUw?Default/Default? http:///schemas/UMLMDAPersistenceProfile/_12xLUP5qEd2pB7xmJlWsyg/15 pathmap://UMLMDA4_PROFILE/UMLMDAPersistenceProfile.epx#_1268UP5qEd2pB7xmJlWsyg?UMLMDAPersistenceProfile/UMLMDAPersistenceProfile?">
   <uml:Model xmi:id="_QQ51YMUTEd2V4aoOrpeVJQ" name="persistence_test_pim">
     <eAnnotations xmi:id="_QQ51YcUTEd2V4aoOrpeVJQ" source="uml2.diagrams"/>
     <packageImport xmi:id="_QQ51ZMUTEd2V4aoOrpeVJQ">
@@ -1937,7 +1937,7 @@
     </profileApplication>
     <profileApplication xmi:id="_UMb20MUTEd2V4aoOrpeVJQ">
       <eAnnotations xmi:id="_UMb20cUTEd2V4aoOrpeVJQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="pathmap://UMLMDA4_PROFILE/UMLMDAPersistenceProfile.epx#_zklWEf2VEd23TNIOegu-ag?UMLMDAPersistenceProfile/UMLMDAPersistenceProfile?"/>
+        <references xmi:type="ecore:EPackage" href="pathmap://UMLMDA4_PROFILE/UMLMDAPersistenceProfile.epx#_1268UP5qEd2pB7xmJlWsyg?UMLMDAPersistenceProfile/UMLMDAPersistenceProfile?"/>
       </eAnnotations>
       <appliedProfile href="pathmap://UMLMDA4_PROFILE/UMLMDAPersistenceProfile.epx#_UkRb8MT7Ed28n7ofFGqNfw?UMLMDAPersistenceProfile?"/>
     </profileApplication>
@@ -2018,8 +2018,8 @@
   <UMLMDAPersistenceProfile:PersistentEntity xmi:id="__y57lO3bEd24CprL6yJ3YQ" base_Class="__y57gO3bEd24CprL6yJ3YQ" mapping="ConcreteClass"/>
   <Default:Documentation xmi:id="__y57le3bEd24CprL6yJ3YQ" base_Comment="__y57ge3bEd24CprL6yJ3YQ"/>
   <UMLMDAPersistenceProfile:PKey xmi:id="__y57lu3bEd24CprL6yJ3YQ" base_Property="__y57g-3bEd24CprL6yJ3YQ"/>
-  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_s20PgO3cEd24CprL6yJ3YQ" base_Class="_si1jkO3cEd24CprL6yJ3YQ"/>
-  <UMLMDAPersistenceProfile:PKey xmi:id="_6Uhx0O3cEd24CprL6yJ3YQ" domainAttribute="false" base_Property="_3HKd8O3cEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_s20PgO3cEd24CprL6yJ3YQ" base_Class="_si1jkO3cEd24CprL6yJ3YQ" table="_DATATYPE_TEST" schema=""/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_6Uhx0O3cEd24CprL6yJ3YQ" domainAttribute="false" base_Property="_3HKd8O3cEd24CprL6yJ3YQ" generator=""/>
   <UMLMDAPersistenceProfile:VersionAttribute xmi:id="_9ZZRAO3cEd24CprL6yJ3YQ" domainAttribute="false" base_Property="_7JlKgO3cEd24CprL6yJ3YQ"/>
   <UMLMDAPersistenceProfile:PKey xmi:id="_wXOmEf5VEd23TNIOegu-ag" base_Property="_wXOmA_5VEd23TNIOegu-ag"/>
   <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_wXOmEv5VEd23TNIOegu-ag" base_Class="_wXOmDP5VEd23TNIOegu-ag"/>
@@ -2027,4 +2027,5 @@
   <UMLMDAPersistenceProfile:PKey xmi:id="_wXOmFv5VEd23TNIOegu-ag" base_Property="_wXOmAv5VEd23TNIOegu-ag"/>
   <UMLMDAPersistenceProfile:PersistableSuperClass xmi:id="_9H4d8P5pEd2xub5kPOXskA" base_Class="_wXOmAP5VEd23TNIOegu-ag"/>
   <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_qLaykAfuEd6Snr8RTIrjJQ" base_Class="_jOL6sAfuEd6Snr8RTIrjJQ"/>
+  <UMLMDAPersistenceProfile:PersistenceUnit xmi:id="_vcMeAAnCEd6Ve7K2FjU0DA" name="test" tablenamePrefix="TEST" schema="" base_Package="_tqPcsO19Ed24CprL6yJ3YQ" majorVersion="3" minorVersion="1"/>
 </xmi:XMI>

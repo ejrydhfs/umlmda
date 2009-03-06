@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Default="http:///schemas/Default/1" xmlns:UMLMDAPersistenceProfile="http:///schemas/UMLMDAPersistenceProfile/_LuOmkOuCEd2Ap4BHH0G6sw/9" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xsi:schemaLocation="http:///schemas/Default/1 /org.umlmda.test.persistence.pim/model/uml2/Default.profile.uml#_IN8k8MmBEdqBcN1R6EvWUw http:///schemas/UMLMDAPersistenceProfile/_LuOmkOuCEd2Ap4BHH0G6sw/9 /org.umlmda.test.persistence.pim/model/uml2/UMLMDAPersistenceProfile.profile.uml#_LuOmkeuCEd2Ap4BHH0G6sw">
+  <uml:Model xmi:id="_QQ51YMUTEd2V4aoOrpeVJQ" name="persistence_test_pim">
+    <packageImport xmi:id="_QQ51ZMUTEd2V4aoOrpeVJQ">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packageImport xmi:id="_R_do8MUTEd2V4aoOrpeVJQ">
+      <importedPackage xmi:type="uml:Model" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_ggMDAPK4EdmFXfbQyopNVQ"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_rd3rwO19Ed24CprL6yJ3YQ" name="org">
+      <packagedElement xmi:type="uml:Package" xmi:id="_sa-NMO19Ed24CprL6yJ3YQ" name="umlmda">
+        <packagedElement xmi:type="uml:Package" xmi:id="_tqPcsO19Ed24CprL6yJ3YQ" name="test">
+          <packagedElement xmi:type="uml:Package" xmi:id="_vT47EO19Ed24CprL6yJ3YQ" name="combinedids">
+            <ownedComment xmi:id="_BXUrUO1-Ed24CprL6yJ3YQ" annotatedElement="_vT47EO19Ed24CprL6yJ3YQ">
+              <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Samples with combined ids.&lt;/BODY>&lt;/HTML></body>
+            </ownedComment>
+            <packagedElement xmi:type="uml:Package" xmi:id="_HexxwO1-Ed24CprL6yJ3YQ" name="one2one">
+              <packagedElement xmi:type="uml:Class" xmi:id="_Oarz8O1-Ed24CprL6yJ3YQ" name="A1">
+                <ownedAttribute xmi:id="_UnzdgO1-Ed24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_SDvlUO1-Ed24CprL6yJ3YQ" name="aId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_g_zU8O1-Ed24CprL6yJ3YQ" name="aAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_iEynEe1-Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_iEynEO1-Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_nYiYoO1-Ed24CprL6yJ3YQ" name="b" visibility="private" type="_QPqYkO1-Ed24CprL6yJ3YQ" association="_nYYnoO1-Ed24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nYsJoO1-Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nYiYoe1-Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_QPqYkO1-Ed24CprL6yJ3YQ" name="B1">
+                <ownedAttribute xmi:id="_Z72KAO1-Ed24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_bXMGoO1-Ed24CprL6yJ3YQ" name="bId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_cTZQMO1-Ed24CprL6yJ3YQ" name="bAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eKJ9ge1-Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eKJ9gO1-Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_nYYnoO1-Ed24CprL6yJ3YQ" memberEnd="_nYiYoO1-Ed24CprL6yJ3YQ _nYsJoe1-Ed24CprL6yJ3YQ">
+                <ownedComment xmi:id="_tfskIO1-Ed24CprL6yJ3YQ" annotatedElement="_nYYnoO1-Ed24CprL6yJ3YQ">
+                  <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Simple One2One association.&lt;/BODY>&lt;/HTML></body>
+                </ownedComment>
+                <ownedEnd xmi:id="_nYsJoe1-Ed24CprL6yJ3YQ" name="" visibility="private" type="_Oarz8O1-Ed24CprL6yJ3YQ" association="_nYYnoO1-Ed24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nYsJo-1-Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nYsJou1-Ed24CprL6yJ3YQ"/>
+                </ownedEnd>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_1R1qwO1-Ed24CprL6yJ3YQ" name="A2">
+                <ownedAttribute xmi:id="_1R1qwe1-Ed24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_1R1qwu1-Ed24CprL6yJ3YQ" name="aId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_1R1qw-1-Ed24CprL6yJ3YQ" name="aAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1R1qxO1-Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1R1qxe1-Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_1R1qxu1-Ed24CprL6yJ3YQ" name="b" visibility="private" type="_1R1qye1-Ed24CprL6yJ3YQ" aggregation="shared" association="_1R1qz-1-Ed24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1R1qx-1-Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1R1qyO1-Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_1R1qye1-Ed24CprL6yJ3YQ" name="B2">
+                <ownedAttribute xmi:id="_1R1qyu1-Ed24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_1R1qy-1-Ed24CprL6yJ3YQ" name="bId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_1R1qzO1-Ed24CprL6yJ3YQ" name="bAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1R1qze1-Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1R1qzu1-Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_1R1q0e1-Ed24CprL6yJ3YQ" name="a" visibility="private" type="_1R1qwO1-Ed24CprL6yJ3YQ" association="_1R1qz-1-Ed24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1R1q0u1-Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1R1q0-1-Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_1R1qz-1-Ed24CprL6yJ3YQ" memberEnd="_1R1qxu1-Ed24CprL6yJ3YQ _1R1q0e1-Ed24CprL6yJ3YQ">
+                <ownedComment xmi:id="_1R1q0O1-Ed24CprL6yJ3YQ" annotatedElement="_1R1qz-1-Ed24CprL6yJ3YQ">
+                  <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Bidirectional&amp;nbsp;One2One association.&lt;/BODY>&lt;/HTML></body>
+                </ownedComment>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_J3QPkO1_Ed24CprL6yJ3YQ" name="A3">
+                <ownedAttribute xmi:id="_J3QPke1_Ed24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_J3QPku1_Ed24CprL6yJ3YQ" name="aId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_J3QPk-1_Ed24CprL6yJ3YQ" name="aAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_J3QPlO1_Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_J3QPle1_Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_J3QPlu1_Ed24CprL6yJ3YQ" name="b" visibility="private" type="_J3ZZgO1_Ed24CprL6yJ3YQ" aggregation="composite" association="_J3ZZhu1_Ed24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_J3QPl-1_Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_J3QPmO1_Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_J3ZZgO1_Ed24CprL6yJ3YQ" name="B3">
+                <ownedAttribute xmi:id="_J3ZZge1_Ed24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_J3ZZgu1_Ed24CprL6yJ3YQ" name="bId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_J3ZZg-1_Ed24CprL6yJ3YQ" name="bAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_J3ZZhO1_Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_J3ZZhe1_Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_J3ZZhu1_Ed24CprL6yJ3YQ" memberEnd="_J3QPlu1_Ed24CprL6yJ3YQ _J3ZZiO1_Ed24CprL6yJ3YQ">
+                <ownedComment xmi:id="_J3ZZh-1_Ed24CprL6yJ3YQ" annotatedElement="_J3ZZhu1_Ed24CprL6yJ3YQ">
+                  <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Simple One2One composition.&lt;/BODY>&lt;/HTML></body>
+                </ownedComment>
+                <ownedEnd xmi:id="_J3ZZiO1_Ed24CprL6yJ3YQ" name="" visibility="private" type="_J3QPkO1_Ed24CprL6yJ3YQ" association="_J3ZZhu1_Ed24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_J3ZZie1_Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_J3ZZiu1_Ed24CprL6yJ3YQ" value="1"/>
+                </ownedEnd>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_fCznUO1_Ed24CprL6yJ3YQ" name="A4">
+                <ownedAttribute xmi:id="_fCznUe1_Ed24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_fCznUu1_Ed24CprL6yJ3YQ" name="aId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_fCznU-1_Ed24CprL6yJ3YQ" name="aAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_fCznVO1_Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_fCznVe1_Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_fCznVu1_Ed24CprL6yJ3YQ" name="b" visibility="private" type="_fC9YUO1_Ed24CprL6yJ3YQ" aggregation="composite" association="_fC9YVu1_Ed24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_fCznV-1_Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_fCznWO1_Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_fC9YUO1_Ed24CprL6yJ3YQ" name="B4">
+                <ownedAttribute xmi:id="_fC9YUe1_Ed24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_fC9YUu1_Ed24CprL6yJ3YQ" name="bId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_fC9YU-1_Ed24CprL6yJ3YQ" name="bAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_fC9YVO1_Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_fC9YVe1_Ed24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_fC9YWO1_Ed24CprL6yJ3YQ" name="a" visibility="private" type="_fCznUO1_Ed24CprL6yJ3YQ" association="_fC9YVu1_Ed24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_fC9YWe1_Ed24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_fC9YWu1_Ed24CprL6yJ3YQ" value="1"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_fC9YVu1_Ed24CprL6yJ3YQ" memberEnd="_fCznVu1_Ed24CprL6yJ3YQ _fC9YWO1_Ed24CprL6yJ3YQ">
+                <ownedComment xmi:id="_fC9YV-1_Ed24CprL6yJ3YQ" annotatedElement="_fC9YVu1_Ed24CprL6yJ3YQ">
+                  <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Bidirectional&amp;nbsp;One2One composition.&lt;/BODY>&lt;/HTML></body>
+                </ownedComment>
+              </packagedElement>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_I9Zr4O1-Ed24CprL6yJ3YQ" name="one2many">
+              <packagedElement xmi:type="uml:Class" xmi:id="_sf-hoO2AEd24CprL6yJ3YQ" name="C1">
+                <ownedAttribute xmi:id="_sf-hoe2AEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sf-hou2AEd24CprL6yJ3YQ" name="aId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sf-ho-2AEd24CprL6yJ3YQ" name="aAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sf-hpO2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sf-hpe2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sf-hpu2AEd24CprL6yJ3YQ" name="ds" visibility="private" type="_sf-hqe2AEd24CprL6yJ3YQ" association="_sgISwe2AEd24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_2uSvwe2AEd24CprL6yJ3YQ" value="*"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_2uSvwO2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_sf-hqe2AEd24CprL6yJ3YQ" name="D1">
+                <ownedAttribute xmi:id="_sf-hqu2AEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sf-hq-2AEd24CprL6yJ3YQ" name="bId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sf-hrO2AEd24CprL6yJ3YQ" name="bAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sf-hre2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sf-hru2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_sf-hr-2AEd24CprL6yJ3YQ" name="C2">
+                <ownedAttribute xmi:id="_sf-hsO2AEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sf-hse2AEd24CprL6yJ3YQ" name="aId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sf-hsu2AEd24CprL6yJ3YQ" name="aAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sf-hs-2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sf-htO2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sf-hte2AEd24CprL6yJ3YQ" name="ds" visibility="private" type="_sf-huO2AEd24CprL6yJ3YQ" aggregation="shared" association="_sgISxu2AEd24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sf-htu2AEd24CprL6yJ3YQ" value="*"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sf-ht-2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_sf-huO2AEd24CprL6yJ3YQ" name="D2">
+                <ownedAttribute xmi:id="_sf-hue2AEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sf-huu2AEd24CprL6yJ3YQ" name="bId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sf-hu-2AEd24CprL6yJ3YQ" name="bAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sf-hvO2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sf-hve2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sf-hvu2AEd24CprL6yJ3YQ" name="a" visibility="private" type="_sf-hr-2AEd24CprL6yJ3YQ" association="_sgISxu2AEd24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sf-hv-2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sf-hwO2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_sgISoO2AEd24CprL6yJ3YQ" name="C3">
+                <ownedAttribute xmi:id="_sgISoe2AEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sgISou2AEd24CprL6yJ3YQ" name="aId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sgISo-2AEd24CprL6yJ3YQ" name="aAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sgISpO2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sgISpe2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sgISpu2AEd24CprL6yJ3YQ" name="ds" visibility="private" type="_sgISqe2AEd24CprL6yJ3YQ" aggregation="composite" association="_sgISyO2AEd24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sgISp-2AEd24CprL6yJ3YQ" value="*"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sgISqO2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_sgISqe2AEd24CprL6yJ3YQ" name="D3">
+                <ownedAttribute xmi:id="_sgISqu2AEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sgISq-2AEd24CprL6yJ3YQ" name="bId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sgISrO2AEd24CprL6yJ3YQ" name="bAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sgISre2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sgISru2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_sgISr-2AEd24CprL6yJ3YQ" name="C4">
+                <ownedAttribute xmi:id="_sgISsO2AEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sgISse2AEd24CprL6yJ3YQ" name="aId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sgISsu2AEd24CprL6yJ3YQ" name="aAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sgISs-2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sgIStO2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sgISte2AEd24CprL6yJ3YQ" name="ds" visibility="private" type="_sgISuO2AEd24CprL6yJ3YQ" aggregation="composite" association="_sgISze2AEd24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sgIStu2AEd24CprL6yJ3YQ" value="*"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sgISt-2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_sgISuO2AEd24CprL6yJ3YQ" name="D4">
+                <ownedAttribute xmi:id="_sgISue2AEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sgISuu2AEd24CprL6yJ3YQ" name="bId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sgISu-2AEd24CprL6yJ3YQ" name="bAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sgISvO2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sgISve2AEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_sgISvu2AEd24CprL6yJ3YQ" name="a" visibility="private" type="_sgISr-2AEd24CprL6yJ3YQ" association="_sgISze2AEd24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sgISv-2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sgISwO2AEd24CprL6yJ3YQ" value="1"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_sgISwe2AEd24CprL6yJ3YQ" memberEnd="_sf-hpu2AEd24CprL6yJ3YQ _sgISw-2AEd24CprL6yJ3YQ">
+                <ownedComment xmi:id="_sgISwu2AEd24CprL6yJ3YQ" annotatedElement="_sgISwe2AEd24CprL6yJ3YQ">
+                  <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Simple One2One association.&lt;/BODY>&lt;/HTML></body>
+                </ownedComment>
+                <ownedEnd xmi:id="_sgISw-2AEd24CprL6yJ3YQ" name="" visibility="private" type="_sf-hoO2AEd24CprL6yJ3YQ" association="_sgISwe2AEd24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sgISxO2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sgISxe2AEd24CprL6yJ3YQ"/>
+                </ownedEnd>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_sgISxu2AEd24CprL6yJ3YQ" memberEnd="_sf-hte2AEd24CprL6yJ3YQ _sf-hvu2AEd24CprL6yJ3YQ">
+                <ownedComment xmi:id="_sgISx-2AEd24CprL6yJ3YQ" annotatedElement="_sgISxu2AEd24CprL6yJ3YQ">
+                  <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Bidirectional&amp;nbsp;One2One association.&lt;/BODY>&lt;/HTML></body>
+                </ownedComment>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_sgISyO2AEd24CprL6yJ3YQ" memberEnd="_sgISpu2AEd24CprL6yJ3YQ _sgISyu2AEd24CprL6yJ3YQ">
+                <ownedComment xmi:id="_sgISye2AEd24CprL6yJ3YQ" annotatedElement="_sgISyO2AEd24CprL6yJ3YQ">
+                  <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Simple One2One composition.&lt;/BODY>&lt;/HTML></body>
+                </ownedComment>
+                <ownedEnd xmi:id="_sgISyu2AEd24CprL6yJ3YQ" name="" visibility="private" type="_sgISoO2AEd24CprL6yJ3YQ" association="_sgISyO2AEd24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sgISy-2AEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sgISzO2AEd24CprL6yJ3YQ" value="1"/>
+                </ownedEnd>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_sgISze2AEd24CprL6yJ3YQ" memberEnd="_sgISte2AEd24CprL6yJ3YQ _sgISvu2AEd24CprL6yJ3YQ">
+                <ownedComment xmi:id="_sgISzu2AEd24CprL6yJ3YQ" annotatedElement="_sgISze2AEd24CprL6yJ3YQ">
+                  <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Bidirectional&amp;nbsp;One2One composition.&lt;/BODY>&lt;/HTML></body>
+                </ownedComment>
+                <name xsi:nil="true"/>
+              </packagedElement>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_KO6XEO1-Ed24CprL6yJ3YQ" name="many2many">
+              <packagedElement xmi:type="uml:Class" xmi:id="_s9XLwO2BEd24CprL6yJ3YQ" name="E1">
+                <ownedAttribute xmi:id="_s9XLwe2BEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_s9XLwu2BEd24CprL6yJ3YQ" name="aId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_s9XLw-2BEd24CprL6yJ3YQ" name="aAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_s9XLxO2BEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_s9XLxe2BEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_s9XLxu2BEd24CprL6yJ3YQ" name="fs" visibility="private" type="_s9XLye2BEd24CprL6yJ3YQ" association="_s9g8wO2BEd24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_s9XLx-2BEd24CprL6yJ3YQ" value="*"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_s9XLyO2BEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_s9XLye2BEd24CprL6yJ3YQ" name="F1">
+                <ownedAttribute xmi:id="_s9XLyu2BEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_s9XLy-2BEd24CprL6yJ3YQ" name="bId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_s9XLzO2BEd24CprL6yJ3YQ" name="bAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_s9XLze2BEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_s9XLzu2BEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_s9XLz-2BEd24CprL6yJ3YQ" name="E2">
+                <ownedAttribute xmi:id="_s9XL0O2BEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_s9XL0e2BEd24CprL6yJ3YQ" name="aId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_s9XL0u2BEd24CprL6yJ3YQ" name="aAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_s9XL0-2BEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_s9XL1O2BEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_s9XL1e2BEd24CprL6yJ3YQ" name="fs" visibility="private" type="_s9XL2O2BEd24CprL6yJ3YQ" aggregation="shared" association="_s9g8xe2BEd24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_s9XL1u2BEd24CprL6yJ3YQ" value="*"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_s9XL1-2BEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_s9XL2O2BEd24CprL6yJ3YQ" name="F2">
+                <ownedAttribute xmi:id="_s9XL2e2BEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_s9XL2u2BEd24CprL6yJ3YQ" name="bId" visibility="private">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_s9XL2-2BEd24CprL6yJ3YQ" name="bAttr" visibility="public">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_s9XL3O2BEd24CprL6yJ3YQ" value="1"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_s9XL3e2BEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_s9XL3u2BEd24CprL6yJ3YQ" name="es" visibility="private" type="_s9XLz-2BEd24CprL6yJ3YQ" association="_s9g8xe2BEd24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_s9XL3-2BEd24CprL6yJ3YQ" value="*"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_s9XL4O2BEd24CprL6yJ3YQ"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_s9g8wO2BEd24CprL6yJ3YQ" memberEnd="_s9XLxu2BEd24CprL6yJ3YQ _s9g8wu2BEd24CprL6yJ3YQ">
+                <ownedComment xmi:id="_s9g8we2BEd24CprL6yJ3YQ" annotatedElement="_s9g8wO2BEd24CprL6yJ3YQ">
+                  <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Simple One2One association.&lt;/BODY>&lt;/HTML></body>
+                </ownedComment>
+                <ownedEnd xmi:id="_s9g8wu2BEd24CprL6yJ3YQ" name="" visibility="private" type="_s9XLwO2BEd24CprL6yJ3YQ" association="_s9g8wO2BEd24CprL6yJ3YQ">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_s9g8w-2BEd24CprL6yJ3YQ" value="*"/>
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_s9g8xO2BEd24CprL6yJ3YQ"/>
+                </ownedEnd>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_s9g8xe2BEd24CprL6yJ3YQ" memberEnd="_s9XL1e2BEd24CprL6yJ3YQ _s9XL3u2BEd24CprL6yJ3YQ">
+                <ownedComment xmi:id="_s9g8xu2BEd24CprL6yJ3YQ" annotatedElement="_s9g8xe2BEd24CprL6yJ3YQ">
+                  <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>Bidirectional&amp;nbsp;One2One association.&lt;/BODY>&lt;/HTML></body>
+                </ownedComment>
+              </packagedElement>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_X1X9YO3ZEd24CprL6yJ3YQ" name="inheritance">
+              <packagedElement xmi:type="uml:Package" xmi:id="_c3Y-YO3cEd24CprL6yJ3YQ" name="hierarchy">
+                <packagedElement xmi:type="uml:Class" xmi:id="_dPbyUO3ZEd24CprL6yJ3YQ" name="I1">
+                  <ownedComment xmi:id="_Pd-YIO3aEd24CprL6yJ3YQ" annotatedElement="_dPbyUO3ZEd24CprL6yJ3YQ">
+                    <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>ClassHierarchy - All classes in one table&lt;/BODY>&lt;/HTML></body>
+                  </ownedComment>
+                  <ownedAttribute xmi:id="_kTiuQO3ZEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  </ownedAttribute>
+                  <ownedAttribute xmi:id="_mzW_oO3ZEd24CprL6yJ3YQ" name="iId" visibility="private">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  </ownedAttribute>
+                  <ownedAttribute xmi:id="_nyruoO3ZEd24CprL6yJ3YQ" name="i1Attr" visibility="public">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_qGZdse3ZEd24CprL6yJ3YQ" value="1"/>
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qGZdsO3ZEd24CprL6yJ3YQ"/>
+                  </ownedAttribute>
+                </packagedElement>
+                <packagedElement xmi:type="uml:Class" xmi:id="_ew92gO3ZEd24CprL6yJ3YQ" name="I11">
+                  <generalization xmi:id="_isLu4O3ZEd24CprL6yJ3YQ" general="_dPbyUO3ZEd24CprL6yJ3YQ"/>
+                  <ownedAttribute xmi:id="_uwq0cO3ZEd24CprL6yJ3YQ" name="i2Attr" visibility="public">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_2FAkwe3ZEd24CprL6yJ3YQ" value="1"/>
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_2FAkwO3ZEd24CprL6yJ3YQ"/>
+                  </ownedAttribute>
+                </packagedElement>
+                <packagedElement xmi:type="uml:Class" xmi:id="_foX_oO3ZEd24CprL6yJ3YQ" name="I12">
+                  <generalization xmi:id="_jQeuwO3ZEd24CprL6yJ3YQ" general="_dPbyUO3ZEd24CprL6yJ3YQ"/>
+                  <ownedAttribute xmi:id="_w86pkO3ZEd24CprL6yJ3YQ" name="i3Attr" visibility="public">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_2y8o0O3ZEd24CprL6yJ3YQ" value="1"/>
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_2yy30O3ZEd24CprL6yJ3YQ"/>
+                  </ownedAttribute>
+                </packagedElement>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Package" xmi:id="_frHqQO3cEd24CprL6yJ3YQ" name="subclass">
+                <packagedElement xmi:type="uml:Class" xmi:id="_hs0HIO3aEd24CprL6yJ3YQ" name="I2">
+                  <ownedComment xmi:id="_hs0HIe3aEd24CprL6yJ3YQ" annotatedElement="_hs0HIO3aEd24CprL6yJ3YQ">
+                    <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>SubClass&amp;nbsp;- All subclasses in a seperate table&lt;/BODY>&lt;/HTML></body>
+                  </ownedComment>
+                  <ownedAttribute xmi:id="_hs0HIu3aEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  </ownedAttribute>
+                  <ownedAttribute xmi:id="_hs0HI-3aEd24CprL6yJ3YQ" name="iId" visibility="private">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  </ownedAttribute>
+                  <ownedAttribute xmi:id="_hs0HJO3aEd24CprL6yJ3YQ" name="i1Attr" visibility="public">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_hs0HJe3aEd24CprL6yJ3YQ" value="1"/>
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_hs0HJu3aEd24CprL6yJ3YQ"/>
+                  </ownedAttribute>
+                </packagedElement>
+                <packagedElement xmi:type="uml:Class" xmi:id="_hs0HJ-3aEd24CprL6yJ3YQ" name="I21">
+                  <generalization xmi:id="_hs0HKO3aEd24CprL6yJ3YQ" general="_hs0HIO3aEd24CprL6yJ3YQ"/>
+                  <ownedAttribute xmi:id="_hs0HKe3aEd24CprL6yJ3YQ" name="i2Attr" visibility="public">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_hs0HKu3aEd24CprL6yJ3YQ" value="1"/>
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_hs0HK-3aEd24CprL6yJ3YQ"/>
+                  </ownedAttribute>
+                </packagedElement>
+                <packagedElement xmi:type="uml:Class" xmi:id="_hs0HLO3aEd24CprL6yJ3YQ" name="I22">
+                  <generalization xmi:id="_hs0HLe3aEd24CprL6yJ3YQ" general="_hs0HIO3aEd24CprL6yJ3YQ"/>
+                  <ownedAttribute xmi:id="_hs0HLu3aEd24CprL6yJ3YQ" name="i3Attr" visibility="public">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_hs0HL-3aEd24CprL6yJ3YQ" value="1"/>
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_hs0HMO3aEd24CprL6yJ3YQ"/>
+                  </ownedAttribute>
+                </packagedElement>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Package" xmi:id="_ht1I4O3cEd24CprL6yJ3YQ" name="concrete">
+                <packagedElement xmi:type="uml:Class" xmi:id="__y57gO3bEd24CprL6yJ3YQ" name="I3">
+                  <ownedComment xmi:id="__y57ge3bEd24CprL6yJ3YQ" annotatedElement="__y57gO3bEd24CprL6yJ3YQ">
+                    <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>ConcreteClass - A table per concrete class&lt;/BODY>&lt;/HTML></body>
+                  </ownedComment>
+                  <ownedAttribute xmi:id="__y57gu3bEd24CprL6yJ3YQ" name="groupId" visibility="private">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  </ownedAttribute>
+                  <ownedAttribute xmi:id="__y57g-3bEd24CprL6yJ3YQ" name="iId" visibility="private">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  </ownedAttribute>
+                  <ownedAttribute xmi:id="__y57hO3bEd24CprL6yJ3YQ" name="i1Attr" visibility="public">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__y57he3bEd24CprL6yJ3YQ" value="1"/>
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__y57hu3bEd24CprL6yJ3YQ"/>
+                  </ownedAttribute>
+                </packagedElement>
+                <packagedElement xmi:type="uml:Class" xmi:id="__y57h-3bEd24CprL6yJ3YQ" name="I31">
+                  <generalization xmi:id="__y57iO3bEd24CprL6yJ3YQ" general="__y57gO3bEd24CprL6yJ3YQ"/>
+                  <ownedAttribute xmi:id="__y57ie3bEd24CprL6yJ3YQ" name="i2Attr" visibility="public">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__y57iu3bEd24CprL6yJ3YQ" value="1"/>
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__y57i-3bEd24CprL6yJ3YQ"/>
+                  </ownedAttribute>
+                </packagedElement>
+                <packagedElement xmi:type="uml:Class" xmi:id="__y57jO3bEd24CprL6yJ3YQ" name="I32">
+                  <generalization xmi:id="__y57je3bEd24CprL6yJ3YQ" general="__y57gO3bEd24CprL6yJ3YQ"/>
+                  <ownedAttribute xmi:id="__y57ju3bEd24CprL6yJ3YQ" name="i3Attr" visibility="public">
+                    <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__y57j-3bEd24CprL6yJ3YQ" value="1"/>
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__y57kO3bEd24CprL6yJ3YQ"/>
+                  </ownedAttribute>
+                </packagedElement>
+              </packagedElement>
+            </packagedElement>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_B1RyoO1-Ed24CprL6yJ3YQ" name="simpleids">
+            <ownedComment xmi:id="_F4aQ4O1-Ed24CprL6yJ3YQ" annotatedElement="_B1RyoO1-Ed24CprL6yJ3YQ">
+              <body>&lt;HTML>&lt;HEAD>&#xD;
+&lt;META content=&quot;MSHTML 6.00.2900.3199&quot; name=GENERATOR>&lt;/HEAD>&#xD;
+&lt;BODY>&#xD;
+&lt;P>Samples with simple generated or none generated ids.&lt;/P>&lt;/BODY>&lt;/HTML></body>
+            </ownedComment>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_niHbsO3cEd24CprL6yJ3YQ" name="datatypes">
+            <packagedElement xmi:type="uml:Class" xmi:id="_si1jkO3cEd24CprL6yJ3YQ" name="DatatypeTest">
+              <ownedAttribute xmi:id="_3HKd8O3cEd24CprL6yJ3YQ" name="id" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_7JlKgO3cEd24CprL6yJ3YQ" name="version" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_wtBFAO3cEd24CprL6yJ3YQ" name="booleanAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_zNXT0PK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_zDZGgO3cEd24CprL6yJ3YQ" name="optBooleanAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_zNXT0PK4EdmFXfbQyopNVQ"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0uZ20e3cEd24CprL6yJ3YQ" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0uZ20O3cEd24CprL6yJ3YQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_Q2F6QO3dEd24CprL6yJ3YQ" name="charAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_xveZgPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_SRmO8O3dEd24CprL6yJ3YQ" name="optCharAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_xveZgPK4EdmFXfbQyopNVQ"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_stEoMe3dEd24CprL6yJ3YQ" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_stEoMO3dEd24CprL6yJ3YQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_Tsp3sO3dEd24CprL6yJ3YQ" name="dateAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_iFa7cPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_U3BZEO3dEd24CprL6yJ3YQ" name="optDateAtte" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_iFa7cPK4EdmFXfbQyopNVQ"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sCKC8e3dEd24CprL6yJ3YQ" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sCKC8O3dEd24CprL6yJ3YQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_WvunIO3dEd24CprL6yJ3YQ" name="datetimeAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_Uvq8IPooEdm7DL4CHtPQSQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_YWHWIO3dEd24CprL6yJ3YQ" name="optDatetimeAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_Uvq8IPooEdm7DL4CHtPQSQ"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_rag0Ie3dEd24CprL6yJ3YQ" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_rag0IO3dEd24CprL6yJ3YQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_bxCk4O3dEd24CprL6yJ3YQ" name="decimalAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_zLfhkP9bEdmxS4XKQrL4uA"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_dLfwsO3dEd24CprL6yJ3YQ" name="optDecimalAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_zLfhkP9bEdmxS4XKQrL4uA"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_q54MQe3dEd24CprL6yJ3YQ" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_q54MQO3dEd24CprL6yJ3YQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_idpm0O3dEd24CprL6yJ3YQ" name="doubleAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_sodcYPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_lrA6sO3dEd24CprL6yJ3YQ" name="optDoubleAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_sodcYPK4EdmFXfbQyopNVQ"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_pxJpoe3dEd24CprL6yJ3YQ" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_pxJpoO3dEd24CprL6yJ3YQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_4wvOYO3dEd24CprL6yJ3YQ" name="floatAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_ucmTgPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_6A6c0O3dEd24CprL6yJ3YQ" name="optFloatAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_ucmTgPK4EdmFXfbQyopNVQ"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_D3m1Ie3eEd24CprL6yJ3YQ" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_D3m1IO3eEd24CprL6yJ3YQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_715ogO3dEd24CprL6yJ3YQ" name="shortAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_qZ-LkPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_96sKwO3dEd24CprL6yJ3YQ" name="optShortAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_qZ-LkPK4EdmFXfbQyopNVQ"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_DPXJYe3eEd24CprL6yJ3YQ" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_DPXJYO3eEd24CprL6yJ3YQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="__iHbkO3dEd24CprL6yJ3YQ" name="stringAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_AomigO3eEd24CprL6yJ3YQ" name="optStringAttr" visibility="public">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_CTmrwe3eEd24CprL6yJ3YQ" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_CTmrwO3eEd24CprL6yJ3YQ"/>
+              </ownedAttribute>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:id="_QQ51ZcUTEd2V4aoOrpeVJQ">
+      <eAnnotations xmi:id="_QQ51ZsUTEd2V4aoOrpeVJQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+    </profileApplication>
+    <profileApplication xmi:id="_QQ51Z8UTEd2V4aoOrpeVJQ">
+      <eAnnotations xmi:id="_QQ51aMUTEd2V4aoOrpeVJQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.test.persistence.pim/model/uml2/Default.profile.uml#_IN8k8MmBEdqBcN1R6EvWUw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.test.persistence.pim/model/uml2/Default.profile.uml#_a_S3wNWLEdiy4IqP8whjFA"/>
+    </profileApplication>
+    <profileApplication xmi:id="_QQ51acUTEd2V4aoOrpeVJQ">
+      <eAnnotations xmi:id="_QQ51asUTEd2V4aoOrpeVJQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.test.persistence.pim/model/uml2/Deployment.profile.uml#_IrdAUMmBEdqBcN1R6EvWUw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.test.persistence.pim/model/uml2/Deployment.profile.uml#_vjbuwOvHEdiDX5bji0iVSA"/>
+    </profileApplication>
+    <profileApplication xmi:id="_TTD-0MUTEd2V4aoOrpeVJQ">
+      <eAnnotations xmi:id="_TTD-0cUTEd2V4aoOrpeVJQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDACommonProfile.profile.uml#_k-qQgexoEd20l8kTFJG5bw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDACommonProfile.profile.uml#_LKQ_oMT7Ed28n7ofFGqNfw"/>
+    </profileApplication>
+    <profileApplication xmi:id="_UMb20MUTEd2V4aoOrpeVJQ">
+      <eAnnotations xmi:id="_UMb20cUTEd2V4aoOrpeVJQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDAPersistenceProfile.profile.uml#_LuOmkeuCEd2Ap4BHH0G6sw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.test.persistence.pim/model/uml2/UMLMDAPersistenceProfile.profile.uml#_UkRb8MT7Ed28n7ofFGqNfw"/>
+    </profileApplication>
+  </uml:Model>
+  <Default:Documentation xmi:id="_BXecUO1-Ed24CprL6yJ3YQ" base_Comment="_BXUrUO1-Ed24CprL6yJ3YQ"/>
+  <Default:Documentation xmi:id="_F4kB4O1-Ed24CprL6yJ3YQ" base_Comment="_F4aQ4O1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_PDqfgO1-Ed24CprL6yJ3YQ" base_Class="_Oarz8O1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_QlHrMO1-Ed24CprL6yJ3YQ" base_Class="_QPqYkO1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_jv7TMO1-Ed24CprL6yJ3YQ" base_Property="_SDvlUO1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_jwFEMO1-Ed24CprL6yJ3YQ" base_Property="_UnzdgO1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_k6lvgO1-Ed24CprL6yJ3YQ" base_Property="_bXMGoO1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_k6lvge1-Ed24CprL6yJ3YQ" base_Property="_Z72KAO1-Ed24CprL6yJ3YQ"/>
+  <Default:Documentation xmi:id="_tfskIe1-Ed24CprL6yJ3YQ" base_Comment="_tfskIO1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_1R1q1O1-Ed24CprL6yJ3YQ" base_Property="_1R1qy-1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_1R1q1e1-Ed24CprL6yJ3YQ" base_Class="_1R1qwO1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_1R1q1u1-Ed24CprL6yJ3YQ" base_Class="_1R1qye1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_1R1q1-1-Ed24CprL6yJ3YQ" base_Property="_1R1qwu1-Ed24CprL6yJ3YQ"/>
+  <Default:Documentation xmi:id="_1R1q2O1-Ed24CprL6yJ3YQ" base_Comment="_1R1q0O1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_1R1q2e1-Ed24CprL6yJ3YQ" base_Property="_1R1qyu1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_1R1q2u1-Ed24CprL6yJ3YQ" base_Property="_1R1qwe1-Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_J3ZZi-1_Ed24CprL6yJ3YQ" base_Property="_J3ZZgu1_Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_J3ZZjO1_Ed24CprL6yJ3YQ" base_Class="_J3QPkO1_Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_J3ZZje1_Ed24CprL6yJ3YQ" base_Class="_J3ZZgO1_Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_J3ZZju1_Ed24CprL6yJ3YQ" base_Property="_J3QPku1_Ed24CprL6yJ3YQ"/>
+  <Default:Documentation xmi:id="_J3ZZj-1_Ed24CprL6yJ3YQ" base_Comment="_J3ZZh-1_Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_J3ZZkO1_Ed24CprL6yJ3YQ" base_Property="_J3ZZge1_Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_J3ZZke1_Ed24CprL6yJ3YQ" base_Property="_J3QPke1_Ed24CprL6yJ3YQ"/>
+  <Default:Documentation xmi:id="_fC9YW-1_Ed24CprL6yJ3YQ" base_Comment="_fC9YV-1_Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_fC9YXO1_Ed24CprL6yJ3YQ" base_Property="_fCznUe1_Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_fC9YXe1_Ed24CprL6yJ3YQ" base_Class="_fC9YUO1_Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_fC9YXu1_Ed24CprL6yJ3YQ" base_Property="_fC9YUe1_Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_fC9YX-1_Ed24CprL6yJ3YQ" base_Property="_fC9YUu1_Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_fC9YYO1_Ed24CprL6yJ3YQ" base_Class="_fCznUO1_Ed24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_fC9YYe1_Ed24CprL6yJ3YQ" base_Property="_fCznUu1_Ed24CprL6yJ3YQ"/>
+  <Default:Documentation xmi:id="_sgRckO2AEd24CprL6yJ3YQ" base_Comment="_sgISye2AEd24CprL6yJ3YQ"/>
+  <Default:Documentation xmi:id="_sgRcke2AEd24CprL6yJ3YQ" base_Comment="_sgISwu2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_sgRcku2AEd24CprL6yJ3YQ" base_Class="_sf-huO2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRck-2AEd24CprL6yJ3YQ" base_Property="_sgISue2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRclO2AEd24CprL6yJ3YQ" base_Property="_sgISqu2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_sgRcle2AEd24CprL6yJ3YQ" base_Class="_sgISoO2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRclu2AEd24CprL6yJ3YQ" base_Property="_sf-huu2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRcl-2AEd24CprL6yJ3YQ" base_Property="_sf-hsO2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_sgRcmO2AEd24CprL6yJ3YQ" base_Class="_sf-hoO2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_sgRcme2AEd24CprL6yJ3YQ" base_Class="_sf-hr-2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_sgRcmu2AEd24CprL6yJ3YQ" base_Class="_sgISuO2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRcm-2AEd24CprL6yJ3YQ" base_Property="_sf-hoe2AEd24CprL6yJ3YQ"/>
+  <Default:Documentation xmi:id="_sgRcnO2AEd24CprL6yJ3YQ" base_Comment="_sgISx-2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRcne2AEd24CprL6yJ3YQ" base_Property="_sgISou2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRcnu2AEd24CprL6yJ3YQ" base_Property="_sf-hq-2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRcn-2AEd24CprL6yJ3YQ" base_Property="_sgISse2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRcoO2AEd24CprL6yJ3YQ" base_Property="_sf-hou2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRcoe2AEd24CprL6yJ3YQ" base_Property="_sf-hqu2AEd24CprL6yJ3YQ"/>
+  <Default:Documentation xmi:id="_sgRcou2AEd24CprL6yJ3YQ" base_Comment="_sgISzu2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRco-2AEd24CprL6yJ3YQ" base_Property="_sgISoe2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_sgRcpO2AEd24CprL6yJ3YQ" base_Class="_sgISr-2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_sgRcpe2AEd24CprL6yJ3YQ" base_Class="_sf-hqe2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRcpu2AEd24CprL6yJ3YQ" base_Property="_sf-hue2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRcp-2AEd24CprL6yJ3YQ" base_Property="_sgISsO2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_sgRcqO2AEd24CprL6yJ3YQ" base_Class="_sgISqe2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRcqe2AEd24CprL6yJ3YQ" base_Property="_sgISuu2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRcqu2AEd24CprL6yJ3YQ" base_Property="_sgISq-2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_sgRcq-2AEd24CprL6yJ3YQ" base_Property="_sf-hse2AEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_s9g8x-2BEd24CprL6yJ3YQ" base_Property="_s9XLwe2BEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_s9g8yO2BEd24CprL6yJ3YQ" base_Property="_s9XL0O2BEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_s9g8ye2BEd24CprL6yJ3YQ" base_Property="_s9XL2u2BEd24CprL6yJ3YQ"/>
+  <Default:Documentation xmi:id="_s9g8yu2BEd24CprL6yJ3YQ" base_Comment="_s9g8xu2BEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_s9g8y-2BEd24CprL6yJ3YQ" base_Property="_s9XLy-2BEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_s9g8zO2BEd24CprL6yJ3YQ" base_Class="_s9XLz-2BEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_s9g8ze2BEd24CprL6yJ3YQ" base_Property="_s9XLwu2BEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_s9g8zu2BEd24CprL6yJ3YQ" base_Class="_s9XLye2BEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_s9g8z-2BEd24CprL6yJ3YQ" base_Property="_s9XL0e2BEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_s9g80O2BEd24CprL6yJ3YQ" base_Property="_s9XLyu2BEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_s9g80e2BEd24CprL6yJ3YQ" base_Class="_s9XL2O2BEd24CprL6yJ3YQ"/>
+  <Default:Documentation xmi:id="_s9g80u2BEd24CprL6yJ3YQ" base_Comment="_s9g8we2BEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_s9g80-2BEd24CprL6yJ3YQ" base_Property="_s9XL2e2BEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_s9g81O2BEd24CprL6yJ3YQ" base_Class="_s9XLwO2BEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_tXNHIO3ZEd24CprL6yJ3YQ" base_Property="_kTiuQO3ZEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_tXNHIe3ZEd24CprL6yJ3YQ" base_Property="_mzW_oO3ZEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_7XGJcO3ZEd24CprL6yJ3YQ" base_Class="_dPbyUO3ZEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_8xoNwO3ZEd24CprL6yJ3YQ" base_Class="_ew92gO3ZEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_8xxXsO3ZEd24CprL6yJ3YQ" base_Class="_foX_oO3ZEd24CprL6yJ3YQ"/>
+  <Default:Documentation xmi:id="_PeIJIO3aEd24CprL6yJ3YQ" base_Comment="_Pd-YIO3aEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_hs0HMe3aEd24CprL6yJ3YQ" base_Property="_hs0HIu3aEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_hs0HMu3aEd24CprL6yJ3YQ" base_Class="_hs0HJ-3aEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_hs0HM-3aEd24CprL6yJ3YQ" base_Class="_hs0HLO3aEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_hs0HNO3aEd24CprL6yJ3YQ" base_Property="_hs0HI-3aEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_hs0HNe3aEd24CprL6yJ3YQ" base_Class="_hs0HIO3aEd24CprL6yJ3YQ" mapping="SubClass"/>
+  <Default:Documentation xmi:id="_hs0HNu3aEd24CprL6yJ3YQ" base_Comment="_hs0HIe3aEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="__y57ke3bEd24CprL6yJ3YQ" base_Class="__y57jO3bEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="__y57ku3bEd24CprL6yJ3YQ" base_Class="__y57h-3bEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="__y57k-3bEd24CprL6yJ3YQ" base_Property="__y57gu3bEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="__y57lO3bEd24CprL6yJ3YQ" base_Class="__y57gO3bEd24CprL6yJ3YQ" mapping="ConcreteClass"/>
+  <Default:Documentation xmi:id="__y57le3bEd24CprL6yJ3YQ" base_Comment="__y57ge3bEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="__y57lu3bEd24CprL6yJ3YQ" base_Property="__y57g-3bEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PersistentEntity xmi:id="_s20PgO3cEd24CprL6yJ3YQ" base_Class="_si1jkO3cEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:PKey xmi:id="_6Uhx0O3cEd24CprL6yJ3YQ" domainAttribute="false" base_Property="_3HKd8O3cEd24CprL6yJ3YQ"/>
+  <UMLMDAPersistenceProfile:VersionAttribute xmi:id="_9ZZRAO3cEd24CprL6yJ3YQ" domainAttribute="false" base_Property="_7JlKgO3cEd24CprL6yJ3YQ"/>
+</xmi:XMI>
