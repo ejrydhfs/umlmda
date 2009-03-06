@@ -1,0 +1,43 @@
+//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = CppBusinessFactorySourceWriter
+main.CodeWriterFormat	   = format/ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.cpp.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.cpp.AbstractCppNamespaceWriter
+%>
+<% import!
+import org.umlmda.generator.model.util.RcsHelper;
+// ==== End of generation header ===============================================
+%>
+<% @section declare %><%
+   /* (non-Javadoc)
+    * @see net.sourceforge.umlmda.generator.AbstractWriter#getFileExt()
+    */
+   public String getBaseName() {
+      return "I"+super.getBaseName()+"Factory";
+   }
+
+   /* (non-Javadoc)
+    * @see net.sourceforge.umlmda.generator.AbstractWriter#getFileExt()
+    */
+   public String getFileExt() {
+      return ".cpp";
+   }
+%><% @section %>
+
+#include <<%=getNamespaceName()%>/IFactory.h>
+<%= beginUserSection("Include", COMMON) %>
+<%= endUserSection("Include", COMMON) %>
+
+using namespace <%=getNamespaceName()%>;
+
+IFactory::~IFactory() {
+}
+   
+//@@UserSection-Begin RCSLog
+<%=RcsHelper.writeLog("// ")%>
+//@@UserSection-End RCSLog

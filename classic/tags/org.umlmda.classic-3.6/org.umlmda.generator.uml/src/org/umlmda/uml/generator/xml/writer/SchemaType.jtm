@@ -1,0 +1,77 @@
+  <xs:complexType name="<%=getName(modelClass, NM_BASE)%>">
+<%  if ( modelClass.getSuperClass() != null ) {
+%>    <xs:complexContent>
+    <xs:extension base="<%=getName(modelClass.getSuperClass(), NM_QREF_BASE)%>">
+<%  }
+    boolean seqOpened = false;
+
+    // add XML element of type ObjectType if it is a base class
+    // TODO: check for business objects
+    if ( modelClass.getSuperClass() == null ) {
+      if (!seqOpened) {
+        seqOpened = true;
+%>    <xs:sequence>
+<%    }
+%>      <xs:element name="o-ref" type="tns1:ObjectType"/>
+<%  }
+    // write complex model attributes as ObjectType
+    for ( Iterator ia = modelClass.getAttributes().iterator(); ia.hasNext(); ) {
+      ModelAttribute attribute = (ModelAttribute)ia.next();
+      if (!attribute.isPrimitiveType()) {
+        if (!seqOpened) {
+          seqOpened = true;
+%>    <xs:sequence>
+<%    }
+%>      <xs:attribute name="<%=attribute.getName()%>" use="<%=attribute.isOptional() ? "optional" : "required"%>" type="tns1:ObjectType"/>
+<%    }
+    } // for attributes
+
+    // write assocations as ObjectType
+    for ( Iterator ia = modelClass.getAssociations().iterator(); ia.hasNext(); ) {
+      ModelAssociation association = (ModelAssociation)ia.next();
+      if (!seqOpened) {
+        seqOpened = true;
+%>    <xs:sequence>
+<%    }
+      if ( association.isMultiple() ) {
+%>      <xs:element name="<%=association.getName()%>List" minOccurs="0" maxOccurs="unbounded" type="tns1:ObjectType"/>
+<%    } else {
+%>      <xs:element name="<%=association.getName()%>" nillable="<%=association.isOptional()%>" type="tns1:ObjectType"/>
+<%    } // endif multiple
+    } // for associations
+    if (seqOpened) {
+      seqOpened = false;
+%>    </xs:sequence>
+<%  }
+
+    // write primitive model attributes as XML attributes
+    for ( Iterator ia = modelClass.getAttributes().iterator(); ia.hasNext(); ) {
+      ModelAttribute attribute = (ModelAttribute)ia.next();
+      if (attribute.isPrimitiveType()) {
+%>    <xs:attribute name="<%=attribute.getName()%>" type="<%=attribute.getType()%>"<%
+        // primary key attributes are required
+%> use="<%=attribute.isOptional() ? "optional" : "required"%>"/>
+<%    }
+    } // for attributes
+
+    if ( modelClass.getSuperClass() != null ) {
+%>    </xs:extension>
+    </xs:complexContent>
+<%  }
+%>  </xs:complexType>
+<%
+    // generate choice for polymorphic used classes
+    if (isPolymorph(modelClass, NM_BASE)) {%>
+  <xs:complexType name="<%=getName(modelClass, NM_DERIVED)%>">
+    <xs:choice><%
+       // include base class in choice - if not abstract
+       if (!modelClass.isAbstract()) {%>
+      <xs:element name="<%=getName(modelClass, NM_BEAN)%>" type="<%=getName(modelClass, NM_QREF_BASE)%>"/>
+<%    }
+      for(Iterator is = modelClass.getAllSubClasses().iterator(); is.hasNext(); ) {
+        ModelClass subClass = (ModelClass)is.next();%>
+      <xs:element name="<%=getName(subClass, NM_BEAN)%>" type="<%=getName(subClass, NM_QREF_BASE)%>"/><%
+      } // for %>
+    </xs:choice>
+  </xs:complexType>
+<%  } // endif %>
