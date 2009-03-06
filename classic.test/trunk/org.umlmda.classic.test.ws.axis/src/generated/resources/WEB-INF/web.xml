@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- @@Generated file, please edit UserSections only -->
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
+
+  <servlet>
+    <servlet-name>CommonServiceServlet</servlet-name>
+    <servlet-class>org.umlmda.demo.partner.ws.servlet.CommonServiceServlet</servlet-class>
+<!-- @@UserSection-Begin CommonServiceServlet -->
+<!-- Custom env entries to configure web service endpoint -->
+<!-- @@UserSection-End CommonServiceServlet -->
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>CommonServiceServlet</servlet-name>
+    <url-pattern>/CommonService</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PartnerPersistenceServlet</servlet-name>
+    <servlet-class>org.umlmda.demo.partner.ws.servlet.PartnerPersistenceServlet</servlet-class>
+<!-- @@UserSection-Begin PartnerPersistenceServlet -->
+<!-- Custom env entries to configure web service endpoint -->
+<!-- @@UserSection-End PartnerPersistenceServlet -->
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>PartnerPersistenceServlet</servlet-name>
+    <url-pattern>/PartnerPersistence</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PartnerServiceServlet</servlet-name>
+    <servlet-class>org.umlmda.demo.partner.ws.servlet.PartnerServiceServlet</servlet-class>
+<!-- @@UserSection-Begin PartnerServiceServlet -->
+<!-- Custom env entries to configure web service endpoint -->
+<!-- @@UserSection-End PartnerServiceServlet -->
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>PartnerServiceServlet</servlet-name>
+    <url-pattern>/PartnerService</url-pattern>
+  </servlet-mapping>
+
+</web-app>

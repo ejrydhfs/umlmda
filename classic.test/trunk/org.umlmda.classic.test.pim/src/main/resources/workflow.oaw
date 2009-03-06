@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workflow>
 
-    <!-- Nur zum Debugging des Workflows, wird normalerweise von Maven gesetzt -->
-    <!-- 
-    <property name="basedir" value="C:\devel\COR-PnC\vertrag_pnc_oap_gui_pim"/>
-     -->
+	<!-- Load the properties -->
     <property file="workflow.properties"/>
 
     <!-- initializes resourcemaps, urimaps, etc. -->
@@ -50,8 +47,10 @@
 	
 	<!-- Run classic generator -->
 	<component class="org.umlmda.generator.oaw.ClassicGenerator">
-		<templateFolder value="etc/umlmda/3rd/templates"/>
+		<templateFolder value="${basedir}/etc/umlmda/3rd/templates"/>
 		<modelSlot value="umlmda_pim"/>
 		<generatorProfile value="gs"/>
 	</component>
+	
+	
 </workflow>

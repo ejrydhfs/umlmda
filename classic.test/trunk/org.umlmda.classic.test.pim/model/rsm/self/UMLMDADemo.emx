@@ -312,9 +312,7 @@
                 <element xsi:nil="true"/>
               </contents>
             </eAnnotations>
-            <eAnnotations xmi:id="_exQOgI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
-              <details xmi:id="_exQOgY6tEdu_38fAI0Hi1w" key="BusinessComponent"/>
-            </eAnnotations>
+            <eAnnotations xmi:id="_exQOgI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             <ownedComment xmi:id="_ew0JtI6tEdu_38fAI0Hi1w" annotatedElement="_419D11490052419D117F00C8">
               <body>Common used business exceptions and objects.</body>
             </ownedComment>
@@ -379,9 +377,7 @@
                 <body>Base</body>
               </ownedComment>
               <ownedAttribute xmi:id="_419D1149005241E25D6D0381" name="validFrom" visibility="private">
-                <eAnnotations xmi:id="_exHEkI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
-                  <details xmi:id="_exHEkY6tEdu_38fAI0Hi1w" key="PKey"/>
-                </eAnnotations>
+                <eAnnotations xmi:id="_exHEkI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_iFa7cPK4EdmFXfbQyopNVQ?UMLMDATypes/date?"/>
               </ownedAttribute>
               <ownedAttribute xmi:id="_419D1149005241E25D8201F0" name="validTo" visibility="private">
@@ -477,7 +473,7 @@
                     <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_e0FgH46tEdu_38fAI0Hi1w" canonical="false"/>
                   </children>
                   <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_e0FgEY6tEdu_38fAI0Hi1w" showListStereotype="Text" showListSignature="true" lineColor="10011046" showStereotype="Text"/>
-                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_e0FgEo6tEdu_38fAI0Hi1w" x="14545" y="499"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_e0FgEo6tEdu_38fAI0Hi1w" x="11076" y="520"/>
                 </children>
                 <children xmi:id="_e0FgII6tEdu_38fAI0Hi1w" element="_419D1149005241E25D630001">
                   <children xmi:id="_e0FgI46tEdu_38fAI0Hi1w" type="ImageCompartment">
@@ -653,7 +649,7 @@
                     <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_e0ZCEY6tEdu_38fAI0Hi1w" canonical="false"/>
                   </children>
                   <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_e0PRoI6tEdu_38fAI0Hi1w" showListStereotype="Text" showListSignature="true" lineColor="10011046" showStereotype="Text"/>
-                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_e0PRoY6tEdu_38fAI0Hi1w" x="23775" y="4438"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_e0PRoY6tEdu_38fAI0Hi1w" x="25272" y="4420"/>
                 </children>
                 <children xmi:id="_e0ZCG46tEdu_38fAI0Hi1w" element="_419D1149005241B6E5DB034D">
                   <children xmi:id="_e0ZCHo6tEdu_38fAI0Hi1w" type="ImageCompartment">
@@ -785,7 +781,7 @@
                     <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_e0iMCI6tEdu_38fAI0Hi1w" canonical="false"/>
                   </children>
                   <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_e0ZCoY6tEdu_38fAI0Hi1w" showListStereotype="Text" showListSignature="true" lineColor="0" showParent="QualifiedName" showStereotype="Text"/>
-                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_e0ZCoo6tEdu_38fAI0Hi1w" x="-767" y="9323"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_e0ZCoo6tEdu_38fAI0Hi1w" x="-4686" y="8687"/>
                 </children>
                 <children xmi:id="_e0iMCY6tEdu_38fAI0Hi1w" element="_419D11490052434FD1D0030D">
                   <children xmi:id="_e0iMDI6tEdu_38fAI0Hi1w" type="ImageCompartment">
@@ -874,6 +870,28 @@
                   </children>
                   <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_v9HUQpBzEdugQZgPS72wTA" showListSignature="true" lineColor="13420443" showStereotype="Label"/>
                   <layoutConstraint xmi:type="notation:Bounds" xmi:id="_v9HUQ5BzEdugQZgPS72wTA" x="24092" y="10144"/>
+                </children>
+                <children xmi:id="_7CkPQD3iEd2TXIc2w3nvmA" element="_419D11490052445A08580340">
+                  <children xmi:id="_7CkPQz3iEd2TXIc2w3nvmA" type="ImageCompartment">
+                    <layoutConstraint xmi:type="notation:Size" xmi:id="_7CkPRD3iEd2TXIc2w3nvmA" width="1320" height="1320"/>
+                  </children>
+                  <children xmi:id="_7CkPRT3iEd2TXIc2w3nvmA" type="Stereotype"/>
+                  <children xmi:id="_7CkPRj3iEd2TXIc2w3nvmA" type="Name"/>
+                  <children xmi:id="_7CkPRz3iEd2TXIc2w3nvmA" type="Parent"/>
+                  <children xmi:id="_7CkPSD3iEd2TXIc2w3nvmA" type="AttributeCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_7CkPST3iEd2TXIc2w3nvmA"/>
+                  </children>
+                  <children xmi:id="_7CkPSj3iEd2TXIc2w3nvmA" visible="false" type="OperationCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_7CkPSz3iEd2TXIc2w3nvmA"/>
+                  </children>
+                  <children xmi:id="_7CkPTD3iEd2TXIc2w3nvmA" visible="false" type="SignalCompartment">
+                    <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_7CkPTT3iEd2TXIc2w3nvmA"/>
+                  </children>
+                  <children xmi:id="_7CkPTj3iEd2TXIc2w3nvmA" visible="false" type="StructureCompartment">
+                    <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_7CkPTz3iEd2TXIc2w3nvmA" canonical="false"/>
+                  </children>
+                  <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_7CkPQT3iEd2TXIc2w3nvmA" showListStereotype="Text" showListSignature="true" lineColor="0" showParent="QualifiedName" showStereotype="Text"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7CkPQj3iEd2TXIc2w3nvmA" x="8216" y="3796"/>
                 </children>
                 <styles xmi:type="umlnotation:UMLDiagramStyle" xmi:id="_eymSdI6tEdu_38fAI0Hi1w" description="The full telephone number including country and area code. Sample for a dreived settable attribute."/>
                 <element xsi:nil="true"/>
@@ -1115,7 +1133,7 @@
                     <layoutConstraint xmi:type="notation:Location" xmi:id="_e0ZCjY6tEdu_38fAI0Hi1w" y="1058"/>
                   </children>
                   <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_e0ZCbo6tEdu_38fAI0Hi1w" routing="Rectilinear" lineColor="3342489" showStereotype="None"/>
-                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_e0ZCb46tEdu_38fAI0Hi1w" points="[-1557, 1016, 1828, -3454]$[-1557, 3437, 1828, -1032]"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_e0ZCb46tEdu_38fAI0Hi1w" points="[-264, 873, 3757, -3678]$[-264, 2116, 3757, -2435]$[-4259, 2116, -238, -2435]$[-4259, 3651, -238, -900]"/>
                 </edges>
                 <edges xmi:id="_e0iMGY6tEdu_38fAI0Hi1w" element="_419D11490052434FD2340118" source="_e0iMCY6tEdu_38fAI0Hi1w" target="_e0FgMI6tEdu_38fAI0Hi1w">
                   <children xmi:id="_e0iMHI6tEdu_38fAI0Hi1w" type="NameLabel">
@@ -1507,11 +1525,11 @@
                   </children>
                   <children xmi:id="_e01G-o6tEdu_38fAI0Hi1w" type="FromMultiplicityLabel" element="_419D1149005243F4FDFF0262">
                     <children xmi:id="_e01G_I6tEdu_38fAI0Hi1w" type="FromMultiplicity"/>
-                    <layoutConstraint xmi:type="notation:Location" xmi:id="_e01G-46tEdu_38fAI0Hi1w" x="390" y="-475"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_e01G-46tEdu_38fAI0Hi1w" x="6" y="-477"/>
                   </children>
                   <children xmi:id="_e01G_Y6tEdu_38fAI0Hi1w" type="FromRoleLabel" element="_419D1149005243F4FDFF0262">
                     <children xmi:id="_e01G_46tEdu_38fAI0Hi1w" type="FromRole"/>
-                    <layoutConstraint xmi:type="notation:Location" xmi:id="_e01G_o6tEdu_38fAI0Hi1w" x="439" y="796"/>
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_e01G_o6tEdu_38fAI0Hi1w" x="-262" y="459"/>
                   </children>
                   <children xmi:id="_e01HAI6tEdu_38fAI0Hi1w" type="ToQualifierLabel" element="_419D1149005243F4FDFF0264">
                     <children xmi:id="_e01HAo6tEdu_38fAI0Hi1w" type="QualifierCompartment">
@@ -1538,7 +1556,7 @@
                     <layoutConstraint xmi:type="notation:Location" xmi:id="_e01HDY6tEdu_38fAI0Hi1w" y="1058"/>
                   </children>
                   <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_e0r9n46tEdu_38fAI0Hi1w" routing="Rectilinear" lineColor="3342489" showStereotype="None"/>
-                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_e0r9oI6tEdu_38fAI0Hi1w" points="[-1455, 1164, 3255, 1138]$[-1455, 1987, 3255, 1961]$[-4815, 1987, -105, 1961]$[-4815, 1164, -105, 1138]"/>
+                  <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_e0r9oI6tEdu_38fAI0Hi1w" points="[-2090, 0, 5107, 609]$[-3493, 0, 3704, 609]"/>
                 </edges>
                 <edges xmi:id="_e01HEI6tEdu_38fAI0Hi1w" element="_419D1149005244154A9A0068" source="_e0iMIo6tEdu_38fAI0Hi1w" target="_e0iMCY6tEdu_38fAI0Hi1w">
                   <children xmi:id="_e01HE46tEdu_38fAI0Hi1w" type="NameLabel">
@@ -2089,9 +2107,7 @@
                 </edges>
               </contents>
             </eAnnotations>
-            <eAnnotations xmi:id="_eywDVI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
-              <details xmi:id="_eywDVY6tEdu_38fAI0Hi1w" key="BusinessComponent"/>
-            </eAnnotations>
+            <eAnnotations xmi:id="_eywDVI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             <ownedComment xmi:id="_exQOg46tEdu_38fAI0Hi1w" annotatedElement="_419D11490052419D118503B6">
               <body>Business objects and services for a simple party system.</body>
             </ownedComment>
@@ -2105,9 +2121,7 @@
                 <body>Base of Businessobject of person or legal entity.</body>
               </ownedComment>
               <ownedAttribute xmi:id="_419D1149005241B6EEB0000B" name="id" visibility="private">
-                <eAnnotations xmi:id="_exQOj46tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
-                  <details xmi:id="_exQOkI6tEdu_38fAI0Hi1w" key="PKey"/>
-                </eAnnotations>
+                <eAnnotations xmi:id="_exQOj46tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string?"/>
               </ownedAttribute>
               <ownedAttribute xmi:id="_419D11490052419D12010332" name="name" visibility="private">
@@ -2168,9 +2182,7 @@ Different types can be distinguished:
               </ownedComment>
               <generalization xmi:id="_419D1149005241F2BFE602C8" general="_419D1149005241E25D630001"/>
               <ownedAttribute xmi:id="_419D1149005241B7059F0343" name="nr" visibility="private">
-                <eAnnotations xmi:id="_exZ_io6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
-                  <details xmi:id="_exZ_i46tEdu_38fAI0Hi1w" key="PKey"/>
-                </eAnnotations>
+                <eAnnotations xmi:id="_exZ_io6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
                 <ownedComment xmi:id="_exZ_iI6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241B7059F0343">
                   <body>sequential number of the addresses of one partner. Primary key (together with parent primary key attributes). </body>
                 </ownedComment>
@@ -2320,6 +2332,7 @@ Different types can be distinguished:
                 <ownedParameter xmi:id="_419D1149005241C97F990040" name="validityDate" direction="inout">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_iFa7cPK4EdmFXfbQyopNVQ?UMLMDATypes/date?"/>
                 </ownedParameter>
+                <ownedParameter xmi:id="_E1wAkD3jEd2TXIc2w3nvmA" name="security" type="_419D11490052445A08580340"/>
               </ownedOperation>
               <ownedOperation xmi:id="_419D1149005241F77254038F" name="update" visibility="public" raisedException="_419D11490052419D11990134">
                 <ownedComment xmi:id="_ex2reY6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241F77254038F">
@@ -2389,9 +2402,7 @@ Different types can be distinguished:
                 <body>Two separate date between different mandators.</body>
               </ownedComment>
               <ownedAttribute xmi:id="_419D114900524231C3FE014C" name="mandatorId" visibility="private">
-                <eAnnotations xmi:id="_eyAcdo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
-                  <details xmi:id="_eyAcd46tEdu_38fAI0Hi1w" key="PKey"/>
-                </eAnnotations>
+                <eAnnotations xmi:id="_eyAcdo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx#_wefSwPK4EdmFXfbQyopNVQ?UMLMDATypes/string?"/>
               </ownedAttribute>
               <ownedAttribute xmi:id="_419D114900524231C40E03A8" name="name" visibility="private">
@@ -2564,9 +2575,7 @@ Different types can be distinguished:
                 <element xsi:nil="true"/>
               </contents>
             </eAnnotations>
-            <eAnnotations xmi:id="_ey5NS46tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
-              <details xmi:id="_ey5NTI6tEdu_38fAI0Hi1w" key="BusinessComponent"/>
-            </eAnnotations>
+            <eAnnotations xmi:id="_ey5NS46tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             <ownedComment xmi:id="_eywDV46tEdu_38fAI0Hi1w" annotatedElement="_419D11490052445764E403BF">
               <body>Package, containing only services, using objects from other packages.</body>
             </ownedComment>
@@ -2712,4 +2721,7 @@ Different types can be distinguished:
   <UMLMDAProfile:Enumeration xmi:id="_Fv9nQDuMEd2kXoe9DnY4hA" base_Class="_JX13oJBzEdugQZgPS72wTA"/>
   <UMLMDAProfile:Enumeration xmi:id="_IWaFEDuMEd2kXoe9DnY4hA" base_Class="_vjCnYJBzEdugQZgPS72wTA"/>
   <UMLMDAProfile:Enumeration xmi:id="_IWaFETuMEd2kXoe9DnY4hA" base_Class="_clCsUJBzEdugQZgPS72wTA"/>
+  <UMLMDAProfile:BusinessComponent xmi:id="_7l7loAozEd6Ve7K2FjU0DA" WSNamespacePrefix="cmn" WSNamespace="http://www.umlmda.org/demo/common" base_Package="_419D11490052419D117F00C8"/>
+  <UMLMDAProfile:BusinessComponent xmi:id="_-E7-sAozEd6Ve7K2FjU0DA" WSNamespacePrefix="par" WSNamespace="http://www.umlmda.org/demo/partner" base_Package="_419D11490052419D118503B6"/>
+  <UMLMDAProfile:BusinessComponent xmi:id="_BYPigAo0Ed6Ve7K2FjU0DA" WSNamespacePrefix="srv" WSNamespace="http://www.umlmda.org/demo/service" base_Package="_419D11490052445764E403BF"/>
 </xmi:XMI>

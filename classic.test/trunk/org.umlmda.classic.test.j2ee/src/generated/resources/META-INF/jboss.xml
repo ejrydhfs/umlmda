@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Generated file, please edit UserSections only -->
+
+<jboss>
+
+   <enterprise-beans>
+
+      <!-- Session Beans -->
+      <session>
+         <ejb-name>CommonService</ejb-name>
+         <jndi-name>ejb/partner/1/CommonService</jndi-name>
+<!-- UserSection-Begin CommonService -->
+<!-- UserSection-End CommonService -->
+      </session>
+
+      <session>
+         <ejb-name>PartnerPersistence</ejb-name>
+         <jndi-name>ejb/partner/1/PartnerPersistence</jndi-name>
+<!-- UserSection-Begin PartnerPersistence -->
+<!-- UserSection-End PartnerPersistence -->
+      </session>
+
+      <session>
+         <ejb-name>PartnerService</ejb-name>
+         <jndi-name>ejb/partner/1/PartnerService</jndi-name>
+<!-- UserSection-Begin PartnerService -->
+<!-- UserSection-End PartnerService -->
+      </session>
+
+    
+<!-- UserSection-Begin enterprise-beans -->
+<!-- UserSection-End enterprise-beans -->
+   </enterprise-beans>
+   
+   <resource-managers>
+<!-- UserSection-Begin resource-managers -->
+<!-- UserSection-End resource-managers -->
+   </resource-managers>
+   
+</jboss>
