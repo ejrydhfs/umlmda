@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
    <parent>
@@ -8,7 +7,7 @@
       <version>3.14</version>
    </parent>
    <artifactId>org.umlmda.classic</artifactId>
-   <version>3.6-SNAPSHOT</version>
+   <version>3.6</version>
    <packaging>pom</packaging>
    <name>UMLMDA Classic</name>
    <description>UMLMDA maven project for umlmda classic modules.</description>
@@ -55,8 +54,8 @@
    </modules>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/trunk</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/trunk</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/tags/org.umlmda.classic-3.6</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/tags/org.umlmda.classic-3.6</developerConnection>
    </scm>
 
    <dependencyManagement>
@@ -167,17 +166,17 @@
          <dependency>
             <groupId>org.umlmda</groupId>
             <artifactId>org.umlmda.generator.core</artifactId>
-            <version>3.6-SNAPSHOT</version>
+            <version>3.6</version>
          </dependency>
          <dependency>
             <groupId>org.umlmda</groupId>
             <artifactId>org.umlmda.generator.uml</artifactId>
-            <version>3.6-SNAPSHOT</version>
+            <version>3.6</version>
          </dependency>
          <dependency>
             <groupId>org.umlmda</groupId>
             <artifactId>org.umlmda.classic.generator</artifactId>
-            <version>3.6-SNAPSHOT</version>
+            <version>3.6</version>
          </dependency>
 
       </dependencies>
