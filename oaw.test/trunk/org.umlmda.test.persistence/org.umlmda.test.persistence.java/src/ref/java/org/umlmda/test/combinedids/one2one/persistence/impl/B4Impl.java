@@ -172,7 +172,7 @@ public class B4Impl implements B4, Serializable, XMLSerializable, org.umlmda.run
    @OneToOne(fetch = FetchType.LAZY, optional = false)
    @JoinColumns( {
          @JoinColumn(name = "groupId", referencedColumnName = "groupId", nullable = true, insertable = false, updatable = false),
-         @JoinColumn(name = "aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
+         @JoinColumn(name = "a4_aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
    private A4Impl a;
 
    /**

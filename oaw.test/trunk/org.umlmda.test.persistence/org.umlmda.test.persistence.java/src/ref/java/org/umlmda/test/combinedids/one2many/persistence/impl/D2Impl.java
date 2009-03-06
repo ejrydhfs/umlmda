@@ -172,7 +172,7 @@ public class D2Impl implements D2, Serializable, XMLSerializable, org.umlmda.run
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumns( {
          @JoinColumn(name = "groupId", referencedColumnName = "groupId", nullable = true, insertable = false, updatable = false),
-         @JoinColumn(name = "aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
+         @JoinColumn(name = "c2_aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
    private C2Impl a;
 
    /**

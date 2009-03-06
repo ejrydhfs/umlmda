@@ -172,7 +172,7 @@ public class D4Impl implements D4, Serializable, XMLSerializable, org.umlmda.run
    @ManyToOne(fetch = FetchType.LAZY, optional = false)
    @JoinColumns( {
          @JoinColumn(name = "groupId", referencedColumnName = "groupId", nullable = true, insertable = false, updatable = false),
-         @JoinColumn(name = "aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
+         @JoinColumn(name = "c4_aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
    private C4Impl a;
 
    /**

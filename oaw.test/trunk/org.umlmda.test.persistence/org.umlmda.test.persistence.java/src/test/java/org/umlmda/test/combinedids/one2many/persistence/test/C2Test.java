@@ -77,7 +77,7 @@ public class C2Test extends AbstractTest{
 		
 		em.flush();
 		
-		Query q = em.createQuery("SELECT d2 FROM D2Impl d2 WHERE d2.aId=:id").setParameter("id", "Id 1");
+		Query q = em.createQuery("SELECT d2 FROM D2Impl d2 WHERE d2.c2_aId=:id").setParameter("id", "Id 1");
 		for(Object o:q.getResultList()){
 			log.info("Group ID: "+((D2Impl)o).getGroupId());
 		}
