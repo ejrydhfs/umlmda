@@ -88,12 +88,7 @@
    
    «EXPAND java::BOImpl::standardCtor("public") FOR this»
    «EXPAND handleAttributes FOR this»  
-   
-   «FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
-     «EXPAND handleAssociation(this) FOR assoc»
-   «ENDFOREACH»
-   «EXPAND compositionHandling FOR this»
-   «EXPAND jpaSyncMethod FOR this»
+   «EXPAND handleAssociations FOR this»
 
    «FOREACH implementedMethods.typeSelect(JavaModelMethod) AS method»
       «EXPAND java::BOImpl::handleMethod(this) FOR method»
@@ -103,6 +98,13 @@
    «EXPAND java::BOImpl::visitorAcceptMethod FOR this»
    «EXPAND java::BOImpl::xmlSerializationMethods FOR this»
 «ENDDEFINE»
+
+
+«REM»
+====================================================================================================
+                               A  T  T  R  I  B  U  T  E  S
+====================================================================================================
+«ENDREM»
 
 «DEFINE attrAnnotation FOR JavaModelAttribute»
 	«IF hasStereotype("PKey") && owningClass.hasStereotype("PersistentEntity") && ! owningClass.hasCompositeKey()»
@@ -127,59 +129,17 @@
    «ENDIF»
 «ENDDEFINE»
 
-«DEFINE assocAnnotation FOR JavaModelAssociation»
-	«IF !derived»
-	   «IF multiple && !reverse.multiple»
-	      @OneToMany(
-	        «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
-	           «attr»
-	        «ENDFOREACH»
-	      )
-	   «ELSEIF !multiple && !reverse.multiple»
-         @OneToOne(
-           «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
-              «attr»
-           «ENDFOREACH»
-         )
-         «EXPAND joinColumns FOR this»
-       «ELSEIF !multiple && reverse.multiple»
-         @ManyToOne(
-           «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
-              «attr»
-           «ENDFOREACH»
-         )
-         «EXPAND joinColumns FOR this»
-       «ELSEIF multiple && reverse.multiple»
-         @ManyToMany(
-           «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
-              «attr»
-           «ENDFOREACH»
-         )
-       «ENDIF»
-	«ENDIF»
-«ENDDEFINE»
-
-«DEFINE joinColumns FOR JavaModelAssociation»
-   «IF joinColumns().isEmpty == false»
-      @JoinColumns( {
-         «FOREACH joinColumns() AS keyAttr SEPARATOR ","»
-            @JoinColumn(name = "«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
-         «ENDFOREACH»
-      })         
-   «ENDIF»
-«ENDDEFINE»
-
 «DEFINE handleAttributes FOR JavaModelClass»
-   «FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr»
-   		«REM»PKey attributes only for PersistentEntity«ENDREM»		
-        «IF this.hasStereotype("PersistentEntity") && attr.hasStereotype("PKey")»
-        	«REM»But only if we don't have a compound key«ENDREM»
-        	«IF ! this.hasCompositeKey()»
-	            «EXPAND handleAttribute(this) FOR attr»
-            «ENDIF»
-        «ELSEIF ! attr.hasStereotype("PKey")»
-        	«EXPAND handleAttribute(this) FOR attr»
-		«ENDIF»		   		
+   «FOREACH implementedAttributes.typeSelect(JavaModelAttribute).reject(a|superClass!=null && ((JavaModelClass)superClass).implementedAttributes.contains(a)) AS attr»
+      «REM» PKey attributes only for PersistentEntity «ENDREM»		
+		«IF this.hasStereotype("PersistentEntity") && attr.hasStereotype("PKey")»
+   		«REM» But only if we don't have a compound key «ENDREM»
+         «IF ! this.hasCompositeKey()»
+            «EXPAND handleAttribute(this) FOR attr»
+         «ENDIF»
+      «ELSEIF ! attr.hasStereotype("PKey")»
+         «EXPAND handleAttribute(this) FOR attr»
+      «ENDIF»		   		
    «ENDFOREACH»
 «ENDDEFINE»
 
@@ -202,6 +162,93 @@
    «EXPAND java::BOInterface::attrSetterDecl FOR this» {
         pkey.«setter»(«name»);
    }
+«ENDDEFINE»
+
+
+«REM»
+====================================================================================================
+                           A  S  S  O  C  I  A  T  I  O  N  S
+====================================================================================================
+«ENDREM»
+
+«DEFINE handleAssociations FOR JavaBusinessObject»
+   «FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
+     «EXPAND handleAssociation(this) FOR assoc»
+   «ENDFOREACH»
+   «EXPAND compositionHandling FOR this»
+   «EXPAND jpaSyncMethod FOR this»
+«ENDDEFINE»
+
+«DEFINE handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
+   «EXPAND assocAnnotation FOR this»
+   «EXPAND assocDecl FOR this»
+   
+   «IF !derived && multiple»
+        @SuppressWarnings("unchecked")   
+   «ENDIF»
+   «EXPAND java::BOInterface::assocGetterDecl FOR this»
+   «EXPAND java::BOImpl::getterBody(modelClass) FOR this»
+   
+   «EXPAND java::BOInterface::assocSetterDecl FOR this» {
+        «IF multiple»
+            this.«name» = «name»;
+        «ELSE»
+            this.«name» = («implDeclType()»)«name»;
+            «IF hasUnSharedJoinColumns()»
+            if ( «name» == null ) {
+                «FOREACH unsharedJoinColumns() AS attr»
+                    «target.name.toFirstLower()»_«attr.name» = null;
+                «ENDFOREACH»
+            }
+            «ENDIF»
+        «ENDIF»
+   }
+
+    «IF isJoinAssociation()»
+       «EXPAND handleJoinColumns FOR this»
+    «ENDIF»
+«ENDDEFINE»
+
+«DEFINE assocAnnotation FOR JavaModelAssociation»
+   «IF !derived»
+      «IF multiple && !reverse.multiple»
+         @OneToMany(
+           «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
+              «attr»
+           «ENDFOREACH»
+         )
+      «ELSEIF !multiple && !reverse.multiple»
+         @OneToOne(
+           «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
+              «attr»
+           «ENDFOREACH»
+         )
+         «EXPAND joinColumns FOR this»
+       «ELSEIF !multiple && reverse.multiple»
+         @ManyToOne(
+           «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
+              «attr»
+           «ENDFOREACH»
+         )
+         «EXPAND joinColumns FOR this»
+       «ELSEIF multiple && reverse.multiple»
+         @ManyToMany(
+           «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
+              «attr»
+           «ENDFOREACH»
+         )
+       «ENDIF»
+   «ENDIF»
+«ENDDEFINE»
+
+«DEFINE joinColumns FOR JavaModelAssociation»
+   «IF joinColumns().isEmpty == false»
+      @JoinColumns( {
+         «FOREACH joinColumns() AS keyAttr SEPARATOR ","»
+            @JoinColumn(name = "«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
+         «ENDFOREACH»
+      })         
+   «ENDIF»
 «ENDDEFINE»
 
 «DEFINE compositionHandling FOR JavaBusinessObject»
@@ -235,36 +282,6 @@
          «ENDFOREACH»
       }
    «ENDIF»
-«ENDDEFINE»
-
-«DEFINE handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
-   «EXPAND assocAnnotation FOR this»
-   «EXPAND assocDecl FOR this»
-   
-   «IF !derived && multiple»
-        @SuppressWarnings("unchecked")   
-   «ENDIF»
-   «EXPAND java::BOInterface::assocGetterDecl FOR this»
-   «EXPAND java::BOImpl::getterBody(modelClass) FOR this»
-   
-   «EXPAND java::BOInterface::assocSetterDecl FOR this» {
-        «IF multiple»
-            this.«name» = «name»;
-        «ELSE»
-            this.«name» = («implDeclType()»)«name»;
-            «IF hasUnSharedJoinColumns()»
-            if ( «name» == null ) {
-                «FOREACH unsharedJoinColumns() AS attr»
-                    «target.name.toFirstLower()»_«attr.name» = null;
-                «ENDFOREACH»
-            }
-            «ENDIF»
-        «ENDIF»
-   }
-
-    «IF isJoinAssociation()»
-       «EXPAND handleJoinColumns FOR this»
-    «ENDIF»
 «ENDDEFINE»
 
 «DEFINE handleJoinColumns FOR JavaModelAssociation»
@@ -318,6 +335,13 @@
         «ENDIF»
     «ENDIF»
 «ENDDEFINE»
+
+
+«REM»
+====================================================================================================
+                           E  N  T  I  T  Y      K  E  Y
+====================================================================================================
+«ENDREM»
 
 «DEFINE keyImpl FOR JavaModelClass»
    «REM»Only concrete persistent entities should get a key implementation«ENDREM»
