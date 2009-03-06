@@ -245,7 +245,11 @@
    «IF joinColumns().isEmpty == false»
       @JoinColumns( {
          «FOREACH joinColumns() AS keyAttr SEPARATOR ","»
-            @JoinColumn(name = "«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
+            «IF !sharedJoinColumns().contains(keyAttr)»
+               @JoinColumn(name = "«target.name.toFirstLower()»_«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
+            «ELSE»
+               @JoinColumn(name = "«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
+            «ENDIF»
          «ENDFOREACH»
       })         
    «ENDIF»
@@ -319,7 +323,6 @@
 		«ENDIF»
 		)
 
-		@SuppressWarnings("unused") // Used by JPA implementation
 		private «attr.javaType» «target.name.toFirstLower()»_«attr.name»; 
 		
    «ENDFOREACH»
