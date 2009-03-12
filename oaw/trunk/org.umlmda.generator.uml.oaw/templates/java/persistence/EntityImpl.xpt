@@ -66,17 +66,23 @@
    «IF hasStereotype("PersistentEntity")»
       @Entity
       «IF getStereotypeProperty("table") != null»
-      @Table(name="«getStereotypeProperty("table")»"
+         @Table(name="«getStereotypeProperty("table")»"
       	«IF getStereotypeProperty("schema") != null», schema="«getStereotypeProperty("schema")»"«ENDIF»)
       «ENDIF»
       «IF getStereotypeProperty("mapping") != null»
 	      «IF getStereotypeProperty("mapping").toString() == "ClassHierarchy"»
-	      @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+            @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 	      «ELSEIF getStereotypeProperty("mapping").toString() == "ConcreteClass"»
-	      @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+            @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 	      «ELSEIF getStereotypeProperty("mapping").toString() == "SubClass"»
-	      @Inheritance(strategy = InheritanceType.JOINED)
+            @Inheritance(strategy = InheritanceType.JOINED)
 	      «ENDIF»
+      «ENDIF»
+      «IF getStereotypeProperty("discriminatorColumn") != null»
+         @DiscriminatorColumn(name="«getStereotypeProperty("discriminatorColumn")»")
+      «ENDIF»
+      «IF getStereotypeProperty("discriminatorValue") != null»
+         @DiscriminatorValue("«getStereotypeProperty("discriminatorValue")»")
       «ENDIF»
    «ENDIF»
 «ENDDEFINE»
@@ -109,11 +115,44 @@
 «DEFINE attrAnnotation FOR JavaModelAttribute»
 	«IF hasStereotype("PKey") && owningClass.hasStereotype("PersistentEntity") && ! owningClass.hasCompositeKey()»
 		@Id
+		«REM» Key generator only valid here «ENDREM»
+		«IF getStereotypeProperty("generationStrategy") != null || getStereotypeProperty("generator") != null»
+         @GeneratedValue(
+            «IF getStereotypeProperty("generationStrategy") != null»
+		         «IF getStereotypeProperty("generationStrategy")=="Auto"»
+                  strategy=GenerationType.AUTO
+		         «ELSEIF getStereotypeProperty("generationStrategy")=="Identity"»
+                  strategy=GenerationType.IDENTITY
+		         «ELSEIF getStereotypeProperty("generationStrategy")=="Sequence"»
+                  strategy=GenerationType.SEQUENCE
+		         «ELSEIF getStereotypeProperty("generationStrategy")=="Table"»
+                  strategy=GenerationType.TABLE
+		         «ENDIF»
+               «IF getStereotypeProperty("generator") != null»
+               , generator="«getStereotypeProperty("generator")»"
+               «ENDIF»
+            «ELSEIF getStereotypeProperty("generator") != null»
+               generator="«getStereotypeProperty("generator")»"
+            «ENDIF»
+         )
+		«ENDIF»
 	«ENDIF»
    «IF hasStereotype("TransientAttribute")»
       @Transient   
    «ELSE»
       @Column
+      «IF getStereotypeProperty("column") != null || getStereotypeProperty("columnLength").asInteger() > 0»
+         (
+            «IF getStereotypeProperty("column") != null»
+               name="«getStereotypeProperty("column")»"
+               «IF type=="String" && getStereotypeProperty("columnLength").asInteger() > 0»
+               , length=«getStereotypeProperty("columnLength")»
+               «ENDIF»
+            «ELSEIF type=="String" && getStereotypeProperty("columnLength").asInteger() > 0»
+               length=«getStereotypeProperty("columnLength")»
+            «ENDIF»
+         )
+      «ENDIF»
    «ENDIF»
    «IF dataType.name == "date" || dataType.name == "dateTime"»
       @Temporal(
@@ -355,7 +394,7 @@
         @Embeddable
          public static class PKey implements «pkeyInterface()» {
          	private static final long serialVersionUID = «serialVersionUID»;
-         «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS attr»
+         «FOREACH keyAttributes.typeSelect(JavaModelAttribute).sortBy(k|k.getStereotypeProperty("order")) AS attr»
             «EXPAND java::BOImpl::attrDecl FOR attr»
          «ENDFOREACH»
          
