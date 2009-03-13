@@ -23,7 +23,7 @@ cached List[String] persistenceAttributes(JavaModelAssociation assoc) :
     // optional only on OneToOne
     assoc.optional || assoc.multiple ? true : attributes.add("optional=false") ->
     // mapped by
-    assoc.isBidirectional() && assoc.isOwner() ? attributes.add("mappedBy=\""+assoc.reverse.name+"\"") : true ->
+    assoc.isBidirectional() && assoc.multiple ? attributes.add("mappedBy=\""+assoc.reverse.name+"\"") : true ->
     assoc.multiple ? attributes.add("targetEntity="+targetImpl+".class") : true ->
     attributes
 ;    
