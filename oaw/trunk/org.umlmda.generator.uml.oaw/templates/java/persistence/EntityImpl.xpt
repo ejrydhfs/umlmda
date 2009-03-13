@@ -113,6 +113,7 @@
 «ENDREM»
 
 «DEFINE attrAnnotation FOR JavaModelAttribute»
+   «REM» Handle ID attribute «ENDREM»
 	«IF hasStereotype("PKey") && owningClass.hasStereotype("PersistentEntity") && ! owningClass.hasCompositeKey()»
 		@Id
 		«REM» Key generator only valid here «ENDREM»
@@ -140,6 +141,20 @@
    «IF hasStereotype("TransientAttribute")»
       @Transient   
    «ELSE»
+      «REM» Handle persistent attribute with column «ENDREM»
+	   «IF hasStereotype("VersionAttribute")»
+	      @Version
+	      
+	      «REM»   
+	      
+	                       TODO: Should be a check validation later!!
+	      
+	      «ENDREM»
+	      «IF !(dataType.name=="int" || dataType.name=="short" || dataType.name=="long" || dataType.name=="dateTime")»
+            «ERROR "Version annotation doesn't support data type "+dataType.name»
+	      «ENDIF»
+	      
+	   «ENDIF»
       @Column
       «IF getStereotypeProperty("column") != null || getStereotypeProperty("columnLength").asInteger() > 0»
          (
@@ -153,18 +168,15 @@
             «ENDIF»
          )
       «ENDIF»
-   «ENDIF»
-   «IF dataType.name == "date" || dataType.name == "dateTime"»
-      @Temporal(
-         «IF dataType.name == "date"»
-            TemporalType.DATE
-         «ELSE»
-            TemporalType.TIMESTAMP
-         «ENDIF»
-      )   
-   «ENDIF»
-   «IF hasStereotype("VersionAttribute")»
-      @Version
+	   «IF dataType.name == "date" || dataType.name == "dateTime"»
+	      @Temporal(
+	         «IF dataType.name == "date"»
+	            TemporalType.DATE
+	         «ELSE»
+	            TemporalType.TIMESTAMP
+	         «ENDIF»
+	      )   
+	   «ENDIF»
    «ENDIF»
 «ENDDEFINE»
 
@@ -189,8 +201,11 @@
    «EXPAND java::BOInterface::attrGetterDecl FOR this»
    «EXPAND java::BOImpl::getterBody(modelClass) FOR this»
    
-   «EXPAND java::BOInterface::attrSetterDecl FOR this» 
-   «EXPAND java::BOImpl::setterBody(modelClass) FOR this»
+   «REM» Version attributes shouldn't be changed by the application «ENDREM»
+   «IF !hasStereotype("VersionAttribute")»
+      «EXPAND java::BOInterface::attrSetterDecl FOR this» 
+      «EXPAND java::BOImpl::setterBody(modelClass) FOR this»
+   «ENDIF»
 «ENDDEFINE»
 
 «DEFINE handleKeyAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
@@ -236,7 +251,7 @@
             «IF hasUnSharedJoinColumns()»
             if ( «name» == null ) {
                 «FOREACH unsharedJoinColumns() AS attr»
-                    «target.name.toFirstLower()»_«attr.name» = null;
+                    «target.name.toFirstLower()»_«attr.name» = «IF !attr.defaultInitializer().isEmpty()»«attr.defaultInitializer()»«ELSE»null«ENDIF»;
                 «ENDFOREACH»
             }
             «ENDIF»
@@ -346,7 +361,7 @@
          «ENDFOREACH»    
          } else {
          «FOREACH unsharedJoinColumns().select(a|domainKeys(target).contains(a)) AS attr»
-            «target.name.toFirstLower()»_«attr.name» = null;
+            «target.name.toFirstLower()»_«attr.name» = «IF !attr.defaultInitializer().isEmpty()»«attr.defaultInitializer()»«ELSE»null«ENDIF»;
          «ENDFOREACH»
          }
       }   
@@ -394,6 +409,11 @@
         @Embeddable
          public static class PKey implements «pkeyInterface()» {
          	private static final long serialVersionUID = «serialVersionUID»;
+         	
+         «REM» 
+            Problem with key order: JPA does not yet support explicit ordering. 
+            With this you won't get an efficiently working primary key index generated.
+         «ENDREM»
          «FOREACH keyAttributes.typeSelect(JavaModelAttribute).sortBy(k|k.getStereotypeProperty("order")) AS attr»
             «EXPAND java::BOImpl::attrDecl FOR attr»
          «ENDFOREACH»
