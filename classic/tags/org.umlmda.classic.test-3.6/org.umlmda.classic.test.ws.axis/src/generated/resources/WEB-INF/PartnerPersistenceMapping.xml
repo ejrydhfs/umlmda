@@ -1,0 +1,930 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @@Generated file, please edit UserSections only -->
+<java-wsdl-mapping version="1.1" xmlns="http://java.sun.com/xml/ns/j2ee" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://www.ibm.com/webservices/xsd/j2ee_jaxrpc_mapping_1_1.xsd">
+
+  <!-- Package Mappings -->
+  <package-mapping>
+    <package-type>org.umlmda.demo.partner.ws</package-type>
+    <namespaceURI>http://www.umlmda.org/demo/partner</namespaceURI>
+  </package-mapping>
+
+  <!-- Type Mappings -->
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.common.ws.axis.Sex
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/common">
+      wsdlMsgNS:Sex
+    </root-type-qname>
+    <qname-scope>
+      simpleType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.AddressType
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:AddressType
+    </root-type-qname>
+    <qname-scope>
+      simpleType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.IMType
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:IMType
+    </root-type-qname>
+    <qname-scope>
+      simpleType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.common.ws.axis.Note
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/common">
+      wsdlMsgNS:Note
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.common.ws.axis.TimeDependentIn
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/common">
+      wsdlMsgNS:TimeDependentIn
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.common.ws.axis.TimeDependentOut
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/common">
+      wsdlMsgNS:TimeDependentOut
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.CommunicationAddressIn
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:CommunicationAddressIn
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.CommunicationAddressOut
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:CommunicationAddressOut
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.EMailIn
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:EMailIn
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.EMailOut
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:EMailOut
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.InstantMessengerIn
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:InstantMessengerIn
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.InstantMessengerOut
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:InstantMessengerOut
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.LegalEntityIn
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:LegalEntityIn
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.LegalEntityOut
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:LegalEntityOut
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.MandatorIn
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:MandatorIn
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.MandatorOut
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:MandatorOut
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerIn
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerIn
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerInHierarchie
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerInHierarchie
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerOut
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerOut
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerOutHierarchie
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerOutHierarchie
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceDeleteByPKeyPartnerRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceDeleteByPKeyPartnerRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceDeleteByPKeyPartnerResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceDeleteByPKeyPartnerResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceDeleteByPKey_mandatorRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceDeleteByPKey_mandatorRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceDeleteByPKey_mandatorResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceDeleteByPKey_mandatorResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceDeletePartnerRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceDeletePartnerRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceDeletePartnerResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceDeletePartnerResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceDelete_mandatorRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceDelete_mandatorRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceDelete_mandatorResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceDelete_mandatorResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceInsertPartnerRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceInsertPartnerRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceInsertPartnerResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceInsertPartnerResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceInsert_mandatorRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceInsert_mandatorRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceInsert_mandatorResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceInsert_mandatorResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceIsContainerManagedRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceIsContainerManagedRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceIsContainerManagedResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceIsContainerManagedResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceQueryContactPersonsRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceQueryContactPersonsRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceQueryContactPersonsResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceQueryContactPersonsResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceReadByPKeyPartnerRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceReadByPKeyPartnerRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceReadByPKeyPartnerResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceReadByPKeyPartnerResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceReadByPKey_mandatorRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceReadByPKey_mandatorRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceReadByPKey_mandatorResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceReadByPKey_mandatorResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceSavePartnerRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceSavePartnerRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceSavePartnerResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceSavePartnerResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceSave_mandatorRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceSave_mandatorRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceSave_mandatorResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceSave_mandatorResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceUpdatePartnerRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceUpdatePartnerRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceUpdatePartnerResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceUpdatePartnerResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceUpdate_mandatorRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceUpdate_mandatorRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PartnerPersistenceUpdate_mandatorResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PartnerPersistenceUpdate_mandatorResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PersonIn
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PersonIn
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PersonListOut
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PersonListOut
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PersonOut
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PersonOut
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PostalAddressIn
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PostalAddressIn
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.PostalAddressOut
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:PostalAddressOut
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.Profession
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:Profession
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.TelephoneIn
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:TelephoneIn
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.TelephoneOut
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:TelephoneOut
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  
+  <service-interface-mapping>
+    <service-interface>org.umlmda.demo.partner.ws.servlet.PartnerPersistence</service-interface>
+    <wsdl-service-name xmlns:serviceNS="http://www.umlmda.org/demo/partner">
+      serviceNS:PartnerPersistence</wsdl-service-name>
+    <port-mapping>
+      <port-name>PartnerPersistencePort</port-name>
+      <java-port-name>PartnerPersistencePort</java-port-name>
+    </port-mapping>
+  </service-interface-mapping>
+
+  <service-endpoint-interface-mapping>
+    <service-endpoint-interface>org.umlmda.demo.partner.ws.servlet.PartnerPersistence</service-endpoint-interface>
+    <wsdl-port-type xmlns:portTypeNS="http://www.umlmda.org/demo/partner">
+      portTypeNS:PartnerPersistencePort</wsdl-port-type>
+    <wsdl-binding xmlns:bindingNS="http://www.umlmda.org/demo/partner">
+      bindingNS:PartnerPersistenceSoapBinding</wsdl-binding>
+
+    <service-endpoint-method-mapping>
+      <java-method-name>queryContactPersons</java-method-name>
+      <wsdl-operation>queryContactPersons</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceQueryContactPersonsRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:queryContactPersonsRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceQueryContactPersonsResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:queryContactPersonsResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>isContainerManaged</java-method-name>
+      <wsdl-operation>isContainerManaged</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceIsContainerManagedRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:isContainerManagedRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceIsContainerManagedResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:isContainerManagedResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>readByPKey_mandator</java-method-name>
+      <wsdl-operation>readByPKey_mandator</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceReadByPKey_mandatorRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:readByPKey_mandatorRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceReadByPKey_mandatorResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:readByPKey_mandatorResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>deleteByPKey_mandator</java-method-name>
+      <wsdl-operation>deleteByPKey_mandator</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceDeleteByPKey_mandatorRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:deleteByPKey_mandatorRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceDeleteByPKey_mandatorResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:deleteByPKey_mandatorResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>insert_mandator</java-method-name>
+      <wsdl-operation>insert_mandator</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceInsert_mandatorRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:insert_mandatorRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceInsert_mandatorResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:insert_mandatorResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>update_mandator</java-method-name>
+      <wsdl-operation>update_mandator</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceUpdate_mandatorRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:update_mandatorRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceUpdate_mandatorResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:update_mandatorResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>delete_mandator</java-method-name>
+      <wsdl-operation>delete_mandator</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceDelete_mandatorRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:delete_mandatorRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceDelete_mandatorResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:delete_mandatorResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>save_mandator</java-method-name>
+      <wsdl-operation>save_mandator</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceSave_mandatorRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:save_mandatorRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceSave_mandatorResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:save_mandatorResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>readByPKeyPartner</java-method-name>
+      <wsdl-operation>readByPKeyPartner</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceReadByPKeyPartnerRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:readByPKeyPartnerRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceReadByPKeyPartnerResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:readByPKeyPartnerResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>deleteByPKeyPartner</java-method-name>
+      <wsdl-operation>deleteByPKeyPartner</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceDeleteByPKeyPartnerRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:deleteByPKeyPartnerRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceDeleteByPKeyPartnerResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:deleteByPKeyPartnerResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>insertPartner</java-method-name>
+      <wsdl-operation>insertPartner</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceInsertPartnerRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:insertPartnerRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceInsertPartnerResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:insertPartnerResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>updatePartner</java-method-name>
+      <wsdl-operation>updatePartner</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceUpdatePartnerRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:updatePartnerRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceUpdatePartnerResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:updatePartnerResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>deletePartner</java-method-name>
+      <wsdl-operation>deletePartner</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceDeletePartnerRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:deletePartnerRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceDeletePartnerResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:deletePartnerResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>savePartner</java-method-name>
+      <wsdl-operation>savePartner</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.PartnerPersistenceSavePartnerRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:savePartnerRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.PartnerPersistenceSavePartnerResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:savePartnerResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+
+  </service-endpoint-interface-mapping>
+</java-wsdl-mapping>

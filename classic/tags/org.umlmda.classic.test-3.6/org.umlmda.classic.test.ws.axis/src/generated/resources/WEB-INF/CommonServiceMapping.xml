@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @@Generated file, please edit UserSections only -->
+<java-wsdl-mapping version="1.1" xmlns="http://java.sun.com/xml/ns/j2ee" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://www.ibm.com/webservices/xsd/j2ee_jaxrpc_mapping_1_1.xsd">
+
+  <!-- Package Mappings -->
+  <package-mapping>
+    <package-type>org.umlmda.demo.common.ws</package-type>
+    <namespaceURI>http://www.umlmda.org/demo/common</namespaceURI>
+  </package-mapping>
+  <package-mapping>
+    <package-type>org.umlmda.demo.partner.ws</package-type>
+    <namespaceURI>http://www.umlmda.org/demo/partner</namespaceURI>
+  </package-mapping>
+
+  <!-- Type Mappings -->
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.common.ws.axis.CommonServiceIsAvailableRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/common">
+      wsdlMsgNS:CommonServiceIsAvailableRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.common.ws.axis.CommonServiceIsAvailableResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/common">
+      wsdlMsgNS:CommonServiceIsAvailableResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.CommonServiceGetVersionRequest
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:CommonServiceGetVersionRequest
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  <java-xml-type-mapping>
+    <java-type>
+      org.umlmda.demo.partner.ws.axis.CommonServiceGetVersionResponse
+    </java-type>
+    <root-type-qname xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+      wsdlMsgNS:CommonServiceGetVersionResponse
+    </root-type-qname>
+    <qname-scope>
+      complexType
+    </qname-scope>
+  </java-xml-type-mapping>
+  
+  <service-interface-mapping>
+    <service-interface>org.umlmda.demo.partner.ws.servlet.CommonService</service-interface>
+    <wsdl-service-name xmlns:serviceNS="http://www.umlmda.org/demo/partner">
+      serviceNS:CommonService</wsdl-service-name>
+    <port-mapping>
+      <port-name>CommonServicePort</port-name>
+      <java-port-name>CommonServicePort</java-port-name>
+    </port-mapping>
+  </service-interface-mapping>
+
+  <service-endpoint-interface-mapping>
+    <service-endpoint-interface>org.umlmda.demo.partner.ws.servlet.CommonService</service-endpoint-interface>
+    <wsdl-port-type xmlns:portTypeNS="http://www.umlmda.org/demo/partner">
+      portTypeNS:CommonServicePort</wsdl-port-type>
+    <wsdl-binding xmlns:bindingNS="http://www.umlmda.org/demo/partner">
+      bindingNS:CommonServiceSoapBinding</wsdl-binding>
+
+    <service-endpoint-method-mapping>
+      <java-method-name>isAvailable</java-method-name>
+      <wsdl-operation>isAvailable</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.common.ws.axis.CommonServiceIsAvailableRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:isAvailableRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.common.ws.axis.CommonServiceIsAvailableResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:isAvailableResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+    <service-endpoint-method-mapping>
+      <java-method-name>getVersion</java-method-name>
+      <wsdl-operation>getVersion</wsdl-operation>
+      <method-param-parts-mapping>
+        <param-position>0</param-position>
+        <param-type>org.umlmda.demo.partner.ws.axis.CommonServiceGetVersionRequest</param-type>
+        <wsdl-message-mapping>
+          <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+            wsdlMsgNS:getVersionRequest</wsdl-message>
+          <wsdl-message-part-name>in</wsdl-message-part-name>
+          <parameter-mode>IN</parameter-mode>
+        </wsdl-message-mapping>
+      </method-param-parts-mapping>
+      <wsdl-return-value-mapping>
+        <method-return-value>org.umlmda.demo.partner.ws.axis.CommonServiceGetVersionResponse</method-return-value>
+        <wsdl-message xmlns:wsdlMsgNS="http://www.umlmda.org/demo/partner">
+          wsdlMsgNS:getVersionResponse</wsdl-message>
+        <wsdl-message-part-name>return</wsdl-message-part-name>
+      </wsdl-return-value-mapping>
+    </service-endpoint-method-mapping>
+
+  </service-endpoint-interface-mapping>
+</java-wsdl-mapping>

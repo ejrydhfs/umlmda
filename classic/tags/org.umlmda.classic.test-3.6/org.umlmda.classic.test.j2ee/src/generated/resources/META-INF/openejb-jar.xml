@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- @@Generated file, please edit UserSections only -->
+<openejb-jar xmlns="http://www.openejb.org/xml/ns/openejb-jar-2.1">
+
+	<dep:environment xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.1">
+		<dep:moduleId>
+			<dep:groupId>umlmda</dep:groupId>
+			<dep:artifactId>partner</dep:artifactId>
+			<dep:version>1.0.0</dep:version>
+			<dep:type>car</dep:type>
+		</dep:moduleId>
+		<dep:dependencies/>
+		<dep:hidden-classes/>
+		<dep:non-overridable-classes/>
+	</dep:environment>
+  
+  <enterprise-beans>
+
+    <!-- Session Beans -->
+    <session>
+      <ejb-name>CommonService</ejb-name>
+      <jndi-name>ejb/partner/1/CommonService</jndi-name>
+<!-- UserSection-Begin CommonService -->
+<!-- UserSection-End CommonService -->
+    </session>
+  
+    <session>
+      <ejb-name>PartnerPersistence</ejb-name>
+      <jndi-name>ejb/partner/1/PartnerPersistence</jndi-name>
+<!-- UserSection-Begin PartnerPersistence -->
+<!-- UserSection-End PartnerPersistence -->
+    </session>
+  
+    <session>
+      <ejb-name>PartnerService</ejb-name>
+      <jndi-name>ejb/partner/1/PartnerService</jndi-name>
+<!-- UserSection-Begin PartnerService -->
+<!-- UserSection-End PartnerService -->
+    </session>
+  
+<!-- UserSection-Begin enterprise-beans -->
+<!-- UserSection-End enterprise-beans -->
+  </enterprise-beans>
+   
+<!-- UserSection-Begin openejb -->
+<!-- UserSection-End openejb -->
+   
+</openejb-jar>

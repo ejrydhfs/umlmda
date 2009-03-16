@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+
+	<!-- Load the properties -->
+    <property file="workflow.properties"/>
+
+    <!-- initializes resourcemaps, urimaps, etc. -->
+    <component class="org.openarchitectureware.adapter.rsdp.workflow.RSASetup" >
+        <!-- Standard profiles -->
+        <pathMapEntry>
+            <alias value="UMLMDA_PROFILE"/>
+            <path value="${basedir}/profiles/rsm/3rd/umlmda/profiles"/>
+        </pathMapEntry>
+        <pathMapEntry>
+            <alias value="UMLMDA4_PROFILE"/>
+            <path value="${basedir}/profiles/rsm/3rd/umlmda/profiles"/>
+        </pathMapEntry>
+        <pathMapEntry>
+            <alias value="UML2_MSL_PROFILES"/>
+            <path value="${basedir}/profiles/rsm/3rd/ibm"/>
+        </pathMapEntry>
+        <init value="true"/>
+    </component> 
+
+    <!-- Loading and verify UMLMDA generation sets -->
+    <component id="generationSetLoader"
+            class="org.umlmda.oaw.generator.workflow.GenerationSetLoader">
+        <generationSet value="${model.project}/etc/umlmda/self/set/All.ums"/>
+        <generationSetSlot value="gs"/>
+    </component>
+    <component id="gsIntegrityCheck" class="org.umlmda.oaw.generator.workflow.ModelIntegrityChecker">
+      <modelSlot value="gs"/>
+    </component>
+
+	<!-- Load and verify uml models -->
+	<component class="org.openarchitectureware.emf.XmiReader">
+		<modelFile value="${model}" />
+		<outputSlot value="service_model_pim" />
+	</component>
+    <component id="modelIntegrityCheck" class="org.umlmda.oaw.generator.workflow.ModelIntegrityChecker">
+      <modelSlot value="service_model_pim"/>
+    </component>
+
+    <!-- Read the uml model -->
+    <component class="org.openarchitectureware.emf.XmiReader">
+        <modelFile value="${basedir}/profiles/rsm/3rd/umlmda/profiles/UMLMDAServiceProfile.epx" />
+        <outputSlot value="umlmda_profile" />
+    </component>
+
+    <!-- Transform Domain-PIM to UMLMDA-Standard-PIM -->
+    <component id="domainPimCreator" class="oaw.xtend.XtendComponent">
+        <metaModel id="mm.UML2" class="oaw.uml2.UML2MetaModel"/>
+        <invoke value="org::umlmda::uml::service::Service2Java::m2m(service_model_pim)"/>
+        <globalVarDef name="generationProfile" value="umlmda_profile"/>
+        <globalVarDef name="objectStereotype" value="'BusinessObject'"/>
+        <globalVarDef name="packageStereotype" value="'BusinessComponent'"/>
+        <outputSlot value="service_model_psm"/>
+    </component>
+	
+	<!-- Generate UMLMDA Pim from uml model -->
+	<component id="pimLoader" class="org.umlmda.oaw.generator.workflow.ModelLoader">
+		<modelFactory class="org.umlmda.oaw.generator.workflow.Uml2ModelFactory">
+		   <umlmodelSlot value="service_model_psm"/>
+		</modelFactory>   
+		<modelSlot value="umlmda_pim"/>
+	</component>
+	
+	<!-- Run classic generator -->
+	<component class="org.umlmda.generator.oaw.ClassicGenerator">
+		<templateFolder value="${basedir}/etc/umlmda/3rd/templates"/>
+		<modelSlot value="umlmda_pim"/>
+		<generatorProfile value="gs"/>
+	</component>
+	
+	
+</workflow>
