@@ -36,11 +36,11 @@
    <dependencies>
       <!-- Classic stuff -->
       <dependency>
-         <groupId>${parent.groupId}</groupId>
+         <groupId>org.umlmda</groupId>
          <artifactId>org.umlmda.classic.generator</artifactId>
-         <version>${parent.version}</version>
          <type>pom</type>
          <scope>import</scope>
+         <version>3.6</version>
       </dependency>
    </dependencies>
 

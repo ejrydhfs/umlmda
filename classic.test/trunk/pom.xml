@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
    <parent>
@@ -22,7 +21,7 @@
       <module>org.umlmda.classic.test.ws.axis</module>
    </modules>
 
-  
+
    <build>
       <sourceDirectory>src/main/java</sourceDirectory>
       <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -37,20 +36,66 @@
          </testResource>
       </testResources>
    </build>
-   
+
    <dependencyManagement>
-   	<dependencies>
-   		<dependency>
-   			<groupId>org.umlmda.classic.test</groupId>
-   			<artifactId>org.umlmda.classic.test.java</artifactId>
-   			<version>3.6-SNAPSHOT</version>
-   		</dependency>
+      <dependencies>
+         <dependency>
+            <groupId>org.umlmda</groupId>
+            <artifactId>org.umlmda.classic.generator</artifactId>
+            <version>3.6</version>
+         </dependency>
+
+         <dependency>
+            <groupId>org.umlmda.classic.test</groupId>
+            <artifactId>org.umlmda.classic.test.java</artifactId>
+            <version>3.6-SNAPSHOT</version>
+         </dependency>
          <dependency>
             <groupId>org.umlmda.classic.test</groupId>
             <artifactId>org.umlmda.classic.test.j2ee</artifactId>
             <version>3.6-SNAPSHOT</version>
          </dependency>
-   	</dependencies>
+      </dependencies>
    </dependencyManagement>
-   
+
+   <repositories>
+      <repository>
+         <id>ibiblio mirrors</id>
+         <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+         <snapshots>
+            <enabled>false</enabled>
+         </snapshots>
+      </repository>
+      
+      <repository>
+         <id>jboss</id>
+         <url>http://repository.jboss.com/maven2</url>
+         <snapshots>
+            <enabled>false</enabled>
+         </snapshots>
+      </repository>
+      
+      <repository>
+         <id>umlmda</id>
+         <name>UMLMDA Release Builds</name>
+         <url>http://coding.ds2k.de/artifactory/repo</url>
+         <snapshots>
+            <enabled>false</enabled>
+         </snapshots>
+      </repository>
+
+   </repositories>
+
+   <pluginRepositories>
+      <pluginRepository>
+         <id>umlmda</id>
+         <name>UMLMDA maven plugin repository</name>
+         <url>http://coding.ds2k.de/artifactory/repo</url>
+         <snapshots>
+            <enabled>false</enabled>
+         </snapshots>
+      </pluginRepository>
+   </pluginRepositories>
+
+
 </project>
