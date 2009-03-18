@@ -13,7 +13,7 @@ extension org::umlmda::oaw::util::TypeMapper;
  
 extension org::umlmda::uml::Common2Java;
 
-Object m2m( uml::Model m ) :
+cached Object m2m( uml::Model m ) :
     debug("processing model "+m.name) ->
     
     m.setName(m.name+"_java_psm") ->
@@ -61,12 +61,15 @@ cached Void process(uml::Package package) :
 ;    
 	
 cached Void process(uml::Property property) :
-    property.replaceAliasType()
+    property.association == null ?
+        property.replaceAliasType()
+    :
+        property.type.getModel().m2m()    
 ;    
 	
 cached Void process(uml::Generalization generalization) :
 	let general = generalization.general :
 	let generalModel = general.getModel() :
 	
-	general.process()
+	generalModel.m2m()
 ;
