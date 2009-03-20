@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.profile:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.profile="http:///org/umlmda/generator/profile.ecore" name="wsdlXsdRpcLiteral" description="Profile for generating WSDL-Style XML Schema" adapterFactory="org.umlmda.uml.generator.webservices.schema.WSSchemaModelAdapterFactory">
+  <stereotypes name="WebServiceComponent">
+    <mappings artefact="//@artefacts.0"/>
+  </stereotypes>
+  <stereotypes name="WebService">
+    <mappings artefact="//@artefacts.1"/>
+  </stereotypes>
+  <artefacts name="webservices.XSD" description="XS Schema Generation for use in a WSDL" fileExtension="xsd" useNamespace="false" replacement="$1" replacementPattern="(.*)" writer="org.umlmda.uml.generator.webservices.writer.XSDWriter"/>
+  <artefacts name="webservices.ModularizedWsdl" description="WSDL Generation that imports the dtos a separate schemas" filename="" fileExtension="wsdl" useNamespace="false" writer="org.umlmda.uml.generator.webservices.writer.OptimizedWSDLWriter">
+    <defaultProperties name="soapBinding" value="rpc"/>
+    <defaultProperties name="soapEncoding" value="literal"/>
+    <defaultProperties name="modularizedMode" value="true"/>
+  </artefacts>
+</org.umlmda.generator.profile:Profile>
