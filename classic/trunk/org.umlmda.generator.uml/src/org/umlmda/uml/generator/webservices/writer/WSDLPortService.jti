@@ -32,7 +32,7 @@
      ModelMethod method = (ModelMethod)ia.next();
 %>  
     <wsdl:operation name="<%=method.getName()%>">
-         <wsdlsoap:operation soapAction=""/>
+         <wsdlsoap:operation soapAction="<%=getType(genPackage)%>/<%=method.getName()%>"/>
          <wsdl:input name="<%=method.getName()%>Request">
            <wsdlsoap:body use="<%=soapEncodingTag%>" <% 
       if ( soapEncodingTag.equals("encoded") ) {%>
