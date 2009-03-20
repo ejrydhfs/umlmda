@@ -40,6 +40,10 @@ import org.umlmda.uml.generator.webservices.*;
    boolean soapWrapping = genModel.isSoapWrapping();
    boolean packageFilter = true;
 
+   String  modularizedModePpt = genModel.getArtefact().getProperties().getProperty("modularizedMode", "false");
+   boolean useModularizedMode = modularizedModePpt.equals("true");
+   String  schemaNameImportExt = useModularizedMode ? "/import" : "";
+
    if ( soapBinding.equals("rpc" ) ) {
       soapBindingTag = "rpc";
    }
@@ -83,14 +87,18 @@ import org.umlmda.uml.generator.webservices.*;
    for ( Iterator ipkg = packageList.iterator(); ipkg.hasNext(); ) {
       ModelPackage modelPackage = (ModelPackage)ipkg.next();
 %>  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
-          targetNamespace="<%=getType(modelPackage)%>">
+          targetNamespace="<%=getType(modelPackage) + schemaNameImportExt%>">
 <%    if ( soapEncodingTag.equals("encoded") ) {%>
     <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
-<%    }%>    
-<% @include OptimizedSchema.jti template-relative %>
+<%    }%>
+<%    if (useModularizedMode) {%>
+          <import namespace="<%=getType(modelPackage)%>" schemaLocation="<%=modelPackage.getName() + ".xsd"%>"/> 
+<%    }
+      else {   %> 
+          <% @include OptimizedSchema.jti template-relative %>
+<%    } %>
   </schema>
-<% } // Loop required packages
-%>  
+<% } // Loop required packages %>
  </wsdl:types>
 
 <% // Modelled Methods
