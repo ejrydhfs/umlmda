@@ -14,8 +14,9 @@
           targetNamespace="http://www.umlmda.org/demo/common">
 
     <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
-    
-  <complexType name="CommonServiceIsAvailableRequest">
+
+ 
+            <complexType name="CommonServiceIsAvailableRequest">
      <sequence>
        <element name="dummy" nillable="true" type="xsd:string"/>
      </sequence>
@@ -29,13 +30,15 @@
 
      
 
+
   </schema>
   <schema xmlns="http://www.w3.org/2001/XMLSchema" 
           targetNamespace="http://www.umlmda.org/demo/partner">
 
     <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
-    
-  <complexType name="CommonServiceGetVersionRequest">
+
+ 
+            <complexType name="CommonServiceGetVersionRequest">
      <sequence>
        <element name="dummy" nillable="true" type="xsd:string"/>
      </sequence>
@@ -49,8 +52,9 @@
 
      
 
+
   </schema>
-  
+
  </wsdl:types>
 
   
@@ -88,7 +92,7 @@
 
   
     <wsdl:operation name="isAvailable">
-         <wsdlsoap:operation soapAction=""/>
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/isAvailable"/>
          <wsdl:input name="isAvailableRequest">
            <wsdlsoap:body use="encoded" 
                           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
@@ -103,7 +107,7 @@
     </wsdl:operation>
   
     <wsdl:operation name="getVersion">
-         <wsdlsoap:operation soapAction=""/>
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/getVersion"/>
          <wsdl:input name="getVersionRequest">
            <wsdlsoap:body use="encoded" 
                           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"

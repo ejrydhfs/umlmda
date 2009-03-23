@@ -14,8 +14,9 @@
           targetNamespace="http://www.umlmda.org/demo/common">
 
     <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
-    
-  <complexType name="CommonServiceIsAvailableRequest">
+
+ 
+            <complexType name="CommonServiceIsAvailableRequest">
      <sequence>
        <element name="dummy" nillable="true" type="xsd:string"/>
      </sequence>
@@ -66,13 +67,15 @@
 
      
 
+
   </schema>
   <schema xmlns="http://www.w3.org/2001/XMLSchema" 
           targetNamespace="http://www.umlmda.org/demo/partner">
 
     <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
-    
-  <simpleType name="AddressType">
+
+ 
+            <simpleType name="AddressType">
     <restriction base="xsd:int">
       <enumeration value="1"/>
       <enumeration value="2"/>
@@ -359,8 +362,9 @@
 
      
 
+
   </schema>
-  
+
  </wsdl:types>
 
   
@@ -422,7 +426,7 @@
 
   
     <wsdl:operation name="isAvailable">
-         <wsdlsoap:operation soapAction=""/>
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/isAvailable"/>
          <wsdl:input name="isAvailableRequest">
            <wsdlsoap:body use="encoded" 
                           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
@@ -437,7 +441,7 @@
     </wsdl:operation>
   
     <wsdl:operation name="read">
-         <wsdlsoap:operation soapAction=""/>
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/read"/>
          <wsdl:input name="readRequest">
            <wsdlsoap:body use="encoded" 
                           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
@@ -452,7 +456,7 @@
     </wsdl:operation>
   
     <wsdl:operation name="update">
-         <wsdlsoap:operation soapAction=""/>
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/update"/>
          <wsdl:input name="updateRequest">
            <wsdlsoap:body use="encoded" 
                           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
@@ -467,7 +471,7 @@
     </wsdl:operation>
   
     <wsdl:operation name="echo">
-         <wsdlsoap:operation soapAction=""/>
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/echo"/>
          <wsdl:input name="echoRequest">
            <wsdlsoap:body use="encoded" 
                           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
