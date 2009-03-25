@@ -354,14 +354,14 @@
       private void sync«name.toFirstUpper()»() {
          if( «name» != null) {
          «FOREACH unsharedJoinColumns().select(a|domainKeys(target).contains(a)) AS attr»
-            «target.name.toFirstLower()»_«attr.name» = «name».«((JavaModelClass)target).pkeyGetter()»().«attr.getter»();
+            «name.toFirstLower()»_«attr.name» = «name».«((JavaModelClass)target).pkeyGetter()»().«attr.getter»();
          «ENDFOREACH»
          «FOREACH sharedJoinColumns().select(a|domainKeys(target).contains(a)) AS attr»
             assert «name».«((JavaModelClass)target).pkeyGetter()»().«attr.getter»().equals(pkey.«attr.getter»()) : "different «attr.name»";
          «ENDFOREACH»    
          } else {
          «FOREACH unsharedJoinColumns().select(a|domainKeys(target).contains(a)) AS attr»
-            «target.name.toFirstLower()»_«attr.name» = «IF !attr.defaultInitializer().isEmpty()»«attr.defaultInitializer()»«ELSE»null«ENDIF»;
+            «name.toFirstLower()»_«attr.name» = «IF !attr.defaultInitializer().isEmpty()»«attr.defaultInitializer()»«ELSE»null«ENDIF»;
          «ENDFOREACH»
          }
       }   
@@ -376,9 +376,7 @@
          nullable=false
 		«ENDIF»
 		)
-
-		private «attr.javaType» «target.name.toFirstLower()»_«attr.name»; 
-		
+		private «attr.javaType» «name.toFirstLower()»_«attr.name»; 
    «ENDFOREACH»
 «ENDDEFINE»
 
