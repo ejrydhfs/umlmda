@@ -7,6 +7,7 @@ import UMLMDAPersistenceProfile;
 extension org::openarchitectureware::util::stdlib::io;   
 extension org::openarchitectureware::util::stdlib::issues;   
 
+extension org::umlmda::oaw::util::Model;
 extension org::umlmda::oaw::util::Element;
 extension org::umlmda::oaw::util::Stereotype;
 extension org::umlmda::oaw::util::TypeMapper;
@@ -14,18 +15,9 @@ extension org::umlmda::oaw::util::TypeMapper;
 extension org::umlmda::uml::Common2Java;
 
 cached Object m2m( uml::Model m ) :
-    debug("processing model "+m.name) ->
-    
-    m.setName(m.name+"_java_psm") ->
-
-    // Starting conversions    
-    m.allOwnedElements().typeSelect(uml::Element).process() ->
-    
-    // Process packages after conversion
-    m.allOwnedElements().typeSelect(uml::Package).applyGenerationStereotypes() ->
-    
-    // Destroy all collected elements
-    destroyCollected(m.qualifiedName) ->
+    m.process() ->
+    // delete All the alias types for all Models
+    collectedModels("org::umlmda::uml::Service2Java::DestroyAliases").forAll(model|model.destroyAliases()) ->
     m
 ;
 
@@ -52,6 +44,33 @@ cached Void process(uml::ProfileApplication profileApplication) :
 ;
 
 // Processing classes
+Boolean destroyAliases(uml::Model m) :
+    info("destroying aliases for model "+m.name) ->
+    destroyCollected(m.qualifiedName) ->
+    true
+;
+
+cached Void process(uml::Model m) :
+    info("processing model "+m.name) ->
+ 
+    m.markAsProcessed("org::umlmda::uml::Service2Java") ->
+    
+    m.setName(m.name+"_java_psm") ->
+
+    // Starting conversions    
+    m.allOwnedElements().typeSelect(uml::Element).process() ->
+    
+    // Process packages after conversion
+    m.allOwnedElements().typeSelect(uml::Package).applyGenerationStereotypes() ->
+    
+    // Destroy all collected elements
+    m.processLater("org::umlmda::uml::Service2Java::DestroyAliases") ->
+    
+    // Process Referenced Models
+    collectedModels("org::umlmda::uml::Service2Java").select (model|model != null).forAll(model|model.process()) ->
+    true
+;
+
 cached Void process(uml::Class class) :
     true
 ;
@@ -64,12 +83,16 @@ cached Void process(uml::Property property) :
     property.association == null ?
         property.replaceAliasType()
     :
-        property.type.getModel().m2m()    
+        property.type.getModel().processLater("org::umlmda::uml::Service2Java")
 ;    
-	
+		
 cached Void process(uml::Generalization generalization) :
 	let general = generalization.general :
 	let generalModel = general.getModel() :
+    let ownModel = generalization.specific.getModel() :	
 	
-	generalModel.m2m()
+	generalModel == ownModel ?
+	   general.process()
+	:
+	   generalModel.processLater("org::umlmda::uml::Service2Java")  
 ;
