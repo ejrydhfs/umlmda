@@ -27,3 +27,22 @@ private List[Type] lookupDatatype (Namespace namespace, String typeName) :
     )   
 ;
 
+cached Void processLater(uml::Model model,String processContext) :
+    JAVA org.umlmda.oaw.util.uml2.ModelUtils.processLater(org.eclipse.uml2.uml.Model,java.lang.String)
+;    
+
+cached Void markAsProcessed(uml::Model model,String processContext) :
+    model.processLater(processContext) ->
+    model.removeFromModelList(processContext) 
+;    
+
+private Void removeFromModelList(uml::Model model,String processContext) :
+    JAVA org.umlmda.oaw.util.uml2.ModelUtils.markAsProcessed(org.eclipse.uml2.uml.Model,java.lang.String)
+;    
+
+List[Model] collectedModels(String processContext) :
+    JAVA org.umlmda.oaw.util.uml2.ModelUtils.collectedModels(java.lang.String)
+;    
+
+
+
