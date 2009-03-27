@@ -1,0 +1,38 @@
+import java::util;
+import org::umlmda::generator::model::uml;
+import org::umlmda::profile;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+cached List[JavaModelAttribute] javaAttributes(ModelClass clazz) :
+	clazz.attributes.typeSelect(JavaModelAttribute);
+
+cached List[JavaModelAttribute] javaWriteableAttributes(ModelClass clazz) :
+	clazz.attributes.typeSelect(JavaModelAttribute).select(e|e.readOnly == false);
+
+cached List[JavaModelAssociation] javaWriteableAssociations(ModelClass clazz) :
+	clazz.associations.typeSelect(JavaModelAssociation).select(e|e.readOnly == false);
+
+cached List[JavaModelAttribute] javaWriteableImplementedAttributes(ModelClass clazz) :
+	((JavaModelClass)clazz).implementedAttributes.typeSelect(JavaModelAttribute).select(e|e.readOnly == false);
+
+cached List[JavaModelAssociation] javaWriteableImplementedAssociations(ModelClass clazz) :
+	((JavaModelClass)clazz).implementedAssociations.typeSelect(JavaModelAssociation).select(e|e.readOnly == false);
+
+String javaTypeName(ModelClass clazz) :
+	((JavaModelClass)clazz).javaType;
+	
+JavaModelMethod initializerMethod(ModelClass clazz) :
+	clazz.methods.typeSelect(JavaModelMethod).select(m|m.stereotypes.typeSelect(String).exists(s|s == "Initializer")).first();		
+	
+cached List[JavaModelClass] javaExtentedInterfaces(ModelClass clazz) :
+	clazz.superClasses.typeSelect(JavaModelClass).select(e|e.hasStereotype("NativeClass") == false);
+		
+cached Boolean isNative(ModelClass clazz) :
+	clazz.hasStereotype("NativeClass") || clazz.hasStereotype("NativeInterface");	
+	
+cached Boolean hasCompositeKey(ModelClass clazz) :
+    clazz.keyAttributes.size > 1;	
