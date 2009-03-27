@@ -251,7 +251,7 @@
             «IF hasUnSharedJoinColumns()»
             if ( «name» == null ) {
                 «FOREACH unsharedJoinColumns() AS attr»
-                    «target.name.toFirstLower()»_«attr.name» = «IF !attr.defaultInitializer().isEmpty()»«attr.defaultInitializer()»«ELSE»null«ENDIF»;
+                    «name.toFirstLower()»_«attr.name» = «IF !attr.defaultInitializer().isEmpty()»«attr.defaultInitializer()»«ELSE»null«ENDIF»;
                 «ENDFOREACH»
             }
             «ENDIF»
