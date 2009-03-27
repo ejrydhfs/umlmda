@@ -15,3 +15,12 @@ String dbColumn(ModelAttribute attr) :
     
     stereotypeName != null ? stereotypeName : attr.name
 ;
+
+cached Boolean isDomainAttribute(ModelAttribute attr) :
+    attr.getStereotypeProperty("domainAttribute", "true") == "true"
+;
+
+cached Boolean isTechnicalAttribute(ModelAttribute attr) :
+    attr.isDomainAttribute() == false
+;
+     

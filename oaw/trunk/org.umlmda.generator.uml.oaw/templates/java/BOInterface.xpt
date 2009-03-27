@@ -163,10 +163,14 @@
 «ENDDEFINE»
 
 «DEFINE methodDecl FOR JavaModelMethod»
+    «EXPAND methodDecl("public") FOR this»
+«ENDDEFINE»
+
+«DEFINE methodDecl(String modifier) FOR JavaModelMethod»
    /**
     * «documentation»
     */
-   public «javaType» «name»(
+   «modifier» «javaType» «name»(
 	«FOREACH parameters.typeSelect(JavaModelParameter) AS parameter SEPARATOR "," »
 	    «parameter.javaTypeName()» «parameter.name»
 	«ENDFOREACH»   
