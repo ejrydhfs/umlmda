@@ -1,0 +1,8 @@
+bin
+org.umlmda.umlmodel.uml2_*.jar
+UMLModelUML2Src.zip
+temp.folder
+src.zip
+@dot
+javaCompiler.*.args
+target
