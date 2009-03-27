@@ -8,7 +8,6 @@ import org.umlmda.uml.generator.webservices.WSModelAdapterFactory;
 import org.umlmda.uml.generator.webservices.WSModelPackageAdapter;
 
 public class WSSchemaModelAdapterFactory extends WSModelAdapterFactory {
-
 	
 	@Override
 	public ModelPackage createModelPackage(ModelPackageBase modelPackage,
@@ -17,6 +16,11 @@ public class WSSchemaModelAdapterFactory extends WSModelAdapterFactory {
 	          return (ModelPackage) modelPackage;
 	       else
 	          return new WSSchemaModelPackageAdapter(modelPackage, model);
+	}
+
+	@Override
+	protected Model createPsmModel(Model model) {
+	      return new WSSchemaModelAdapter(this, model);
 	}
 	   
 }

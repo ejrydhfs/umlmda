@@ -97,7 +97,7 @@ public class WSPSMClassCreatorVisitor extends DefaultModelVisitor {
     * @param postFix
     * @param excludeStereotype
     */
-   private ModelClass createOrFindWsService(ModelClass modelClass) {
+   protected ModelClass createOrFindWsService(ModelClass modelClass) {
       WSModelPackage modelPackage = (WSModelPackage) modelClass.getPackage();
       WSModel model = (WSModel) modelPackage.getModel();
       ModelClassBase wsClassImpl = createOrFindWsClassImpl(modelClass, "", null, WSStereotypes.WEB_SERVICE, PIMStereotypes.PIM_SERVICE);
@@ -158,7 +158,7 @@ public class WSPSMClassCreatorVisitor extends DefaultModelVisitor {
       }
    }
    
-   private ModelClass createOrFindWsInDTO(ModelClass modelClass) {
+   protected ModelClass createOrFindWsInDTO(ModelClass modelClass) {
       if ( ((WSModelClass)modelClass).isOptimized() ) {
          return createOrFindWsDTO(modelClass, WSStereotypes.WEB_SERVICE_OBJECT, "In", ModelStereotype.DIRECTION_OUT);
       }
@@ -167,7 +167,7 @@ public class WSPSMClassCreatorVisitor extends DefaultModelVisitor {
       }
    }
    
-   private ModelClass createOrFindWsOutDTO(ModelClass modelClass) {
+   protected ModelClass createOrFindWsOutDTO(ModelClass modelClass) {
       if ( ((WSModelClass)modelClass).isOptimized() ) {
          return createOrFindWsDTO(modelClass, WSStereotypes.WEB_SERVICE_OBJECT, "Out", ModelStereotype.DIRECTION_IN);
       }
@@ -182,7 +182,7 @@ public class WSPSMClassCreatorVisitor extends DefaultModelVisitor {
     * @param postFix
     * @param excludeFeatureStereotype
     */
-   private ModelClass createOrFindWsDTO(ModelClass modelClass, String stereotype, String postFix, String excludeFeatureStereotype) {
+   protected ModelClass createOrFindWsDTO(ModelClass modelClass, String stereotype, String postFix, String excludeFeatureStereotype) {
       WSModelPackage modelPackage = (WSModelPackage) modelClass.getPackage();
       WSModel model = (WSModel) modelPackage.getModel();
       ModelClassBase wsClassImpl = createOrFindWsClassImpl(modelClass, postFix, excludeFeatureStereotype, WSStereotypes.WEB_SERVICE_DTO, PIMStereotypes.PIM_OBJECT);
@@ -245,15 +245,7 @@ public class WSPSMClassCreatorVisitor extends DefaultModelVisitor {
                WSModelClass wsTargetClass;
                ModelClassBase wsTargetClassBase;
                
-               if (targetClass.isOptimized() && "In".equals(postFix)) {
-                  wsTargetClass = (WSModelClass) createOrFindWsInDTO(targetClass);
-               }
-               else if (targetClass.isOptimized() && "Out".equals(postFix)) {
-                  wsTargetClass = (WSModelClass) createOrFindWsOutDTO(targetClass);
-               }
-               else {
-                  wsTargetClass = (WSModelClass) createOrFindWsDTO(targetClass, WSStereotypes.WEB_SERVICE_DTO, "", null);
-               }
+               wsTargetClass = createOrFindAssociationTargetClass(postFix,targetClass);
 
                wsTargetClassBase = (ModelClassBase) wsTargetClass.getBase();
                wsAssociationImpl.setTargetBase(wsTargetClassBase);
@@ -269,6 +261,25 @@ public class WSPSMClassCreatorVisitor extends DefaultModelVisitor {
          return wsClass;
       }
    }
+
+	/**
+	 * Refactored from createOrFindWsDTO to override it in WSSchemaPSMClassVisitor
+	 * 
+	 * @param postFix
+	 * @param targetClass
+	 * @return
+	 */
+	protected WSModelClass createOrFindAssociationTargetClass(String postFix, WSModelClass targetClass) {
+		WSModelClass wsTargetClass;
+		if (targetClass.isOptimized() && "In".equals(postFix)) {
+			wsTargetClass = (WSModelClass) createOrFindWsInDTO(targetClass);
+		} else if (targetClass.isOptimized() && "Out".equals(postFix)) {
+			wsTargetClass = (WSModelClass) createOrFindWsOutDTO(targetClass);
+		} else {
+			wsTargetClass = (WSModelClass) createOrFindWsDTO(targetClass,WSStereotypes.WEB_SERVICE_DTO, "", null);
+		}
+		return wsTargetClass;
+	}
    
    /**
     * @param modelClass
@@ -278,7 +289,7 @@ public class WSPSMClassCreatorVisitor extends DefaultModelVisitor {
     * @param dependencyStereotype
     * @return
     */
-   private ModelClassBase createOrFindWsClassImpl(ModelClass modelClass, String postFix, String excludeStereotype, String stereotype, String dependencyStereotype) {
+   protected ModelClassBase createOrFindWsClassImpl(ModelClass modelClass, String postFix, String excludeStereotype, String stereotype, String dependencyStereotype) {
       WSModelPackage modelPackage = (WSModelPackage) modelClass.getPackage();
       WSModel model = (WSModel) modelPackage.getModel();
       String name = modelClass.getName() + postFix;
@@ -342,7 +353,7 @@ public class WSPSMClassCreatorVisitor extends DefaultModelVisitor {
     * @param postFix
     * @param excludeStereotype
     */
-   private ModelClass createOrFindWsEnumeration(ModelClass modelClass) {
+   protected ModelClass createOrFindWsEnumeration(ModelClass modelClass) {
       WSModelPackage modelPackage = (WSModelPackage) modelClass.getPackage();
       WSModel model = (WSModel) modelPackage.getModel();
       ModelClassBase wsClassImpl = createOrFindWsClassImpl(modelClass, "", null, WSStereotypes.WEB_SERVICE_ENUMERATION, PIMStereotypes.PIM_OBJECT);
