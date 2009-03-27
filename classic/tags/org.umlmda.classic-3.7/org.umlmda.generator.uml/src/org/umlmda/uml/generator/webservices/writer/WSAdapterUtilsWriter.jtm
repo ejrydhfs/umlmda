@@ -1,0 +1,136 @@
+<%// $Header: /cvsroot/umlmda/UMLGenerator/src/org/umlmda/uml/generator/webservices/writer/WSUtilsWriter.jtm,v 1.3 2005/10/28 16:29:47 moroff Exp $
+//
+// Copyright (C) 2005 Dieter Moroff
+//
+// This file is part of UMLMDA (http://www.umlmda.org)
+// 
+// WSUtilsWriter generates the web service "Utils" class for a <<BusinesService>> model element
+//
+%><% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = WSAdapterUtilsWriter
+main.CodeWriterFormat	   = format/ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.webservices.writer
+java.CodeWriter.extends    = AbstractWSWriter
+%><% import!
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+
+import org.apache.commons.lang.StringUtils;
+
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.model.uml.*;
+import org.umlmda.model.uml.impl.ModelClassAdapter;
+import org.umlmda.profile.ModelStereotype;
+import org.umlmda.uml.generator.java.*;
+import org.umlmda.uml.generator.webservices.*;
+
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %><%
+   WSModelClass genClass = (WSModelClass)getGenClass();
+   final List classList = genClass.getSchemaTypes();
+   final List pimClassList = genClass.getReferencedPIMTypes();
+   final List packageList = UMLModelHelper.getPackagesFromClassList(classList);
+
+   genClass.resetImports();
+   for ( Iterator ip = packageList.iterator(); ip.hasNext(); ) {
+      WSModelPackage modelPackage = (WSModelPackage)ip.next();
+      JavaModelPackage pimPackage = (JavaModelPackage)modelPackage.getPIMPackage();
+      
+      genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT_FACTORY, pimPackage);
+   }
+   for ( Iterator iter = classList.iterator(); iter.hasNext(); ) {
+      WSModelClass modelClass = (WSModelClass)iter.next();
+       
+      if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO)
+        || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO_HIERARCHY)
+        || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION) )
+         genClass.registerImport(WSArtefacts.WS_STUB, modelClass);
+   } // for
+   for ( Iterator iter = pimClassList.iterator(); iter.hasNext(); ) {
+      JavaModelClass pimClass = (JavaModelClass)iter.next();
+        
+      if ( pimClass.hasStereotype(ModelStereotype.BUSINESS_OBJECT)  ) {
+         genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, pimClass);
+      }
+      else if ( pimClass.hasStereotype(ModelStereotype.BUSINESS_EXCEPTION)  ) {
+         genClass.registerImport(JavaArtefacts.BUSINESS_EXCEPTION, pimClass);
+      }
+   } // for
+%>//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+package <%=getPackageName()%>;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.umlmda.webservice.WebserviceUtils;
+
+<%=genClass.registeredImports()%>
+
+public class <%=getBaseName()%> {
+   private final Map registry = new HashMap();
+   private List resolvers = new ArrayList();
+   
+   private abstract class ResolveReference {
+      abstract void resolve();
+      
+      Object lookup(Object objectRef) {
+         if ( objectRef != null ) {
+            return registry.get(objectRef);
+         }
+         else {
+            return null;
+         }      
+      }
+   }
+
+   private void register(ResolveReference resolveReference) {
+      resolvers.add(resolveReference);
+   }
+
+   public void resolveReferences() {
+      for (Iterator iter = resolvers.iterator(); iter.hasNext();) {
+         ResolveReference resolveReference = (ResolveReference) iter.next();
+         
+         resolveReference.resolve();
+      }
+   }
+
+   public void resetReferences() {
+      resolvers.clear();
+      registry.clear();
+   }
+   
+<% // Loop required packages
+   int index=1;
+   for ( Iterator iter = packageList.iterator(); iter.hasNext(); ++index) {
+      WSModelPackage modelPackage = (WSModelPackage)iter.next();
+      JavaModelPackage pimPackage = (JavaModelPackage)modelPackage.getPIMPackage();
+      String factoryInterface = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_FACTORY, pimPackage);
+
+%>   private <%=factoryInterface%> <%=getFactoryMember(modelPackage)%> = null;
+
+   public void set<%=StringUtils.capitalize(pimPackage.getName())%>Factory(<%=factoryInterface%> factory) {
+      <%=getFactoryMember(modelPackage)%> = factory;
+   }
+<% }  
+%>
+<% for ( Iterator ic = classList.iterator(); ic.hasNext(); ) {
+      WSModelClass modelClass = (WSModelClass)ic.next();
+      if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_OBJECT) && modelClass.getPIMClass() != null ) {  
+%><% @include WSImplCreate.jti template-relative %><%
+      }
+   } // for
+%>
+}

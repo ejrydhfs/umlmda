@@ -1,0 +1,37 @@
+  <complexType name="<%=modelClass.getName()%>">
+<%  if ( modelClass.getSuperClass() != null ) {
+       WSModelClass superClass = (WSModelClass)modelClass.getSuperClass();
+%>    <complexContent>
+     <extension base="<%=superClass.getSchemaType()%>">
+<% }
+%>     <sequence>
+<%  // Fix for empty base classes
+    if ( modelClass.getSuperClass() == null && modelClass.getAttributes().size() == 0 ) {
+%>       <element name="dummy" nillable="true" type="xsd:string"/>
+<%  }
+
+    // Attributes
+    for ( Iterator ia = modelClass.getAttributes().iterator(); ia.hasNext(); ) {
+      WSModelAttribute attr = (WSModelAttribute)ia.next();
+      String maxOccursTag = attr.getMaxOccursTag();
+      String minOccursTag = attr.getMinOccursTag();
+      String nillableTag = attr.getNillableTag();
+%>       <element name="<%=attr.getName()%>" <%=nillableTag%><%=minOccursTag%><%=maxOccursTag%>type="<%=attr.getSchemaType()%>"/>
+<%  }
+    // Assocations
+    for ( Iterator ia = modelClass.getAssociations().iterator(); ia.hasNext(); ) {
+      WSModelAssociation association = (WSModelAssociation)ia.next();
+      WSModelClass assocTarget = (WSModelClass)association.getTarget();
+      String maxOccursTag = association.getMaxOccursTag();
+      String minOccursTag = association.getMinOccursTag();
+      String nillableTag = association.getNillableTag();
+
+%>       <element name="<%=association.getName()%>" <%=nillableTag%><%=minOccursTag%><%=maxOccursTag%>type="<%=assocTarget.getSchemaType()%>"/>
+<%  }
+%>     </sequence>
+<%  if ( modelClass.getSuperClass() != null ) {
+%>    </extension>
+    </complexContent>
+<%  }
+%>  </complexType>
+

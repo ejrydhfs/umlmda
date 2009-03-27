@@ -1,0 +1,63 @@
+//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//   $Header$
+//   $Source$
+// $Revision$
+//     $Name$
+//     $Date$
+//@@UserSection-End RCSHeader
+package ${genPackage.getQualifiedPackageName("java.VisitableIterator")};
+
+import org.umlmda.runtime.visitor.AbstractVisitableIterator;
+${genPackage.resetImports()}##
+${genPackage.registerImports("java.BusinessObjectInterface", ${genPackage.classes}, "BusinessObject")}##
+#foreach( $refPackage in ${genPackage.referencedPackages} )
+	#if ( ${refPackage.getClasses("BusinessObject").size()} > 0 )
+		${genPackage.registerImport("java.VisitableIterator", $refPackage)}##
+	#end##if
+#end##foreach		
+${genPackage.registeredImports()}
+
+/**
+ * Visitable iterator for the business objects of ${genPackage.qualifiedName} 
+ */
+public class ${genPackage.generatedName} extends AbstractVisitableIterator {
+
+   /**
+    * 
+    */
+   public ${genPackage.generatedName}(Object startPoint) {
+      this(null, startPoint);
+   }
+
+   /**
+    * 
+    */
+   public ${genPackage.generatedName}(AbstractVisitableIterator parentIterator, Object startPoint) {
+      super(parentIterator, startPoint);
+   }
+
+   /* (non-Javadoc)
+    * @see org.umlmda.runtime.visitor.AbstractVisitableIterator#registerChilds()
+    */
+   protected void registerChilds(Object startPoint) {
+#foreach( $genClass in ${genPackage.getClasses("BusinessObject")} )
+#set($boClass = $genPackage.getScopedName("java.BusinessObjectInterface", ${genClass}))
+      if ( startPoint instanceof $boClass ) {
+         ${boClass} sp${genClass.name} = (${boClass})startPoint;
+
+#foreach( $assoc in ${genClass.associations} )
+#set($iteratorClass = ${genPackage.getScopedName("java.VisitableIterator", ${assoc.target.component})})
+#if( ${assoc.multiple} )
+         registerChilds(${iteratorClass}.class, sp${genClass.name}.${assoc.getter}());
+#else		 
+         registerChild(${iteratorClass}.class, sp${genClass.name}.${assoc.getter}());
+#end##if		 
+#end## foreach $asscoc
+      }
+#end## foreach $genClass   
+   }
+}
+
+//@@UserSection-Begin RCSLog
+//@@UserSection-End RCSLog

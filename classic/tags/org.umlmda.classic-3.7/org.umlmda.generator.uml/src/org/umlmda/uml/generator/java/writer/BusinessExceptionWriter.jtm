@@ -1,0 +1,75 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = BusinessExceptionWriter
+main.CodeWriterFormat	     = format/ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.java.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.java.AbstractJavaClassWriter
+%><% import!
+import java.util.Iterator;
+import java.util.Collection;
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.model.uml.*;
+import org.umlmda.profile.*;
+import org.umlmda.uml.generator.java.*;
+import org.umlmda.generator.model.util.StringUtil;
+// ==== End of generation header ===============================================
+%><%
+   JavaModelClass genClass = (JavaModelClass)getGenClass();
+   JavaModelClass genSuperClass = (JavaModelClass)genClass.getSuperClass();
+   String superClass = null;
+   JavaModel genModel = (JavaModel)genClass.getGeneratorModel();
+   String ctorScope = "public ";
+   boolean propertyChangeSupport = genClass.hasBoundProperties();
+   boolean ctorWithAttributes = true;
+   
+   genClass.resetImports();
+   genClass.registerImports(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, genClass.getReferencedTypes(), ModelStereotype.BUSINESS_OBJECT);
+   genClass.registerImports(JavaArtefacts.BUSINESS_EXCEPTION, genClass.getReferencedTypes(), ModelStereotype.BUSINESS_EXCEPTION);
+   if ( genSuperClass != null ) {
+      superClass = genClass.getScopedName(JavaArtefacts.BUSINESS_EXCEPTION, genSuperClass);
+   }
+
+%>//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+
+package <%=getPackageName()%>;
+
+<% if ( propertyChangeSupport ) {
+%>import java.beans.PropertyChangeSupport;
+import java.beans.PropertyChangeListener;
+
+import org.umlmda.runtime.beans.BeanUtils;
+
+<% }
+%><%=genClass.registeredImports()%>
+<%= beginUserSection("Imports", COMMON) %>
+<%= endUserSection("Imports", COMMON) %>
+
+/**
+ * <%=getModelClass().getDocumentation()%>
+ */
+public class <%=getClassName()%> extends <%if ( superClass != null ) {%><%=superClass%><%} else { %>Exception<% } %>
+{
+   // Version information from BusinessComponent <%=genClass.getComponent().getQualifiedName()%>
+   private static final String modelVersion = "<%=genClass.getModelVersion()%>";
+//@@UserSection-Begin VersionInfo
+   private static final String interfaceVersion = "<%=genClass.getModelVersion()%>";
+   private static final long serialVersionUID = <%=genClass.getSerialVersionUID()%>;
+//@@UserSection-End VersionInfo
+   
+<% // Constants
+   for ( Iterator ia = getModelClass().getConstants().iterator(); ia.hasNext(); ) {
+     ModelAttribute attribute = (ModelAttribute)ia.next();
+%>   /**
+   * Constant <%=attribute.getName()%>
+   */
+   public static final <%=getType(attribute)%> <%=attribute.getName()%> = <%=getInitializer(attribute)%>;
+   
+<% }%><% @include JavaClassBody.jti template-relative %>
+}
+
+//@@UserSection-Begin RCSLog
+<%=RcsHelper.writeLog("// ")%>
+//@@UserSection-End RCSLog

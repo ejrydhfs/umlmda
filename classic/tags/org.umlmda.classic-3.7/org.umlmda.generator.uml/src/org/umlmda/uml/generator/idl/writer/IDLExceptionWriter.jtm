@@ -1,0 +1,35 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = IDLExceptionWriter
+main.CodeWriterFormat	   = format/EmbeddedJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.idl.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.idl.AbstractIDLElementWriter
+%>
+<% import!
+import java.util.Iterator;
+import org.umlmda.model.uml.*;
+// ==== End of generation header ===============================================
+%>
+<% @section declare %><%
+%><% @section %>
+   /**
+    *
+    */
+   exception <%=getClassName()%> <%if ( getModelClass().getSuperClass() != null ) {%>/* derived from <%=getBaseClass()%> */<%}%>
+   {
+<% // Attributes
+   for ( Iterator ia = getModelClass().getAttributes(true).iterator(); ia.hasNext(); ) {
+	   ModelAttribute attribute = (ModelAttribute)ia.next();
+%>      <%=getType(attribute)%> <%=attribute.getName()%>;
+<% }
+   // Associations-Accessors
+   for ( Iterator ia = getModelClass().getAssociations(true).iterator(); ia.hasNext(); ) {
+      ModelAssociation association = (ModelAssociation)ia.next();
+      if ( !association.isUnspecified() ) {
+         if ( association.isMultiple() ) {
+%>      sequence<<%=getType(association.getTarget())%>> <%=association.getName()%>List;
+<%       } else {
+%>      <%=getType(association.getTarget())%>> <%=association.getName()%>;
+<%       }
+     }
+   }%>   };

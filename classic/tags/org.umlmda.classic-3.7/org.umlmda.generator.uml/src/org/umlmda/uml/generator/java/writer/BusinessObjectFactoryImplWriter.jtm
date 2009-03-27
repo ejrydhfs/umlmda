@@ -1,0 +1,89 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = BusinessObjectFactoryImplWriter
+main.CodeWriterFormat	   = format/ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.java.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.java.AbstractBusinessFactoryWriter
+%><% import!
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.model.uml.*;
+import java.util.*;
+import org.umlmda.uml.generator.java.*;
+import org.umlmda.profile.ModelStereotype;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+   public String getFileExt() {
+   		return ".java";
+   }
+%><% @section %><%
+   JavaModelPackage genPackage = (JavaModelPackage)getGenPackage();
+   JavaModel genModel = (JavaModel)genPackage.getGeneratorModel();
+   
+   genPackage.resetImports();
+   genPackage.registerImport(JavaArtefacts.BUSINESS_OBJECT_FACTORY);
+   genPackage.registerImports(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, genPackage.getClasses(), ModelStereotype.BUSINESS_OBJECT);
+   genPackage.registerImports(JavaArtefacts.BUSINESS_OBJECT, genPackage.getClasses(), ModelStereotype.BUSINESS_OBJECT);
+%>//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+
+
+package <%=getPackageName()%>;
+
+<%=genPackage.registeredImports()%>
+<%= beginUserSection("Imports", COMMON) %>
+<%= endUserSection("Imports", COMMON) %>
+
+/**
+ * Abstract factory for the modelled classes of the package <%=getModelPackage().getQualifiedName()%>
+ */
+public class <%=genPackage.getGeneratedName()%> implements <%=genPackage.getScopedName(JavaArtefacts.BUSINESS_OBJECT_FACTORY)%>
+{
+<% // Factory-Methods
+   for ( Iterator ia = getModelPackage().getClasses().iterator(); ia.hasNext(); ) {
+     JavaModelClass genClass = (JavaModelClass)ia.next();
+     String businessObject = genPackage.getScopedName(JavaArtefacts.BUSINESS_OBJECT, genClass);
+
+       if ( genClass.isAbstract() == false && genClass.hasStereotype(ModelStereotype.BUSINESS_OBJECT) ) {
+          String businessInterface = genPackage.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, genClass);
+%>   /**
+   * Create Businessinterface implementation for <%=genClass.getName()%>
+   * @see <%=businessInterface%>
+   */
+   public <%=businessInterface%> create<%=genClass.getName()%>() {
+   	  return <%=businessObject%>.create<%=businessObject%>();
+   }
+<%	   
+       if ( isInheritPKeyFromParent(genClass) && genClass.getParent().getKeyAttributes().size() > 0 ) {
+          ModelClass parent = genClass.getParent();
+       %>
+
+   /**
+   * Create Businessinterface for <%=genClass.getName()%>, using the
+   * parent class for setting the primary keys
+   * @see <%=businessInterface%>
+   */
+   public <%=businessInterface%> create<%=genClass.getName()%>(<%=getType(parent)%> parent, <%=getParameterSignature(genClass.getOwnedKeyAttributes(true))%>) {
+      return <%=businessObject%>.create<%=businessObject%>(<%=getParameter("parent", getParent(genClass), genClass.getOwnedKeyAttributes(true))%>);
+   }
+<%     }
+       if ( genClass.getKeyAttributes().size() > 0 ) {%>
+   /**
+   * Create Businessinterface for <%=genClass.getName()%>, giving the
+   * primary key attributes.
+   * @see <%=businessInterface%>
+   */
+   public <%=businessInterface%> create<%=genClass.getName()%>(<%=getParameterSignature(genClass.getKeyAttributes())%>) {
+      return <%=businessObject%>.create<%=businessObject%>(<%=getParameter(genClass.getKeyAttributes())%>);
+   }
+<%     }
+     } // if
+	 } // for
+%>	    
+
+};
+
+//@@UserSection-Begin RCSLog
+<%=RcsHelper.writeLog("// ")%>
+//@@UserSection-End RCSLog

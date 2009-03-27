@@ -1,0 +1,215 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.classic</artifactId>
+      <version>3.7</version>
+   </parent>
+
+   <artifactId>org.umlmda.generator.uml</artifactId>
+   <name>UMLMDA classic uml generator</name>
+   <description />
+
+   
+   <dependencies>
+      <!-- UMLMDA Classic -->
+      <dependency>
+         <groupId>org.umlmda</groupId>
+         <artifactId>org.umlmda.generator.core</artifactId>
+      </dependency>
+      
+      <!-- UMLMDA Common for testing -->
+      <dependency>
+         <groupId>org.umlmda</groupId>
+         <artifactId>org.umlmda.umlmodel.nsuml</artifactId>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.umlmda</groupId>
+         <artifactId>org.umlmda.crazybeans</artifactId>
+         <scope>test</scope>
+      </dependency>
+      
+      
+   </dependencies>
+
+   <build>
+      <resources>
+         <resource>
+            <directory>${basedir}/src</directory>
+            <includes>
+               <include>**/*.oaw</include>
+            </includes>
+            <excludes>
+               <exclude>**.*.java</exclude>
+            </excludes>
+         </resource>
+      </resources>
+
+      <plugins>
+         <!-- Compile jostraca templates -->
+         <plugin>
+            <groupId>org.umlmda</groupId>
+            <artifactId>org.umlmda.jostraca.maven</artifactId>
+            <executions>
+               <execution>
+                  <id>gen</id>
+                  <phase>generate-sources</phase>
+                  <goals>
+                     <goal>generate</goal>
+                  </goals>
+                  <configuration>
+                     <configFolder>${basedir}/etc/jostraca</configFolder>
+                     <templateBaseFolder>${basedir}/src</templateBaseFolder>
+                     <outputBaseFolder>${basedir}/src-gen</outputBaseFolder>
+                     <templatePaths>
+                        <templatePath>org/umlmda/uml/generator/j2ee/writer</templatePath>
+                        <templatePath>org/umlmda/uml/generator/java/writer</templatePath>
+                        <templatePath>org/umlmda/uml/generator/webservices/writer</templatePath>
+                     </templatePaths>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+
+         <!-- unpack jostraca configuration -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+               <!-- Unpack jostraca configuration -->
+               <execution>
+                  <id>unpack</id>
+                  <phase>initialize</phase>
+                  <goals>
+                     <goal>unpack</goal>
+                  </goals>
+                  <configuration>
+                     <artifactItems>
+                        <artifactItem>
+                           <groupId>org.umlmda</groupId>
+                           <artifactId>org.jostraca</artifactId>
+                           <version>${jostraca.version}</version>
+                           <type>zip</type>
+                           <classifier>conf</classifier>
+                           <overWrite>false</overWrite>
+                           <outputDirectory>${basedir}/etc/jostraca</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                           <groupId>org.umlmda</groupId>
+                           <artifactId>org.jostraca</artifactId>
+                           <version>${jostraca.version}</version>
+                           <type>zip</type>
+                           <classifier>format</classifier>
+                           <overWrite>false</overWrite>
+                           <outputDirectory>${basedir}/etc/jostraca</outputDirectory>
+                        </artifactItem>
+                     </artifactItems>
+                     <overWriteReleases>false</overWriteReleases>
+                     <overWriteSnapshots>true</overWriteSnapshots>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+
+         <!-- added src-gen to source folders -->
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>add-source</id>
+                  <phase>process-sources</phase>
+                  <goals>
+                     <goal>add-source</goal>
+                  </goals>
+                  <configuration>
+                     <sources>
+                        <source>${basedir}/src-gen</source>
+                     </sources>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+
+         <!-- Pack templates -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>zip-templates</id>
+                  <phase>package</phase>
+                  <configuration>
+                     <tasks>
+                        <mkdir dir="${project.build.directory}" />
+                        <zip destfile="${project.build.directory}/templates.zip">
+                           <fileset dir="${basedir}/templates" includes="**/*.*" />
+                        </zip>
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>attach-artifacts</id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>attach-artifact</goal>
+                  </goals>
+                  <configuration>
+                     <artifacts>
+                        <artifact>
+                           <file>${project.build.directory}/templates.zip</file>
+                           <type>zip</type>
+                           <classifier>templates</classifier>
+                        </artifact>
+                     </artifacts>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+
+         <!-- Test -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+               <skip>true</skip>
+               <systemProperties>
+                  <property>
+                     <name>org.umlmda.model.uml.ModelFactory</name>
+                     <value>org.umlmda.model.uml.nsuml.ModelFactoryImpl</value>
+                  </property>
+                  <property>
+                     <name>test.org.umlmda.uml.generator.ValidatorTest.adapterFactory</name>
+                     <value />
+                  </property>   
+                  <property>
+                     <name>test.org.umlmda.uml.generator.ValidatorTest.model</name>
+                     <value>model/rose/UMLMDATestValidator.mdl</value>
+                  </property>
+                  <property>
+                     <name>test.org.umlmda.uml.generator.webservices.WSModelAdapterTest.model</name>
+                     <value>model/rose/UMLGeneratorTest.mdl</value>
+                  </property>
+                  <property>
+                     <name>test.org.umlmda.uml.generator.webservices.WSModelAdapterTest.adapterFactory</name>
+                     <value />
+                  </property>
+               </systemProperties>
+            </configuration>
+         </plugin>
+
+      </plugins>
+   </build>
+</project>
