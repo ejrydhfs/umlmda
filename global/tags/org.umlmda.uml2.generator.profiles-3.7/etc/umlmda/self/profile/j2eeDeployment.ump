@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.profile:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.profile="http:///org/umlmda/generator/profile.ecore" name="j2eeDeployment" adapterFactory="org.umlmda.uml.generator.j2ee.J2EEModelAdapterFactory">
+  <stereotypes name="BusinessComponent">
+    <mappings artefact="//@artefacts.0"/>
+    <mappings artefact="//@artefacts.1"/>
+    <mappings artefact="//@artefacts.2"/>
+    <mappings artefact="//@artefacts.3"/>
+    <mappings artefact="//@artefacts.4"/>
+  </stereotypes>
+  <artefacts name="j2ee.EjbJarXml" filename="ejb-jar" fileExtension="xml" useNamespace="false" namespacePostfix="" writer="org.umlmda.uml.generator.j2ee.writer.EjbJarXmlWriter"/>
+  <artefacts name="j2ee.JBossXml" filename="jboss" fileExtension="xml" useNamespace="false" namespacePostfix="" writer="org.umlmda.uml.generator.j2ee.writer.JBossXmlWriter"/>
+  <artefacts name="j2ee.OpenejbJarXml" filename="openejb-jar" fileExtension="xml" useNamespace="false" type="Velocity" writer="j2ee/openejb-jar.xml.vm" generationStrategy="org.umlmda.uml.generator.j2ee.J2EEServiceStrategy"/>
+  <artefacts name="j2ee.IbmEjbJarBndXmi" filename="ibm-ejb-jar-bnd" fileExtension="xmi" useNamespace="false" namespacePostfix="" writer="org.umlmda.uml.generator.j2ee.writer.IbmEjbJarBndXmiWriter"/>
+  <artefacts name="j2ee.IbmEjbJarExtXmi" filename="ibm-ejb-jar-ext" fileExtension="xmi" useNamespace="false" namespacePostfix="" replacement="" replacementPattern="" writer="org.umlmda.uml.generator.j2ee.writer.IbmEjbJarExtXmiWriter"/>
+  <basedOn href="j2ee.ump#j2ee"/>
+</org.umlmda.generator.profile:Profile>
