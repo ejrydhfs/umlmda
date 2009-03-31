@@ -182,7 +182,7 @@
 
 «DEFINE handleAttributes FOR JavaModelClass»
    «FOREACH implementedAttributes.typeSelect(JavaModelAttribute).reject(a|superClass!=null && ((JavaModelClass)superClass).implementedAttributes.contains(a)) AS attr»
-      «REM» PKey attributes only for PersistentEntity «ENDREM»		
+      «REM» PKey attributes only for PersistentEntity «ENDREM»
 		«IF this.hasStereotype("PersistentEntity") && attr.hasStereotype("PKey")»
    		«REM» But only if we don't have a compound key «ENDREM»
          «IF ! this.hasCompositeKey()»
@@ -203,8 +203,26 @@
    
    «REM» Version attributes shouldn't be changed by the application «ENDREM»
    «IF !hasStereotype("VersionAttribute")»
-      «EXPAND java::BOInterface::attrSetterDecl FOR this» 
-      «EXPAND java::BOImpl::setterBody(modelClass) FOR this»
+		«IF readOnly && getStereotypeProperty("domainAttribute")!="true"»
+         «REM» Handle setter for "read only" attribute «ENDREM»
+         «IF !hasStereotype("PKey")»
+            /**
+		       * Set «name», «getDocumentation("SETTER")»
+		       */
+            protected void «setter»(«javaTypeName()» «name») {
+               «EXPAND java::BOImpl::setterAssignment FOR this»
+            }
+         «ELSE»
+            /**
+             * Set «name», «getDocumentation("SETTER")»
+             */
+            protected abstract void «setter»(«javaTypeName()» «name»);
+         «ENDIF»
+		«ELSE»
+         «REM» Normal attribute setter «ENDREM»
+	      «EXPAND java::BOInterface::attrSetterDecl FOR this» 
+	      «EXPAND java::BOImpl::setterBody(modelClass) FOR this»
+		«ENDIF»
    «ENDIF»
 «ENDDEFINE»
 
