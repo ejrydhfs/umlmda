@@ -15,7 +15,7 @@
    <properties>
       <umlmda.uml2.profile.version>4.1.0</umlmda.uml2.profile.version>
       <umlmda.uml2.profile.new.version>4.2.6</umlmda.uml2.profile.new.version>
-      <umlmda.generator.profile.version>3.6</umlmda.generator.profile.version>
+      <umlmda.generator.profile.version>3.7</umlmda.generator.profile.version>
       <umlmda.jostraca.version>3.1</umlmda.jostraca.version>
       <jostraca.version>0.3.3</jostraca.version>
    </properties>
