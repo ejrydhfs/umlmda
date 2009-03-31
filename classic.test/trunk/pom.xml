@@ -5,7 +5,7 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.classic</artifactId>
-      <version>3.7</version>
+      <version>3.8-SNAPSHOT</version>
    </parent>
    <artifactId>org.umlmda.classic.test</artifactId>
    <version>3.8-SNAPSHOT</version>
@@ -15,7 +15,7 @@
 
    <properties>
       <umlmda.generator.profile.version>3.7</umlmda.generator.profile.version>
-      <umlmda.classic.version>3.7</umlmda.classic.version>
+      <umlmda.classic.version>3.8-SNAPSHOT</umlmda.classic.version>
    </properties>
 
    <modules>
@@ -56,6 +56,11 @@
          </dependency>
       </dependencies>
    </dependencyManagement>
+
+   <scm>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic.test/trunk</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic.test/trunk</developerConnection>
+   </scm>
 
    <repositories>
       <repository>
