@@ -8,7 +8,7 @@
       <version>3.7</version>
    </parent>
    <artifactId>org.umlmda.classic.test</artifactId>
-   <version>3.7</version>
+   <version>3.8-SNAPSHOT</version>
    <packaging>pom</packaging>
    <name>UMLMDA Classic test</name>
    <description>UMLMDA maven test project for umlmda classic modules.</description>
@@ -47,12 +47,12 @@
          <dependency>
             <groupId>org.umlmda.classic.test</groupId>
             <artifactId>org.umlmda.classic.test.java</artifactId>
-            <version>3.7</version>
+            <version>3.8-SNAPSHOT</version>
          </dependency>
          <dependency>
             <groupId>org.umlmda.classic.test</groupId>
             <artifactId>org.umlmda.classic.test.j2ee</artifactId>
-            <version>3.7</version>
+            <version>3.8-SNAPSHOT</version>
          </dependency>
       </dependencies>
    </dependencyManagement>
@@ -95,9 +95,4 @@
          </snapshots>
       </pluginRepository>
    </pluginRepositories>
-
-  <scm>
-    <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/tags/org.umlmda.classic.test-3.7</connection>
-    <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/tags/org.umlmda.classic.test-3.7</developerConnection>
-  </scm>
 </project>
