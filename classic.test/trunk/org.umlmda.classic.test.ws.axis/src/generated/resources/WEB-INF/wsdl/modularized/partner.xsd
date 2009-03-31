@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- @@Generated file, please edit UserSections only -->
+<xsd:schema targetNamespace="http://www.umlmda.org/demo/partner" 
+           elementFormDefault="qualified" 
+           attributeFormDefault="unqualified" 
+           version="1.1"
+           xmlns="http://www.w3.org/2001/XMLSchema" 
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:cmn="http://www.umlmda.org/demo/common" 
+  xmlns:cmn="http://www.umlmda.org/demo/common" 
+  xmlns:par="http://www.umlmda.org/demo/partner" 
+  xmlns:par="http://www.umlmda.org/demo/partner" 
+ ><xsd:import namespace="http://www.umlmda.org/demo/common" schemaLocation="common.xsd"/> 
+<xsd:import namespace="http://www.umlmda.org/demo/common" schemaLocation="common.xsd"/> 
+<xsd:import namespace="http://www.umlmda.org/demo/partner" schemaLocation="partner.xsd"/> 
+
+  <simpleType name="AddressType">
+    <restriction base="xsd:int">
+      <enumeration value="1"/>
+      <enumeration value="2"/>
+      <enumeration value="3"/>
+    </restriction>
+  </simpleType>
+
+  <complexType name="CommunicationAddress">
+    <complexContent>
+     <extension base="cmn:TimeDependent">
+     <sequence>
+       <element name="nr" nillable="false" type="xsd:int"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="EMail">
+    <complexContent>
+     <extension base="par:CommunicationAddress">
+     <sequence>
+       <element name="adress" nillable="false" type="xsd:string"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <simpleType name="IMType">
+    <restriction base="xsd:string">
+      <enumeration value="Y"/>
+      <enumeration value="A"/>
+      <enumeration value="S"/>
+    </restriction>
+  </simpleType>
+
+  <complexType name="InstantMessenger">
+    <complexContent>
+     <extension base="par:CommunicationAddress">
+     <sequence>
+       <element name="imType" nillable="true" type="par:IMType"/>
+       <element name="imId" nillable="false" type="xsd:string"/>
+       <element name="imNick" nillable="false" type="xsd:string"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="LegalEntity">
+    <complexContent>
+     <extension base="par:Partner">
+     <sequence>
+       <element name="legalForm" nillable="false" type="xsd:string"/>
+       <element name="revenue" nillable="false" type="xsd:decimal"/>
+       <element name="contactPerson" minOccurs="0" maxOccurs="1" type="par:Person"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="Mandator">
+     <sequence>
+       <element name="mandatorId" nillable="false" type="xsd:string"/>
+       <element name="name" nillable="false" type="xsd:string"/>
+       <element name="_partner" minOccurs="0" maxOccurs="unbounded" type="par:Partner"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="Partner">
+     <sequence>
+       <element name="id" nillable="false" type="xsd:string"/>
+       <element name="name" nillable="false" type="xsd:string"/>
+       <element name="_eMail" minOccurs="0" maxOccurs="unbounded" type="par:EMail"/>
+       <element name="_instantMessenger" minOccurs="0" maxOccurs="unbounded" type="par:InstantMessenger"/>
+       <element name="_telephone" minOccurs="0" maxOccurs="unbounded" type="par:Telephone"/>
+       <element name="addresses" minOccurs="1" maxOccurs="unbounded" type="par:PostalAddress"/>
+       <element name="notes" minOccurs="0" maxOccurs="unbounded" type="cmn:Note"/>
+       <element name="preferredAddress" minOccurs="0" maxOccurs="1" type="par:PostalAddress"/>
+       <element name="primaryAddress" minOccurs="1" maxOccurs="1" type="par:PostalAddress"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="Person">
+    <complexContent>
+     <extension base="par:Partner">
+     <sequence>
+       <element name="firstname" nillable="false" type="xsd:string"/>
+       <element name="birthdate" nillable="false" type="xsd:date"/>
+       <element name="sex" nillable="true" type="cmn:Sex"/>
+       <element name="employee" nillable="false" type="xsd:boolean"/>
+       <element name="salary" nillable="false" type="xsd:decimal"/>
+       <element name="nationalities" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+       <element name="_profession" minOccurs="0" maxOccurs="1" type="par:Profession"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="PersonList">
+     <sequence>
+       <element name="dummy" nillable="true" type="xsd:string"/>
+       <element name="_person" minOccurs="0" maxOccurs="unbounded" type="par:Person"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="PostalAddress">
+    <complexContent>
+     <extension base="cmn:TimeDependent">
+     <sequence>
+       <element name="nr" nillable="false" type="xsd:int"/>
+       <element name="zip" nillable="false" type="xsd:string"/>
+       <element name="city" nillable="false" type="xsd:string"/>
+       <element name="street" nillable="false" type="xsd:string"/>
+       <element name="PRIVATE" nillable="false" type="xsd:int"/>
+       <element name="BUSINESS" nillable="false" type="xsd:int"/>
+       <element name="HOLIDAY" nillable="false" type="xsd:int"/>
+       <element name="type" nillable="false" type="par:AddressType"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="Profession">
+     <sequence>
+       <element name="name" nillable="false" type="xsd:string"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="Telephone">
+    <complexContent>
+     <extension base="par:CommunicationAddress">
+     <sequence>
+       <element name="countryCode" nillable="false" type="xsd:string"/>
+       <element name="areaCode" nillable="false" type="xsd:string"/>
+       <element name="number" nillable="false" type="xsd:string"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+     
+
+</xsd:schema>

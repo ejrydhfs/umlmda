@@ -39,7 +39,7 @@
          <artifactId>org.umlmda.classic.generator</artifactId>
          <type>pom</type>
          <scope>import</scope>
-         <version>3.6</version>
+         <version>${umlmda.classic.version}</version>
       </dependency>
    </dependencies>
 

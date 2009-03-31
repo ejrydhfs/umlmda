@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- @@Generated file, please edit UserSections only -->
+<wsdl:definitions 
+  targetNamespace="http://www.umlmda.org/demo/partner" 
+  xmlns:apachesoap="http://xml.apache.org/xml-soap" 
+  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" 
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:cmn="http://www.umlmda.org/demo/common" 
+  xmlns:cmn="http://www.umlmda.org/demo/common" 
+  xmlns:par="http://www.umlmda.org/demo/partner" 
+  xmlns:par="http://www.umlmda.org/demo/partner" 
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+ <wsdl:types>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+          targetNamespace="http://www.umlmda.org/demo/common/import">
+
+
+          <import namespace="http://www.umlmda.org/demo/common" schemaLocation="common.xsd"/> 
+
+  </schema>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+          targetNamespace="http://www.umlmda.org/demo/common/import">
+
+
+          <import namespace="http://www.umlmda.org/demo/common" schemaLocation="common.xsd"/> 
+
+  </schema>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+          targetNamespace="http://www.umlmda.org/demo/partner/import">
+
+
+          <import namespace="http://www.umlmda.org/demo/partner" schemaLocation="partner.xsd"/> 
+
+  </schema>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+          targetNamespace="http://www.umlmda.org/demo/partner/import">
+
+
+          <import namespace="http://www.umlmda.org/demo/partner" schemaLocation="partner.xsd"/> 
+
+  </schema>
+
+ </wsdl:types>
+
+  
+   <wsdl:message name="isAvailableRequest">
+   </wsdl:message>
+   <wsdl:message name="isAvailableResponse">
+      <wsdl:part name="returnValue" type="xsd:boolean"/>
+   </wsdl:message>
+  
+   <wsdl:message name="readRequest">
+      <wsdl:part name="id" type="xsd:string"/>
+      <wsdl:part name="validityDate" type="xsd:date"/>
+      <wsdl:part name="security" type="cmn:SecurityToken"/>
+   </wsdl:message>
+   <wsdl:message name="readResponse">
+      <wsdl:part name="returnValue" type="par:Partner"/>
+   </wsdl:message>
+  
+   <wsdl:message name="updateRequest">
+      <wsdl:part name="toUpdate" type="par:Partner"/>
+      <wsdl:part name="validityDate" type="xsd:date"/>
+   </wsdl:message>
+  
+   <wsdl:message name="echoRequest">
+      <wsdl:part name="toEcho" type="par:Partner"/>
+   </wsdl:message>
+   <wsdl:message name="echoResponse">
+      <wsdl:part name="returnValue" type="par:Partner"/>
+   </wsdl:message>
+
+
+  <wsdl:portType name="PartnerServicePort">
+  
+    <wsdl:operation name="isAvailable" >
+      <wsdl:input name="isAvailableRequest" message="par:isAvailableRequest"/>
+      <wsdl:output name="isAvailableResponse" message="par:isAvailableResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="read" parameterOrder="id validityDate security ">
+      <wsdl:input name="readRequest" message="par:readRequest"/>
+      <wsdl:output name="readResponse" message="par:readResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="update" parameterOrder="toUpdate validityDate ">
+      <wsdl:input name="updateRequest" message="par:updateRequest"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="echo" >
+      <wsdl:input name="echoRequest" message="par:echoRequest"/>
+      <wsdl:output name="echoResponse" message="par:echoResponse"/>
+    </wsdl:operation>
+
+  </wsdl:portType>
+
+  <wsdl:binding name="PartnerServiceSoapBinding" type="par:PartnerServicePort">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+  
+    <wsdl:operation name="isAvailable">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/isAvailable"/>
+         <wsdl:input name="isAvailableRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="isAvailableResponse">
+           <wsdlsoap:body use="literal" />
+         </wsdl:output>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="read">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/read"/>
+         <wsdl:input name="readRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="readResponse">
+           <wsdlsoap:body use="literal" />
+         </wsdl:output>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="update">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/update"/>
+         <wsdl:input name="updateRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="echo">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/echo"/>
+         <wsdl:input name="echoRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="echoResponse">
+           <wsdlsoap:body use="literal" />
+         </wsdl:output>
+         
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+  <wsdl:service name="PartnerService">
+    <wsdl:port name="PartnerServicePort" binding="par:PartnerServiceSoapBinding">
+<!-- @@UserSection-Begin ServicePort -->
+      <wsdlsoap:address location="http://this.value.is.replaced.by.jboss"/>
+<!-- @@UserSection-End ServicePort -->
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

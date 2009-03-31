@@ -13,6 +13,11 @@
    <name>UMLMDA Classic</name>
    <description>UMLMDA maven test project for umlmda classic modules.</description>
 
+   <properties>
+      <umlmda.generator.profile.version>3.7</umlmda.generator.profile.version>
+      <umlmda.classic.version>3.7</umlmda.classic.version>
+   </properties>
+
    <modules>
       <module>org.umlmda.classic.test.pim</module>
       <!-- module>org.umlmda.classic.test.ant</module -->
@@ -39,12 +44,6 @@
 
    <dependencyManagement>
       <dependencies>
-         <dependency>
-            <groupId>org.umlmda</groupId>
-            <artifactId>org.umlmda.classic.generator</artifactId>
-            <version>3.6</version>
-         </dependency>
-
          <dependency>
             <groupId>org.umlmda.classic.test</groupId>
             <artifactId>org.umlmda.classic.test.java</artifactId>
