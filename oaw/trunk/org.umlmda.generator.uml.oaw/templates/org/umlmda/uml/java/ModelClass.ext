@@ -36,3 +36,7 @@ cached Boolean isNative(ModelClass clazz) :
 	
 cached Boolean hasCompositeKey(ModelClass clazz) :
     clazz.keyAttributes.size > 1;	
+    
+// A super class is only valid if it's not stereotyped as native interface
+cached Boolean hasSuperClass(ModelClass clazz) : 
+    clazz.superClass!=null && !clazz.superClass.hasStereotype("NativeInterface");
