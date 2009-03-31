@@ -10,7 +10,7 @@
    <artifactId>org.umlmda.classic.test</artifactId>
    <version>3.7-SNAPSHOT</version>
    <packaging>pom</packaging>
-   <name>UMLMDA Classic</name>
+   <name>UMLMDA Classic test</name>
    <description>UMLMDA maven test project for umlmda classic modules.</description>
 
    <properties>
