@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- @@Generated file, please edit UserSections only -->
+<wsdl:definitions 
+  targetNamespace="http://www.umlmda.org/demo/partner" 
+  xmlns:apachesoap="http://xml.apache.org/xml-soap" 
+  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" 
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:cmn="http://www.umlmda.org/demo/common" 
+  xmlns:par="http://www.umlmda.org/demo/partner" 
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+ <wsdl:types>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+          targetNamespace="http://www.umlmda.org/demo/common">
+
+    <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+ 
+            <complexType name="CommonServiceIsAvailableRequest">
+     <sequence>
+       <element name="dummy" nillable="true" type="xsd:string"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="CommonServiceIsAvailableResponse">
+     <sequence>
+       <element name="returnValue" nillable="false" type="xsd:boolean"/>
+     </sequence>
+  </complexType>
+
+     
+
+
+  </schema>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+          targetNamespace="http://www.umlmda.org/demo/partner">
+
+    <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+ 
+            <complexType name="CommonServiceGetVersionRequest">
+     <sequence>
+       <element name="dummy" nillable="true" type="xsd:string"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="CommonServiceGetVersionResponse">
+     <sequence>
+       <element name="returnValue" nillable="false" type="xsd:string"/>
+     </sequence>
+  </complexType>
+
+     
+
+
+  </schema>
+
+ </wsdl:types>
+
+  
+   <wsdl:message name="isAvailableRequest">
+      <wsdl:part name="in" type="cmn:CommonServiceIsAvailableRequest"/>
+   </wsdl:message>
+   <wsdl:message name="isAvailableResponse">
+      <wsdl:part name="returnValue" type="cmn:CommonServiceIsAvailableResponse"/>
+   </wsdl:message>
+  
+   <wsdl:message name="getVersionRequest">
+      <wsdl:part name="in" type="par:CommonServiceGetVersionRequest"/>
+   </wsdl:message>
+   <wsdl:message name="getVersionResponse">
+      <wsdl:part name="returnValue" type="par:CommonServiceGetVersionResponse"/>
+   </wsdl:message>
+
+
+  <wsdl:portType name="CommonServicePort">
+  
+    <wsdl:operation name="isAvailable" >
+      <wsdl:input name="isAvailableRequest" message="par:isAvailableRequest"/>
+      <wsdl:output name="isAvailableResponse" message="par:isAvailableResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="getVersion" >
+      <wsdl:input name="getVersionRequest" message="par:getVersionRequest"/>
+      <wsdl:output name="getVersionResponse" message="par:getVersionResponse"/>
+    </wsdl:operation>
+
+  </wsdl:portType>
+
+  <wsdl:binding name="CommonServiceSoapBinding" type="par:CommonServicePort">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+  
+    <wsdl:operation name="isAvailable">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/isAvailable"/>
+         <wsdl:input name="isAvailableRequest">
+           <wsdlsoap:body use="encoded" 
+                          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                          namespace="http://www.umlmda.org/demo/partner"/>
+         </wsdl:input>
+         <wsdl:output name="isAvailableResponse">
+           <wsdlsoap:body use="encoded" 
+                          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                          namespace="http://www.umlmda.org/demo/partner"/>
+         </wsdl:output>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="getVersion">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/getVersion"/>
+         <wsdl:input name="getVersionRequest">
+           <wsdlsoap:body use="encoded" 
+                          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                          namespace="http://www.umlmda.org/demo/partner"/>
+         </wsdl:input>
+         <wsdl:output name="getVersionResponse">
+           <wsdlsoap:body use="encoded" 
+                          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                          namespace="http://www.umlmda.org/demo/partner"/>
+         </wsdl:output>
+         
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+  <wsdl:service name="CommonService">
+    <wsdl:port name="CommonServicePort" binding="par:CommonServiceSoapBinding">
+<!-- @@UserSection-Begin ServicePort -->
+      <wsdlsoap:address location="http://this.value.is.replaced.by.jboss"/>
+<!-- @@UserSection-End ServicePort -->
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

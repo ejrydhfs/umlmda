@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ejbext:EJBJarExtension xmi:version="2.0"
+	xmlns:xmi="http://www.omg.org/XMI"
+	xmlns:ejbext="ejbext.xmi"
+	xmlns:ejb="ejb.xmi"
+	xmi:id="EJBJarExtension_1">
+
+  <ejbExtensions xmi:type="ejbext:SessionExtension" xmi:id="SessionExtension_1">
+    <!-- Session Beans -->
+    <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#CommonService"/>
+    <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#PartnerPersistence"/>
+    <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#PartnerService"/>
+    
+<!-- UserSection-Begin enterprise-beans -->
+    <localTransaction xmi:id="LocalTransaction" boundary="BeanMethod" resolver="ContainerAtBoundary" unresolvedAction="Commit"/>
+<!-- UserSection-End enterprise-beans -->
+  </ejbExtensions>
+  <ejbJar href="META-INF/ejb-jar.xml#ejb-jar_ID"/>
+</ejbext:EJBJarExtension>

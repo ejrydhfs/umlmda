@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- @@Generated file, please edit UserSections only -->
+<wsdl:definitions 
+  targetNamespace="http://www.umlmda.org/demo/partner" 
+  xmlns:apachesoap="http://xml.apache.org/xml-soap" 
+  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" 
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:cmn="http://www.umlmda.org/demo/common" 
+  xmlns:cmn="http://www.umlmda.org/demo/common" 
+  xmlns:par="http://www.umlmda.org/demo/partner" 
+  xmlns:par="http://www.umlmda.org/demo/partner" 
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+ <wsdl:types>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+          targetNamespace="http://www.umlmda.org/demo/common/import">
+
+
+          <import namespace="http://www.umlmda.org/demo/common" schemaLocation="common.xsd"/> 
+
+  </schema>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+          targetNamespace="http://www.umlmda.org/demo/common/import">
+
+
+          <import namespace="http://www.umlmda.org/demo/common" schemaLocation="common.xsd"/> 
+
+  </schema>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+          targetNamespace="http://www.umlmda.org/demo/partner/import">
+
+
+          <import namespace="http://www.umlmda.org/demo/partner" schemaLocation="partner.xsd"/> 
+
+  </schema>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+          targetNamespace="http://www.umlmda.org/demo/partner/import">
+
+
+          <import namespace="http://www.umlmda.org/demo/partner" schemaLocation="partner.xsd"/> 
+
+  </schema>
+
+ </wsdl:types>
+
+  
+   <wsdl:message name="queryContactPersonsRequest">
+   </wsdl:message>
+   <wsdl:message name="queryContactPersonsResponse">
+      <wsdl:part name="returnValue" type="par:PersonList"/>
+   </wsdl:message>
+  
+   <wsdl:message name="isContainerManagedRequest">
+   </wsdl:message>
+   <wsdl:message name="isContainerManagedResponse">
+      <wsdl:part name="returnValue" type="xsd:boolean"/>
+   </wsdl:message>
+  
+   <wsdl:message name="readByPKey_mandatorRequest">
+   </wsdl:message>
+   <wsdl:message name="readByPKey_mandatorResponse">
+      <wsdl:part name="returnValue" type="par:Mandator"/>
+   </wsdl:message>
+  
+   <wsdl:message name="deleteByPKey_mandatorRequest">
+   </wsdl:message>
+   <wsdl:message name="deleteByPKey_mandatorResponse">
+      <wsdl:part name="returnValue" type="par:Mandator"/>
+   </wsdl:message>
+  
+   <wsdl:message name="insert_mandatorRequest">
+      <wsdl:part name="toInsert" type="par:Mandator"/>
+   </wsdl:message>
+  
+   <wsdl:message name="update_mandatorRequest">
+      <wsdl:part name="toUpdate" type="par:Mandator"/>
+   </wsdl:message>
+  
+   <wsdl:message name="delete_mandatorRequest">
+      <wsdl:part name="toDelete" type="par:Mandator"/>
+   </wsdl:message>
+  
+   <wsdl:message name="save_mandatorRequest">
+      <wsdl:part name="toSave" type="par:Mandator"/>
+   </wsdl:message>
+  
+   <wsdl:message name="readByPKeyPartnerRequest">
+   </wsdl:message>
+   <wsdl:message name="readByPKeyPartnerResponse">
+      <wsdl:part name="returnValue" type="par:Partner"/>
+   </wsdl:message>
+  
+   <wsdl:message name="deleteByPKeyPartnerRequest">
+   </wsdl:message>
+   <wsdl:message name="deleteByPKeyPartnerResponse">
+      <wsdl:part name="returnValue" type="par:Partner"/>
+   </wsdl:message>
+  
+   <wsdl:message name="insertPartnerRequest">
+      <wsdl:part name="toInsert" type="par:Partner"/>
+   </wsdl:message>
+  
+   <wsdl:message name="updatePartnerRequest">
+      <wsdl:part name="toUpdate" type="par:Partner"/>
+   </wsdl:message>
+  
+   <wsdl:message name="deletePartnerRequest">
+      <wsdl:part name="toDelete" type="par:Partner"/>
+   </wsdl:message>
+  
+   <wsdl:message name="savePartnerRequest">
+      <wsdl:part name="toSave" type="par:Partner"/>
+   </wsdl:message>
+
+
+  <wsdl:portType name="PartnerPersistencePort">
+  
+    <wsdl:operation name="queryContactPersons" >
+      <wsdl:input name="queryContactPersonsRequest" message="par:queryContactPersonsRequest"/>
+      <wsdl:output name="queryContactPersonsResponse" message="par:queryContactPersonsResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="isContainerManaged" >
+      <wsdl:input name="isContainerManagedRequest" message="par:isContainerManagedRequest"/>
+      <wsdl:output name="isContainerManagedResponse" message="par:isContainerManagedResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="readByPKey_mandator" >
+      <wsdl:input name="readByPKey_mandatorRequest" message="par:readByPKey_mandatorRequest"/>
+      <wsdl:output name="readByPKey_mandatorResponse" message="par:readByPKey_mandatorResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="deleteByPKey_mandator" >
+      <wsdl:input name="deleteByPKey_mandatorRequest" message="par:deleteByPKey_mandatorRequest"/>
+      <wsdl:output name="deleteByPKey_mandatorResponse" message="par:deleteByPKey_mandatorResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="insert_mandator" >
+      <wsdl:input name="insert_mandatorRequest" message="par:insert_mandatorRequest"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="update_mandator" >
+      <wsdl:input name="update_mandatorRequest" message="par:update_mandatorRequest"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="delete_mandator" >
+      <wsdl:input name="delete_mandatorRequest" message="par:delete_mandatorRequest"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="save_mandator" >
+      <wsdl:input name="save_mandatorRequest" message="par:save_mandatorRequest"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="readByPKeyPartner" >
+      <wsdl:input name="readByPKeyPartnerRequest" message="par:readByPKeyPartnerRequest"/>
+      <wsdl:output name="readByPKeyPartnerResponse" message="par:readByPKeyPartnerResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="deleteByPKeyPartner" >
+      <wsdl:input name="deleteByPKeyPartnerRequest" message="par:deleteByPKeyPartnerRequest"/>
+      <wsdl:output name="deleteByPKeyPartnerResponse" message="par:deleteByPKeyPartnerResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="insertPartner" >
+      <wsdl:input name="insertPartnerRequest" message="par:insertPartnerRequest"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="updatePartner" >
+      <wsdl:input name="updatePartnerRequest" message="par:updatePartnerRequest"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="deletePartner" >
+      <wsdl:input name="deletePartnerRequest" message="par:deletePartnerRequest"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="savePartner" >
+      <wsdl:input name="savePartnerRequest" message="par:savePartnerRequest"/>
+    </wsdl:operation>
+
+  </wsdl:portType>
+
+  <wsdl:binding name="PartnerPersistenceSoapBinding" type="par:PartnerPersistencePort">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+  
+    <wsdl:operation name="queryContactPersons">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/queryContactPersons"/>
+         <wsdl:input name="queryContactPersonsRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="queryContactPersonsResponse">
+           <wsdlsoap:body use="literal" />
+         </wsdl:output>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="isContainerManaged">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/isContainerManaged"/>
+         <wsdl:input name="isContainerManagedRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="isContainerManagedResponse">
+           <wsdlsoap:body use="literal" />
+         </wsdl:output>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="readByPKey_mandator">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/readByPKey_mandator"/>
+         <wsdl:input name="readByPKey_mandatorRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="readByPKey_mandatorResponse">
+           <wsdlsoap:body use="literal" />
+         </wsdl:output>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="deleteByPKey_mandator">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/deleteByPKey_mandator"/>
+         <wsdl:input name="deleteByPKey_mandatorRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="deleteByPKey_mandatorResponse">
+           <wsdlsoap:body use="literal" />
+         </wsdl:output>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="insert_mandator">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/insert_mandator"/>
+         <wsdl:input name="insert_mandatorRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="update_mandator">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/update_mandator"/>
+         <wsdl:input name="update_mandatorRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="delete_mandator">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/delete_mandator"/>
+         <wsdl:input name="delete_mandatorRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="save_mandator">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/save_mandator"/>
+         <wsdl:input name="save_mandatorRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="readByPKeyPartner">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/readByPKeyPartner"/>
+         <wsdl:input name="readByPKeyPartnerRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="readByPKeyPartnerResponse">
+           <wsdlsoap:body use="literal" />
+         </wsdl:output>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="deleteByPKeyPartner">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/deleteByPKeyPartner"/>
+         <wsdl:input name="deleteByPKeyPartnerRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="deleteByPKeyPartnerResponse">
+           <wsdlsoap:body use="literal" />
+         </wsdl:output>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="insertPartner">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/insertPartner"/>
+         <wsdl:input name="insertPartnerRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="updatePartner">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/updatePartner"/>
+         <wsdl:input name="updatePartnerRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="deletePartner">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/deletePartner"/>
+         <wsdl:input name="deletePartnerRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="savePartner">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/savePartner"/>
+         <wsdl:input name="savePartnerRequest">
+           <wsdlsoap:body use="literal" />
+         </wsdl:input>
+         
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+  <wsdl:service name="PartnerPersistence">
+    <wsdl:port name="PartnerPersistencePort" binding="par:PartnerPersistenceSoapBinding">
+<!-- @@UserSection-Begin ServicePort -->
+      <wsdlsoap:address location="http://this.value.is.replaced.by.jboss"/>
+<!-- @@UserSection-End ServicePort -->
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.set:GenerationSet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.set="http:///org/umlmda/generator/set.ecore" name="UMLGeneratorTest_All">
+  <GenerationProfile destination="../org.umlmda.classic.test.java/src/generated/java" packagePrefix="org.umlmda.demo">
+    <profile href="../../3rd/profile/java.ump#java"/>
+    <properties name="genericSupport" value="false"/>
+  </GenerationProfile>
+  <GenerationProfile destination="../org.umlmda.classic.test.j2ee/src/generated/java" packagePrefix="org.umlmda.demo">
+    <profile href="../../3rd/profile/j2ee.ump#j2ee"/>
+    <properties name="genericSupport" value="false"/>
+  </GenerationProfile>
+  <GenerationProfile destination="../org.umlmda.classic.test.j2ee/src/generated/resources/META-INF" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/j2eeDeployment.ump#j2eeDeployment"/>
+    <properties name="genericSupport" value="false"/>
+  </GenerationProfile>
+  <GenerationProfile destination="../org.umlmda.classic.test.ws.axis/src/generated/resources/WEB-INF/wsdl" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/wsdlRpcEncoded.ump#wsdlRpcEncoded"/>
+    <properties name="genericSupport" value="false"/>
+  </GenerationProfile>
+  <GenerationProfile destination="../org.umlmda.classic.test.ws.axis/src/generated/resources/WEB-INF/wsdl/modularized" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/wsdlXsdRpcLiteral.ump#wsdlXsdRpcLiteral"/>
+  </GenerationProfile>
+  <GenerationProfile destination="../org.umlmda.classic.test.ws.axis/src/generated/resources/WEB-INF" packagePrefix="org.umlmda.demo.partner">
+    <profile href="../../3rd/profile/wsAxisServerDeployment.ump#wsAxisServerDeployment"/>
+    <properties name="genericSupport" value="false"/>
+  </GenerationProfile>
+</org.umlmda.generator.set:GenerationSet>

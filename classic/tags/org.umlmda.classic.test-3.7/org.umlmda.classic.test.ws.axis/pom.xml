@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <parent>
+      <artifactId>org.umlmda.classic.test</artifactId>
+      <groupId>org.umlmda</groupId>
+      <version>3.7</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>org.umlmda.classic.test</groupId>
+   <artifactId>org.umlmda.classic.test.ws.axis</artifactId>
+   <name>UMLMDA Classic test wsaxis</name>
+   <description />
+
+   <dependencies>
+      <dependency>
+         <groupId>org.umlmda.classic.test</groupId>
+         <artifactId>org.umlmda.classic.test.java</artifactId>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <resources>
+         <resource>
+            <directory>src/generated/resources</directory>
+         </resource>
+      </resources>
+      <plugins>
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>add-source</id>
+                  <phase>initialize</phase>
+                  <goals>
+                     <goal>add-source</goal>
+                  </goals>
+                  <configuration>
+                     <sources>
+                        <source>${basedir}/src/generated/java</source>
+                     </sources>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+
+   </build>
+</project>

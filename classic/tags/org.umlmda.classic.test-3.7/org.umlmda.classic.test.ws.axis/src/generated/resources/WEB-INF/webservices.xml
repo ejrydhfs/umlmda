@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- @@Generated file, please edit UserSections only -->
+<webservices xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://www.ibm.com/webservices/xsd/j2ee_web_services_1_1.xsd" version="1.1">
+    
+    <webservice-description>
+        <webservice-description-name>CommonService</webservice-description-name>
+        <wsdl-file>WEB-INF/wsdl/CommonService.wsdl</wsdl-file>
+        <jaxrpc-mapping-file>WEB-INF/CommonServiceMapping.xml</jaxrpc-mapping-file>
+        <port-component>
+            <port-component-name>CommonService</port-component-name>
+            <wsdl-port>CommonServicePort</wsdl-port>
+            <service-endpoint-interface>org.umlmda.demo.partner.ws.servlet.CommonService</service-endpoint-interface>
+            <service-impl-bean>
+                <servlet-link>CommonServiceServlet</servlet-link>
+            </service-impl-bean>
+        </port-component>
+    </webservice-description>
+
+    <webservice-description>
+        <webservice-description-name>PartnerPersistence</webservice-description-name>
+        <wsdl-file>WEB-INF/wsdl/PartnerPersistence.wsdl</wsdl-file>
+        <jaxrpc-mapping-file>WEB-INF/PartnerPersistenceMapping.xml</jaxrpc-mapping-file>
+        <port-component>
+            <port-component-name>PartnerPersistence</port-component-name>
+            <wsdl-port>PartnerPersistencePort</wsdl-port>
+            <service-endpoint-interface>org.umlmda.demo.partner.ws.servlet.PartnerPersistence</service-endpoint-interface>
+            <service-impl-bean>
+                <servlet-link>PartnerPersistenceServlet</servlet-link>
+            </service-impl-bean>
+        </port-component>
+    </webservice-description>
+
+    <webservice-description>
+        <webservice-description-name>PartnerService</webservice-description-name>
+        <wsdl-file>WEB-INF/wsdl/PartnerService.wsdl</wsdl-file>
+        <jaxrpc-mapping-file>WEB-INF/PartnerServiceMapping.xml</jaxrpc-mapping-file>
+        <port-component>
+            <port-component-name>PartnerService</port-component-name>
+            <wsdl-port>PartnerServicePort</wsdl-port>
+            <service-endpoint-interface>org.umlmda.demo.partner.ws.servlet.PartnerService</service-endpoint-interface>
+            <service-impl-bean>
+                <servlet-link>PartnerServiceServlet</servlet-link>
+            </service-impl-bean>
+        </port-component>
+    </webservice-description>
+
+</webservices>

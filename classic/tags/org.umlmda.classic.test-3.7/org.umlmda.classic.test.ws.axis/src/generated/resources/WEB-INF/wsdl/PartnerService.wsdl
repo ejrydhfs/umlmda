@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- @@Generated file, please edit UserSections only -->
+<wsdl:definitions 
+  targetNamespace="http://www.umlmda.org/demo/partner" 
+  xmlns:apachesoap="http://xml.apache.org/xml-soap" 
+  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" 
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:cmn="http://www.umlmda.org/demo/common" 
+  xmlns:par="http://www.umlmda.org/demo/partner" 
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+ <wsdl:types>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+          targetNamespace="http://www.umlmda.org/demo/common">
+
+    <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+ 
+            <complexType name="CommonServiceIsAvailableRequest">
+     <sequence>
+       <element name="dummy" nillable="true" type="xsd:string"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="CommonServiceIsAvailableResponse">
+     <sequence>
+       <element name="returnValue" nillable="false" type="xsd:boolean"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="Note">
+     <sequence>
+       <element name="usage" nillable="false" type="xsd:string"/>
+       <element name="context" nillable="false" type="xsd:string"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="SecurityToken">
+     <sequence>
+       <element name="signature" nillable="false" type="xsd:hexBinary"/>
+       <element name="securityIds" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+     </sequence>
+  </complexType>
+
+  <simpleType name="Sex">
+    <restriction base="xsd:string">
+      <enumeration value="M"/>
+      <enumeration value="F"/>
+    </restriction>
+  </simpleType>
+
+  <complexType name="TimeDependentIn">
+     <sequence>
+       <element name="validFrom" nillable="false" type="xsd:date"/>
+       <element name="validTo" nillable="true" type="xsd:date"/>
+       <element name="dummy" nillable="false" type="xsd:string"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="TimeDependentOut">
+     <sequence>
+       <element name="validFrom" nillable="false" type="xsd:date"/>
+       <element name="validTo" nillable="true" type="xsd:date"/>
+       <element name="createdAt" nillable="false" type="xsd:dateTime"/>
+     </sequence>
+  </complexType>
+
+     
+
+
+  </schema>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+          targetNamespace="http://www.umlmda.org/demo/partner">
+
+    <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+ 
+            <simpleType name="AddressType">
+    <restriction base="xsd:int">
+      <enumeration value="1"/>
+      <enumeration value="2"/>
+      <enumeration value="3"/>
+    </restriction>
+  </simpleType>
+
+  <complexType name="CommunicationAddressIn">
+    <complexContent>
+     <extension base="cmn:TimeDependentIn">
+     <sequence>
+       <element name="nr" nillable="false" type="xsd:int"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="CommunicationAddressOut">
+    <complexContent>
+     <extension base="cmn:TimeDependentOut">
+     <sequence>
+       <element name="nr" nillable="false" type="xsd:int"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="EMailIn">
+    <complexContent>
+     <extension base="par:CommunicationAddressIn">
+     <sequence>
+       <element name="adress" nillable="false" type="xsd:string"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="EMailOut">
+    <complexContent>
+     <extension base="par:CommunicationAddressOut">
+     <sequence>
+       <element name="adress" nillable="false" type="xsd:string"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <simpleType name="IMType">
+    <restriction base="xsd:string">
+      <enumeration value="Y"/>
+      <enumeration value="A"/>
+      <enumeration value="S"/>
+    </restriction>
+  </simpleType>
+
+  <complexType name="InstantMessengerIn">
+    <complexContent>
+     <extension base="par:CommunicationAddressIn">
+     <sequence>
+       <element name="imType" nillable="true" type="par:IMType"/>
+       <element name="imId" nillable="false" type="xsd:string"/>
+       <element name="imNick" nillable="false" type="xsd:string"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="InstantMessengerOut">
+    <complexContent>
+     <extension base="par:CommunicationAddressOut">
+     <sequence>
+       <element name="imType" nillable="true" type="par:IMType"/>
+       <element name="imId" nillable="false" type="xsd:string"/>
+       <element name="imNick" nillable="false" type="xsd:string"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="LegalEntityIn">
+    <complexContent>
+     <extension base="par:PartnerIn">
+     <sequence>
+       <element name="legalForm" nillable="false" type="xsd:string"/>
+       <element name="revenue" nillable="false" type="xsd:decimal"/>
+       <element name="contactPerson" minOccurs="0" maxOccurs="1" type="par:PartnerInHierarchie"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="LegalEntityOut">
+    <complexContent>
+     <extension base="par:PartnerOut">
+     <sequence>
+       <element name="legalForm" nillable="false" type="xsd:string"/>
+       <element name="revenue" nillable="false" type="xsd:decimal"/>
+       <element name="contactPerson" minOccurs="0" maxOccurs="1" type="par:PartnerOutHierarchie"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="PartnerIn">
+     <sequence>
+       <element name="id" nillable="false" type="xsd:string"/>
+       <element name="name" nillable="false" type="xsd:string"/>
+       <element name="_eMail" minOccurs="0" maxOccurs="unbounded" type="par:EMailIn"/>
+       <element name="_instantMessenger" minOccurs="0" maxOccurs="unbounded" type="par:InstantMessengerIn"/>
+       <element name="_telephone" minOccurs="0" maxOccurs="unbounded" type="par:TelephoneIn"/>
+       <element name="addresses" minOccurs="1" maxOccurs="unbounded" type="par:PostalAddressIn"/>
+       <element name="notes" minOccurs="0" maxOccurs="unbounded" type="cmn:Note"/>
+       <element name="preferredAddress" minOccurs="0" maxOccurs="1" type="par:PostalAddressIn"/>
+       <element name="primaryAddress" minOccurs="1" maxOccurs="1" type="par:PostalAddressIn"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="PartnerInHierarchie">
+     <sequence>
+       <element name="dummy" nillable="true" type="xsd:string"/>
+       <element name="legalEntityIn" minOccurs="0" maxOccurs="1" type="par:LegalEntityIn"/>
+       <element name="partnerIn" minOccurs="0" maxOccurs="1" type="par:PartnerIn"/>
+       <element name="personIn" minOccurs="0" maxOccurs="1" type="par:PersonIn"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="PartnerOut">
+     <sequence>
+       <element name="id" nillable="false" type="xsd:string"/>
+       <element name="name" nillable="false" type="xsd:string"/>
+       <element name="_eMail" minOccurs="0" maxOccurs="unbounded" type="par:EMailOut"/>
+       <element name="_instantMessenger" minOccurs="0" maxOccurs="unbounded" type="par:InstantMessengerOut"/>
+       <element name="_telephone" minOccurs="0" maxOccurs="unbounded" type="par:TelephoneOut"/>
+       <element name="addresses" minOccurs="1" maxOccurs="unbounded" type="par:PostalAddressOut"/>
+       <element name="notes" minOccurs="0" maxOccurs="unbounded" type="cmn:Note"/>
+       <element name="preferredAddress" minOccurs="0" maxOccurs="1" type="par:PostalAddressOut"/>
+       <element name="primaryAddress" minOccurs="1" maxOccurs="1" type="par:PostalAddressOut"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="PartnerOutHierarchie">
+     <sequence>
+       <element name="dummy" nillable="true" type="xsd:string"/>
+       <element name="legalEntityOut" minOccurs="0" maxOccurs="1" type="par:LegalEntityOut"/>
+       <element name="partnerOut" minOccurs="0" maxOccurs="1" type="par:PartnerOut"/>
+       <element name="personOut" minOccurs="0" maxOccurs="1" type="par:PersonOut"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="PartnerServiceEchoRequest">
+     <sequence>
+       <element name="toEcho" nillable="false" type="par:PartnerInHierarchie"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="PartnerServiceEchoResponse">
+     <sequence>
+       <element name="returnValue" nillable="false" type="par:PartnerOutHierarchie"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="PartnerServiceReadRequest">
+     <sequence>
+       <element name="id" nillable="false" type="xsd:string"/>
+       <element name="validityDate" nillable="false" type="xsd:date"/>
+       <element name="security" nillable="false" type="cmn:SecurityToken"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="PartnerServiceReadResponse">
+     <sequence>
+       <element name="returnValue" nillable="false" type="par:PartnerOutHierarchie"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="PartnerServiceUpdateRequest">
+     <sequence>
+       <element name="toUpdate" nillable="false" type="par:PartnerInHierarchie"/>
+       <element name="validityDate" nillable="false" type="xsd:date"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="PartnerServiceUpdateResponse">
+     <sequence>
+       <element name="dummy" nillable="true" type="xsd:string"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="PersonIn">
+    <complexContent>
+     <extension base="par:PartnerIn">
+     <sequence>
+       <element name="firstname" nillable="false" type="xsd:string"/>
+       <element name="birthdate" nillable="false" type="xsd:date"/>
+       <element name="sex" nillable="true" type="cmn:Sex"/>
+       <element name="employee" nillable="false" type="xsd:boolean"/>
+       <element name="salary" nillable="false" type="xsd:decimal"/>
+       <element name="nationalities" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+       <element name="_profession" minOccurs="0" maxOccurs="1" type="par:Profession"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="PersonOut">
+    <complexContent>
+     <extension base="par:PartnerOut">
+     <sequence>
+       <element name="firstname" nillable="false" type="xsd:string"/>
+       <element name="birthdate" nillable="false" type="xsd:date"/>
+       <element name="sex" nillable="true" type="cmn:Sex"/>
+       <element name="employee" nillable="false" type="xsd:boolean"/>
+       <element name="salary" nillable="false" type="xsd:decimal"/>
+       <element name="nationalities" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+       <element name="_profession" minOccurs="0" maxOccurs="1" type="par:Profession"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="PostalAddressIn">
+    <complexContent>
+     <extension base="cmn:TimeDependentIn">
+     <sequence>
+       <element name="nr" nillable="false" type="xsd:int"/>
+       <element name="zip" nillable="false" type="xsd:string"/>
+       <element name="city" nillable="false" type="xsd:string"/>
+       <element name="street" nillable="false" type="xsd:string"/>
+       <element name="PRIVATE" nillable="false" type="xsd:int"/>
+       <element name="BUSINESS" nillable="false" type="xsd:int"/>
+       <element name="HOLIDAY" nillable="false" type="xsd:int"/>
+       <element name="type" nillable="false" type="par:AddressType"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="PostalAddressOut">
+    <complexContent>
+     <extension base="cmn:TimeDependentOut">
+     <sequence>
+       <element name="nr" nillable="false" type="xsd:int"/>
+       <element name="zip" nillable="false" type="xsd:string"/>
+       <element name="city" nillable="false" type="xsd:string"/>
+       <element name="street" nillable="false" type="xsd:string"/>
+       <element name="PRIVATE" nillable="false" type="xsd:int"/>
+       <element name="BUSINESS" nillable="false" type="xsd:int"/>
+       <element name="HOLIDAY" nillable="false" type="xsd:int"/>
+       <element name="type" nillable="false" type="par:AddressType"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="Profession">
+     <sequence>
+       <element name="name" nillable="false" type="xsd:string"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="TelephoneIn">
+    <complexContent>
+     <extension base="par:CommunicationAddressIn">
+     <sequence>
+       <element name="countryCode" nillable="false" type="xsd:string"/>
+       <element name="areaCode" nillable="false" type="xsd:string"/>
+       <element name="number" nillable="false" type="xsd:string"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="TelephoneOut">
+    <complexContent>
+     <extension base="par:CommunicationAddressOut">
+     <sequence>
+       <element name="countryCode" nillable="false" type="xsd:string"/>
+       <element name="areaCode" nillable="false" type="xsd:string"/>
+       <element name="number" nillable="false" type="xsd:string"/>
+     </sequence>
+    </extension>
+    </complexContent>
+  </complexType>
+
+     
+
+
+  </schema>
+
+ </wsdl:types>
+
+  
+   <wsdl:message name="isAvailableRequest">
+      <wsdl:part name="in" type="cmn:CommonServiceIsAvailableRequest"/>
+   </wsdl:message>
+   <wsdl:message name="isAvailableResponse">
+      <wsdl:part name="returnValue" type="cmn:CommonServiceIsAvailableResponse"/>
+   </wsdl:message>
+  
+   <wsdl:message name="readRequest">
+      <wsdl:part name="in" type="par:PartnerServiceReadRequest"/>
+   </wsdl:message>
+   <wsdl:message name="readResponse">
+      <wsdl:part name="returnValue" type="par:PartnerServiceReadResponse"/>
+   </wsdl:message>
+  
+   <wsdl:message name="updateRequest">
+      <wsdl:part name="in" type="par:PartnerServiceUpdateRequest"/>
+   </wsdl:message>
+   <wsdl:message name="updateResponse">
+      <wsdl:part name="returnValue" type="par:PartnerServiceUpdateResponse"/>
+   </wsdl:message>
+  
+   <wsdl:message name="echoRequest">
+      <wsdl:part name="in" type="par:PartnerServiceEchoRequest"/>
+   </wsdl:message>
+   <wsdl:message name="echoResponse">
+      <wsdl:part name="returnValue" type="par:PartnerServiceEchoResponse"/>
+   </wsdl:message>
+
+
+  <wsdl:portType name="PartnerServicePort">
+  
+    <wsdl:operation name="isAvailable" >
+      <wsdl:input name="isAvailableRequest" message="par:isAvailableRequest"/>
+      <wsdl:output name="isAvailableResponse" message="par:isAvailableResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="read" >
+      <wsdl:input name="readRequest" message="par:readRequest"/>
+      <wsdl:output name="readResponse" message="par:readResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="update" >
+      <wsdl:input name="updateRequest" message="par:updateRequest"/>
+      <wsdl:output name="updateResponse" message="par:updateResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="echo" >
+      <wsdl:input name="echoRequest" message="par:echoRequest"/>
+      <wsdl:output name="echoResponse" message="par:echoResponse"/>
+    </wsdl:operation>
+
+  </wsdl:portType>
+
+  <wsdl:binding name="PartnerServiceSoapBinding" type="par:PartnerServicePort">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+  
+    <wsdl:operation name="isAvailable">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/isAvailable"/>
+         <wsdl:input name="isAvailableRequest">
+           <wsdlsoap:body use="encoded" 
+                          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                          namespace="http://www.umlmda.org/demo/partner"/>
+         </wsdl:input>
+         <wsdl:output name="isAvailableResponse">
+           <wsdlsoap:body use="encoded" 
+                          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                          namespace="http://www.umlmda.org/demo/partner"/>
+         </wsdl:output>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="read">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/read"/>
+         <wsdl:input name="readRequest">
+           <wsdlsoap:body use="encoded" 
+                          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                          namespace="http://www.umlmda.org/demo/partner"/>
+         </wsdl:input>
+         <wsdl:output name="readResponse">
+           <wsdlsoap:body use="encoded" 
+                          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                          namespace="http://www.umlmda.org/demo/partner"/>
+         </wsdl:output>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="update">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/update"/>
+         <wsdl:input name="updateRequest">
+           <wsdlsoap:body use="encoded" 
+                          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                          namespace="http://www.umlmda.org/demo/partner"/>
+         </wsdl:input>
+         <wsdl:output name="updateResponse">
+           <wsdlsoap:body use="encoded" 
+                          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                          namespace="http://www.umlmda.org/demo/partner"/>
+         </wsdl:output>
+         
+    </wsdl:operation>
+  
+    <wsdl:operation name="echo">
+         <wsdlsoap:operation soapAction="http://www.umlmda.org/demo/partner/echo"/>
+         <wsdl:input name="echoRequest">
+           <wsdlsoap:body use="encoded" 
+                          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                          namespace="http://www.umlmda.org/demo/partner"/>
+         </wsdl:input>
+         <wsdl:output name="echoResponse">
+           <wsdlsoap:body use="encoded" 
+                          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                          namespace="http://www.umlmda.org/demo/partner"/>
+         </wsdl:output>
+         
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+  <wsdl:service name="PartnerService">
+    <wsdl:port name="PartnerServicePort" binding="par:PartnerServiceSoapBinding">
+<!-- @@UserSection-Begin ServicePort -->
+      <wsdlsoap:address location="http://this.value.is.replaced.by.jboss"/>
+<!-- @@UserSection-End ServicePort -->
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

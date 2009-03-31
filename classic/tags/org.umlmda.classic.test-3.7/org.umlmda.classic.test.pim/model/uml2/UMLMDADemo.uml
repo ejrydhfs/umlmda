@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:UMLMDAProfile="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xsi:schemaLocation="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22 /org.umlmda.classic.test.pim/model/uml2/UMLMDAProfile.profile.uml#_m4nosa87Edy5F6gxEi6kNw">
+  <uml:Model xmi:id="_e1lU4I6tEdu_38fAI0Hi1w" name="UMLMDADemo">
+    <packageImport xmi:id="_e1lU546tEdu_38fAI0Hi1w">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packageImport xmi:id="_NbMdcI60Edu_38fAI0Hi1w">
+      <importedPackage xmi:type="uml:Model" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_ggMDAPK4EdmFXfbQyopNVQ"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_987IwDuLEd2kXoe9DnY4hA" name="org">
+      <packagedElement xmi:type="uml:Package" xmi:id="_-0DlEDuLEd2kXoe9DnY4hA" name="umlmda">
+        <packagedElement xmi:type="uml:Package" xmi:id="_419D11490052419D11780303" name="demo">
+          <packagedElement xmi:type="uml:Package" xmi:id="_419D11490052419D117F00C8" name="common">
+            <eAnnotations xmi:id="_exQOgI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+              <details xmi:id="_exQOgY6tEdu_38fAI0Hi1w" key="BusinessComponent"/>
+            </eAnnotations>
+            <ownedComment xmi:id="_ew0JtI6tEdu_38fAI0Hi1w" annotatedElement="_419D11490052419D117F00C8">
+              <body>Common used business exceptions and objects.</body>
+            </ownedComment>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D11490052419D11990134" name="NotFoundException">
+              <eAnnotations xmi:id="_ew0Juo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_ew0Ju46tEdu_38fAI0Hi1w" key="BusinessException"/>
+              </eAnnotations>
+              <ownedComment xmi:id="_ew0Jt46tEdu_38fAI0Hi1w" annotatedElement="_419D11490052419D11990134">
+                <body>Exception thrown when business object was not found as expected.</body>
+              </ownedComment>
+              <generalization xmi:id="_419D1149005241A6E4F30261" general="_419D1149005241A6E4A60274"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005241A6E4A60274" name="CommonException">
+              <eAnnotations xmi:id="_ew9TlI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_ew9TlY6tEdu_38fAI0Hi1w" key="BusinessException"/>
+              </eAnnotations>
+              <ownedComment xmi:id="_ew0JvY6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241A6E4A60274">
+                <body>Base of all exceptions.</body>
+              </ownedComment>
+              <ownedAttribute xmi:id="_419D1149005241A6E4BF02DE" name="reason" visibility="private">
+                <ownedComment xmi:id="_ew9Tko6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241A6E4BF02DE">
+                  <body>Detailed information about the reason why the exception was thrown.</body>
+                </ownedComment>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005241A6E4F90242" name="ProcessingException">
+              <eAnnotations xmi:id="_ew9ToI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_ew9ToY6tEdu_38fAI0Hi1w" key="BusinessException"/>
+              </eAnnotations>
+              <ownedComment xmi:id="_ew9Tl46tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241A6E4F90242">
+                <body>Exception thrown when service could not execute because businessrule are not validated.</body>
+              </ownedComment>
+              <generalization xmi:id="_419D1149005241A6E505018B" general="_419D1149005241A6E4A60274"/>
+              <ownedAttribute xmi:id="_419D1149005243E9E80802F8" name="OK" visibility="private" isStatic="true">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_ew9Tm46tEdu_38fAI0Hi1w">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                  <body>0</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052423014BC0239" name="errorNumber" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_ew9TnY6tEdu_38fAI0Hi1w">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                  <body>OK</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052423014CA0243" name="errorCode" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_ew9Tn46tEdu_38fAI0Hi1w">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                  <body>N/A</body>
+                </defaultValue>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005241E25D630001" name="TimeDependent" isAbstract="true">
+              <eAnnotations xmi:id="_exHEm46tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_exHEnI6tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <ownedComment xmi:id="_ew9To46tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241E25D630001">
+                <body>Base</body>
+              </ownedComment>
+              <ownedAttribute xmi:id="_419D1149005241E25D6D0381" name="validFrom" visibility="private">
+                <eAnnotations xmi:id="_exHEkI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_iFa7cPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005241E25D8201F0" name="validTo" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_iFa7cPK4EdmFXfbQyopNVQ"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_exHElI6tEdu_38fAI0Hi1w" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_exHEk46tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052437206CA03BF" name="createdAt" visibility="private">
+                <eAnnotations xmi:id="_exHElo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                  <details xmi:id="_exHEl46tEdu_38fAI0Hi1w" key="Out"/>
+                </eAnnotations>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_Uvq8IPooEdm7DL4CHtPQSQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D114900524372245501BC" name="dummy" visibility="private">
+                <eAnnotations xmi:id="_exHEmY6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                  <details xmi:id="_exHEmo6tEdu_38fAI0Hi1w" key="In"/>
+                </eAnnotations>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005242F707B801FE" name="CommonService" isAbstract="true">
+              <eAnnotations xmi:id="_exHEoo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_exHEo46tEdu_38fAI0Hi1w" key="BusinessService"/>
+              </eAnnotations>
+              <ownedComment xmi:id="_exHEno6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005242F707B801FE">
+                <body>Sample for an abstract business service used as base class for other services.</body>
+              </ownedComment>
+              <ownedOperation xmi:id="_419D1149005242F707EA01C4" name="isAvailable" visibility="public">
+                <ownedParameter xmi:id="_exHEoY6tEdu_38fAI0Hi1w" direction="return">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_zNXT0PK4EdmFXfbQyopNVQ"/>
+                </ownedParameter>
+              </ownedOperation>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005243F4FD8C01D0" name="Note">
+              <eAnnotations xmi:id="_exHEp46tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_exHEqI6tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <ownedAttribute xmi:id="_419D1149005243F4FDA802B7" name="usage" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005243F4FDBA0280" name="context" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D11490052445A08580340" name="SecurityToken">
+              <eAnnotations xmi:id="_exHEtY6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_exHEto6tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <ownedAttribute xmi:id="_419D11490052445A086302D7" name="signature" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_1tokgEUzEdqZVfIn6o62TA"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052445A090300CD" name="securityIds" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_exHEtI6tEdu_38fAI0Hi1w" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_exHEs46tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_JX13oJBzEdugQZgPS72wTA" name="Sex">
+              <ownedAttribute xmi:id="_K26dsJBzEdugQZgPS72wTA" name="MALE" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:LiteralString" xmi:id="_M0rx8JBzEdugQZgPS72wTA" value="M">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_M0-s4JBzEdugQZgPS72wTA" name="FEMALE" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:LiteralString" xmi:id="_Om-O8JBzEdugQZgPS72wTA" value="F">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </defaultValue>
+              </ownedAttribute>
+            </packagedElement>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_419D11490052419D118503B6" name="partner" clientDependency="_419D114900524270ACD501B1 _419D114900524270A7130299">
+            <eAnnotations xmi:id="_eywDVI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+              <details xmi:id="_eywDVY6tEdu_38fAI0Hi1w" key="BusinessComponent"/>
+            </eAnnotations>
+            <ownedComment xmi:id="_exQOg46tEdu_38fAI0Hi1w" annotatedElement="_419D11490052419D118503B6">
+              <body>Business objects and services for a simple party system.</body>
+            </ownedComment>
+            <packagedElement xmi:type="uml:Dependency" xmi:id="_419D114900524270ACD501B1" supplier="_419D11490052419D117F00C8" client="_419D11490052419D118503B6"/>
+            <packagedElement xmi:type="uml:Dependency" xmi:id="_419D114900524270A7130299" supplier="_419D11490052419D11990134" client="_419D11490052419D118503B6"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D11490052419D11EF0051" name="Partner">
+              <eAnnotations xmi:id="_exZ_gY6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_exZ_go6tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <ownedComment xmi:id="_exQOiI6tEdu_38fAI0Hi1w" annotatedElement="_419D11490052419D11EF0051">
+                <body>Base of Businessobject of person or legal entity.</body>
+              </ownedComment>
+              <ownedAttribute xmi:id="_419D1149005241B6EEB0000B" name="id" visibility="private">
+                <eAnnotations xmi:id="_exQOj46tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052419D12010332" name="name" visibility="private">
+                <ownedComment xmi:id="_exQOko6tEdu_38fAI0Hi1w" annotatedElement="_419D11490052419D12010332">
+                  <body>Name of the partner.</body>
+                </ownedComment>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052419D1244008F" name="addresses" visibility="public" type="_419D11490052419D11F60105" isUnique="false" aggregation="composite" association="_419D11490052419D124302B5">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eyTXdY6tEdu_38fAI0Hi1w" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eyTXdI6tEdu_38fAI0Hi1w" value="1"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052419E53610065" name="primaryAddress" visibility="public" type="_419D11490052419D11F60105" isUnique="false" association="_419D11490052419E536000F0">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eychU46tEdu_38fAI0Hi1w" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eychUo6tEdu_38fAI0Hi1w" value="1"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005241FE3D65026C" name="_telephone" visibility="public" type="_419D1149005241FE3C8D01FD" isUnique="false" aggregation="composite" association="_419D1149005241FE3D6401CA">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eychZI6tEdu_38fAI0Hi1w" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eychY46tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D114900524215C5650251" name="_eMail" visibility="public" type="_419D1149005241FE3CB10078" isUnique="false" aggregation="composite" association="_419D114900524215C5630316">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eychaY6tEdu_38fAI0Hi1w" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eychaI6tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005243A2DE2F01AE" name="preferredAddress" visibility="public" type="_419D11490052419D11F60105" isUnique="false" association="_419D1149005243A2DE2E01AD">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eymSYo6tEdu_38fAI0Hi1w" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eymSYY6tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005243F4FDFF0262" name="notes" visibility="public" type="_419D1149005243F4FD8C01D0" isUnique="false" aggregation="composite" association="_419D1149005243F4FDFE03E7">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eymSa46tEdu_38fAI0Hi1w" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eymSao6tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005244154A9E001E" name="_instantMessenger" visibility="public" type="_419D11490052434FD1D0030D" isUnique="false" aggregation="composite" association="_419D1149005244154A9A0068">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eymScI6tEdu_38fAI0Hi1w" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eymSb46tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+              <ownedOperation xmi:id="_419D1149005242159B150165" name="getFullName" visibility="public">
+                <ownedComment xmi:id="_exQOi46tEdu_38fAI0Hi1w" annotatedElement="_419D1149005242159B150165">
+                  <body>Delivers the full name of the partner. Might be overwritten in subclasses.</body>
+                </ownedComment>
+                <ownedParameter xmi:id="_exQOjY6tEdu_38fAI0Hi1w" direction="return">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedParameter>
+              </ownedOperation>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D11490052419D11F60105" name="PostalAddress">
+              <eAnnotations xmi:id="_exZ_mY6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_exZ_mo6tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <ownedComment xmi:id="_exZ_hI6tEdu_38fAI0Hi1w" annotatedElement="_419D11490052419D11F60105">
+                <body>Postal adress.
+
+Different types can be distinguished:
+- Private address
+- Business address
+- Holiday address
+</body>
+              </ownedComment>
+              <generalization xmi:id="_419D1149005241F2BFE602C8" general="_419D1149005241E25D630001"/>
+              <ownedAttribute xmi:id="_419D1149005241B7059F0343" name="nr" visibility="private">
+                <eAnnotations xmi:id="_exZ_io6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+                <ownedComment xmi:id="_exZ_iI6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241B7059F0343">
+                  <body>sequential number of the addresses of one partner. Primary key (together with parent primary key attributes). </body>
+                </ownedComment>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052419D12250167" name="zip" visibility="private">
+                <ownedComment xmi:id="_exZ_jY6tEdu_38fAI0Hi1w" annotatedElement="_419D11490052419D12250167">
+                  <body>The Cities zip code.</body>
+                </ownedComment>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052419D122D03C1" name="city" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052419D1233006D" name="street" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052419E71580052" name="PRIVATE" visibility="private" isStatic="true">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_7c2zII60Edu_38fAI0Hi1w" value="1">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052419E716100A5" name="BUSINESS" visibility="private" isStatic="true">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_9FT-sI60Edu_38fAI0Hi1w" value="2">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052426E044F039B" name="HOLIDAY" visibility="private" isStatic="true">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_99Vy4I60Edu_38fAI0Hi1w" value="3">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052439404B900E7" name="type" visibility="private" type="_vjCnYJBzEdugQZgPS72wTA">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_exZ_mI6tEdu_38fAI0Hi1w" type="_vjCnYJBzEdugQZgPS72wTA">
+                  <body>AdressType.PRIVATE</body>
+                </defaultValue>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005241B6E5DB034D" name="PartnerPersistence">
+              <eAnnotations xmi:id="_exjwhI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_exjwhY6tEdu_38fAI0Hi1w" key="PersistenceService"/>
+              </eAnnotations>
+              <ownedAttribute xmi:id="_419D1149005241B6E6070075" name="partner" visibility="public" type="_419D11490052419D11EF0051" isUnique="false" aggregation="shared" association="_419D1149005241B6E606018C">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eychWI6tEdu_38fAI0Hi1w" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eychV46tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D114900524231C442037B" name="_mandator" visibility="public" type="_419D114900524231C3F40116" isUnique="false" aggregation="composite" association="_419D114900524231C4420082">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eychbo6tEdu_38fAI0Hi1w" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eychbY6tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+              <ownedOperation xmi:id="_419D114900524242BA1301A6" name="queryContactPersons" visibility="public">
+                <ownedComment xmi:id="_exjwgY6tEdu_38fAI0Hi1w" annotatedElement="_419D114900524242BA1301A6">
+                  <body>Retrieves all person, which are contact persons in a legal entity.</body>
+                </ownedComment>
+                <ownedParameter xmi:id="_exjwg46tEdu_38fAI0Hi1w" type="_419D114900524242BA6A0057" direction="return"/>
+              </ownedOperation>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005241B6EB9C024C" name="Person">
+              <eAnnotations xmi:id="_exs6hI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_exs6hY6tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <generalization xmi:id="_419D1149005241B6EBA502A9" general="_419D11490052419D11EF0051"/>
+              <ownedAttribute xmi:id="_419D1149005241B6EC07011A" name="firstname" visibility="private">
+                <ownedComment xmi:id="_exjwjY6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241B6EC07011A">
+                  <body>Surname of the partner</body>
+                </ownedComment>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005241B6EC070124" name="birthdate" visibility="private">
+                <ownedComment xmi:id="_exjwko6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241B6EC070124">
+                  <body>Birthday of the partner.</body>
+                </ownedComment>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_iFa7cPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D114900524450BF9300BA" name="sex" visibility="private" type="_JX13oJBzEdugQZgPS72wTA">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_exs6dY6tEdu_38fAI0Hi1w" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_exs6dI6tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005243F1DEFF0046" name="age" visibility="private" isDerived="true">
+                <ownedComment xmi:id="_exs6d46tEdu_38fAI0Hi1w" annotatedElement="_419D1149005243F1DEFF0046">
+                  <body>Age of the person. Sample of a derived nonchangealbe attribute.</body>
+                </ownedComment>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005242243CC902AF" name="employee" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_zNXT0PK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D114900524242B38402BF" name="salary" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_zLfhkP9bEdmxS4XKQrL4uA"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052436BB6DD0360" name="nationalities" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_exs6g46tEdu_38fAI0Hi1w" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_exs6go6tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005243A2B4E4017C" name="_profession" visibility="public" type="_419D1149005243A2B4DD0276" isUnique="false" aggregation="composite" association="_419D1149005243A2B4E3018E">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eymSXY6tEdu_38fAI0Hi1w" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eymSXI6tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+              <ownedOperation xmi:id="_419D114900524215A1A50110" name="getFullName" visibility="public">
+                <ownedComment xmi:id="_exjwiY6tEdu_38fAI0Hi1w" annotatedElement="_419D114900524215A1A50110">
+                  <body>Delivers the full name of the partner. Might be overwritten in subclasses.</body>
+                </ownedComment>
+                <ownedParameter xmi:id="_exjwi46tEdu_38fAI0Hi1w" direction="return">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedParameter>
+              </ownedOperation>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005241B6EBA9007E" name="LegalEntity">
+              <eAnnotations xmi:id="_exs6jo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_exs6j46tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <generalization xmi:id="_419D1149005241B6EBB300BF" general="_419D11490052419D11EF0051"/>
+              <ownedAttribute xmi:id="_419D1149005241B6EC38023D" name="legalForm" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052443B9826025A" name="revenue" visibility="private">
+                <ownedComment xmi:id="_exs6io6tEdu_38fAI0Hi1w" annotatedElement="_419D11490052443B9826025A">
+                  <body>Sample for using optional decimal attribute.</body>
+                </ownedComment>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_zLfhkP9bEdmxS4XKQrL4uA"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005241B6EC6A01E4" name="contactPerson" visibility="public" type="_419D1149005241B6EB9C024C" isUnique="false" association="_419D1149005241B6EC690161">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eychXY6tEdu_38fAI0Hi1w" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eychXI6tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005241C97F480221" name="PartnerService">
+              <eAnnotations xmi:id="_ex2rgI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_ex2rgY6tEdu_38fAI0Hi1w" key="BusinessService"/>
+              </eAnnotations>
+              <ownedComment xmi:id="_exs6kY6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241C97F480221">
+                <body>Sample parnter service, derived from another service.</body>
+              </ownedComment>
+              <generalization xmi:id="_419D1149005242F708330129" general="_419D1149005242F707B801FE"/>
+              <ownedOperation xmi:id="_419D1149005241C97F650120" name="read" visibility="public">
+                <ownedComment xmi:id="_ex2rc46tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241C97F650120">
+                  <body>Reads a partner which  data valid at the given date.</body>
+                </ownedComment>
+                <ownedParameter xmi:id="_ex2rdY6tEdu_38fAI0Hi1w" type="_419D11490052419D11EF0051" direction="return"/>
+                <ownedParameter xmi:id="_419D1149005241C97F99000E" name="id" direction="inout">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedParameter>
+                <ownedParameter xmi:id="_419D1149005241C97F990040" name="validityDate" direction="inout">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_iFa7cPK4EdmFXfbQyopNVQ"/>
+                </ownedParameter>
+                <ownedParameter xmi:id="_E1wAkD3jEd2TXIc2w3nvmA" name="security" type="_419D11490052445A08580340"/>
+              </ownedOperation>
+              <ownedOperation xmi:id="_419D1149005241F77254038F" name="update" visibility="public" raisedException="_419D11490052419D11990134">
+                <ownedComment xmi:id="_ex2reY6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241F77254038F">
+                  <body>Updates a partner which  data valid for the given date.</body>
+                </ownedComment>
+                <ownedParameter xmi:id="_419D1149005241F772540390" name="toUpdate" type="_419D11490052419D11EF0051" direction="inout"/>
+                <ownedParameter xmi:id="_419D1149005241F772540391" name="validityDate" direction="inout">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_iFa7cPK4EdmFXfbQyopNVQ"/>
+                </ownedParameter>
+              </ownedOperation>
+              <ownedOperation xmi:id="_419D11490052444FE2B60305" name="echo" visibility="public">
+                <ownedParameter xmi:id="_ex2rfo6tEdu_38fAI0Hi1w" type="_419D11490052419D11EF0051" direction="return"/>
+                <ownedParameter xmi:id="_419D11490052444FE2CB019C" name="toEcho" type="_419D11490052419D11EF0051" direction="inout"/>
+              </ownedOperation>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005241FE3C4B0325" name="CommunicationAddress" isAbstract="true">
+              <eAnnotations xmi:id="_ex2rh46tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_ex2riI6tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <generalization xmi:id="_419D1149005241FE3C680019" general="_419D1149005241E25D630001"/>
+              <ownedAttribute xmi:id="_419D1149005241FE3CD402D2" name="nr" visibility="private">
+                <eAnnotations xmi:id="_ex2rhY6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005241FE3C8D01FD" name="Telephone">
+              <eAnnotations xmi:id="_ex2rj46tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_ex2rkI6tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <generalization xmi:id="_419D1149005241FE3CAE007E" general="_419D1149005241FE3C4B0325"/>
+              <ownedAttribute xmi:id="_419D1149005241FE3D060306" name="countryCode" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005241FE3D1200DC" name="areaCode" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005241FE3D170007" name="number" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D1149005243F1E5CA032F" name="fullNumber" visibility="private" isDerived="true">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005241FE3CB10078" name="EMail">
+              <eAnnotations xmi:id="_ex2rlI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_ex2rlY6tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <generalization xmi:id="_419D1149005241FE3CBA034C" general="_419D1149005241FE3C4B0325"/>
+              <ownedAttribute xmi:id="_419D1149005241FE3D280296" name="adress" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D114900524242BA6A0057" name="PersonList">
+              <eAnnotations xmi:id="_eyAccI6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_eyAccY6tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <ownedAttribute xmi:id="_419D114900524242BA7C0125" name="_person" visibility="public" type="_419D1149005241B6EB9C024C" isUnique="false" aggregation="composite" association="_419D114900524242BA7B021E">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eymSWI6tEdu_38fAI0Hi1w" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eymSV46tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D114900524231C3F40116" name="Mandator">
+              <eAnnotations xmi:id="_eyAceY6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_eyAceo6tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <ownedComment xmi:id="_eyAcc46tEdu_38fAI0Hi1w" annotatedElement="_419D114900524231C3F40116">
+                <body>Two separate date between different mandators.</body>
+              </ownedComment>
+              <ownedAttribute xmi:id="_419D114900524231C3FE014C" name="mandatorId" visibility="private">
+                <eAnnotations xmi:id="_eyAcdo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D114900524231C40E03A8" name="name" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D114900524231C46600F2" name="_partner" visibility="public" type="_419D11490052419D11EF0051" isUnique="false" aggregation="composite" association="_419D114900524231C465024F">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eymSU46tEdu_38fAI0Hi1w" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eymSUo6tEdu_38fAI0Hi1w"/>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D11490052434FD1D0030D" name="InstantMessenger">
+              <eAnnotations xmi:id="_eyAcgo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_eyAcg46tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <generalization xmi:id="_419D11490052434FD2340118" general="_419D1149005241FE3C4B0325"/>
+              <ownedAttribute xmi:id="_419D11490052434FD1F90161" name="imType" visibility="private" type="_clCsUJBzEdugQZgPS72wTA">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_qj2wkZBzEdugQZgPS72wTA" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qj2wkJBzEdugQZgPS72wTA"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052434FD2240031" name="imId" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_419D11490052434FD2050343" name="imNick" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005243A2B4DD0276" name="Profession">
+              <eAnnotations xmi:id="_eyTXZo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_eyTXZ46tEdu_38fAI0Hi1w" key="BusinessObject"/>
+              </eAnnotations>
+              <ownedAttribute xmi:id="_419D1149005243A2B5320228" name="name" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D1149005244047C50010A" name="CommonService">
+              <eAnnotations xmi:id="_eyTXbo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_eyTXb46tEdu_38fAI0Hi1w" key="BusinessService"/>
+              </eAnnotations>
+              <ownedComment xmi:id="_eyTXaY6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005244047C50010A">
+                <body>Service with same name as base service in different package.</body>
+              </ownedComment>
+              <generalization xmi:id="_419D1149005244047C8002D4" general="_419D1149005242F707B801FE"/>
+              <ownedOperation xmi:id="_419D1149005244047C89013D" name="getVersion" visibility="public">
+                <ownedParameter xmi:id="_eyTXbY6tEdu_38fAI0Hi1w" direction="return">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedParameter>
+              </ownedOperation>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D11490052419D124302B5" memberEnd="_419D11490052419D1244008F _419D11490052419D12440099">
+              <ownedComment xmi:id="_eyTXcY6tEdu_38fAI0Hi1w" annotatedElement="_419D11490052419D124302B5">
+                <body>Collection of all addresses.</body>
+              </ownedComment>
+              <ownedEnd xmi:id="_419D11490052419D12440099" name="_partner" visibility="public" type="_419D11490052419D11EF0051" isUnique="false" association="_419D11490052419D124302B5"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D11490052419E536000F0" memberEnd="_419D11490052419E53610065 _419D11490052419E5361006F">
+              <ownedComment xmi:id="_eyTXeI6tEdu_38fAI0Hi1w" annotatedElement="_419D11490052419E536000F0">
+                <body>The primary postal address to be used for correspondence.</body>
+              </ownedComment>
+              <ownedEnd xmi:id="_419D11490052419E5361006F" name="_partner" visibility="public" type="_419D11490052419D11EF0051" isUnique="false" association="_419D11490052419E536000F0"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D1149005241B6E606018C" memberEnd="_419D1149005241B6E6070075 _419D1149005241B6E6070077">
+              <ownedEnd xmi:id="_419D1149005241B6E6070077" name="_partnerPersistence" visibility="public" type="_419D1149005241B6E5DB034D" isUnique="false" association="_419D1149005241B6E606018C"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D1149005241B6EC690161" memberEnd="_419D1149005241B6EC6A01E4 _419D1149005241B6EC6A01E6">
+              <ownedEnd xmi:id="_419D1149005241B6EC6A01E6" name="_legalEntity" visibility="public" type="_419D1149005241B6EBA9007E" isUnique="false" association="_419D1149005241B6EC690161"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D1149005241FE3D6401CA" memberEnd="_419D1149005241FE3D65026C _419D1149005241FE3D65026E">
+              <ownedComment xmi:id="_eychYI6tEdu_38fAI0Hi1w" annotatedElement="_419D1149005241FE3D6401CA">
+                <body>Unnamed association the check default behavior, that unnamed assocations get the name of the target class.</body>
+              </ownedComment>
+              <ownedEnd xmi:id="_419D1149005241FE3D65026E" name="_partner" visibility="public" type="_419D11490052419D11EF0051" isUnique="false" association="_419D1149005241FE3D6401CA"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D114900524215C5630316" memberEnd="_419D114900524215C5650251 _419D114900524215C5650253">
+              <ownedEnd xmi:id="_419D114900524215C5650253" name="_partner" visibility="public" type="_419D11490052419D11EF0051" isUnique="false" association="_419D114900524215C5630316"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D114900524231C4420082" memberEnd="_419D114900524231C442037B _419D114900524231C442037D">
+              <ownedEnd xmi:id="_419D114900524231C442037D" name="_partnerPersistence" visibility="public" type="_419D1149005241B6E5DB034D" isUnique="false" association="_419D114900524231C4420082"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D114900524231C465024F" memberEnd="_419D114900524231C46600F2 _419D114900524231C46600F4">
+              <ownedEnd xmi:id="_419D114900524231C46600F4" name="_mandator" visibility="public" type="_419D114900524231C3F40116" isUnique="false" association="_419D114900524231C465024F"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D114900524242BA7B021E" memberEnd="_419D114900524242BA7C0125 _419D114900524242BA7C012F">
+              <ownedEnd xmi:id="_419D114900524242BA7C012F" name="_personList" visibility="public" type="_419D114900524242BA6A0057" isUnique="false" association="_419D114900524242BA7B021E"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D1149005243A2B4E3018E" memberEnd="_419D1149005243A2B4E4017C _419D1149005243A2B4E4017E">
+              <ownedEnd xmi:id="_419D1149005243A2B4E4017E" name="_person" visibility="public" type="_419D1149005241B6EB9C024C" isUnique="false" association="_419D1149005243A2B4E3018E"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D1149005243A2DE2E01AD" memberEnd="_419D1149005243A2DE2F01AE _419D1149005243A2DE2F01B0">
+              <ownedEnd xmi:id="_419D1149005243A2DE2F01B0" name="_partner" visibility="public" type="_419D11490052419D11EF0051" isUnique="false" association="_419D1149005243A2DE2E01AD">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eymSZY6tEdu_38fAI0Hi1w" value="1"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eymSZI6tEdu_38fAI0Hi1w"/>
+              </ownedEnd>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D1149005243F4FDFE03E7" memberEnd="_419D1149005243F4FDFF0262 _419D1149005243F4FDFF0264">
+              <ownedComment xmi:id="_eymSZ46tEdu_38fAI0Hi1w" annotatedElement="_419D1149005243F4FDFE03E7">
+                <body>Reference to a BO in an other package.</body>
+              </ownedComment>
+              <ownedEnd xmi:id="_419D1149005243F4FDFF0264" name="_partner" visibility="public" type="_419D11490052419D11EF0051" isUnique="false" association="_419D1149005243F4FDFE03E7"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Association" xmi:id="_419D1149005244154A9A0068" memberEnd="_419D1149005244154A9E001E _419D1149005244154A9E0020">
+              <ownedEnd xmi:id="_419D1149005244154A9E0020" name="_partner" visibility="public" type="_419D11490052419D11EF0051" isUnique="false" association="_419D1149005244154A9A0068"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_clCsUJBzEdugQZgPS72wTA" name="IMType">
+              <ownedAttribute xmi:id="_eGf4AJBzEdugQZgPS72wTA" name="YAHOO" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:LiteralString" xmi:id="_h6IhsJBzEdugQZgPS72wTA" value="Y">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_h76qYJBzEdugQZgPS72wTA" name="AOL" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:LiteralString" xmi:id="_ja1fcJBzEdugQZgPS72wTA" value="A">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_jceeMJBzEdugQZgPS72wTA" name="SKYPE" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:LiteralString" xmi:id="_lBD2YJBzEdugQZgPS72wTA" value="S">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </defaultValue>
+              </ownedAttribute>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_vjCnYJBzEdugQZgPS72wTA" name="AddressType">
+              <ownedAttribute xmi:id="_xhG2kJBzEdugQZgPS72wTA" name="PRIVATE" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_yyK10JBzEdugQZgPS72wTA" value="1">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_yzgSkJBzEdugQZgPS72wTA" name="BUSINESS" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_0msHcJBzEdugQZgPS72wTA" value="2">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_0oCLQJBzEdugQZgPS72wTA" name="HOLIDAY" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_2IvwEJBzEdugQZgPS72wTA" value="3">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDATypes.uml#_m5tw4PK4EdmFXfbQyopNVQ"/>
+                </defaultValue>
+              </ownedAttribute>
+            </packagedElement>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_419D11490052445764E403BF" name="service">
+            <eAnnotations xmi:id="_ey5NS46tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+              <details xmi:id="_ey5NTI6tEdu_38fAI0Hi1w" key="BusinessComponent"/>
+            </eAnnotations>
+            <ownedComment xmi:id="_eywDV46tEdu_38fAI0Hi1w" annotatedElement="_419D11490052445764E403BF">
+              <body>Package, containing only services, using objects from other packages.</body>
+            </ownedComment>
+            <packagedElement xmi:type="uml:Class" xmi:id="_419D114900524457650A0229" name="MasterService">
+              <eAnnotations xmi:id="_ey5NRo6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_ey5NR46tEdu_38fAI0Hi1w" key="BusinessService"/>
+              </eAnnotations>
+              <ownedComment xmi:id="_ey5NQo6tEdu_38fAI0Hi1w" annotatedElement="_419D114900524457650A0229">
+                <body>Service using objects from other packages.</body>
+              </ownedComment>
+              <ownedOperation xmi:id="_419D114900524457653C019F" name="verify" visibility="public">
+                <ownedParameter xmi:id="_419D114900524457655403DE" name="toVerify" type="_419D11490052419D11EF0051" direction="inout"/>
+              </ownedOperation>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:id="_e1lU4Y6tEdu_38fAI0Hi1w">
+      <eAnnotations xmi:id="_e1lU4o6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+    </profileApplication>
+    <profileApplication xmi:id="_e1lU446tEdu_38fAI0Hi1w">
+      <eAnnotations xmi:id="_e1lU5I6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.classic.test.pim/model/uml2/Default.profile.uml#_IN8k8MmBEdqBcN1R6EvWUw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.classic.test.pim/model/uml2/Default.profile.uml#_a_S3wNWLEdiy4IqP8whjFA"/>
+    </profileApplication>
+    <profileApplication xmi:id="_e1lU5Y6tEdu_38fAI0Hi1w">
+      <eAnnotations xmi:id="_e1lU5o6tEdu_38fAI0Hi1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.classic.test.pim/model/uml2/Deployment.profile.uml#_IrdAUMmBEdqBcN1R6EvWUw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.classic.test.pim/model/uml2/Deployment.profile.uml#_vjbuwOvHEdiDX5bji0iVSA"/>
+    </profileApplication>
+    <profileApplication xmi:id="_F9i7AJBzEdugQZgPS72wTA">
+      <eAnnotations xmi:id="_F-Sh4JBzEdugQZgPS72wTA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.classic.test.pim/model/uml2/UMLMDAProfile.profile.uml#_m4nosa87Edy5F6gxEi6kNw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.classic.test.pim/model/uml2/UMLMDAProfile.profile.uml#_fgmLseO5Edm14clrpIgO7w"/>
+    </profileApplication>
+  </uml:Model>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoYDuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241A6E4BF02DE"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoYTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243E9E80802F8"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoYjuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052423014BC0239"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoYzuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052423014CA0243"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoZDuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241E25D6D0381"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoZTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241E25D8201F0"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoZjuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052437206CA03BF"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoZzuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524372245501BC"/>
+  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzoaDuKEd2N3qQqZ9pYfQ" base_Operation="_419D1149005242F707EA01C4"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoaTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243F4FDA802B7"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoajuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243F4FDBA0280"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoazuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052445A086302D7"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzobDuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052445A090300CD"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzobTuKEd2N3qQqZ9pYfQ" base_Property="_K26dsJBzEdugQZgPS72wTA"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzobjuKEd2N3qQqZ9pYfQ" base_Property="_M0-s4JBzEdugQZgPS72wTA"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzobzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6EEB0000B"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzocDuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419D12010332"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzocTuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419D1244008F"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzocjuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419E53610065"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoczuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3D65026C"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzodDuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524215C5650251"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzodTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243A2DE2F01AE"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzodjuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243F4FDFF0262"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzodzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005244154A9E001E"/>
+  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzoeDuKEd2N3qQqZ9pYfQ" base_Operation="_419D1149005242159B150165"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoeTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B7059F0343"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoejuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419D12250167"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoezuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419D122D03C1"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzofDuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419D1233006D"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzofTuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419E71580052"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzofjuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419E716100A5"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzofzuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052426E044F039B"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzogDuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052439404B900E7"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzogTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6E6070075"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzogjuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524231C442037B"/>
+  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzogzuKEd2N3qQqZ9pYfQ" base_Operation="_419D114900524242BA1301A6"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzohDuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6EC07011A"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzohTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6EC070124"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzohjuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524450BF9300BA"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzohzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243F1DEFF0046"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoiDuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005242243CC902AF"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoiTuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524242B38402BF"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoijuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052436BB6DD0360"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzoizuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243A2B4E4017C"/>
+  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzojDuKEd2N3qQqZ9pYfQ" base_Operation="_419D114900524215A1A50110"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzojTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6EC38023D"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzojjuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052443B9826025A"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzojzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6EC6A01E4"/>
+  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzokDuKEd2N3qQqZ9pYfQ" base_Operation="_419D1149005241C97F650120"/>
+  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzokTuKEd2N3qQqZ9pYfQ" base_Operation="_419D1149005241F77254038F"/>
+  <UMLMDAProfile:TransactionalMethod xmi:id="_mdzokjuKEd2N3qQqZ9pYfQ" base_Operation="_419D11490052444FE2B60305"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzokzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3CD402D2"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzolDuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3D060306"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_mdzolTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3D1200DC"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZYDuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3D170007"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZYTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243F1E5CA032F"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZYjuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3D280296"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZYzuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524242BA7C0125"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZZDuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524231C3FE014C"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZZTuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524231C40E03A8"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZZjuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524231C46600F2"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZZzuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052434FD1F90161"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZaDuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052434FD2240031"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZaTuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052434FD2050343"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZajuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243A2B5320228"/>
+  <UMLMDAProfile:TransactionalMethod xmi:id="_md9ZazuKEd2N3qQqZ9pYfQ" base_Operation="_419D1149005244047C89013D"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZbDuKEd2N3qQqZ9pYfQ" base_Association="_419D11490052419D124302B5"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZbTuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419D12440099"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZbjuKEd2N3qQqZ9pYfQ" base_Association="_419D11490052419E536000F0"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZbzuKEd2N3qQqZ9pYfQ" base_Property="_419D11490052419E5361006F"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZcDuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005241B6E606018C"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZcTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6E6070077"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZcjuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005241B6EC690161"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZczuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241B6EC6A01E6"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZdDuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005241FE3D6401CA"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZdTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005241FE3D65026E"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZdjuKEd2N3qQqZ9pYfQ" base_Association="_419D114900524215C5630316"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZdzuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524215C5650253"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZeDuKEd2N3qQqZ9pYfQ" base_Association="_419D114900524231C4420082"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZeTuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524231C442037D"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZejuKEd2N3qQqZ9pYfQ" base_Association="_419D114900524231C465024F"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZezuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524231C46600F4"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZfDuKEd2N3qQqZ9pYfQ" base_Association="_419D114900524242BA7B021E"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZfTuKEd2N3qQqZ9pYfQ" base_Property="_419D114900524242BA7C012F"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZfjuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005243A2B4E3018E"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZfzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243A2B4E4017E"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZgDuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005243A2DE2E01AD"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZgTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243A2DE2F01B0"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZgjuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005243F4FDFE03E7"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZgzuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005243F4FDFF0264"/>
+  <UMLMDAProfile:PersistentAssociation xmi:id="_md9ZhDuKEd2N3qQqZ9pYfQ" base_Association="_419D1149005244154A9A0068"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZhTuKEd2N3qQqZ9pYfQ" base_Property="_419D1149005244154A9E0020"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZhjuKEd2N3qQqZ9pYfQ" base_Property="_eGf4AJBzEdugQZgPS72wTA"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZhzuKEd2N3qQqZ9pYfQ" base_Property="_h76qYJBzEdugQZgPS72wTA"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZiDuKEd2N3qQqZ9pYfQ" base_Property="_jceeMJBzEdugQZgPS72wTA"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZiTuKEd2N3qQqZ9pYfQ" base_Property="_xhG2kJBzEdugQZgPS72wTA"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZijuKEd2N3qQqZ9pYfQ" base_Property="_yzgSkJBzEdugQZgPS72wTA"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_md9ZizuKEd2N3qQqZ9pYfQ" base_Property="_0oCLQJBzEdugQZgPS72wTA"/>
+  <UMLMDAProfile:TransactionalMethod xmi:id="_md9ZjDuKEd2N3qQqZ9pYfQ" base_Operation="_419D114900524457653C019F"/>
+  <UMLMDAProfile:Enumeration xmi:id="_Fv9nQDuMEd2kXoe9DnY4hA" base_Class="_JX13oJBzEdugQZgPS72wTA"/>
+  <UMLMDAProfile:Enumeration xmi:id="_IWaFEDuMEd2kXoe9DnY4hA" base_Class="_vjCnYJBzEdugQZgPS72wTA"/>
+  <UMLMDAProfile:Enumeration xmi:id="_IWaFETuMEd2kXoe9DnY4hA" base_Class="_clCsUJBzEdugQZgPS72wTA"/>
+</xmi:XMI>
