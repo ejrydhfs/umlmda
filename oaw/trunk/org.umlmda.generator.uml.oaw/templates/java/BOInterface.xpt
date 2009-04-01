@@ -122,35 +122,53 @@
 «ENDDEFINE»
 
 «DEFINE attrGetterDecl FOR JavaModelAttribute»
-	«EXPAND attrGetterDecl("") FOR this»
+	«EXPAND attrGetterDecl(false, "") FOR this»
+«ENDDEFINE»
+«DEFINE attrGetterDecl(Boolean forInterface) FOR JavaModelAttribute»
+   «EXPAND attrGetterDecl(forInterface, "") FOR this»
 «ENDDEFINE»
 «DEFINE attrGetterDecl(String context) FOR JavaModelAttribute»
+   «EXPAND attrGetterDecl(false, context) FOR this»
+«ENDDEFINE»
+«DEFINE attrGetterDecl(Boolean forInterface, String context) FOR JavaModelAttribute»
    /**
    * Get«context» «name», «getDocumentation("GETTER")»
    */
-   public «javaTypeName()» «getter»()
+   «IF !forInterface»public«ENDIF» «javaTypeName()» «getter»()
 «ENDDEFINE»
 
 «DEFINE attrSetterDecl FOR JavaModelAttribute»
-	«EXPAND attrSetterDecl("") FOR this»
+	«EXPAND attrSetterDecl(false, "") FOR this»
+«ENDDEFINE»
+«DEFINE attrSetterDecl(Boolean forInterface) FOR JavaModelAttribute»
+   «EXPAND attrSetterDecl(forInterface, "") FOR this»
 «ENDDEFINE»
 «DEFINE attrSetterDecl(String context) FOR JavaModelAttribute»
+   «EXPAND attrSetterDecl(false, context) FOR this»
+«ENDDEFINE»
+«DEFINE attrSetterDecl(Boolean forInterface, String context) FOR JavaModelAttribute»
 «IF readOnly == false»
   /**
    * Set«context» «name», «getDocumentation("SETTER")»
    */
-   public void «setter»(«javaTypeName()» «name»)
+   «IF !forInterface»public«ENDIF» void «setter»(«javaTypeName()» «name»)
 «ENDIF»
 «ENDDEFINE»
 
 «DEFINE assocGetterDecl FOR JavaModelAssociation»
+   «EXPAND assocGetterDecl(false) FOR this»
+«ENDDEFINE»
+«DEFINE assocGetterDecl(Boolean forInterface) FOR JavaModelAssociation»
    /**
     * «getDocumentation("GETTER")»
     */
-   public «interfaceType» «getter»()
+   «IF !forInterface»public«ENDIF» «interfaceType» «getter»()
 «ENDDEFINE»
 
 «DEFINE assocSetterDecl FOR JavaModelAssociation»
+   «EXPAND assocSetterDecl(false) FOR this»
+«ENDDEFINE»
+«DEFINE assocSetterDecl(Boolean forInterface) FOR JavaModelAssociation»
 «IF readOnly == false»
 	/**
 	 * «getDocumentation("SETTER")»
@@ -158,7 +176,7 @@
 	 * @param «name»
 	 *		New value for assocation «name» 
 	 */
-     public void «setter»(«interfaceType» «name»)
+   «IF !forInterface»public«ENDIF» void «setter»(«interfaceType» «name»)
 «ENDIF»
 «ENDDEFINE»
 
