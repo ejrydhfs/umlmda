@@ -251,7 +251,12 @@
    «EXPAND jpaSyncMethod FOR this»
 «ENDDEFINE»
 
+«DEFINE associationComment FOR JavaModelAssociation»
+   // «IF composition»Composition«ELSEIF aggregation»Aggregation«ELSE»Association«ENDIF» '«name»' from '«source.name»' to '«target.name»'
+«ENDDEFINE»
+
 «DEFINE handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
+   «EXPAND associationComment FOR this»
    «EXPAND assocAnnotation FOR this»
    «EXPAND assocDecl FOR this»
    
