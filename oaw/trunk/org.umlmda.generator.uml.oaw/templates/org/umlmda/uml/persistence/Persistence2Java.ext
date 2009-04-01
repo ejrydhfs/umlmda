@@ -7,14 +7,27 @@ import UMLMDAPersistenceProfile;
 extension org::openarchitectureware::util::stdlib::io;   
 extension org::openarchitectureware::util::stdlib::issues;   
 
+extension org::umlmda::oaw::util::Model;
 extension org::umlmda::oaw::util::Element;
 extension org::umlmda::oaw::util::Stereotype;
 extension org::umlmda::oaw::util::TypeMapper;
+
+extension org::umlmda::uml::Common2Java;
  
-Object m2m( uml::Model m ) :
-    debug("processing model "+m.name) ->
+cached Object m2m( uml::Model m ) :
+    m.process() ->
+    // delete All the alias types for all Models
+    collectedModels("org::umlmda::uml::Service2Java::DestroyAliases").forAll(model|model.destroyAliases()) ->
+    m
+;
+ 
+cached process( uml::Model m ) :
+    info("processing model "+m.name) ->
+    
+    m.markAsProcessed("org::umlmda::uml::Persistence2Java") ->
     
     m.setName(m.name+"_java_psm") ->
+    m.applyProfileToModel(generationProfile()) ->
 
     // Starting conversions    
     m.allOwnedElements().typeSelect(uml::Element).process() ->
@@ -23,8 +36,11 @@ Object m2m( uml::Model m ) :
     m.allOwnedElements().typeSelect(uml::Package).applyGenerationStereotypes() ->
     
     // Destroy all collected elements
-    destroyCollected(m.qualifiedName) ->
-    m
+    m.processLater("org::umlmda::uml::Persistence2Java::DestroyAliases") ->
+    
+    // Process Referenced Models
+    collectedModels("org::umlmda::uml::Persistence2Java").select (model|model != null).forAll(model|model.process()) ->
+    true
 ;
 
 // Unprocessed elements
@@ -51,7 +67,7 @@ cached Void process(uml::ProfileApplication profileApplication) :
 
 // Processing classes
 cached Void process(uml::Class class) :
-    class.applyGenerationStereotypes()
+    class.applyGenerationStereotypes({"PersistentEntity", "PersistableSuperClass"}, false)
 ;
 
 cached Void process(uml::Package package) :
@@ -59,120 +75,21 @@ cached Void process(uml::Package package) :
 ;    
 	
 cached Void process(uml::Property property) :
-	true
-//    property.replaceAliasType()
+    property.association == null ? (
+        property.replaceAliasType() ->
+        property.replaceEnumerationType() 
+    ) :
+        property.type.getModel().processLater("org::umlmda::uml::Persistence2Java")
 ;    
 	
 cached Void process(uml::Generalization generalization) :
 	let general = generalization.general :
 	let generalModel = general.getModel() :
+    let ownModel = generalization.specific.getModel() :	
 	
-	general.process()
+	generalModel == ownModel ?
+	   general.process()
+	:
+	   generalModel.processLater("org::umlmda::uml::Persistence2Java")  
 ;
 		
-/**
- * Replace the type of properties, using an <<Alias>> type.
- */
-cached Void replaceAliasType(Property prop) :
-	let propType = prop.type :
-	let isAlias = ( propType != null ? propType.hasStereotype("Alias") : false ) :
-	
-	isAlias ? (
-	   debug("Replacing alias on "+prop.qualifiedName) ->
-	   prop.setType(propType.ownedElement.typeSelect(Property).first().type) ->
-	   propType.destroyLater(prop.getModel().qualifiedName)
-	   // TODO merge stereotype information
-	) : (
-	   true
-	)
-;	
-
-/**
- * Adds standard UMLMDA generation stereotypes
- */
-cached Void applyGenerationStereotypes(Class cls) :
-
-    cls.getAppliedStereotypes().size == 0 ? (
-        cls.addObjectStereotype()
-    ) : (
-        let domainStereotypes = { "Entity", "Bitemporal", "Temporal", "ValueObject" } :
-        
-        cls.hasStereotype(domainStereotypes) ? (
-            cls.removeStereotypes(domainStereotypes) ->
-            cls.addObjectStereotype()
-        ) : (
-            true
-        )    
-    )
-;
-
-/**
- * Adds standard UMLMDA generation stereotypes
- */
-cached Void applyGenerationStereotypes(UMLMDAPersistenceProfile::PersistenceClass cls) :
-   cls.addObjectStereotype()
-;
-
-Void applyGenerationStereotypes(Package pkg) :
-    let packageStereotype = packageStereotype() :
-    let objectStereotype = objectStereotype() :
-    let ownedBusinessObjects = pkg.ownedElement.typeSelect(Class).select(e|e.hasObjectStereotype()) :
-    
-    info("Process package "+pkg.qualifiedName) ->
-    ownedBusinessObjects.size > 0 ? (
-        info("Applying "+packageStereotype+" on "+pkg.qualifiedName) ->
-        pkg.applyStereotype(packageStereotype)    
-    ) : (
-        true
-    )    
-;
-
-private Boolean hasObjectStereotype(Class cls) :
-    let objectStereotype = objectStereotype() :
-    let stereotypes = cls.getAppliedStereotypes() :
-
-    debug("Checking for objectStereotype in "+cls.qualifiedName) ->
-    stereotypes.select(e|e == objectStereotype).size > 0
-;
-    
-private cached Void addObjectStereotype(Class cls) :
-        let objectStereotype = objectStereotype() :
-
-        cls.getModel().applyProfile(objectStereotype.getProfile()) ->
-        cls.applyStereotype(objectStereotype)    
-;
-
-private cached Void removeStereotypes(Class cls, List[String] stereotypeNames) :
-	cls.unapplyStereotypes(stereotypeNames)
-//	stereotypeNames.forAll(stereotype|cls.unapplyStereotype(cls.getModel().getStereotype(stereotype)))
-;
-	
-private cached Stereotype objectStereotype() :
-    let objectStereotypeName = (String)GLOBALVAR objectStereotype :
-    let generationProfile = generationProfile() :
-    let stereotype = generationProfile().ownedStereotype.selectFirst(e|e.name == objectStereotypeName) :
-    
-    info("ObjectStereotype is "+stereotype.qualifiedName) ->
-    stereotype
-;
-
-private cached Stereotype packageStereotype() :
-    let packageStereotypeName = (String)GLOBALVAR packageStereotype :
-    let generationProfile = generationProfile() :
-    let stereotype = generationProfile().ownedStereotype.selectFirst(e|e.name == packageStereotypeName) :
-    
-    info("PackageStereotype is "+stereotype.qualifiedName) ->
-    stereotype
-;
-
-private cached Profile generationProfile() :
-    let profile = (Profile)GLOBALVAR generationProfile :
-    
-    info("Using generation profile "+profile.qualifiedName) ->
-    profile
-;
-    
-private cached Void applyProfile(Model model, Profile profile) :
-    info("Applying profile "+profile.qualifiedName+" to "+model.qualifiedName) ->
-    model.applyProfile(profile)
-;        

@@ -21,6 +21,27 @@ cached Object m2m( uml::Model m ) :
     m
 ;
 
+cached Void process(uml::Model m) :
+    info("processing model "+m.name) ->
+ 
+    m.markAsProcessed("org::umlmda::uml::Service2Java") ->
+    
+    m.setName(m.name+"_java_psm") ->
+
+    // Starting conversions    
+    m.allOwnedElements().typeSelect(uml::Element).process() ->
+    
+    // Process packages after conversion
+    m.allOwnedElements().typeSelect(uml::Package).applyGenerationStereotypes() ->
+    
+    // Destroy all collected elements
+    m.processLater("org::umlmda::uml::Service2Java::DestroyAliases") ->
+    
+    // Process Referenced Models
+    collectedModels("org::umlmda::uml::Service2Java").select (model|model != null).forAll(model|model.process()) ->
+    true
+;
+
 // Unprocessed elements
 cached Void process(uml::Element element) :
 	debug("Nothing to do on "+element.metaType)
@@ -41,34 +62,6 @@ cached Void process(uml::LiteralSpecification literal) :
 
 cached Void process(uml::ProfileApplication profileApplication) :
 	true
-;
-
-// Processing classes
-Boolean destroyAliases(uml::Model m) :
-    info("destroying aliases for model "+m.name) ->
-    destroyCollected(m.qualifiedName) ->
-    true
-;
-
-cached Void process(uml::Model m) :
-    info("processing model "+m.name) ->
- 
-    m.markAsProcessed("org::umlmda::uml::Service2Java") ->
-    
-    m.setName(m.name+"_java_psm") ->
-
-    // Starting conversions    
-    m.allOwnedElements().typeSelect(uml::Element).process() ->
-    
-    // Process packages after conversion
-    m.allOwnedElements().typeSelect(uml::Package).applyGenerationStereotypes() ->
-    
-    // Destroy all collected elements
-    m.processLater("org::umlmda::uml::Service2Java::DestroyAliases") ->
-    
-    // Process Referenced Models
-    collectedModels("org::umlmda::uml::Service2Java").select (model|model != null).forAll(model|model.process()) ->
-    true
 ;
 
 cached Void process(uml::Class class) :
