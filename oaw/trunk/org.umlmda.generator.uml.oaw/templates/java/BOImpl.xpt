@@ -110,8 +110,7 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 «ENDDEFINE»
 
 «DEFINE extendsDecl FOR JavaModelClass»
-	«IF superClass != null && superClass.hasStereotype("NativeInterface") == false»
-	  
+	«IF hasSuperClass()»
 		extends «getScopedName(getDefaultArtefact(javaSuperClass, scopeImplementation()), javaSuperClass)»
 	«ELSE»
 		«EXPAND standardExtendsDecl FOR this»	
