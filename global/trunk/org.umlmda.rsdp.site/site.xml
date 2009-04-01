@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
+   <description url="http://www.umlmda.org/rsx/7.0/update/">
+      Eclipse / IBM Rational Software Modeler/Architect (RSM/RSA) plugins with UML2 profiles and type models. Required in RSx to create models processed with the UMLMDA generators. Install in an eclipse installation if template development will bwe done.
+   </description>
    <feature url="features/org.umlmda.rsdp.uml2_2.1.0.200801142220.jar" id="org.umlmda.rsdp.uml2" version="2.1.0.200801142220">
       <category name="UMLMDA_MODELING_3"/>
    </feature>
@@ -12,12 +15,16 @@
    <feature url="features/org.umlmda.rsdp.uml2.new.feature_4.2.4.200902171636.jar" id="org.umlmda.rsdp.uml2.new.feature" version="4.2.4.200902171636">
       <category name="UMLMDA_MODELING_4"/>
    </feature>
-   <feature url="features/org.umlmda.rsdp.uml2.new.feature_4.2.5.200902181059.jar" id="org.umlmda.rsdp.uml2.new.feature" version="4.2.5.200902181059">
+   <feature url="features/org.umlmda.rsdp.uml2.new.feature_4.2.6.200903132241.jar" id="org.umlmda.rsdp.uml2.new.feature" version="4.2.6.200903132241">
       <category name="UMLMDA_MODELING_4"/>
    </feature>
-   <feature url="features/org.umlmda.rsdp.uml2.new.feature_4.2.6.200902191056.jar" id="org.umlmda.rsdp.uml2.new.feature" version="4.2.6.200902191056">
+   <feature url="features/org.umlmda.rsdp.uml2.new.feature_4.3.0.200904011737.jar" id="org.umlmda.rsdp.uml2.new.feature" version="4.3.0.200904011737">
       <category name="UMLMDA_MODELING_4"/>
    </feature>
-   <category-def name="UMLMDA_MODELING_3" label="UMLMDA 3.x / RSM 7.x Modelling"/>
+   <category-def name="UMLMDA_MODELING_3" label="UMLMDA 3.x / RSM 7.x Modelling">
+      <description>
+         UML2 profile to create models for the UMLMDA generators.
+      </description>
+   </category-def>
    <category-def name="UMLMDA_MODELING_4" label="UMLMDA 4.x / RSM 7.x Modelling"/>
 </site>
