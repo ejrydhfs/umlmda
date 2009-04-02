@@ -21,7 +21,7 @@ String pkeyGetter(JavaModelClass class) :
 ;    
 
 cached List[ModelAttribute] domainKeys(ModelClass class) :
-    class.keyAttributes.typeSelect(ModelAttribute).select(attr|attr.derived == false).select(attr | attr.getStereotypeProperty("domainAttribute", "true") == "true")
+    class.keyAttributes.typeSelect(ModelAttribute).select(attr| !attr.derived && attr.getStereotypeProperty("domainAttribute", "true") == "true")
 ;
 
 cached List[ModelAttribute] implementedDomainAttributes(JavaModelClass class) :
