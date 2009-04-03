@@ -1,0 +1,88 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelAssociation
+ */
+import java::util;
+import org::umlmda::generator::model::uml;
+import org::umlmda::profile;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+extension org::umlmda::uml::java::Artefact;
+extension org::umlmda::uml::persistence::Class;
+
+cached List[String] persistenceAttributes(JavaModelAssociation assoc) :
+    let attributes = {} :
+    let targetArtefact = assoc.target.getDefaultArtefact(scopeImplementation()) :
+    let targetImpl = ((JavaModelClass)assoc.target).getScopedName(targetArtefact) :
+
+    assoc.composition ? attributes.add("cascade=CascadeType.ALL") : true ->
+    assoc.composition ? attributes.add("fetch=FetchType.EAGER") : attributes.add("fetch=FetchType.LAZY") ->
+    // optional only on OneToOne
+    assoc.optional || assoc.multiple ? true : attributes.add("optional=false") ->
+    // mapped by
+    assoc.isBidirectional() && assoc.multiple ? attributes.add("mappedBy=\""+assoc.reverse.name+"\"") : true ->
+    assoc.multiple ? attributes.add("targetEntity="+targetImpl+".class") : true ->
+    attributes
+;    
+
+cached String implDeclType(JavaModelAssociation assoc) :
+    assoc.multiple ? assoc.collectionInterfaceType : assoc.implementationInterfaceType
+;
+    
+cached Boolean isBidirectional(JavaModelAssociation assoc) :
+    assoc.navigatableToTarget && assoc.reverse.navigatableToTarget
+;    
+
+cached Boolean isOwner(JavaModelAssociation assoc) :
+    assoc.composition || assoc.aggregation
+;
+
+cached List[JavaModelAttribute] joinColumns(JavaModelAssociation assoc) :
+    assoc.target.keyAttributes.typeSelect(ModelAttribute)
+;
+
+cached List[JavaModelAttribute] unsharedJoinColumns(JavaModelAssociation assoc) :
+    let sourceColumns = assoc.source.keyAttributes.typeSelect(ModelAttribute).name :
+    
+    assoc.joinColumns().reject(e|sourceColumns.contains(e.name))
+;
+
+cached List[JavaModelAttribute] sharedJoinColumns(JavaModelAssociation assoc) :
+    let sourceColumns = assoc.source.keyAttributes.typeSelect(ModelAttribute).name :
+    
+    assoc.joinColumns().select(e|sourceColumns.contains(e.name))
+;
+
+cached Boolean hasSharedKey(JavaModelAssociation assoc) :
+    
+    let targetKeys = assoc.target.keyAttributes.typeSelect(ModelAttribute) :
+    let sourceKeys = assoc.source.keyAttributes.typeSelect(ModelAttribute) :
+    let commonKeys = targetKeys.select(tk|sourceKeys.exists(sk|tk.name == sk.name)) :
+    
+    commonKeys.size > 0
+;
+
+cached List[JavaModelAttribute] sharedDomainKeys(JavaModelAssociation assoc) :
+    let targetKeys = assoc.target.domainKeys() :
+    let sourceKeys = assoc.source.domainKeys() :
+    targetKeys.select(tk|sourceKeys.exists(sk|tk.name == sk.name))
+;
+
+private List[String] keyNames(ModelClass class) :
+    class.keyAttributes.typeSelect(ModelAttribute).collect(e|e.name)
+;    
+
+cached Boolean hasSharedJoinColumns(JavaModelAssociation assoc) :
+    !assoc.multiple && assoc.reverse.multiple
+;
+
+cached Boolean hasUnSharedJoinColumns(JavaModelAssociation assoc) :
+    assoc.isBidirectional() && !assoc.isOwner() && !assoc.multiple && !assoc.unsharedJoinColumns().isEmpty
+;    
+
+cached Boolean isJoinAssociation(JavaModelAssociation assoc) :
+    assoc.isBidirectional() && !assoc.isOwner() && !assoc.multiple && !assoc.derived
+;
