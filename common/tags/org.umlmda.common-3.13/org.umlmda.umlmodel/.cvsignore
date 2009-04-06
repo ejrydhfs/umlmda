@@ -1,0 +1,10 @@
+bin
+*Src.zip
+org.umlmda.umlmodel_*.jar
+UMLModel.jar
+temp.folder
+javaCompiler.runtime_org.umlmda.umlmodel.jar.args
+@dot
+src.zip
+javaCompiler.*.args
+target
