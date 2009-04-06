@@ -172,7 +172,7 @@ public String getCollectionInterfaceType() {
     */
    public String getImplementationType() {
       JavaModelClass target = (JavaModelClass) getTarget();
-      String targetType = target.getScopedName(JavaArtefacts.BUSINESS_OBJECT);
+      String targetType = target.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE);
       
       if ( isMultiple() ) {
          if (genericSupport) {
@@ -204,7 +204,7 @@ public String getCollectionInterfaceType() {
     */
    public String getImplementationInterfaceType() {
       JavaModelClass target = (JavaModelClass) getTarget();
-      String targetType = target.getScopedName(JavaArtefacts.BUSINESS_OBJECT);
+      String targetType = target.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE);
       
       if ( isMultiple() ) {
          if (genericSupport) {
