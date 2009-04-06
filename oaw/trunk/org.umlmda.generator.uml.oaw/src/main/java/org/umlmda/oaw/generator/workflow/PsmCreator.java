@@ -67,13 +67,21 @@ public class PsmCreator extends AbstractWorkflowComponent {
          }
          
          // Lockup and set profile
-         for (Iterator ip = set.getGenerationProfile().iterator(); ip.hasNext();) {
+         boolean foundProfile = false;
+         
+         for (Iterator ip = set.getGenerationProfile().iterator(); ip.hasNext() && !foundProfile;) {
             GenerationProfile generationProfile = (GenerationProfile) ip.next();
             Profile profile = generationProfile.getProfile();
             
             if ( this.generationProfile.equals(profile.getName()) ) {
                psmModel.setProfile(generationProfile);
+               foundProfile = true;
             }
+         }
+         
+         if ( !foundProfile ) {
+            String msg = "Profile "+generationProfile+" not found in generationset "+set.getName();
+            issues.addError(msg);
          }
          ctx.set(psmModelSlot, psmModel);
          logger.info("Put instance of "+psmModel.getClass()+" to "+psmModelSlot);
