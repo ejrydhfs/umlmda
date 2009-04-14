@@ -21,15 +21,23 @@ String pkeyGetter(JavaModelClass class) :
 ;    
 
 cached List[ModelAttribute] domainKeys(ModelClass class) :
-    class.keyAttributes.typeSelect(ModelAttribute).select(attr| !attr.derived && attr.getStereotypeProperty("domainAttribute", "true") == "true")
+    class.keyAttributes.typeSelect(ModelAttribute).select(attr| attr.getStereotypeProperty("domainAttribute", "true") == "true")
+;
+
+cached List[ModelAttribute] derivedDomainKeys(ModelClass class) :
+    class.domainKeys().select(attr| attr.derived)
+;
+
+cached List[ModelAttribute] persistentDomainKeys(ModelClass class) :
+    class.domainKeys().select(attr| !attr.derived)
 ;
 
 cached List[ModelAttribute] implementedDomainAttributes(JavaModelClass class) :
     class.implementedAttributes.typeSelect(ModelAttribute).select(e|!e.hasStereotype("PKey")).select(e|e.isDomainAttribute())
 ;
     
-cached Boolean hasDomainKey(ModelClass class) :
-    class.domainKeys().isEmpty == false
+cached Boolean hasPersistentDomainKeys(ModelClass class) :
+    class.persistentDomainKeys().isEmpty == false
 ;
     
 cached Boolean noneGeneratedCodeRequired(JavaModelClass class) :
