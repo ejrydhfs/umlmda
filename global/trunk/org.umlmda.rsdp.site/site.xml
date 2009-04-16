@@ -21,6 +21,9 @@
    <feature url="features/org.umlmda.rsdp.uml2.new.feature_4.3.0.200904011737.jar" id="org.umlmda.rsdp.uml2.new.feature" version="4.3.0.200904011737">
       <category name="UMLMDA_MODELING_4"/>
    </feature>
+   <feature url="features/org.umlmda.rsdp.uml2.feature_4.1.5.jar" id="org.umlmda.rsdp.uml2.feature" version="4.1.5">
+      <category name="UMLMDA_MODELING_3"/>
+   </feature>
    <category-def name="UMLMDA_MODELING_3" label="UMLMDA 3.x / RSM 7.x Modelling">
       <description>
          UML2 profile to create models for the UMLMDA generators.
