@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         id="UMLMDA.uml2.profile"
+         name="UMLMDA UML2 Profile"
+         point="com.ibm.xtools.uml.msl.UMLProfiles">
+      <UMLProfile
+            visible="true"
+            path="pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx"
+            name="UMLMDA RSM/RSA Classic Profile"/>
+      <UMLProfile
+            name="UMLMDA RSM/RSA SDO Profile"
+            path="pathmap://UMLMDA_PROFILE/UMLMDASDOProfile.epx"
+            visible="true"/>
+   </extension>
+
+   <extension
+         name="UMLMDA Type Library"
+         point="com.ibm.xtools.uml.msl.UMLLibraries">
+      <UMLLibrary
+            id="UMLMDATypeLibrary"
+            name="UMLMDA RSM/RSA primitive types"
+            path="pathmap://UMLMDA_PROFILE/UMLMDATypes.emx"
+            required="false"
+            visible="true">
+      </UMLLibrary>
+      <UMLLibrary
+            id="UMLMDATypeLibrary"
+            name="UMLMDA UML2 primitive types"
+            path="pathmap://UMLMDA_PROFILE/UMLMDATypes.uml2"
+            required="false"
+            visible="true">
+      </UMLLibrary>
+   </extension>
+
+   <extension
+         id="org.umlmda.rsx.template.classic"
+         name="UMLMDA model template (deprecated)"
+         point="com.ibm.xtools.modeler.ui.wizards.template">
+      <directory path="templates/classic"/>
+   </extension>
+   
+   <extension
+         id="UMLMDA.pathmaps"
+         point="org.eclipse.gmf.runtime.emf.core.Pathmaps">
+      <pathmap
+            name="UMLMDA_PROFILE"
+            path="profiles"
+            plugin="org.umlmda.uml2.profile"/>
+      <pathmap
+            path="templates"
+            name="UMLMDA_TEMPLATES"
+            plugin="org.umlmda.uml2.profile"/>
+   </extension>
+   
+   <!-- RSx 6.0 compatible pathmap entries -->
+
+</plugin>
