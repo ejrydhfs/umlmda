@@ -83,3 +83,8 @@ cached List extendedSuperClasses(ModelClass cls) :
 	    
 cached List noneExtendedSuperClasses(ModelClass cls) :
     cls.superClasses.reject(e|cls.extendedSuperClasses().exists(s|e == s));
+
+// Filters the given attribute list by name, returning only those attributes with unique names.
+cached List[ModelAttribute] filterDuplicateAttributesByName(ModelClass class, List[ModelAttribute] attributes) : 
+  JAVA org.umlmda.oaw.generator.util.ElementUtils.filterDuplicateAttributesByName(org.umlmda.model.uml.ModelClass, java.util.List)
+;
