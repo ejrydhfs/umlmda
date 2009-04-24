@@ -1,0 +1,11 @@
+import uml;
+
+extension org::openarchitectureware::util::stdlib::io;   
+
+cached Void destroyLater(uml::Element element, String destroyContext) :
+    JAVA org.umlmda.oaw.util.uml2.ElementUtils.destroyLater(org.eclipse.uml2.uml.Element, java.lang.String)
+;    
+
+cached Void destroyCollected(String destroyContext) :
+    JAVA org.umlmda.oaw.util.uml2.ElementUtils.destroyCollected(java.lang.String)
+;   
