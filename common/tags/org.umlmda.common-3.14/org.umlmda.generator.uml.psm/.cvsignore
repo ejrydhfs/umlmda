@@ -1,0 +1,10 @@
+lib
+org.umlmda.generator.uml.psm_*.jar
+org.umlmda.generator.uml.psm_*.zip
+temp.folder
+javaCompiler.runtime_org.umlmda.generator.uml.psm.jar.args
+@dot
+javaCompiler.*.args
+src.zip
+target
+.externalToolBuilders
