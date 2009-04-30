@@ -40,14 +40,17 @@
  	
 	public java.util.IdentityHashMap collectCompositeObjects(java.util.IdentityHashMap collectedObjects)
 	{    
-   		if(collectedObjects.containsKey(this)) 
-   		{
-    		return collectedObjects;
-     	 }
+      if(collectedObjects.containsKey(this)) {
+         return collectedObjects;
+      }
   		 
   		collectedObjects.put(this, null);  
-	«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc-»
-		«EXPAND mutableCollectObjects FOR assoc-»
+	«FOREACH implementedAssociations.typeSelect(JavaModelAssociation).select(e|e.composition && e.multiple) AS assoc-»
+      for («((JavaModelClass)assoc.target).javaType» composite : getClientObject()) {
+         if ( composite instanceof CopyCluster ) {
+            ((CopyCluster)composite).collectCompositeObjects(collectedObjects);
+         }
+      }
 	«ENDFOREACH-»
 		return collectedObjects;
  	}
@@ -87,15 +90,3 @@
 		«ENDIF»
 	«ENDIF»
 «ENDDEFINE»
-
-«DEFINE mutableCollectObjects FOR JavaModelAssociation»
-	«IF this.multiple-»
-		«IF this.composition-»
-		for(CopyCluster composite : (java.util.Collection<CopyCluster>)«this.getter»()) 
-		{
-			composite.collectCompositeObjects(collectedObjects);
-		}
-      	«ENDIF-»
-    «ENDIF-»
-«ENDDEFINE»
-
