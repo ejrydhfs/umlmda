@@ -1,0 +1,151 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::j2ee»
+«EXTENSION java::UMLMDA»
+
+«DEFINE SessionBean FOR J2EEBusinessService»
+«LET generatedName(this, "j2ee.SessionBean") AS interfaceName»
+«FILE generatedPath+"/"+interfaceName+".java"»//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//@@UserSection-End RCSHeader
+
+package «generatorPackage.getQualifiedPackageName("j2ee.SessionBean")»;
+
+«EXPAND standardImports FOR this»
+
+/**
+ * J2EE session bean implementation for businessservice «getScopedName("java.BusinessServiceInterface")»
+ */
+public
+«IF abstract»
+abstract
+«ENDIF» 
+class «interfaceName» 
+«IF superClass != null»
+	extends «getScopedName("j2ee.SessionBean", (JavaModelClass)superClass)»
+«ELSE»
+	«EXPAND standardBaseClass FOR this»
+«ENDIF» 
+{
+«IF superClass == null»
+	«EXPAND handleSessionContext FOR this»
+«ENDIF»
+	
+	/**
+	 * Business service implementation with does the actual work
+	 */
+	private «getScopedName("java.BusinessServiceInterface")» delegate = null;
+
+	«IF abstract»
+		protected «getScopedName("java.BusinessServiceInterface")» getDelegate() {
+			return delegate;
+		}
+
+		protected void setDelegate(«getScopedName("java.BusinessServiceInterface")» delegate) {
+			this.delegate = delegate;
+		}
+	«ENDIF»
+
+	«FOREACH attributes.typeSelect(JavaModelAttribute) AS attr»
+		«EXPAND java::BOImpl::attrDecl FOR attr»
+		«EXPAND java::BOInterface::attrGetterDecl FOR attr»
+		«EXPAND java::BOImpl::getterBody(this) FOR attr»
+		«EXPAND java::BOInterface::attrSetterDecl FOR attr»
+		«EXPAND java::BOImpl::getterBody(this) FOR attr»
+	«ENDFOREACH»
+	
+	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+		«EXPAND java::BOImpl::assocDecl FOR assoc»
+	
+		«EXPAND java::BOInterface::assocGetterDecl FOR assoc»
+		«EXPAND java::BOImpl::getterBody(this) FOR assoc»
+	
+		«EXPAND java::BOInterface::assocSetterDecl FOR assoc»
+		«EXPAND java::BOImpl::setterBody(this) FOR assoc»
+	«ENDFOREACH»
+
+	«EXPAND standardMethods FOR this»
+	
+	«FOREACH methods.typeSelect(JavaModelMethod) AS method»
+		«EXPAND java::BOInterface::methodDecl FOR method»
+		«EXPAND methodBody FOR method»
+	«ENDFOREACH»
+	
+}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE methodBody FOR JavaModelMethod»
+	{
+		try {
+		«IF returnType != null»
+			return 
+		«ENDIF»      
+		delegate.«name»(
+		«FOREACH parameters.typeSelect(ModelParameter) AS param SEPARATOR "," »
+			«param.name»
+		«ENDFOREACH»
+		);
+		} catch ( RuntimeException e ) {
+			throw e;
+		} finally {
+		}
+    }
+«ENDDEFINE»
+
+«DEFINE standardBaseClass FOR J2EEBusinessService»
+implements javax.ejb.SessionBean
+«ENDDEFINE»
+
+«DEFINE standardImports FOR J2EEBusinessService»
+import javax.ejb.CreateException;
+import javax.ejb.SessionContext;
+«ENDDEFINE»
+
+«DEFINE standardMethods FOR J2EEBusinessService»
+   	/**
+	 * @see javax.ejb.SessionBean#ejbActivate()
+	 */
+	public void ejbActivate() throws javax.ejb.EJBException {
+		//@@UserSection-Begin ejbActivate
+		//@@UserSection-End ejbActivate      
+	}
+
+	/**
+	 * @see javax.ejb.SessionBean#ejbPassivate()
+	 */
+	public void ejbPassivate() throws javax.ejb.EJBException {
+		//@@UserSection-Begin ejbPassivate
+		//@@UserSection-End ejbPassivate
+   }
+
+   /**
+    * @see javax.ejb.SessionBean#ejbRemove()
+    */
+   public void ejbRemove() throws javax.ejb.EJBException {
+		//@@UserSection-Begin ejbRemove
+		//@@UserSection-End ejbRemove   
+   }
+«ENDDEFINE»
+
+«DEFINE handleSessionContext FOR J2EEBusinessService»
+    /**
+     * EJB session context
+     */
+	protected SessionContext sessionContext = null;
+	
+    /**
+     * @see javax.ejb.SessionBean#setSessionContext(javax.ejb.SessionContext)
+     */
+    public void setSessionContext(SessionContext sessionContext) throws javax.ejb.EJBException {
+       this.sessionContext = null;
+//@@UserSection-Begin setSessionContext
+//@@UserSection-End setSessionContext    
+	}
+
+   	public SessionContext getSessionContext() {
+      	return this.sessionContext;
+   	}
+«ENDDEFINE»

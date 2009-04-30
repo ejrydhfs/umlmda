@@ -1,0 +1,679 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::Association»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+«EXTENSION org::umlmda::uml::java::StructuralFeature»
+
+«DEFINE BOImpl FOR JavaBusinessObject»
+«LET generatedName(this, getDefaultArtefact("BusinessObject", scopeImplementation())) AS className»
+«this.resetImports()»
+«this.registerImport(getDefaultArtefact("BusinessObject"))»
+«IF javaSuperClass != null && javaSuperClass.hasStereotype("NativeInterface") == false»
+	«this.registerImport(getDefaultArtefact(javaSuperClass), javaSuperClass)»
+«ENDIF»
+«this.registerImports(getDefaultArtefact("BusinessObject"), implementationReferencedTypes, "BusinessObject")»
+«this.registerImports(getDefaultArtefact("BusinessException"), implementationReferencedTypes, "BusinessException")»
+«this.registerImports(getDefaultArtefact("Enumeration"), implementationReferencedTypes, "Enumeration")»
+«EXPAND ImportVisitorBase FOR this»
+«FILE generatedPath+"/"+className+".java"»
+package «generatorPackage.getQualifiedPackageName(getDefaultArtefact("BusinessObject", scopeImplementation()))»;
+
+«EXPAND standardImports FOR this»
+«EXPAND propertyChangeImports FOR this»
+«EXPAND xmlSerializationImports FOR this»
+«EXPAND java::JmiReflect::Imports FOR this»
+«this.registeredImports()»
+
+/**
+ * Business implementation of «qualifiedName».
+ */
+public 
+«IF abstract»
+abstract
+«ENDIF»
+class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»  {
+	«EXPAND standardBody FOR this»
+}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE standardBody FOR JavaBusinessObject»
+	«EXPAND versionInfo FOR this»
+	«EXPAND propertyChangeSupportAttr FOR this»
+	«EXPAND persistenceImpl FOR this»
+	«EXPAND delegateFactory FOR this»
+	«EXPAND standardCtor FOR this»
+
+	«EXPAND handleAttributes FOR this»	
+	
+	«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
+		«EXPAND handleAssociation(this) FOR assoc»
+	«ENDFOREACH»
+	
+	«FOREACH implementedMethods.typeSelect(JavaModelMethod) AS method»
+		«EXPAND handleMethod(this) FOR method»
+	«ENDFOREACH»
+	
+	«EXPAND modelMetaInformation FOR this»
+	«EXPAND propertyChangeSupportMethods FOR this»
+	«EXPAND java::JmiReflect::Impl FOR this»
+	«EXPAND visitorAcceptMethod FOR this»
+	«EXPAND xmlSerializationMethods FOR this»
+«ENDDEFINE»
+
+«DEFINE standardImports FOR JavaBusinessObject»
+	import java.io.Serializable;
+	import java.util.Iterator;
+«ENDDEFINE»
+
+«DEFINE handleAttributes FOR JavaModelClass»
+	«FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr»
+		«EXPAND handleAttribute(this) FOR attr»
+	«ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE handleAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
+	«EXPAND attrDecl FOR this»
+
+	«EXPAND BOInterface::attrGetterDecl FOR this»
+	«EXPAND getterBody(modelClass) FOR this»
+	
+	«EXPAND BOInterface::attrSetterDecl FOR this» 
+	«EXPAND setterBody(modelClass) FOR this»
+«ENDDEFINE»
+
+«DEFINE handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
+		«EXPAND assocDecl FOR this»
+	
+		«EXPAND BOInterface::assocGetterDecl FOR this»
+		«EXPAND getterBody(modelClass) FOR this»
+	
+		«EXPAND BOInterface::assocSetterDecl FOR this»
+		«EXPAND setterBody(modelClass) FOR this»
+		«EXPAND internalSetMethod FOR this»
+«ENDDEFINE»
+
+«DEFINE handleMethod(JavaModelClass modelClass) FOR JavaModelMethod»
+	«EXPAND BOInterface::methodDecl FOR this» {
+		«EXPAND methodBody(modelClass) FOR this»
+	}
+«ENDDEFINE»
+
+«DEFINE extendsDecl FOR JavaModelClass»
+	«IF hasSuperClass()»
+		extends «getScopedName(getDefaultArtefact(javaSuperClass, scopeImplementation()), javaSuperClass)»
+	«ELSE»
+		«EXPAND standardExtendsDecl FOR this»	
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE standardExtendsDecl FOR JavaModelClass»
+«ENDDEFINE»
+
+«DEFINE implementsDecl FOR JavaModelClass»
+    implements «getScopedName(getDefaultArtefact(this))» «EXPAND standardBOInterfaces FOR this»
+«ENDDEFINE»
+
+«DEFINE standardBOInterfaces FOR JavaModelClass»
+	, Serializable, XMLSerializable
+	«EXPAND persistenceInterface FOR this»
+	«IF abstract == false»
+		, org.umlmda.runtime.visitor.Visitable
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE versionInfo FOR JavaModelClass»
+	/**
+	 * Name in die UML model «model.name»
+	 */
+	public static final String MODEL_NAME = "«qualifiedName»";
+
+	/**
+	 * Version information from BusinessComponent «component.qualifiedName»
+	 */
+   	public static final String MODEL_VERSION = "«modelVersion»";
+//@@UserSection-Begin VersionInfo
+   private static final String interfaceVersion = "«modelVersion»";
+   private static final long serialVersionUID = «serialVersionUID»;
+//@@UserSection-End VersionInfo
+«ENDDEFINE»
+
+«DEFINE modelMetaInformation FOR JavaModelClass»
+	public String getModelName() {
+		return MODEL_NAME;
+	}
+
+	public String getModelVersion() {
+		return MODEL_VERSION;
+	}
+«ENDDEFINE»
+
+«DEFINE standardCtor FOR JavaModelClass»
+	/**
+	 * Default Ctor. «EXPAND docInitializer FOR this»
+	 */
+	public «generatedName(this, "java.BusinessObject")»()
+	{
+		super();
+		«EXPAND callInitializer FOR this»
+	}
+«ENDDEFINE»
+
+
+«DEFINE standardCtor FOR JavaBusinessObject»
+   «EXPAND standardCtor("protected") FOR this»
+«ENDDEFINE»
+
+«DEFINE standardCtor(String visibility) FOR JavaBusinessObject»
+	/**
+	 * Default Ctor. «EXPAND docInitializer FOR this»
+	 */
+	«visibility» «generatedName»()
+	{
+		super();
+		«EXPAND callInitializer FOR this»
+	}
+
+   «EXPAND standardCtorWithKeys(visibility) FOR this»
+«ENDDEFINE»
+
+«DEFINE standardCtorWithKeys(String visibility) FOR JavaBusinessObject»
+   «IF ! keyAttributes.isEmpty»
+      «visibility» «generatedName»(
+      «FOREACH (List[JavaModelAttribute])keyAttributes AS attr SEPARATOR ","»
+         «attr.javaTypeName()» «attr.name»
+      «ENDFOREACH»
+      ) {
+         super(«superClass.keyAttributes.nameList()»);
+         «IF this.owningAPKey»
+              this.pkey = new PKey(«keyAttributes.nameList()»);
+         «ELSEIF this.keyAttributes.size == 1»
+            «((JavaModelAttribute)this.keyAttributes.get(0)).setter»(«((JavaModelAttribute)this.keyAttributes.get(0)).name»);
+         «ENDIF»
+      }
+   «ENDIF»
+«ENDDEFINE»
+
+
+«DEFINE callInitializer FOR JavaModelClass»
+	«IF initializerMethod() != null»
+		// Call modeled initializer method
+		«initializerMethod().name»();
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE docInitializer FOR JavaModelClass»
+	«IF initializerMethod() != null»
+Calling modeled initializer {@link #«initializerMethod().name»()}.
+	«ENDIF»
+«ENDDEFINE»
+
+// Attribute variable declaration
+«DEFINE attrDecl FOR JavaModelAttribute»
+	«IF derived == false»
+		private «javaTypeName()» «name»
+		«IF defaultInitializer().isEmpty() == false»
+			= «defaultInitializer()»
+		«ENDIF»
+		;
+	«ENDIF»
+«ENDDEFINE»
+
+// Association variable declaration
+«DEFINE assocDecl FOR JavaModelAssociation»
+	«IF derived == false»
+		«IF multiple»
+		   private «interfaceType» «name» = new «implementationType»();
+		«ELSE»
+		   private «interfaceType» «name»;
+		«ENDIF»
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE getterBody(ModelClass implementingClass) FOR JavaModelStructuraleFeature»
+	{
+	«IF derived»
+		«EXPAND derivedGetterBody(implementingClass) FOR this»
+	«ELSE»
+		return «name»;
+	«ENDIF»
+	}
+«ENDDEFINE»
+
+«DEFINE derivedGetterBody(ModelClass implementingClass) FOR JavaModelStructuraleFeature»
+	return get«implementingClass.name»Delegate().«getter»();
+«ENDDEFINE»
+
+«DEFINE setterBody(ModelClass implementingClass) FOR JavaModelStructuraleFeature»
+«IF readOnly == false»
+	{
+	«IF derived»
+		«EXPAND derivedSetterBody(implementingClass) FOR this»
+	«ELSE»
+		«EXPAND setterAssignment FOR this»
+	«ENDIF»
+	}
+«ENDIF»
+«ENDDEFINE»
+
+«DEFINE derivedSetterBody(ModelClass implementingClass) FOR JavaModelStructuraleFeature»
+	get«implementingClass.name»Delegate().«setter»(«name»);
+«ENDDEFINE»
+
+«DEFINE setterAssignment FOR JavaModelStructuraleFeature»
+		«EXPAND saveOldValue FOR this»
+		this.«name» = «name»;
+		«EXPAND callPostSetMethod FOR this»
+	    «EXPAND firePropertyChange(this) FOR (JavaModelClass)owner»
+«ENDDEFINE»
+
+«DEFINE callPostSetMethod FOR JavaModelStructuraleFeature»
+		«IF postSetMethod() != null»
+			«IF postSetMethod.parameters.size == 1»
+				«postSetMethod().name»(«name»);
+			«ELSEIF postSetMethod.parameters.size == 2»	
+				«postSetMethod().name»(«name», oldValue);
+			«ENDIF»
+		«ENDIF»
+«ENDDEFINE»
+
+«DEFINE saveOldValue FOR JavaModelStructuraleFeature»
+    «javaTypeName()» oldValue = this.«name»;
+«ENDDEFINE»
+
+«DEFINE saveOldValue FOR JavaModelAssociation»
+	«IF multivalue == true»
+		«interfaceType» oldValue;
+		
+		if ( this.«name» != null ) {
+    		oldValue = new «implementationType»(this.«name»);
+    	}
+    	else {
+    		oldValue = null;
+    	}
+	«ELSE»
+    	«interfaceType» oldValue = this.«name»;
+    «ENDIF»
+«ENDDEFINE»
+
+«DEFINE setterAssignment FOR JavaModelAssociation»
+	«IF multivalue == true»
+		«setter»Internal(«name»);
+	«ELSE»
+		«EXPAND saveOldValue FOR this»
+		this.«name» = «name»;
+		«EXPAND callPostSetMethod FOR this»
+	    «EXPAND firePropertyChange(this) FOR (JavaModelClass)owner»
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE internalSetMethod FOR JavaModelAssociation»
+	«IF multiple && derived == false && readOnly == false»
+	   private void «setter»Internal(«interfaceType» «name») {
+	   		«EXPAND saveOldValue FOR this»
+	      
+	      if ( «name» != null ) {
+	         if ( this.«name» == null ) {
+	            this.«name» = new «implementationType»();
+	         }
+	         this.«name».clear();
+	         this.«name».addAll(«name»);
+	      }
+	      else if ( this.«name» != null ) {
+	         this.«name».clear();
+	         this.«name» = null;
+	      }
+	      «EXPAND firePropertyChange(this) FOR (JavaModelClass)owner»
+	   }
+	«ENDIF»
+«ENDDEFINE»
+
+// Key if at least one attribute with stereotype <<PKey>>
+
+«DEFINE methodBody(ModelClass generatedClass) FOR ModelMethod»
+	«IF returnType != null »
+		return
+	«ENDIF»
+	get«generatedClass.name»Delegate().«name»(«parameters.typeSelect(ModelParameter).name.toString(",")»);
+«ENDDEFINE»
+
+
+// ===================
+// Persistence support
+// ===================
+«DEFINE persistenceInterface FOR ModelClass»
+«ENDDEFINE»
+
+«DEFINE persistenceInterface FOR JavaBusinessObject»
+«ENDDEFINE»
+
+«DEFINE persistenceImpl FOR ModelClass»
+«ENDDEFINE»
+
+«DEFINE persistenceImpl FOR JavaBusinessObject»
+«ENDDEFINE»
+
+
+
+// =======================
+// Property Change Support
+// =======================
+«DEFINE propertyChangeImports FOR JavaModelClass»
+import org.umlmda.runtime.bean.PropertyChangeSupportHelper;
+import java.beans.PropertyChangeListener;
+import org.umlmda.runtime.bean.BeanUtils;
+«ENDDEFINE»
+
+«DEFINE propertyChangeSupportAttr FOR JavaModelClass»
+	«IF superClass == null»
+   // Property change support
+   protected final PropertyChangeSupportHelper propertyChangeSupport = new PropertyChangeSupportHelper(this);
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE propertyChangeSupportParameter FOR JavaModelClass»
+	, propertyChangeSupport
+«ENDDEFINE»
+
+«DEFINE propertyChangeSupportParameterDecl FOR JavaModelClass»
+	, PropertyChangeSupportHelper propertyChangeSupport
+«ENDDEFINE»
+
+«DEFINE propertyChangeSupportMethods FOR JavaModelClass»
+	«IF superClass == null»
+	   /**
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#addPropertyChangeListener(java.beans.PropertyChangeListener)
+	    */
+	   public void addPropertyChangeListener(java.beans.PropertyChangeListener listener)
+	   {
+	      if (!(listener instanceof Serializable)) {
+	         throw new IllegalArgumentException(listener.getClass() + " must implement " + Serializable.class);
+	      }
+	
+	      propertyChangeSupport.addPropertyChangeListener(listener);
+	   }
+	
+	   /**
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#addPropertyChangeListener(java.lang.String,
+	    *      java.beans.PropertyChangeListener)
+	    */
+	   public void addPropertyChangeListener(String propertyName, java.beans.PropertyChangeListener listener)
+	   {
+	      if (!(listener instanceof Serializable)) {
+	         throw new IllegalArgumentException(listener.getClass() + " must implement " + Serializable.class);
+	      }
+	
+	      propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
+	   }
+	
+	   /**
+	    * 
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#getPropertyChangeListeners()
+	    */
+	   public java.beans.PropertyChangeListener[] getPropertyChangeListeners()
+	   {
+	      return propertyChangeSupport.getPropertyChangeListeners();
+	   }
+	
+	   /**
+	    * 
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#getPropertyChangeListeners(java.lang.String)
+	    */
+	   public java.beans.PropertyChangeListener[] getPropertyChangeListeners(String propertyName)
+	   {
+	      return propertyChangeSupport.getPropertyChangeListeners(propertyName);
+	   }
+	
+	   /**
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#hasListeners(java.lang.String)
+	    */
+	   public boolean hasListeners(String propertyName)
+	   {
+	      return propertyChangeSupport.hasListeners(propertyName);
+	   }
+	
+	   /**
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#removePropertyChangeListener(java.beans.PropertyChangeListener)
+	    */
+	   public void removePropertyChangeListener(java.beans.PropertyChangeListener listener)
+	   {
+	      propertyChangeSupport.removePropertyChangeListener(listener);
+	   }
+	
+	   /**
+	    * @see org.umlmda.runtime.bean.PropertyChangeSupportHelper#removePropertyChangeListener(java.lang.String,
+	    *      java.beans.PropertyChangeListener)
+	    */
+	   public void removePropertyChangeListener(String propertyName, java.beans.PropertyChangeListener listener)
+	   {
+	      propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
+	   }
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE firePropertyChange(JavaModelAssociation feature) FOR JavaBusinessObject»
+	«IF feature.multiple»
+		if (propertyChangeSupport.hasListeners(«EXPAND java::BOInterface::propertyNameConstant FOR feature»)) {
+			propertyChangeSupport.firePropertyChange(«EXPAND java::BOInterface::propertyNameConstant FOR feature», new «feature.implementationType»(this.«feature.name»), oldValue);
+		}
+	«ELSE»
+		BeanUtils.firePropertyChange(propertyChangeSupport, «EXPAND java::BOInterface::propertyNameConstant FOR feature», this.«feature.name», oldValue);
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE firePropertyChange(JavaModelStructuraleFeature feature) FOR JavaBusinessObject»
+	BeanUtils.firePropertyChange(propertyChangeSupport, «EXPAND java::BOInterface::propertyNameConstant FOR feature», this.«feature.name», oldValue);
+«ENDDEFINE»
+
+«DEFINE firePropertyChange(JavaModelStructuraleFeature feature) FOR JavaModelClass»
+«ENDDEFINE»
+
+«DEFINE visitorAcceptMethod FOR JavaModelClass»
+«ENDDEFINE»
+
+«DEFINE visitorAcceptMethod FOR JavaBusinessObject»
+«LET this.getScopedName("java.Visitor", javaPackage) AS visitor»
+«LET this.javaPackage.getQualifiedName("java.Visitor") AS qualifiedVisitor»
+   /** 
+    * Accept the visitor
+    * @param visitor
+    *           must be instance of «qualifiedVisitor».
+    * @see «qualifiedVisitor».
+    */
+    public void accept(org.umlmda.runtime.visitor.Visitor visitor) {
+       if ( visitor instanceof «visitor» ) {
+          «visitor» aVisitor = («visitor»)visitor;
+          
+          aVisitor.visit(this);
+       }
+    }
+«ENDLET»
+«ENDLET»
+«ENDDEFINE»
+
+
+   /**
+    * Accept the visitor
+    *
+    * @param visitor must be instance of org.umlmda.demo.common.dto.CommonVisitor.
+    *
+    * @see org.umlmda.demo.common.dto.CommonVisitor.
+    */
+   public void accept(org.umlmda.runtime.visitor.Visitor visitor)
+   {
+      if (visitor instanceof CommonVisitor) {
+         CommonVisitor aVisitor = (CommonVisitor) visitor;
+
+         aVisitor.visit(this);
+      }
+   }
+
+«DEFINE ImportVisitorBase FOR JavaBusinessObject»
+«this.registerImport("java.Visitor", javaPackage)»
+«ENDDEFINE»
+
+
+«DEFINE xmlSerializationMethods FOR JavaBusinessObject»
+   /**
+    * Diagnostics
+    */
+   public String toString() {
+//@@UserSection-Begin toString
+		return toXmlString();
+//@@UserSection-End toString
+   }
+
+   /**
+    * XML serialization
+    */
+   public String toXmlString() {
+      XMLMarshalContext context = new XMLMarshalContext();
+      
+      marshal("«getGeneratedName("java.BusinessObject")»", context, true);
+      return context.toString();
+   }
+   
+   /**
+    * XML serialization of the elements and all children
+    */
+   public void marshal(String elementName, XMLMarshalContext context, boolean isRoot) {
+      context.startElement(elementName, this, isRoot);
+      marshalAttributes(context);
+      marshalChildren(context);
+      marshalReferences(context);
+      context.endElement(elementName, this, isRoot);
+   }
+
+   /**
+    * Marshal attributes
+    */
+   protected void marshalAttributes(XMLMarshalContext context) {
+   «IF superClass != null && superClass.isNative() == false»
+		super.marshalAttributes(context);
+	«ENDIF»   
+	«FOREACH implementedAttributes.typeSelect(JavaModelAttribute) AS attr»
+		«EXPAND xmlMarshalAttribute FOR attr»
+	«ENDFOREACH»
+   }
+
+	/**
+	 * Marshal children
+	 */
+	protected void marshalChildren(XMLMarshalContext context) {
+   «IF superClass != null && superClass.isNative() == false»
+			super.marshalChildren(context);
+		«ENDIF»
+		«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
+			«EXPAND xmlMarshalChild FOR assoc»
+		«ENDFOREACH»   
+	}
+   
+	/**
+	 * Marshal references
+	 */
+	protected void marshalReferences(XMLMarshalContext context) {
+	«IF superClass != null && superClass.isNative() == false»
+		super.marshalReferences(context);
+	«ENDIF»
+	«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
+		«EXPAND xmlMarshalReference FOR assoc»
+	«ENDFOREACH»   
+   }
+
+«ENDDEFINE»
+
+«DEFINE xmlMarshalAttribute FOR JavaModelAttribute»
+	«IF this.modelClassifier.hasStereotype("Enumeration")»
+		 if ( «getter»() != null ) {
+	         context.simpleElement("«name»", «getter»().getValue());
+         }
+	«ELSE»
+         context.simpleElement("«name»", «getter»());
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE xmlMarshalChild FOR JavaModelAssociation»
+	«IF this.multiple && this.composition»
+      for ( «target.name» child : «this.getter»() ) {
+     		if ( child instanceof XMLSerializable ) {
+        		((XMLSerializable)child).marshal("«this.name»", context, false);
+        	}
+  		}
+  	«ELSEIF this.multiple == false && this.composition»
+  		if ( «this.name» instanceof XMLSerializable ) {
+        	((XMLSerializable)«this.name»).marshal("«this.name»", context, false);
+      }
+  	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE xmlMarshalReference FOR JavaModelAssociation»
+	«IF this.multiple && this.composition == false»
+      for ( «target.javaType» child : «this.getter»() ) {
+	 		if ( child instanceof XMLSerializable ) {
+	         context.elementRef("«this.name»", (XMLSerializable)child);
+	      }
+  		}
+  	«ELSEIF this.multiple == false && this.composition»
+  		if ( «this.javaType» instanceof XMLSerializable ) {
+         context.elementRef("«this.name»", (XMLSerializable)«this.getter»());
+      }
+  	«ENDIF»
+«ENDDEFINE»
+
+
+«DEFINE delegateFactory FOR JavaBusinessObject»
+«IF abstract == false»
+	«IF hasNoneGenerateableFeatures() || hasAbstractBaseClassesWithNoneGenerateableFeatures()»
+		// Delegate for none generatable features
+   		private transient «getScopedName("java.DelegateInterface")» the«name»Delegate = null;
+
+		/**
+		 * Lazy creation of the delegate for none generateable features. 
+		 */
+		protected «getScopedName("java.DelegateInterface")» get«name»Delegate() {
+			if ( the«name»Delegate == null ) {
+				the«name»Delegate = new «getScopedName("java.DelegateImpl")»(this «EXPAND propertyChangeSupportParameter FOR this»);
+      		}
+      		return the«name»Delegate;
+   		}
+	«ENDIF»
+	«FOREACH abstractBaseClassesWithNoneGenerateableFeatures.typeSelect(JavaBusinessObject) AS baseClass»
+	   /**
+	    * Overwritten creation of the delegate for none generateable features from abstract base classes
+	    */
+	   protected «getScopedName("java.DelegateInterface", baseClass)» get«baseClass.name»Delegate() {
+	      return get«name»Delegate();
+	   }
+	«ENDFOREACH»  
+«ELSE»
+	«EXPAND getAbstractDelegate FOR this»
+	«FOREACH noneExtendedSuperClasses().typeSelect(JavaModelClass) AS superClass»
+		«EXPAND getAbstractDelegate FOR superClass»
+	«ENDFOREACH»
+«ENDIF»
+«ENDDEFINE»
+
+«DEFINE getAbstractDelegate FOR JavaModelClass»
+	«IF this.delegationInterfaceNeeded == true»
+	   /**
+	    * Creation of the delegate for none generateable features in a none abstract subclass
+	    */
+	   protected abstract «getScopedName("java.DelegateInterface")» get«name»Delegate();
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE xmlSerializationImports FOR JavaBusinessObject»
+import org.umlmda.runtime.xml.XMLMarshalContext;
+import org.umlmda.runtime.xml.XMLSerializable;
+«ENDDEFINE»
+
