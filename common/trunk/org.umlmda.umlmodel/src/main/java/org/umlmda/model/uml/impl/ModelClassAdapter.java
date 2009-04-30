@@ -632,12 +632,22 @@ public class ModelClassAdapter extends ModelClassifierAdapter implements ModelCl
          }
       }
 
-      // Have a look in the super classes
+      // If we have one defined super class, have a look there
+      if ( parentComposition == null && getSuperClass()!=null ) {
+         parentComposition = getSuperClass().getParentComposition();
+      }
+
+      // Otherwise, have a look in all super classes
       if ( parentComposition == null ) {
          for (Iterator isc = getSuperClasses().iterator(); isc.hasNext();) {
             ModelClass superClass = (ModelClass) isc.next();
             
             parentComposition = superClass.getParentComposition();
+            
+            // Fetch the first parentComposition and live with it
+            if ( parentComposition!=null ) {
+               break;
+            }
          }
       }
       return parentComposition;
