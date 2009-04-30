@@ -102,7 +102,7 @@
                   «ENDIF»
             }
             @Override public Class<?> getPropertyType() {
-               return «javaType».class;
+               return «javaNonGenericType()».class;
             }
          }); 
 	«ENDLET»

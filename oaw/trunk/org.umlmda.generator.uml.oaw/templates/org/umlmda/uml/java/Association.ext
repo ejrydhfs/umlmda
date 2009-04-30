@@ -12,3 +12,10 @@ cached String javaTypeName(JavaModelAssociation assoc) :
 cached String javaType(JavaModelAssociation assoc) :
 	assoc.interfaceType
 ;		
+
+cached String javaNonGenericType(JavaModelAssociation assoc) :
+    assoc.interfaceType.contains('<') ? 
+        assoc.interfaceType.split('<').first() 
+    : 
+        assoc.interfaceType
+;

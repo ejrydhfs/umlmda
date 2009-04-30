@@ -32,3 +32,6 @@ cached String initialValue(JavaModelAttribute attr) :
 		attr.initialValue
 ;
 
+cached String javaNonGenericType(JavaModelAttribute attr) :
+    attr.javaType
+;
