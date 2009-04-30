@@ -618,13 +618,13 @@ import org.umlmda.runtime.bean.BeanUtils;
 
 «DEFINE xmlMarshalReference FOR JavaModelAssociation»
 	«IF this.multiple && this.composition == false»
-      for ( «target.name» child : «this.getter»() ) {
+      for ( «target.javaType» child : «this.getter»() ) {
 	 		if ( child instanceof XMLSerializable ) {
 	         context.elementRef("«this.name»", (XMLSerializable)child);
 	      }
   		}
   	«ELSEIF this.multiple == false && this.composition»
-  		if ( «this.name» instanceof XMLSerializable ) {
+  		if ( «this.javaType» instanceof XMLSerializable ) {
          context.elementRef("«this.name»", (XMLSerializable)«this.getter»());
       }
   	«ENDIF»
