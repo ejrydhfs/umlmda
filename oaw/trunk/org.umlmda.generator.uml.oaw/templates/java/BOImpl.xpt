@@ -604,7 +604,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 
 «DEFINE xmlMarshalChild FOR JavaModelAssociation»
 	«IF this.multiple && this.composition»
-      for ( «target.name» child : «this.getter»() ) {
+      for ( «target.javaType» child : «this.getter»() ) {
      		if ( child instanceof XMLSerializable ) {
         		((XMLSerializable)child).marshal("«this.name»", context, false);
         	}
@@ -624,7 +624,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 	      }
   		}
   	«ELSEIF this.multiple == false && this.composition»
-  		if ( «this.javaType» instanceof XMLSerializable ) {
+  		if ( «this.name» instanceof XMLSerializable ) {
          context.elementRef("«this.name»", (XMLSerializable)«this.getter»());
       }
   	«ENDIF»
