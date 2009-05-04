@@ -46,7 +46,7 @@
   		 
   		collectedObjects.put(this, null);  
 	«FOREACH implementedAssociations.typeSelect(JavaModelAssociation).select(e|e.composition && e.multiple) AS assoc-»
-      for («((JavaModelClass)assoc.target).javaType» composite : getClientObject()) {
+      for («((JavaModelClass)assoc.target).javaType» composite : «assoc.getter»()) {
          if ( composite instanceof CopyCluster ) {
             ((CopyCluster)composite).collectCompositeObjects(collectedObjects);
          }
