@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+
+    <property name="umlmda.plugin.path" value="C:/winapp/Rational/SDP/7.0-UMLMDA/eclipse/plugins"/>
+
+    <!-- initializes resourcemaps, urimaps, etc. -->
+    <component class="org.openarchitectureware.adapter.rsdp.workflow.RSASetup" >
+        <!-- Standard profiles -->
+		<pathMapEntry>
+			<alias value="UMLMDA_PROFILE"/>
+			<path value="${umlmda.plugin.path}/org.umlmda.uml2.profile_2.1.0.200801142220/profiles"/>
+		</pathMapEntry>
+		<pathMapEntry>
+		   <alias value="CSS_GUI_PROFILE"/>
+		   <path value="${umlmda.plugin.path}/ch.css.vertrag.umlmda.gui.uml2.profile_2.0.0/profiles"/>
+		</pathMapEntry>
+    	<init value="true"/>
+    </component> 
+
+    <!-- Loading UMLMDA generationset -->
+	<component id="generationSetLoader"
+			class="org.umlmda.oaw.generator.workflow.GenerationSetLoader">
+		<generationSet value="test/oAWTest.ums"/>
+		<generationSetSlot value="gs"/>
+	</component>
+    
+	<!-- Read the uml model -->
+	<component class="org.openarchitectureware.emf.XmiReader">
+		<modelFile value="ReferencedModel.emx" />
+		<outputSlot value="model_base" />
+	</component>
+
+	<!-- Generate UMLMDA Pim from uml model -->
+	<component id="pimLoaderBase"
+			class="org.umlmda.oaw.generator.workflow.ModelLoader">
+		<modelFactory class="org.umlmda.oaw.generator.workflow.Uml2ModelFactory">
+		   <umlmodelSlot value="model_base"/>
+		</modelFactory>   
+		<modelSlot value="pim_base"/>
+	</component>
+
+    <!-- Creating UMLMDA Java PSM -->
+	<component id="javaPsmCreator"
+			class="org.umlmda.oaw.generator.workflow.PsmCreator">
+		<adapterFactory value="ch.css.vertrag.umlmda.gui.GuiModelAdapterFactory"/>
+		<pimModelSlot value="pim_base"/>
+		<psmModelSlot value="javaModel_base"/>
+		<generationSetSlot value="gs"/>
+		<generationProfile value="java"/>
+	</component>
+
+	
+</workflow>
