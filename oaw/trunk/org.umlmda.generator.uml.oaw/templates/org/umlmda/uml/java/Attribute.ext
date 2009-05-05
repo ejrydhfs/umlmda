@@ -33,5 +33,5 @@ cached String initialValue(JavaModelAttribute attr) :
 ;
 
 cached String javaNonGenericType(JavaModelAttribute attr) :
-    attr.javaType
+    attr.javaPropertyTypeName()
 ;
