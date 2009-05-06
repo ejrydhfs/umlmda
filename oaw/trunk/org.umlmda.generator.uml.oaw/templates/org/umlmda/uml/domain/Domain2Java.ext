@@ -66,7 +66,7 @@ cached Void process(uml::ProfileApplication profileApplication) :
 
 // Processing classes
 cached Void process(uml::Class class) :
-    class.applyGenerationStereotypes({"Entity", "ValueObject"}, true)
+    class.applyGenerationStereotypes({"Entity", "ValueObject", "Bitemporal", "Temporal", "Historical"}, true)
 ;
 
 cached Void process(uml::Package package) :
