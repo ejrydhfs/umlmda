@@ -2,16 +2,17 @@ package org.umlmda.runtime.sdo.sync.gwt.server;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.umlmda.runtime.reflect.ReflectionInvocationFactory;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.Recorder;
+import org.umlmda.runtime.sdo.sync.SyncSession;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectFactory;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
@@ -27,181 +28,247 @@ import org.umlmda.runtime.sdo.sync.parameter.ParameterUtil;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public abstract class AbstractSyncServiceImpl extends RemoteServiceServlet implements SyncService {
-   public static final String SESSION_ATTR_SDO_PLAYER = "SDOPlayer";
-   public static final String SESSION_ATTR_SDO_RECORDER = "SDORecorder";
+    private static final long serialVersionUID = 100L;
+    private static final String SESSION_ATTR_SYNC_SESSIONS = "SyncSessions";
+    private static Logger logger = Logger.getLogger(AbstractSyncServiceImpl.class);
 
-   static Logger logger = Logger.getLogger(AbstractSyncServiceImpl.class);
+    public AbstractSyncServiceImpl() {
+    }
 
-   private static final long serialVersionUID = 100L;
+    public abstract SynchronizedObjectFactory createRootFactory(Recorder recorder);
 
+    private SyncSession getSyncSession(String syncSessionId) {
+        if (isDebugEnabled()) {
+            debug("getSyncSession(" + syncSessionId + ")");
+        }
 
-   public AbstractSyncServiceImpl() {
-   }
+        HttpSession httpSession = getHttpSession();
+        Map<String, SyncSession> syncSessions = getSyncSessions(httpSession);
+        if (syncSessions == null) {
+            debug("No sync sessions map found...");
+            return null;
+        }
+        return syncSessions.get(syncSessionId);
+    }
 
-   public abstract SynchronizedObjectFactory createRootFactory(Recorder recorder);
+    @SuppressWarnings("unchecked")
+    private Map<String, SyncSession> getSyncSessions(HttpSession httpSession) {
+        return (Map<String, SyncSession>) httpSession.getAttribute(SESSION_ATTR_SYNC_SESSIONS);
+    }
 
-   @Override
-   public void destroy() {
-      // TODO Auto-generated method stub
-      super.destroy();
-   }
+    private HttpSession createHttpSession() {
+        HttpSession session = getThreadLocalRequest().getSession(false);
+        if (session == null) {
+            session = getThreadLocalRequest().getSession(true);
+            logger.info("Creating new session with id " + session.getId());
+        } else {
+            logger.info("Using existing session with id " + session.getId());
+        }
+        return session;
+    }
 
-   @Override
-   public void init() throws ServletException {
-      super.init();
-   }
+    private HttpSession getHttpSession() {
+        HttpSession httpSession = getThreadLocalRequest().getSession(false);
+        if (httpSession == null) {
+            debug("No http session found...");
+            throw new IllegalArgumentException("No http session found");
+        } else {
+            debug("Http session found: " + httpSession.getId());
+        }
+        return httpSession;
+    }
 
-   public HttpSession getSession() {
-      HttpSession session;
-      session = getThreadLocalRequest().getSession(false);
-      if ( session == null ) {
-         session = getThreadLocalRequest().getSession(true);
-         logger.info("creating new session with id " + session.getId());
-      } else {
-         logger.info("using existing sesion with id " + session.getId());
-      }
-      
-      if (session.getAttribute(SESSION_ATTR_SDO_PLAYER) == null) {
-         SynchronizerImpl recorder = new SynchronizerImpl(null);
-         SynchronizedObjectFactory factory = createRootFactory(recorder); 
-         Player player = new PlayerImpl(Player.SERVER, factory, new ReflectionInvocationFactory());
+    public String startConversation() {
+        String conversationId = getConversationId();
 
-         recorder.setPlayer(player);
-         session.setAttribute(SESSION_ATTR_SDO_PLAYER, player);
-         session.setAttribute(SESSION_ATTR_SDO_RECORDER, recorder);
-      }
-      return session;
-   }
+        debug("startConversation(" + conversationId + ")");
+        HttpSession httpSession = createHttpSession();
+        Map<String, SyncSession> syncSessions =(Map<String, SyncSession>) httpSession.getAttribute(SESSION_ATTR_SYNC_SESSIONS);
+        if (syncSessions == null) {
+            debug("Creating new map for session " + httpSession.getId());
+            syncSessions = new HashMap<String, SyncSession>();
+            httpSession.setAttribute(SESSION_ATTR_SYNC_SESSIONS, syncSessions);
+        }
 
-   private Player getPlayer() {
-      return (Player) getSession().getAttribute(SESSION_ATTR_SDO_PLAYER);
-   }
+        SynchronizerImpl recorder = new SynchronizerImpl(null);
+        recorder.setConversationId(conversationId);
+        SynchronizedObjectFactory factory = createRootFactory(recorder);
+        Player player = new PlayerImpl(Player.SERVER, factory, new ReflectionInvocationFactory());
+        recorder.setPlayer(player);
+        SyncSession syncSession = new SyncSessionImpl(player);
 
-   private Recorder getRecorder() {
-      return (Recorder) getSession().getAttribute(SESSION_ATTR_SDO_RECORDER);
-   }
+        factory = player.getObjectFactory();
+        Recorder slaveRecorder = factory.getRecorder();
+        debug("Slave recorder: " + slaveRecorder);
 
-   public void startConversation() {
-      logger.info("startConversation()");
+        if (syncSessions.containsKey(conversationId)) {
+            info("This conversation id is already bound...");
+        }
+        syncSessions.put(conversationId, syncSession);
 
-      getPlayer().reset();
-      getRecorder().reset();
-   }
-   
-   public void finishConversation() {
-      logger.info("finishConversation()");
+        return conversationId;
+    }
 
-      getPlayer().reset();
-      getRecorder().reset();
-   }
-   
-   /**
-    * Server side implementation of the SyncService
-    */
-   public List<AbstractChangeLogEntry> synchronizeChanges(List<AbstractChangeLogEntry> changes) {
-      logger.info("synchronizeChanges()");
+    private String getConversationId() {
+        debug("getConversationId()");
+        String conversationId = ConversationIds.getInstance().getNext();
+        debug("Next conversation id is " + conversationId);
+        return conversationId;
+    }
 
-      try {
-         if ( logger.isDebugEnabled() ) {
-            logger.debug("Changes to synchronize");
-            for (AbstractChangeLogEntry entry : changes) {
-               logger.debug(entry);
+    public void finishConversation(String conversationId) {
+        logger.info("finishConversation(" + conversationId + ")");
+
+        HttpSession httpSession = getHttpSession();
+        Map<String, SyncSession> syncSessions = getSyncSessions(httpSession);
+        if (syncSessions == null) {
+            debug("No sync sessions map found...");
+        }
+        SyncSession syncSession = syncSessions.get(conversationId);
+        if (syncSession == null) {
+            logger.info("No sync session found...");
+            return;
+        }
+
+        syncSession.getPlayer().reset();
+        syncSession.getRecorder().reset();
+
+        syncSessions.remove(conversationId);
+    }
+
+    /**
+     * Server side implementation of the SyncService
+     */
+    public List<AbstractChangeLogEntry> synchronizeChanges(String conversationId, List<AbstractChangeLogEntry> changes) {
+        logger.info("synchronizeChanges(" + conversationId + ")");
+
+        try {
+            SyncSession syncSession = getSyncSession(conversationId);
+            if (syncSession == null) {
+                logger.error("No sync session found...");
+                throw new IllegalArgumentException("No sync session found...");
             }
-         }
-         
-         Player player = getPlayer();
-         SynchronizedObjectFactory factory = player.getObjectFactory();
 
-         // Reset recorder
-         Recorder slaveRecorder = factory.getRecorder();
-         
-         slaveRecorder.getChangeEntries().clear();
+            Player player = syncSession.getPlayer();
 
-         // Put recorder to thread local to be accessible in subsequent functions
-         // TODO can be removed, because recorder is singleton for session
-         SyncContext.recorderHolder.set(slaveRecorder);
-         
-         player.playback(changes, null);
-         
-         // Remove changes from input
-         slaveRecorder.getChangeEntries().removeAll(changes);
-
-         if ( logger.isDebugEnabled() ) {
-            logger.debug("Changes to send back from synchonize");
-            for (AbstractChangeLogEntry entry : slaveRecorder.getChangeEntries()) {
-               logger.debug(entry);
+            if (isDebugEnabled()) {
+                debug("Player " + player + " - changes to synchronize");
+                for (AbstractChangeLogEntry entry : changes) {
+                    debug(entry);
+                }
             }
-         }
 
-         
-         return slaveRecorder.getChangeEntries();
-      } catch (RuntimeException e) {
-         logger.error(e.getMessage(), e);
-         throw e;
-      } catch (Throwable e) {
-         logger.fatal(e.getMessage(), e);
-         throw new RuntimeException(e);
-      }
-   }
+            SynchronizedObjectFactory factory = player.getObjectFactory();
 
-   public AbstractInvocationResult invokeMethod(SynchronizedObjectProxy objectProxy, String methodName, List<AbstractParameter> parameters) {
-      try {
-         Player player = getPlayer();
-         SynchronizedObjectFactory factory = player.getObjectFactory();
+            // Reset recorder
+            Recorder slaveRecorder = factory.getRecorder();
 
-         // Reset recorder
-         Recorder slaveRecorder = factory.getRecorder();
-         
-         slaveRecorder.getChangeEntries().clear();
-         
-         SynchronizedObject object = player.getObject(objectProxy);
-         AbstractInvocationResult result = null;
+            debug("Slave recorder: " + slaveRecorder);
+            debug("Change entries: " + ((slaveRecorder == null) ? null : slaveRecorder.getChangeEntries()));
+            slaveRecorder.getChangeEntries().clear();
 
-         if ( logger.isDebugEnabled() ) {
-            logger.debug("invoke method "+methodName+" on "+object.getClass());
-         }
-         
-         // Put recorder to thread local to be accessible in subsequent functions
-         SyncContext.recorderHolder.set(slaveRecorder);
-         
-         try {
-            Object parameterArray[] = ParameterUtil.toArray(parameters, player);
-            Method method = MethodUtils.findMatchingMethod(object.getClass(), methodName, parameterArray);
+            // Put recorder to thread local to be accessible in subsequent
+            // functions
+            // TODO can be removed, because recorder is singleton for session
+            SyncContext.recorderHolder.set(slaveRecorder);
 
-            method.invoke(object, parameterArray);
-            
-            if ( logger.isDebugEnabled() ) {
-               logger.debug("Changes to send back from invoke");
-               for (AbstractChangeLogEntry entry : slaveRecorder.getChangeEntries()) {
-                  logger.debug(entry);
-               }
+            player.playback(changes, null);
+
+            // Remove changes from input
+            slaveRecorder.getChangeEntries().removeAll(changes);
+
+            if (isDebugEnabled()) {
+                debug("Changes to send back from synchronize");
+                for (AbstractChangeLogEntry entry : slaveRecorder.getChangeEntries()) {
+                    debug(entry);
+                }
             }
-            
-            result = new VoidInvocationResult(slaveRecorder.getChangeEntries());
-         } catch (SecurityException e) {
-            result = handleException(e);
-         } catch (NoSuchMethodException e) {
-            result = handleException(e);
-         } catch (IllegalArgumentException e) {
-            result = handleException(e);
-         } catch (IllegalAccessException e) {
-            result = handleException(e);
-         } catch (InvocationTargetException e) {
-            result = handleException(e);
-         }
 
-         return result;
-      } catch (RuntimeException e) {
-         logger.error(e.getMessage(), e);
-         throw e;
-      }
-   }
+            return slaveRecorder.getChangeEntries();
+        } catch (RuntimeException e) {
+            logger.error(e.getMessage(), e);
+            throw e;
+        } catch (Throwable e) {
+            logger.fatal(e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
+    }
 
-   private AbstractInvocationResult handleException(Throwable e) {
-      AbstractInvocationResult result;
-      logger.error(e.getMessage(), e);
-      result = new VoidInvocationResult(e.getMessage(), e.getStackTrace().toString());
-      return result;
-   }
+    public AbstractInvocationResult invokeMethod(String conversationId, SynchronizedObjectProxy objectProxy, String methodName,
+                    List<AbstractParameter> parameters) {
+        try {
+            logger.info("invokeMethod(" + conversationId + ")");
+
+            SyncSession syncSession = getSyncSession(conversationId);
+            if (syncSession == null) {
+                logger.error("No sync session found...");
+                throw new IllegalArgumentException("No sync session found...");
+            }
+            Player player = syncSession.getPlayer();
+            SynchronizedObjectFactory factory = player.getObjectFactory();
+
+            // Reset recorder
+            Recorder slaveRecorder = factory.getRecorder();
+            slaveRecorder.getChangeEntries().clear();
+
+            SynchronizedObject object = player.getObject(objectProxy);
+            if (isDebugEnabled()) {
+                debug("Invoke method: " + methodName + " on " + object.getClass() + " - " + object.toString());
+            }
+
+            // Put recorder to thread local to be accessible in subsequent
+            // functions
+            SyncContext.recorderHolder.set(slaveRecorder);
+
+            AbstractInvocationResult result = null;
+            try {
+                Object parameterArray[] = ParameterUtil.toArray(parameters, player);
+                Method method = MethodUtils.findMatchingMethod(object.getClass(), methodName, parameterArray);
+
+                method.invoke(object, parameterArray);
+
+                if (isDebugEnabled()) {
+                    debug("Changes to send back from invoke");
+                    for (AbstractChangeLogEntry entry : slaveRecorder.getChangeEntries()) {
+                        debug(entry);
+                    }
+                }
+
+                result = new VoidInvocationResult(slaveRecorder.getChangeEntries());
+            } catch (SecurityException e) {
+                result = handleException(e);
+            } catch (NoSuchMethodException e) {
+                result = handleException(e);
+            } catch (IllegalArgumentException e) {
+                result = handleException(e);
+            } catch (IllegalAccessException e) {
+                result = handleException(e);
+            } catch (InvocationTargetException e) {
+                result = handleException(e);
+            }
+
+            return result;
+        } catch (RuntimeException e) {
+            logger.error(e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    private AbstractInvocationResult handleException(Throwable e) {
+        logger.error(e.getMessage(), e);
+        return new VoidInvocationResult(e.getMessage(), e.getStackTrace().toString());
+    }
+
+    private final boolean isDebugEnabled() {
+        return logger.isDebugEnabled();
+    }
+
+    private final void debug(Object msg) {
+        logger.debug(msg);
+    }
+
+    private final void info(Object msg) {
+        logger.info(msg);
+    }
 
 }

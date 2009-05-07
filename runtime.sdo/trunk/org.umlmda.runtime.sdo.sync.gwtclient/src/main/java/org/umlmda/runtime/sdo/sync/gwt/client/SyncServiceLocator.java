@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 public class SyncServiceLocator {
    private static SyncServiceAsync instance;
+
    public static SyncServiceAsync getInstance(){
       if (instance == null) {
          instance = (SyncServiceAsync) GWT.create(SyncService.class);
@@ -13,4 +14,5 @@ public class SyncServiceLocator {
       }
       return instance;
    }
+
 }

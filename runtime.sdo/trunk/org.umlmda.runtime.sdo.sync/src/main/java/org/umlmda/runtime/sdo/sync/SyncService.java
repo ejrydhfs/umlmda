@@ -7,30 +7,49 @@ import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
 import org.umlmda.runtime.sdo.sync.impl.ServiceCallWrapperImpl;
 
 public interface SyncService {
-   /** 
-    * Start the conversation
-    */
-   public void startConversation();
-   
-   /**
-    * Finish the conversation. A new conversation can be started.
-    */
-   public void finishConversation();
 
    /**
-    * Synchronize changes with remote peer
-    * @param changes
-    * @return
+    * Starts the conversation.
     */
-	public abstract void synchronizeChanges(List<AbstractChangeLogEntry> changes, ServiceCallWrapperImpl<List<AbstractChangeLogEntry>> callback);
-	
-	/**
-	 * Invoke a method on the remote peer.
-	 * @param object
-	 * @param methodName
-	 * @return
-	 */
-	public abstract void invokeMethod(SynchronizedObjectProxy object, String methodName, Object[] parameter, ServiceCallWrapperImpl<AbstractInvocationResult> callback);
-	
-	public abstract SyncServiceCallback getCallback();
+   public String startConversation();
+
+   /**
+    * Finish the conversation. A new conversation can be started.
+    * The old conversation id becomes invalid.
+    *
+    * If an invalid (non-existing) conversation id is specified, the call
+    * will fail.
+    *
+    * @param conversationId unique conversation id
+    */
+   public void finishConversation(String conversationId);
+
+   /**
+    * Synchronize changes with remote peer.
+    *
+    * If an invalid (non-existing) conversation id is specified, the call
+    * will fail.
+    *
+    * @param conversationId unique conversation id
+    * @param changes
+    * @param callback
+    */
+    public abstract void synchronizeChanges(String conversationId, List<AbstractChangeLogEntry> changes, ServiceCallWrapperImpl<List<AbstractChangeLogEntry>> callback);
+
+    /**
+     * Invoke a method on the remote peer.
+     *
+     * If an invalid (non-existing) conversation id is specified, this call
+     * will fail.
+     *
+     * @param conversationId unique conversation id
+     * @param object
+     * @param methodName
+     * @param parameters
+     * @param callback
+     */
+    public abstract void invokeMethod(String conversationId, SynchronizedObjectProxy object, String methodName, Object[] parameter, ServiceCallWrapperImpl<AbstractInvocationResult> callback);
+
+    //TODO do we need this ?
+    public abstract SyncServiceCallback getCallback();
 }

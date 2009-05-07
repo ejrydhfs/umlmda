@@ -47,9 +47,14 @@ public class SynchronizerImpl implements Recorder {
 	private Player player;
 	public SynchronizeStrategy strategy = SynchronizeStrategy.COLLECT;
 	protected InvocationStatus invocationStatus = InvocationStatus.IDLE;
+	private String conversationId;
 
 	public SynchronizerImpl(SyncService service) {
 		this.service = service;
+	}
+
+	public void setConversationId(String conversationId) {
+	    this.conversationId = conversationId;
 	}
 
 	public void reset() {
@@ -184,9 +189,9 @@ public class SynchronizerImpl implements Recorder {
 	      changeEntries.add(new InvokeEntry(recordedObject.getRecordObjectId(), methodName, transferParameter));
 	      return;
 	   }
-	   
+
 	   invocationStatus = InvocationStatus.RUNNING;
-	   
+
 		if (logger.isDebugEnabled()) {
 			logger.debug("About to invoke " + methodName + " pushd changes to remote peer");
 			for (AbstractChangeLogEntry entry : changeEntries) {
@@ -215,7 +220,7 @@ public class SynchronizerImpl implements Recorder {
 			serviceQueue.addServiceCall(new AbstractServiceCall<List<AbstractChangeLogEntry>>() {
 
 				public void onExecute(ServiceCallWrapperImpl<List<AbstractChangeLogEntry>> wrapper) {
-					service.synchronizeChanges(extractChangeEntries(changeEntries), wrapper);
+					service.synchronizeChanges(conversationId, extractChangeEntries(changeEntries), wrapper);
 				}
 
 				public void onSucess(List<AbstractChangeLogEntry> remoteChanges, SyncServiceCallback callback) {
@@ -233,7 +238,7 @@ public class SynchronizerImpl implements Recorder {
 
 				public void onExecute(ServiceCallWrapperImpl<AbstractInvocationResult> wrapper) {
 					SynchronizedObjectProxy objectProxy = new SynchronizedObjectProxy(recordedObjectId);
-					service.invokeMethod(objectProxy, methodName, transferParameter, wrapper);
+					service.invokeMethod(conversationId, objectProxy, methodName, transferParameter, wrapper);
 				}
 
 				public void onSucess(AbstractInvocationResult invocationResult, SyncServiceCallback callback) {
@@ -244,12 +249,12 @@ public class SynchronizerImpl implements Recorder {
 					}
 					if (callback != null) {
 						InvokeEntry invokeEntry = getNextInvokeEntry(changeEntries);
-						
+
                   if ( invokeEntry == null ) {
                      callback.onSuccess();
 						   invocationStatus = InvocationStatus.IDLE;
 						}
-						
+
 						// Put queued invokes to service queue
 						else {
 						   generateServiceEntries(serviceQueue, invokeEntry.getRecordId(), invokeEntry.getMethodName(), invokeEntry.getTransferParameters());
@@ -276,10 +281,10 @@ public class SynchronizerImpl implements Recorder {
 	 */
 	private List<AbstractChangeLogEntry> extractChangeEntries(List<AbstractChangeLogEntry> allLogEntries) {
 	   List<AbstractChangeLogEntry> changeEntries = new ArrayList<AbstractChangeLogEntry>();
-	   
+
 	   for ( Iterator<AbstractChangeLogEntry> ile = allLogEntries.iterator(); ile.hasNext(); ) {
          AbstractChangeLogEntry logEntry = ile.next();
-         
+
          if ( logEntry instanceof InvokeEntry ) {
             return changeEntries;
          }

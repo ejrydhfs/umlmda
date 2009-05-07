@@ -3,13 +3,17 @@
     <inherits name="java.Io"/>
     <inherits name="java.Beans"/>
     <inherits name="java.lang.Reflect"/>
-    <inherits name="javax.Jmi"/>
+    <inherits name="javax.JMI"/>
     <inherits name="org.umlmda.Runtime"/>
     <inherits name="org.umlmda.runtime.Sdo"/>
     <inherits name="org.umlmda.runtime.sdo.sync.gwt.SdoSync"/>
-    
+
 	<entry-point class="org.umlda.runtime.sdo.sync.gwt.test.client.SdoGwtServiceTest"/>
-   
+
+	   <!-- Logging -->
+   <inherits name="org.apache.Log4J" />
+   <inherits name="com.allen_sauer.gwt.log.gwt-log" />
+
     <servlet path="/SyncService" class="org.umlda.runtime.sdo.sync.gwt.test.server.SyncServiceImpl"/>
-   
+
 </module>

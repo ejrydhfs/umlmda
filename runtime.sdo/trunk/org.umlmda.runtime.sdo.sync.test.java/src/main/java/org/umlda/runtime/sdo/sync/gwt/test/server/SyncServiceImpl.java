@@ -8,7 +8,7 @@ import org.umlmda.runtime.sdo.sync.test.model.impl.TestFactoryImpl;
 public class SyncServiceImpl extends AbstractSyncServiceImpl {
 
    /**
-    * 
+    *
     */
    private static final long serialVersionUID = 100L;
 
@@ -18,7 +18,7 @@ public class SyncServiceImpl extends AbstractSyncServiceImpl {
 
    @Override
    public SynchronizedObjectFactory createRootFactory(Recorder recorder) {
-      return new TestFactoryImpl(null);
+      return new TestFactoryImpl(recorder);
    }
 
 }
