@@ -4,7 +4,7 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.runtime.sdo</artifactId>
-      <version>3.9-SNAPSHOT</version>
+      <version>3.9</version>
    </parent>
    <artifactId>org.umlmda.runtime.sdo.sync</artifactId>
    <name>UMLMDA SDO Sync-Service</name>
