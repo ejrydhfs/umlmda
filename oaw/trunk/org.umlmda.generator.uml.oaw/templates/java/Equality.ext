@@ -13,7 +13,7 @@ import org::umlmda::oaw::generator::model::java;
 cached List[JavaModelStructuraleFeature] features(JavaModelClass class) :
     let features = {} :
     
-    features.addAll(class.implementedAttributes.typeSelect(JavaModelStructuraleFeature)) ->
-    features.addAll(class.implementedAssociations.typeSelect(JavaModelAssociation).select(e|e.composition == false)) ->
+    features.addAll(class.implementedAttributes.typeSelect(JavaModelAttribute).select(e|e.derived == false && e.hasStereotype("Id") == false)) ->
+    features.addAll(class.implementedAssociations.typeSelect(JavaModelAssociation).select(e|e.derived == false && e.composition == false)) ->
     features
 ;    

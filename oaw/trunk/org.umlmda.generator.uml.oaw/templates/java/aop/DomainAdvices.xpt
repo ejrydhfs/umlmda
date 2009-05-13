@@ -12,8 +12,8 @@
 «AROUND java::BOImpl::standardCtor FOR JavaBusinessObject»
    «targetDef.proceed()»
    
-   «EXPAND java::Equality::equals(this.implementedDomainKeys()) FOR this»
-   «EXPAND java::Equality::hashCode(this.implementedDomainKeys()) FOR this»
+   «EXPAND java::Equality::equals(this.implementedDomainKeys().select(e|e.derived == false)) FOR this»
+   «EXPAND java::Equality::hashCode(this.implementedDomainKeys().select(e|e.derived == false)) FOR this»
    «EXPAND java::Equality::arePropertiesEqual FOR this»   
 «ENDAROUND»
 

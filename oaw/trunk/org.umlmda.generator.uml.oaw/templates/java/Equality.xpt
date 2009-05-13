@@ -15,39 +15,42 @@
 «EXTENSION org::umlmda::uml::java::StructuralFeature»
 
 «DEFINE equals(List[JavaModelAttribute] attributes) FOR JavaModelClass»
-   @Override
-   public boolean equals(Object obj) {
-      
-      if ( «IF superClass != null»super.equals(obj) && «ENDIF»obj instanceof «javaType» ) {
-         «javaType» other = («javaType») obj;
-         
-         return 
-	         «FOREACH attributes AS attr SEPARATOR "&&"» 
-               «attr.name» == other.«attr.getter»() || («attr.name» != null && «attr.name».equals(other.«attr.getter»()))
-	         «ENDFOREACH» 
-         ;
-      }
-
-      return false;
-   }
+	«IF attributes.isEmpty == false»
+	   @Override
+	   public boolean equals(Object obj) {
+	      
+	      if ( «IF superClass != null»super.equals(obj) && «ENDIF»obj instanceof «javaType» ) {
+	         «javaType» other = («javaType») obj;
+	         
+	         return 
+		         «FOREACH attributes AS attr SEPARATOR "&&"» 
+	               «attr.name» == other.«attr.getter»() || («attr.name» != null && «attr.name».equals(other.«attr.getter»()))
+		         «ENDFOREACH» 
+	         ;
+	      }
+	
+	      return false;
+	   }
+	«ENDIF»
 «ENDDEFINE»
 
 «DEFINE hashCode(List[ModelAttribute] attributes) FOR JavaModelClass»
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = 
-         «IF superClass != null»
-            super.hashCode()
-         «ELSE»
-            1
-         «ENDIF»;
-      «FOREACH attributes AS attr»
-         result = prime * result + ((«attr.name» == null) ? 0 : «attr.name».hashCode());
-      «ENDFOREACH»
-      return result;
-   }
-
+   «IF attributes.isEmpty == false»
+	   @Override
+	   public int hashCode() {
+	      final int prime = 31;
+	      int result = 
+	         «IF superClass != null»
+	            super.hashCode()
+	         «ELSE»
+	            1
+	         «ENDIF»;
+	      «FOREACH attributes AS attr»
+	         result = prime * result + ((«attr.name» == null) ? 0 : «attr.name».hashCode());
+	      «ENDFOREACH»
+	      return result;
+	   }
+   «ENDIF»
 «ENDDEFINE»
 
 «DEFINE arePropertiesEqual FOR JavaModelClass»
