@@ -7,7 +7,7 @@
       <version>3.14</version>
    </parent>
    <artifactId>org.umlmda.oaw</artifactId>
-   <version>3.25</version>
+   <version>3.26-SNAPSHOT</version>
    <packaging>pom</packaging>
    <name>UMLMDA oaw</name>
    <description>UMLMDA maven project for umlmda openarchitectureware integration modules.</description>
@@ -19,8 +19,8 @@
    </modules>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/tags/org.umlmda.oaw-3.25</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/tags/org.umlmda.oaw-3.25</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/trunk</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/trunk</developerConnection>
    </scm>
 
    <dependencyManagement>
@@ -61,12 +61,12 @@
          <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.oaw.util</artifactId>
-            <version>3.25</version>
+            <version>3.26-SNAPSHOT</version>
          </dependency>
          <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.generator.uml.oaw</artifactId>
-            <version>3.25</version>
+            <version>3.26-SNAPSHOT</version>
          </dependency>
       </dependencies>
    </dependencyManagement>
