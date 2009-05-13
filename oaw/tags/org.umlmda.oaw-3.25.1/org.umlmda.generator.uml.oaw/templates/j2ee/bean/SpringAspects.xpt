@@ -1,0 +1,76 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::j2ee»
+
+// Spring imports
+«AROUND standardImports FOR J2EEBusinessService»
+	«targetDef.proceed()»
+	import org.springframework.beans.factory.BeanFactory;
+	import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+	import org.springframework.context.ConfigurableApplicationContext;
+«ENDAROUND»
+
+// Spring base class
+«AROUND standardBaseClass FOR J2EEBusinessService»
+extends org.springframework.ejb.support.AbstractStatelessSessionBean
+«ENDAROUND»
+
+// Standard spring methods
+«AROUND standardMethods FOR J2EEBusinessService»
+«LET getScopedName("java.BusinessFactory", javaPackage) AS factoryClass»
+«LET javaPackage.getGeneratedName("java.BusinessFactory") AS factoryName»
+	public void onEjbCreate() throws javax.ejb.CreateException {
+		«IF abstract == false»
+			«factoryClass» factory = («factoryClass») getBeanFactory().getBean("«factoryName»", «factoryClass».class);
+	
+			if ( factory != null ) {
+				delegate = factory.create«name»();
+				«IF superClass != null»
+					super.setDelegate(delegate);
+				«ENDIF»			
+			}
+			else {
+				String msg = "Unable to create an instance of "+«factoryClass».class+" from bean factory";
+	         	//TODO <%=logging.warn("msg")%>
+	         	throw new CreateException(msg);
+			}
+		«ENDIF»
+	}
+«ENDLET»
+«ENDLET»
+
+	/**
+     * Get the bean factory and register the bean factory with the name "BeanFactory"
+     */ 	   
+	protected BeanFactory getBeanFactory() {
+		BeanFactory beanFactory = super.getBeanFactory();
+
+		if ( beanFactory.getType("BeanFactory") == null ) {
+			register("BeanFactory", beanFactory);
+		}
+		return beanFactory;
+	}
+   
+	private void register(String contextName, Object singleton) {
+		BeanFactory beanFactory = super.getBeanFactory();
+      
+		if (beanFactory instanceof ConfigurableBeanFactory) {
+			ConfigurableBeanFactory configurableBeanFactory = (ConfigurableBeanFactory)beanFactory;
+         
+			configurableBeanFactory.registerSingleton(contextName, singleton);
+		}
+		else if (beanFactory instanceof ConfigurableApplicationContext) {
+			ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext)beanFactory;
+         
+			applicationContext.getBeanFactory().registerSingleton(contextName, singleton);
+		}
+		else {
+			throw new RuntimeException("Unable to regsiter a bean in the beanFactory "+beanFactory.getClass().toString());
+		}
+	}
+«ENDAROUND»
+
+// Spring handle session context interally
+«AROUND handleSessionContext FOR J2EEBusinessService»
+«ENDAROUND»
