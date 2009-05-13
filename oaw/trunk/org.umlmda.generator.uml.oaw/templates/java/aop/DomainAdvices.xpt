@@ -1,0 +1,22 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION org::umlmda::uml::domain::Class»
+
+«REM»
+   Add equals and hashCode using domain key attributes, and implement EqualityCheckable interface
+«ENDREM»
+«AROUND java::BOImpl::standardCtor FOR JavaBusinessObject»
+   «targetDef.proceed()»
+   
+   «EXPAND java::Equality::equals(this.implementedDomainKeys()) FOR this»
+   «EXPAND java::Equality::hashCode(this.implementedDomainKeys()) FOR this»
+   «EXPAND java::Equality::arePropertiesEqual FOR this»   
+«ENDAROUND»
+
+«AROUND java::BOInterface::standardBaseInterface FOR JavaBusinessObject»
+   «targetDef.proceed()», org.umlmda.runtime.lang.EqualityCheckable
+«ENDAROUND»
