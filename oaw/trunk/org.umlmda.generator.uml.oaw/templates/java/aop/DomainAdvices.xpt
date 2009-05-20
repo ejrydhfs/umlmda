@@ -15,8 +15,17 @@
    «EXPAND java::Equality::equals(this.implementedDomainKeys().select(e|e.derived == false)) FOR this»
    «EXPAND java::Equality::hashCode(this.implementedDomainKeys().select(e|e.derived == false)) FOR this»
    «EXPAND java::Equality::arePropertiesEqual FOR this»   
+   «EXPAND java::BOImpl::childNavigatableImpl FOR this»
+«ENDAROUND»
+
+«AROUND java::BOImpl::standardImports FOR JavaBusinessObject»
+   «targetDef.proceed()»
+   import java.util.LinkedHashSet;
+   import java.util.Set;
+
+   import org.umlmda.runtime.lang.ChildNavigatable;
 «ENDAROUND»
 
 «AROUND java::BOInterface::standardBaseInterface FOR JavaBusinessObject»
-   «targetDef.proceed()», org.umlmda.runtime.lang.EqualityCheckable
+   «targetDef.proceed()», org.umlmda.runtime.lang.EqualityCheckable, org.umlmda.runtime.lang.ChildNavigatable
 «ENDAROUND»

@@ -677,3 +677,38 @@ import org.umlmda.runtime.xml.XMLMarshalContext;
 import org.umlmda.runtime.xml.XMLSerializable;
 «ENDDEFINE»
 
+«DEFINE childNavigatableImpl FOR JavaBusinessObject»
+   public Set<Object> getChildren(boolean recursive) {
+      Set<Object> childrenSet = 
+		«IF superClass != null»
+   		super.getChildren(recursive);
+		«ELSE»
+   		new LinkedHashSet<Object>();
+		«ENDIF»      
+   
+		«FOREACH implementedAssociations.typeSelect(ModelAssociation).select(e|e.composition) AS assoc»
+         «IF assoc.multiple»
+		      for (Object child : «assoc.name») {
+		         childrenSet.add(child);
+		         if (recursive && child instanceof ChildNavigatable) {
+		            ChildNavigatable childNavigatable = (ChildNavigatable) child;
+		            
+		            childrenSet.addAll(childNavigatable.getChildren(recursive));
+		         }
+		      }
+		   «ELSE»
+		      if ( «assoc.name» != null ) {
+		         childrenSet.add(«assoc.name»);
+		         if (recursive && «assoc.name» instanceof ChildNavigatable) {
+		            ChildNavigatable childNavigatable = (ChildNavigatable) «assoc.name»;
+		            
+		            childrenSet.addAll(childNavigatable.getChildren(recursive));
+		         }
+		      }
+         «ENDIF»
+		«ENDFOREACH»      
+
+      return childrenSet;
+   }
+   
+«ENDDEFINE»
