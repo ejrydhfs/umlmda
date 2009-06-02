@@ -4,7 +4,7 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.oaw</artifactId>
-      <version>3.15</version>
+      <version>3.25.1</version>
    </parent>
    <artifactId>org.umlmda.classic</artifactId>
    <version>3.8-SNAPSHOT</version>
@@ -13,8 +13,8 @@
    <description>UMLMDA maven project for umlmda classic modules.</description>
 
    <properties>
-      <umlmda.uml2.profile.version>4.1.0</umlmda.uml2.profile.version>
-      <umlmda.uml2.profile.new.version>4.2.6</umlmda.uml2.profile.new.version>
+      <umlmda.uml2.profile.version>4.2.1</umlmda.uml2.profile.version>
+      <umlmda.uml2.profile.new.version>4.3.0</umlmda.uml2.profile.new.version>
       <umlmda.generator.profile.version>3.7</umlmda.generator.profile.version>
       <umlmda.jostraca.version>3.1</umlmda.jostraca.version>
       <jostraca.version>0.3.3</jostraca.version>
