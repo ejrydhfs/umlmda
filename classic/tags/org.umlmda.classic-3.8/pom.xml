@@ -1,0 +1,209 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.oaw</artifactId>
+      <version>3.25.1</version>
+   </parent>
+   <artifactId>org.umlmda.classic</artifactId>
+   <version>3.8</version>
+   <packaging>pom</packaging>
+   <name>UMLMDA Classic</name>
+   <description>UMLMDA maven project for umlmda classic modules.</description>
+
+   <properties>
+      <umlmda.uml2.profile.version>4.2.1</umlmda.uml2.profile.version>
+      <umlmda.uml2.profile.new.version>4.3.0</umlmda.uml2.profile.new.version>
+      <umlmda.generator.profile.version>3.7</umlmda.generator.profile.version>
+      <umlmda.jostraca.version>3.1</umlmda.jostraca.version>
+      <jostraca.version>0.3.3</jostraca.version>
+   </properties>
+
+   <build>
+      <sourceDirectory>src</sourceDirectory>
+      <testSourceDirectory>test</testSourceDirectory>
+
+      <pluginManagement>
+         <plugins>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-site-plugin</artifactId>
+               <version>2.0-beta-4</version>
+            </plugin>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-project-info-reports-plugin</artifactId>
+               <version>2.0.1</version>
+            </plugin>
+            <plugin>
+               <groupId>org.umlmda</groupId>
+               <artifactId>org.umlmda.jostraca.maven</artifactId>
+               <version>${umlmda.jostraca.version}</version>
+            </plugin>
+         </plugins>
+      </pluginManagement>
+
+
+   </build>
+
+   <modules>
+      <module>org.umlmda.generator.core</module>
+      <module>org.umlmda.generator.uml</module>
+      <module>org.umlmda.classic.generator</module>
+   </modules>
+
+   <scm>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/tags/org.umlmda.classic-3.8</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/tags/org.umlmda.classic-3.8</developerConnection>
+   </scm>
+
+   <dependencyManagement>
+      <dependencies>
+         <!-- Apache stuff -->
+         <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.5</version>
+         </dependency>
+         <dependency>
+            <groupId>ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.6.5</version>
+         </dependency>
+         <!-- Freemarker -->
+         <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.9</version>
+         </dependency>
+         <!-- EMF -->
+         <dependency>
+            <groupId>org.eclipse.emf</groupId>
+            <artifactId>ecore</artifactId>
+            <version>${emf.version}</version>
+            <exclusions>
+               <exclusion>
+                  <groupId>org.eclipse.core</groupId>
+                  <artifactId>runtime</artifactId>
+               </exclusion>
+            </exclusions>
+         </dependency>
+         <!-- UML2 -->
+         <dependency>
+            <groupId>org.eclipse.uml2</groupId>
+            <artifactId>resources</artifactId>
+            <version>${uml2.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.eclipse.uml2</groupId>
+            <artifactId>uml</artifactId>
+            <version>${uml2.version}</version>
+            <exclusions>
+               <exclusion>
+                  <groupId>org.eclipse.core</groupId>
+                  <artifactId>runtime</artifactId>
+               </exclusion>
+            </exclusions>
+         </dependency>
+         <dependency>
+            <groupId>org.eclipse.uml2</groupId>
+            <artifactId>uml-ecore-importer</artifactId>
+            <version>${uml2.version}</version>
+            <exclusions>
+               <exclusion>
+                  <groupId>org.eclipse.core</groupId>
+                  <artifactId>runtime</artifactId>
+               </exclusion>
+            </exclusions>
+         </dependency>
+         <!-- oAW -->
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-emftools</artifactId>
+            <version>${oaw.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-expressions</artifactId>
+            <version>${oaw.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-workflow</artifactId>
+            <version>${oaw.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-xpand2</artifactId>
+            <version>${oaw.version}</version>
+            <exclusions>
+               <exclusion>
+                  <groupId>org.eclipse.jdt</groupId>
+                  <artifactId>core</artifactId>
+               </exclusion>
+            </exclusions>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-util-stdlib</artifactId>
+            <version>${oaw.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-uml2-adapter</artifactId>
+            <version>${oaw.version}</version>
+            <!-- 
+               <exclusions>
+               <exclusion>
+               <groupId>org.eclipse.jdt</groupId>
+               <artifactId>core</artifactId>
+               </exclusion>
+               </exclusions> -->
+         </dependency>
+
+         <!-- own stuff -->
+         <dependency>
+            <groupId>org.umlmda</groupId>
+            <artifactId>org.umlmda.generator.core</artifactId>
+            <version>3.8</version>
+         </dependency>
+         <dependency>
+            <groupId>org.umlmda</groupId>
+            <artifactId>org.umlmda.generator.uml</artifactId>
+            <version>3.8</version>
+         </dependency>
+         <dependency>
+            <groupId>org.umlmda</groupId>
+            <artifactId>org.umlmda.classic.generator</artifactId>
+            <version>3.8</version>
+         </dependency>
+
+      </dependencies>
+   </dependencyManagement>
+
+
+   <repositories>
+      <repository>
+         <id>artifactory</id>
+         <url>http://coding.ds2k.de/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+      <repository>
+         <id>cor-artifactory</id>
+         <url>http://cor-health-dev1:8090/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
+
+</project>
