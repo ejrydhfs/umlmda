@@ -1,8 +1,5 @@
 /*
  * Created on 04.11.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.model.uml.uml2;
 
@@ -16,7 +13,6 @@ import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Namespace;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Property;
 import org.umlmda.model.uml.ModelAttributeBase;
@@ -26,18 +22,15 @@ import org.umlmda.model.uml.ModelDependencyBase;
 import org.umlmda.model.uml.ModelElementBase;
 import org.umlmda.model.uml.ModelPackageBase;
 
-
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ModelDependencyImpl extends ModelElementImpl implements ModelDependencyBase {
-   private final Dependency modelDependency;
+public class ModelDependencyImpl extends ModelElementImpl implements ModelDependencyBase
+{
+   private final Dependency       modelDependency;
    private List<ModelElementBase> suppliers = null;
-   private List<ModelElementBase> clients = null;
-   
+   private List<ModelElementBase> clients   = null;
+
    /**
     * @param model
     * @param owner
@@ -47,7 +40,8 @@ public class ModelDependencyImpl extends ModelElementImpl implements ModelDepend
       this.modelDependency = modelDependency;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelDependencyBase#getClients()
     */
    public Collection<ModelElementBase> getClients() {
@@ -55,10 +49,11 @@ public class ModelDependencyImpl extends ModelElementImpl implements ModelDepend
          clients = new ArrayList<ModelElementBase>();
          addElements(model, clients, modelDependency.getClients());
       }
-      return suppliers;
+      return clients;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelDependencyBase#getSuppliers()
     */
    public Collection<ModelElementBase> getSuppliers() {
@@ -69,14 +64,15 @@ public class ModelDependencyImpl extends ModelElementImpl implements ModelDepend
       return suppliers;
    }
 
-   private static void addElements(ModelImpl model, Collection<ModelElementBase> elementList, Collection<NamedElement> modelElementList) {
-      for (Iterator<NamedElement> ic = modelElementList.iterator(); ic.hasNext();) {
+   private static void addElements(ModelImpl model, Collection<ModelElementBase> elementList,
+         Collection<NamedElement> modelElementList) {
+      for ( Iterator<NamedElement> ic = modelElementList.iterator(); ic.hasNext(); ) {
          NamedElement element = ic.next();
-         
+
          if ( element instanceof Classifier ) {
             Classifier umlClassifier = (Classifier) element;
             ModelClassifierBase modelClassifier = model.findClassifier(umlClassifier);
-            
+
             if ( modelClassifier != null ) {
                elementList.add(modelClassifier);
             }
@@ -87,7 +83,7 @@ public class ModelDependencyImpl extends ModelElementImpl implements ModelDepend
          else if ( element instanceof Package ) {
             Package umlPackage = (Package) element;
             ModelPackageBase modelPackage = model.findPackage(umlPackage);
-            
+
             if ( modelPackage != null ) {
                elementList.add(modelPackage);
             }
@@ -97,15 +93,15 @@ public class ModelDependencyImpl extends ModelElementImpl implements ModelDepend
          }
          else if ( element instanceof Property ) {
             Property umlProperty = (Property) element;
-            
-            if (umlProperty.getAssociation() == null) {
-               if (umlProperty.getOwner() instanceof Class) {
+
+            if ( umlProperty.getAssociation() == null ) {
+               if ( umlProperty.getOwner() instanceof Class ) {
                   ModelClassBase modelClass = model.findClass((Class) umlProperty.getOwner());
 
-                  for (Iterator<?> ia = modelClass.getAttributes().iterator(); ia.hasNext();) {
+                  for ( Iterator<?> ia = modelClass.getAttributes().iterator(); ia.hasNext(); ) {
                      ModelAttributeBase modelAttribute = (ModelAttributeBase) ia.next();
 
-                     if (modelAttribute.getName().equals(umlProperty.getName())) {
+                     if ( modelAttribute.getName().equals(umlProperty.getName()) ) {
                         elementList.add(modelAttribute);
                         break;
                      }
@@ -117,13 +113,13 @@ public class ModelDependencyImpl extends ModelElementImpl implements ModelDepend
             }
          }
          else if ( element instanceof Association ) {
-            
+
          }
          else {
-            // TODO handle all types 
+            // TODO handle all types
          }
-         
+
       }
-      
+
    }
 }
