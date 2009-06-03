@@ -19,8 +19,8 @@ import org.umlmda.model.uml.ModelElementBase;
  * @author MOROFF
  */
 public class ModelDependencyImpl extends ModelElementImpl implements ModelDependencyBase {
-   List clients = new ArrayList(); //TODO Observer
-   List supplies = new ArrayList();
+   List<ModelElementBase> clients = new ArrayList<ModelElementBase>(); //TODO Observer
+   List<ModelElementBase> supplies = new ArrayList<ModelElementBase>();
    
    /**
     * @param model
@@ -33,14 +33,14 @@ public class ModelDependencyImpl extends ModelElementImpl implements ModelDepend
    /* (non-Javadoc)
     * @see org.umlmda.model.uml.ModelDependencyBase#getClients()
     */
-   public Collection getClients() {
+   public Collection<ModelElementBase> getClients() {
       return clients;
    }
 
    /* (non-Javadoc)
     * @see org.umlmda.model.uml.ModelDependencyBase#getSuppliers()
     */
-   public Collection getSuppliers() {
+   public Collection<ModelElementBase> getSuppliers() {
       return supplies;
    }
 

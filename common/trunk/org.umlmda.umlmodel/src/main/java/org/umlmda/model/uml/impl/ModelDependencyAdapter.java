@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.umlmda.model.uml.Model;
-import org.umlmda.model.uml.ModelAdapterFactory;
 import org.umlmda.model.uml.ModelDependency;
 import org.umlmda.model.uml.ModelDependencyBase;
 import org.umlmda.model.uml.ModelElement;
@@ -27,8 +26,8 @@ import org.umlmda.model.uml.ModelVisitor;
  */
 public class ModelDependencyAdapter extends ModelElementAdapter implements ModelDependency {
    private final ModelDependencyBase modelDependency;
-   private List clients = null;
-   private List suppliers = null;
+   private List<ModelElementBase> clients = null;
+   private List<ModelElementBase> suppliers = null;
    
    /**
     * @param modelElement
@@ -42,12 +41,12 @@ public class ModelDependencyAdapter extends ModelElementAdapter implements Model
    /* (non-Javadoc)
     * @see org.umlmda.model.uml.ModelDependencyBase#getClients()
     */
-   public Collection getClients() {
+   public Collection<ModelElementBase> getClients() {
       if ( clients == null ) {
-         clients = new ArrayList();
+         clients = new ArrayList<ModelElementBase>();
          
-         for (Iterator ic = modelDependency.getClients().iterator(); ic.hasNext();) {
-            ModelElementBase elementBase = (ModelElementBase) ic.next();
+         for (Iterator<ModelElementBase> ic = modelDependency.getClients().iterator(); ic.hasNext();) {
+            ModelElementBase elementBase = ic.next();
             
             clients.add(getModel().getModelElement(elementBase));
          }
@@ -58,12 +57,12 @@ public class ModelDependencyAdapter extends ModelElementAdapter implements Model
    /* (non-Javadoc)
     * @see org.umlmda.model.uml.ModelDependencyBase#getSuppliers()
     */
-   public Collection getSuppliers() {
+   public Collection<ModelElementBase> getSuppliers() {
       if ( suppliers == null ) {
-         suppliers = new ArrayList();
+         suppliers = new ArrayList<ModelElementBase>();
          
-         for (Iterator is = modelDependency.getSuppliers().iterator(); is.hasNext();) {
-            ModelElementBase elementBase = (ModelElementBase) is.next();
+         for (Iterator<ModelElementBase> is = modelDependency.getSuppliers().iterator(); is.hasNext();) {
+            ModelElementBase elementBase = is.next();
             
             suppliers.add(getModel().getModelElement(elementBase));
          }

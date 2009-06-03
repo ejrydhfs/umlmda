@@ -22,10 +22,10 @@ public interface ModelDependencyBase extends ModelElementBase {
    /**
     * Returns the 'Client' reference list.
     */
-   public Collection getClients();
+   public Collection<ModelElementBase> getClients();
 
    /**
     * Returns the 'Supplier' reference list.
     */
-   public Collection getSuppliers();
+   public Collection<ModelElementBase> getSuppliers();
 }
