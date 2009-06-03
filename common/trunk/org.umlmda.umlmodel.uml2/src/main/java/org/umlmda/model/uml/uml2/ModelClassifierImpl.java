@@ -29,23 +29,23 @@ import org.eclipse.uml2.uml.Classifier;
 import org.umlmda.model.uml.ModelClassifierBase;
 
 /**
- * primitive DataType of a UML model. This class wraps ru.novosoft.uml.foundation.core.MDataType to make
- * a more easy access.
- *  
+ * primitive DataType of a UML model. This class wraps ru.novosoft.uml.foundation.core.MDataType to make a more easy access.
+ * 
  * @author Dieter Moroff
  */
-public class ModelClassifierImpl extends ModelElementImpl implements ModelClassifierBase {
-	private final Classifier modelClassifier;
-	
-	ModelClassifierImpl() {
-		super(null, null);
-		this.modelClassifier = null;
-	}
-	
-	public ModelClassifierImpl(ModelImpl model, Classifier modelClassifier) {
-		super(model, modelClassifier);
-		this.modelClassifier = modelClassifier;	
-	}
-	
-   
+public class ModelClassifierImpl extends ModelElementImpl implements ModelClassifierBase
+{
+   @SuppressWarnings("unused")
+   private final Classifier modelClassifier;
+
+   ModelClassifierImpl() {
+      super(null, null);
+      this.modelClassifier = null;
+   }
+
+   public ModelClassifierImpl(ModelImpl model, Classifier modelClassifier) {
+      super(model, modelClassifier);
+      this.modelClassifier = modelClassifier;
+   }
+
 }

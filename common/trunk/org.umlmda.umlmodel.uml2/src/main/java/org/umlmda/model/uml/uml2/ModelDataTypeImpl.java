@@ -29,33 +29,34 @@ import org.eclipse.uml2.uml.DataType;
 import org.umlmda.model.uml.ModelDataTypeBase;
 
 /**
- * primitive DataType of a UML model. This class wraps ru.novosoft.uml.foundation.core.MDataType to make
- * a more easy access.
- *  
+ * primitive DataType of a UML model. This class wraps ru.novosoft.uml.foundation.core.MDataType to make a more easy access.
+ * 
  * @author Dieter Moroff
  */
-public class ModelDataTypeImpl extends ModelClassifierImpl implements ModelDataTypeBase {
-	private final DataType modelDataType;
-	
-	ModelDataTypeImpl() {
-		super();
-		this.modelDataType = null;
-	}
-	
-	public ModelDataTypeImpl(ModelImpl model, DataType modelDataType) {
-		super(model, modelDataType);
-		this.modelDataType = modelDataType;	
-	}
-	
-	/**
-	 * @return the fully qualified name of the class
-	 */
-	public String getQualifiedName() {
-      return getName();
-	}
+public class ModelDataTypeImpl extends ModelClassifierImpl implements ModelDataTypeBase
+{
+   @SuppressWarnings("unused")
+   private final DataType modelDataType;
 
-	public String toString() {
-		return getQualifiedName();
-	}
+   ModelDataTypeImpl() {
+      super();
+      this.modelDataType = null;
+   }
+
+   public ModelDataTypeImpl(ModelImpl model, DataType modelDataType) {
+      super(model, modelDataType);
+      this.modelDataType = modelDataType;
+   }
+
+   /**
+    * @return the fully qualified name of the class
+    */
+   public String getQualifiedName() {
+      return getName();
+   }
+
+   public String toString() {
+      return getQualifiedName();
+   }
 
 }

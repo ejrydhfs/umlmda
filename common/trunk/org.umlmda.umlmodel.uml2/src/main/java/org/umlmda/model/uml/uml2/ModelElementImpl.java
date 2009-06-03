@@ -46,83 +46,71 @@ import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.umlmda.model.uml.ModelBase;
-import org.umlmda.model.uml.ModelClass;
 import org.umlmda.model.uml.ModelClassBase;
-import org.umlmda.model.uml.ModelClassifierBase;
 import org.umlmda.model.uml.ModelConstants;
 import org.umlmda.model.uml.ModelElementBase;
-import org.umlmda.model.uml.ModelMethod;
 import org.umlmda.model.uml.ModelMethodBase;
 
-
 /**
- * Model element implementation for UML2 models based on eclipse UML2
- * implementation.
+ * Model element implementation for UML2 models based on eclipse UML2 implementation.
+ * 
  * @author MOROFF
  */
-public class ModelElementImpl implements ModelConstants, ModelElementBase {
-   protected final Element modelElement;
-   protected final ModelImpl model;
-   private final String modelUId;
-   private Properties taggedValues = null;
-   private String stereotype = null;
-   private List stereotypes = null;
-   private List depencencies = null;
-   protected static Logger logger = Logger.getLogger(ModelElementImpl.class);
-	
-	ModelElementImpl(ModelImpl model, Element modelElement) {
+public class ModelElementImpl implements ModelConstants, ModelElementBase
+{
+   protected final Element           modelElement;
+   protected final ModelImpl         model;
+   private final String              modelUId;
+   private Properties                taggedValues = null;
+   private List<String>              stereotypes  = null;
+   private List<ModelDependencyImpl> depencencies = null;
+   protected static Logger           logger       = Logger.getLogger(ModelElementImpl.class);
+
+   ModelElementImpl(ModelImpl model, Element modelElement) {
       this.model = model;
-	  this.modelElement = modelElement;
+      this.modelElement = modelElement;
 
-     String id = null;
-     
-     if ( modelElement.eResource() != null ) {
-        id = modelElement.eResource().getURIFragment(modelElement);
-     }
-     
-     if ( id != null ) {
-        modelUId = id;
-     }
-     else {
-        modelUId = org.umlmda.model.uml.impl.ModelElementImpl.createUUID();
-     }
+      String id = null;
 
-      
-      
-      
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.umlmda.model.uml.ModelElement#getTaggedValues()
-	 */
-	public Properties getTaggedValues() {
-		if ( taggedValues == null ) {
-			taggedValues = new Properties();
-         
+      if ( modelElement.eResource() != null ) {
+         id = modelElement.eResource().getURIFragment(modelElement);
+      }
+
+      if ( id != null ) {
+         modelUId = id;
+      }
+      else {
+         modelUId = org.umlmda.model.uml.impl.ModelElementImpl.createUUID();
+      }
+
+   }
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelElement#getTaggedValues()
+    */
+   public Properties getTaggedValues() {
+      if ( taggedValues == null ) {
+         taggedValues = new Properties();
+
          getTaggedValues(getModelElement(), taggedValues);
-		}
-		return taggedValues;
-	}
+      }
+      return taggedValues;
+   }
 
    /**
     * @param appliedStereotypSet
     */
    static void getTaggedValues(Element modelElement, Properties taggedValues) {
-      List appliedStereotypSet = modelElement.getAppliedStereotypes();
-
-      for (Iterator is = appliedStereotypSet.iterator(); is.hasNext();) {
-         Stereotype stereotype = (Stereotype) is.next();
-         
-         getTaggedValues(modelElement, stereotype, taggedValues);         
+      List<Stereotype> appliedStereotypeSet = modelElement.getAppliedStereotypes();
+      for ( Stereotype stereotype : appliedStereotypeSet ) {
+         getTaggedValues(modelElement, stereotype, taggedValues);
       }
-      
-      List stereotypSet = modelElement.getApplicableStereotypes();
 
-      for (Iterator is = stereotypSet.iterator(); is.hasNext();) {
-         Stereotype stereotype = (Stereotype) is.next();
-      
+      List<Stereotype> stereotypeSet = modelElement.getApplicableStereotypes();
+      for ( Stereotype stereotype : stereotypeSet ) {
          if ( modelElement.isStereotypeRequired(stereotype) ) {
-            getTaggedValues(modelElement, stereotype, taggedValues);         
+            getTaggedValues(modelElement, stereotype, taggedValues);
          }
       }
    }
@@ -133,34 +121,32 @@ public class ModelElementImpl implements ModelConstants, ModelElementBase {
     * @param taggedValues
     */
    private static void getTaggedValues(Element modelElement, Stereotype stereotype, Properties taggedValues) {
-      for (Iterator ip = stereotype.getAllAttributes().iterator(); ip.hasNext();) {
-         Property property = (Property) ip.next();
-         
+      for ( Property property : stereotype.getAllAttributes() ) {
          if ( !(property.getName().startsWith("base$") || property.getName().startsWith("base_")) ) {
             Object value = modelElement.getValue(stereotype, property.getName());
-            
+
             if ( value instanceof String ) {
-               if ( StringUtils.isNotEmpty((String)value) )
+               if ( StringUtils.isNotEmpty((String) value) )
                   taggedValues.put(property.getName(), value);
             }
             else if ( value instanceof EnumerationLiteral ) {
                EnumerationLiteral literal = (EnumerationLiteral) value;
-               
+
                taggedValues.put(property.getName(), literal.getName());
             }
             else if ( value instanceof Integer ) {
                Integer intValue = (Integer) value;
-               
+
                taggedValues.put(property.getName(), intValue.toString());
             }
             else if ( value instanceof Boolean ) {
                Boolean boolValue = (Boolean) value;
-               
+
                taggedValues.put(property.getName(), boolValue.toString());
             }
-            else if ( value != null ){
+            else if ( value != null ) {
                if ( logger.isDebugEnabled() )
-                  logger.debug(property.getName()+" unknown type "+value.getClass());
+                  logger.debug(property.getName() + " unknown type " + value.getClass());
             }
          }
       }
@@ -170,31 +156,29 @@ public class ModelElementImpl implements ModelConstants, ModelElementBase {
       return this.modelElement;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElement#getStereotypes()
     */
-   public Collection getStereotypes() {
+   public Collection<String> getStereotypes() {
       if ( stereotypes == null ) {
-         stereotypes = new ArrayList();
-         
-         List appliedStereotypeSet = modelElement.getAppliedStereotypes();
-         List stereotypeSet = modelElement.getKeywords();
-         
-         for (Iterator is = appliedStereotypeSet.iterator(); is.hasNext();) {
-            Stereotype stereotype = (Stereotype) is.next();
-            
+         stereotypes = new ArrayList<String>();
+
+         List<Stereotype> appliedStereotypeSet = modelElement.getAppliedStereotypes();
+         List<String> stereotypeSet = modelElement.getKeywords();
+
+         for ( Stereotype stereotype : appliedStereotypeSet ) {
             stereotypes.add(stereotype.getName());
          }
-         for (Iterator is = stereotypeSet.iterator(); is.hasNext();) {
-            String stereotype = (String)is.next();
-            
+         for ( String stereotype : stereotypeSet ) {
             stereotypes.add(stereotype);
          }
       }
       return stereotypes;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElement#hasStereotype(java.lang.String)
     */
    public boolean hasStereotype(String stereotype) {
@@ -203,52 +187,53 @@ public class ModelElementImpl implements ModelConstants, ModelElementBase {
 
    public String getName() {
       if ( modelElement != null && modelElement instanceof NamedElement ) {
-         NamedElement namedElement = (NamedElement) modelElement; 
+         NamedElement namedElement = (NamedElement) modelElement;
 
          return namedElement.getName();
       }
       else
-         return EMPTY;   
+         return EMPTY;
    }
-   
+
    public String getDocumentation() {
-      List comments = modelElement.getOwnedComments();
+      List<Comment> comments = modelElement.getOwnedComments();
       if ( comments.size() > 0 ) {
          Comment comment = (Comment) comments.get(0);
 
          return comment.getBody();
       }
       else
-         return EMPTY;   
+         return EMPTY;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElement#getOwner()
     */
    public ModelElementBase getOwnerBase() {
       Element container = modelElement.getOwner();
-      
+
       if ( container instanceof Model ) {
-         if ( ((Model)container).getName().equals(model.getName()) ) {
+         if ( ((Model) container).getName().equals(model.getName()) ) {
             return model;
          }
          else {
-            return model.findModel((Model)container);
+            return model.findModel((Model) container);
          }
       }
       else if ( container instanceof Package )
-         return model.findPackage((Package)container);
+         return model.findPackage((Package) container);
       else if ( container instanceof Classifier )
-         return model.findClassifier((Classifier)container);
+         return model.findClassifier((Classifier) container);
       else if ( container instanceof Operation ) {
          Operation operation = (Operation) container;
-         Classifier operationOwner  = (Classifier) operation.getOwner();
+         Classifier operationOwner = (Classifier) operation.getOwner();
          ModelClassBase operationClass = (ModelClassBase) model.findClassifier(operationOwner);
-         
-         for (Iterator im = operationClass.getMethods().iterator(); im.hasNext();) {
+
+         for ( Iterator im = operationClass.getMethods().iterator(); im.hasNext(); ) {
             ModelMethodBase method = (ModelMethodBase) im.next();
-            
-            if ( method.getName().equals(operation.getName())) {
+
+            if ( method.getName().equals(operation.getName()) ) {
                return method;
             }
          }
@@ -257,64 +242,67 @@ public class ModelElementImpl implements ModelConstants, ModelElementBase {
       else
          return null;
    }
-   
+
    public ModelBase getModelBase() {
       return model;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElementBase#getDependencies()
     */
-   public Collection getDependencies() {
+   public Collection<ModelDependencyImpl> getDependencies() {
       if ( depencencies == null ) {
-         depencencies = new ArrayList();
-         
+         depencencies = new ArrayList<ModelDependencyImpl>();
+
          if ( modelElement instanceof NamedElement ) {
             NamedElement namedElement = (NamedElement) modelElement;
 
-            for (Iterator id = namedElement.getClientDependencies().iterator(); id.hasNext();) {
-               Dependency dependency = (Dependency) id.next();
-               
+            for ( Dependency dependency : namedElement.getClientDependencies() ) {
                depencencies.add(new ModelDependencyImpl((ModelImpl) getModelBase(), dependency));
             }
          }
       }
       return depencencies;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElementBase#getStereotypeProperty(java.lang.String)
     */
    public String getStereotypeProperty(String name) {
       return getTaggedValues().getProperty(name);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElementBase#getStereotypeProperty(java.lang.String, java.lang.String)
     */
    public String getStereotypeProperty(String name, String defaultValue) {
       return getTaggedValues().getProperty(name, defaultValue);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElementBase#getModelUId()
     */
    public String getModelUId() {
       return modelUId;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#getConstraints()
     */
    protected String getConstraints(Element contraintsHolder) {
       StringBuffer constraints = new StringBuffer();
-      
-      for (Iterator ic = contraintsHolder.getOwnedElements().iterator(); ic.hasNext();) {
+
+      for ( Iterator<Element> ic = contraintsHolder.getOwnedElements().iterator(); ic.hasNext(); ) {
          Element element = (Element) ic.next();
-         
+
          if ( element instanceof Constraint ) {
             Constraint constraint = (Constraint) element;
-            
+
             constraints.append(constraint.getSpecification().toString());
             if ( ic.hasNext() ) {
                constraints.append("\n");
@@ -323,12 +311,13 @@ public class ModelElementImpl implements ModelConstants, ModelElementBase {
       }
       return constraints.toString();
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#getConstraints()
     */
    public String getConstraints() {
       return getConstraints(modelElement);
    }
-   
+
 }

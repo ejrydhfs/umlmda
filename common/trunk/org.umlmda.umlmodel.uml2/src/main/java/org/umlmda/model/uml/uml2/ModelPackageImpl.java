@@ -26,28 +26,29 @@
 package org.umlmda.model.uml.uml2;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Namespace;
+import org.eclipse.uml2.uml.Package;
 import org.umlmda.model.uml.ModelConstants;
 import org.umlmda.model.uml.ModelPackageBase;
-import org.eclipse.uml2.uml.Package;
 
 /**
  * Wraps a package from a UML model
+ * 
  * @author Dieter Moroff
  */
-public class ModelPackageImpl extends ModelElementImpl implements ModelConstants, ModelPackageBase {
-	private final Package modelPackage;
-   private Collection referencedPackages = null;
-   private List classes = null;
-	private String name;
-	
+public class ModelPackageImpl extends ModelElementImpl implements ModelConstants, ModelPackageBase
+{
+   private final Package        modelPackage;
+   // private Collection referencedPackages = null;
+   private List<ModelClassImpl> classes = null;
+   @SuppressWarnings("unused")
+   private String               name;
+
    /**
     * 
     */
@@ -57,38 +58,36 @@ public class ModelPackageImpl extends ModelElementImpl implements ModelConstants
       this.name = Object.class.getPackage().getName();
    }
 
-	/**
-	 * @param namespace
-	 */
-	public ModelPackageImpl(ModelImpl model, Namespace namespace) {
-		super(model, namespace);
-		if (namespace instanceof Package && !(namespace instanceof Model) ) 
-			modelPackage = (Package) namespace;
-		else
-			modelPackage = null;
-	}
+   /**
+    * @param namespace
+    */
+   public ModelPackageImpl(ModelImpl model, Namespace namespace) {
+      super(model, namespace);
+      if ( namespace instanceof Package && !(namespace instanceof Model) )
+         modelPackage = (Package) namespace;
+      else
+         modelPackage = null;
+   }
 
    /**
     * 
     */
-   public List getClasses() {
+   public List<ModelClassImpl> getClasses() {
       if ( classes == null ) {
-         classes = new ArrayList();
-         
-         for (Iterator iter = modelPackage.getOwnedElements().iterator(); iter.hasNext();) {
-            Element element = (Element) iter.next();
-   
-            if (element instanceof Class) {
-               ModelClassImpl newModelClass = model.findClass((Class)element);
-               classes.add(model.findClass((Class)element));
-            }      
-         }      
+         classes = new ArrayList<ModelClassImpl>();
+
+         for ( Element element : modelPackage.getOwnedElements() ) {
+            if ( element instanceof Class ) {
+               classes.add(model.findClass((Class) element));
+            }
+         }
       }
-      
+
       return classes;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelPackage#getPackage()
     */
    public ModelPackageBase getPackageBase() {
@@ -97,5 +96,5 @@ public class ModelPackageImpl extends ModelElementImpl implements ModelConstants
       else
          return null;
    }
-   
+
 }

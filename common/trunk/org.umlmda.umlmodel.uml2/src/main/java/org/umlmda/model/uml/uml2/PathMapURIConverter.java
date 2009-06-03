@@ -37,12 +37,13 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 
 /**
- * URIConverter to load UML2 model stored by IBM RSM/RSA 
+ * URIConverter to load UML2 model stored by IBM RSM/RSA
  */
-public class PathMapURIConverter implements URIConverter {
+public class PathMapURIConverter implements URIConverter
+{
    private final URIConverter converter;
-   private final Map pathMap;
-   private final Logger logger = Logger.getLogger(getClass());
+   private final Map          pathMap;
+   private final Logger       logger = Logger.getLogger(getClass());
 
    public PathMapURIConverter(URIConverter converter, Map pathMap) {
       super();
@@ -50,34 +51,35 @@ public class PathMapURIConverter implements URIConverter {
       this.pathMap = pathMap;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.eclipse.emf.ecore.resource.URIConverter#normalize(org.eclipse.emf.common.util.URI)
     */
    public URI normalize(URI uri) {
       URI normalizedURI = null;
-      
-      if ( uri.scheme() != null && uri.scheme().equals("pathmap")) {
+
+      if ( uri.scheme() != null && uri.scheme().equals("pathmap") ) {
          normalizedURI = createPathMapURI(uri);
       }
       else {
-         normalizedURI = converter.normalize(uri); 
+         normalizedURI = converter.normalize(uri);
       }
-      
-      return normalizedURI; 
+
+      return normalizedURI;
    }
 
    private URI createPathMapURI(URI uri) {
       URI normalizedURI;
       String host = uri.host();
       String mappedPath = (String) pathMap.get(host);
-      
+
       if ( mappedPath != null ) {
          if ( mappedPath.startsWith("jar:") ) {
-            normalizedURI = URI.createURI(mappedPath+uri.path());
+            normalizedURI = URI.createURI(mappedPath + uri.path());
          }
          else {
             String path = uri.path();
-            normalizedURI = URI.createFileURI(mappedPath+path);
+            normalizedURI = URI.createFileURI(mappedPath + path);
          }
       }
       else {
@@ -86,31 +88,33 @@ public class PathMapURIConverter implements URIConverter {
       return normalizedURI;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.eclipse.emf.ecore.resource.URIConverter#getURIMap()
     */
-   public Map getURIMap() {
+   public Map<URI, URI> getURIMap() {
       return converter.getURIMap();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.eclipse.emf.ecore.resource.URIConverter#createInputStream(org.eclipse.emf.common.util.URI)
     */
    public InputStream createInputStream(URI uri) throws IOException {
       InputStream inputStream = null;
-      
+
       if ( uri.scheme() != null && uri.scheme().equals("pathmap") ) {
          String host = uri.host();
          String mappedPath = (String) pathMap.get(host);
-         
+
          if ( mappedPath != null ) {
             URI normalizedURI = createPathMapURI(uri);
 
             inputStream = createInputStream(normalizedURI);
-            logger.info("loaded "+normalizedURI.toString());
+            logger.info("loaded " + normalizedURI.toString());
          }
          else {
-            logger.warn(uri.toString()+" ignored");
+            logger.warn(uri.toString() + " ignored");
             inputStream = converter.createInputStream(uri);
          }
       }
@@ -121,7 +125,8 @@ public class PathMapURIConverter implements URIConverter {
       return inputStream;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.eclipse.emf.ecore.resource.URIConverter#createOutputStream(org.eclipse.emf.common.util.URI)
     */
    public OutputStream createOutputStream(URI uri) throws IOException {

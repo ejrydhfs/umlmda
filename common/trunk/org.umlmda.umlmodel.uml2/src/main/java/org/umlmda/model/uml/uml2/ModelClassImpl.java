@@ -26,7 +26,6 @@
 package org.umlmda.model.uml.uml2;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.uml2.uml.Class;
@@ -39,31 +38,32 @@ import org.umlmda.model.uml.ModelClassBase;
 import org.umlmda.model.uml.ModelPackageBase;
 
 /**
- * ModelClass of a UML model. This class wraps
- * ru.novosoft.uml.foundation.core.MClass to make a more easy access to the
- * class members and relations.
+ * ModelClass of a UML model. This class wraps ru.novosoft.uml.foundation.core.MClass to make a more easy access to the class
+ * members and relations.
  * 
  * @author Dieter Moroff
  */
-public class ModelClassImpl extends ModelClassifierImpl implements ModelClassBase {
-   private final Class modelClass;
+public class ModelClassImpl extends ModelClassifierImpl implements ModelClassBase
+{
+   private final Class                   modelClass;
 
-   private ModelPackageBase modelPackage = null;
+   private ModelPackageBase              modelPackage    = null;
 
-   private List attributes = null;
+   private List<ModelAttributeImpl>      attributes      = null;
 
-   private List constants = null;
+   private List<ModelAttributeImpl>      constants       = null;
 
-   private List methods = null;
+   private List<ModelMethodImpl>         methods         = null;
 
-   private List associations = null;
+   private List<ModelAssociationBase>    associations    = null;
 
-   private List allAssociations = new ArrayList();
+   private List<ModelAssociationBase>    allAssociations = new ArrayList<ModelAssociationBase>();
 
-   private List referencedTypes = null;
+   @SuppressWarnings({ "unchecked", "unused" })
+   private List                          referencedTypes = null;
 
-   private List generalizations = null;
-   
+   private List<ModelGeneralizationImpl> generalizations = null;
+
    ModelClassImpl() {
       super();
       this.modelClass = null;
@@ -76,7 +76,7 @@ public class ModelClassImpl extends ModelClassifierImpl implements ModelClassBas
    }
 
    public ModelPackageBase getPackageBase() {
-      if (modelPackage == null)
+      if ( modelPackage == null )
          modelPackage = model.findPackage(modelClass.getNamespace());
       return modelPackage;
    }
@@ -84,34 +84,32 @@ public class ModelClassImpl extends ModelClassifierImpl implements ModelClassBas
    /**
     * @return
     */
-   public List getAttributes() {
-      if (attributes == null) {
+   public List<ModelAttributeImpl> getAttributes() {
+      if ( attributes == null ) {
          attributes = getAttributeList(false);
       }
       return attributes;
    }
 
    /**
-    * Returns a collection containing all constant attributes (a constant must
-    * be mark frozen, scope classifier and have an initial value).
+    * Returns a collection containing all constant attributes (a constant must be mark frozen, scope classifier and have an
+    * initial value).
     */
-   public List getConstants() {
-      if (constants == null) {
+   public List<ModelAttributeImpl> getConstants() {
+      if ( constants == null ) {
          constants = getAttributeList(true);
       }
       return constants;
    }
 
-   private List getAttributeList(boolean constants) {
-      List attributes = new ArrayList();
-      for (Iterator ia = modelClass.getAttributes().iterator(); ia.hasNext();) {
-         Property feature = (Property) ia.next();
-
-         if (feature.getAssociation() == null) {
+   private List<ModelAttributeImpl> getAttributeList(boolean constants) {
+      List<ModelAttributeImpl> attributes = new ArrayList<ModelAttributeImpl>();
+      for ( Property feature : modelClass.getAttributes() ) {
+         if ( feature.getAssociation() == null ) {
             Property attribute = (Property) feature;
 
-            if ((constants == true && ModelAttributeImpl.isConstant(attribute))
-                  || (constants == false && !ModelAttributeImpl.isConstant(attribute)))
+            if ( (constants == true && ModelAttributeImpl.isConstant(attribute))
+                  || (constants == false && !ModelAttributeImpl.isConstant(attribute)) )
                attributes.add(new ModelAttributeImpl(model, (Property) feature));
          }
       }
@@ -121,36 +119,30 @@ public class ModelClassImpl extends ModelClassifierImpl implements ModelClassBas
    /**
     * @return
     */
-   public List getMethods() {
-      if (methods == null) {
-         methods = new ArrayList();
+   public List<ModelMethodImpl> getMethods() {
+      if ( methods == null ) {
+         methods = new ArrayList<ModelMethodImpl>();
 
-         for (Iterator iter = modelClass.getFeatures().iterator(); iter.hasNext();) {
-            Feature feature = (Feature) iter.next();
-
-            if (feature instanceof Operation)
+         for ( Feature feature : modelClass.getFeatures() ) {
+            if ( feature instanceof Operation )
                methods.add(new ModelMethodImpl(model, (Operation) feature));
          }
       }
       return methods;
    }
 
-   
-   public List getGeneralizations() {
+   public List<ModelGeneralizationImpl> getGeneralizations() {
       if ( generalizations == null ) {
-         generalizations = new ArrayList();
+         generalizations = new ArrayList<ModelGeneralizationImpl>();
 
-         for (Iterator iter = modelClass.getGeneralizations().iterator(); iter.hasNext();) {
-            Generalization generalization = (Generalization) iter.next();
-
-            if (generalization.getSpecific() == modelClass)
-               generalizations.add(new ModelGeneralizationImpl((ModelImpl)getModelBase(), generalization));
+         for ( Generalization generalization : modelClass.getGeneralizations() ) {
+            if ( generalization.getSpecific() == modelClass )
+               generalizations.add(new ModelGeneralizationImpl((ModelImpl) getModelBase(), generalization));
          }
       }
       return generalizations;
    }
-   
-   
+
    /**
     * @return
     */
@@ -161,23 +153,21 @@ public class ModelClassImpl extends ModelClassifierImpl implements ModelClassBas
    /**
     * @return
     */
-   public List getAssociations() {
-      if (associations == null) {
-         associations = new ArrayList();
+   public List<ModelAssociationBase> getAssociations() {
+      if ( associations == null ) {
+         associations = new ArrayList<ModelAssociationBase>();
 
-         for (Iterator iter = modelClass.getFeatures().iterator(); iter.hasNext();) {
-            Feature feature = (Feature) iter.next();
-
-            if (feature instanceof Property) {
+         for ( Feature feature : modelClass.getFeatures() ) {
+            if ( feature instanceof Property ) {
                Property property = (Property) feature;
 
-               if (property.getAssociation() != null) {
+               if ( property.getAssociation() != null ) {
                   ModelAssociationBase association = new ModelAssociationImpl(model, this, property);
 
                   allAssociations.add(association);
-                  if (association.isNavigatableToTarget())
+                  if ( association.isNavigatableToTarget() )
                      associations.add(association);
-                  if (association.getTargetBase() != null && association.isNavigatableToSource() == false)
+                  if ( association.getTargetBase() != null && association.isNavigatableToSource() == false )
                      ((ModelClassImpl) (association.getTargetBase())).addReverse(association);
                }
             }
@@ -195,18 +185,16 @@ public class ModelClassImpl extends ModelClassifierImpl implements ModelClassBas
 
    /*
     * (non-Javadoc)
-    * 
     * @see org.umlmda.model.uml.ModelClass#getAllAssociations()
     */
-   public List getAllAssociations() {
-      if (allAssociations == null)
+   public List<ModelAssociationBase> getAllAssociations() {
+      if ( allAssociations == null )
          getAssociations();
       return allAssociations;
    }
 
    /*
     * (non-Javadoc)
-    * 
     * @see org.umlmda.model.uml.ModelClass#isAbstract()
     */
    public boolean isAbstract() {

@@ -34,11 +34,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import org.umlmda.model.uml.ModelAssociationBase;
-import org.umlmda.model.uml.ModelClassBase;
-import org.umlmda.model.uml.ModelElementBase;
-import org.umlmda.model.uml.attributes.Multiplicity;
-
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.uml2.uml.AggregationKind;
 import org.eclipse.uml2.uml.Class;
@@ -48,41 +43,46 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
+import org.umlmda.model.uml.ModelAssociationBase;
+import org.umlmda.model.uml.ModelClassBase;
+import org.umlmda.model.uml.ModelElementBase;
+import org.umlmda.model.uml.attributes.Multiplicity;
 
 /**
- * Implementation of a association from a owning class to a target class for
- * UML2.
+ * Implementation of a association from a owning class to a target class for UML2.
+ * 
  * @author moroff
  */
-public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements ModelAssociationBase {
+public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements ModelAssociationBase
+{
    /**
     * Model class to which the association points
     */
-   final private ModelClassBase target;
+   final private ModelClassBase     target;
    /**
     * Property in the owner containing the endpoint of the assocations
     */
-   final private Property targetEnd;
+   final private Property           targetEnd;
    /**
     * Model class which owns this assocations
     */
-   final private ModelClassBase owner;
-	/**
-	 * association which connects source and target in opposite direction
-	 */
-	private ModelAssociationBase reverseAssoc = null;
+   final private ModelClassBase     owner;
+   /**
+    * association which connects source and target in opposite direction
+    */
+   private ModelAssociationBase     reverseAssoc = null;
    /**
     * Property in the target containing the other endpoint of the assocations
     */
-   final private Property ownerEnd;
+   final private Property           ownerEnd;
    /**
     * Tagged values of the assocation
     */
-   private Properties taggedValues = null;
-   private Multiplicity multiplicity = null;
-   private List qualifiers = null;
-   private Set stereoTypes = null;
-   
+   private Properties               taggedValues = null;
+   private Multiplicity             multiplicity = null;
+   private List<ModelAttributeImpl> qualifiers   = null;
+   private Set<String>              stereoTypes  = null;
+
    /**
     * @param modelElement
     */
@@ -90,27 +90,27 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       super(model, targetEnd);
       this.owner = owner;
       if ( targetEnd.getType() == null ) {
-         logger.error(targetEnd.getName()+" has no type specified");
+         logger.error(targetEnd.getName() + " has no type specified");
          this.target = null;
       }
       else {
-         this.target = model.findClass((Class)targetEnd.getType());
+         this.target = model.findClass((Class) targetEnd.getType());
       }
       this.targetEnd = targetEnd;
       if ( targetEnd.getAssociation().getMemberEnds().get(0) != targetEnd ) {
-         ownerEnd = (Property)targetEnd.getAssociation().getMemberEnds().get(0);
+         ownerEnd = (Property) targetEnd.getAssociation().getMemberEnds().get(0);
       }
-      else {             
-         ownerEnd = (Property)targetEnd.getAssociation().getMemberEnds().get(1);
+      else {
+         ownerEnd = (Property) targetEnd.getAssociation().getMemberEnds().get(1);
       }
    }
 
    ModelAssociationBase createReverse() {
-      ModelAssociationBase reverse = new ModelAssociationImpl((ModelImpl)getModelBase(), getTargetBase(), getOwnerEnd());
-      
+      ModelAssociationBase reverse = new ModelAssociationImpl((ModelImpl) getModelBase(), getTargetBase(), getOwnerEnd());
+
       return reverse;
    }
-   
+
    /**
     * @return
     */
@@ -124,40 +124,42 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
    public ModelClassBase getSourceBase() {
       return owner;
    }
-   
+
    public boolean isAggregation() {
       return targetEnd.getAggregation().getValue() == AggregationKind.SHARED;
    }
-   
+
    public boolean isComposition() {
       return targetEnd.getAggregation().getValue() == AggregationKind.COMPOSITE;
    }
-   
+
    public boolean isMultiple() {
-      return targetEnd.isMultivalued();      
+      return targetEnd.isMultivalued();
    }
 
    public boolean isOptional() {
-      return targetEnd.lowerBound() == 0;      
+      return targetEnd.lowerBound() == 0;
    }
 
-	/**
-	 * checks whether the target could be navigated through this association
-	 * @return
-	 */
-	public boolean isNavigatableToTarget() {
-		return targetEnd.isNavigable();
-	}
-   
+   /**
+    * checks whether the target could be navigated through this association
+    * 
+    * @return
+    */
+   public boolean isNavigatableToTarget() {
+      return targetEnd.isNavigable();
+   }
+
    public boolean isNavigatableToSource() {
       return ownerEnd.isNavigable();
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElement#getName()
     */
    public String getName() {
-      if ( StringUtils.isEmpty(targetEnd.getName())) {
+      if ( StringUtils.isEmpty(targetEnd.getName()) ) {
          return Introspector.decapitalize(getTargetBase().getName());
       }
       else {
@@ -165,8 +167,8 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       }
    }
 
-
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.nsuml.ModelElementImpl#getModelElement()
     */
    protected Element getModelElement() {
@@ -174,65 +176,66 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
    }
 
    public String getDocumentation() {
-      List comments = ownerEnd.getAssociation().getOwnedComments();
+      List<Comment> comments = ownerEnd.getAssociation().getOwnedComments();
       if ( comments.size() > 0 ) {
          Comment comment = (Comment) comments.get(0);
-         
+
          return comment.getBody();
       }
       else
          return StringUtils.EMPTY;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getStereotype()
     */
-   public Collection getStereotypes() {
+   public Collection<String> getStereotypes() {
       if ( stereoTypes == null ) {
-         stereoTypes = new HashSet();
-         
-         for (Iterator is = ownerEnd.getAssociation().getAppliedStereotypes().iterator(); is.hasNext();) {
-            Stereotype stereotype = (Stereotype) is.next();
-            
+         stereoTypes = new HashSet<String>();
+
+         for ( Stereotype stereotype : ownerEnd.getAssociation().getAppliedStereotypes() ) {
             stereoTypes.add(stereotype.getName());
          }
-         
-         for (Iterator is = targetEnd.getAppliedStereotypes().iterator(); is.hasNext();) {
-            Stereotype stereotype = (Stereotype) is.next();
-            
+
+         for ( Stereotype stereotype : targetEnd.getAppliedStereotypes() ) {
             stereoTypes.add(stereotype.getName());
          }
       }
       return stereoTypes;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElement#getTaggedValues()
     */
    public Properties getTaggedValues() {
       if ( taggedValues == null ) {
          taggedValues = new Properties();
-         
+
          getTaggedValues(targetEnd.getAssociation(), taggedValues);
       }
       return taggedValues;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeature#getOwningClass()
     */
    public ModelClassBase getOwningClassBase() {
       return getSourceBase();
    }
-   
+
    Property getOwnerEnd() {
       return ownerEnd;
    }
+
    Property getTargetEnd() {
       return targetEnd;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#getReverseBase()
     */
    public ModelAssociationBase getReverseBase() {
@@ -247,68 +250,69 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
 		}
 		return reverseAssoc;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElement#getOwner()
     */
    public ModelElementBase getOwnerBase() {
 
       // getOwner() returns the containing package
-   	  // we need the class from which the association comes from
-      Element container = ((Property)modelElement).getOwner();
+      // we need the class from which the association comes from
+      Element container = ((Property) modelElement).getOwner();
 
       if ( container instanceof Classifier )
-         return model.findClassifier((Classifier)container);
+         return model.findClassifier((Classifier) container);
       else if ( container instanceof Package )
-         return model.findPackage((Package)container);
+         return model.findPackage((Package) container);
       else
          return null;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeatureBase#getMultiplicity()
     */
    public Multiplicity getMultiplicity() {
-      if (multiplicity == null) {
-         multiplicity = new Multiplicity(
-               targetEnd.lowerBound(),
-               targetEnd.upperBound());
+      if ( multiplicity == null ) {
+         multiplicity = new Multiplicity(targetEnd.lowerBound(), targetEnd.upperBound());
       }
       return multiplicity;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#getQualifiers()
     */
-   public List getQualifiers() {
-      qualifiers = new ArrayList();
-      for (Iterator ia = targetEnd.getQualifiers().iterator(); ia.hasNext();) {
-         Property feature = (Property) ia.next();
-
-         if (feature.getAssociation() == null) {
+   public List<ModelAttributeImpl> getQualifiers() {
+      qualifiers = new ArrayList<ModelAttributeImpl>();
+      for ( Property feature : targetEnd.getQualifiers() ) {
+         if ( feature.getAssociation() == null ) {
             Property attribute = (Property) feature;
-
             qualifiers.add(new ModelAttributeImpl(model, attribute));
          }
       }
       return qualifiers;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#getConstraints()
     */
    public String getConstraints() {
       return getConstraints(targetEnd);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#isOrdered()
     */
    public boolean isOrdered() {
       return targetEnd.isOrdered();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#isUnique()
     */
    public boolean isUnique() {
@@ -322,7 +326,8 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       return super.isDerived() || targetEnd.isDerived();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeatureBase#isReadOnly()
     */
    public boolean isReadOnly() {

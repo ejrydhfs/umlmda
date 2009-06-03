@@ -26,7 +26,6 @@
 package org.umlmda.model.uml.uml2;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.uml2.uml.Class;
@@ -41,53 +40,51 @@ import org.umlmda.model.uml.ModelMethodBase;
 /**
  * @author moroff
  */
-public class ModelMethodImpl extends ModelElementImpl implements ModelMethodBase {
-   private final Operation method;
-   private List parameters;
-   private List exceptions;
-   private ModelClassifierBase returnType;
-      
+public class ModelMethodImpl extends ModelElementImpl implements ModelMethodBase
+{
+   private final Operation           method;
+   private List<ModelParameterImpl>  parameters;
+   private List<ModelClassifierBase> exceptions;
+   private ModelClassifierBase       returnType;
+
    public ModelMethodImpl(ModelImpl model, Operation method) {
       super(model, method);
       this.method = method;
    }
-   
+
    /**
     * @return
     */
-   public List getParameters() {
+   public List<ModelParameterImpl> getParameters() {
       if ( parameters == null ) {
-         parameters = new ArrayList(method.getOwnedParameters().size());
-         exceptions = new ArrayList();
-                 
-         for (Iterator iter = method.getOwnedParameters().iterator(); iter.hasNext();) {
-            Parameter parameter = (Parameter) iter.next();
+         parameters = new ArrayList<ModelParameterImpl>(method.getOwnedParameters().size());
+         exceptions = new ArrayList<ModelClassifierBase>();
 
+         for ( Parameter parameter : method.getOwnedParameters() ) {
             if ( parameter.getDirection().getValue() == ParameterDirectionKind.OUT && parameter.isException() )
-               exceptions.add(model.findClassifier((Classifier)parameter.getType()));
+               exceptions.add(model.findClassifier((Classifier) parameter.getType()));
             else if ( parameter.getDirection().getValue() == ParameterDirectionKind.RETURN ) {
                if ( parameter.getType() != null ) {
-                  returnType = model.findClassifier((Classifier)parameter.getType());
+                  returnType = model.findClassifier((Classifier) parameter.getType());
                }
                else {
                   returnType = null;
                }
-                  
             }
             else
                parameters.add(new ModelParameterImpl(model, parameter));
-         }                 
+         }
       }
       return parameters;
    }
 
-   public List getExceptions() {
+   public List<ModelClassifierBase> getExceptions() {
       if ( exceptions == null ) {
          getParameters();
       }
       return exceptions;
    }
-   
+
    /**
     * @return
     */
@@ -105,11 +102,12 @@ public class ModelMethodImpl extends ModelElementImpl implements ModelMethodBase
       return method.getName();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttribute#getOwningClass()
     */
    public ModelClassBase getOwningClass() {
-      return model.findClass((Class)method.getOwner());
+      return model.findClass((Class) method.getOwner());
    }
-   
+
 }
