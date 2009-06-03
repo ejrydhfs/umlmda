@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+/**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id: plugin.xml,v 1.46.2.1 2008/01/21 11:15:43 moroff Exp $
+ */
+-->
+
+<plugin>
+
+    <extension
+    point = "org.eclipse.ui.newWizards">
+    <category
+      id = "org.umlmda.Wizard.category.ID"
+      name="UMLMDA">
+    </category>
+    <wizard
+      id = "org.umlmda.generator.set.presentation.UmsModelWizardID"
+      name = "Generator Set"
+      class = "org.umlmda.generator.set.presentation.UmsModelWizard"
+      category = "org.umlmda.Wizard.category.ID"
+      icon = "icons/full/obj16/UmsModelFile.gif">
+      <description>%_UI_UmsModelWizard_description</description>
+      <selection class = "org.eclipse.core.resources.IResource" />
+    </wizard>
+  </extension>
+
+  <extension point = "org.eclipse.ui.editors">
+    <editor
+        id = "org.umlmda.generator.set.presentation.UmsEditorID"
+        name = "UMLMDA Generator Set Editor"
+        icon = "icons/full/obj16/UmsModelFile.gif"
+        extensions = "ums"
+        class = "org.umlmda.generator.set.presentation.UmsEditor" 
+        contributorClass="org.umlmda.generator.set.presentation.UmsActionBarContributor" >
+    </editor>
+  </extension>    
+
+  <extension
+    point = "org.eclipse.ui.newWizards">
+    <wizard
+      id = "org.umlmda.generator.profile.presentation.UmpModelWizardID"
+      name = "Generator Profile"
+      class = "org.umlmda.generator.profile.presentation.UmpModelWizard"
+      category = "org.umlmda.Wizard.category.ID"
+      icon = "icons/full/obj16/UmpModelFile.gif">
+      <description>%_UI_UmpModelWizard_description</description>
+      <selection class = "org.eclipse.core.resources.IResource" />
+    </wizard>
+  </extension>
+
+  <extension point = "org.eclipse.ui.editors">
+    <editor
+        id = "org.umlmda.generator.profile.presentation.UmpEditorID"
+        name = "UMLMDA Generator Profile Editor"
+        icon = "icons/full/obj16/UmpModelFile.gif"
+        extensions = "ump"
+        class = "org.umlmda.generator.profile.presentation.UmpEditor" 
+        contributorClass="org.umlmda.generator.profile.presentation.UmpActionBarContributor" >
+    </editor>
+  </extension>    
+</plugin>

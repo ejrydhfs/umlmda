@@ -1,0 +1,8 @@
+bin
+temp.bin
+org.umlmda.umlmodel.nsuml_*.jar
+temp.folder
+javaCompiler.runtime_org.umlmda.umlmodel.nsuml.jar.args
+@dot
+src.zip
+javaCompiler.*.args
