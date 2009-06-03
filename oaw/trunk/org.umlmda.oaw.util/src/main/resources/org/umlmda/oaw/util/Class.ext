@@ -1,0 +1,14 @@
+import uml;
+
+// and we also load the io extensions, for the purpose of
+// debugging, in case we need it   
+extension org::openarchitectureware::util::stdlib::io;   
+extension org::openarchitectureware::util::stdlib::issues;   
+
+List[uml::Relationship] getRelationships(uml::Class to, uml::Package in) :
+    JAVA org.umlmda.oaw.util.uml2.AssociationUtils.getRelationships(org.eclipse.uml2.uml.Class, org.eclipse.uml2.uml.Package)
+;
+
+List[uml::Element] getRelationElements(uml::Class to, uml::Package in) :
+    JAVA org.umlmda.oaw.util.uml2.AssociationUtils.getRelationElements(org.eclipse.uml2.uml.Class, org.eclipse.uml2.uml.Package)
+;        
