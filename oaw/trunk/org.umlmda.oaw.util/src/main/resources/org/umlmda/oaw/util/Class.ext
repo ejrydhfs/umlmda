@@ -1,5 +1,7 @@
 import uml;
 
+extension org::umlmda::oaw::util::Classifier reexport;
+
 // and we also load the io extensions, for the purpose of
 // debugging, in case we need it   
 extension org::openarchitectureware::util::stdlib::io;   
