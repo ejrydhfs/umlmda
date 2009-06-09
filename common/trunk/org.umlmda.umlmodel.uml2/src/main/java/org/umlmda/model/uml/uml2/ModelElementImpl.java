@@ -320,4 +320,26 @@ public class ModelElementImpl implements ModelConstants, ModelElementBase
       return getConstraints(modelElement);
    }
 
+   public String getQualifiedName() {
+      StringBuilder builder = new StringBuilder();
+      Element owner = modelElement.getOwner();
+      
+      if ( modelElement instanceof NamedElement ) { 
+         builder.append(((NamedElement)modelElement).getName());
+      }
+      while ( owner instanceof NamedElement ) {
+         builder.insert(0, "::");
+         builder.insert(0, ((NamedElement)owner).getName());
+         
+         owner = owner.getOwner();
+      }
+      
+      return builder.toString();
+   }
+      
+   @Override
+   public String toString() {
+      return getQualifiedName();
+   }
+      
 }
