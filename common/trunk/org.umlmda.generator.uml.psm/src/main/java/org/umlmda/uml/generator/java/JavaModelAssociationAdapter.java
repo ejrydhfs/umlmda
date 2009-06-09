@@ -172,7 +172,7 @@ public String getCollectionInterfaceType() {
     */
    public String getImplementationType() {
       JavaModelClass target = (JavaModelClass) getTarget();
-      String targetType = target.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE);
+      String targetType = target.getJavaType();
       
       if ( isMultiple() ) {
          if (genericSupport) {
