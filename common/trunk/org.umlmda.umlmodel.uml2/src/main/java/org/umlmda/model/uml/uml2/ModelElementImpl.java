@@ -77,7 +77,9 @@ public class ModelElementImpl implements ModelConstants, ModelElementBase
       }
 
       if ( id != null ) {
-         modelUId = id;
+         String resource = modelElement.eResource().getURI().toString();
+         
+         modelUId = id + "@" + resource;
       }
       else {
          modelUId = org.umlmda.model.uml.impl.ModelElementImpl.createUUID();
