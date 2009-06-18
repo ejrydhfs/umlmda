@@ -131,7 +131,7 @@ cached Void applyStereotypeToElement(NamedElement element, Stereotype stereotype
         debug("Stereotype <<"+stereotype.name+">> already applied to model "+element.qualifiedName) ->
         true
     ) : (
-        info("Applying <<"+stereotype.name+" to "+element.qualifiedName) ->
+        info("Applying <<"+stereotype.name+">> to "+element.qualifiedName) ->
         element.applyStereotype(stereotype)
     )    
 ;
