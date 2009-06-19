@@ -40,24 +40,24 @@ cached Boolean isOwner(JavaModelAssociation assoc) :
     assoc.composition || assoc.aggregation
 ;
 
+// Returns relevant join columns from the target of the given association.
 cached List[JavaModelAttribute] joinColumns(JavaModelAssociation assoc) :
-    assoc.target.keyAttributes.typeSelect(ModelAttribute)
+    assoc.target.keyAttributes.typeSelect(ModelAttribute).reject(a | a.derived)
 ;
 
 cached List[JavaModelAttribute] unsharedJoinColumns(JavaModelAssociation assoc) :
-    let sourceColumns = assoc.source.keyAttributes.typeSelect(ModelAttribute).name :
+    let sourceColumns = assoc.source.keyAttributes.typeSelect(ModelAttribute).reject(a | a.derived).name :
     
     assoc.joinColumns().reject(e|sourceColumns.contains(e.name))
 ;
 
 cached List[JavaModelAttribute] sharedJoinColumns(JavaModelAssociation assoc) :
-    let sourceColumns = assoc.source.keyAttributes.typeSelect(ModelAttribute).name :
+    let sourceColumns = assoc.source.keyAttributes.typeSelect(ModelAttribute).reject(a | a.derived).name :
     
     assoc.joinColumns().select(e|sourceColumns.contains(e.name))
 ;
 
 cached Boolean hasSharedKey(JavaModelAssociation assoc) :
-    
     let targetKeys = assoc.target.keyAttributes.typeSelect(ModelAttribute) :
     let sourceKeys = assoc.source.keyAttributes.typeSelect(ModelAttribute) :
     let commonKeys = targetKeys.select(tk|sourceKeys.exists(sk|tk.name == sk.name)) :
