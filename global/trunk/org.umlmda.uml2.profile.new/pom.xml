@@ -8,15 +8,15 @@
    </parent>
    
    <artifactId>org.umlmda.uml2.profiles.new</artifactId>
-   <version>4.4.1-SNAPSHOT</version>
+   <version>4.5.0</version>
    <name>UMLMDA uml2 profiles new 4.x</name>
    <description />
    <packaging>pom</packaging>
    
    
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.profiles.new-4.2.5</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.profiles.new-4.2.5</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.profiles.new-4.5.0</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.profiles.new-4.5.0</developerConnection>
    </scm>
    
    <build>
