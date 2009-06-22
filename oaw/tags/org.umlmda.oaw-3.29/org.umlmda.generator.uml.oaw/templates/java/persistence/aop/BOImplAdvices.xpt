@@ -1,0 +1,40 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::Association»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+«EXTENSION org::umlmda::uml::java::StructuralFeature»
+
+«REM»
+   Constructor with key reference only for concrete entities and with differing implementation.
+«ENDREM»
+«AROUND java::BOImpl::standardCtorWithKeys(String visibility) FOR JavaBusinessObject»
+    «EXPAND standardCtorWithKeys(visibility) FOR this»
+«ENDAROUND»
+
+«DEFINE standardCtorWithKeys(String visibility) FOR JavaBusinessObject»
+   «IF ! keyAttributes.isEmpty && this.hasStereotype("PersistentEntity")»
+      «visibility» «generatedName»(
+      «FOREACH (List[JavaModelAttribute])keyAttributes AS attr SEPARATOR ","»
+         «attr.javaTypeName()» «attr.name»
+      «ENDFOREACH»
+      ) {
+         «IF superClass != null && superClass.hasStereotype("PersistentEntity")»
+                super(«superClass.keyAttributes.nameList()»);
+         «ENDIF»
+         «IF this.owningAPKey»
+                this.pkey = new PKey(«keyAttributes.nameList()»);
+         «ELSEIF this.keyAttributes.size == 1»
+            «((JavaModelAttribute)this.keyAttributes.get(0)).setter»(«((JavaModelAttribute)this.keyAttributes.get(0)).name»);
+         «ENDIF»
+      }
+   «ENDIF»
+«ENDDEFINE»
