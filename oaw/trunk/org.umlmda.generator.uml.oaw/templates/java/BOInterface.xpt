@@ -30,7 +30,7 @@
 		/**
 		 * «documentation»
 		 */
-		public interface «interfaceName» «EXPAND extendsDecl FOR this»
+		«EXPAND interfaceDecl(interfaceName) FOR this» 
 		{
 		«EXPAND keyDecl FOR this»
 		
@@ -50,6 +50,16 @@
 		}
 	«ENDFILE»
 	«ENDLET»
+«ENDDEFINE»
+
+«DEFINE interfaceDecl(String interfaceName) FOR JavaModelClass»
+	public interface «interfaceName» «EXPAND extendsDecl FOR this»
+«ENDDEFINE»
+
+«DEFINE interfaceDecl(String interfaceName) FOR JavaBusinessService»
+	@javax.ejb.Local
+	@javax.ejb.Remote
+	public interface «interfaceName» «EXPAND extendsDecl FOR this»
 «ENDDEFINE»
 
 «DEFINE standardImports FOR JavaModelClass»
@@ -181,13 +191,13 @@
 «ENDDEFINE»
 
 «DEFINE methodDecl FOR JavaModelMethod»
+   /**
+    * «documentation»
+    */
     «EXPAND methodDecl("public") FOR this»
 «ENDDEFINE»
 
 «DEFINE methodDecl(String modifier) FOR JavaModelMethod»
-   /**
-    * «documentation»
-    */
    «modifier» «javaType» «name»(
 	«FOREACH parameters.typeSelect(JavaModelParameter) AS parameter SEPARATOR "," »
 	    «parameter.javaTypeName()» «parameter.name»

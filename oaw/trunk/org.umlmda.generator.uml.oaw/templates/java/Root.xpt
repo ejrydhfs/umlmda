@@ -16,6 +16,7 @@
 «DEFINE Root FOR JavaBusinessException»
 	«EXPAND java::BOException::BOException»
 «ENDDEFINE»
+
 «DEFINE Root FOR JavaBusinessObject»
 	«EXPAND java::BOInterface::BOInterface»
 	«EXPAND java::BOImpl::BOImpl»
@@ -36,17 +37,21 @@
 
 «DEFINE Root FOR JavaBusinessComponent»
 	«EXPAND Root FOREACH classes.typeSelect(ModelClass)»
-	«EXPAND java::BOFactory::BOFactory FOR this»
-	«EXPAND java::BOFactoryImpl::BOFactoryImpl FOR this»
-	«EXPAND java::BFactory::BFactory FOR this»
-	«EXPAND java::Visitor::Visitor FOR this»
-	«EXPAND java::AbstractVisitor::Root FOR this»
-	«EXPAND java::ConstraintVisitor::Root FOR this»
+	«EXPAND JavaArtefact FOR this»
+«ENDDEFINE»
+
+«DEFINE JavaArtefact FOR JavaBusinessComponent»
+   «EXPAND java::BOFactory::BOFactory FOR this»
+   «EXPAND java::BOFactoryImpl::BOFactoryImpl FOR this»
+   «EXPAND java::BFactory::BFactory FOR this»
+   «EXPAND java::Visitor::Visitor FOR this»
+   «EXPAND java::AbstractVisitor::Root FOR this»
+   «EXPAND java::ConstraintVisitor::Root FOR this»
 «ENDDEFINE»
 
 «DEFINE Root FOR JavaModelPackage»
-    «ERROR "Root called on <<Package>> "+name»
-	«EXPAND Root FOREACH classes.typeSelect(ModelClass)»
+   «ERROR "Root called on <<Package>> "+name»
+   «EXPAND Root FOREACH classes.typeSelect(ModelClass)»
 «ENDDEFINE»
 
 «DEFINE Root FOR ModelElement»
