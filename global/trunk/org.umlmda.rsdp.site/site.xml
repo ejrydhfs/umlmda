@@ -24,9 +24,6 @@
    <feature url="features/org.umlmda.rsdp.uml2.feature_4.1.5.jar" id="org.umlmda.rsdp.uml2.feature" version="4.1.5">
       <category name="UMLMDA_MODELING_3"/>
    </feature>
-   <feature url="features/org.umlmda.rsdp.uml2.new.feature_4.3.0.200906101454.jar" id="org.umlmda.rsdp.uml2.new.feature" version="4.3.0.200906101454">
-      <category name="UMLMDA_MODELING_4"/>
-   </feature>
    <feature url="features/org.umlmda.rsdp.uml2.new.feature_4.4.0.jar" id="org.umlmda.rsdp.uml2.new.feature" version="4.4.0">
       <category name="UMLMDA_MODELING_4"/>
    </feature>
