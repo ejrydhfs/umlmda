@@ -39,6 +39,9 @@
                         <zip destfile="${project.build.directory}/j2ee-profiles.zip">
                            <fileset dir="${basedir}/etc/umlmda/self/profile" includes="j2ee*.ump" />
                         </zip>
+                        <zip destfile="${project.build.directory}/jee-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="jee*.ump" />
+                        </zip>
                         <zip destfile="${project.build.directory}/ws-profiles.zip">
                            <fileset dir="${basedir}/etc/umlmda/self/profile" includes="ws*.ump" />
                         </zip>
@@ -83,6 +86,13 @@
                            </file>
                            <type>zip</type>
                            <classifier>j2ee-ump</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/jee-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>jee-ump</classifier>
                         </artifact>
                         <artifact>
                            <file>
