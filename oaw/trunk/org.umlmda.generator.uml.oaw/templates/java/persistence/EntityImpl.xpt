@@ -328,7 +328,7 @@
       @JoinColumns( {
          «FOREACH joinColumns() AS keyAttr SEPARATOR ","»
             «IF !sharedJoinColumns().contains(keyAttr)»
-               @JoinColumn(name = "«target.name.toFirstLower()»_«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
+               @JoinColumn(name = "«name.toFirstLower()»_«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
             «ELSE»
                @JoinColumn(name = "«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
             «ENDIF»
