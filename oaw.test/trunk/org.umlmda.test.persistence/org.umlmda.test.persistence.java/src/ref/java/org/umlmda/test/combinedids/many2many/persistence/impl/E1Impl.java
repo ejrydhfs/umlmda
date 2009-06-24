@@ -169,6 +169,7 @@ public class E1Impl implements E1, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
+   // Association 'fs' from 'E1' to 'F1'
    @ManyToMany(fetch = FetchType.LAZY, targetEntity = F1Impl.class)
    @SuppressWarnings("unchecked")
    private java.util.Set fs = new java.util.HashSet();

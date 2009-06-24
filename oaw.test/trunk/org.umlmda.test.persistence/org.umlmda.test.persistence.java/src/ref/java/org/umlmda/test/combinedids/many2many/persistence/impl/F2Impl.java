@@ -169,6 +169,7 @@ public class F2Impl implements F2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.bAttr;
       this.bAttr = bAttr;
    }
+   // Association 'es' from 'F2' to 'E2'
    @ManyToMany(fetch = FetchType.LAZY, targetEntity = E2Impl.class)
    @SuppressWarnings("unchecked")
    private java.util.Set es = new java.util.HashSet();

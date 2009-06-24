@@ -169,6 +169,7 @@ public class C4Impl implements C4, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
+   // Composition 'ds' from 'C4' to 'D4'
    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "a", targetEntity = D4Impl.class)
    @SuppressWarnings("unchecked")
    private java.util.Set ds = new java.util.HashSet();

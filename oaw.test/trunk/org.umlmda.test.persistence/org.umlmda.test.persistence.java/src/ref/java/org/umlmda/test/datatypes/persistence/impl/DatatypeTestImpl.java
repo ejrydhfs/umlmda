@@ -44,6 +44,7 @@ public class DatatypeTestImpl implements DatatypeTest, Serializable, XMLSerializ
       setId(id);
    }
    @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
    @Column
    private String id;
 
@@ -61,8 +62,8 @@ public class DatatypeTestImpl implements DatatypeTest, Serializable, XMLSerializ
       String oldValue = this.id;
       this.id = id;
    }
-   @Column
    @Version
+   @Column
    private int version = 0;
 
    /**
@@ -70,14 +71,6 @@ public class DatatypeTestImpl implements DatatypeTest, Serializable, XMLSerializ
     */
    public int getVersion() {
       return version;
-   }
-
-   /**
-    * Set version, 
-    */
-   public void setVersion(int version) {
-      int oldValue = this.version;
-      this.version = version;
    }
    @Column
    private boolean booleanAttr;

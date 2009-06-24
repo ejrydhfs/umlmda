@@ -169,11 +169,12 @@ public class A2Impl implements A2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
-   @OneToOne(fetch = FetchType.LAZY, mappedBy = "a")
+   // Aggregation 'b' from 'A2' to 'B2'
+   @OneToOne(fetch = FetchType.LAZY, mappedBy = "a", targetEntity = B2Impl.class)
    @JoinColumns( {
          @JoinColumn(name = "groupId", referencedColumnName = "groupId", nullable = true, insertable = false, updatable = false),
-         @JoinColumn(name = "b2_bId", referencedColumnName = "bId", nullable = true, insertable = false, updatable = false) })
-   private B2Impl b;
+         @JoinColumn(name = "b_bId", referencedColumnName = "bId", nullable = true, insertable = false, updatable = false) })
+   private org.umlmda.test.combinedids.one2one.persistence.B2 b;
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
@@ -193,7 +194,7 @@ public class A2Impl implements A2, Serializable, XMLSerializable, org.umlmda.run
     *		New value for assocation b 
     */
    public void setB(B2 b) {
-      this.b = (B2Impl) b;
+      this.b = (org.umlmda.test.combinedids.one2one.persistence.B2) b;
    }
 
    public String getModelName() {

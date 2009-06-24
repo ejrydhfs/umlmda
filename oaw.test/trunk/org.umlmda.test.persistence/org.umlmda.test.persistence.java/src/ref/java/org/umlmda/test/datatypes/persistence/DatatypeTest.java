@@ -38,12 +38,7 @@ public interface DatatypeTest extends org.umlmda.runtime.model.ModeledElement, j
    /**
     * Get version, 
     */
-   public int getVersion();
-
-   /**
-    * Set version, 
-    */
-   public void setVersion(int version);
+   public int getVersion();;
 
    /**
     * Get booleanAttr, 

@@ -169,6 +169,7 @@ public class C2Impl implements C2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
+   // Aggregation 'ds' from 'C2' to 'D2'
    @OneToMany(fetch = FetchType.LAZY, mappedBy = "a", targetEntity = D2Impl.class)
    @SuppressWarnings("unchecked")
    private java.util.Set ds = new java.util.HashSet();

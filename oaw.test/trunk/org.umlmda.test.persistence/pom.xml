@@ -5,7 +5,7 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.oaw</artifactId>
-      <version>3.15-SNAPSHOT</version>
+      <version>3.30-SNAPSHOT</version>
    </parent>
    <artifactId>org.umlmda.test.persistence</artifactId>
    <version>1.0-SNAPSHOT</version>
@@ -14,11 +14,11 @@
    <description>UMLMDA maven project for umlmda persistence generation test.</description>
 
    <properties>
-      <umlmda.oaw.version>3.14-SNAPSHOT</umlmda.oaw.version>
-      <umlmda.uml2.profile.version>4.1.0</umlmda.uml2.profile.version>
-      <umlmda.uml2.profile.new.version>4.2.6</umlmda.uml2.profile.new.version>
-      <umlmda.generator.profile.version>3.6</umlmda.generator.profile.version>
-      <umlmda.runtime.version>3.8</umlmda.runtime.version>
+      <umlmda.oaw.version>3.30-SNAPSHOT</umlmda.oaw.version>
+      <umlmda.uml2.profile.version>4.2.1</umlmda.uml2.profile.version>
+      <umlmda.uml2.profile.new.version>4.6.0</umlmda.uml2.profile.new.version>
+      <umlmda.generator.profile.version>3.8</umlmda.generator.profile.version>
+      <umlmda.runtime.version>3.9</umlmda.runtime.version>
    </properties>
 
    <dependencyManagement>

@@ -169,6 +169,7 @@ public class C1Impl implements C1, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
+   // Association 'ds' from 'C1' to 'D1'
    @OneToMany(fetch = FetchType.LAZY, targetEntity = D1Impl.class)
    @SuppressWarnings("unchecked")
    private java.util.Set ds = new java.util.HashSet();

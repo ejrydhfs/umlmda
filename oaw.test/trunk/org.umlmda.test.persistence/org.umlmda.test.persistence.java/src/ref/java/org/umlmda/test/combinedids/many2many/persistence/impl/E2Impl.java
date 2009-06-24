@@ -169,6 +169,7 @@ public class E2Impl implements E2, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.aAttr;
       this.aAttr = aAttr;
    }
+   // Aggregation 'fs' from 'E2' to 'F2'
    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "es", targetEntity = F2Impl.class)
    @SuppressWarnings("unchecked")
    private java.util.Set fs = new java.util.HashSet();

@@ -169,11 +169,12 @@ public class B4Impl implements B4, Serializable, XMLSerializable, org.umlmda.run
       String oldValue = this.bAttr;
       this.bAttr = bAttr;
    }
-   @OneToOne(fetch = FetchType.LAZY, optional = false)
+   // Association 'a' from 'B4' to 'A4'
+   @OneToOne(fetch = FetchType.LAZY, optional = false, targetEntity = A4Impl.class)
    @JoinColumns( {
          @JoinColumn(name = "groupId", referencedColumnName = "groupId", nullable = true, insertable = false, updatable = false),
-         @JoinColumn(name = "a4_aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
-   private A4Impl a;
+         @JoinColumn(name = "a_aId", referencedColumnName = "aId", nullable = true, insertable = false, updatable = false) })
+   private A4 a;
 
    /**
     * &lt;HTML&gt;&lt;HEAD&gt;
@@ -193,9 +194,9 @@ public class B4Impl implements B4, Serializable, XMLSerializable, org.umlmda.run
     *		New value for assocation a 
     */
    public void setA(A4 a) {
-      this.a = (A4Impl) a;
+      this.a = (A4) a;
       if (a == null) {
-         a4_aId = null;
+         a_aId = null;
       }
    }
 
@@ -207,18 +208,18 @@ public class B4Impl implements B4, Serializable, XMLSerializable, org.umlmda.run
     */
    private void syncA() {
       if (a != null) {
-         a4_aId = a.getA4Pkey().getAId();
+         a_aId = a.getA4Pkey().getAId();
          assert a.getA4Pkey().getGroupId().equals(pkey.getGroupId()) : "different groupId";
       }
       else {
-         a4_aId = null;
+         a_aId = null;
       }
    }
    /**
     * Unshared pkey column of association {@link #getA()} to {@link A4}
     */
    @Column(nullable = false)
-   private String a4_aId;
+   private String a_aId;
 
    /**
     * Sync technical foreign key columns to related objects or the parent.
