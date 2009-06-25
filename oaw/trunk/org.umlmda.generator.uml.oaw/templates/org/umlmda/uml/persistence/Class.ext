@@ -1,5 +1,5 @@
 /**
- * Standard Xtend Library for UML2 base generation. Extensions for ModelAssociation
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelClass
  */
 import java::util;
 import org::umlmda::generator::model::uml;
@@ -12,6 +12,7 @@ import org::umlmda::oaw::generator::model::java;
 
 extension java::UMLMDA;
 extension org::umlmda::uml::persistence::Attribute;
+extension org::umlmda::uml::persistence::Package;
 
 String pkeyInterface(JavaModelClass class) :
     class.getScopedName("java.BusinessObjectInterface")+".PKey"
@@ -57,3 +58,9 @@ cached Boolean isKeyClassRequired(JavaModelClass class) :
 cached Boolean isPersistable(ModelClass class) :
     class.hasStereotype("PersistentEntity") || class.hasStereotype("PersistableSuperClass")
 ;    
+
+cached String tablename(JavaModelClass class) :
+	class.getStereotypeProperty("table", "---") != "---" 
+		? class.getStereotypeProperty("table")
+		: class.package.tablenamePrefix() + class.name 
+;

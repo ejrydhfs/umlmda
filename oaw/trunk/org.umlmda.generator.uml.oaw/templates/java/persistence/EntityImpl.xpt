@@ -71,10 +71,7 @@
 «ENDDEFINE»
 
 «DEFINE entityAnnotationDetails FOR JavaBusinessObject»
-   «IF getStereotypeProperty("table") != null»
-      @Table(name="«getStereotypeProperty("table")»"
-      «IF getStereotypeProperty("schema") != null», schema="«getStereotypeProperty("schema")»"«ENDIF»)
-   «ENDIF»
+   @Table(name="«tablename()»"«IF getStereotypeProperty("schema") != null», schema="«getStereotypeProperty("schema")»"«ENDIF»)
    «IF getStereotypeProperty("mapping") != null»
       «IF getStereotypeProperty("mapping").toString() == "ClassHierarchy"»
          @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -122,9 +119,9 @@
 	«IF hasStereotype("PKey") && owningClass.hasStereotype("PersistentEntity") && ! owningClass.hasCompositeKey()»
 		@Id
 		«REM» Key generator only valid here «ENDREM»
-		«IF getStereotypeProperty("generationStrategy") != null || getStereotypeProperty("generator") != null»
+		«IF getStereotypeProperty("generationStrategy", "Undefined") != "Undefined" || !getStereotypeProperty("generator").isEmpty() »
          @GeneratedValue(
-            «IF getStereotypeProperty("generationStrategy") != null»
+            «IF getStereotypeProperty("generationStrategy", "Undefined") != "Undefined"»
 		         «IF getStereotypeProperty("generationStrategy")=="Auto"»
                   strategy=GenerationType.AUTO
 		         «ELSEIF getStereotypeProperty("generationStrategy")=="Identity"»
@@ -134,10 +131,10 @@
 		         «ELSEIF getStereotypeProperty("generationStrategy")=="Table"»
                   strategy=GenerationType.TABLE
 		         «ENDIF»
-               «IF getStereotypeProperty("generator") != null»
+               «IF !getStereotypeProperty("generator").isEmpty()»
                , generator="«getStereotypeProperty("generator")»"
                «ENDIF»
-            «ELSEIF getStereotypeProperty("generator") != null»
+            «ELSEIF !getStereotypeProperty("generator").isEmpty()»
                generator="«getStereotypeProperty("generator")»"
             «ENDIF»
          )
