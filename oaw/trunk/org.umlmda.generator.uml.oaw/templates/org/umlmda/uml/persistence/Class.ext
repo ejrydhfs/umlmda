@@ -10,6 +10,7 @@ import org::umlmda::uml::generator::java;
 import org::umlmda::oaw::generator::util;
 import org::umlmda::oaw::generator::model::java;
 
+extension java::UMLMDA;
 extension org::umlmda::uml::persistence::Attribute;
 
 String pkeyInterface(JavaModelClass class) :
@@ -21,7 +22,7 @@ String pkeyGetter(JavaModelClass class) :
 ;    
 
 cached List[ModelAttribute] domainKeys(ModelClass class) :
-    class.keyAttributes.typeSelect(ModelAttribute).select(attr| attr.getStereotypeProperty("domainAttribute", "true") == "true")
+    class.filterDuplicateAttributesByName( class.keyAttributes.typeSelect(ModelAttribute).select(attr| attr.getStereotypeProperty("domainAttribute", "true") == "true") )
 ;
 
 cached List[ModelAttribute] derivedDomainKeys(ModelClass class) :
