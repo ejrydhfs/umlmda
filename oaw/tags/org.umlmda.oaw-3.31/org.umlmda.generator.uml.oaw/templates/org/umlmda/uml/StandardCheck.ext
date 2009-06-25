@@ -1,0 +1,11 @@
+import uml;
+
+extension org::umlmda::oaw::util::Stereotype;
+
+cached List[String] generationStereotypes() :
+    { "BusinessObject", "BusinessService", "BusinessException", "NativeClass", "NativeInterface", "Enumeration" }
+;
+    
+cached Boolean hasGenerationStereotype(uml::Class class) :
+    class.hasStereotype(generationStereotypes())
+;    
