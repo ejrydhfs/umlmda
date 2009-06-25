@@ -1,0 +1,16 @@
+import uml;
+
+extension org::umlmda::oaw::util::Stereotype;
+extension org::umlmda::uml::StandardCheck;
+
+context uml::Association ERROR
+    "Association ends invalid for"+qualifiedName :
+    this.getEndTypes().typeSelect(Class).forAll(e|e.hasStereotype({"BusinessObject", "NativeClass", "NativeInterface"}))
+;    
+
+/*
+context uml::Class ERROR
+    "Class "+qualifiedName+" without a standard generation stereotype " :
+    this.hasGenerationStereotype()
+; 
+*/   
