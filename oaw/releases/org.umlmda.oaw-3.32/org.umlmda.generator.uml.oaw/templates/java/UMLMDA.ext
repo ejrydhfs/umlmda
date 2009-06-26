@@ -1,0 +1,90 @@
+import java::util;
+import org::umlmda::generator::model::uml;
+import org::umlmda::profile;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+String generatedName (GeneratorModelElement elem, String artefact) : 
+  JAVA org.umlmda.oaw.generator.util.ModelUtils.getGeneratedName(org.umlmda.generator.model.uml.GeneratorModelElement, java.lang.String);
+
+boolean hasOwnedPKeyAttributes(JavaModelClass cls) :
+  cls.getOwnedKeyAttributes(false).isEmpty == false; 
+
+boolean persistable(JavaModelClass cls) :
+  cls.keyAttributes.isEmpty == false;
+    
+// Mapping of interface artefact for the metaclasses 
+String interfaceArtefact(JavaBusinessService elem) :
+  "java.BusinessServiceInterface";
+  
+String interfaceArtefact(JavaBusinessObject elem) :
+  "java.BusinessObjectInterface";
+  
+String interfaceArtefact(JavaModelClass elem) :
+  "java.NativeInterface";
+  
+String interfaceArtefact(JavaBusinessException elem) :
+  "java.BusinessException";
+
+// Maps the models default value to a java initializer
+String defaultInitializer(JavaModelAttribute attr) :
+	 switch { 
+			case attr.primitiveType && attr.optional :
+				(attr.initialValue == null && attr.initialValue.length == 0 ? "null" : attr.initialValue)
+			case attr.primitiveType && !attr.optional && !attr.multivalue :
+				(switch ( attr.dataType.name ) {
+					case "string":
+						(attr.initialValue == null ? "" : attr.initialValue)
+					case "char":
+						(attr.initialValue == null ? null : "'"+attr.initialValue+"'")
+					case "int":
+						(attr.initialValue == null ? "0" : attr.initialValue)
+					case "short":
+						(attr.initialValue == null ? "0" : attr.initialValue)
+					case "long":
+						(attr.initialValue == null ? "0" : attr.initialValue)
+					case "float":
+						(attr.initialValue == null ? "0.0f" : attr.initialValue)
+					case "double":
+						(attr.initialValue == null ? "0.0" : attr.initialValue)
+					default:
+						attr.initialValue	
+				})
+			default:
+				null	
+		};		 
+
+boolean hasAbstractBaseClassesWithNoneGenerateableFeatures(JavaModelClass cls) :
+  cls.abstractBaseClassesWithNoneGenerateableFeatures.isEmpty == false;
+  
+// Utility like org.apache.commons.lang.StringUtils  
+boolean isEmpty(String string) :
+	string == null || string.length == 0; 
+	
+// Comma separated list of model element names	
+String nameList(List list) :
+	list.typeSelect(ModelElement).name.toString(",");
+	
+String typeName(JavaModelAttribute attr) :
+	attr.javaType+" "+attr.name;
+	
+String typeNameList(List list) :
+	list.typeSelect(JavaModelAttribute).typeName().toString(",");			 
+
+// Contains all classes
+cached List extendedSuperClasses(ModelClass cls) :
+	let list = new java::util::ArrayList :
+	    cls.superClass != null 
+	    	? (list.add(cls.superClass) -> list.addAll(cls.superClass.extendedSuperClasses())) 
+	    	: list;
+	    
+cached List noneExtendedSuperClasses(ModelClass cls) :
+    cls.superClasses.reject(e|cls.extendedSuperClasses().exists(s|e == s));
+
+// Filters the given attribute list by name, returning only those attributes with unique names.
+cached List[ModelAttribute] filterDuplicateAttributesByName(ModelClass class, List[ModelAttribute] attributes) : 
+  JAVA org.umlmda.oaw.generator.util.ElementUtils.filterDuplicateAttributesByName(org.umlmda.model.uml.ModelClass, java.util.List)
+;
