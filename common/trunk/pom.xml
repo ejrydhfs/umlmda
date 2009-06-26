@@ -3,7 +3,7 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.releng</artifactId>
-      <version>3.6</version>
+      <version>3.7</version>
    </parent>
 
    <artifactId>org.umlmda.common</artifactId>
