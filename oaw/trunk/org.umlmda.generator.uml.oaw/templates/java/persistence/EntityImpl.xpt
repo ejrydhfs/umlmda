@@ -62,16 +62,16 @@
 «DEFINE entityAnnotation FOR JavaBusinessObject»
    «IF hasStereotype("PersistableSuperClass")»
       @MappedSuperclass
-      «EXPAND entityAnnotationDetails FOR this»
+      «EXPAND entityAnnotationDetails("") FOR this»
    «ENDIF»
    «IF hasStereotype("PersistentEntity")»
       @Entity
-      «EXPAND entityAnnotationDetails FOR this»
+      «EXPAND entityAnnotationDetails("") FOR this»
    «ENDIF»
 «ENDDEFINE»
 
-«DEFINE entityAnnotationDetails FOR JavaBusinessObject»
-   @Table(name="«tablename()»"«IF getStereotypeProperty("schema") != null», schema="«getStereotypeProperty("schema")»"«ENDIF»)
+«DEFINE entityAnnotationDetails(String tablenamePostfix) FOR JavaBusinessObject»
+   @Table(name="«tablename()»«tablenamePostfix»"«IF getStereotypeProperty("schema") != null», schema="«getStereotypeProperty("schema")»"«ENDIF»)
    «IF getStereotypeProperty("mapping") != null»
       «IF getStereotypeProperty("mapping").toString() == "ClassHierarchy"»
          @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
