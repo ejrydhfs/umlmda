@@ -26,6 +26,7 @@
 //  Created on Nov 9, 2004
 package org.umlmda.model.uml;
 
+
 /**
  * interface for a model suitable for UMLMDA 
  * @author vpussel

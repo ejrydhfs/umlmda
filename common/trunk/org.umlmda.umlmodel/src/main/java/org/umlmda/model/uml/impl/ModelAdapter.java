@@ -329,4 +329,8 @@ public class ModelAdapter extends ModelElementAdapter implements Model {
       visitor.visit(this);
    }
 
+   public ModelClass findClassByName(String classname) {
+	   return (ModelClass) getModelElement(srcModel.findClassByName(classname));
+   }
+
 }

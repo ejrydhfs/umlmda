@@ -70,8 +70,11 @@
    «ENDIF»
 «ENDDEFINE»
 
-«DEFINE entityAnnotationDetails(String tablenamePostfix) FOR JavaBusinessObject»
-   @Table(name="«tablename()»«tablenamePostfix»"«IF getStereotypeProperty("schema") != null», schema="«getStereotypeProperty("schema")»"«ENDIF»)
+«DEFINE entityAnnotationDetails(String tablenamePrefix) FOR JavaBusinessObject»
+   «IF getStereotypeProperty("mapping") == null 
+   		|| getStereotypeProperty("mapping").toString() != "SubClass"»
+   		@Table(name="«tablenamePrefix»«tablename()»"«IF getStereotypeProperty("schema") != null», schema="«getStereotypeProperty("schema")»"«ENDIF»)
+   «ENDIF»		
    «IF getStereotypeProperty("mapping") != null»
       «IF getStereotypeProperty("mapping").toString() == "ClassHierarchy"»
          @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -82,7 +85,13 @@
       «ENDIF»
    «ENDIF»
    «IF getStereotypeProperty("discriminatorColumn") != null»
-      @DiscriminatorColumn(name="«getStereotypeProperty("discriminatorColumn")»")
+      @DiscriminatorColumn(name="«getStereotypeProperty("discriminatorColumn")»"
+      , discriminatorType=DiscriminatorType.
+      «IF getStereotypeProperty("discriminatorColumnType") == "String"»STRING, length=«getStereotypeProperty("discriminatorColumnLength")»
+      «ELSEIF getStereotypeProperty("discriminatorColumnType") == "Char"»CHAR
+      «ELSEIF getStereotypeProperty("discriminatorColumnType") == "Integer"»INTEGER
+      «ENDIF»
+      )
    «ENDIF»
    «IF getStereotypeProperty("discriminatorValue") != null»
       @DiscriminatorValue("«getStereotypeProperty("discriminatorValue")»")

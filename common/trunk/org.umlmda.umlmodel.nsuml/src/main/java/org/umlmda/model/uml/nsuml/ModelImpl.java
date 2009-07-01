@@ -30,6 +30,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import org.umlmda.model.uml.ModelBase;
+import org.umlmda.model.uml.ModelClass;
 import org.umlmda.model.uml.ModelClassBase;
 import org.umlmda.model.uml.ModelClassifierBase;
 import org.umlmda.model.uml.ModelDataType;
@@ -233,5 +234,9 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
       }
       return null;
    }
+
+public ModelClass findClassByName(String classname) {
+	   throw new IllegalArgumentException("Not supported yet!");
+}
    
 }

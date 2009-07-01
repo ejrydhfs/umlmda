@@ -51,4 +51,13 @@ public interface ModelBase extends ModelElementBase {
 	 */
   public abstract Collection getDatatypes();
 
+  /**
+   * Find a Class by its name
+   * 
+   * @param classname
+   * @return
+   */
+  public ModelClassBase findClassByName(String classname);
+  
+  
 }

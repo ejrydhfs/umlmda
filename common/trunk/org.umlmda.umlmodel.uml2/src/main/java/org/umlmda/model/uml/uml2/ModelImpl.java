@@ -49,6 +49,7 @@ import org.eclipse.uml2.uml.ProfileApplication;
 import org.eclipse.uml2.uml.Signal;
 import org.eclipse.uml2.uml.Stereotype;
 import org.umlmda.model.uml.ModelBase;
+import org.umlmda.model.uml.ModelClass;
 import org.umlmda.model.uml.ModelClassBase;
 import org.umlmda.model.uml.ModelClassifierBase;
 import org.umlmda.model.uml.ModelDataTypeBase;
@@ -202,6 +203,23 @@ public class ModelImpl extends ModelElementImpl implements ModelBase
          }
       }
       return modelClassImpl;
+   }
+
+   /**
+    * @param classname
+    * @return
+    */
+   public ModelClassBase findClassByName(String classname) {
+      ModelClassBase modelClassBase = null;
+
+      for (Iterator<ModelClassBase> it = classes.values().iterator(); modelClassBase == null && it.hasNext(); ) {
+    	  ModelClassBase mcb = it.next();
+    	  if (mcb.getName().equals(classname)) {
+    	      modelClassBase = mcb;
+    	  }
+      }
+
+      return modelClassBase;
    }
 
    ModelDataTypeBase findDataType(DataType dataType) {
