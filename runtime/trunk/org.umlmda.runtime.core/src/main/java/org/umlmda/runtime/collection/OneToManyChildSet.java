@@ -56,14 +56,14 @@ public abstract class OneToManyChildSet<TParent, TChild> implements Set<TChild> 
     * @param child
     * @param parent
     */
-   abstract void setParent(TChild child, TParent parent);
+   protected abstract void setParent(TChild child, TParent parent);
    
    /**
     * Method to get the parent of a child element.
     * @param child
     * @return
     */
-   abstract TParent getParent(TChild child);
+   protected abstract TParent getParent(TChild child);
    
    public boolean add(TChild child) {
       boolean added = wrappedSet.add(child);

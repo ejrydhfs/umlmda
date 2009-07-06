@@ -23,6 +23,11 @@ package org.umlmda.runtime.collection;
 
 import java.util.Iterator;
 
+import org.umlmda.runtime.collection.test.ChildSample;
+import org.umlmda.runtime.collection.test.ChildSampleImpl;
+import org.umlmda.runtime.collection.test.ParentSample;
+import org.umlmda.runtime.collection.test.ParentSampleImpl;
+
 import junit.framework.TestCase;
 
 public class OnyToManyTest extends TestCase {

@@ -37,7 +37,7 @@ public abstract class OneToManyParent<TParent, TChild> {
       return parent;
    }
    
-   public abstract Set<TChild> getChildren(TParent parent);
+   protected  abstract Set<TChild> getChildren(TParent parent);
    
    public void setParent(TParent parent) {
       if ( this.parent != parent ) {
