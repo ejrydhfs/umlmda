@@ -1,0 +1,48 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::Association»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+«EXTENSION org::umlmda::uml::java::StructuralFeature»
+
+«DEFINE BeanImpl FOR JavaBusinessService»
+   «LET generatedName(this, "jee.BeanImpl") AS className»
+   «this.resetImports()»
+   «this.registerImport("jee.AbstractBeanContract")»
+	«FILE generatedPath+"/"+className+".java" delegateImpl»
+	
+   package «generatorPackage.getQualifiedPackageName("jee.BeanImpl")»;
+         
+   «this.registeredImports()»
+   
+   /**
+    * TODO Generated skeleton, enter documentation and insert business code
+    */
+   «IF getStereotypeProperty("Stateful", "false") == "false"»
+      @javax.ejb.Stateless(
+   «ELSE»
+      @javax.ejb.Stateful(      
+   «ENDIF»
+   name="«component.getStereotypeProperty("EJBComponent")»«name»")
+   public class «generatedName» extends «getScopedName("jee.AbstractBeanContract")» {
+	   «FOREACH methods.typeSelect(JavaModelMethod) AS method»
+	      /**
+	       * «method.documentation»
+	       */
+	      «EXPAND java::BOInterface::methodDecl("public") FOR method» {
+	         // FIXME Enter your service implementation
+	         throw new UnsupportedOperationException("Not implemented yet");
+	      }
+	   «ENDFOREACH»
+   }
+	«ENDFILE»
+	«ENDLET»
+«ENDDEFINE»
