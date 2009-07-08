@@ -21,12 +21,11 @@
  */
 package org.umlmda.runtime.collection;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
-import org.omg.CORBA.TCKind;
 
 /**
  * A wrapper around a {@link Set} to support bidirectionality in a one to many aggregation or composition. 
@@ -37,8 +36,9 @@ import org.omg.CORBA.TCKind;
  * @param <TParent>
  * @param <TChild>
  */
-public abstract class OneToManyChildSet<TParent, TChild> implements Set<TChild> {
+public abstract class OneToManyChildSet<TParent, TChild> implements Set<TChild>, Serializable {
 
+   private static final long serialVersionUID = 1L;
    private final Set<TChild> wrappedSet;
    private final TParent parent;
 
