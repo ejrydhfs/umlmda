@@ -233,11 +233,29 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 «DEFINE assocDecl FOR JavaModelAssociation»
 	«IF derived == false»
 		«IF multiple»
-		   private «interfaceType» «name» = new «implementationType»();
+			«IF isbidirectionalOneToMany() && unique»
+			   «EXPAND bidirOneToManyParentSetDecl FOR this»
+			«ELSE»
+            private «interfaceType» «name» = new «implementationType»();
+	   	«ENDIF»
 		«ELSE»
-		   private «interfaceType» «name»;
+         private «interfaceType» «name»;
 		«ENDIF»
 	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE bidirOneToManyParentSetDecl FOR JavaModelAssociation»
+    // Collection managing bidirectional one to many associations
+    private «interfaceType» «name» = new org.umlmda.runtime.collection.OneToManyChildSet<«bidirectionalParentType()», «bidirectionalChildType()»>(this, new «implementationType»()) {
+       @Override
+       protected «bidirectionalParentType()» getParent(«bidirectionalChildType()» child) {
+          return child.«reverse.getter»();
+       }
+       @Override
+       protected void setParent(«bidirectionalChildType()» child, «bidirectionalParentType()» parent) {
+          child.«reverse.setter»(parent);
+       }
+    };
 «ENDDEFINE»
 
 «DEFINE getterBody(ModelClass implementingClass) FOR JavaModelStructuraleFeature»
@@ -310,10 +328,20 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 	«IF multivalue == true»
 		«setter»Internal(«name»);
 	«ELSE»
-		«EXPAND saveOldValue FOR this»
-		this.«name» = «name»;
-		«EXPAND callPostSetMethod FOR this»
-	    «EXPAND firePropertyChange(this) FOR (JavaModelClass)owner»
+	   if ( «name» != this.«name» ) {
+			«EXPAND saveOldValue FOR this»
+			this.«name» = «name»;
+			«EXPAND callPostSetMethod FOR this»
+	      «EXPAND firePropertyChange(this) FOR (JavaModelClass)owner»
+	      «IF isbidirectionalOneToMany() && unique»      
+		      if ( oldValue != null && oldValue.«reverse.getter»().contains(this) ) {
+		         oldValue.«reverse.getter»().remove(this);
+		      }
+		      if ( «name» != null && «name».«reverse.getter»().contains(this) == false ) {
+		         «name».«reverse.getter»().add(this);
+		      }
+	      «ENDIF»
+      }
 	«ENDIF»
 «ENDDEFINE»
 

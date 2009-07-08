@@ -19,3 +19,29 @@ cached String javaNonGenericType(JavaModelAssociation assoc) :
     : 
         assoc.interfaceType
 ;
+
+cached Boolean isbidirectional(JavaModelAssociation assoc) :
+    assoc.navigatableToSource && assoc.navigatableToTarget
+;
+
+cached Boolean isbidirectionalOneToMany(JavaModelAssociation assoc) :
+      assoc.isbidirectional() 
+ && ((assoc.multiple && !assoc.reverse.multiple) || (assoc.reverse.multiple && !assoc.multiple))
+;
+
+cached JavaModelClass bidirectionalParent(JavaModelAssociation assoc) :
+    assoc.multiple ? assoc.source : assoc.target
+;
+
+cached String bidirectionalParentType(JavaModelAssociation assoc) :
+    assoc.bidirectionalParent().getScopedName("java.BusinessObjectInterface")
+;
+    
+cached JavaModelClass bidirectionalChild(JavaModelAssociation assoc) :
+    assoc.multiple ? assoc.target : assoc.source
+;
+
+cached String bidirectionalChildType(JavaModelAssociation assoc) : 
+    assoc.bidirectionalChild().getScopedName("java.BusinessObjectInterface")
+;
+        
