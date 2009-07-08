@@ -21,25 +21,27 @@
  */
 package org.umlmda.runtime.collection.test;
 
-import java.util.Set;
-
-import org.umlmda.runtime.collection.OneToManyParent;
 
 public class ChildSampleImpl implements ChildSample {
    
-   private OneToManyParent<ParentSample, ChildSample> parent = new OneToManyParent<ParentSample, ChildSample>(this) {
-
-      @Override
-      protected Set<ChildSample> getChildren(ParentSample parent) {
-         return parent.getChildren();
-      }};
+   private ParentSample parent = null;
 
    public ParentSample getParentSample() {
-      return parent.getParent();
+      return parent;
    }
 
    public void setParentSample(ParentSample parent) {
-      this.parent.setParent(parent);
+      if (parent != this.parent) {
+         ParentSample oldValue = this.parent;
+
+         this.parent = parent;
+         if (oldValue != null && oldValue.getChildren().contains(this)) {
+            oldValue.getChildren().remove(this);
+         }
+         if (parent != null && parent.getChildren().contains(this) == false) {
+            parent.getChildren().add(this);
+         }
+      }
    }
 
 }
