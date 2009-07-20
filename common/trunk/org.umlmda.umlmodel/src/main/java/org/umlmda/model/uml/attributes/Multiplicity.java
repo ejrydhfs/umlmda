@@ -82,19 +82,31 @@ public class Multiplicity extends Observable {
          return lower + ".." + (upper == UNBOUND ? "*" : Integer.toString(upper));
       }
    }
-   
-   /* (non-Javadoc)
-    * @see java.lang.Object#equals(java.lang.Object)
-    */
-   public boolean equals(Object obj) {
-      return toString().equals(obj.toString());
-   }
-   
-   /* (non-Javadoc)
-    * @see java.lang.Object#hashCode()
-    */
+
+   @Override
    public int hashCode() {
-      return toString().hashCode();
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + lower;
+      result = prime * result + upper;
+      return result;
    }
+
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj)
+         return true;
+      if (obj == null)
+         return false;
+      if (getClass() != obj.getClass())
+         return false;
+      Multiplicity other = (Multiplicity) obj;
+      if (lower != other.lower)
+         return false;
+      if (upper != other.upper)
+         return false;
+      return true;
+   }
+   
       
 }
