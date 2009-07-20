@@ -32,24 +32,45 @@
 		 */
 		«EXPAND interfaceDecl(interfaceName) FOR this» 
 		{
-		«EXPAND keyDecl FOR this»
-		
-		«FOREACH javaAttributes() AS attr»
-			«EXPAND propertyNameConstantDecl FOR attr»
-		«ENDFOREACH»
-		«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
-			«EXPAND propertyNameConstantDecl FOR assoc»;
-		«ENDFOREACH»
-
-		«EXPAND handleAttributes FOR this»
-		«EXPAND handleAssociations FOR this»		
-		
-		«FOREACH methods.typeSelect(JavaModelMethod) AS method»
-			«EXPAND handleMethod FOR method»
-		«ENDFOREACH»
+			«EXPAND keyDecl FOR this»
+			
+			«FOREACH javaAttributes() AS attr»
+				«EXPAND propertyNameConstantDecl FOR attr»
+			«ENDFOREACH»
+			«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+				«EXPAND propertyNameConstantDecl FOR assoc»;
+			«ENDFOREACH»
+	
+			«EXPAND handleAttributes FOR this»
+			«EXPAND handleAssociations FOR this»		
+			
+			«FOREACH methods.typeSelect(JavaModelMethod) AS method»
+				«EXPAND handleMethod FOR method»
+			«ENDFOREACH»
+			
+			«EXPAND jeeInterfaces(interfaceName) FOR this»
 		}
 	«ENDFILE»
 	«ENDLET»
+«ENDDEFINE»
+
+«DEFINE jeeInterfaces(String interfaceName) FOR JavaModelClass»
+«ENDDEFINE»
+«DEFINE jeeInterfaces(String interfaceName) FOR JavaBusinessService»
+   /** 
+    * Local jee interface
+    */
+   @javax.ejb.Local
+   public interface Local extends «interfaceName» {
+   }
+   
+   /** 
+    * Local jee interface
+    */
+   @javax.ejb.Remote
+   public interface Remote extends «interfaceName» {
+   }
+   
 «ENDDEFINE»
 
 «DEFINE interfaceDecl(String interfaceName) FOR JavaModelClass»
@@ -57,8 +78,6 @@
 «ENDDEFINE»
 
 «DEFINE interfaceDecl(String interfaceName) FOR JavaBusinessService»
-	@javax.ejb.Local
-	@javax.ejb.Remote
 	public interface «interfaceName» «EXPAND extendsDecl FOR this»
 «ENDDEFINE»
 
