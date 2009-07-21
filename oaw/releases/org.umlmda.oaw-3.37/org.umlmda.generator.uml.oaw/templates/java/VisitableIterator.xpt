@@ -1,0 +1,69 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION java::Visitor»
+«EXTENSION org::umlmda::uml::java::Sdo»
+
+«DEFINE Root FOR JavaBusinessComponent»
+«LET generatedName(this, "java.VisitableIterator") AS className»
+«FILE generatedPath+"/"+className+".java"»
+package «getQualifiedPackageName("java.VisitableIterator")»;
+
+import org.umlmda.runtime.visitor.AbstractVisitableIterator;
+«resetImports()»
+«registerImports("java.BusinessObjectInterface", classes, "BusinessObject")»
+«FOREACH referencedPackages.select(e|e.classes.typeSelect(JavaBusinessObject).isEmpty == false) AS refPackage»
+      «registerImport("java.VisitableIterator", refPackage)»
+«ENDFOREACH»
+«registeredImports()»
+
+/**
+ * Visitable iterator for the business objects of «qualifiedName» 
+ */
+public class «generatedName» extends AbstractVisitableIterator {
+
+   /**
+    * 
+    */
+   public «generatedName»(Object startPoint) {
+      this(null, startPoint);
+   }
+
+   /**
+    * 
+    */
+   public «generatedName»(AbstractVisitableIterator parentIterator, Object startPoint) {
+      super(parentIterator, startPoint);
+   }
+
+   /* (non-Javadoc)
+    * @see org.umlmda.runtime.visitor.AbstractVisitableIterator#registerChilds()
+    */
+   protected void registerChilds(Object startPoint) {
+	   «FOREACH classes.typeSelect(JavaBusinessObject) AS class»
+			«LET getScopedName("java.BusinessObjectInterface", class) AS boClass»
+            if ( startPoint instanceof «boClass» ) {
+               «boClass» sp«class.name» = («boClass»)startPoint;
+
+					«FOREACH class.associations AS assoc»
+						«LET getScopedName("java.VisitableIterator", assoc.target.component) AS iteratorClass»
+							«IF assoc.multiple»
+	                     registerChilds(«iteratorClass».class, sp«class.name».«assoc.getter»());
+							«ELSE»
+	                     registerChild(«iteratorClass».class, sp«class.name».«assoc.getter»());
+							«ENDIF»
+						«ENDLET»
+					«ENDFOREACH»
+            }
+			«ENDLET»	   
+	   «ENDFOREACH»
+   }
+}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»

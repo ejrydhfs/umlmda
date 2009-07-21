@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.set:GenerationSet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.set="http:///org/umlmda/generator/set.ecore" name="oAWTest">
+  <GenerationProfile destination="" packagePrefix="org.umlmda.demo">
+    <profile href="../../UMLGeneratorProfiles/profiles/v2/java.ump#java"/>
+  </GenerationProfile>
+  <GenerationProfile destination="src" packagePrefix="org.umlmda.demo">
+    <profile href="../../UMLGeneratorProfiles/profiles/v2/j2ee.ump#j2ee"/>
+  </GenerationProfile>
+  <GenerationProfile destination="META-INF" packagePrefix="org.umlmda.demo">
+    <profile href="../../UMLGeneratorProfiles/profiles/v2/j2eeDeployment.ump#j2eeDeployment"/>
+  </GenerationProfile>
+</org.umlmda.generator.set:GenerationSet>

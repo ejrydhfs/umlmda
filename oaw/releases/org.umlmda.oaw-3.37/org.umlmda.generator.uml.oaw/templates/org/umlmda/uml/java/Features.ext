@@ -1,0 +1,15 @@
+import org::umlmda::uml::generator::java;
+
+extension org::umlmda::utils::String;
+
+private String GWTSupport() : 
+    GLOBALVAR GWTSupport;
+
+cached Boolean isGWTSupported() :
+	let var = GWTSupport() :
+	
+	isEmpty(var) ? false : var.booleanValue();
+	
+cached String javaNonGenericType(JavaModelStructuraleFeature feature) :
+    "Shouldn't be called, only derived javaNonGenericType() should be called"
+;
