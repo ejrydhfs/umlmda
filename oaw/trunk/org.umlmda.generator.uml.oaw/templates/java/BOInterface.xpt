@@ -48,29 +48,36 @@
 				«EXPAND handleMethod FOR method»
 			«ENDFOREACH»
 			
-			«EXPAND jeeInterfaces(interfaceName) FOR this»
 		}
 	«ENDFILE»
+   «EXPAND jeeInterfaces(interfaceName) FOR this»
 	«ENDLET»
 «ENDDEFINE»
 
 «DEFINE jeeInterfaces(String interfaceName) FOR JavaModelClass»
 «ENDDEFINE»
+
 «DEFINE jeeInterfaces(String interfaceName) FOR JavaBusinessService»
-   /** 
-    * Local jee interface
-    */
-   @javax.ejb.Local
-   public interface Local extends «interfaceName» {
-   }
-   
-   /** 
-    * Local jee interface
-    */
-   @javax.ejb.Remote
-   public interface Remote extends «interfaceName» {
-   }
-   
+	«FILE generatedPath+"/"+interfaceName+"Local.java"»
+	   package «generatorPackage.getQualifiedPackageName(getDefaultArtefact())»;
+	   
+	   /** 
+	    * Local jee interface
+	    */
+	   @javax.ejb.Local
+	   public interface «interfaceName»Local extends «interfaceName» {
+	   }
+	«ENDFILE»
+   «FILE generatedPath+"/"+interfaceName+"Remote.java"»
+      package «generatorPackage.getQualifiedPackageName(getDefaultArtefact())»;
+      
+	   /** 
+	    * Local jee interface
+	    */
+	   @javax.ejb.Remote
+	   public interface «interfaceName»Remote extends «interfaceName» {
+	   }
+   «ENDFILE»   
 «ENDDEFINE»
 
 «DEFINE interfaceDecl(String interfaceName) FOR JavaModelClass»
