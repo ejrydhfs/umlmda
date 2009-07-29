@@ -1,0 +1,18 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Dealing with SDO client/server features.
+ */
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator::java;
+
+extension org::umlmda::uml::java::Element;
+
+cached boolean isRelevantForGeneratedSdoPeer(ModelElement feature) :
+ (	feature.isSDOClientOnly() && generateServer()
+ ||	feature.isSDOServerOnly() && generateClient() ) == false
+; 
+
+private cached boolean generateServer() : 
+    GLOBALVAR generateServer;
+
+private cached boolean generateClient() : 
+    GLOBALVAR generateClient;
