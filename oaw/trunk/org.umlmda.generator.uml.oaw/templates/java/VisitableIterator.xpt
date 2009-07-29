@@ -50,7 +50,7 @@ public class «generatedName» extends AbstractVisitableIterator {
             if ( startPoint instanceof «boClass» ) {
                «boClass» sp«class.name» = («boClass»)startPoint;
 
-					«FOREACH class.associations AS assoc»
+					«FOREACH class.associations.select(e|e.target.hasStereotype("BusinessObject")) AS assoc»
 						«LET getScopedName("java.VisitableIterator", assoc.target.component) AS iteratorClass»
 							«IF assoc.multiple»
 	                     registerChilds(«iteratorClass».class, sp«class.name».«assoc.getter»());
