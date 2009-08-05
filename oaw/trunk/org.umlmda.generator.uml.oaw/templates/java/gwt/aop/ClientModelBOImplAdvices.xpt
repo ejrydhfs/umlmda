@@ -85,6 +85,10 @@ import org.umlmda.runtime.bean.BeanUtils;
 	«targetDef.proceed()»
 «ENDAROUND»
 
+«REM» Do nothing here! Reverse assignment is "harmful" in GUI context. «ENDREM»
+«AROUND java::BOImpl::setterAssignmentReverse FOR JavaModelAssociation»
+«ENDAROUND»
+
 «AROUND java::BOImpl::assocDecl FOR JavaModelAssociation»
 	«IF derived == false»
 		«IF multiple»

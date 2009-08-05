@@ -77,6 +77,10 @@
 	«ENDIF»
 «ENDAROUND»
 
+«REM» Do nothing here! Reverse assignment is "harmful" in GUI context. «ENDREM»
+«AROUND java::BOImpl::setterAssignmentReverse FOR JavaModelAssociation»
+«ENDAROUND»
+
 «AROUND java::BOImpl::xmlMarshalAttribute FOR JavaModelAttribute»
 	«IF this.isSDOClientOnly() == false»
 		«targetDef.proceed()»

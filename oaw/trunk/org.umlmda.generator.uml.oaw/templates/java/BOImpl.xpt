@@ -324,6 +324,18 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
     «ENDIF»
 «ENDDEFINE»
 
+«REM» Used inside the association setter to update the change on the other side of the association. «ENDREM»
+«DEFINE setterAssignmentReverse FOR JavaModelAssociation»
+     «IF isbidirectionalOneToMany() && unique»      
+        if ( oldValue != null && oldValue.«reverse.getter»().contains(this) ) {
+           oldValue.«reverse.getter»().remove(this);
+        }
+        if ( «name» != null && «name».«reverse.getter»().contains(this) == false ) {
+           «name».«reverse.getter»().add(this);
+        }
+     «ENDIF»
+«ENDDEFINE»
+
 «DEFINE setterAssignment FOR JavaModelAssociation»
 	«IF multivalue == true»
 		«setter»Internal(«name»);
@@ -333,14 +345,7 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 			this.«name» = «name»;
 			«EXPAND callPostSetMethod FOR this»
 	      «EXPAND firePropertyChange(this) FOR (JavaModelClass)owner»
-	      «IF isbidirectionalOneToMany() && unique»      
-		      if ( oldValue != null && oldValue.«reverse.getter»().contains(this) ) {
-		         oldValue.«reverse.getter»().remove(this);
-		      }
-		      if ( «name» != null && «name».«reverse.getter»().contains(this) == false ) {
-		         «name».«reverse.getter»().add(this);
-		      }
-	      «ENDIF»
+         «EXPAND setterAssignmentReverse FOR this»
       }
 	«ENDIF»
 «ENDDEFINE»
