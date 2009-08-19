@@ -40,3 +40,8 @@ cached Boolean hasCompositeKey(ModelClass clazz) :
 // A super class is only valid if it's not stereotyped as native interface
 cached Boolean hasSuperClass(ModelClass clazz) : 
     clazz.superClass!=null && !clazz.superClass.hasStereotype("NativeInterface");
+
+// Returns all associations of the given class that are outgoing compositions.
+cached List[JavaModelAssociation] outgoingCompositions(ModelClass class) :
+    class.associations.typeSelect(JavaModelAssociation).select(a|a.composition && a.source==class)
+;

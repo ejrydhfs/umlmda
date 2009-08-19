@@ -79,12 +79,19 @@ cached List extendedSuperClasses(ModelClass cls) :
 	let list = new java::util::ArrayList :
 	    cls.superClass != null 
 	    	? (list.add(cls.superClass) -> list.addAll(cls.superClass.extendedSuperClasses())) 
-	    	: list;
+	    	: list
+;
 	    
 cached List noneExtendedSuperClasses(ModelClass cls) :
-    cls.superClasses.reject(e|cls.extendedSuperClasses().exists(s|e == s));
+    cls.superClasses.reject(e|cls.extendedSuperClasses().exists(s|e == s))
+;
+
+cached List[JavaModelClass] modeledSuperClasses(ModelClass class) :
+    class.superClasses.typeSelect(ModelClass).select(e | e.hasStereotype("BusinessObject"))
+; 
 
 // Filters the given attribute list by name, returning only those attributes with unique names.
 cached List[ModelAttribute] filterDuplicateAttributesByName(ModelClass class, List[ModelAttribute] attributes) : 
   JAVA org.umlmda.oaw.generator.util.ElementUtils.filterDuplicateAttributesByName(org.umlmda.model.uml.ModelClass, java.util.List)
 ;
+

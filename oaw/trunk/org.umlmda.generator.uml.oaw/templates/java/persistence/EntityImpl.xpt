@@ -71,10 +71,14 @@
 «ENDDEFINE»
 
 «DEFINE entityAnnotationDetails(String tablenamePrefix) FOR JavaBusinessObject»
-   «IF getStereotypeProperty("mapping") == null 
-   		|| getStereotypeProperty("mapping").toString() != "SubClass"»
+   «REM» Table annotation only if the mapping leads to separate tables or if the mapping differs from the super entity «ENDREM»
+   «IF superClass==null 
+      || !superClass.isPersistentEntity()
+      || superClass.currentInheritanceMappingStrategy()=="ConcreteClass" 
+      || superClass.currentInheritanceMappingStrategy()=="SubClass" 
+      || currentInheritanceMappingStrategy()!=superClass.currentInheritanceMappingStrategy()»
    		@Table(name="«tablenamePrefix»«tablename()»"«IF getStereotypeProperty("schema") != null», schema="«getStereotypeProperty("schema")»"«ENDIF»)
-   «ENDIF»		
+   «ENDIF»
    «IF getStereotypeProperty("mapping") != null»
       «IF getStereotypeProperty("mapping").toString() == "ClassHierarchy"»
          @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

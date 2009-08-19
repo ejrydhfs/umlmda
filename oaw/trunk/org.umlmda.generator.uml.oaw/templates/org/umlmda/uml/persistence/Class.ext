@@ -14,6 +14,14 @@ extension java::UMLMDA;
 extension org::umlmda::uml::persistence::Attribute;
 extension org::umlmda::uml::persistence::Package;
 
+cached Boolean isPersistableSuperClass(ModelClass class) :
+    class.hasStereotype("PersistableSuperClass") 
+;
+
+cached Boolean isPersistentEntity(ModelClass class) :
+    class.hasStereotype("PersistentEntity") 
+;
+
 String pkeyInterface(JavaModelClass class) :
     class.getScopedName("java.BusinessObjectInterface")+".PKey"
 ;
@@ -57,10 +65,19 @@ cached Boolean isKeyClassRequired(JavaModelClass class) :
 
 cached Boolean isPersistable(ModelClass class) :
     class.hasStereotype("PersistentEntity") || class.hasStereotype("PersistableSuperClass")
-;    
+;
 
 cached String tablename(JavaModelClass class) :
 	class.getStereotypeProperty("table", "---") != "---" 
 		? class.getStereotypeProperty("table")
 		: class.package.tablenamePrefix() + class.name 
+;
+
+// Gets the current inheritance mapping strategy for tables from the current or the next defining super class.
+cached String currentInheritanceMappingStrategy(ModelClass class) :
+    (class.getStereotypeProperty("mapping")!=null && class.getStereotypeProperty("mapping")!="Undefined")
+        ? class.getStereotypeProperty("mapping")
+        : (class.superClass!=null 
+            ? class.superClass.currentInheritanceMappingStrategy()
+            : "Undefined")
 ;
