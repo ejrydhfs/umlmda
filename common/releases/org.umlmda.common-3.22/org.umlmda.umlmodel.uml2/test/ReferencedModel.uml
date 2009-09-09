@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:UMLMDAProfile="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xsi:schemaLocation="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22 /org.umlmda.umlmodel.uml2/test/UMLMDAProfile.profile.uml#_m4nosa87Edy5F6gxEi6kNw">
+  <uml:Model xmi:id="_bmpVofLCEdmyduCk8dC3zA" name="ReferencedModel">
+    <packageImport xmi:id="_bmpVtPLCEdmyduCk8dC3zA">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packageImport xmi:id="_8JoAYPMJEdmrXqwlJJdHPg">
+      <importedPackage xmi:type="uml:Model" href="/org.umlmda.umlmodel.uml2/test/UMLMDATypes.uml#_ggMDAPK4EdmFXfbQyopNVQ"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_ilXY8OuCEdydHqpMKq5jmA" name="org">
+      <packagedElement xmi:type="uml:Package" xmi:id="_y_54wOuCEdyuk6TETm35Jw" name="umlmda">
+        <packagedElement xmi:type="uml:Package" xmi:id="_0ypBsOuCEdyuk6TETm35Jw" name="test">
+          <packagedElement xmi:type="uml:Package" xmi:id="_7MkYMOuCEdyuk6TETm35Jw" name="ref">
+            <packagedElement xmi:type="uml:Class" xmi:id="_DDobEOuDEdyuk6TETm35Jw" name="TestClass">
+              <generalization xmi:id="_FcE5IOuDEdyuk6TETm35Jw">
+                <general xmi:type="uml:Class" href="/org.umlmda.umlmodel.uml2/test/BaseModel.uml#_l434cOt_EdydHqpMKq5jmA"/>
+              </generalization>
+              <ownedAttribute xmi:id="_GILxMOuDEdyuk6TETm35Jw" name="b" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.umlmodel.uml2/test/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:id="_bmpVq_LCEdmyduCk8dC3zA">
+      <eAnnotations xmi:id="_bmpVrPLCEdmyduCk8dC3zA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+    </profileApplication>
+    <profileApplication xmi:id="_bmpVrvLCEdmyduCk8dC3zA">
+      <eAnnotations xmi:id="_bmpVr_LCEdmyduCk8dC3zA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.umlmodel.uml2/test/Default.profile.uml#_IN8k8MmBEdqBcN1R6EvWUw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.umlmodel.uml2/test/Default.profile.uml#_a_S3wNWLEdiy4IqP8whjFA"/>
+    </profileApplication>
+    <profileApplication xmi:id="_bmpVsfLCEdmyduCk8dC3zA">
+      <eAnnotations xmi:id="_bmpVsvLCEdmyduCk8dC3zA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.umlmodel.uml2/test/Deployment.profile.uml#_IrdAUMmBEdqBcN1R6EvWUw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.umlmodel.uml2/test/Deployment.profile.uml#_vjbuwOvHEdiDX5bji0iVSA"/>
+    </profileApplication>
+    <profileApplication xmi:id="_fSWyYPLCEdmyduCk8dC3zA">
+      <eAnnotations xmi:id="_fSWyYfLCEdmyduCk8dC3zA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.umlmodel.uml2/test/UMLMDAProfile.profile.uml#_m4nosa87Edy5F6gxEi6kNw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.umlmodel.uml2/test/UMLMDAProfile.profile.uml#_fgmLseO5Edm14clrpIgO7w"/>
+    </profileApplication>
+  </uml:Model>
+  <UMLMDAProfile:BusinessObject xmi:id="_Dkj94OuDEdyuk6TETm35Jw" base_Class="_DDobEOuDEdyuk6TETm35Jw"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_GILxMeuDEdyuk6TETm35Jw" base_Property="_GILxMOuDEdyuk6TETm35Jw"/>
+</xmi:XMI>

@@ -1,0 +1,8 @@
+org.umlmda.generator.model_*.jar
+bin
+temp.folder
+javaCompiler.runtime_org.umlmda.generator.model.jar.args
+@dot
+javaCompiler.*.args
+src.zip
+target
