@@ -16,6 +16,7 @@
 «EXTENSION org::umlmda::uml::persistence::Attribute»
 «EXTENSION org::umlmda::uml::persistence::Class»
 
+
 «DEFINE EntityImpl FOR JavaBusinessObject»
 	«LET generatedName(this, getDefaultArtefact("BusinessObject", scopeImplementation())) AS className»
 	«this.resetImports()»
@@ -30,45 +31,44 @@
    «IF parentComposition != null && ((JavaModelAssociation)parentComposition).isOwner() && ! parentComposition.navigatableToSource»
       «this.registerImport(getDefaultArtefact(parentComposition.source), (JavaBusinessObject)parentComposition.source)»
    «ENDIF»
-	«EXPAND java::BOImpl::ImportVisitorBase FOR this»
+	«EXPAND java::BOImpl::ImportVisitorBase»
 	«FILE generatedPath+"/"+className+".java"»
 		package «generatorPackage.getQualifiedPackageName(getDefaultArtefact("BusinessObject", scopeImplementation()))»;
 		
-		«EXPAND standardImports FOR this»
-		«EXPAND java::BOImpl::xmlSerializationImports FOR this»
+		«EXPAND standardImports»
+		«EXPAND java::BOImpl::xmlSerializationImports»
 		«this.registeredImports()»
 		
 		/**
-		 * Business implementation of «qualifiedName».
+		 * Persistence implementation of «qualifiedName».
 		 */
-		«EXPAND entityAnnotation FOR this» 
-		public 
-		«IF abstract»
-		abstract
-		«ENDIF»
-		class «className» «EXPAND java::BOImpl::extendsDecl FOR this» «EXPAND java::BOImpl::implementsDecl FOR this»  {
-		    «EXPAND standardBody FOR this»
+		«EXPAND entityAnnotation» 
+		public «IF abstract»abstract«ENDIF» class «className» «EXPAND java::BOImpl::extendsDecl» «EXPAND java::BOImpl::implementsDecl»  {
+		    «EXPAND standardBody»
 		}
 	«ENDFILE»
 	«ENDLET»
 «ENDDEFINE»
 
+
 «DEFINE standardImports FOR JavaBusinessObject»
-   «EXPAND java::BOImpl::standardImports FOR this»
+   «EXPAND java::BOImpl::standardImports»
    
    import javax.persistence.*;
 «ENDDEFINE»
 
+
 «DEFINE entityAnnotation FOR JavaBusinessObject»
    «IF hasStereotype("PersistableSuperClass")»
       @MappedSuperclass
-      «EXPAND entityAnnotationDetails("") FOR this»
+      «EXPAND entityAnnotationDetails("")»
    «ENDIF»
    «IF hasStereotype("PersistentEntity")»
       @Entity
-      «EXPAND entityAnnotationDetails("") FOR this»
+      «EXPAND entityAnnotationDetails("")»
    «ENDIF»
 «ENDDEFINE»
+
 
 «DEFINE entityAnnotationDetails(String tablenamePrefix) FOR JavaBusinessObject»
    «REM» Table annotation only if the mapping leads to separate tables or if the mapping differs from the super entity «ENDREM»
@@ -102,22 +102,23 @@
    «ENDIF»
 «ENDDEFINE»
 
+
 «DEFINE standardBody FOR JavaBusinessObject»
-   «EXPAND java::BOImpl::versionInfo FOR this»
-   «EXPAND java::BOImpl::delegateFactory FOR this»
-   «EXPAND keyImpl FOR this»
+   «EXPAND java::BOImpl::versionInfo»
+   «EXPAND java::BOImpl::delegateFactory»
+   «EXPAND keyImpl»
    
-   «EXPAND java::BOImpl::standardCtor("public") FOR this»
-   «EXPAND handleAttributes FOR this»  
-   «EXPAND handleAssociations FOR this»
+   «EXPAND java::BOImpl::standardCtor("public")»
+   «EXPAND handleAttributes»  
+   «EXPAND handleAssociations»
 
    «FOREACH implementedMethods.typeSelect(JavaModelMethod) AS method»
       «EXPAND java::BOImpl::handleMethod(this) FOR method»
    «ENDFOREACH»
 
-   «EXPAND java::BOImpl::modelMetaInformation FOR this»
-   «EXPAND java::BOImpl::visitorAcceptMethod FOR this»
-   «EXPAND java::BOImpl::xmlSerializationMethods FOR this»
+   «EXPAND java::BOImpl::modelMetaInformation»
+   «EXPAND java::BOImpl::visitorAcceptMethod»
+   «EXPAND java::BOImpl::xmlSerializationMethods»
 «ENDDEFINE»
 
 
@@ -127,73 +128,87 @@
 ====================================================================================================
 «ENDREM»
 
-«DEFINE attrAnnotation FOR JavaModelAttribute»
-   «REM» Handle ID attribute «ENDREM»
-	«IF hasStereotype("PKey") && owningClass.hasStereotype("PersistentEntity") && ! owningClass.hasCompositeKey()»
-		@Id
-		«REM» Key generator only valid here «ENDREM»
-		«IF getStereotypeProperty("generationStrategy", "Undefined") != "Undefined" || !getStereotypeProperty("generator").isEmpty() »
-         @GeneratedValue(
-            «IF getStereotypeProperty("generationStrategy", "Undefined") != "Undefined"»
-		         «IF getStereotypeProperty("generationStrategy")=="Auto"»
-                  strategy=GenerationType.AUTO
-		         «ELSEIF getStereotypeProperty("generationStrategy")=="Identity"»
-                  strategy=GenerationType.IDENTITY
-		         «ELSEIF getStereotypeProperty("generationStrategy")=="Sequence"»
-                  strategy=GenerationType.SEQUENCE
-		         «ELSEIF getStereotypeProperty("generationStrategy")=="Table"»
-                  strategy=GenerationType.TABLE
-		         «ENDIF»
-               «IF !getStereotypeProperty("generator").isEmpty()»
-               , generator="«getStereotypeProperty("generator")»"
-               «ENDIF»
-            «ELSEIF !getStereotypeProperty("generator").isEmpty()»
-               generator="«getStereotypeProperty("generator")»"
-            «ENDIF»
-         )
-		«ENDIF»
-	«ENDIF»
+«DEFINE attributeAnnotation FOR JavaModelAttribute»
+   «IF hasStereotype("PKey") && owningClass.hasStereotype("PersistentEntity") && ! owningClass.hasCompositeKey()»
+      «EXPAND attributeIdAnnotation»
+   «ENDIF»
    «IF hasStereotype("TransientAttribute")»
       @Transient   
    «ELSE»
       «REM» Handle persistent attribute with column «ENDREM»
 	   «IF hasStereotype("VersionAttribute")»
-	      @Version
-	      
-	      «REM»   
-	      
-	                       TODO: Should be a check validation later!!
-	      
-	      «ENDREM»
-	      «IF !(dataType.name=="int" || dataType.name=="short" || dataType.name=="long" || dataType.name=="dateTime")»
-            «ERROR "Version annotation doesn't support data type "+dataType.name»
-	      «ENDIF»
-	      
+	      «EXPAND attributeVersionAnnotation»
 	   «ENDIF»
-      @Column
-      «IF getStereotypeProperty("column") != null || getStereotypeProperty("columnLength").asInteger() > 0»
-         (
-            «IF getStereotypeProperty("column") != null»
-               name="«getStereotypeProperty("column")»"
-               «IF type=="String" && getStereotypeProperty("columnLength").asInteger() > 0»
-               , length=«getStereotypeProperty("columnLength")»
-               «ENDIF»
-            «ELSEIF type=="String" && getStereotypeProperty("columnLength").asInteger() > 0»
-               length=«getStereotypeProperty("columnLength")»
-            «ENDIF»
-         )
-      «ENDIF»
-	   «IF dataType.name == "date" || dataType.name == "dateTime"»
-	      @Temporal(
-	         «IF dataType.name == "date"»
-	            TemporalType.DATE
-	         «ELSE»
-	            TemporalType.TIMESTAMP
-	         «ENDIF»
-	      )   
-	   «ENDIF»
+	   «EXPAND attributeColumnAnnotation('')»
    «ENDIF»
 «ENDDEFINE»
+
+
+«DEFINE attributeIdAnnotation FOR JavaModelAttribute»
+   «REM» Handle ID attribute «ENDREM»
+   @Id
+   «REM» Key generator only valid here «ENDREM»
+   «IF getStereotypeProperty("generationStrategy", "Undefined") != "Undefined" || !getStereotypeProperty("generator").isEmpty() »
+      @GeneratedValue(
+         «IF getStereotypeProperty("generationStrategy", "Undefined") != "Undefined"»
+            «IF getStereotypeProperty("generationStrategy")=="Auto"»
+               strategy=GenerationType.AUTO
+            «ELSEIF getStereotypeProperty("generationStrategy")=="Identity"»
+               strategy=GenerationType.IDENTITY
+            «ELSEIF getStereotypeProperty("generationStrategy")=="Sequence"»
+               strategy=GenerationType.SEQUENCE
+            «ELSEIF getStereotypeProperty("generationStrategy")=="Table"»
+               strategy=GenerationType.TABLE
+            «ENDIF»
+            «IF !getStereotypeProperty("generator").isEmpty()»
+            , generator="«getStereotypeProperty("generator")»"
+            «ENDIF»
+         «ELSEIF !getStereotypeProperty("generator").isEmpty()»
+            generator="«getStereotypeProperty("generator")»"
+         «ENDIF»
+      )
+   «ENDIF»
+«ENDDEFINE»
+
+
+«DEFINE attributeVersionAnnotation FOR JavaModelAttribute»
+   @Version
+«REM»   
+         
+      TODO: Should be a check validation later!!
+         
+«ENDREM»
+   «IF !(dataType.name=="int" || dataType.name=="short" || dataType.name=="long" || dataType.name=="dateTime")»
+      «ERROR "Version annotation doesn't support data type "+dataType.name»
+   «ENDIF»
+«ENDDEFINE»
+
+
+«DEFINE attributeColumnAnnotation(String prefix) FOR JavaModelAttribute»
+   @Column
+   «IF getStereotypeProperty("column") != null || getStereotypeProperty("columnLength").asInteger() > 0»
+      (
+         «IF isColumnNameDefined()»
+            name="«columnName(prefix)»"
+            «IF type=="String" && getStereotypeProperty("columnLength").asInteger() > 0»
+               , length=«getStereotypeProperty("columnLength")»
+            «ENDIF»
+         «ELSEIF type=="String" && getStereotypeProperty("columnLength").asInteger() > 0»
+            length=«getStereotypeProperty("columnLength")»
+         «ENDIF»
+      )
+   «ENDIF»
+   «IF dataType.name == "date" || dataType.name == "dateTime"»
+      @Temporal(
+         «IF dataType.name == "date"»
+            TemporalType.DATE
+         «ELSE»
+            TemporalType.TIMESTAMP
+         «ENDIF»
+      )   
+   «ENDIF»
+«ENDDEFINE»
+
 
 «DEFINE handleAttributes FOR JavaModelClass»
    «FOREACH implementedAttributes.typeSelect(JavaModelAttribute).reject(a|superClass!=null && ((JavaModelClass)superClass).implementedAttributes.contains(a)) AS attr»
@@ -209,12 +224,13 @@
    «ENDFOREACH»
 «ENDDEFINE»
 
-«DEFINE handleAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
-   «EXPAND attrAnnotation FOR this»
-   «EXPAND java::BOImpl::attrDecl FOR this»
 
-   «EXPAND java::BOInterface::attrGetterDecl FOR this»
-   «EXPAND java::BOImpl::getterBody(modelClass) FOR this»
+«DEFINE handleAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
+   «EXPAND attributeAnnotation»
+   «EXPAND java::BOImpl::attrDecl»
+
+   «EXPAND java::BOInterface::attrGetterDecl»
+   «EXPAND java::BOImpl::getterBody(modelClass)»
    
    «REM» Version attributes shouldn't be changed by the application «ENDREM»
    «IF !hasStereotype("VersionAttribute")»
@@ -225,7 +241,7 @@
 		       * Set «name», «getDocumentation("SETTER")»
 		       */
             protected void «setter»(«javaTypeName()» «name») {
-               «EXPAND java::BOImpl::setterAssignment FOR this»
+               «EXPAND java::BOImpl::setterAssignment»
             }
          «ELSE»
             /**
@@ -235,18 +251,18 @@
          «ENDIF»
 		«ELSE»
          «REM» Normal attribute setter «ENDREM»
-	      «EXPAND java::BOInterface::attrSetterDecl FOR this» 
-	      «EXPAND java::BOImpl::setterBody(modelClass) FOR this»
+	      «EXPAND java::BOInterface::attrSetterDecl» 
+	      «EXPAND java::BOImpl::setterBody(modelClass)»
 		«ENDIF»
    «ENDIF»
 «ENDDEFINE»
 
 «DEFINE handleKeyAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
-   «EXPAND java::BOInterface::attrGetterDecl FOR this» {
+   «EXPAND java::BOInterface::attrGetterDecl» {
         return pkey.«getter»();
    }     
    
-   «EXPAND java::BOInterface::attrSetterDecl FOR this» {
+   «EXPAND java::BOInterface::attrSetterDecl» {
         pkey.«setter»(«name»);
    }
 «ENDDEFINE»
@@ -262,8 +278,8 @@
    «FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
      «EXPAND handleAssociation(this) FOR assoc»
    «ENDFOREACH»
-   «EXPAND compositionHandling FOR this»
-   «EXPAND jpaSyncMethod FOR this»
+   «EXPAND compositionHandling»
+   «EXPAND jpaSyncMethod»
 «ENDDEFINE»
 
 «DEFINE associationComment FOR JavaModelAssociation»
@@ -271,17 +287,17 @@
 «ENDDEFINE»
 
 «DEFINE handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
-   «EXPAND associationComment FOR this»
-   «EXPAND assocAnnotation FOR this»
-   «EXPAND assocDecl FOR this»
+   «EXPAND associationComment»
+   «EXPAND assocAnnotation»
+   «EXPAND assocDecl»
    
    «IF !derived && multiple»
         @SuppressWarnings("unchecked")   
    «ENDIF»
-   «EXPAND java::BOInterface::assocGetterDecl FOR this»
-   «EXPAND java::BOImpl::getterBody(modelClass) FOR this»
+   «EXPAND java::BOInterface::assocGetterDecl»
+   «EXPAND java::BOImpl::getterBody(modelClass)»
    
-   «EXPAND java::BOInterface::assocSetterDecl FOR this» {
+   «EXPAND java::BOInterface::assocSetterDecl» {
         «IF multiple»
             this.«name» = «name»;
         «ELSE»
@@ -297,7 +313,7 @@
    }
 
     «IF isJoinAssociation()»
-       «EXPAND handleJoinColumns FOR this»
+       «EXPAND handleJoinColumns»
     «ENDIF»
 «ENDDEFINE»
 
@@ -315,14 +331,14 @@
               «attr»
            «ENDFOREACH»
          )
-         «EXPAND joinColumns FOR this»
+         «EXPAND joinColumns»
        «ELSEIF !multiple && reverse.multiple»
          @ManyToOne(
            «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
               «attr»
            «ENDFOREACH»
          )
-         «EXPAND joinColumns FOR this»
+         «EXPAND joinColumns»
        «ELSEIF multiple && reverse.multiple»
          @ManyToMany(
            «FOREACH persistenceAttributes() AS attr SEPARATOR ","»
@@ -333,19 +349,21 @@
    «ENDIF»
 «ENDDEFINE»
 
+
 «DEFINE joinColumns FOR JavaModelAssociation»
    «IF joinColumns().isEmpty == false»
       @JoinColumns( {
          «FOREACH joinColumns() AS keyAttr SEPARATOR ","»
             «IF !sharedJoinColumns().contains(keyAttr)»
-               @JoinColumn(name = "«name.toFirstLower()»_«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
+               @JoinColumn(name = "«name.toFirstLower()»_«keyAttr.columnName()»", referencedColumnName = "«keyAttr.columnName()»", nullable = true, insertable = false, updatable = false)
             «ELSE»
-               @JoinColumn(name = "«keyAttr.dbColumn()»", referencedColumnName = "«keyAttr.dbColumn()»", nullable = true, insertable = false, updatable = false)
+               @JoinColumn(name = "«keyAttr.columnName()»", referencedColumnName = "«keyAttr.columnName()»", nullable = true, insertable = false, updatable = false)
             «ENDIF»
          «ENDFOREACH»
       })         
    «ENDIF»
 «ENDDEFINE»
+
 
 «DEFINE compositionHandling FOR JavaBusinessObject»
    «REM» Special handling for non-navigable compositions. Expect only one parent composition here! «ENDREM»
@@ -356,6 +374,7 @@
       «EXPAND handleJoinColumns FOR (JavaModelAssociation)parentComposition.reverse»
    «ENDIF»
 «ENDDEFINE»
+
 
 «DEFINE jpaSyncMethod FOR JavaBusinessObject»
    «REM» JPA sync method for FKs to non-navigable, related entities «ENDREM»
@@ -379,6 +398,7 @@
       }
    «ENDIF»
 «ENDDEFINE»
+
 
 «DEFINE handleJoinColumns FOR JavaModelAssociation»
    «IF ! unsharedJoinColumns().isEmpty»
@@ -417,6 +437,7 @@
 		private «attr.javaType» «name.toFirstLower()»_«attr.name»; 
    «ENDFOREACH»
 «ENDDEFINE»
+
 
 «DEFINE assocDecl FOR JavaModelAssociation»
     «IF !derived»

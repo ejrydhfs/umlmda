@@ -10,11 +10,21 @@ import org::umlmda::uml::generator::java;
 import org::umlmda::oaw::generator::util;
 import org::umlmda::oaw::generator::model::java;
 
-String dbColumn(ModelAttribute attr) :
-    let stereotypeName = attr.getStereotypeProperty("column") :
-    
-    stereotypeName != null ? stereotypeName : attr.name
+
+cached Boolean isColumnNameDefined(ModelAttribute attr) : 
+   attr.getStereotypeProperty("column") != null
 ;
+
+cached String columnName(ModelAttribute attr) :
+    attr.columnName('')
+;
+
+cached String columnName(ModelAttribute attr, String prefix) : 
+    let columnName = attr.getStereotypeProperty("column", attr.name) :
+    prefix + columnName
+;
+
+
 
 cached Boolean isDomainAttribute(ModelAttribute attr) :
     attr.getStereotypeProperty("domainAttribute", "true") == "true"

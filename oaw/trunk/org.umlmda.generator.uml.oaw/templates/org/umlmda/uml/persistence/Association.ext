@@ -13,6 +13,11 @@ import org::umlmda::oaw::generator::model::java;
 extension org::umlmda::uml::java::Artefact;
 extension org::umlmda::uml::persistence::Class;
 
+/* Returns the column name prefix for FK keys belonging to the given association. */
+cached String fkColumnPrefix(ModelAssociation assoc) :
+    assoc.getStereotypeProperty("fkColumnPrefix", assoc.name)
+;
+
 cached List[String] persistenceAttributes(JavaModelAssociation assoc) :
     let attributes = {} :
     let targetArtefact = assoc.target.getDefaultArtefact(scopeImplementation()) :
