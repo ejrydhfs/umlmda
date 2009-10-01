@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: UMLMDA Oaw Plug-in
+Bundle-SymbolicName: org.umlmda.generator.uml.oaw
+Bundle-Version: 3.0.4.qualifier
+Bundle-Activator: org.umlmda.generator.uml.oaw.plugin.Activator
+Bundle-Vendor: www.umlmda.org
+Bundle-Localization: plugin
+Export-Package: org.umlmda.oaw.generator.model.j2ee,
+ org.umlmda.oaw.generator.model.java,
+ org.umlmda.oaw.generator.util,
+ org.umlmda.oaw.generator.workflow
+Require-Bundle: org.apache.log4j,
+ org.apache.commons.lang,
+ org.eclipse.core.runtime,
+ org.eclipse.uml2.uml,
+ org.umlmda.generator.profile,
+ org.umlmda.model.profile,
+ org.umlmda.umlmodel,
+ org.umlmda.generator.model,
+ org.umlmda.generator.uml.psm,
+ org.umlmda.umlmodel.nsuml;resolution:=optional,
+ org.umlmda.umlmodel.uml2;resolution:=optional,
+ org.openarchitectureware.dependencies
+Eclipse-LazyStart: true
