@@ -1,0 +1,135 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.releng</artifactId>
+      <version>3.2.0</version>
+   </parent>
+   
+   <artifactId>org.umlmda.uml2.profiles.new</artifactId>
+   <version>4.6.2</version>
+   <name>UMLMDA uml2 profiles new 4.x</name>
+   <description />
+   <packaging>pom</packaging>
+   
+   
+   <scm>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.profiles.new-4.6.2</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.profiles.new-4.6.2</developerConnection>
+   </scm>
+   
+   <build>
+      <plugins>
+         <!-- Pack RSx/UML2 Profiles -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>model2java</id>
+                  <phase>package</phase>
+                  <configuration>
+                     <tasks>
+                        <mkdir dir="${project.build.directory}" />
+                        <zip destfile="${project.build.directory}/umlmda-common-profiles.zip">
+                           <fileset dir="${basedir}/profiles">
+                              <include name="UMLMDACommonProfile.epx" />
+                           </fileset>
+                        </zip>
+                        <zip destfile="${project.build.directory}/umlmda-domain-profiles.zip">
+                           <fileset dir="${basedir}/profiles">
+                              <include name="UMLMDADomainProfile.epx" />
+                           </fileset>
+                        </zip>
+                        <zip destfile="${project.build.directory}/umlmda-persistence-profiles.zip">
+                           <fileset dir="${basedir}/profiles">
+                              <include name="UMLMDAPersistenceProfile.epx" />
+                           </fileset>
+                        </zip>
+                        <zip destfile="${project.build.directory}/umlmda-service-profiles.zip">
+                           <fileset dir="${basedir}/profiles">
+                              <include name="UMLMDAServiceProfile.epx" />
+                           </fileset>
+                        </zip>
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>attach-artifacts</id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>attach-artifact</goal>
+                  </goals>
+                  <configuration>
+                     <artifacts>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/umlmda-common-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>common</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/umlmda-domain-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>domain</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/umlmda-persistence-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>persistence</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/umlmda-service-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>service</classifier>
+                        </artifact>
+                     </artifacts>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
+
+   <repositories>
+      <repository>
+         <id>artifactory</id>
+         <url>http://coding.ds2k.de/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+      <repository>
+         <id>cor-artifactory</id>
+         <url>http://cor-health-dev1/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
+
+</project>
