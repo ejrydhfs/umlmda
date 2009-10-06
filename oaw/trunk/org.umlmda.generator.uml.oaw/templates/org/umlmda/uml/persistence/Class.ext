@@ -64,7 +64,7 @@ cached Boolean isKeyClassRequired(JavaModelClass class) :
 ;
 
 cached Boolean isPersistable(ModelClass class) :
-    class.hasStereotype("PersistentEntity") || class.hasStereotype("PersistableSuperClass")
+    class.isPersistentEntity() || class.isPersistableSuperClass()
 ;
 
 cached String tablename(JavaModelClass class) :
