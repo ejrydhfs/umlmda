@@ -4,7 +4,7 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.common</artifactId>
-      <version>3.23</version>
+      <version>3.24-SNAPSHOT</version>
    </parent>
    <artifactId>org.umlmda.generator.profile</artifactId>
    <name>UMLMDA generator profile</name>
