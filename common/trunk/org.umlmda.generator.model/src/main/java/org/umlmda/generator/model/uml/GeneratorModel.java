@@ -11,6 +11,7 @@ import org.umlmda.generator.model.util.RcsHelper;
 import org.umlmda.generator.profile.Artefact;
 import org.umlmda.generator.set.GenerationProfile;
 import org.umlmda.generator.set.GenerationSet;
+import org.umlmda.model.uml.ModelElement;
 
 
 public interface GeneratorModel  
@@ -49,7 +50,7 @@ public interface GeneratorModel
     * @param stereotype
     * @return Set of @link org.umlmda.generator.profile.Artefact
     */
-   public Set getArtefacts(String stereotype);
+   public Set<Artefact> getArtefacts(String stereotype);
    
    /** 
     * Returns the properties defined on the generation profile or the profile.
@@ -58,10 +59,19 @@ public interface GeneratorModel
    public Properties getProperties();
    
    /**
-    * Returns a set of model elements to be generated
+    * Returns a set of model elements to be generated, namely Classes and Packages.<br />
+    * For a complete set of ModelElements see {@link GeneratorModel#getAllModelElements()}.
     * @return Set of @link org.umlmda.uml.generator.GeneratorModelElement to be generated
     */
-   public Set getModelElements();
+   public Set<ModelElement> getModelElements();
+   
+   /**
+    * Returns a comprehensive set of model elements to be generated, i.e. all visitable ones.<br />
+    * These are Model, Package, Class, Association, Parameter, Attribute, Method, Dependency and DataType.<br />
+    * For a smaller set of ModelElements see {@link GeneratorModel#getModelElements()}.
+    * @return Set of @link org.umlmda.uml.generator.GeneratorModelElement to be generated
+    */
+   public Set<ModelElement> getAllModelElements();
 
    /**
     * Returns a artefact in the profile or any based on profiles fitting for the given model element 

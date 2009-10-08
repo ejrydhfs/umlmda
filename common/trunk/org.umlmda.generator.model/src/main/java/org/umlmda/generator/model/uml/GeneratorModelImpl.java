@@ -113,11 +113,12 @@ public abstract class GeneratorModelImpl implements GeneratorModel {
    /* (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorModel#getArtefacts(java.lang.String)
     */
-   public Set getArtefacts(String stereotypeName) {
+   @SuppressWarnings("unchecked")
+   public Set<Artefact> getArtefacts(String stereotypeName) {
       Stereotype stereotype = getStereotype(stereotypeName);
       
       if ( stereotype != null ) {
-         Set artefacts = new HashSet();
+         Set<Artefact> artefacts = new HashSet<Artefact>();
          for (Iterator im = stereotype.getMappings().iterator(); im.hasNext();) {
             Mapping mapping = (Mapping) im.next();
 

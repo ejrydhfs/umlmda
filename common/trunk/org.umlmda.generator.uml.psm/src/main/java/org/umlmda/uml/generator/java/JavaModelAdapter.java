@@ -30,10 +30,16 @@ import java.util.Set;
 import org.umlmda.model.uml.DefaultModelVisitor;
 import org.umlmda.model.uml.Model;
 import org.umlmda.model.uml.ModelAdapterFactory;
+import org.umlmda.model.uml.ModelAssociation;
+import org.umlmda.model.uml.ModelAttribute;
 import org.umlmda.model.uml.ModelBase;
 import org.umlmda.model.uml.ModelClass;
+import org.umlmda.model.uml.ModelDataType;
+import org.umlmda.model.uml.ModelDependency;
 import org.umlmda.model.uml.ModelElement;
+import org.umlmda.model.uml.ModelMethod;
 import org.umlmda.model.uml.ModelPackage;
+import org.umlmda.model.uml.ModelParameter;
 import org.umlmda.model.uml.impl.ModelClassImpl;
 import org.umlmda.model.uml.impl.ModelPackageImpl;
 import org.umlmda.model.uml.utils.ModelVisitableIterator;
@@ -41,20 +47,24 @@ import org.umlmda.profile.ModelStereotype;
 import org.umlmda.uml.generator.DefaultModelAdapter;
 
 /**
- * Implementation of a model adapter for java generation 
+ * Implementation of a model adapter for java generation
+ * 
  * @author Dieter Moroff
  */
-public class JavaModelAdapter extends DefaultModelAdapter implements JavaModel {
+public class JavaModelAdapter extends DefaultModelAdapter implements JavaModel
+{
    private boolean init = false;
-   
-   public Collection getClasses() {
+
+   public Collection<ModelClass> getClasses() {
       init();
       return super.getClasses();
    }
-   public Collection getPackages() {
+
+   public Collection<ModelPackage> getPackages() {
       init();
       return super.getPackages();
    }
+
    /**
     * @param factory
     * @param srcModel
@@ -63,30 +73,22 @@ public class JavaModelAdapter extends DefaultModelAdapter implements JavaModel {
       super(factory, srcModel);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorModel#getModelElements()
     */
-   public final Set getModelElements() {
-      final Set modelElements = new HashSet();
+   public final Set<ModelElement> getModelElements() {
       init();
+      return super.getModelElements();
+   }
 
-      // Using the visitor to collect all packages and classes for generation
-      new ModelVisitableIterator(new DefaultModelVisitor(logger) {
-         public boolean visit(ModelPackage modelPackage) {
-            super.visit(modelPackage);
-            modelElements.add(modelPackage);
-            return true;
-         }
-
-         public boolean visit(ModelClass modelClass) {
-            super.visit(modelClass);
-            modelElements.add(modelClass);
-            return true;
-         }
-
-      }).iterate(this);
-
-      return modelElements;
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.uml.generator.DefaultModelAdapter#getAllModelElements()
+    */
+   public final Set<ModelElement> getAllModelElements() {
+      init();
+      return super.getAllModelElements();
    }
 
    /**
@@ -104,7 +106,7 @@ public class JavaModelAdapter extends DefaultModelAdapter implements JavaModel {
       model.getPackages().add(modelPackage);
       return modelPackage;
    }
-   
+
    /**
     * @param packageName
     * @param model
@@ -123,47 +125,48 @@ public class JavaModelAdapter extends DefaultModelAdapter implements JavaModel {
       model.getClasses().add(modelClass);
       return modelClass;
    }
-   
+
    public void init() {
-      if ( ! init ) {
+      if ( !init ) {
          this.init = true;
 
          createCommonModelElements();
-         
+
          // Using visitor to handle <<AsyncCall>> methods
          new ModelVisitableIterator(new JavaPSMCreateListenerVisitor()).iterate(this);
       }
    }
-   
+
    /**
-    * Create common elements used in the writers for the java plattform. 
+    * Create common elements used in the writers for the java plattform.
     */
    protected void createCommonModelElements() {
       // Create common java classes
-      ModelPackage java = (ModelPackage) find("java"); 
+      ModelPackage java = (ModelPackage) find("java");
       if ( java == null ) {
          java = createPackage("java", getModel());
       }
-      ModelPackage javaLang = (ModelPackage) find("java.lang"); 
+      ModelPackage javaLang = (ModelPackage) find("java.lang");
       if ( javaLang == null ) {
          javaLang = createPackage("lang", java);
       }
-      ModelClass javaLangThrowable = (ModelClass)find(Throwable.class.getName());
+      ModelClass javaLangThrowable = (ModelClass) find(Throwable.class.getName());
       if ( javaLangThrowable == null ) {
          javaLangThrowable = createClass("Throwable", javaLang, ModelStereotype.NATIVE_CLASS);
       }
-      ModelClass javaLangException = (ModelClass)find(Exception.class.getName());
+      ModelClass javaLangException = (ModelClass) find(Exception.class.getName());
       if ( javaLangException == null ) {
          javaLangException = createClass("Exception", javaLang, ModelStereotype.NATIVE_CLASS);
       }
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.j2ee.J2EEModel#isSpringSupported()
     */
    public boolean isSpringSupported() {
-      return Boolean.valueOf(getProperties().getProperty(PROPERTY_SPRING_SUPPORT, PROPERTY_SPRING_SUPPORT_DEFAULT)).booleanValue();
+      return Boolean.valueOf(getProperties().getProperty(PROPERTY_SPRING_SUPPORT, PROPERTY_SPRING_SUPPORT_DEFAULT))
+            .booleanValue();
    }
-   
-   
+
 }
