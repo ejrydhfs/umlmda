@@ -67,6 +67,12 @@ cached Boolean isPersistable(ModelClass class) :
     class.isPersistentEntity() || class.isPersistableSuperClass()
 ;
 
+// Construct the table name for an entity starting with the given prefix.  
+cached String tablename(JavaModelClass class, String prefix) :
+    prefix + class.tablename() 
+;
+
+// Construct the table name for an entity, eventually adding the packages prefix to it. 
 cached String tablename(JavaModelClass class) :
 	class.getStereotypeProperty("table", "---") != "---" 
 		? class.getStereotypeProperty("table")

@@ -77,7 +77,7 @@
       || superClass.currentInheritanceMappingStrategy()=="ConcreteClass" 
       || superClass.currentInheritanceMappingStrategy()=="SubClass" 
       || currentInheritanceMappingStrategy()!=superClass.currentInheritanceMappingStrategy()»
-   		@Table(name="«tablenamePrefix»«tablename()»"«IF getStereotypeProperty("schema") != null», schema="«getStereotypeProperty("schema")»"«ENDIF»)
+   		@Table(name="«tablename(tablenamePrefix)»"«IF getStereotypeProperty("schema") != null», schema="«getStereotypeProperty("schema")»"«ENDIF»)
    «ENDIF»
    «IF getStereotypeProperty("mapping") != null»
       «IF getStereotypeProperty("mapping").toString() == "ClassHierarchy"»
