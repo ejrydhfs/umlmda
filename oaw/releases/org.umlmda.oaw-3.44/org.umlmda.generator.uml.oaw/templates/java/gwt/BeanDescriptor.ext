@@ -1,0 +1,26 @@
+import java::util;
+import org::umlmda::generator::model::uml;
+import org::umlmda::profile;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+extension org::umlmda::uml::java::Element;
+
+cached boolean hasImplementedClientFeatures(JavaModelClass class) :
+	class.getImplementedClientAttributes().size > 0 || class.getImplementedClientAssociation().size > 0
+;
+	
+cached List[JavaModelAttribute] getImplementedClientAttributes(JavaModelClass class) :
+	class.implementedAttributes.typeSelect(JavaModelAttribute).select(e|e.isSDOServerOnly() == false)
+;
+	
+cached List[JavaModelAssociation] getImplementedClientAssociation(JavaModelClass class) :
+	class.implementedAssociations.typeSelect(JavaModelAssociation).select(e|e.isSDOServerOnly() == false)	
+;	
+
+cached String getPropertyDesciptor(JavaModelStructuraleFeature attr) :
+	attr.readOnly ? "ReadOnlyPropertyDescriptor" : "DynamicEditorPropertyDescriptor"
+;

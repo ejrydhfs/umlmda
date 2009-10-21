@@ -1,0 +1,99 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelClass
+ */
+import java::util;
+import org::umlmda::generator::model::uml;
+import org::umlmda::profile;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+extension java::UMLMDA;
+extension org::umlmda::uml::persistence::Attribute;
+extension org::umlmda::uml::persistence::Package;
+
+cached Boolean isPersistableSuperClass(ModelClass class) :
+    class.hasStereotype("PersistableSuperClass") 
+;
+
+cached Boolean isPersistentEntity(ModelClass class) :
+    class.hasStereotype("PersistentEntity") 
+;
+
+String pkeyInterface(JavaModelClass class) :
+    class.getScopedName("java.BusinessObjectInterface")+".PKey"
+;
+
+String pkeyGetter(JavaModelClass class) :
+    "get"+class.name+"Pkey"
+;    
+
+cached List[ModelAttribute] domainKeys(ModelClass class) :
+    class.filterDuplicateAttributesByName( class.keyAttributes.typeSelect(ModelAttribute).select(attr| attr.getStereotypeProperty("domainAttribute", "true") == "true").sortBy(a | a.getStereotypeProperty("order")) )
+;
+
+cached List[ModelAttribute] derivedDomainKeys(ModelClass class) :
+    class.domainKeys().select(attr| attr.derived)
+;
+
+cached List[ModelAttribute] persistentDomainKeys(ModelClass class) :
+    class.domainKeys().select(attr| !attr.derived)
+;
+
+cached List[ModelAttribute] implementedDomainAttributes(JavaModelClass class) :
+    class.implementedAttributes.typeSelect(ModelAttribute).select(e|!e.hasStereotype("PKey")).select(e|e.isDomainAttribute())
+;
+    
+cached Boolean hasPersistentDomainKeys(ModelClass class) :
+    class.persistentDomainKeys().isEmpty == false
+;
+    
+cached Boolean noneGeneratedCodeRequired(JavaModelClass class) :
+    class.implementedMethods.isEmpty == false 
+ || class.implementedAttributes.typeSelect(ModelAttribute).exists(e|e.derived)    
+ || class.implementedAssociations.typeSelect(ModelAssociation).exists(e|e.derived)    
+;
+
+/**
+ * Checks if a key class is required
+ */
+cached Boolean isKeyClassRequired(JavaModelClass class) :
+   class.keyAttributes.size > 1 && (class.superClass == null || !class.superClass.hasStereotype("PersistentEntity")) && class.hasStereotype("PersistentEntity")
+;
+
+cached Boolean isPersistable(ModelClass class) :
+    class.isPersistentEntity() || class.isPersistableSuperClass()
+;
+
+// Checks if the given class needs a table annotation by looking at the inheritance mapping strategy in the current class hierarchy.
+cached Boolean needsTableAnnotation(ModelClass class) :
+    class.isPersistentEntity() 
+    && ( class.superClass==null 
+      || !class.superClass.isPersistentEntity()
+      || class.superClass.currentInheritanceMappingStrategy()=="ConcreteClass" 
+      || class.superClass.currentInheritanceMappingStrategy()=="SubClass" 
+      || class.currentInheritanceMappingStrategy()!=class.superClass.currentInheritanceMappingStrategy() )
+;
+
+// Construct the table name for an entity starting with the given prefix.  
+cached String tablename(JavaModelClass class, String prefix) :
+    prefix + class.tablename() 
+;
+
+// Construct the table name for an entity, eventually adding the packages prefix to it. 
+cached String tablename(JavaModelClass class) :
+	class.getStereotypeProperty("table", "---") != "---" 
+		? class.getStereotypeProperty("table")
+		: class.package.tablenamePrefix() + class.name 
+;
+
+// Gets the current inheritance mapping strategy for tables from the current or the next defining super class.
+cached String currentInheritanceMappingStrategy(ModelClass class) :
+    (class.getStereotypeProperty("mapping")!=null && class.getStereotypeProperty("mapping")!="Undefined")
+        ? class.getStereotypeProperty("mapping")
+        : (class.superClass!=null 
+            ? class.superClass.currentInheritanceMappingStrategy()
+            : "Undefined")
+;

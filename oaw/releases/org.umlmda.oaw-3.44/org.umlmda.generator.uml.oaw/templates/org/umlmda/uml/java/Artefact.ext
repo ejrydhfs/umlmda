@@ -1,0 +1,60 @@
+import org::umlmda::model::uml;
+
+// and we also load the io extensions, for the purpose of
+// debugging, in case we need it   
+extension org::openarchitectureware::util::stdlib::io;   
+extension org::openarchitectureware::util::stdlib::issues;   
+
+String scopeInterface() :
+	JAVA org.umlmda.uml.generator.util.ArtefactUtils.getScopeInterface()
+;
+	
+String scopeImplementation() :
+	JAVA org.umlmda.uml.generator.util.ArtefactUtils.getScopeImplemenation()
+;
+	
+Void resetDefaultArtefacts() :
+	JAVA org.umlmda.uml.generator.util.ArtefactUtils.resetDefaultMappings()
+;
+
+cached String getDefaultArtefact(ModelElement element)	:
+   let artefacts = element.stereotypes.typeSelect(String).collect(e|getDefaultArtefact(e)).reject(e|e == "" || e == null) :
+
+   (artefacts != null && artefacts.size == 1) ? (
+   		let artefact = artefacts.first() :
+        debug("Artefact for "+element.qualifiedName+" is "+artefact) ->
+        artefact
+   ) : (
+        error("No artefact for "+element.qualifiedName) ->
+        null
+   )             
+;
+   
+String getDefaultArtefact(ModelElement element, String scope)	:
+   let artefacts = element.stereotypes.typeSelect(String).collect(e|getDefaultArtefact(e,scope)).reject(e|e == "" || e == null) :
+
+   (artefacts != null && artefacts.size == 1) ? (
+   		let artefact = artefacts.first() :
+        debug("Artefact for "+element.qualifiedName+" with scope "+scope+" is "+artefact) ->
+        artefact
+   ) : (
+        error("No artefact for "+element.qualifiedName+" with scope "+scope) ->
+        null
+   )             
+;
+   
+String getDefaultArtefact(String stereotypeName)	:
+   JAVA org.umlmda.uml.generator.util.ArtefactUtils.getDefaultMapping(java.lang.String)
+;
+   
+String getDefaultArtefact(String stereotypeName, String scope)	:
+   JAVA org.umlmda.uml.generator.util.ArtefactUtils.getDefaultMapping(java.lang.String, java.lang.String)
+;
+   
+Void setDefaultArtefact(String stereotypeName, String artefactName) :
+   JAVA org.umlmda.uml.generator.util.ArtefactUtils.setDefaultMapping(java.lang.String, java.lang.String)
+;   
+
+Void setDefaultArtefact(String stereotypeName, String artefactName, String scope) :
+   JAVA org.umlmda.uml.generator.util.ArtefactUtils.setDefaultMapping(java.lang.String, java.lang.String, java.lang.String)
+;   
