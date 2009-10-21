@@ -67,6 +67,16 @@ cached Boolean isPersistable(ModelClass class) :
     class.isPersistentEntity() || class.isPersistableSuperClass()
 ;
 
+// Checks if the given class needs a table annotation by looking at the inheritance mapping strategy in the current class hierarchy.
+cached Boolean needsTableAnnotation(ModelClass class) :
+    class.isPersistentEntity() 
+    && ( class.superClass==null 
+      || !class.superClass.isPersistentEntity()
+      || class.superClass.currentInheritanceMappingStrategy()=="ConcreteClass" 
+      || class.superClass.currentInheritanceMappingStrategy()=="SubClass" 
+      || class.currentInheritanceMappingStrategy()!=class.superClass.currentInheritanceMappingStrategy() )
+;
+
 // Construct the table name for an entity starting with the given prefix.  
 cached String tablename(JavaModelClass class, String prefix) :
     prefix + class.tablename() 
