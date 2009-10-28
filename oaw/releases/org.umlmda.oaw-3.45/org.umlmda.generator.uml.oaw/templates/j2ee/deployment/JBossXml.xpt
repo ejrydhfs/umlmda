@@ -1,0 +1,43 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::j2ee»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::j2ee»
+«EXTENSION java::UMLMDA»
+
+«DEFINE JBossXml FOR J2EEBusinessComponent»
+«LET generatedName(this, "j2ee.EjbJarXml") AS interfaceName»
+«FILE generatedPath+"META-INF/jboss.xml"»<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Generated file, please edit UserSections only -->
+
+<jboss>
+
+	<enterprise-beans>
+
+	<!-- Session Beans -->
+	«FOREACH businessServices.typeSelect(J2EEBusinessService) AS businessService»
+		«EXPAND sessionBeanDecl FOR businessService»
+	«ENDFOREACH»      
+
+	<!-- UserSection-Begin enterprise-beans -->
+	<!-- UserSection-End enterprise-beans -->
+	</enterprise-beans>
+   
+	<resource-managers>
+	<!-- UserSection-Begin resource-managers -->
+	<!-- UserSection-End resource-managers -->
+	</resource-managers>
+   
+</jboss>
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE sessionBeanDecl FOR J2EEBusinessService»
+	<session>
+		<ejb-name>«name»</ejb-name>
+		<jndi-name>«jndiName»</jndi-name>
+<!-- UserSection-Begin «name» -->
+<!-- UserSection-End «name» -->
+	</session>
+«ENDDEFINE»
