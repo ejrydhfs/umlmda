@@ -31,7 +31,7 @@ String pkeyGetter(JavaModelClass class) :
 ;    
 
 cached List[ModelAttribute] domainKeys(ModelClass class) :
-    class.filterDuplicateAttributesByName( class.keyAttributes.typeSelect(ModelAttribute).select(attr| attr.getStereotypeProperty("domainAttribute", "true") == "true").sortBy(a | a.getStereotypeProperty("order")) )
+    class.filterDuplicateAttributesByName( class.keyAttributes.typeSelect(ModelAttribute).select(attr| attr.getStereotypeProperty("domainAttribute", "true") == "true").sortBy(a | a.getStereotypeProperty("order").asInteger() ) )
 ;
 
 cached List[ModelAttribute] derivedDomainKeys(ModelClass class) :

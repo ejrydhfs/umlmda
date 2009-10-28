@@ -467,7 +467,7 @@
             Problem with key order: JPA does not yet support explicit ordering. 
             With this you won't get an efficiently working primary key index generated.
          «ENDREM»
-         «FOREACH keyAttributes.typeSelect(JavaModelAttribute).sortBy(k|k.getStereotypeProperty("order")) AS attr»
+         «FOREACH keyAttributes.typeSelect(JavaModelAttribute).sortBy( k | k.getStereotypeProperty("order").asInteger() ) AS attr»
             «EXPAND java::BOImpl::attrDecl FOR attr»
          «ENDFOREACH»
          
