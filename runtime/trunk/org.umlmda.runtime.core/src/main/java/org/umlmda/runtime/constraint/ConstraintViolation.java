@@ -26,12 +26,13 @@ package org.umlmda.runtime.constraint;
 
 /**
  * Baseclass for constraint violations
- * @author Dieter Moroff (20.02.2006), last change $Date: 2008/03/25 09:54:05 $ $Name:  $
- * @version $Revision: 1.1 $
+ * 
+ * @author Dieter Moroff (20.02.2006)
  */
-public class ConstraintViolation {
+public class ConstraintViolation
+{
    private final String feature;
-   
+
    /**
     * 
     */
@@ -46,4 +47,12 @@ public class ConstraintViolation {
    public String getFeature() {
       return feature;
    }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#toString()
+    */
+   public String toString() {
+      return "ConstraintViolation: " + getFeature();
+   }
+
 }

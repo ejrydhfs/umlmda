@@ -1,10 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/constraint/MultiplicityConstraintViolation.java,v 1.1 2008/03/25 09:54:05 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/constraint/MultiplicityConstraintViolation.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2008/03/25 09:54:05 $
- * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
@@ -26,21 +20,22 @@ package org.umlmda.runtime.constraint;
 
 /**
  * TODO Insert type javadoc
- * @author Dieter Moroff (20.02.2006), last change $Date: 2008/03/25 09:54:05 $ $Name:  $
- * @version $Revision: 1.1 $
+ * 
+ * @author Dieter Moroff (20.02.2006)
  */
-public class MultiplicityConstraintViolation extends ConstraintViolation {
+public class MultiplicityConstraintViolation extends ConstraintViolation
+{
    private final String boundType;
-   private final int is;
-   private final int expected;
-   
+   private final int    is;
+   private final int    expected;
+
    /**
     * @param feature
     */
    public MultiplicityConstraintViolation(String feature, String boundType, int is, int expected) {
       super(feature);
       this.boundType = boundType;
-      this.is = is; 
+      this.is = is;
       this.expected = expected;
    }
 
@@ -50,20 +45,23 @@ public class MultiplicityConstraintViolation extends ConstraintViolation {
    private String getBoundType() {
       return boundType;
    }
+
    /**
     * @return Returns the expected.
     */
    private int getExpected() {
       return expected;
    }
+
    /**
     * @return Returns the is.
     */
    private int getIs() {
       return is;
    }
-   
+
    public String toString() {
-      return "MultiplicityConstraintViolation: "+getFeature()+" "+getBoundType()+" multiplicity is "+is+", expected "+expected;
+      return "MultiplicityConstraintViolation: " + getFeature() + " " + getBoundType() + " multiplicity is " + getIs()
+            + ", expected " + getExpected();
    }
 }
