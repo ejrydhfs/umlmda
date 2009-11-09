@@ -1,13 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelPackage.java,v 1.3 2006/04/12 20:18:30 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelPackage.java,v $
-// $Revision: 1.3 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/12 20:18:30 $
-//   $Locker:  $
-//
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
 //  License as published by the Free Software Foundation; either
@@ -29,11 +21,12 @@ package org.umlmda.model.uml;
 import java.util.List;
 
 /**
- * interface for sophisticated model package access 
+ * Interface for sophisticated model package access
  * 
  * @author vpussel
  */
-public interface ModelPackage extends ModelElement, ModelPackageBase, ModelVisitable {
+public interface ModelPackage extends ModelElement, ModelPackageBase, ModelVisitable
+{
 
    /**
     * @return the package containing this package
@@ -41,12 +34,12 @@ public interface ModelPackage extends ModelElement, ModelPackageBase, ModelVisit
    public abstract ModelPackage getPackage();
 
    /**
-    * @return an alphabetically sorted list of all packages on with this package depends 
+    * @return an alphabetically sorted list of all packages on with this package depends
     */
    public abstract List getReferencedPackages();
 
    /**
-    * @return an alphabetically sorted list of all referenced classes 
+    * @return an alphabetically sorted list of all referenced classes
     */
    public abstract List getReferencedClasses();
 
@@ -54,4 +47,9 @@ public interface ModelPackage extends ModelElement, ModelPackageBase, ModelVisit
     * Returns a list containing only objects of the given stereotype
     */
    public abstract List getClasses(String stereotype);
+
+   /**
+    * @return A list of nested packages.
+    */
+   public abstract List<? extends ModelPackageBase> getNestedPackages();
 }

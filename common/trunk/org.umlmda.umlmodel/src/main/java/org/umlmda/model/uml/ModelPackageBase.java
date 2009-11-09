@@ -1,13 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelPackageBase.java,v 1.2 2006/04/13 23:04:37 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelPackageBase.java,v $
-// $Revision: 1.2 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/13 23:04:37 $
-//   $Locker:  $
-//
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
 //  License as published by the Free Software Foundation; either
@@ -29,16 +21,18 @@ package org.umlmda.model.uml;
 import java.util.List;
 
 /**
- * interface for basic model package access
- *   
+ * Interface for basic model package access
+ * 
  * @author vpussel
  */
-public interface ModelPackageBase extends ModelElementBase {
-   public static final String PROPERTY_CLASSES = "classes";
-   public final static String PACKAGE_SEPARATOR = ".";
+public interface ModelPackageBase extends ModelElementBase
+{
+   static final String PROPERTY_CLASSES  = "classes";
+   static final String PROPERTY_PACKAGES = "packages";
+   static final String PACKAGE_SEPARATOR = ".";
 
    /**
-    * Returns a list containing all classes of the package 
+    * Returns a list containing all classes of the package
     */
    public abstract List getClasses();
 
@@ -46,5 +40,10 @@ public interface ModelPackageBase extends ModelElementBase {
     * Returns the package containing this package
     */
    public abstract ModelPackageBase getPackageBase();
-   
+
+   /**
+    * @return A list with nested packages.
+    */
+   public abstract List<? extends ModelPackageBase> getNestedPackagesBase();
+
 }

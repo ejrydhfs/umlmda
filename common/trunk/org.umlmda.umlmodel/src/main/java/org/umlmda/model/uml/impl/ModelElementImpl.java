@@ -1,10 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelElementImpl.java,v 1.6 2006/06/24 18:50:21 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelElementImpl.java,v $
- * $Revision: 1.6 $
- *     $Name:  $
- *     $Date: 2006/06/24 18:50:21 $
- * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
@@ -34,22 +28,25 @@ import org.umlmda.model.uml.ModelBase;
 import org.umlmda.model.uml.ModelElementBase;
 import org.umlmda.utils.observer.ObservableList;
 
-
 /**
  * Simple implementation of a model element
  * 
  * @author Dieter Moroff (08.08.2005)
  */
-public class ModelElementImpl extends Observable implements ModelElementBase, Observer {
-   private final ModelBase model;
+/**
+ * @author ASCHMACKS
+ */
+public class ModelElementImpl extends Observable implements ModelElementBase, Observer
+{
+   private final ModelBase        model;
    private final ModelElementBase owner;
-   private Properties taggedValues = new Properties();
-   private ObservableList stereotypes = new ObservableList(new ArrayList());
-   private ObservableList dependencies = new ObservableList(new ArrayList());
-   private String name = null;
-   private String documentation = null;
-   private final String modelUID;
-   private String constraints = null;
+   private Properties             taggedValues  = new Properties();
+   private ObservableList         stereotypes   = new ObservableList(new ArrayList());
+   private ObservableList         dependencies  = new ObservableList(new ArrayList());
+   private String                 name          = null;
+   private String                 documentation = null;
+   private final String           modelUID;
+   private String                 constraints   = null;
 
    /**
     * 
@@ -72,22 +69,25 @@ public class ModelElementImpl extends Observable implements ModelElementBase, Ob
       setName(source.getName());
    }
 
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getTaggedValues()
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelElementBase#getTaggedValues()
     */
    public Properties getTaggedValues() {
       return taggedValues;
    }
 
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getStereotypes()
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelElementBase#getStereotypes()
     */
    public Collection getStereotypes() {
       return stereotypes;
    }
 
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getName()
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelElementBase#getName()
     */
    public String getName() {
       return name;
@@ -97,8 +97,10 @@ public class ModelElementImpl extends Observable implements ModelElementBase, Ob
       this.name = name;
       notifyObservers(PROPERTY_NAME);
    }
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getDocumentation()
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelElementBase#getDocumentation()
     */
    public String getDocumentation() {
       return documentation;
@@ -108,35 +110,40 @@ public class ModelElementImpl extends Observable implements ModelElementBase, Ob
       this.documentation = documentation;
       notifyObservers(PROPERTY_DOCUMENTATION);
    }
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getOwner()
+
+   /**
+    * @return
     */
    public ModelElementBase getOwner() {
       return owner;
    }
 
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.ModelElementBase#getOwnerBase()
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelElementBase#getOwnerBase()
     */
    public ModelElementBase getOwnerBase() {
       return getOwner();
    }
 
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getModel()
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelElementBase#getModelBase()
     */
    public ModelBase getModelBase() {
       return model;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElementBase#getDependencies()
     */
    public Collection getDependencies() {
       return dependencies;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
     */
    public void update(Observable o, Object arg) {
@@ -148,56 +155,70 @@ public class ModelElementImpl extends Observable implements ModelElementBase, Ob
       }
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelElementBase#getStereotypeProperty()
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelElementBase#getStereotypeProperty(java.lang.String)
     */
    public String getStereotypeProperty(String name) {
       return taggedValues.getProperty(name);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelElementBase#getStereotypeProperty(java.lang.String)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelElementBase#getStereotypeProperty(java.lang.String, java.lang.String)
     */
    public String getStereotypeProperty(String name, String defaultValue) {
       return taggedValues.getProperty(name, defaultValue);
    }
 
+   /*
+    * (non-Javadoc)
+    * @see java.util.Observable#notifyObservers()
+    */
    public void notifyObservers() {
       setChanged();
       super.notifyObservers();
    }
+
+   /*
+    * (non-Javadoc)
+    * @see java.util.Observable#notifyObservers(java.lang.Object)
+    */
    public void notifyObservers(Object arg) {
       setChanged();
       super.notifyObservers(arg);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElementBase#getModelUId()
     */
    public String getModelUId() {
       return modelUID;
    }
- 
+
    private static long sequence = 0L;
 
    public static synchronized String createUUID() {
       ++sequence;
-      return "UMLMDA-UUID-"+Long.toHexString(sequence);
+      return "UMLMDA-UUID-" + Long.toHexString(sequence);
    }
-   
-   /**
-    * @return Returns the constraints.
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelElementBase#getConstraints()
     */
    public String getConstraints() {
       return constraints;
    }
-   
+
    /**
-    * @param constraints The constraints to set.
+    * @param constraints
+    *           The constraints to set.
     */
    public void setConstraints(String constraints) {
       this.constraints = constraints;
       notifyObservers(PROPERTY_CONSTRAINTS);
    }
-   
+
 }

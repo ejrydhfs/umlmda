@@ -32,14 +32,16 @@ import org.umlmda.model.uml.ModelElementBase;
 import org.umlmda.model.uml.ModelPackageBase;
 import org.umlmda.utils.observer.ObservableList;
 
-
 /**
  * Basic implementation of a model package.
+ * 
  * @author Dieter Moroff (21.10.2005)
  */
-public class ModelPackageImpl extends ModelElementImpl implements ModelPackageBase {
+public class ModelPackageImpl extends ModelElementImpl implements ModelPackageBase
+{
 
-   private ObservableList classes = new ObservableList(new ArrayList());
+   private ObservableList classes        = new ObservableList(new ArrayList());
+   private ObservableList nestedPackages = new ObservableList(new ArrayList());
 
    /**
     * @param model
@@ -51,30 +53,44 @@ public class ModelPackageImpl extends ModelElementImpl implements ModelPackageBa
 
    private void initObserver() {
       classes.addObserver(this);
+      nestedPackages.addObserver(this);
    }
 
-   /* (non-Javadoc)
-    * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.impl.ModelElementImpl#update(java.util.Observable, java.lang.Object)
     */
    public void update(Observable o, Object arg) {
       super.update(o, arg);
       if ( o == classes ) {
          notifyObservers(PROPERTY_CLASSES);
+      } else if ( o == nestedPackages ) {
+         notifyObservers(PROPERTY_PACKAGES);
       }
    }
-   
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.ModelPackageBase#getClasses()
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelPackageBase#getClasses()
     */
    public List getClasses() {
       return classes;
    }
 
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.ModelPackageBase#getPackageBase()
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelPackageBase#getPackageBase()
     */
    public ModelPackageBase getPackageBase() {
       return (ModelPackageBase) getOwner();
+   }
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelPackageBase#getNestedPackagesBase()
+    */
+   public List<? extends ModelPackageBase> getNestedPackagesBase() {
+      return nestedPackages;
    }
 
 }

@@ -26,7 +26,6 @@
 package org.umlmda.model.uml.nsuml;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,67 +40,73 @@ import ru.novosoft.uml.model_management.MPackage;
 
 /**
  * Wraps a package from a UML model
+ * 
  * @author Dieter Moroff
  */
-public class ModelPackageImpl extends ModelElementImpl implements ModelConstants, ModelPackageBase {
-	private final MPackage modelPackage;
-   private Collection referencedPackages = null;
-   private List classes = null;
-	private String name;
-	
-   /**
-	 * @param namespace
-	 */
-	public ModelPackageImpl(ModelImpl model, MNamespace namespace) {
-		super(model, namespace);
-		if (namespace instanceof MPackage && !(namespace instanceof MModel) ) 
-			modelPackage = (MPackage) namespace;
-		else
-			modelPackage = null;
-	}
+public class ModelPackageImpl extends ModelElementImpl implements ModelConstants, ModelPackageBase
+{
+   private final MPackage modelPackage;
+   private List           classes        = null;
+   private List           nestedPackages = null;
+   private String         name;
 
-	/**
+   /**
+    * @param namespace
+    */
+   public ModelPackageImpl(ModelImpl model, MNamespace namespace) {
+      super(model, namespace);
+      if ( namespace instanceof MPackage && !(namespace instanceof MModel) )
+         modelPackage = (MPackage) namespace;
+      else
+         modelPackage = null;
+   }
+
+   /**
     * Must be overwritten to remove pseudo packages from rational rose
-	 * @return Full
-	 */
-	public String getQualifiedName() {
-		if ( name == null ) {
-			if ( modelPackage != null  ) 
-				name = getName(modelPackage);
-			else
-				name = EMPTY;
-		}
-		return name;	
-	}
-   
-	private static String getName(MNamespace namespace) {
-		if ( namespace.getNamespace() != null && !(namespace.getNamespace() instanceof MModel) && !(namespace.getNamespace().getName().equals("Logical View")) )
-			return getName(namespace.getNamespace()) + PACKAGE_SEPARATOR + namespace.getName();	
-		else
-			return namespace.getName();
-	}
-
-   /**
     * 
+    * @return Full
+    */
+   public String getQualifiedName() {
+      if ( name == null ) {
+         if ( modelPackage != null )
+            name = getName(modelPackage);
+         else
+            name = EMPTY;
+      }
+      return name;
+   }
+
+   private static String getName(MNamespace namespace) {
+      if ( namespace.getNamespace() != null && !(namespace.getNamespace() instanceof MModel)
+            && !(namespace.getNamespace().getName().equals("Logical View")) )
+         return getName(namespace.getNamespace()) + PACKAGE_SEPARATOR + namespace.getName();
+      else
+         return namespace.getName();
+   }
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelPackageBase#getClasses()
     */
    public List getClasses() {
       if ( classes == null ) {
          classes = new ArrayList();
-         
-         for (Iterator iter = modelPackage.getOwnedElements().iterator(); iter.hasNext();) {
+
+         for ( Iterator iter = modelPackage.getOwnedElements().iterator(); iter.hasNext(); ) {
             MElement element = (MElement) iter.next();
-   
-            if (element instanceof MClass) {
-               classes.add(model.findClass((MClass)element));
-            }      
-         }      
+
+            if ( element instanceof MClass ) {
+               classes.add(model.findClass((MClass) element));
+            }
+         }
       }
-      
+
       return classes;
    }
 
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.ModelPackageBase#getPackageBase()
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelPackageBase#getPackageBase()
     */
    public ModelPackageBase getPackageBase() {
       if ( modelPackage.getNamespace() instanceof MPackage )
@@ -109,5 +114,24 @@ public class ModelPackageImpl extends ModelElementImpl implements ModelConstants
       else
          return null;
    }
-   
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelPackageBase#getNestedPackagesBase()
+    */
+   public List<? extends ModelPackageBase> getNestedPackagesBase() {
+      if ( nestedPackages == null ) {
+         nestedPackages = new ArrayList();
+
+         for ( Iterator iter = modelPackage.getOwnedElements().iterator(); iter.hasNext(); ) {
+            MElement element = (MElement) iter.next();
+
+            if ( element instanceof MPackage ) {
+               nestedPackages.add(model.findPackage((MPackage) element));
+            }
+         }
+      }
+      return nestedPackages;
+   }
+
 }

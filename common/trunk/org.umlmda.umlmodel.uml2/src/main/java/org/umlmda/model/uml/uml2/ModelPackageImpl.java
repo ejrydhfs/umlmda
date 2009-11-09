@@ -43,11 +43,12 @@ import org.umlmda.model.uml.ModelPackageBase;
  */
 public class ModelPackageImpl extends ModelElementImpl implements ModelConstants, ModelPackageBase
 {
-   private final Package        modelPackage;
+   private final Package          modelPackage;
    // private Collection referencedPackages = null;
-   private List<ModelClassImpl> classes = null;
+   private List<ModelClassImpl>   classes        = null;
+   private List<ModelPackageBase> nestedPackages = null;
    @SuppressWarnings("unused")
-   private String               name;
+   private String                 name;
 
    /**
     * 
@@ -69,8 +70,9 @@ public class ModelPackageImpl extends ModelElementImpl implements ModelConstants
          modelPackage = null;
    }
 
-   /**
-    * 
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelPackageBase#getClasses()
     */
    public List<ModelClassImpl> getClasses() {
       if ( classes == null ) {
@@ -88,13 +90,33 @@ public class ModelPackageImpl extends ModelElementImpl implements ModelConstants
 
    /*
     * (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelPackage#getPackage()
+    * @see org.umlmda.model.uml.ModelPackageBase#getPackageBase()
     */
    public ModelPackageBase getPackageBase() {
-      if ( modelPackage.getNamespace() instanceof Package )
+      if ( modelPackage.getNamespace() instanceof Package ) {
          return model.findPackage(modelPackage.getNamespace());
-      else
+      }
+      else {
          return null;
+      }
+   }
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelPackageBase#getNestedPackagesBase()
+    */
+   public List<? extends ModelPackageBase> getNestedPackagesBase() {
+      if ( nestedPackages == null ) {
+         nestedPackages = new ArrayList<ModelPackageBase>();
+
+         for ( Element element : modelPackage.getOwnedElements() ) {
+            if ( element instanceof Package ) {
+               nestedPackages.add(model.findPackage((Package) element));
+            }
+         }
+      }
+
+      return nestedPackages;
    }
 
 }
