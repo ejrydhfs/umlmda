@@ -169,11 +169,6 @@
 
 «DEFINE attributeVersionAnnotation FOR JavaModelAttribute»
    @Version
-«REM»   
-         
-      TODO: Should be a check validation later!!
-         
-«ENDREM»
    «IF !(dataType.name=="int" || dataType.name=="short" || dataType.name=="long" || dataType.name=="dateTime")»
       «ERROR "Version annotation doesn't support data type "+dataType.name»
    «ENDIF»
@@ -181,19 +176,27 @@
 
 
 «DEFINE attributeColumnAnnotation(String prefix) FOR JavaModelAttribute»
-   @Column
+   @Column(
    «IF getStereotypeProperty("column") != null || getStereotypeProperty("columnLength").asInteger() > 0»
-      (
-         «IF isColumnNameDefined()»
-            name="«columnName(prefix)»"
-            «IF type=="String" && getStereotypeProperty("columnLength").asInteger() > 0»
-               , length=«getStereotypeProperty("columnLength")»
-            «ENDIF»
-         «ELSEIF type=="String" && getStereotypeProperty("columnLength").asInteger() > 0»
-            length=«getStereotypeProperty("columnLength")»
+      «IF isColumnNameDefined()»
+         name = "«columnName(prefix)»"
+         «IF type=="String" && getStereotypeProperty("columnLength").asInteger() > 0»
+            , length = «getStereotypeProperty("columnLength")»
          «ENDIF»
-      )
+      «ELSEIF type=="String" && getStereotypeProperty("columnLength").asInteger() > 0»
+         length = «getStereotypeProperty("columnLength")»
+      «ENDIF»
+      «REM» PK columns must not be null (and PKs don't have a prefix) «ENDREM»
+      «IF hasStereotype("PKey") && prefix.isEmpty()»
+         , nullable = false
+      «ENDIF»
+   «ELSE»
+      «REM» PK columns must not be null (and PKs don't have a prefix) «ENDREM»
+      «IF hasStereotype("PKey") && prefix.isEmpty()»
+         nullable = false
+      «ENDIF»
    «ENDIF»
+   )
    «IF dataType.name == "date" || dataType.name == "dateTime"»
       @Temporal(
          «IF dataType.name == "date"»
