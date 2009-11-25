@@ -103,6 +103,9 @@ public class DirectSynchronizerImpl extends SynchronizerImpl
             if ( parameter instanceof SynchronizedObjectProxy ) {
                callParameters[i] = serverModelPlayer.getObject((SynchronizedObjectProxy)parameter);
             }
+            else if ( parameter instanceof SynchronizedObject ) {
+               callParameters[i] = serverModelPlayer.getObjectById(((SynchronizedObject)parameter).getRecordObjectId());
+            }
             else {
                callParameters[i] = parameter;
             }
