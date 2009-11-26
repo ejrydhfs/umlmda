@@ -164,7 +164,6 @@
          <plugin>
             <groupId>org.fornax.toolsupport</groupId>
             <artifactId>fornax-oaw-m2-plugin</artifactId>
-            <version>2.0.0</version>
             <configuration>
                <defaultOawResourceDir>${basedir}/src/main/resources</defaultOawResourceDir>
                <properties>

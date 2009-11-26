@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <parent>
       <groupId>org.umlmda</groupId>
@@ -25,14 +26,14 @@
    <!-- inherited property values -->
    <properties>
       <spring.version>1.2.7</spring.version>
-      <gwt.version>1.5.M2</gwt.version>
+      <gwt.version>1.5.2</gwt.version>
       <google.webtoolkit.home>${env.GWT_HOME}</google.webtoolkit.home>
-      <oaw.version>4.2.0</oaw.version>
-      <umlmda.common.version>3.4.1</umlmda.common.version>
-      <umlmda.oaw.version>3.8</umlmda.oaw.version>
-      <umlmda.runtime.version>3.6</umlmda.runtime.version>
-      <umlmda.uml2.profile.version>3.2.0</umlmda.uml2.profile.version>
-      <umlmda.generator.profile.version>3.2.0</umlmda.generator.profile.version>
+      <oaw.version>4.3.1</oaw.version>
+      <umlmda.common.version>3.25</umlmda.common.version>
+      <umlmda.oaw.version>3.46</umlmda.oaw.version>
+      <umlmda.runtime.version>3.13</umlmda.runtime.version>
+      <umlmda.uml2.profile.version>4.2.1</umlmda.uml2.profile.version>
+      <umlmda.generator.profile.version>3.8</umlmda.generator.profile.version>
    </properties>
 
    <dependencyManagement>
@@ -212,6 +213,16 @@
          </dependency>
       </dependencies>
    </dependencyManagement>
+
+   <build>
+      <pluginManagement>
+         <plugin>
+            <groupId>org.fornax.toolsupport</groupId>
+            <artifactId>fornax-oaw-m2-plugin</artifactId>
+            <version>2.1.1</version>
+         </plugin>
+      </pluginManagement>
+   </build>
 
    <scm>
       <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime.sdo/trunk</connection>
