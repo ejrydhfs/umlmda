@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <parent>
       <groupId>org.umlmda</groupId>
@@ -8,7 +7,7 @@
    </parent>
    <artifactId>org.umlmda.runtime.sdo</artifactId>
    <packaging>pom</packaging>
-   <version>3.10-SNAPSHOT</version>
+   <version>3.10</version>
    <name>UMLMDA runtime.sdo pom</name>
    <description>UMLMDA maven project for umlmda runtime.sdo modules.</description>
 
@@ -227,8 +226,8 @@
    </build>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime.sdo/trunk</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime.sdo/trunk</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime.sdo/releases/org.umlmda.runtime.sdo-3.10</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime.sdo/releases/org.umlmda.runtime.sdo-3.10</developerConnection>
    </scm>
 
    <repositories>
