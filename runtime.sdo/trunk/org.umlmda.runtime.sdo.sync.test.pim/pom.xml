@@ -14,14 +14,13 @@
    <dependencies>
       <!-- oAW -->
       <dependency>
-         <groupId>org.fornax.openarchitectureware</groupId>
-         <artifactId>oaw-uml2</artifactId>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-rsdp-adapter</artifactId>
          <version>${oaw.version}</version>
-         <type>pom</type>
       </dependency>
       <dependency>
-         <groupId>org.openarchitectureware.adapter</groupId>
-         <artifactId>adapter-rsdp</artifactId>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-util-stdlib</artifactId>
          <version>${oaw.version}</version>
       </dependency>
 
