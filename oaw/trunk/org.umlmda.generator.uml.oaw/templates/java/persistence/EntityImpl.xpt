@@ -177,7 +177,7 @@
 
 «DEFINE attributeColumnAnnotation(String prefix) FOR JavaModelAttribute»
    @Column(
-   «IF getStereotypeProperty("column") != null || getStereotypeProperty("columnLength").asInteger() > 0»
+   «IF isColumnNameDefined() || getStereotypeProperty("columnLength").asInteger() > 0»
       «IF isColumnNameDefined()»
          name = "«columnName(prefix)»"
          «IF type=="String" && getStereotypeProperty("columnLength").asInteger() > 0»

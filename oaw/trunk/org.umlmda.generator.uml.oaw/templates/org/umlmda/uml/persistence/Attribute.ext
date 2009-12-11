@@ -12,7 +12,7 @@ import org::umlmda::oaw::generator::model::java;
 
 
 cached Boolean isColumnNameDefined(ModelAttribute attr) : 
-   attr.getStereotypeProperty("column") != null
+   attr.getStereotypeProperty("column", "").trim().length > 0
 ;
 
 cached String columnName(ModelAttribute attr) :
@@ -20,7 +20,7 @@ cached String columnName(ModelAttribute attr) :
 ;
 
 cached String columnName(ModelAttribute attr, String prefix) : 
-    let columnName = attr.getStereotypeProperty("column", attr.name) :
+    let columnName = attr.getStereotypeProperty("column", attr.name).trim() :
     prefix + columnName
 ;
 
