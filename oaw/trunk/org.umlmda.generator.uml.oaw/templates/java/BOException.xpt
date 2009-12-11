@@ -32,13 +32,7 @@ public class «className» extends «javaSuperClass.javaType» {
 	«ENDFOREACH»
 
 	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
-		«EXPAND BOImpl::assocDecl FOR assoc»
-	
-		«EXPAND BOInterface::assocGetterDecl FOR assoc»
-		«EXPAND BOImpl::getterBody(this) FOR assoc»
-	
-		«EXPAND BOInterface::assocSetterDecl FOR assoc»
-		«EXPAND BOImpl::setterBody(this) FOR assoc»
+		«EXPAND BOImpl::handleAssociation(this) FOR assoc»
 	«ENDFOREACH»
 	
 	«FOREACH methods.typeSelect(org::umlmda::uml::generator::java::JavaModelMethod) AS method»
@@ -53,14 +47,24 @@ public class «className» extends «javaSuperClass.javaType» {
     }
      
     /**
+     * Constructor with an exception message passed to the super class
+     *
+     * @param message
+     */
+    public «className» (String message) {
+      super(message);
+    }
+     
+    /**
      * Constructor with all attributes set
      */
 	«IF attributes.size > 0 »
-		public «className» (
+		public «className» (String message,
 		«FOREACH javaAttributes.typeSelect(org::umlmda::uml::generator::java::JavaModelAttribute) AS attr SEPARATOR ","»
 			«attr.javaType» «attr.name»
 		«ENDFOREACH»
 		) {
+		   super(message);
 		«FOREACH javaAttributes.typeSelect(org::umlmda::uml::generator::java::JavaModelAttribute) AS attr»
 			this.«attr.name» = «attr.name»;
 		«ENDFOREACH»
