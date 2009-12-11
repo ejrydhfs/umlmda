@@ -1,0 +1,17 @@
+<workflow>
+    <property file="testWorkflow.properties"/>
+
+    <!-- Loading UMLMDA generationset -->
+	<component id="generationSetLoader"
+			class="org.umlmda.oaw.generator.workflow.GenerationSetLoader">
+		<generationSet value="test/oAWTest.ums"/>
+		<generationSetSlot value="gs"/>
+	</component>
+
+    <!-- Checking UMLMDA generationset -->
+	<component id="generationSetChecker"
+			class="org.umlmda.oaw.generator.workflow.GenerationSetChecker">
+		<generationSetSlot value="gs"/>
+	</component>
+
+</workflow>
