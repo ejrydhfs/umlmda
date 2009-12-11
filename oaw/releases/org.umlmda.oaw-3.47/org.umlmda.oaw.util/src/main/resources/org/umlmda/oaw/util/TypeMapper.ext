@@ -1,0 +1,11 @@
+import uml;
+
+extension org::openarchitectureware::util::stdlib::io;   
+
+cached Void registerMappedNamespace(uml::Namespace namespace, String prefix) :
+    JAVA org.umlmda.oaw.util.uml2.TypeMapper.registerNamespace(org.eclipse.uml2.uml.Namespace, java.lang.String)
+;
+
+cached Type findMappedType(uml::Type type) :
+    JAVA org.umlmda.oaw.util.uml2.TypeMapper.findType(org.eclipse.uml2.uml.Type)
+;       

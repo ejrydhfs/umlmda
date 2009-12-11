@@ -1,0 +1,16 @@
+import org::umlmda::generator::model::uml;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::model::java;
+
+cached String ejbTransactionAnnotation(JavaModelMethod method) :
+    "@javax.ejb.TransactionAttribute(" + method.ejbTransactionType() + ")"
+;
+
+private ejbTransactionType(JavaModelMethod method) :
+    method.getStereotypeProperty("transactionType") == "RequiresNew" ?
+        "javax.ejb.TransactionAttributeType.REQUIRES_NEW"
+    :
+        "javax.ejb.TransactionAttributeType.REQUIRED"    
+;
