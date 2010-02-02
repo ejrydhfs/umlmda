@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: UMLMDA 4.x UML2-Profile Plug-in
+Bundle-SymbolicName: org.umlmda.uml2.profile.new; singleton:=true
+Bundle-Version: 4.7.2
+Bundle-ClassPath: runtime/org.umlmda.uml2.profile.jar
+Bundle-Activator: org.umlmda.uml2.profile.ProfilePlugin
+Bundle-Vendor: www.umlmda.org
+Bundle-Localization: plugin
+Export-Package: org.umlmda.uml2.profile
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.ibm.xtools.emf.msl;resolution:=optional,
+ com.ibm.xtools.modeler.ui.wizards;resolution:=optional,
+ org.eclipse.gmf.runtime.emf.core.compatibility;resolution:=optional
+Eclipse-LazyStart: true
