@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.profile:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.profile="http:///org/umlmda/generator/profile.ecore" name="jaxWsArtefacts" adapterFactory="org.umlmda.uml.generator.webservices.WSModelAdapterFactory">
+  <artefacts name="ws.Utils" fileExtension="java" postfix="Utils" namespacePostfix=".utils" replacement="" replacementPattern="" writer="org.umlmda.uml.generator.webservices.writer.WSAdapterUtilsWriter"/>
+  <artefacts name="ws.Adapter" filename="" fileExtension="java" postfix="Accessor" namespacePostfix=".accessor" replacement="" replacementPattern="" writer="org.umlmda.uml.generator.webservices.writer.WSAdapterWriter"/>
+  <artefacts name="ws.AdapterFactory" fileExtension="java" postfix="" namespacePostfix=".ws.accessor" replacement="\u$1Factory" replacementPattern="(.*)" type="Velocity" writer="webservice/AdapterFactory.vm"/>
+  <artefacts name="ws.Stub" description="Von WSDL2Java generierte Sourcen" namespacePostfix=".jax" type="None"/>
+  <artefacts name="ws.Request" description="Von WSDL2Java generierte Sourcen" postfix="" namespacePostfix=".jax" replacement="$2Request" replacementPattern="(.*)\.(.*)" type="None"/>
+  <artefacts name="ws.Response" description="Von WSDL2Java generierte Sourcen" postfix="" namespacePostfix=".jax" replacement="$2Response" replacementPattern="(.*)\.(.*)" type="None"/>
+  <artefacts name="ws.ServicePort" description="Von WSDL2Java generierte Sourcen" postfix="Port" namespacePostfix=".jax" type="None"/>
+  <artefacts name="ws.ServiceLocator" description="Von WSDL2Java generierte Sourcen" postfix="Locator" namespacePostfix=".jax" type="None"/>
+  <artefacts name="ws.Package" namespacePostfix=".ws" type="None"/>
+  <artefacts name="ws.Servlet" fileExtension="java" postfix="Servlet" namespacePostfix=".servlet" writer="org.umlmda.uml.generator.webservices.writer.WSServletWriter"/>
+  <artefacts name="ws.ServletInterface" fileExtension="java" namespacePostfix=".servlet" type="Velocity" writer="webservice/ServletInterface.vm"/>
+  <defaultProperties name="DateMapping" value="java.util.Date"/>
+  <defaultProperties name="soapWrapping" value="true"/>
+  <basedOn href="javaArtefacts.ump#javaArtefacts"/>
+</org.umlmda.generator.profile:Profile>
