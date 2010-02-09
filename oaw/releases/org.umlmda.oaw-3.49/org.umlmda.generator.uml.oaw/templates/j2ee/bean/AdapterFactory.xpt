@@ -1,0 +1,45 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::j2ee»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+
+«DEFINE AdapterFactory FOR J2EEBusinessComponent»
+«LET generatedName(this, "j2ee.AdapterFactory") AS className»
+«FILE generatedPath+"/"+className+".java"»//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//@@UserSection-End RCSHeader
+
+package «getQualifiedPackageName("j2ee.AdapterFactory")»;
+
+«FOREACH businessServices.typeSelect(J2EEBusinessService) AS bs»
+	«this.registerImport("j2ee.Adapter", bs)»
+«ENDFOREACH»
+«this.registerImport("java.BusinessObjectFactoryImpl")»
+«this.registerImport("java.BusinessFactory")»
+«this.registeredImports()»
+
+/**
+ * J2EE adapter implementation for business factory for «qualifiedName». «documentation»
+ */
+public class «className» extends «getScopedName("java.BusinessObjectFactoryImpl")» implements «getScopedName("java.BusinessFactory")» {
+	«FOREACH businessServices.typeSelect(J2EEBusinessService) AS bs»
+		«IF bs.abstract == false»
+			«EXPAND java::BFactory::createBSDecl FOR bs»
+			«EXPAND createBSBody FOR bs»
+		«ENDIF»
+	«ENDFOREACH»
+}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE createBSBody FOR JavaBusinessService»
+	{
+		return new «getScopedName("j2ee.Adapter")»();
+	}
+«ENDDEFINE» 
+ 
