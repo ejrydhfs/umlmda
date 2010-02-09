@@ -2,7 +2,7 @@
 <feature
       id="org.umlmda.generator.uml.oaw.feature"
       label="UMLMDA oAW Integration"
-      version="3.0.4.qualifier"
+      version="3.0.5"
       provider-name="www.umlmda.org">
 
    <description url="readme.html">
@@ -21,6 +21,6 @@
          id="org.umlmda.generator.uml.oaw"
          download-size="0"
          install-size="0"
-         version="3.0.4.qualifier"/>
+         version="3.0.5"/>
 
 </feature>

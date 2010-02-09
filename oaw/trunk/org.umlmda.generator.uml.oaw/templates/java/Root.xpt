@@ -45,7 +45,9 @@
    «EXPAND java::BOFactoryImpl::BOFactoryImpl FOR this»
    «EXPAND java::BFactory::BFactory FOR this»
    «EXPAND java::Visitor::Visitor FOR this»
+   «EXPAND java::VisitableIterator::Root FOR this»
    «EXPAND java::AbstractVisitor::Root FOR this»
+   «EXPAND java::ConstraintIteration::Root FOR this»
    «EXPAND java::ConstraintVisitor::Root FOR this»
 «ENDDEFINE»
 
