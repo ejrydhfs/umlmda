@@ -17,6 +17,7 @@ main.CodeWriterFormat	   = format/ParentJavaWriterFormat.jwf
 java.CodeWriter.package    = org.umlmda.uml.generator.webservices.writer
 java.CodeWriter.extends    = AbstractPackageWriter
 %><% import!
+import org.apache.commons.lang.StringUtils;
 import java.beans.Introspector;
 import java.util.*;
 

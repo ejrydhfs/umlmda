@@ -37,16 +37,16 @@
            <wsdlsoap:body use="<%=soapEncodingTag%>" <% 
       if ( soapEncodingTag.equals("encoded") ) {%>
                          <%=soapEncodingStyleTag%>
-                          namespace="<%=getType(getModelClass().getPackage())%>"<%
-      }%>/>
+                          <%
+      }%>namespace="<%=getType(getModelClass().getPackage())%>"/>
          </wsdl:input>
 <%    if ( soapWrapping || (method.getReturnType() != null && method.getReturnType().getName().equals("void") == false) ) {
 %>         <wsdl:output name="<%=method.getName()%>Response">
            <wsdlsoap:body use="<%=soapEncodingTag%>" <% 
       if ( soapEncodingTag.equals("encoded") ) {%>
                          <%=soapEncodingStyleTag%>
-                          namespace="<%=getType(getModelClass().getPackage())%>"<%
-      }%>/>
+                          <%
+      }%>namespace="<%=getType(getModelClass().getPackage())%>"/>
          </wsdl:output>
 <%    }
       for ( Iterator ie = method.getExceptions().iterator(); ie.hasNext(); ) {
@@ -56,8 +56,8 @@
                            use="<%=soapEncodingTag%>" <%
       if ( soapEncodingTag.equals("encoded") ) {%>
                           <%=soapEncodingStyleTag%>
-                           namespace="<%=getType(getModelClass().getPackage())%>"<%
-      }%>/>
+                           <%
+      }%>namespace="<%=getType(getModelClass().getPackage())%>"/>
          </wsdl:fault>
 <%    }
 %>         

@@ -120,7 +120,7 @@
             <executions>
                <execution>
                   <id>add-source</id>
-                  <phase>process-sources</phase>
+                  <phase>initialize</phase>
                   <goals>
                      <goal>add-source</goal>
                   </goals>

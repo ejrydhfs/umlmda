@@ -17,6 +17,7 @@ main.CodeWriterFormat	   = format/ParentJavaWriterFormat.jwf
 java.CodeWriter.package    = org.umlmda.uml.generator.webservices.writer
 java.CodeWriter.extends    = AbstractWSDLWriter
 %><% import!
+import org.apache.commons.lang.StringUtils;
 import java.beans.Introspector;
 import java.util.Iterator;
 import java.util.List;
@@ -136,7 +137,7 @@ import org.umlmda.uml.generator.webservices.*;
       for ( Iterator ie = method.getExceptions().iterator(); ie.hasNext(); ) {
         ModelClass exception = (ModelClass)ie.next();
 %>   <wsdl:message name="<%=method.getName()%><%=exception.getName()%>">
-    <wsdl:part name="fault" type="<%=getType(exception)%>"/>
+    <wsdl:part name="fault" element="<%=getType(exception)%>Element"/>
    </wsdl:message>
 <%    }        
    }

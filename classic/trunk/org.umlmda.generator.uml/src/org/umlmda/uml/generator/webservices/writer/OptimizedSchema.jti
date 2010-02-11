@@ -13,7 +13,7 @@
     <restriction base="<%=type%>">
 <%        for ( Iterator ia = modelClass.getAttributes().iterator(); ia.hasNext(); ) {
              attr = (WSModelAttribute)ia.next();
-%>      <enumeration value="<%=attr.getInitialValue()%>"/>
+%>      <enumeration value="<%=(StringUtils.isNumeric(attr.getInitialValue().substring(0,1))?"C":"")+attr.getInitialValue()%>"/>
 <%        }
 %>    </restriction>
   </simpleType>
@@ -33,6 +33,11 @@
         &&  (  modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE)
             || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_REQUEST)) ) {
 %>  <element name="<%=modelClass.getName()%>Element" type="<%=modelClass.getSchemaType()%>"/>
+
+<%      }
+
+        if (  modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_EXCEPTION) ) {
+%>  <xsd:element name="<%=modelClass.getName()%>Element" type="<%=modelClass.getSchemaType()%>"/>
 
 <%      }
      } // for

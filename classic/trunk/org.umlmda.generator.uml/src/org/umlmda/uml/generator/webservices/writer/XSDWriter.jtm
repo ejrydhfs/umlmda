@@ -19,6 +19,7 @@ java.CodeWriter.extends    = AbstractPackageWriter
 %><% import!
 import java.beans.Introspector;
 import java.util.*;
+import org.apache.commons.lang.StringUtils;
 
 import org.umlmda.model.uml.*;
 import org.umlmda.profile.ModelStereotype;

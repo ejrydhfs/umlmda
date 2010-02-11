@@ -76,7 +76,7 @@
      if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_EXCEPTION) )  {
 %>   // create <%=pimClass.getName()%> web service exception from business service exception
    public <%=stubName%> create<%=modelClass.getName()%>(final <%=interfaceName%> from) {
-      int ii;
+      <%=stubName%> dest = new <%=stubName%>();
       
       if ( from != null ) {
 <% // Attributes        
@@ -100,14 +100,13 @@
 
       if ( association.isComposition() ) {
          if ( association.isMultiple() ) {
-%>      <%=assocWsType%> _<%=assocName%>[] = new <%=assocWsType%>[from.<%=association.getGetter()%>().size()];
-      ii=0;
-      for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ++ii) {
-         _<%=assocName%>[ii] = create<%=assocClass.getName()%>((<%=assocType%>)i.next());
+%>
+      for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ) {
+         dest.<%=association.getGetter()%>().add(create<%=assocClass.getName()%>((<%=assocType%>)i.next()));
       }
 <%       }
          else {
-%>      <%=assocWsType%> _<%=assocName%> = create<%=assocClass.getName()%>(from.<%=association.getGetter()%>());
+%>      dest.<%=association.getSetter()%>(create<%=assocClass.getName()%>(from.<%=association.getGetter()%>()));
 <%       }
       }
       else {
@@ -141,20 +140,19 @@
 <%       }
       }
    }
-%>         <%=stubName%> dest = new <%=stubName%>(<%
    // Attributes        
      for ( Iterator ia = modelClass.getAttributes(true).iterator(); ia.hasNext(); ) {
-        ModelStructuralFeature attribute = (ModelStructuralFeature)ia.next();
-%>_<%=attribute.getName()%><%if ( ia.hasNext() ) {%>, <%}
+        JavaModelStructuraleFeature attribute = (JavaModelStructuraleFeature)ia.next();
+        
+        if ( attribute.isMultivalue() ) {    
+%>for (int jj=0; jj<_<%=attribute.getName()%>.length; ++jj) {
+   dest.<%=attribute.getGetter()%>().add(_<%=attribute.getName()%>[jj]);
+} 
+<%      } else {
+%>dest.<%=attribute.getSetter()%>(_<%=attribute.getName()%>);
+<%      }
      } // for
-     if ( modelClass.getAttributes(true).size() > 0 && modelClass.getAssociations(true).size() > 0 ) {%>, <%} 
-
-     // Associations
-     for ( Iterator ia = modelClass.getAssociations(true).iterator(); ia.hasNext(); ) {
-        ModelStructuralFeature feature = (ModelStructuralFeature)ia.next();
-%>_<%=feature.getName()%><%if ( ia.hasNext() ) {%>, <%}
-     } // for 
-         %>);
+     %>
          registry.put(from, dest);
          return dest;
       }
@@ -181,7 +179,6 @@
 
    // copy interface DTO to web service DTO 
    private void copy<%=pimClass.getName()%>(final <%=interfaceName%> from, final <%=stubName%> to) {
-      int ii;
 <% if ( modelClass.getSuperClass() != null ) {
       WSModelClass superClass = (WSModelClass)modelClass.getSuperClass();
 %>      copy<%=superClass.getPIMClass().getName()%>(from, to);
@@ -194,9 +191,15 @@
 %>      if ( from.<%=attribute.getGetter()%>() == null ) {
          throw new IllegalArgumentException("None optional attribute <%=attribute.getQualifiedName()%> is null");
       }
-<%    } 
+<%    }
+      if ( attribute.isMultivalue() ) {      
+%>      for (int jj=0; jj<<%=attribute.getConvertToWs()%>.length; ++jj) {
+         to.<%=attribute.getGetter()%>().add(<%=attribute.getConvertToWs()%>[jj]);
+      }   
+<%    } else {       
 %>      to.<%=attribute.getSetter()%>(<%=attribute.getConvertToWs()%>);
-<% } // for 
+<%    }
+   } // for 
    // Associations
    for ( Iterator ia = modelClass.getAssociations().iterator(); ia.hasNext(); ) {
       WSModelAssociation association = (WSModelAssociation)ia.next();
@@ -207,10 +210,8 @@
 
       if ( association.isComposition() ) {
          if ( association.isMultiple() ) {
-%>      to.set<%=assocName%>(new <%=assocWsType%>[from.<%=association.getGetter()%>().size()]);
-      ii=0;
-      for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ++ii) {
-         to.get<%=assocName%>()[ii] = create<%=assocClass.getName()%>((<%=assocType%>)i.next());
+%>      for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ) {
+         to.get<%=assocName%>().add(create<%=assocClass.getName()%>((<%=assocType%>)i.next()));
       }
 <%       }
          else {
@@ -305,8 +306,13 @@
 
       if ( attribute.isReadOnly() || attribute.isDerived() )
          continue;
-%>      to.<%=attribute.getSetter()%>(<%=attribute.getConvertFromWs("from")%>);
-<%
+      if ( attribute.isMultivalue() ) {   
+%>      
+to.<%=attribute.getSetter()%>(<%=attribute.getConvertFromWs("from")%>.toArray(new <%=attribute.getJavaType().substring(0, attribute.getJavaType().length()-2)%>[<%=attribute.getConvertFromWs("from")%>.size()]));
+<%    } else {
+%>      
+to.<%=attribute.getSetter()%>(<%=attribute.getConvertFromWs("from")%>);
+<%      }
    }
 
    // Associations
@@ -325,8 +331,8 @@
 %>      to.set<%=assocName%>((<%=pimTargetClass%>)create<%=assocPIMClass.getName()%>(from.get<%=assocName%>()));
 <%    } else {
 %>      if ( from.get<%=assocName%>() != null ) {
-         for (int i = 0; i < from.get<%=assocName%>().length; i++) {
-            to.<%=assoc.getGetter()%>().add(create<%=assocPIMClass.getName()%>(from.get<%=assocName%>(i)));
+         for (int i = 0; i < from.get<%=assocName%>().size(); i++) {
+            to.<%=assoc.getGetter()%>().add(create<%=assocPIMClass.getName()%>(from.get<%=assocName%>().get(i)));
          }
       }
 <%    } // else
