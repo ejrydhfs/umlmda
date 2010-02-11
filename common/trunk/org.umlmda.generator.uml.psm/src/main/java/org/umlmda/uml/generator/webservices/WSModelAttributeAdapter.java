@@ -158,7 +158,7 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
             return srcInstance+"."+getGetter()+"() != null ? "+javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().getValue()) : null";
          }
          else {
-            return javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().getValue())";
+            return javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().value())";
          }
       }
       else {
