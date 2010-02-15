@@ -24,20 +24,20 @@
  */
 package org.umlmda.runtime.constraint;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.umlmda.runtime.visitor.VisitorContext;
 
 /**
- * TODO Insert type javadoc
- * @author Dieter Moroff (20.02.2006), last change $Date: 2008/03/25 09:54:05 $ $Name:  $
- * @version $Revision: 1.1 $
+ * iterator that checks for constraint violations.
+ * 
+ * @author Dieter Moroff (20.02.2006)
  */
 public class ConstraintVisitorContext implements VisitorContext {
    private int objectLevel = 0;
-   private List violations = new ArrayList();
+   private List<ConstraintViolation> violations = new LinkedList<ConstraintViolation>();
    
    /**
     * 
@@ -63,11 +63,11 @@ public class ConstraintVisitorContext implements VisitorContext {
    /**
     * @return Returns the violations.
     */
-   public List getViolations() {
+   public List<ConstraintViolation> getViolations() {
       return violations;
    }
    
-   public void checkMultiplicityContraint(String feature, int lower, int upper, Collection collection) {
+   public void checkMultiplicityContraint(String feature, int lower, int upper, Collection<?> collection) {
       if ( lower > collection.size() ) {
          violations.add(new MultiplicityConstraintViolation(feature, "lower", collection.size(), lower));
       }
@@ -83,8 +83,6 @@ public class ConstraintVisitorContext implements VisitorContext {
       }
       
       if ( value != null ) {
-	      Class valueClass = value.getClass();
-	      
 	      if ( value instanceof Object[] ) {
 	         Object array[] = (Object[]) value;
 	         int length = array.length;

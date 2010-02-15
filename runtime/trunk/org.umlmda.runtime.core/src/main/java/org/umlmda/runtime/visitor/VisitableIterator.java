@@ -47,8 +47,4 @@ public interface VisitableIterator extends Iterator {
     */
    public Visitable nextVisitable();
    
-//   /**
-//    * Returns the startpoint of the iterator
-//    */
-//   public Visitable getStartPoint();
 }

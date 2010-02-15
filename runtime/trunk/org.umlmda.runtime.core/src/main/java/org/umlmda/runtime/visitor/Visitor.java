@@ -46,5 +46,5 @@ public interface Visitor {
     * Checks if the Visitor is applicable for the visitable class
     * as a visitor.
     */
-   public boolean isApplicable(Class visitableClass);
+   public boolean isApplicable(Class<?> visitableClass);
 }

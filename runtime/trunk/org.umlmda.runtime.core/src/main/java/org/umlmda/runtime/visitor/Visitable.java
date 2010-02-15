@@ -28,9 +28,25 @@ package org.umlmda.runtime.visitor;
 
 /**
  * Interface to be implemented from all objects that can be visited
+ * 
  * @author MOROFF
  */
-public interface Visitable {
+public interface Visitable
+{
 
+   /**
+    * the visitable performs the visitor's action
+    * 
+    * @param visitor
+    */
    void accept(Visitor visitor);
+
+   /**
+    * return a child VisitableIterator when descending into a parent-child relation.
+    * 
+    * @param parent
+    *           a VisitableIterator that is iterating the parent object
+    * @return a visitableIterator suitable to iterate this object
+    */
+   VisitableIterator getVisitableIterator(VisitableIterator parent);
 }

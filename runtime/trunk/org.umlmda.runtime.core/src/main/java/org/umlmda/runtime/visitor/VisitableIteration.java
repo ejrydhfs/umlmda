@@ -25,19 +25,25 @@
 package org.umlmda.runtime.visitor;
 
 /**
- * TODO Insert type javadoc
- * @author Dieter Moroff (20.02.2006), last change $Date: 2008/03/25 09:54:06 $ $Name:  $
- * @version $Revision: 1.1 $
+ * register visitables with visitors and define an iteration on the visitables
+ * 
+ * @author Dieter Moroff
  */
-public interface VisitableIteration {
+public interface VisitableIteration
+{
 
+   /**
+    * Iterate over all elements of the iterator using a previously specified context.
+    * 
+    * @return the context, filled with the iteration results.
+    */
    public VisitorContext iterate();
 
    /**
-    * Register a visitor specific for a given package
-    * @param visitablePackage
+    * Register a visitor specific for a given package.
+    * 
     * @param visitor
     */
    public void registerVisitor(Visitor visitor);
-   
+
 }
