@@ -1,0 +1,66 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+
+«DEFINE BOFactoryImpl FOR JavaBusinessComponent»
+«LET generatedName(this, "java.BusinessObjectFactoryImpl") AS className»
+«this.resetImports()»
+«FILE generatedPath+"/"+className+".java"»
+
+package «getQualifiedPackageName("java.BusinessObjectFactoryImpl")»;
+
+«EXPAND standardImports FOR this»
+
+«FOREACH businessObjects.typeSelect(JavaBusinessObject) AS bo»
+	«this.registerImport("java.BusinessObjectInterface", bo)»
+«ENDFOREACH»
+«this.registerImport("java.BusinessObjectFactory")»
+«this.registeredImports()»
+
+/**
+ * Business object factory implementation for «qualifiedName». «documentation»
+ */
+public class «className» «EXPAND standardImplementsDecl FOR this»
+{
+	«EXPAND standardCtor FOR this»
+	
+	«FOREACH businessObjects.typeSelect(JavaBusinessObject) AS bo»
+		«IF bo.abstract == false»
+			«EXPAND BOFactory::createBODecl FOR bo»
+			«EXPAND createBOBody FOR bo»
+		«ENDIF»
+	«ENDFOREACH»
+	
+	«EXPAND additionalMethods FOR this»
+}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE standardImports FOR JavaBusinessComponent»
+«ENDDEFINE»
+
+«DEFINE standardImplementsDecl FOR JavaBusinessComponent»
+	implements «getScopedName("java.BusinessObjectFactory")»
+«ENDDEFINE»
+
+«DEFINE standardCtor FOR JavaBusinessComponent»
+«LET generatedName(this, "java.BusinessObjectFactoryImpl") AS className»
+	public «className»() {
+		super();
+	}
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE createBOBody FOR JavaBusinessObject»
+	{
+		return new «getScopedName("java.BusinessObject")»();
+	}
+«ENDDEFINE» 
+ 
+«DEFINE additionalMethods FOR JavaBusinessComponent»
+«ENDDEFINE» 
