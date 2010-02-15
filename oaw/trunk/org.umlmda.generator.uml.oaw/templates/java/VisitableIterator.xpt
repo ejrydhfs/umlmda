@@ -15,12 +15,7 @@
 package «getQualifiedPackageName("java.VisitableIterator")»;
 
 import org.umlmda.runtime.visitor.AbstractVisitableIterator;
-«resetImports()»
-«registerImports("java.BusinessObjectInterface", classes, "BusinessObject")»
-«FOREACH referencedPackages.select(e|e.classes.typeSelect(JavaBusinessObject).isEmpty == false) AS refPackage»
-      «registerImport("java.VisitableIterator", refPackage)»
-«ENDFOREACH»
-«registeredImports()»
+import org.umlmda.runtime.visitor.VisitableIterator;
 
 /**
  * Visitable iterator for the business objects of «qualifiedName» 
@@ -37,29 +32,32 @@ public class «generatedName» extends AbstractVisitableIterator {
    /**
     * 
     */
-   public «generatedName»(AbstractVisitableIterator parentIterator, Object startPoint) {
+   public «generatedName»(VisitableIterator parentIterator, Object startPoint) {
       super(parentIterator, startPoint);
    }
 
    /* (non-Javadoc)
-    * @see org.umlmda.runtime.visitor.AbstractVisitableIterator#registerChilds()
+    * @see org.umlmda.runtime.visitor.AbstractVisitableIterator#registerChildrenOf()
     */
-   protected void registerChilds(Object startPoint) {
+   protected void registerChildrenOf(Object startPoint) {
 	   «FOREACH classes.typeSelect(JavaBusinessObject) AS class»
+	        «LET class.associations.select(e|e.target.hasStereotype("BusinessObject")) AS assocList»
+			«IF assocList.isEmpty»
+			«ELSE»
 			«LET getScopedName("java.BusinessObjectInterface", class) AS boClass»
             if ( startPoint instanceof «boClass» ) {
                «boClass» sp«class.name» = («boClass»)startPoint;
 
-					«FOREACH class.associations.select(e|e.target.hasStereotype("BusinessObject")) AS assoc»
-						«LET getScopedName("java.VisitableIterator", assoc.target.component) AS iteratorClass»
-							«IF assoc.multiple»
-	                     registerChilds(«iteratorClass».class, sp«class.name».«assoc.getter»());
-							«ELSE»
-	                     registerChild(«iteratorClass».class, sp«class.name».«assoc.getter»());
-							«ENDIF»
-						«ENDLET»
+					«FOREACH assocList AS assoc»
+						«IF assoc.multiple»
+	                     registerChildren(sp«class.name».«assoc.getter»());
+						«ELSE»
+	                     registerChild(sp«class.name».«assoc.getter»());
+						«ENDIF»
 					«ENDFOREACH»
             }
+			«ENDLET»	   
+			«ENDIF»	   
 			«ENDLET»	   
 	   «ENDFOREACH»
    }

@@ -17,6 +17,7 @@ package «getQualifiedPackageName("java.ConstraintVisitor")»;
 import org.umlmda.runtime.constraint.ConstraintVisitorContext;
 import org.umlmda.runtime.visitor.AbstractVisitableIteration;
 import org.umlmda.runtime.visitor.VisitableIterator;
+import org.umlmda.runtime.visitor.VisitorContext;
 
 «resetImports()»
 «registerImport("java.VisitableIterator")»
@@ -32,20 +33,37 @@ import org.umlmda.runtime.visitor.VisitableIterator;
 public class «generatedName» extends AbstractVisitableIteration {
 
    /**
-    * Ctor to start the constraint check.
-    * @param object Startpoint of the iteration
+    * Ctor to start the constraint check with the default ConstraintVisitorContext.
+    * 
+    * @param startPoint
+    *           start point of the iteration
     */
-   public «generatedName»(Object object) {
-      this(new «getScopedName("java.VisitableIterator")»(object));
+   public «generatedName»(Object startPoint) {
+      this(new «getScopedName("java.VisitableIterator")»(startPoint), new ConstraintVisitorContext());
+   }
+
+   /**
+    * Ctor to start the constraint check with a given VisitorContext.
+    * 
+    * @param startPoint
+    *           start point of the iteration
+    * @param visitorContext
+    *           the context object that collects the iteration result
+    */
+   public «generatedName»(Object startPoint, VisitorContext visitorContext) {
+      this(new «getScopedName("java.VisitableIterator")»(startPoint), visitorContext);
    }
 
    /**
     * Ctor to continue the constraint check in a child element of the start point.
-    * Usually used only internal.
-    * @param iterator Iterator for the child element
+    * @param iterator
+    *           iterator for the child element
+    * @param visitorContext
+    *           the context object that collects the iteration result
+    * @deprecated used only internally, report any usage!
     */
-   public «generatedName»(VisitableIterator iterator) {
-      super(iterator, new ConstraintVisitorContext());
+   public «generatedName»(VisitableIterator iterator, VisitorContext visitorContext) {
+      super(iterator, visitorContext);
     
 «FOREACH referencedPackages.typeSelect(JavaBusinessComponent) AS refPackage»
       registerVisitor(new «getScopedName("java.ConstraintVisitor", refPackage)»());

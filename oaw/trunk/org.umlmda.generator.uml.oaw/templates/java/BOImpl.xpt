@@ -68,6 +68,7 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 	«EXPAND propertyChangeSupportMethods FOR this»
 	«EXPAND java::JmiReflect::Impl FOR this»
 	«EXPAND visitorAcceptMethod FOR this»
+	«EXPAND getVisitableIteratorMethod FOR this»
 	«EXPAND xmlSerializationMethods FOR this»
 «ENDDEFINE»
 
@@ -134,7 +135,7 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 
 «DEFINE versionInfo FOR JavaModelClass»
 	/**
-	 * Name in die UML model «model.name»
+	 * element name in UML model «model.name»
 	 */
 	public static final String MODEL_NAME = "«qualifiedName»";
 
@@ -534,25 +535,23 @@ import org.umlmda.runtime.bean.BeanUtils;
 «ENDLET»
 «ENDDEFINE»
 
+«DEFINE getVisitableIteratorMethod FOR JavaModelClass»
+«ENDDEFINE»
 
-   /**
-    * Accept the visitor
-    *
-    * @param visitor must be instance of org.umlmda.demo.common.dto.CommonVisitor.
-    *
-    * @see org.umlmda.demo.common.dto.CommonVisitor.
+«DEFINE getVisitableIteratorMethod FOR JavaBusinessObject»
+«LET this.getScopedName("java.VisitableIterator", javaPackage) AS visitableIterator»
+   /* (non-Javadoc)
+    * @see org.umlmda.runtime.visitor.Visitable#getVisitableIterator()
     */
-   public void accept(org.umlmda.runtime.visitor.Visitor visitor)
-   {
-      if (visitor instanceof CommonVisitor) {
-         CommonVisitor aVisitor = (CommonVisitor) visitor;
-
-         aVisitor.visit(this);
-      }
-   }
+    public org.umlmda.runtime.visitor.VisitableIterator getVisitableIterator(org.umlmda.runtime.visitor.VisitableIterator parent) {
+        return new «visitableIterator»(parent, this);
+    }
+«ENDLET»
+«ENDDEFINE»
 
 «DEFINE ImportVisitorBase FOR JavaBusinessObject»
 «this.registerImport("java.Visitor", javaPackage)»
+«this.registerImport("java.VisitableIterator", javaPackage)»
 «ENDDEFINE»
 
 
