@@ -13,9 +13,9 @@
 
    <dependencies>
       <dependency>
-         <groupId>${parent.groupId}</groupId>
+         <groupId>${project.parent.groupId}</groupId>
          <artifactId>org.umlmda.oaw.util</artifactId>
-         <version>${parent.version}</version>
+         <version>${project.parent.version}</version>
       </dependency>
       <dependency>
          <groupId>commons-lang</groupId>
@@ -42,15 +42,15 @@
          <artifactId>oaw-util-stdlib</artifactId>
       </dependency>
       <dependency>
-         <groupId>${parent.groupId}</groupId>
+         <groupId>${project.parent.groupId}</groupId>
          <artifactId>org.umlmda.umlmodel.uml2</artifactId>
       </dependency>
       <dependency>
-         <groupId>${parent.groupId}</groupId>
+         <groupId>${project.parent.groupId}</groupId>
          <artifactId>org.umlmda.umlmodel.nsuml</artifactId>
       </dependency>
       <dependency>
-         <groupId>${parent.groupId}</groupId>
+         <groupId>${project.parent.groupId}</groupId>
          <artifactId>org.umlmda.generator.uml.psm</artifactId>
       </dependency>
    </dependencies>

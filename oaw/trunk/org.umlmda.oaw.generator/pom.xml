@@ -30,9 +30,9 @@
    <dependencies>
       <!-- UMLMDA oAW stuff -->
       <dependency>
-         <groupId>${parent.groupId}</groupId>
+         <groupId>${project.parent.groupId}</groupId>
          <artifactId>org.umlmda.generator.uml.oaw</artifactId>
-         <version>${parent.version}</version>
+         <version>${project.parent.version}</version>
       </dependency>
 
       <!-- Additional UMLMDA Common stuff -->
