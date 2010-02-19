@@ -12,10 +12,6 @@
    <dependencies>
       <!-- Apache stuff -->
       <dependency>
-         <groupId>commons-lang</groupId>
-         <artifactId>commons-lang</artifactId>
-      </dependency>
-      <dependency>
          <groupId>log4j</groupId>
          <artifactId>log4j</artifactId>
       </dependency>
