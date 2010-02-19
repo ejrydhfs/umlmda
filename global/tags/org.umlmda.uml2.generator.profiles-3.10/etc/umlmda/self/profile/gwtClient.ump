@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.profile:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.profile="http:///org/umlmda/generator/profile.ecore" name="gwtClient">
+  <artefacts name="gwt.BeanDescriptor" fileExtension="java" postfix="Descriptor" namespacePostfix=".gwt.client.model.impl" type="None"/>
+  <artefacts name="java.BusinessObjectFactoryImpl" prefix="" postfix="" namespacePostfix=".gwt.client.model.impl" replacement="\u$1FactoryImpl" replacementPattern="(.*)" writer="org.umlmda.uml.generator.java.writer.BusinessObjectFactoryImplWriter"/>
+  <artefacts name="java.BusinessObjectFactory" fileExtension="" prefix="" postfix="" namespacePostfix=".gwt.client.model" replacement="\u$1Factory" replacementPattern="(.*)" type="None" writer=""/>
+  <artefacts name="java.BusinessObjectInterface" prefix="" namespacePostfix=".gwt.client.model" type="None" writer=""/>
+  <artefacts name="java.BusinessObject" prefix="" postfix="Impl" namespacePostfix=".gwt.client.model.impl" replacement="" replacementPattern="" writer="org.umlmda.uml.generator.java.writer.SimpleBeanWriter"/>
+  <artefacts name="java.DelegateInterface" fileExtension="java" postfix="Delegate" namespacePostfix=".gwt.client.model" writer="" generationStrategy="org.umlmda.uml.generator.java.DelegationGenerationStrategy"/>
+  <artefacts name="java.DelegateImpl" postfix="DelegateImpl" namespacePostfix=".gwt.client.model.impl.delegate" type="None"/>
+  <artefacts name="gwt.EnumerationCustomFieldSerializer" fileExtension="java" postfix="_CustomFieldSerializer" namespacePostfix=".dto" type="None" writer=""/>
+  <basedOn href="javaArtefacts.ump#javaArtefacts"/>
+</org.umlmda.generator.profile:Profile>
