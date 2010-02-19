@@ -52,8 +52,8 @@
   <artefacts name="java.Visitor" fileExtension="java" postfix="" namespacePostfix=".dto" replacement="\u$1Visitor" replacementPattern="(.*)" type="Velocity" writer="java/Visitor.vm"/>
   <artefacts name="java.AbstractVisitor" fileExtension="java" prefix="" postfix="" namespacePostfix=".dto.impl" replacement="Abstract\u$1Visitor" replacementPattern="(.*)" type="Velocity" writer="java/AbstractVisitor.vm"/>
   <artefacts name="java.VisitableIterator" fileExtension="java" postfix="" namespacePostfix=".dto" replacement="\u$1VisitableIterator" replacementPattern="(.*)" type="Velocity" writer="java/VisitableIterator.vm"/>
-  <artefacts name="java.ConstraintVisitor" fileExtension="java" postfix="" namespacePostfix=".dto.util" replacement="\u$1ConstraintVisitor" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintVisitor.vm"/>
-  <artefacts name="java.ConstraintIteration" fileExtension="java" postfix="" namespacePostfix=".dto.util" replacement="\u$1ConstraintIteration" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintIteration.vm"/>
+  <artefacts name="java.ConstraintVisitor" fileExtension="java" postfix="" namespacePostfix=".util" replacement="\u$1ConstraintVisitor" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintVisitor.vm"/>
+  <artefacts name="java.ConstraintIteration" fileExtension="java" postfix="" namespacePostfix=".util" replacement="\u$1ConstraintIteration" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintIteration.vm"/>
   <artefacts name="java.MetaFeaturesInterface" fileExtension="java" postfix="Features" namespacePostfix=".dto.meta" type="Velocity" writer="java/MetaFeaturesInterface.vm"/>
   <artefacts name="java.MetaClassInterface" fileExtension="java" postfix="Class" namespacePostfix=".dto.meta" type="Velocity" writer="java/MetaClassInterface.vm"/>
   <defaultProperties name="timezoneIndependent" value="true"/>

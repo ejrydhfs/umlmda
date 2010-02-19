@@ -15,6 +15,6 @@
   <artefacts name="java.Visitor" fileExtension="java" postfix="" namespacePostfix=".model" replacement="\u$1Visitor" replacementPattern="(.*)" type="Velocity" writer="java/Visitor.vm"/>
   <artefacts name="java.AbstractVisitor" fileExtension="java" prefix="" postfix="" namespacePostfix=".model.impl" replacement="Abstract\u$1Visitor" replacementPattern="(.*)" type="Velocity" writer="java/AbstractVisitor.vm"/>
   <artefacts name="java.VisitableIterator" fileExtension="java" postfix="" namespacePostfix=".model" replacement="\u$1VisitableIterator" replacementPattern="(.*)" type="Velocity" writer="java/VisitableIterator.vm"/>
-  <artefacts name="java.ConstraintVisitor" fileExtension="java" postfix="" namespacePostfix=".model.util" replacement="\u$1ConstraintVisitor" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintVisitor.vm"/>
-  <artefacts name="java.ConstraintIteration" fileExtension="java" postfix="" namespacePostfix=".model.util" replacement="\u$1ConstraintIteration" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintIteration.vm"/>
+  <artefacts name="java.ConstraintVisitor" fileExtension="java" postfix="" namespacePostfix=".util" replacement="\u$1ConstraintVisitor" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintVisitor.vm"/>
+  <artefacts name="java.ConstraintIteration" fileExtension="java" postfix="" namespacePostfix=".util" replacement="\u$1ConstraintIteration" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintIteration.vm"/>
 </org.umlmda.generator.profile:Profile>
