@@ -67,8 +67,7 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 	«EXPAND modelMetaInformation FOR this»
 	«EXPAND propertyChangeSupportMethods FOR this»
 	«EXPAND java::JmiReflect::Impl FOR this»
-	«EXPAND visitorAcceptMethod FOR this»
-	«EXPAND getVisitableIteratorMethod FOR this»
+	«EXPAND visitorMethods FOR this»
 	«EXPAND xmlSerializationMethods FOR this»
 «ENDDEFINE»
 
@@ -128,9 +127,7 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 «DEFINE standardBOInterfaces FOR JavaModelClass»
 	, Serializable, XMLSerializable
 	«EXPAND persistenceInterface FOR this»
-	«IF abstract == false»
-		, org.umlmda.runtime.visitor.Visitable
-	«ENDIF»
+	«EXPAND visitorInterface FOR this»
 «ENDDEFINE»
 
 «DEFINE versionInfo FOR JavaModelClass»
@@ -512,12 +509,25 @@ import org.umlmda.runtime.bean.BeanUtils;
 «DEFINE firePropertyChange(JavaModelStructuraleFeature feature) FOR JavaModelClass»
 «ENDDEFINE»
 
-«DEFINE visitorAcceptMethod FOR JavaModelClass»
+// =======================
+// Visitor interaction
+// =======================
+«DEFINE visitorInterface FOR JavaModelClass»
 «ENDDEFINE»
 
-«DEFINE visitorAcceptMethod FOR JavaBusinessObject»
+«DEFINE visitorInterface FOR JavaBusinessObject»
+	«IF abstract == false»
+		, org.umlmda.runtime.visitor.Visitable
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE visitorMethods FOR JavaModelClass»
+«ENDDEFINE»
+
+«DEFINE visitorMethods FOR JavaBusinessObject»
 «LET this.getScopedName("java.Visitor", javaPackage) AS visitor»
 «LET this.javaPackage.getQualifiedName("java.Visitor") AS qualifiedVisitor»
+«LET this.getScopedName("java.VisitableIterator", javaPackage) AS visitableIterator»
    /** 
     * Accept the visitor
     * @param visitor
@@ -531,21 +541,15 @@ import org.umlmda.runtime.bean.BeanUtils;
           aVisitor.visit(this);
        }
     }
-«ENDLET»
-«ENDLET»
-«ENDDEFINE»
 
-«DEFINE getVisitableIteratorMethod FOR JavaModelClass»
-«ENDDEFINE»
-
-«DEFINE getVisitableIteratorMethod FOR JavaBusinessObject»
-«LET this.getScopedName("java.VisitableIterator", javaPackage) AS visitableIterator»
    /* (non-Javadoc)
     * @see org.umlmda.runtime.visitor.Visitable#getVisitableIterator()
     */
     public org.umlmda.runtime.visitor.VisitableIterator getVisitableIterator(org.umlmda.runtime.visitor.VisitableIterator parent) {
         return new «visitableIterator»(parent, this);
     }
+«ENDLET»
+«ENDLET»
 «ENDLET»
 «ENDDEFINE»
 

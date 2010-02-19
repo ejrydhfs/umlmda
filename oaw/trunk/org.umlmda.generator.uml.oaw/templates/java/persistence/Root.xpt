@@ -29,6 +29,7 @@
 	«EXPAND Root FOREACH classes.typeSelect(ModelClass)»
 	«EXPAND java::Visitor::Visitor FOR this»
 	«EXPAND java::AbstractVisitor::Root FOR this»
+	«EXPAND java::VisitableIterator::Root FOR this»
 	«EXPAND java::ConstraintVisitor::Root FOR this»
 «ENDDEFINE»
 

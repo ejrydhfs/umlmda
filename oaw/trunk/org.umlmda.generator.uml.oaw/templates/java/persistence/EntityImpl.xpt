@@ -113,7 +113,7 @@
    «ENDFOREACH»
 
    «EXPAND java::BOImpl::modelMetaInformation»
-   «EXPAND java::BOImpl::visitorAcceptMethod»
+   «EXPAND java::BOImpl::visitorMethods»
    «EXPAND java::BOImpl::xmlSerializationMethods»
 «ENDDEFINE»
 

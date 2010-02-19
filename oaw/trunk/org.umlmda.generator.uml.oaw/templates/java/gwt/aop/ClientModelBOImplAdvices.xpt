@@ -49,7 +49,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 «AROUND java::BOImpl::ImportVisitorBase FOR JavaBusinessObject»
 «ENDAROUND»
 
-«AROUND java::BOImpl::visitorAcceptMethod FOR JavaBusinessObject»
+«AROUND java::BOImpl::visitorMethods FOR JavaBusinessObject»
 «ENDAROUND»
 
 «AROUND java::BOImpl::methodBody(ModelClass generatedClass) FOR ModelMethod»

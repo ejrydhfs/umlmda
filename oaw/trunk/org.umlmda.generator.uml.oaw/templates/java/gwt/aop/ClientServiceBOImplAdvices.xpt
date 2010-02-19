@@ -31,7 +31,10 @@
 «AROUND java::BOImpl::ImportVisitorBase FOR JavaBusinessObject»
 «ENDAROUND»
 
-«AROUND java::BOImpl::visitorAcceptMethod FOR JavaBusinessObject»
+«AROUND java::BOImpl::visitorInterface FOR JavaBusinessObject»
+«ENDAROUND»
+
+«AROUND java::BOImpl::visitorMethods FOR JavaBusinessObject»
 «ENDAROUND»
 
 // ===============

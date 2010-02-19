@@ -15,7 +15,7 @@
 «ENDAROUND»
 
 «AROUND java::BOImpl::standardBOInterfaces FOR JavaModelClass»
-	«targetDef.proceed()», org.umlmda.runtime.util.CopyCluster
+	«targetDef.proceed()», CopyCluster
 «ENDAROUND»
 
 // =================
@@ -81,6 +81,21 @@
 «AROUND java::BOImpl::setterAssignmentReverse FOR JavaModelAssociation»
 «ENDAROUND»
 
+// ==========================
+// Avoid visitor interaction
+// ==========================
+«AROUND java::BOImpl::visitorInterface FOR JavaBusinessObject»
+«ENDAROUND»
+
+«AROUND java::BOImpl::ImportVisitorBase FOR JavaBusinessObject»
+«ENDAROUND»
+
+«AROUND java::BOImpl::visitorMethods FOR JavaBusinessObject»
+«ENDAROUND»
+
+// ==========================
+// Avoid XML serialization
+// ==========================
 «AROUND java::BOImpl::xmlMarshalAttribute FOR JavaModelAttribute»
 	«IF this.isSDOClientOnly() == false»
 		«targetDef.proceed()»
