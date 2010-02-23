@@ -108,7 +108,7 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
             return "from."+getGetter()+"() != null ? "+wsEnum+".fromValue(from."+getGetter()+"().getValue()) : null";
          }
          else {
-            return wsEnum+".fromValue(from."+getGetter()+"().getValue())";
+            return wsEnum+".fromValue(\"C\"+from."+getGetter()+"().getValue())";
          }
       }
       else {
@@ -158,7 +158,7 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
             return srcInstance+"."+getGetter()+"() != null ? "+javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().getValue()) : null";
          }
          else {
-            return javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().value())";
+            return javaEnum+".fromValue(StringUtils.substring("+srcInstance+"."+getGetter()+"().value(),1))";
          }
       }
       else {
