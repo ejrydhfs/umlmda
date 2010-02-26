@@ -103,12 +103,13 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
          WSModelClass enumClass = (WSModelClass) getModelClassifier();
          JavaModelClass pimEnumClass = enumClass.getPIMClass();
          String wsEnum = genClass.getScopedName(WSArtefacts.WS_STUB, enumClass); 
-
+       
+         // FIXME Parameter for JaxWS handling
          if ( isOptional() ) {
-            return "from."+getGetter()+"() != null ? "+wsEnum+".fromValue(from."+getGetter()+"().getValue()) : null";
+               return "from."+getGetter()+"() != null ? "+wsEnum+".fromValue(from."+getGetter()+"().getValue()) : null";
          }
          else {
-            return wsEnum+".fromValue(\"C\"+from."+getGetter()+"().getValue())";
+               return wsEnum+".fromValue(\"C\"+from."+getGetter()+"().getValue())";            
          }
       }
       else {
@@ -148,6 +149,7 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
    
    /* (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getConvertToWs(java.lang.String)
+         // FIXME Parameter for JaxWS handling
     */
    public String getConvertFromWs(String srcInstance) {
       if ( getModelClassifier().hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION)) {
@@ -155,14 +157,19 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
          String javaEnum = enumClass.getPIMClass().getQualifiedName(JavaArtefacts.ENUMERATION); 
          
          if ( isOptional() ) {
-            return srcInstance+"."+getGetter()+"() != null ? "+javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().getValue()) : null";
+            return srcInstance+"."+getGetter()+"() != null ? "+javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().value()) : null";
          }
          else {
             return javaEnum+".fromValue(StringUtils.substring("+srcInstance+"."+getGetter()+"().value(),1))";
          }
       }
       else {
-         return getConvert(getConvertFromWsMethod((WSModelClassifier) getModelClassifier()), srcInstance, getGetter(), getDataType());
+         if ( getDataType() != null && getDataType().getName().equals(ModelDataType.BOOLEAN)) {
+            return getConvert(getConvertFromWsMethod((WSModelClassifier) getModelClassifier()), srcInstance, "is"+StringUtils.capitalize(getName()), getDataType());
+         }
+         else {
+            return getConvert(getConvertFromWsMethod((WSModelClassifier) getModelClassifier()), srcInstance, getGetter(), getDataType());
+         }
       }
    }
 

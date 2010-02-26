@@ -50,6 +50,7 @@ import org.umlmda.uml.generator.PIMStereotypes;
 import org.umlmda.uml.generator.java.JavaArtefacts;
 import org.umlmda.uml.generator.java.JavaModelClass;
 import org.umlmda.uml.generator.java.JavaModelClassAdapter;
+import org.umlmda.uml.generator.util.ArtefactUtils;
 
 /**
  * web service schema adapter for model classes.
@@ -514,4 +515,20 @@ public class WSModelClassAdapter extends JavaModelClassAdapter implements WSMode
       return schemaEnumTypes;
    }
    
+   /* (non-Javadoc)
+    * @see org.umlmda.uml.generator.java.JavaModelClassAdapter#getJavaType()
+    */
+   @Override
+   public String getJavaType() {
+
+      if ( getGeneratorModel().getContext().getCurrentModelElement() instanceof JavaModelClass ) {
+         JavaModelClass genClass = (JavaModelClass) getGeneratorModel().getContext().getCurrentModelElement();
+
+         if (hasStereotype(WSStereotypes.WEB_SERVICE_DTO) || hasStereotype(WSStereotypes.WEB_SERVICE_DTO_HIERARCHY)) {
+            return genClass.getScopedName(WSArtefacts.WS_STUB, this);
+         }
+      }
+      
+      return super.getJavaType();
+   }
 }

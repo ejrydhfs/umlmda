@@ -8,6 +8,7 @@ package org.umlmda.uml.generator.webservices;
 
 import java.util.Iterator;
 
+import org.apache.commons.lang.StringUtils;
 import org.umlmda.generator.model.uml.GeneratorClass;
 import org.umlmda.model.uml.Model;
 import org.umlmda.model.uml.ModelAttribute;
@@ -138,12 +139,18 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
       StringBuffer buffer = new StringBuffer();
       WSModelClass genClass = (WSModelClass) getGeneratorModel().getContext().getCurrentModelElement();
       
-      buffer.append(" throws java.rmi.RemoteException");
+      // FIXME Parameter for JaxWS handling
+      if ( getExceptions().size() > 0 )
+      buffer.append(" throws ");
       for (Iterator ie = getExceptions().iterator(); ie.hasNext();) {
          WSModelClass exceptionClass = (WSModelClass) ie.next();
+         WSModelPackage exceptionPackage = (WSModelPackage) exceptionClass.getPackage();
          
-         buffer.append(", ");
-         buffer.append(genClass.getScopedName(WSArtefacts.WS_STUB, exceptionClass));
+         buffer.append(exceptionPackage.getQualifiedPackageName(WSArtefacts.WS_STUB)+".");
+         buffer.append(StringUtils.capitalize(getName()));
+         buffer.append(exceptionClass.getGeneratedName(WSArtefacts.WS_STUB));
+         if ( ie.hasNext() )
+            buffer.append(", ");
       }
       
       return buffer.toString();
