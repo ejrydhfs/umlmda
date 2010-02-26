@@ -114,14 +114,13 @@
 %>      final <%=assocWsType%> _<%=assocName%>[] = new <%=assocWsType%>[from.<%=association.getGetter()%>().size()];
       register(new ResolveReference() {
          void resolve() {
-            int ii=0;
-            for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ++ii) {
+            for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ) {
                <%=assocType%> from<%=assocName%> = (<%=assocType%>) i.next();
                <%=assocWsType%> <%=assocName%>Ws = (<%=assocWsType%>)lookup(from<%=assocName%>);
             
                if ( <%=assocName%>Ws == null ) 
                   <%=assocName%>Ws = create<%=assocClass.getName()%>(from<%=assocName%>);
-               _<%=assocName%>[ii] = <%=assocName%>Ws;
+               _<%=assocName%>.add(<%=assocName%>Ws);
             }
          }   
      });
@@ -222,14 +221,13 @@
          if ( association.isMultiple() ) {
 %>      register(new ResolveReference() {
          void resolve() {
-            int ii=0;
-            for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ++ii) {
+            for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ) {
                <%=assocType%> from<%=assocName%> = (<%=assocType%>) i.next();
                <%=assocWsType%> <%=assocName%>Ws = (<%=assocWsType%>)lookup(from<%=assocName%>);
             
                if ( <%=assocName%>Ws == null ) 
                   <%=assocName%>Ws = create<%=assocClass.getName()%>(from<%=assocName%>);
-               to.get<%=assocName%>()[ii] = <%=assocName%>Ws;
+               to.get<%=assocName%>().add(<%=assocName%>Ws);
             }
          }   
      });
@@ -332,7 +330,7 @@ to.<%=attribute.getSetter()%>(<%=attribute.getConvertFromWs("from")%>);
 <%    } else {
 %>      if ( from.get<%=assocName%>() != null ) {
          for (int i = 0; i < from.get<%=assocName%>().size(); i++) {
-            to.<%=assoc.getGetter()%>().add(create<%=assocPIMClass.getName()%>(from.get<%=assocName%>().get(i)));
+            to.<%=assoc.getGetter()%>().add((<%=pimTargetClass%>)create<%=assocPIMClass.getName()%>(from.get<%=assocName%>().get(i)));
          }
       }
 <%    } // else

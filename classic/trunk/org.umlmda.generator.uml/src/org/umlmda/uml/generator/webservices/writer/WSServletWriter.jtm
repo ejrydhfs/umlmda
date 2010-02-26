@@ -9,6 +9,7 @@ import org.umlmda.generator.model.util.RcsHelper;
 import org.umlmda.generator.logging.LoggingWriter;
 import org.umlmda.model.uml.*;
 import org.umlmda.uml.generator.java.*;
+import org.umlmda.uml.generator.j2ee.*;
 import org.umlmda.uml.generator.webservices.*;
 import java.util.Iterator;
 import java.util.List;
@@ -54,10 +55,29 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 <% } 
-%>import net.sourceforge.umlmda.webservice.WebserviceUtils;
+%>import org.umlmda.runtime.webservice.WebserviceUtils;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 <%=genClass.registeredImports()%>
 
+@Stateless
+
+@TransactionAttribute(TransactionAttributeType.NEVER)
+@WebService(name = "<%=genClass.getGeneratedName(WSArtefacts.WS_SERVICE_PORT)%>", targetNamespace = "<%=genPackage.getNamespace()%>")
+@SOAPBinding(style = SOAPBinding.Style.RPC)
+@XmlSeeAlso({
+    com.fja.cor.pnc.bs.ref.sample.ws.jax.ObjectFactory.class,
+    com.fja.cor.bs.runtime.ws.jax.ObjectFactory.class
+})
 public class <%=getBaseName()%> implements <%=genClass.getScopedName(WSArtefacts.WS_SERVICE_PORT)%> {
    <%=logging.initDeclaration()%>
 <% for ( Iterator ip = packageList.iterator(); ip.hasNext(); ) {
@@ -66,15 +86,15 @@ public class <%=getBaseName()%> implements <%=genClass.getScopedName(WSArtefacts
      String factoryClass = genClass.getScopedName(JavaArtefacts.BUSINESS_FACTORY, pimPackage);
 %>   private <%=factoryClass%> <%=getFactoryMember(pimPackage)%> = null;
 <% }
-%>   private final <%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, pimClass)%> delegate;
+%>   @EJB (beanInterface=<%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, pimClass)%>Local.class)
+   private final <%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, pimClass)%> delegate;
    private <%=genClass.getScopedName(WSArtefacts.WS_UTILS)%> utils = new <%=genClass.getScopedName(WSArtefacts.WS_UTILS)%>();
 
    /**
     * Construktor, creates factories and creates delegate
     */
-   public <%=getBaseName()%>() throws ServiceException {
+   public <%=getBaseName()%>() {
       super();
-      init();
       delegate = <%=getFactoryMember(((WSModelPackage)getModelClass().getPackage()).getPIMPackage())%>.create<%=getModelClass().getName()%>();
 <% for ( Iterator ip = packageList.iterator(); ip.hasNext(); ) {
      WSModelPackage modelPackage = (WSModelPackage)ip.next();
@@ -92,10 +112,11 @@ public class <%=getBaseName()%> implements <%=genClass.getScopedName(WSArtefacts
     * <%=method.getDocumentation()%>
     */
     public <%=method.getWebServiceSignature()%> {
-<%   if ( genModel.isSoapWrapping() ) {
-       WSModelParameter requestParameter = (WSModelParameter)method.getParameters().get(0);
-       WSModelClass requestClass = (WSModelClass)requestParameter.getType();
-       
+       try {
+<%  WSModelParameter requestParameter = (WSModelParameter)method.getParameters().get(0);
+    WSModelClass requestClass = (WSModelClass)requestParameter.getType();
+ 
+    if ( genModel.isSoapWrapping() ) {
        for ( Iterator ip = requestClass.getAttributes().iterator(); ip.hasNext(); ) {
          WSModelAttribute parameterAttr = (WSModelAttribute)ip.next();
          
@@ -106,11 +127,10 @@ public class <%=getBaseName()%> implements <%=genClass.getScopedName(WSArtefacts
 %>       <%=pimParameterClass.getJavaType()%> <%=parameterAttr.getName()%> = utils.create<%=pimParameterClass.getName()%>(request.<%=parameterAttr.getGetter()%>());
 <%       }
        } // for
-     } // if
-%>       <%=pimMethod.traceEntry(2)%>
-
-       try {
-<%   if ( pimMethod.getReturnType() != null ) {
+     } else {     
+%>       <%=requestClass.getPIMClass().getJavaType()%> bs<%=requestParameter.getName()%> = utils.create<%=requestClass.getName()%>(in);
+<%   }       
+     if ( pimMethod.getReturnType() != null ) {
 %>         <%=pimMethod.getJavaType()%> result;
          
          utils.resolveReferences();
@@ -120,7 +140,7 @@ public class <%=getBaseName()%> implements <%=genClass.getScopedName(WSArtefacts
          utils.resolveReferences();
          <%
      }
-%><%=getCallDelegateSignature("delegate", "", false, pimMethod)%>
+%><%=getCallDelegateSignature("delegate", "bs", false, pimMethod)%>
 <%   if ( genModel.isSoapWrapping() ) {
         WSModelClass reponseClass = (WSModelClass)method.getReturnType();
 %>         <%=method.getWebServiceType()%> wsReturn 
@@ -140,7 +160,7 @@ public class <%=getBaseName()%> implements <%=genClass.getScopedName(WSArtefacts
      else if ( method.getReturnType() != null ) {
         if ( method.getReturnType() instanceof ModelClass ) {
 %>         utils.resetReferences();
-         <%=getType(method.getReturnType())%> convertedResult = utils.create(result);
+         <%=((WSModelClass)method.getReturnType()).getJavaType()%> convertedResult = utils.create<%=method.getReturnType().getName()%>(result);
          utils.resolveReferences();
          return convertedResult;
 <%      } else {
@@ -149,9 +169,12 @@ public class <%=getBaseName()%> implements <%=genClass.getScopedName(WSArtefacts
      }
      for ( Iterator ie = method.getExceptions().iterator(); ie.hasNext(); ) {
        WSModelClass exception = (WSModelClass)ie.next();
+       WSModelPackage exceptionPackage = (WSModelPackage) exception.getPackage();
        JavaModelClass pimException = exception.getPIMClass();
 %>      } catch (<%=genClass.getQualifiedName(JavaArtefacts.BUSINESS_EXCEPTION, pimException)%> e) {
-         throw utils.create<%=exception.getName()%>(e);
+         <%=exception.getScopedName(WSArtefacts.WS_STUB)%> exception = utils.create<%=exception.getName()%>(e);
+         utils.resolveReferences();
+         throw new <%=exceptionPackage.getQualifiedPackageName(WSArtefacts.WS_STUB)+"."+StringUtils.capitalize(method.getName())+exception.getGeneratedName(WSArtefacts.WS_STUB)%>(e.getMessage(), exception);
 <%   }
 %>      } finally {
          utils.resetReferences();
