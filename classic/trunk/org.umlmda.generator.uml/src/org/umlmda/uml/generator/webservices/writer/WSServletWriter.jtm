@@ -74,10 +74,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @TransactionAttribute(TransactionAttributeType.NEVER)
 @WebService(name = "<%=genClass.getGeneratedName(WSArtefacts.WS_SERVICE_PORT)%>", targetNamespace = "<%=genPackage.getNamespace()%>")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-@XmlSeeAlso({
-    com.fja.cor.pnc.bs.ref.sample.ws.jax.ObjectFactory.class,
-    com.fja.cor.bs.runtime.ws.jax.ObjectFactory.class
-})
+
 public class <%=getBaseName()%> implements <%=genClass.getScopedName(WSArtefacts.WS_SERVICE_PORT)%> {
    <%=logging.initDeclaration()%>
 <% for ( Iterator ip = packageList.iterator(); ip.hasNext(); ) {
