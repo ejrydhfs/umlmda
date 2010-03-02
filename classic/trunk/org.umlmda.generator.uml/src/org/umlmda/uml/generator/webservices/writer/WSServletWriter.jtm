@@ -125,7 +125,7 @@ public class <%=getBaseName()%> implements <%=genClass.getScopedName(WSArtefacts
 <%       }
        } // for
      } else {     
-%>       <%=requestClass.getPIMClass().getJavaType()%> bs<%=requestParameter.getName()%> = utils.create<%=requestClass.getName()%>(in);
+%>       <%=requestClass.getPIMClass().getJavaType()%> bs<%=requestParameter.getName()%> = utils.create<%=requestClass.getPIMClass().getName()%>(<%=requestParameter.getName()%>);
 <%   }       
      if ( pimMethod.getReturnType() != null ) {
 %>         <%=pimMethod.getJavaType()%> result;
