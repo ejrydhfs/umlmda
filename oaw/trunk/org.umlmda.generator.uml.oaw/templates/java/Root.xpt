@@ -46,11 +46,12 @@
 	«EXPAND java::BFactory::BFactory FOR this»
 	«EXPAND java::Visitor::Visitor FOR this»
 	«EXPAND java::AbstractVisitor::Root FOR this»
-	«IF isGWTSupported()»
-	«ELSE»
+	«IF isVisitorSupported()»
 		«EXPAND java::VisitableIterator::Root FOR this»
 		«EXPAND java::ConstraintIteration::Root FOR this»
 		«EXPAND java::ConstraintVisitor::Root FOR this»
+    «ELSE»
+        «ERROR "visitor support disabled"»
 	«ENDIF»
 «ENDDEFINE»
 
