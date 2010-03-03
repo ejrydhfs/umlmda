@@ -72,12 +72,13 @@ public class WSModelClassAdapter extends JavaModelClassAdapter implements WSMode
     * @return true if the type uses <<In>> <<Out>> Stereotypes for optimization
     */
    public boolean isOptimized() {
-      if ( optimized == null ) {
-         Set checkedClassesSet = new HashSet();
-         
-         isOptimized(checkedClassesSet);
-      }
-      return optimized.booleanValue();
+      return false;
+//      if ( optimized == null ) {
+//         Set checkedClassesSet = new HashSet();
+//         
+//         isOptimized(checkedClassesSet);
+//      }
+//      return optimized.booleanValue();
    }
    
    private void setIfOptimized(boolean optimized) {
