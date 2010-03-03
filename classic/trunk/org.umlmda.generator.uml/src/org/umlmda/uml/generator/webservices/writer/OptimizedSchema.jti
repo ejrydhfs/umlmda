@@ -13,7 +13,7 @@
     <restriction base="<%=type%>">
 <%        for ( Iterator ia = modelClass.getAttributes().iterator(); ia.hasNext(); ) {
              attr = (WSModelAttribute)ia.next();
-%>      <enumeration value="<%=(StringUtils.isNumeric(attr.getInitialValue().substring(0,1))?"C":"")+attr.getInitialValue()%>"/>
+%>      <enumeration value="<%=(attr.getDataType().getName().equals(ModelDataType.STRING) && StringUtils.isNumeric(attr.getInitialValue().substring(0,1))?"C":"")+attr.getInitialValue()%>"/>
 <%        }
 %>    </restriction>
   </simpleType>

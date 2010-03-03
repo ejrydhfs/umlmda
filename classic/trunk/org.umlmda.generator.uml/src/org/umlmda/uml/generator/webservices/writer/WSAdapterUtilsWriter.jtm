@@ -46,11 +46,13 @@ import org.umlmda.uml.generator.webservices.*;
    }
    for ( Iterator iter = classList.iterator(); iter.hasNext(); ) {
       WSModelClass modelClass = (WSModelClass)iter.next();
+      boolean isStringEnum = modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION) && modelClass.getAttributes().size() > 0 && ((ModelAttribute)modelClass.getAttributes().get(0)).getDataType().getName().equals(ModelDataType.STRING);
        
       if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO)
         || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO_HIERARCHY)
-        || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION) )
+        || (modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION) && isStringEnum) ) {
          genClass.registerImport(WSArtefacts.WS_STUB, modelClass);
+      }   
    } // for
    for ( Iterator iter = pimClassList.iterator(); iter.hasNext(); ) {
       JavaModelClass pimClass = (JavaModelClass)iter.next();
