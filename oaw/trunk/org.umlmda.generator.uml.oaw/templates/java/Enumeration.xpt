@@ -16,7 +16,7 @@ package «generatorPackage.getQualifiedPackageName(getDefaultArtefact("Enumeratio
 
 import java.io.ObjectStreamException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 
 import org.umlmda.runtime.lang.«this.enumInterface()»;
@@ -43,7 +43,7 @@ public class «className» implements «this.enumInterface()» {
    public static final «className» «attr.name» = new «className»(«attr.initialValue()»);
 «ENDFOREACH»
    private final «enumType()» value;
-   private final static List values = new ArrayList();
+   private final static List<«className»> values = new ArrayList<«className»>();
 
    static {
 «FOREACH attributes.typeSelect(JavaModelAttribute) AS attr»
@@ -59,16 +59,17 @@ public class «className» implements «this.enumInterface()» {
       this.value = value;
    }
 
-   /* 
-    * List containing all enumeration literals
+   /** 
+    * @return immutable List containing all enumeration literals
     */
-   public static List values() {
-      return new ArrayList(values);
+   public static List<«className»> values() {
+      return Collections.unmodifiableList(values);
    }
 
    /**
     * Diagnostics
     */
+   @Override
    public String toString() {
 «FOREACH attributes.typeSelect(JavaModelAttribute) AS attr ITERATOR ia»
 «IF ia.counter0 == 0»
@@ -119,9 +120,7 @@ public class «className» implements «this.enumInterface()» {
     * @return the enumeration instance
     */
    public static «className» fromValue(«javaValueType» value) {
-      for (Iterator iv = values.iterator(); iv.hasNext();) {
-         «className» literal = («className») iv.next();
-
+      for («className» literal : values) {
 «IF valuePrimitive»
          if ( literal.getValue() == value ) {
 «ELSE»         
@@ -138,6 +137,7 @@ public class «className» implements «this.enumInterface()» {
    /**
     * test for equality of values in enumeration
     */
+   @Override
    public boolean equals(Object object)
    {
       boolean result = false;
@@ -157,6 +157,7 @@ public class «className» implements «this.enumInterface()» {
    /**
     * calculate hash code of value in enumeration
     */
+   @Override
    public int hashCode()
    {
 «IF ((JavaModelClassifier)typeClassifier).javaPrimitiveType == true»
