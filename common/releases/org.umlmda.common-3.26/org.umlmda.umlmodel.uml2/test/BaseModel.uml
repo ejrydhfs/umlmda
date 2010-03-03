@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:UMLMDAProfile="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xsi:schemaLocation="http:///schemas/UMLMDAProfile/_m4nosK87Edy5F6gxEi6kNw/22 /org.umlmda.umlmodel.uml2/test/UMLMDAProfile.profile.uml#_m4nosa87Edy5F6gxEi6kNw">
+  <uml:Model xmi:id="_bmpVofLCEdmyduCk8dC3zA" name="BaseModel">
+    <packageImport xmi:id="_bmpVtPLCEdmyduCk8dC3zA">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packageImport xmi:id="_8JoAYPMJEdmrXqwlJJdHPg">
+      <importedPackage xmi:type="uml:Model" href="/org.umlmda.umlmodel.uml2/test/UMLMDATypes.uml#_ggMDAPK4EdmFXfbQyopNVQ"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_g22wEOt_EdydHqpMKq5jmA" name="org">
+      <packagedElement xmi:type="uml:Package" xmi:id="_i-dVwOt_EdydHqpMKq5jmA" name="umlmda">
+        <packagedElement xmi:type="uml:Package" xmi:id="_jzp4YOt_EdydHqpMKq5jmA" name="test">
+          <packagedElement xmi:type="uml:Package" xmi:id="_kwmo0Ot_EdydHqpMKq5jmA" name="base">
+            <packagedElement xmi:type="uml:Class" xmi:id="_l434cOt_EdydHqpMKq5jmA" name="TestBaseClass">
+              <ownedAttribute xmi:id="_1ofL8Ot_EdydHqpMKq5jmA" name="a" visibility="private">
+                <type xmi:type="uml:PrimitiveType" href="/org.umlmda.umlmodel.uml2/test/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+              </ownedAttribute>
+              <ownedOperation xmi:id="_3ImT0Ot_EdydHqpMKq5jmA" name="postASet">
+                <ownedParameter xmi:id="_6q9AQOt_EdydHqpMKq5jmA" name="newValue">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.umlmodel.uml2/test/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedParameter>
+                <ownedParameter xmi:id="_6q9AQet_EdydHqpMKq5jmA" name="oldValue">
+                  <type xmi:type="uml:PrimitiveType" href="/org.umlmda.umlmodel.uml2/test/UMLMDATypes.uml#_wefSwPK4EdmFXfbQyopNVQ"/>
+                </ownedParameter>
+              </ownedOperation>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:id="_bmpVq_LCEdmyduCk8dC3zA">
+      <eAnnotations xmi:id="_bmpVrPLCEdmyduCk8dC3zA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+    </profileApplication>
+    <profileApplication xmi:id="_bmpVrvLCEdmyduCk8dC3zA">
+      <eAnnotations xmi:id="_bmpVr_LCEdmyduCk8dC3zA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.umlmodel.uml2/test/Default.profile.uml#_IN8k8MmBEdqBcN1R6EvWUw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.umlmodel.uml2/test/Default.profile.uml#_a_S3wNWLEdiy4IqP8whjFA"/>
+    </profileApplication>
+    <profileApplication xmi:id="_bmpVsfLCEdmyduCk8dC3zA">
+      <eAnnotations xmi:id="_bmpVsvLCEdmyduCk8dC3zA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.umlmodel.uml2/test/Deployment.profile.uml#_IrdAUMmBEdqBcN1R6EvWUw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.umlmodel.uml2/test/Deployment.profile.uml#_vjbuwOvHEdiDX5bji0iVSA"/>
+    </profileApplication>
+    <profileApplication xmi:id="_fSWyYPLCEdmyduCk8dC3zA">
+      <eAnnotations xmi:id="_fSWyYfLCEdmyduCk8dC3zA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.umlmda.umlmodel.uml2/test/UMLMDAProfile.profile.uml#_m4nosa87Edy5F6gxEi6kNw"/>
+      </eAnnotations>
+      <appliedProfile href="/org.umlmda.umlmodel.uml2/test/UMLMDAProfile.profile.uml#_fgmLseO5Edm14clrpIgO7w"/>
+    </profileApplication>
+  </uml:Model>
+  <UMLMDAProfile:BusinessObject xmi:id="_qyPbIOt_EdydHqpMKq5jmA" base_Class="_l434cOt_EdydHqpMKq5jmA"/>
+  <UMLMDAProfile:PersistentAttribute xmi:id="_1ofL8et_EdydHqpMKq5jmA" base_Property="_1ofL8Ot_EdydHqpMKq5jmA"/>
+  <UMLMDAProfile:TransactionalMethod xmi:id="_3ImT0et_EdydHqpMKq5jmA" base_Operation="_3ImT0Ot_EdydHqpMKq5jmA"/>
+</xmi:XMI>

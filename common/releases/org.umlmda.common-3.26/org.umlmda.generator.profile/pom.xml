@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.common</artifactId>
+      <version>3.26</version>
+   </parent>
+   <artifactId>org.umlmda.generator.profile</artifactId>
+   <name>UMLMDA generator profile</name>
+   <description />
+
+
+   <dependencies>
+      <dependency>
+         <groupId>org.eclipse.emf</groupId>
+         <artifactId>common</artifactId>
+         <exclusions>
+            <exclusion>
+               <groupId>org.eclipse</groupId>
+               <artifactId>osgi</artifactId>
+            </exclusion>
+         </exclusions>
+      </dependency>
+      <dependency>
+         <groupId>org.eclipse.emf</groupId>
+         <artifactId>ecore</artifactId>
+         <exclusions>
+            <exclusion>
+               <groupId>org.eclipse</groupId>
+               <artifactId>osgi</artifactId>
+            </exclusion>
+         </exclusions>
+      </dependency>
+      <dependency>
+         <groupId>org.eclipse.emf.ecore</groupId>
+         <artifactId>xmi</artifactId>
+         <exclusions>
+            <exclusion>
+               <groupId>org.eclipse</groupId>
+               <artifactId>osgi</artifactId>
+            </exclusion>
+         </exclusions>
+      </dependency>
+      <dependency>
+         <groupId>${parent.groupId}</groupId>
+         <artifactId>org.umlmda.umlmodel</artifactId>
+         <version>${parent.version}</version>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <sourceDirectory>src</sourceDirectory>
+      <resources>
+         <resource>
+            <directory>src</directory>
+            <excludes>
+               <exclude>*.java</exclude>
+            </excludes>
+         </resource>
+      </resources>
+   </build>
+</project>
