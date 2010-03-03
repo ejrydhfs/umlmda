@@ -10,9 +10,25 @@
 	«EXPAND Root FOREACH this.packages.typeSelect(ModelPackage)»
 «ENDDEFINE»
 
+«DEFINE Root FOR JavaBusinessException»
+   «EXPAND java::Root::Root FOR this»
+«ENDDEFINE»
+
+«DEFINE Root FOR JavaBusinessObject»
+   «EXPAND java::Root::Root FOR this»
+«ENDDEFINE»
+
+«DEFINE Root FOR JavaBusinessService»
+   «EXPAND java::Root::Root FOR this»
+«ENDDEFINE»
+
+«DEFINE Root FOR JavaEnumeration»
+   «EXPAND java::Root::Root FOR this»
+«ENDDEFINE»
+
 «DEFINE Root FOR JavaBusinessComponent»
 	«EXPAND Root FOREACH classes.typeSelect(ModelClass)»
-	«EXPAND JavaArtefact FOR this»
+   «EXPAND JavaArtefact FOR this»
 «ENDDEFINE»
 
 «DEFINE JavaArtefact FOR JavaBusinessComponent»
@@ -24,22 +40,6 @@
 «DEFINE Root FOR JavaModelPackage»
    «ERROR "Root called on <<Package>> "+name»
    «EXPAND Root FOREACH classes.typeSelect(ModelClass)»
-«ENDDEFINE»
-
-«DEFINE Root FOR JavaBusinessException»
-	«EXPAND java::BOException::BOException»
-«ENDDEFINE»
-
-«DEFINE Root FOR JavaBusinessObject»
-	«EXPAND java::Root::Root»
-«ENDDEFINE»
-
-«DEFINE Root FOR JavaBusinessService»
-	«EXPAND java::Root::Root»
-«ENDDEFINE»
-
-«DEFINE Root FOR JavaEnumeration»
-	«EXPAND java::Root::Root»
 «ENDDEFINE»
 
 «DEFINE Root FOR ModelElement»

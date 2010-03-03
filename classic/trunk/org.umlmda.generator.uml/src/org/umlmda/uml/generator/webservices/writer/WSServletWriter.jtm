@@ -70,12 +70,10 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 <%=genClass.registeredImports()%>
 
 @Stateless
-
 @TransactionAttribute(TransactionAttributeType.NEVER)
 @WebService(name = "<%=genClass.getGeneratedName(WSArtefacts.WS_SERVICE_PORT)%>", targetNamespace = "<%=genPackage.getNamespace()%>")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-
-public class <%=getBaseName()%> implements <%=genClass.getScopedName(WSArtefacts.WS_SERVICE_PORT)%> {
+public class <%=getBaseName()%> implements <%=genClass.getScopedName("jaxWs.WSPortLocal")%> {
    <%=logging.initDeclaration()%>
 <% for ( Iterator ip = packageList.iterator(); ip.hasNext(); ) {
      WSModelPackage modelPackage = (WSModelPackage)ip.next();
