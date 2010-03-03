@@ -105,6 +105,7 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
          JavaModelClass pimEnumClass = enumClass.getPIMClass();
          String wsEnum = genClass.getScopedName(WSArtefacts.WS_STUB, enumClass); 
          boolean isStringEnum = ((ModelAttribute)enumClass.getAttributes().get(0)).getDataType().getName().equals(ModelDataType.STRING);
+         boolean isEnumWithNumbers = StringUtils.isNumeric(((ModelAttribute)enumClass.getAttributes().get(0)).getInitialValue().substring(0, 1));
        
          // FIXME Parameter for JaxWS handling
          if ( isOptional() ) {
@@ -112,7 +113,12 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
          }
          else {
             if ( isStringEnum ) {
-               return wsEnum+".fromValue(\"C\"+from."+getGetter()+"().getValue())";
+               if ( isEnumWithNumbers ) {	
+            	   return wsEnum+".fromValue(\"C\"+from."+getGetter()+"().getValue())";
+               }
+               else {
+            	   return wsEnum+".fromValue(from."+getGetter()+"().getValue())";
+               }
             }
             else {
                return "from."+getGetter()+"().getValue()";
@@ -162,6 +168,7 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
       if ( getModelClassifier().hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION)) {
          WSModelClass enumClass = (WSModelClass) getModelClassifier();
          boolean isStringEnum = ((ModelAttribute)enumClass.getAttributes().get(0)).getDataType().getName().equals(ModelDataType.STRING);
+         boolean isEnumWithNumbers = StringUtils.isNumeric(((ModelAttribute)enumClass.getAttributes().get(0)).getInitialValue().substring(0, 1));
          String javaEnum = enumClass.getPIMClass().getQualifiedName(JavaArtefacts.ENUMERATION); 
          
          if ( isOptional() ) {
@@ -169,7 +176,12 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
          }
          else {
             if ( isStringEnum ) {
-               return javaEnum+".fromValue(StringUtils.substring("+srcInstance+"."+getGetter()+"().value(),1))";
+            	if ( isEnumWithNumbers ) {
+            		return javaEnum+".fromValue(StringUtils.substring("+srcInstance+"."+getGetter()+"().value(),1))";
+            	}
+            	else {
+            		return javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().value())";
+            	}
             }
             else {
                return javaEnum+".fromValue("+srcInstance+"."+getGetter()+"())";
