@@ -60,6 +60,7 @@
 	   	<globalVarDef name="decimalMapping" value="${decimalMapping}"/>
 	   	<globalVarDef name="javaGenerics" value="'true'"/>
         <globalVarDef name="GWTSupport" value="${GWTSupport}"/>
+        <globalVarDef name="VisitorSupport" value="${VisitorSupport}"/>
 
 	</component>
 
