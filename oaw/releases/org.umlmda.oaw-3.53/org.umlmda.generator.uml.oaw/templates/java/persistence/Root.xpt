@@ -1,0 +1,55 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Element»
+«EXTENSION org::umlmda::uml::java::Features»
+
+«EXTENSION org::openarchitectureware::util::stdlib::io»
+«EXTENSION org::openarchitectureware::util::stdlib::issues»
+
+«DEFINE Root FOR JavaModel»
+    «REM» Define standard GWT Artefacts«ENDREM»
+    «ERROR "Root called on <<Model>> "+name»
+    «EXPAND initArtefacts FOR this»
+	«EXPAND Root FOREACH this.packages.typeSelect(ModelPackage)»
+«ENDDEFINE»
+
+«DEFINE Root FOR JavaBusinessObject»
+    «ERROR "Root called on <<JavaBusinessObject>> "+qualifiedName»
+	«EXPAND java::BOInterface::BOInterface»
+	«EXPAND java::persistence::EntityImpl::EntityImpl»
+	«EXPAND java::BODelegate::Impl»
+	«EXPAND java::BODelegateInterface::BODelegateInterface»
+«ENDDEFINE»
+
+«DEFINE Root FOR JavaBusinessComponent»
+	«EXPAND Root FOREACH classes.typeSelect(ModelClass)»
+	«EXPAND java::Visitor::Visitor FOR this»
+	«EXPAND java::AbstractVisitor::Root FOR this»
+	«EXPAND java::VisitableIterator::Root FOR this»
+	«EXPAND java::ConstraintVisitor::Root FOR this»
+«ENDDEFINE»
+
+«DEFINE Root FOR JavaModelPackage»
+    «ERROR "Root called on <<Package>> "+qualifiedName»
+	«EXPAND Root FOREACH classes.typeSelect(ModelClass)»
+«ENDDEFINE»
+
+«DEFINE Root FOR JavaModelClass»
+    «IF hasStereotype("NativeClass") || hasStereotype("NativeInterface")»
+        «REM»Noting to do for Natives«ENDREM»
+    «ELSE»
+        «ERROR "Root should not be called on <<Object>>: "+name+" ("+metaType+")"»
+    «ENDIF»
+«ENDDEFINE»
+
+«DEFINE Root FOR ModelElement»
+	«ERROR "Root should not be called on <<Object>>: "+name+" ("+metaType+")"»
+«ENDDEFINE»
+
+«DEFINE initArtefacts FOR JavaModel»
+    «resetDefaultArtefacts()»
+«ENDDEFINE»

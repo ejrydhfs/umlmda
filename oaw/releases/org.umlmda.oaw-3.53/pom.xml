@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.common</artifactId>
+      <version>3.26</version>
+   </parent>
+   <artifactId>org.umlmda.oaw</artifactId>
+   <version>3.53</version>
+   <packaging>pom</packaging>
+   <name>UMLMDA oaw</name>
+   <description>UMLMDA maven project for umlmda openarchitectureware integration modules.</description>
+
+   <modules>
+      <module>org.umlmda.oaw.util</module>
+      <module>org.umlmda.generator.uml.oaw</module>
+      <module>org.umlmda.oaw.generator</module>
+   </modules>
+
+   <scm>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/releases/org.umlmda.oaw-3.53</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/oaw/releases/org.umlmda.oaw-3.53</developerConnection>
+   </scm>
+
+   <dependencyManagement>
+      <dependencies>
+         <!-- oAW -->
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-emftools</artifactId>
+            <version>${oaw.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-expressions</artifactId>
+            <version>${oaw.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-workflow</artifactId>
+            <version>${oaw.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-core-xpand2</artifactId>
+            <version>${oaw.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-uml2-adapter</artifactId>
+            <version>${oaw.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.openarchitectureware</groupId>
+            <artifactId>oaw-util-stdlib</artifactId>
+            <version>${oaw.version}</version>
+         </dependency>
+
+         <!-- own stuff -->
+         <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>org.umlmda.oaw.util</artifactId>
+            <version>3.53</version>
+         </dependency>
+         <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>org.umlmda.generator.uml.oaw</artifactId>
+            <version>3.53</version>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
+
+   <build>
+      <pluginManagement>
+         <plugins>
+            <plugin>
+               <groupId>org.fornax.toolsupport</groupId>
+               <artifactId>fornax-oaw-m2-plugin</artifactId>
+               <version>2.1.1</version>
+            </plugin>
+         </plugins>
+      </pluginManagement>
+   </build>
+
+   <repositories>
+      <repository>
+         <id>artifactory</id>
+         <url>http://coding.ds2k.de/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+      <repository>
+         <id>cor-artifactory</id>
+         <url>http://cor-health-dev1.corag.de/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
+
+</project>
