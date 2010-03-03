@@ -30,6 +30,7 @@ import java.util.Calendar;
 
 import org.apache.commons.lang.StringUtils;
 import org.umlmda.model.uml.Model;
+import org.umlmda.model.uml.ModelAttribute;
 import org.umlmda.model.uml.ModelAttributeBase;
 import org.umlmda.model.uml.ModelDataType;
 import org.umlmda.profile.ModelStereotype;
@@ -103,13 +104,19 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
          WSModelClass enumClass = (WSModelClass) getModelClassifier();
          JavaModelClass pimEnumClass = enumClass.getPIMClass();
          String wsEnum = genClass.getScopedName(WSArtefacts.WS_STUB, enumClass); 
+         boolean isStringEnum = ((ModelAttribute)enumClass.getAttributes().get(0)).getDataType().getName().equals(ModelDataType.STRING);
        
          // FIXME Parameter for JaxWS handling
          if ( isOptional() ) {
                return "from."+getGetter()+"() != null ? "+wsEnum+".fromValue(from."+getGetter()+"().getValue()) : null";
          }
          else {
-               return wsEnum+".fromValue(\"C\"+from."+getGetter()+"().getValue())";            
+            if ( isStringEnum ) {
+               return wsEnum+".fromValue(\"C\"+from."+getGetter()+"().getValue())";
+            }
+            else {
+               return "from."+getGetter()+"().getValue()";
+            }
          }
       }
       else {
@@ -154,13 +161,19 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
    public String getConvertFromWs(String srcInstance) {
       if ( getModelClassifier().hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION)) {
          WSModelClass enumClass = (WSModelClass) getModelClassifier();
+         boolean isStringEnum = ((ModelAttribute)enumClass.getAttributes().get(0)).getDataType().getName().equals(ModelDataType.STRING);
          String javaEnum = enumClass.getPIMClass().getQualifiedName(JavaArtefacts.ENUMERATION); 
          
          if ( isOptional() ) {
             return srcInstance+"."+getGetter()+"() != null ? "+javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().value()) : null";
          }
          else {
-            return javaEnum+".fromValue(StringUtils.substring("+srcInstance+"."+getGetter()+"().value(),1))";
+            if ( isStringEnum ) {
+               return javaEnum+".fromValue(StringUtils.substring("+srcInstance+"."+getGetter()+"().value(),1))";
+            }
+            else {
+               return javaEnum+".fromValue("+srcInstance+"."+getGetter()+"())";
+            }
          }
       }
       else {
