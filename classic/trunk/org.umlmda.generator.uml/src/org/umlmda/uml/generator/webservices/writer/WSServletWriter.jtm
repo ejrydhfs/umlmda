@@ -41,20 +41,9 @@ package <%=getPackageName()%>;
       WSModelPackage modelPackage = (WSModelPackage)ip.next();
       JavaModelPackage pimPackage = modelPackage.getPIMPackage();
       
-      genClass.registerImport(JavaArtefacts.BUSINESS_FACTORY, pimPackage);
+      genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT_FACTORY_IMPL, pimPackage);
    }
 
-%><%=logging.importDeclaration()%>
-
-<% if ( springSupport ) {
-%>import javax.xml.rpc.ServiceException;
-
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-<% } 
 %>import org.umlmda.runtime.webservice.WebserviceUtils;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -74,15 +63,8 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @WebService(name = "<%=genClass.getGeneratedName(WSArtefacts.WS_SERVICE_PORT)%>", targetNamespace = "<%=genPackage.getNamespace()%>")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public class <%=getBaseName()%> implements <%=genClass.getScopedName("jaxWs.WSPortLocal")%> {
-   <%=logging.initDeclaration()%>
-<% for ( Iterator ip = packageList.iterator(); ip.hasNext(); ) {
-     WSModelPackage modelPackage = (WSModelPackage)ip.next();
-     JavaModelPackage pimPackage = modelPackage.getPIMPackage();
-     String factoryClass = genClass.getScopedName(JavaArtefacts.BUSINESS_FACTORY, pimPackage);
-%>   private <%=factoryClass%> <%=getFactoryMember(pimPackage)%> = null;
-<% }
-%>   @EJB (beanInterface=<%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, pimClass)%>Local.class)
-   private final <%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, pimClass)%> delegate;
+   @EJB (beanInterface=<%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, pimClass)%>Local.class)
+   private <%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, pimClass)%> delegate;
    private <%=genClass.getScopedName(WSArtefacts.WS_UTILS)%> utils = new <%=genClass.getScopedName(WSArtefacts.WS_UTILS)%>();
 
    /**
@@ -90,12 +72,12 @@ public class <%=getBaseName()%> implements <%=genClass.getScopedName("jaxWs.WSPo
     */
    public <%=getBaseName()%>() {
       super();
-      delegate = <%=getFactoryMember(((WSModelPackage)getModelClass().getPackage()).getPIMPackage())%>.create<%=getModelClass().getName()%>();
 <% for ( Iterator ip = packageList.iterator(); ip.hasNext(); ) {
      WSModelPackage modelPackage = (WSModelPackage)ip.next();
      JavaModelPackage pimPackage = modelPackage.getPIMPackage();
+     String factoryClass = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_FACTORY_IMPL, pimPackage);
      String factoryName = StringUtils.capitalize(pimPackage.getName());
-%>      utils.set<%=factoryName%>Factory(<%=getFactoryMember(pimPackage)%>);
+%>      utils.set<%=factoryName%>Factory(new <%=factoryClass%>());
 <% }
 %>   }
 
