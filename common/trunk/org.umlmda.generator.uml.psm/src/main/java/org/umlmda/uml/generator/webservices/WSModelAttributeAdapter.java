@@ -109,7 +109,12 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
        
          // FIXME Parameter for JaxWS handling
          if ( isOptional() ) {
-               return "from."+getGetter()+"() != null ? "+wsEnum+".fromValue(from."+getGetter()+"().getValue()) : null";
+        	 if ( isStringEnum && isEnumWithNumbers ) {
+        		 return "from."+getGetter()+"() != null ? "+wsEnum+".fromValue(\"C\"+from."+getGetter()+"().getValue()) : null";
+        	 }
+        	 else {
+        		 return "from."+getGetter()+"() != null ? "+wsEnum+".fromValue(from."+getGetter()+"().getValue()) : null";
+        	 }	 
          }
          else {
             if ( isStringEnum ) {
@@ -172,7 +177,12 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
          String javaEnum = enumClass.getPIMClass().getQualifiedName(JavaArtefacts.ENUMERATION); 
          
          if ( isOptional() ) {
-            return srcInstance+"."+getGetter()+"() != null ? "+javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().value()) : null";
+        	 if ( isStringEnum && isEnumWithNumbers ) {           
+        		 return srcInstance+"."+getGetter()+"() != null ? "+javaEnum+".fromValue(StringUtils.substring("+srcInstance+"."+getGetter()+"().value(),1)) : null";
+        	 }
+        	 else {
+        		 return srcInstance+"."+getGetter()+"() != null ? "+javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().value()) : null";
+        	 }
          }
          else {
             if ( isStringEnum ) {
