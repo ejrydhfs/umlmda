@@ -108,10 +108,10 @@ public class <%=getBaseName()%> implements <%=genClass.getScopedName("jaxWs.WSPo
     */
     public <%=method.getWebServiceSignature()%> {
        try {
-<%  WSModelParameter requestParameter = (WSModelParameter)method.getParameters().get(0);
-    WSModelClass requestClass = (WSModelClass)requestParameter.getType();
- 
-    if ( genModel.isSoapWrapping() ) {
+<%  if ( genModel.isSoapWrapping() ) {
+       WSModelParameter requestParameter = (WSModelParameter)method.getParameters().get(0);
+       WSModelClass requestClass = (WSModelClass)requestParameter.getType();
+
        for ( Iterator ip = requestClass.getAttributes().iterator(); ip.hasNext(); ) {
          WSModelAttribute parameterAttr = (WSModelAttribute)ip.next();
          
@@ -123,8 +123,18 @@ public class <%=getBaseName()%> implements <%=genClass.getScopedName("jaxWs.WSPo
 <%       }
        } // for
      } else {     
-%>       <%=requestClass.getPIMClass().getJavaType()%> bs<%=requestParameter.getName()%> = utils.create<%=requestClass.getPIMClass().getName()%>(<%=requestParameter.getName()%>);
-<%   }       
+         for ( Iterator ip = method.getParameters().iterator(); ip.hasNext(); ) {
+				WSModelParameter parameter = (WSModelParameter)ip.next();
+				
+				if ( parameter.getType() instanceof WSModelClass ) { 
+					WSModelClass parameterClass = (WSModelClass)parameter.getType();            
+%>       <%=parameterClass.getPIMClass().getJavaType()%> bs<%=parameter.getName()%> = utils.create<%=parameterClass.getPIMClass().getName()%>(<%=parameter.getName()%>);
+<%          } else {
+					WSModelDataType parameterType = (WSModelDataType)parameter.getType();            
+%>       <%=parameterType.getJavaType()%> bs<%=parameter.getName()%> = <%=parameter.getName()%>;
+<%          }
+         } // for
+     }
      if ( pimMethod.getReturnType() != null ) {
 %>         <%=pimMethod.getJavaType()%> result;
          
