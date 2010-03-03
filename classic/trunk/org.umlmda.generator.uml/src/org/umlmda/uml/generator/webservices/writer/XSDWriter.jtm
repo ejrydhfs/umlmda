@@ -41,11 +41,8 @@ import org.umlmda.uml.generator.webservices.*;
    WSModelClass genClass = null;
    ModelPackage modelPackage = getModelPackage();
    String xmlEncoding = getProperties().getProperty("xmlEncoding", "ISO-8859-1");
-//   String soapBindingTag = "";
    String soapEncodingTag = "";
-//   String soapEncodingStyleTag = "";
    String soapBinding = getProperties().getProperty("soapBinding", "rpc");
-//   String soapEncoding = "";
    boolean soapWrapping = true;
    boolean packageFilter = false;
    Set classSet = new HashSet();
@@ -56,7 +53,7 @@ import org.umlmda.uml.generator.webservices.*;
    }
    final List classList = new ArrayList(classSet);
    Collections.sort(classList);
-   final List packageList = UMLModelHelper.getPackagesFromClassList( classList);
+   final List packageList = UMLModelHelper.getPackagesFromClassList( classList, WSStereotypes.WEB_SERVICE_COMPONENT);
    
 %><?xml version="1.0" encoding="<%=xmlEncoding%>"?>
 <!-- @@Generated file, please edit UserSections only -->
@@ -74,8 +71,11 @@ import org.umlmda.uml.generator.webservices.*;
    packageList.remove(genPackage);
    for ( Iterator iter = packageList.iterator(); iter.hasNext();) {
       WSModelPackage pkg = (WSModelPackage)iter.next();
+      
+      if ( pkg.getNamespace().equals(genPackage.getNamespace()) == false ) {
 %><xsd:import namespace="<%=pkg.getNamespace()%>" schemaLocation="<%=pkg.getName()%>.xsd"/> 
-<% }
+<%    }
+   }
    for (Iterator iter = classList.iterator();iter.hasNext();){
       WSModelClass modelClass = (WSModelClass)iter.next();
       

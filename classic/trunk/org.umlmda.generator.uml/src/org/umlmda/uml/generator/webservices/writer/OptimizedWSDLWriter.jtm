@@ -76,7 +76,7 @@ import org.umlmda.uml.generator.webservices.*;
   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 <% // Loop required packages
    final List classList = getModelClass().getSchemaTypes();
-   final List packageList = UMLModelHelper.getPackagesFromClassList( classList);
+   final List packageList = UMLModelHelper.getPackagesFromClassList(classList, WSStereotypes.WEB_SERVICE_COMPONENT);
    int index=1;
    for ( Iterator iter = packageList.iterator(); iter.hasNext(); ++index) {
       WSModelPackage modelPackage = (WSModelPackage)iter.next();

@@ -35,6 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * @author pussel
  *
@@ -42,17 +44,24 @@ import java.util.Set;
  */
 public class UMLModelHelper {
 
+   static public List<ModelPackage> getPackagesFromClassList(Collection<ModelClass> classList) {
+      return getPackagesFromClassList(classList, null);
+   }
+   
 	/**
 	 * @param classList to examine for different packages
 	 * @return alphabetically sorted list of all packages occurring in the given class list 
 	 */
-	static public List getPackagesFromClassList(Collection classList) {
-		Set set = new HashSet();
-		for (Iterator iter = classList.iterator(); iter.hasNext();) {
-			ModelClass mClass = (ModelClass) iter.next();
-			set.add(mClass.getPackage());
+	static public List<ModelPackage> getPackagesFromClassList(Collection<ModelClass> classList, String packageStereotype) {
+		Set<ModelPackage> set = new HashSet<ModelPackage>();
+		for (Iterator<ModelClass> iter = classList.iterator(); iter.hasNext();) {
+			ModelClass mClass = iter.next();
+			ModelPackage mPackage = mClass.getPackage();
+			
+			if ( StringUtils.isEmpty(packageStereotype) || mPackage.hasStereotype(packageStereotype) )
+			   set.add(mClass.getPackage());
 		}
-		List packageList = new ArrayList(set.size());
+		List<ModelPackage> packageList = new ArrayList<ModelPackage>(set.size());
 		packageList.addAll(set);
 		Collections.sort(packageList);
 		return packageList;
