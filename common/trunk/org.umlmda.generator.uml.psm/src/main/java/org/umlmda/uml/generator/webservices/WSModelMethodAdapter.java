@@ -8,6 +8,8 @@ package org.umlmda.uml.generator.webservices;
 
 import java.util.Iterator;
 
+import javax.jws.WebParam;
+
 import org.apache.commons.lang.StringUtils;
 import org.umlmda.generator.model.uml.GeneratorClass;
 import org.umlmda.model.uml.Model;
@@ -160,20 +162,22 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
     * @param soapWrapping
     * @return
     */
-   public String getWebServiceParameter() {
+   private String getWebServiceParameter() {
+      StringBuffer buffer = new StringBuffer();
       String parameterSignature = null;
       WSModelClass genClass = (WSModelClass) getGeneratorModel().getContext().getCurrentModelElement();
       WSModel genModel = (WSModel) genClass.getGeneratorModel();
       
       if ( genModel.isSoapWrapping() ) {
-         parameterSignature = getRequestClass() + " request";
+
+         buffer.append("@WebParam(name = \"request\", partName = \"request\")");
+         buffer.append(getRequestClass() + " request");
       }
       else {
-         StringBuffer buffer = new StringBuffer();
-         
          for (Iterator ip = getParameters().iterator(); ip.hasNext();) {
             WSModelParameter parameter = (WSModelParameter) ip.next();
             
+            buffer.append("@WebParam(name = \""+parameter.getName()+"\", partName = \""+parameter.getName()+"\")");
             buffer.append(parameter.getJavaType());
             buffer.append(" ");
             buffer.append(parameter.getName());
@@ -181,8 +185,8 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
                buffer.append(", ");
             }
          }
-         parameterSignature = buffer.toString();
       }
+      parameterSignature = buffer.toString();
       
       return parameterSignature;
    }
