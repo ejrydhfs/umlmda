@@ -72,6 +72,7 @@ package <%=getPackageName()%>;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +85,22 @@ import org.umlmda.runtime.webservice.WebserviceUtils;
 public class <%=getBaseName()%> {
    private final Map registry = new HashMap();
    private List resolvers = new ArrayList();
+   private Map<Class, Map<String, Object>> resolveRegistry = new IdentityHashMap<Class, Map<String,Object>>();
+   
+   private Object getObject(Class<?> clazz, String id) {
+      Map<String, Object> idMap = resolveRegistry.get(clazz);
+      
+      return idMap.get(id);
+   }
+   
+   private void registerObject(Class clazz, Object object, String id) {
+      Map<String, Object> idMap = resolveRegistry.get(clazz);
+      if(idMap == null) {
+         idMap = new HashMap<String, Object>();         
+         resolveRegistry.put(clazz, idMap);
+      }
+      idMap.put(id, object);
+   }
    
    private abstract class ResolveReference {
       abstract void resolve();
@@ -103,7 +120,8 @@ public class <%=getBaseName()%> {
    }
 
    public void resolveReferences() {
-      for (Iterator iter = resolvers.iterator(); iter.hasNext();) {
+      List resolver = new ArrayList(resolvers);
+      for (Iterator iter = resolver.iterator(); iter.hasNext();) {
          ResolveReference resolveReference = (ResolveReference) iter.next();
          
          resolveReference.resolve();
@@ -111,6 +129,7 @@ public class <%=getBaseName()%> {
    }
 
    public void resetReferences() {
+      resolveRegistry.clear();
       resolvers.clear();
       registry.clear();
    }
