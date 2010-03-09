@@ -165,8 +165,8 @@
    // create <%=pimClass.getName()%> web service DTO from interface DTO  
    public <%=stubName%> create<%=modelClass.getName()%>(<%=interfaceName%> src) {
       if ( src != null ) {
-         <%=stubName%> dest = new <%=stubName%>();
-      
+         <%=stubName%> dest = new <%=stubName%>();                   
+         
          registry.put(src, dest);
          copy<%=pimClass.getName()%>(src, dest);
          return dest;
@@ -190,15 +190,18 @@
 %>      if ( from.<%=attribute.getGetter()%>() == null ) {
          throw new IllegalArgumentException("None optional attribute <%=attribute.getQualifiedName()%> is null");
       }
-<%    }
-      if ( attribute.isMultivalue() ) {      
-%>      for (int jj=0; jj<<%=attribute.getConvertToWs()%>.length; ++jj) {
-         to.<%=attribute.getGetter()%>().add(<%=attribute.getConvertToWs()%>[jj]);
-      }   
+<%    } 
+      if ( attribute.isMultivalue() ) {   
+      %>
+      if ( <%=attribute.getConvertToWs()%> != null ) { 
+         for (int jj=0; jj<<%=attribute.getConvertToWs()%>.length; ++jj) {
+           to.<%=attribute.getGetter()%>().add(<%=attribute.getConvertToWs()%>[jj]);
+         } 
+      }    
 <%    } else {       
 %>      to.<%=attribute.getSetter()%>(<%=attribute.getConvertToWs()%>);
-<%    }
-   } // for 
+<%    } 
+   } // for  
    // Associations
    for ( Iterator ia = modelClass.getAssociations().iterator(); ia.hasNext(); ) {
       WSModelAssociation association = (WSModelAssociation)ia.next();
