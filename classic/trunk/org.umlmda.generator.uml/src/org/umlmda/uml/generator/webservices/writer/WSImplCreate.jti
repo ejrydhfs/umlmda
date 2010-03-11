@@ -308,11 +308,9 @@
       if ( attribute.isReadOnly() || attribute.isDerived() )
          continue;
       if ( attribute.isMultivalue() ) {   
-%>      
-to.<%=attribute.getSetter()%>(<%=attribute.getConvertFromWs("from")%>.toArray(new <%=attribute.getJavaType().substring(0, attribute.getJavaType().length()-2)%>[<%=attribute.getConvertFromWs("from")%>.size()]));
+%>      to.<%=attribute.getSetter()%>(<%=attribute.getConvertFromWs("from")%>.toArray(new <%=attribute.getJavaType().substring(0, attribute.getJavaType().length()-2)%>[<%=attribute.getConvertFromWs("from")%>.size()]));
 <%    } else {
-%>      
-to.<%=attribute.getSetter()%>(<%=attribute.getConvertFromWs("from")%>);
+%>      to.<%=attribute.getSetter()%>(<%=attribute.getConvertFromWs("from")%>);
 <%      }
    }
 
