@@ -8,6 +8,7 @@ import org.umlmda.uml.generator.webservices.WSPSMClassCreatorVisitor;
 import org.umlmda.uml.generator.webservices.WSPSMClassHierarchyCreatorVisitor;
 import org.umlmda.uml.generator.webservices.WSPSMClassHierarchyFixVisitor;
 import org.umlmda.uml.generator.webservices.WSPSMClassMultipleInheritanceVisitor;
+import org.umlmda.uml.generator.webservices.WSPSMClassReferenceCreatorVisitor;
 import org.umlmda.uml.generator.webservices.WSPSMRequestReponseCreateVisitor;
 
 public class WSSchemaModelAdapter extends WSModelAdapter {
@@ -31,6 +32,10 @@ public class WSSchemaModelAdapter extends WSModelAdapter {
 	      // Create web service classes
 	      modelIterator = new ModelVisitableIterator(new WSSchemaPSMClassCreatorVisitor());
 	      modelIterator.iterate(this);
+
+         // Create reference classes for polymorphic types
+         modelIterator = new ModelVisitableIterator(new WSPSMClassReferenceCreatorVisitor());
+         modelIterator.iterate(this);
 
           // Create hierarchy classes for polymorphic types
 	      modelIterator = new ModelVisitableIterator(new WSPSMClassHierarchyCreatorVisitor());

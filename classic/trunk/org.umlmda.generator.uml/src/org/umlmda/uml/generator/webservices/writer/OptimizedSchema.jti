@@ -23,6 +23,7 @@
         // Skip everything that is not <<BusinessObject>> nor <<BusinessException>>
         if ( (modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO) 
            || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO_HIERARCHY)
+           || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO_REFERENCE)
            || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE)
            || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_REQUEST)) == false )
            continue;

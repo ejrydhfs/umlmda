@@ -35,6 +35,7 @@ public class WSStereotypes {
    public static final String WEB_SERVICE_OBJECT = "WebServiceObject";
    public static final String WEB_SERVICE_DTO = "WebServiceDTO";
    public static final String WEB_SERVICE_DTO_HIERARCHY = "WebServiceDTOHierarchy";
+   public static final String WEB_SERVICE_DTO_REFERENCE = "WebServiceDTOReference";
    public static final String WEB_SERVICE_ENUMERATION = "WebServiceEnumeration";
    public static final String WEB_SERVICE_EXCEPTION = "WebServiceException";
    public static final String WEB_SERVICE_RESPONSE = "WebServiceResponse";

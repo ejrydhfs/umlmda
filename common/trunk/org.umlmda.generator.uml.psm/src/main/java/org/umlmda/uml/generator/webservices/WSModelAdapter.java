@@ -65,6 +65,10 @@ public class WSModelAdapter extends JavaModelAdapter implements WSModel {
          // Create web service classes
          modelIterator = new ModelVisitableIterator(new WSPSMClassCreatorVisitor());
          modelIterator.iterate(this);
+         
+         // Create reference classes for polymorphic types
+         modelIterator = new ModelVisitableIterator(new WSPSMClassReferenceCreatorVisitor());
+         modelIterator.iterate(this);
 
          // Create hierarchy classes for polymorphic types
          modelIterator = new ModelVisitableIterator(new WSPSMClassHierarchyCreatorVisitor());

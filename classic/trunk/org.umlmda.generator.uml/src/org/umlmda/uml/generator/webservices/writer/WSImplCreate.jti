@@ -71,6 +71,26 @@
 
 <%}
 
+  // Handling reference dtos
+  else if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO_REFERENCE) ) {
+     String wsHierarchie = pimClass.getName() + "Reference";
+%>   // create <%=pimClass.getName()%> reference web service DTO from interface DTO  
+   public <%=stubName%> create<%=modelClass.getName()%>(<%=interfaceName%> <%=arg%>) {
+      <%=stubName%> <%=wsHierarchie%> = new <%=stubName%>();
+      
+<%    // Loop associations of the hierarchy class
+      for ( Iterator ia = pimClass.getAttributes().iterator(); ia.hasNext(); ) {
+        JavaModelAttribute attr = (JavaModelAttribute)ia.next();
+        
+        if ( attr.hasStereotype("Id") ) {
+%>      <%=wsHierarchie%>.<%=attr.getSetter()%>(<%=arg%>.<%=attr.getGetter()%>());
+<%      }    
+      } // for
+%>      return <%=wsHierarchie%>;
+   }
+
+<%}
+
   // Handling simple (none hierarchy) dtos
   else {
      if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_EXCEPTION) )  {
