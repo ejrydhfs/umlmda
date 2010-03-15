@@ -42,7 +42,9 @@ import org.umlmda.uml.generator.webservices.*;
       WSModelPackage modelPackage = (WSModelPackage)ip.next();
       JavaModelPackage pimPackage = (JavaModelPackage)modelPackage.getPIMPackage();
       
-      genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT_FACTORY, pimPackage);
+      if ( pimPackage.getClasses(ModelStereotype.BUSINESS_OBJECT).size() > 0 ) {
+         genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT_FACTORY, pimPackage);
+      }   
    }
    for ( Iterator iter = classList.iterator(); iter.hasNext(); ) {
       WSModelClass modelClass = (WSModelClass)iter.next();
@@ -139,14 +141,16 @@ public class <%=getBaseName()%> {
    for ( Iterator iter = packageList.iterator(); iter.hasNext(); ++index) {
       WSModelPackage modelPackage = (WSModelPackage)iter.next();
       JavaModelPackage pimPackage = (JavaModelPackage)modelPackage.getPIMPackage();
-      String factoryInterface = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_FACTORY, pimPackage);
+      if ( pimPackage.getClasses(ModelStereotype.BUSINESS_OBJECT).size() > 0 ) {
+         String factoryInterface = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_FACTORY, pimPackage);
 
 %>   private <%=factoryInterface%> <%=getFactoryMember(modelPackage)%> = null;
 
    public void set<%=StringUtils.capitalize(pimPackage.getName())%>Factory(<%=factoryInterface%> factory) {
       <%=getFactoryMember(modelPackage)%> = factory;
    }
-<% }  
+<%    } // if
+   } // for  
 %>
 <% for ( Iterator ic = classList.iterator(); ic.hasNext(); ) {
       WSModelClass modelClass = (WSModelClass)ic.next();

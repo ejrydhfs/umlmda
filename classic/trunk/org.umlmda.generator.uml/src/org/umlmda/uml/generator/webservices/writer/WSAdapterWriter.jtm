@@ -63,7 +63,9 @@ import org.umlmda.uml.generator.java.*;
       WSModelPackage modelPackage = (WSModelPackage)ip.next();
       JavaModelPackage modelPIMPackage = modelPackage.getPIMPackage();
       
-      genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT_FACTORY_IMPL, modelPIMPackage);
+      if ( modelPIMPackage.getClasses(ModelStereotype.BUSINESS_OBJECT).size() > 0 ) {
+         genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT_FACTORY_IMPL, modelPIMPackage);
+      }
    }
    
 %>//@@Generated file, please edit UserSections only

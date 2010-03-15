@@ -8,8 +8,6 @@ package org.umlmda.uml.generator.webservices;
 
 import java.util.Iterator;
 
-import javax.jws.WebParam;
-
 import org.apache.commons.lang.StringUtils;
 import org.umlmda.generator.model.uml.GeneratorClass;
 import org.umlmda.model.uml.Model;
