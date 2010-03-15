@@ -40,7 +40,7 @@
    «registerImport("jee.EJBLocal", PIMClass)»
    «registerImport("jee.EJBRemote", PIMClass)»
    «registerImport("ws.ServicePort")»
-   «FOREACH schemaPackages() AS pkg»
+   «FOREACH schemaPackages().select(e|e.PIMPackage.getClasses("BusinessObject").size > 0) AS pkg»
       «registerImport("java.BusinessObjectFactoryImpl", pkg.PIMPackage)»
    «ENDFOREACH»
    «registeredImports()»
@@ -97,7 +97,7 @@
          throw new RuntimeException(e);
       }
       // Init accessor utilities
-      «FOREACH schemaPackages() AS pkg»
+      «FOREACH schemaPackages().select(e|e.PIMPackage.getClasses("BusinessObject").size > 0) AS pkg»
          utils.set«pkg.PIMPackage.name.toFirstUpper()»Factory(new «pkg.PIMPackage.getScopedName("java.BusinessObjectFactoryImpl")»());
       «ENDFOREACH»
       
