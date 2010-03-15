@@ -21,4 +21,6 @@
   <artefacts name="java.MetaFeaturesInterface" fileExtension="java" postfix="Features" namespacePostfix=".dto.meta" type="Velocity" writer="java/MetaFeaturesInterface.vm"/>
   <artefacts name="java.MetaClassInterface" fileExtension="java" postfix="Class" namespacePostfix=".dto.meta" type="Velocity" writer="java/MetaClassInterface.vm"/>
   <artefacts name="gwt.EnumerationCustomFieldSerializer" fileExtension="java" postfix="_CustomFieldSerializer" namespacePostfix=".dto" type="None" writer=""/>
+  <artefacts name="jee.EJBLocal" fileExtension="java" prefix="" namespacePostfix="" replacement="\u$1Local" replacementPattern="(.*)" type="None"/>
+  <artefacts name="jee.EJBRemote" fileExtension="java" prefix="" namespacePostfix="" replacement="\u$1Remote" replacementPattern="(.*)" type="None"/>
 </org.umlmda.generator.profile:Profile>

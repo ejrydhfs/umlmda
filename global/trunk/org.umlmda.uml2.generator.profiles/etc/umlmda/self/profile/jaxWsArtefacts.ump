@@ -11,7 +11,10 @@
   <artefacts name="ws.Package" namespacePostfix=".ws" type="None"/>
   <artefacts name="ws.Servlet" fileExtension="java" postfix="Servlet" namespacePostfix=".servlet" writer="org.umlmda.uml.generator.webservices.writer.WSServletWriter"/>
   <artefacts name="ws.ServletInterface" fileExtension="java" namespacePostfix=".servlet" type="Velocity" writer="webservice/ServletInterface.vm"/>
+  <artefacts name="jaxWs.WSPortLocal" description="Local ejb interface for jax ws service port" postfix="WSPortLocal" namespacePostfix=".ejb" type="None"/>
+  <artefacts name="jaxWs.WSPortEjb" description="Local ejb interface for jax ws service port" postfix="WSPortEJb" namespacePostfix=".ejb" type="None"/>
+  <artefacts name="jaxWs.WSAccessor" filename="" fileExtension="java" postfix="Accessor" namespacePostfix=".accessor" replacement="" replacementPattern="" type="None" writer=""/>
   <defaultProperties name="DateMapping" value="java.util.Date"/>
-  <defaultProperties name="soapWrapping" value="true"/>
+  <defaultProperties name="soapWrapping" value="false"/>
   <basedOn href="javaArtefacts.ump#javaArtefacts"/>
 </org.umlmda.generator.profile:Profile>
