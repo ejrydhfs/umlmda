@@ -14,7 +14,7 @@ extension java::UMLMDA;
 
 cached String tablenamePrefix(ModelPackage package) :
 	package.getStereotypeProperty("tablenamePrefix", "---") != "---" 
-		? package.getStereotypeProperty("tablenamePrefix")
+		? package.getStereotypeProperty("tablenamePrefix").trim()
 		: (package.package != null
 			? package.package.tablenamePrefix()
 			: "")
