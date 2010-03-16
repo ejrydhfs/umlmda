@@ -84,9 +84,11 @@ cached String tablename(JavaModelClass class, String prefix) :
 
 // Construct the table name for an entity, eventually adding the packages prefix to it. 
 cached String tablename(JavaModelClass class) :
+    let packagePrefix = class.package.tablenamePrefix() :
+    
 	class.getStereotypeProperty("table", "---") != "---" 
-		? class.getStereotypeProperty("table")
-		: class.package.tablenamePrefix() + class.name 
+		? packagePrefix + class.getStereotypeProperty("table").trim()
+		: packagePrefix + class.name 
 ;
 
 // Gets the current inheritance mapping strategy for tables from the current or the next defining super class.
