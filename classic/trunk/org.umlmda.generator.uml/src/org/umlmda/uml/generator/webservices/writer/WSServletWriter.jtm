@@ -64,7 +64,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NEVER)
-@WebService(name = "<%=genClass.getName()%>", targetNamespace = "<%=genPackage.getNamespace()%>")
+@WebService(name = "<%=genClass.getName()%>", serviceName="<%=genClass.getName()%>", targetNamespace = "<%=genPackage.getNamespace()%>")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public class <%=getBaseName()%> implements <%=genClass.getScopedName("jaxWs.WSPortLocal")%> {
    @EJB (beanInterface=<%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, pimClass)%>Local.class)

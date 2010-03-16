@@ -87,21 +87,34 @@ import org.umlmda.runtime.webservice.WebserviceUtils;
 public class <%=getBaseName()%> {
    private final Map registry = new HashMap();
    private List resolvers = new ArrayList();
-   private Map<Class, Map<String, Object>> resolveRegistry = new IdentityHashMap<Class, Map<String,Object>>();
-   
-   private Object getObject(Class<?> clazz, String id) {
-      Map<String, Object> idMap = resolveRegistry.get(clazz);
+   private Map<String, Map<Class<?>, Object>> resolveRegistry = new IdentityHashMap<String, Map<Class<?>,Object>>();
+ 
+   private <T> T getObject(Class<T> clazz, String id) {
+      Map<Class<?>, Object> idMap = resolveRegistry.get(id);
+      Object reference = null;
       
-      return idMap.get(id);
+      if ( idMap != null ) {
+         for ( Map.Entry<Class<?>, Object> classMapEntry : idMap.entrySet() ) {
+            if ( clazz.isAssignableFrom(classMapEntry.getValue().getClass()) ) {
+               if ( reference == null ) {
+                  reference = classMapEntry.getValue();
+               }
+               else {
+                  throw new IllegalStateException("Found more than one instance to resolve id "+id+" for class "+clazz);
+               }
+            }
+         }
+      }
+      return (T) reference;
    }
    
-   private void registerObject(Class clazz, Object object, String id) {
-      Map<String, Object> idMap = resolveRegistry.get(clazz);
+   private void registerObject(Object object, String id) {
+      Map<Class<?>, Object> idMap = resolveRegistry.get(id);
       if(idMap == null) {
-         idMap = new HashMap<String, Object>();         
-         resolveRegistry.put(clazz, idMap);
+         idMap = new HashMap<Class<?>, Object>();         
+         resolveRegistry.put(id, idMap);
       }
-      idMap.put(id, object);
+      idMap.put(object.getClass(), object);
    }
    
    private abstract class ResolveReference {

@@ -211,16 +211,16 @@
          throw new IllegalArgumentException("None optional attribute <%=attribute.getQualifiedName()%> is null");
       }
 <%    } 
-      if ( attribute.isMultivalue() ) {   
+      if ( attribute.isMultivalue() ) {
       %>
-      if ( <%=attribute.getConvertToWs()%> != null ) { 
+      if ( <%=attribute.getConvertToWs()%> != null ) {
          for (int jj=0; jj<<%=attribute.getConvertToWs()%>.length; ++jj) {
            to.<%=attribute.getGetter()%>().add(<%=attribute.getConvertToWs()%>[jj]);
-         } 
-      }    
-<%    } else {       
+         }
+      }
+<%    } else {
 %>      to.<%=attribute.getSetter()%>(<%=attribute.getConvertToWs()%>);
-<%    } 
+<%    }
    } // for  
    // Associations
    for ( Iterator ia = modelClass.getAssociations().iterator(); ia.hasNext(); ) {
@@ -229,7 +229,6 @@
       String assocName = StringUtils.capitalize(association.getName());
       String assocType = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, assocClass.getPIMClass());
       String assocWsType = genClass.getScopedName(WSArtefacts.WS_STUB, assocClass);
-
       if ( association.isComposition() ) {
          if ( association.isMultiple() ) {
 %>      for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ) {
@@ -242,36 +241,29 @@
       }
       else {
          if ( association.isMultiple() ) {
-%>      register(new ResolveReference() {
-         void resolve() {
-            for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ) {
+%>       for ( Iterator i=from.<%=association.getGetter()%>().iterator(); i.hasNext(); ) {
                <%=assocType%> from<%=assocName%> = (<%=assocType%>) i.next();
-               <%=assocWsType%> <%=assocName%>Ws = (<%=assocWsType%>)lookup(from<%=assocName%>);
-            
-               if ( <%=assocName%>Ws == null ) 
-                  <%=assocName%>Ws = create<%=assocClass.getName()%>(from<%=assocName%>);
-               to.get<%=assocName%>().add(<%=assocName%>Ws);
+                           
+               if ( from<%=assocName%> != null ) { 
+      				to.get<%=assocName%>().add(create<%=assocClass.getName()%>(from<%=assocName%>));
+               }
             }
-         }   
-     });
-<%       }
-         else {
-%>      register(new ResolveReference() {
-         void resolve() {
-            <%=assocWsType%> <%=assocName%>Ws = (<%=assocWsType%>)lookup(from.get<%=assocName%>());
-            
-            if ( <%=assocName%>Ws == null ) 
-              <%=assocName%>Ws = create<%=assocClass.getName()%>(from.get<%=assocName%>());
-            to.set<%=assocName%>(<%=assocName%>Ws);
-         }
-      });      
+<%       } else {
+%>      if ( from.get<%=assocName%>() != null ) {
+		   to.set<%=assocName%>(create<%=assocClass.getName()%>(from.get<%=assocName%>()));
+      }
 <%       }
       }
    }
 %>   }
 
 <% }
-
+   JavaModelAttribute pimTargetAttributeId = null;
+   for ( Iterator iterator = pimClass.getAttributes(true).iterator(); iterator.hasNext(); ) {
+      JavaModelAttribute attr = (JavaModelAttribute) iterator.next();
+      if(attr.hasStereotype("Id"))
+            pimTargetAttributeId = attr;
+   }
    if ( modelClass.isAbstract() == false ) {
 %>   // create <%=pimClass.getName()%> interface DTO from web service DTO
    public <%=interfaceName%> create<%=pimClass.getName()%>(<%=stubName%> src) {
@@ -283,11 +275,13 @@
 %>            dest = new <%=interfaceName%>();
 <%    } else {
 %>            dest = <%=getFactoryMember(modelClass.getPackage())%>.create<%=pimClass.getName()%>();
-<%    } %>
-      
+<%    } %>      
             registry.put(src, dest);
             copy<%=pimClass.getName()%>(src, dest);
-         }   
+<%          if(pimTargetAttributeId != null) {
+%>            registerObject(dest, dest.<%=pimTargetAttributeId.getGetter()%>());
+<% } 
+%>         }   
          return dest;
       }
       else {
@@ -312,7 +306,7 @@
       else {
          return null;
       }
-   }      
+   }
 <%    } // if
    }
 %>   // copy web service DTO to interface DTO
@@ -339,10 +333,17 @@
       WSModelAssociation assoc = (WSModelAssociation)ia.next();
       WSModelClass assocClass = (WSModelClass)assoc.getTarget();
       ModelAssociation pimAssoc = assoc.getPIMAssociation();
-      String pimTargetClass = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, (JavaModelClass)pimAssoc.getTarget());
+      JavaModelClass pimTarget = (JavaModelClass)pimAssoc.getTarget();
+      pimTargetAttributeId = null;
+      for ( Iterator iterator = pimTarget.getAttributes(true).iterator(); iterator.hasNext(); ) {
+      	JavaModelAttribute attr = (JavaModelAttribute) iterator.next();
+         if(attr.hasStereotype("Id"))
+         	pimTargetAttributeId = attr;
+      }
+      String pimTargetClass = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, pimTarget);
       JavaModelClass assocPIMClass = assocClass.getPIMClass();
       String assocName = StringUtils.capitalize(assoc.getName());
-
+		if ( assoc.isComposition() ) {
       if ( assoc.isMultiple() == false ) {
          if ( assoc.isOptional() ) {
 %>      if ( from.get<%=assocName%>() != null )
@@ -355,6 +356,32 @@
          }
       }
 <%    } // else
+		} 
+		else { // assoc ist Association
+		if(pimTargetAttributeId != null) {
+		if ( assoc.isMultiple() == false ) {
+%>		register(new ResolveReference() {
+
+       @Override void resolve() {
+	    if ( from.get<%=assocName%>() != null) {
+         to.set<%=assocName%>(getObject(<%=pimTargetClass%>.class,from.get<%=assocName%>().<%=pimTargetAttributeId.getGetter()%>()));
+        } else {
+         to.set<%=assocName%>(null);
+        }
+       }});
+<%    } else {
+%>      if ( from.get<%=assocName%>() != null ) {
+         for (int i = 0; i < from.get<%=assocName%>().size(); i++) {
+              register(new ResolveReference() {
+
+              @Override void resolve() {
+                to.<%=assoc.getGetter()%>().add(getObject(<%=pimTargetClass%>.class,((<%=pimTargetClass%>)from.get<%=assocName%>().get(i)).<%=pimTargetAttributeId.getGetter()%>())));
+        }});
+}
+      }
+<%  	}
+		}
+		}
    } // for
 %>   }   
 <%}
