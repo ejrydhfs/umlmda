@@ -124,7 +124,7 @@ public class WSPSMClassReferenceCreatorVisitor extends DefaultModelVisitor {
          wsClassImpl.setAbstract(false);
          wsClassImpl.getStereotypes().add(WSStereotypes.WEB_SERVICE_DTO_REFERENCE);
          wsClassImpl.getStereotypes().add(WSStereotypes.WEB_SERVICE_OBJECT);
-         for ( Iterator iterator = ((WSModelClass)modelClass).getPIMClass().getAttributes().iterator(); iterator.hasNext(); ) {
+         for ( Iterator iterator = ((WSModelClass)modelClass).getPIMClass().getAttributes(true).iterator(); iterator.hasNext(); ) {
             ModelAttribute attr = (ModelAttribute) iterator.next();
 
             if ( attr.hasStereotype("Id")) {
@@ -142,7 +142,5 @@ public class WSPSMClassReferenceCreatorVisitor extends DefaultModelVisitor {
 
          return wsClassImpl;
       }
-   }
-
-   
+   }   
 }
