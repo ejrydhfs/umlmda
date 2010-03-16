@@ -1,0 +1,140 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Element»
+«EXTENSION org::umlmda::uml::java::Features»
+
+«EXTENSION org::openarchitectureware::util::stdlib::io»
+«EXTENSION org::openarchitectureware::util::stdlib::issues»
+
+
+«DEFINE dump FOR JavaModel»
+   «ERROR "#############################################################################"»
+   «ERROR "##  Dumping model "+name»
+   «ERROR "#############################################################################"»
+   «FILE name+".dump"»
+Model «name»
+«EXPAND dump FOREACH packages.typeSelect(ModelPackage).sortBy( e | e.qualifiedName ) -»
+   «ENDFILE»
+«ENDDEFINE»
+
+
+«DEFINE dump FOR JavaModelPackage»
+  Package «name»
+«EXPAND dump FOREACH classes.typeSelect(ModelClass).sortBy( e | e.name ) -»
+«ENDDEFINE»
+
+
+«DEFINE dump FOR JavaBusinessObject»
+    Class «name»«EXPAND dumpClass -»
+«ENDDEFINE»
+
+
+«DEFINE dump FOR JavaBusinessComponent»
+  Package «name»
+«EXPAND dump FOREACH classes.typeSelect(ModelClass).sortBy( e | e.name ) -»
+«ENDDEFINE»
+
+
+«DEFINE dump FOR JavaModelClass»
+    Class «name» (native)«EXPAND dumpClass -»
+«ENDDEFINE»
+
+
+«DEFINE dump FOR ModelElement»
+	«ERROR "dump should not be called on <<Object>>: "+name+" ("+metaType+")"»
+«ENDDEFINE»
+
+
+«REM» Class details «ENDREM»
+«DEFINE dumpClass FOR JavaModelClass»
+«IF abstract -»
+      abstract
+«ENDIF -»
+«EXPAND dumpSuperclasses -»
+«EXPAND dumpStereotypes('     ') -»
+     + Attributes
+«EXPAND dump FOREACH attributes.typeSelect(ModelAttribute).sortBy( e | e.name ) -»
+     + Operations
+«EXPAND dump FOREACH methods.typeSelect(ModelMethod).sortBy( e | e.name ) -»
+     + Relations
+«EXPAND dump FOREACH associations.typeSelect(ModelAssociation).sortBy(e|e.target.name) -»
+«ENDDEFINE»
+
+
+«REM» Superclasses of a model class«ENDREM»
+«DEFINE dumpSuperclasses FOR JavaModelClass»«IF this.superClasses.size>0 -»     + Superclasses
+«EXPAND dumpString('      ') FOREACH this.superClasses.typeSelect(ModelClass).sortBy( sc | sc.name ).collect( sc| sc.name ) -»
+«ENDIF -»
+«IF implementedInterfaces.size>0»     + Interfaces
+«EXPAND dumpString('      ') FOREACH implementedInterfaces.typeSelect(ModelClass).sortBy( sc | sc.name ).collect( sc| sc.name ) -»
+«ENDIF -»
+«ENDDEFINE»
+
+
+«REM» Attribute details «ENDREM»
+«DEFINE dump FOR ModelAttribute»        «name» : «dataType.name»
+«IF derived -»
+         derived
+«ENDIF -»
+«IF readOnly -»
+         readOnly
+«ENDIF -»
+«IF transient -»
+         transient
+«ENDIF -»
+«IF stereotypes.size>0 -»
+«EXPAND dumpStereotypes('         ')»«ENDIF -»
+«ENDDEFINE»
+
+
+«REM» Method details «ENDREM»
+«DEFINE dump FOR ModelMethod»        «name» («parameters.typeSelect(ModelParameter).name») : «returnType.name»
+«IF stereotypes.size>0 -»
+«EXPAND dumpStereotypes('         ')»«ENDIF -»
+«ENDDEFINE»
+
+
+«REM» Association details «ENDREM»
+«DEFINE dump FOR ModelAssociation»        «name»: «source.name» («reverse.multiplicity») «IF ! navigatableToTarget»<«ENDIF»-«IF ! navigatableToSource»>«ENDIF» «target.name» («multiplicity»)
+«IF aggregation -»
+         aggregation
+«ENDIF -»
+«IF composition -»
+         composition
+«ENDIF -»
+«IF derived -»
+         derived
+«ENDIF -»
+«IF ordered -»
+         ordered
+«ENDIF -»
+«IF readOnly -»
+         readOnly
+«ENDIF -»
+«IF stereotypes.size>0 -»
+«EXPAND dumpStereotypes('         ')»«ENDIF -»
+«ENDDEFINE»
+
+
+
+«REM» Dumps applied stereotypes and their properties of a model element«ENDREM»
+«DEFINE dumpStereotypes(String indent) FOR JavaModelElement»«IF stereotypes.size>0 -»«indent»+ Stereotypes
+«EXPAND dumpString(indent+' ') FOREACH stereotypes.typeSelect(String).sortBy( s | s ) -»
+«EXPAND dumpStereotypeProperties(indent)»«ENDIF -»
+«ENDDEFINE»
+
+
+«REM» Dumps appliead stereotype properties of a model element«ENDREM»
+«DEFINE dumpStereotypeProperties(String indent) FOR JavaModelElement»«IF taggedValues.size()>0 -»«indent»+ Stereotype-Properties
+«EXPAND dumpString(indent+' ') FOREACH taggedValues.toString().subString(1,taggedValues.toString().length-1).trim().split(", ").sortBy( s | s )»«ENDIF -»
+«ENDDEFINE»
+
+
+«REM» Well, dump a string... «ENDREM»      
+«DEFINE dumpString(String indent) FOR String»«indent»  «this»
+«ENDDEFINE»
+
