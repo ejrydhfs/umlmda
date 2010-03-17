@@ -79,7 +79,7 @@
       <%=stubName%> <%=wsHierarchie%> = new <%=stubName%>();
       
 <%    // Loop associations of the hierarchy class
-      for ( Iterator ia = pimClass.getAttributes().iterator(); ia.hasNext(); ) {
+      for ( Iterator ia = pimClass.getAttributes(true).iterator(); ia.hasNext(); ) {
         JavaModelAttribute attr = (JavaModelAttribute)ia.next();
         
         if ( attr.hasStereotype("Id") ) {
