@@ -4,51 +4,56 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.uml2.uml.Model;
 
-public class ModelUtils {
-	private static Logger logger = Logger.getLogger(ModelUtils.class);
-	private static HashMap<String,List<Model>> processMap = new HashMap<String,List<Model>>();
-	
-	public static void processLater(Model modelToProcess, String context) {
-		List<Model> processList = processMap.get(context);
-		
-		if ( processList == null ) {
-			processList = new ArrayList<Model>();
-			processMap.put(context, processList);
-		}
-		
-		if (modelToProcess != null)
-		   processList.add(modelToProcess);
-	}
+/**
+ * Utility and convenience methods for the UML2 class {@link Model}.
+ */
+public class ModelUtils
+{
+   private static HashMap<String, List<Model>> processMap = new HashMap<String, List<Model>>();
 
-	/**
-	 * removes the given model from the list of models to be process within the context
-	 * 
-	 * NOTE: the extension is declared as cached and
-	 *       will call processLater directly before calling this method
-	 *       So the model cannot be marked to be processed again for this context
-	 * 
-	 * @param modelToProcess
-	 * @param context
-	 */
-	public static void markAsProcessed(Model modelToProcess, String context) {
-		List<Model> processList = processMap.get(context);
-		if (processList != null)
-		    processList.remove(modelToProcess);
-	}
+   /**
+    * Marks a model as "to be processed later".
+    * 
+    * @param modelToProcess
+    *           Model to be processed later on
+    * @param context
+    *           Context/Scope name for later access.
+    */
+   public static void processLater(Model modelToProcess, String context) {
+      List<Model> processList = processMap.get(context);
 
-	public static List collectedModels(String context) {
-		List<Model> processesToReturn = new ArrayList<Model>();
-		List<Model> processList = processMap.get(context);
+      if ( processList == null ) {
+         processList = new ArrayList<Model>();
+         processMap.put(context, processList);
+      }
 
-		if (processList != null){
-			processesToReturn.addAll(processList);
-		}
-		return processList; 
-	}
+      if ( modelToProcess != null )
+         processList.add(modelToProcess);
+   }
 
-	
+   /**
+    * Removes the given model from the list of models to be process within the context<br />
+    * NOTE: the extension is declared as cached and will call {@link ModelUtils} directly before calling this method. So the model
+    * cannot be marked to be processed again for this context.
+    */
+   public static void markAsProcessed(Model modelToProcess, String context) {
+      List<Model> processList = processMap.get(context);
+      if ( processList != null )
+         processList.remove(modelToProcess);
+   }
+
+   /**
+    * Returns all models that were marked as "to be processed later" for the given scope.
+    */
+   public static List<Model> collectedModels(String context) {
+      List<Model> processesToReturn = new ArrayList<Model>();
+      List<Model> processList = processMap.get(context);
+      if ( processList != null ) {
+         processesToReturn.addAll(processList);
+      }
+      return processList;
+   }
 
 }
