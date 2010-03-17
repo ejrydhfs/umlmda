@@ -12,22 +12,21 @@ import org.umlmda.generator.profile.Artefact;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class GeneratorUtils {
+public class GeneratorUtils
+{
 
    public static String getGeneratedName(GeneratorModelElement genElement, String artefactType) {
       Artefact artefact = genElement.getGeneratorModel().getArtefact(artefactType, genElement);
 
       if ( artefact == null ) {
-         throw new RuntimeException("No artefact with name "+artefactType+" found");
+         throw new RuntimeException("No artefact with name " + artefactType + " found");
       }
-      
+
       if ( StringUtils.isNotEmpty(artefact.getReplacementPattern()) && StringUtils.isNotEmpty(artefact.getReplacement()) ) {
          try {
-            return StringUtil.regexReplacement(genElement.getReplacementName(), artefact.getReplacementPattern(), artefact.getReplacement());
+            return StringUtil.regexReplacement(genElement.getReplacementName(), artefact.getReplacementPattern(), artefact
+                  .getReplacement());
          }
          catch (StringUtil.PatternNotMatchException e) {
             return getGeneratedPrePostfixName(genElement, artefact);
@@ -45,15 +44,14 @@ public class GeneratorUtils {
     */
    private static String getGeneratedPrePostfixName(GeneratorModelElement genElement, Artefact artefact) {
       StringBuffer buffer = new StringBuffer();
-      
+
       if ( StringUtils.isNotEmpty(artefact.getPrefix()) )
          buffer.append(artefact.getPrefix());
       buffer.append(genElement.getName());
       if ( StringUtils.isNotEmpty(artefact.getPostfix()) )
          buffer.append(artefact.getPostfix());
-      
+
       return buffer.toString();
    }
-	
-	
+
 }
