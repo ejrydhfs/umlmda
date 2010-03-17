@@ -22,5 +22,5 @@ cached boolean isSDOServerOnly(ModelElement feature) :
 ;		
 
 Void logStereotypeProperties(ModelElement feature) :
-    JAVA org.umlmda.oaw.generator.util.ElementUtils.logStereotypeProperties(org.umlmda.model.uml.ModelElement)
+    JAVA org.umlmda.oaw.generator.util.ModelElementUtils.logStereotypeProperties(org.umlmda.model.uml.ModelElement)
 ;	

@@ -8,7 +8,7 @@ import org::umlmda::oaw::generator::util;
 import org::umlmda::oaw::generator::model::java;
 
 String generatedName (GeneratorModelElement elem, String artefact) : 
-  JAVA org.umlmda.oaw.generator.util.ModelUtils.getGeneratedName(org.umlmda.generator.model.uml.GeneratorModelElement, java.lang.String);
+  JAVA org.umlmda.oaw.generator.util.GeneratorModelElementUtils.getGeneratedName(org.umlmda.generator.model.uml.GeneratorModelElement, java.lang.String);
 
 boolean hasOwnedPKeyAttributes(JavaModelClass cls) :
   cls.getOwnedKeyAttributes(false).isEmpty == false; 
@@ -92,6 +92,6 @@ cached List[JavaModelClass] modeledSuperClasses(ModelClass class) :
 
 // Filters the given attribute list by name, returning only those attributes with unique names.
 cached List[ModelAttribute] filterDuplicateAttributesByName(ModelClass class, List[ModelAttribute] attributes) : 
-  JAVA org.umlmda.oaw.generator.util.ElementUtils.filterDuplicateAttributesByName(org.umlmda.model.uml.ModelClass, java.util.List)
+  JAVA org.umlmda.oaw.generator.util.ModelElementUtils.filterDuplicateAttributesByName(org.umlmda.model.uml.ModelClass, java.util.List)
 ;
 
