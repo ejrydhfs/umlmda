@@ -1,12 +1,27 @@
-
 import uml;
 
 extension org::openarchitectureware::util::stdlib::io;   
 
-
+// Returns the applicable stereotypes for the given model element.
 List[Stereotype] applicableStereotypes(uml::Element element) :
     JAVA org.umlmda.oaw.util.uml2.StereotypeUtils.getApplicableStereotypes(org.eclipse.uml2.uml.Element)
 ;
+
+// Get the stereotype property value at the given model element.
+Object getStereotypeProperty ( uml::Element element, String stereotypeName, String propertyName ) :
+    JAVA org.umlmda.oaw.util.uml2.StereotypeUtils.getStereotypeProperty( org.eclipse.uml2.uml.Element, java.lang.String, java.lang.String )
+;
+
+// Get the stereotype property value at the given model element, with default value if unset.
+Object getStereotypeProperty ( uml::Element element, String stereotypeName, String propertyName, Object defaultValue ) :
+    JAVA org.umlmda.oaw.util.uml2.StereotypeUtils.getStereotypeProperty( org.eclipse.uml2.uml.Element, java.lang.String, java.lang.String, java.lang.Object )
+;
+
+// Set the stereotype property value at the given model element.
+Object setStereotypeProperty ( uml::Element element, String stereotypeName, String propertyName, Object value ) :
+    JAVA org.umlmda.oaw.util.uml2.StereotypeUtils.setStereotypeProperty( org.eclipse.uml2.uml.Element, java.lang.String, java.lang.String, java.lang.Object )
+;
+
 
 // ============
 // Common stuff
