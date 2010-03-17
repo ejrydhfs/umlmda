@@ -1,0 +1,36 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelAssociation
+ */
+import java::util;
+import org::umlmda::generator::model::uml;
+import org::umlmda::profile;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+
+cached Boolean isColumnNameDefined(ModelAttribute attr) : 
+   attr.getStereotypeProperty("column", "").trim().length > 0
+;
+
+cached String columnName(ModelAttribute attr) :
+    attr.columnName('')
+;
+
+cached String columnName(ModelAttribute attr, String prefix) : 
+    let columnName = attr.getStereotypeProperty("column", attr.name).trim() :
+    prefix + columnName
+;
+
+
+
+cached Boolean isDomainAttribute(ModelAttribute attr) :
+    attr.getStereotypeProperty("domainAttribute", "true") == "true"
+;
+
+cached Boolean isTechnicalAttribute(ModelAttribute attr) :
+    attr.isDomainAttribute() == false
+;
+     

@@ -1,0 +1,5 @@
+
+
+Set[Object] toSet(List[Object] objects) :
+    JAVA org.umlmda.oaw.generator.util.CollectionUtils.toSet(java.util.Collection)
+;    
