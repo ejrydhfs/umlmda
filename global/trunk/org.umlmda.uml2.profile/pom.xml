@@ -43,6 +43,17 @@
                               <include name="UMLMDASDOProfile.epx" />
                            </fileset>
                         </zip>
+                        <zip destfile="${project.build.directory}/umlmda-std-uml2-profiles.zip">
+                           <fileset dir="${basedir}/profiles/uml2">
+                              <include name="UMLMDAProfile.profile.uml" />
+                              <include name="UMLMDATypes.uml" />
+                           </fileset>
+                        </zip>
+                        <zip destfile="${project.build.directory}/umlmda-sdo-uml2-profiles.zip">
+                           <fileset dir="${basedir}/profiles/UML2">
+                              <include name="UMLMDASDOProfile.profile.uml" />
+                           </fileset>
+                        </zip>
                      </tasks>
                   </configuration>
                   <goals>
@@ -77,6 +88,20 @@
                            </file>
                            <type>zip</type>
                            <classifier>sdo</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/umlmda-std-uml2-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>std-uml2</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/umlmda-sdo-uml2-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>sdo-uml2</classifier>
                         </artifact>
                      </artifacts>
                   </configuration>
