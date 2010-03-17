@@ -52,6 +52,11 @@
                               <include name="UMLMDAServiceProfile.epx" />
                            </fileset>
                         </zip>
+                        <zip destfile="${project.build.directory}/umlmda-uml2-profiles.zip">
+                           <fileset dir="${basedir}/profiles/uml2">
+                              <include name="*.profile.uml" />
+                           </fileset>
+                        </zip>
                      </tasks>
                   </configuration>
                   <goals>
@@ -100,6 +105,13 @@
                            </file>
                            <type>zip</type>
                            <classifier>service</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/umlmda-uml2-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>uml2</classifier>
                         </artifact>
                      </artifacts>
                   </configuration>

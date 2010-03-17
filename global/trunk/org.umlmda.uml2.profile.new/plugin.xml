@@ -50,6 +50,10 @@
             name="UMLMDA4_PROFILE"
             path="profiles"
             plugin="org.umlmda.uml2.profile.new"/>
+   </extension>
+   <extension
+         id="UMLMDA4.templates.spathmaps"
+         point="org.eclipse.gmf.runtime.emf.core.Pathmaps">
       <pathmap
             path="templates"
             name="UMLMDA4_TEMPLATES"
