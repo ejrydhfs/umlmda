@@ -52,7 +52,7 @@ Model «name»
 «REM» Class details «ENDREM»
 «DEFINE dumpClass FOR JavaModelClass»
 «IF abstract -»
-      abstract
+     abstract
 «ENDIF -»
 «EXPAND dumpSuperclasses -»
 «EXPAND dumpStereotypes('     ') -»
