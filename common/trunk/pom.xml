@@ -7,7 +7,7 @@
    </parent>
 
    <artifactId>org.umlmda.common</artifactId>
-   <version>3.27-SNAPSHOT</version>
+   <version>3.27</version>
    <packaging>pom</packaging>
    <name>UMLMDA common</name>
    <description>UMLMDA maven project for umlmda common modules.</description>
@@ -31,8 +31,8 @@
    </modules>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/common/trunk</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/common/trunk</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/common/releases/org.umlmda.common-3.27</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/common/releases/org.umlmda.common-3.27</developerConnection>
    </scm>
 
    <dependencyManagement>
@@ -218,42 +218,42 @@
          <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.crazybeans</artifactId>
-            <version>3.27-SNAPSHOT</version>
+            <version>3.27</version>
          </dependency>
          <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.generator.model</artifactId>
-            <version>3.27-SNAPSHOT</version>
+            <version>3.27</version>
          </dependency>
          <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.generator.profile</artifactId>
-            <version>3.27-SNAPSHOT</version>
+            <version>3.27</version>
          </dependency>
          <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.generator.uml.psm</artifactId>
-            <version>3.27-SNAPSHOT</version>
+            <version>3.27</version>
          </dependency>
          <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.model.profile</artifactId>
-            <version>3.27-SNAPSHOT</version>
+            <version>3.27</version>
          </dependency>
          <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.umlmodel</artifactId>
-            <version>3.27-SNAPSHOT</version>
+            <version>3.27</version>
          </dependency>
          <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.umlmodel.uml2</artifactId>
-            <version>3.27-SNAPSHOT</version>
+            <version>3.27</version>
          </dependency>
          <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>org.umlmda.umlmodel.nsuml</artifactId>
-            <version>3.27-SNAPSHOT</version>
+            <version>3.27</version>
          </dependency>
 
       </dependencies>
