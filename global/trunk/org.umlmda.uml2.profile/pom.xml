@@ -50,7 +50,7 @@
                            </fileset>
                         </zip>
                         <zip destfile="${project.build.directory}/umlmda-sdo-uml2-profiles.zip">
-                           <fileset dir="${basedir}/profiles/UML2">
+                           <fileset dir="${basedir}/profiles/uml2">
                               <include name="UMLMDASDOProfile.profile.uml" />
                            </fileset>
                         </zip>
