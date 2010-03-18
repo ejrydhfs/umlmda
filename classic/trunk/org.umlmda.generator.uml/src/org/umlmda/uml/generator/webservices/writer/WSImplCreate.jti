@@ -14,7 +14,12 @@
   String arg = StringUtils.uncapitalize(pimClass.getName());
   String interfaceName = "";
   String stubName = genClass.getScopedName(WSArtefacts.WS_STUB, modelClass);
- 
+  JavaModelAttribute pimTargetAttributeId = null;
+  for ( Iterator iterator = pimClass.getAttributes(true).iterator(); iterator.hasNext(); ) {
+      JavaModelAttribute attr = (JavaModelAttribute) iterator.next();
+      if(attr.hasStereotype("Id"))
+            pimTargetAttributeId = attr;
+  }
   if ( pimClass.hasStereotype(ModelStereotype.BUSINESS_EXCEPTION) )
     interfaceName = genClass.getScopedName(JavaArtefacts.BUSINESS_EXCEPTION, pimClass);
   else if ( pimClass.hasStereotype(ModelStereotype.ENUMERATION) )
@@ -258,12 +263,6 @@
 %>   }
 
 <% }
-   JavaModelAttribute pimTargetAttributeId = null;
-   for ( Iterator iterator = pimClass.getAttributes(true).iterator(); iterator.hasNext(); ) {
-      JavaModelAttribute attr = (JavaModelAttribute) iterator.next();
-      if(attr.hasStereotype("Id"))
-            pimTargetAttributeId = attr;
-   }
    if ( modelClass.isAbstract() == false ) {
 %>   // create <%=pimClass.getName()%> interface DTO from web service DTO
    public <%=interfaceName%> create<%=pimClass.getName()%>(<%=stubName%> src) {
@@ -278,9 +277,9 @@
 <%    } %>      
             registry.put(src, dest);
             copy<%=pimClass.getName()%>(src, dest);
-<%          if(pimTargetAttributeId != null) {
+<%         if(pimTargetAttributeId != null) {
 %>            registerObject(dest, dest.<%=pimTargetAttributeId.getGetter()%>());
-<% } 
+<%   } 
 %>         }   
          return dest;
       }
@@ -301,6 +300,7 @@
       
          registry.put(src, dest);
          copy<%=pimClass.getName()%>(src, dest);
+
          return dest;
       }
       else {

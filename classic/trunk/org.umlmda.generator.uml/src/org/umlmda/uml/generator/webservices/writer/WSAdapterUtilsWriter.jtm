@@ -78,6 +78,8 @@ import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+
 import org.apache.commons.lang.StringUtils;
 
 import org.umlmda.runtime.webservice.WebserviceUtils;
@@ -87,7 +89,7 @@ import org.umlmda.runtime.webservice.WebserviceUtils;
 public class <%=getBaseName()%> {
    private final Map registry = new HashMap();
    private List resolvers = new ArrayList();
-   private Map<String, Map<Class<?>, Object>> resolveRegistry = new IdentityHashMap<String, Map<Class<?>,Object>>();
+   private Map<String, Map<Class<?>, Object>> resolveRegistry = new HashMap<String, Map<Class<?>,Object>>();
  
    private <T> T getObject(Class<T> clazz, String id) {
       Map<Class<?>, Object> idMap = resolveRegistry.get(id);
@@ -105,16 +107,20 @@ public class <%=getBaseName()%> {
             }
          }
       }
+      if(reference == null && id != null) 
+         throw new NoSuchElementException("No instance to resolve id "+id+" for class "+clazz+" found!");
+         
       return (T) reference;
    }
    
    private void registerObject(Object object, String id) {
       Map<Class<?>, Object> idMap = resolveRegistry.get(id);
       if(idMap == null) {
-         idMap = new HashMap<Class<?>, Object>();         
+         idMap = new IdentityHashMap<Class<?>, Object>();     
+         idMap.put(object.getClass(), object);    
          resolveRegistry.put(id, idMap);
-      }
-      idMap.put(object.getClass(), object);
+      } else
+         idMap.put(object.getClass(), object);
    }
    
    private abstract class ResolveReference {
