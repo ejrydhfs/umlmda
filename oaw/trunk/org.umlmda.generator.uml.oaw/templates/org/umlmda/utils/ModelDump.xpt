@@ -22,8 +22,21 @@ Model «name»
 «ENDDEFINE»
 
 
+«DEFINE dump FOR ModelElement»
+   «ERROR "dump should not be called on <<Object>>: "+name+" ("+metaType+")"»
+«ENDDEFINE»
+
+
 «DEFINE dump FOR JavaModelPackage»
   Package «name»
+«EXPAND dumpStereotypes('   ') -»
+«EXPAND dump FOREACH classes.typeSelect(ModelClass).sortBy( e | e.name ) -»
+«ENDDEFINE»
+
+
+«DEFINE dump FOR JavaBusinessComponent»
+  Package «name»
+«EXPAND dumpStereotypes('   ') -»
 «EXPAND dump FOREACH classes.typeSelect(ModelClass).sortBy( e | e.name ) -»
 «ENDDEFINE»
 
@@ -33,19 +46,8 @@ Model «name»
 «ENDDEFINE»
 
 
-«DEFINE dump FOR JavaBusinessComponent»
-  Package «name»
-«EXPAND dump FOREACH classes.typeSelect(ModelClass).sortBy( e | e.name ) -»
-«ENDDEFINE»
-
-
 «DEFINE dump FOR JavaModelClass»
     Class «name» (native)«EXPAND dumpClass -»
-«ENDDEFINE»
-
-
-«DEFINE dump FOR ModelElement»
-	«ERROR "dump should not be called on <<Object>>: "+name+" ("+metaType+")"»
 «ENDDEFINE»
 
 
