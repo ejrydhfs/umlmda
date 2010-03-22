@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         id="UMLMDA.uml2.profile.new"
+         name="UMLMDA 4.x UML2 Profile"
+         point="com.ibm.xtools.uml.msl.UMLProfiles">
+      <UMLProfile
+            name="UMLMDA RSM/RSA Common Modelling Profile"
+            path="pathmap://UMLMDA4_PROFILE/UMLMDACommonProfile.epx"
+            visible="true"/>
+      <UMLProfile
+            name="UMLMDA RSM/RSA Domain Modelling Profile"
+            path="pathmap://UMLMDA4_PROFILE/UMLMDADomainProfile.epx"
+            visible="true"/>
+      <UMLProfile
+            name="UMLMDA RSM/RSA Persistence Modelling Profile"
+            path="pathmap://UMLMDA4_PROFILE/UMLMDAPersistenceProfile.epx"
+            visible="true"/>
+      <UMLProfile
+            name="UMLMDA RSM/RSA Service Modelling Profile"
+            path="pathmap://UMLMDA4_PROFILE/UMLMDAServiceProfile.epx"
+            visible="true"/>
+   </extension>
+
+   <extension
+         id="org.umlmda.rsx.template.domain"
+         name="UMLMDA domain model template"
+         point="com.ibm.xtools.modeler.ui.wizards.template">
+      <directory path="templates/domain"/>
+   </extension>
+   <extension
+         id="org.umlmda.rsx.template.persistence"
+         name="UMLMDA persistent model template"
+         point="com.ibm.xtools.modeler.ui.wizards.template">
+      <directory path="templates/persistence"/>
+   </extension>
+   <extension
+         id="org.umlmda.rsx.template.service"
+         name="UMLMDA service model template"
+         point="com.ibm.xtools.modeler.ui.wizards.template">
+      <directory path="templates/service"/>
+   </extension>
+
+   <extension
+         id="UMLMDA4.pathmaps"
+         point="org.eclipse.gmf.runtime.emf.core.Pathmaps">
+      <pathmap
+            name="UMLMDA4_PROFILE"
+            path="profiles"
+            plugin="org.umlmda.uml2.profile.new"/>
+   </extension>
+   <extension
+         id="UMLMDA4.templates.spathmaps"
+         point="org.eclipse.gmf.runtime.emf.core.Pathmaps">
+      <pathmap
+            path="templates"
+            name="UMLMDA4_TEMPLATES"
+            plugin="org.umlmda.uml2.profile.new"/>
+   </extension>
+   
+</plugin>
