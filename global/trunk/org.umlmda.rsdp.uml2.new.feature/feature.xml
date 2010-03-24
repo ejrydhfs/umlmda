@@ -2,7 +2,7 @@
 <feature
       id="org.umlmda.rsdp.uml2.new.feature"
       label="UMLMDA 4.x RSM/RSM Modeling"
-      version="4.8.1"
+      version="4.8.2"
       provider-name="www.umlmda.org">
    <install-handler/>
 
@@ -27,6 +27,6 @@
          id="org.umlmda.uml2.profile.new"
          download-size="0"
          install-size="0"
-         version="4.8.1"/>
+         version="4.8.2"/>
 
 </feature>
