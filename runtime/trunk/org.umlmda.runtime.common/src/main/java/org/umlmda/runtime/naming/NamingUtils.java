@@ -1,5 +1,7 @@
 package org.umlmda.runtime.naming;
 
+import java.util.StringTokenizer;
+
 import javax.naming.Binding;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -50,6 +52,46 @@ public class NamingUtils
       }
    }
 
+   /**
+    * Binds an object in the global naming context, creates all required subcontexts
+    * 
+    * @param context
+    * @param fullname
+    * @param object
+    * @throws NamingException
+    */
+   public static void bind(Context context, String fullname, Object object) throws NamingException {
+      StringTokenizer nameTokenizer = new StringTokenizer(fullname, "/");
+      StringBuffer contextEntryBuffer = new StringBuffer();
+      
+      do {
+         String token = nameTokenizer.nextToken();
+         
+         if ( contextEntryBuffer.length() > 0 ) {
+            contextEntryBuffer.append("/");
+         }
+         contextEntryBuffer.append(token);
+
+         String contextEntry = contextEntryBuffer.toString();
+         
+         // Lookup or create subcontext
+         if ( nameTokenizer.hasMoreTokens()) {
+          
+            try {
+               context.lookup(contextEntry);
+            }
+            catch ( NameNotFoundException e ) {
+               context.createSubcontext(contextEntry);
+            }
+         }
+         
+         // Create binding
+         else {
+            context.bind(contextEntry, object);
+         }
+      } while( nameTokenizer.hasMoreTokens() );
+   }
+   
    /**
     * Type safe lookup in jdni.
     *  
