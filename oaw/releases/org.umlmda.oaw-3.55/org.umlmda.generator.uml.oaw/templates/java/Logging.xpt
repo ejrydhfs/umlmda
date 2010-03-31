@@ -1,0 +1,21 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::j2ee»
+«EXTENSION java::UMLMDA»
+
+«DEFINE loggingImports FOR JavaBusinessService»
+«ENDDEFINE»
+
+«DEFINE loggingDeclaration FOR JavaBusinessService»
+«ENDDEFINE»
+
+«DEFINE logMethodEntry FOR JavaModelMethod»
+«ENDDEFINE»
+
+«DEFINE logMethodExit FOR JavaModelMethod»
+«ENDDEFINE»
+
+«DEFINE logMethodExeception FOR JavaModelMethod»
+«ENDDEFINE»

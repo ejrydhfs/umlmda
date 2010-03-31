@@ -1,0 +1,7 @@
+import uml;
+
+extension org::openarchitectureware::util::stdlib::io;   
+
+cached NamedElement getDependencyTarget(NamedElement source, String name) :
+    JAVA org.umlmda.oaw.util.uml2.DependencyUtils.getDependencyTarget(org.eclipse.uml2.uml.NamedElement, java.lang.String)
+;  
