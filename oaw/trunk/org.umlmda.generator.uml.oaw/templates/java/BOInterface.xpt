@@ -76,6 +76,11 @@
 	    */
 	   @javax.ejb.Remote
 	   public interface «interfaceName»Remote extends «interfaceName» {
+	      
+	     /**
+	      * The name in the global jndi of the remote ejb
+	      */ 
+	     public final String JNDI_NAME = "«component.getStereotypeProperty("EJBComponent")»«name»";
 	   }
    «ENDFILE»   
 «ENDDEFINE»

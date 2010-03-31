@@ -35,6 +35,8 @@
 
    import org.apache.log4j.Logger;
    
+   import org.umlmda.runtime.naming.NamingUtils;
+   
    «resetImports()»
    «registerImport("ws.Utils")»
    «registerImport("jee.EJBLocal", PIMClass)»
@@ -48,7 +50,7 @@
    /**
     * Web service client ejb
     */
-	@Stateless(name="«PIMClass.name»", mappedName="«PIMClass.component.getStereotypeProperty("EJBComponent")»«PIMClass.name»")
+	@Stateless(name="«PIMClass.name»", mappedName=«PIMClass.getScopedName("jee.EJBRemote")».JNDI_NAME)
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public class «generatedName» implements «PIMClass.getScopedName("jee.EJBLocal")», «PIMClass.getScopedName("jee.EJBRemote")»  {
 
@@ -67,8 +69,7 @@
       URL serviceURL = null;
 
       try {
-         Context context = new InitialContext();
-         Object envEntry = context.lookup(COMP_SERVICE_URL);
+         Object envEntry = NamingUtils.lookup(Object.class, COMP_SERVICE_URL);
             
          if ( envEntry instanceof URL ) {
             serviceURL = (URL)envEntry;
