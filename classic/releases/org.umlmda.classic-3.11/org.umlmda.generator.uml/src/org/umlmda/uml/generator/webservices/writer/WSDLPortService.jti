@@ -1,0 +1,75 @@
+  <wsdl:portType name="<%=getModelClass().getName()%>Port">
+<% // Modelled Methods
+   for ( Iterator ia = getModelClass().getMethods(true).iterator(); ia.hasNext(); ) {
+     ModelMethod method = (ModelMethod)ia.next();
+%>  
+    <wsdl:operation name="<%=method.getName()%>" <%
+     if ( method.getParameters().size() > 1 ) {
+        %>parameterOrder="<%
+        for ( Iterator ip = method.getParameters().iterator(); ip.hasNext(); ) {
+           ModelParameter parameter = (ModelParameter)ip.next();
+           %><%=parameter.getName()%> <%
+        }%>"<%
+     }%>>
+      <wsdl:input name="<%=method.getName()%>Request" message="<%=genPackage.getNamespacePrefix()%>:<%=method.getName()%>Request"/>
+<%    if ( method.getReturnType() != null ) {
+%>      <wsdl:output name="<%=method.getName()%>Response" message="<%=genPackage.getNamespacePrefix()%>:<%=method.getName()%>Response"/>
+<%    }
+      for ( Iterator ie = method.getExceptions().iterator(); ie.hasNext(); ) {
+        ModelClass exception = (ModelClass)ie.next();
+%>      <wsdl:fault name="<%=method.getName()%><%=exception.getName()%>" message="<%=genPackage.getNamespacePrefix()%>:<%=method.getName()%><%=exception.getName()%>"/>
+<%    }
+%>    </wsdl:operation>
+<% }
+%>
+  </wsdl:portType>
+
+  <wsdl:binding name="<%=getModelClass().getName()%>SoapBinding" type="<%=getType(getModelClass())%>Port">
+    <wsdlsoap:binding style="<%=soapBindingTag%>" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+<% // Modelled Methods
+   for ( Iterator ia = getModelClass().getMethods(true).iterator(); ia.hasNext(); ) {
+     ModelMethod method = (ModelMethod)ia.next();
+%>  
+    <wsdl:operation name="<%=method.getName()%>">
+         <wsdlsoap:operation soapAction="<%=getType(genPackage)%>/<%=method.getName()%>"/>
+         <wsdl:input name="<%=method.getName()%>Request">
+           <wsdlsoap:body use="<%=soapEncodingTag%>" <% 
+      if ( soapEncodingTag.equals("encoded") ) {%>
+                         <%=soapEncodingStyleTag%>
+                          <%
+      }%>namespace="<%=getType(getModelClass().getPackage())%>"/>
+         </wsdl:input>
+<%    if ( soapWrapping || (method.getReturnType() != null && method.getReturnType().getName().equals("void") == false) ) {
+%>         <wsdl:output name="<%=method.getName()%>Response">
+           <wsdlsoap:body use="<%=soapEncodingTag%>" <% 
+      if ( soapEncodingTag.equals("encoded") ) {%>
+                         <%=soapEncodingStyleTag%>
+                          <%
+      }%>namespace="<%=getType(getModelClass().getPackage())%>"/>
+         </wsdl:output>
+<%    }
+      for ( Iterator ie = method.getExceptions().iterator(); ie.hasNext(); ) {
+        ModelClass exception = (ModelClass)ie.next();
+%>         <wsdl:fault name="<%=method.getName()%><%=exception.getName()%>">
+           <wsdlsoap:fault name="<%=method.getName()%><%=exception.getName()%>" 
+                           use="<%=soapEncodingTag%>" <%
+      if ( soapEncodingTag.equals("encoded") ) {%>
+                          <%=soapEncodingStyleTag%>
+                           <%
+      }%>namespace="<%=getType(getModelClass().getPackage())%>"/>
+         </wsdl:fault>
+<%    }
+%>         
+    </wsdl:operation>
+<% }
+%>
+  </wsdl:binding>
+
+  <wsdl:service name="<%=getModelClass().getName()%>">
+    <wsdl:port name="<%=getModelClass().getName()%>Port" binding="<%=getType(getModelClass())%>SoapBinding">
+<!-- @@UserSection-Begin ServicePort -->
+      <wsdlsoap:address location="http://this.value.is.replaced.by.jboss"/>
+<!-- @@UserSection-End ServicePort -->
+    </wsdl:port>
+  </wsdl:service>
