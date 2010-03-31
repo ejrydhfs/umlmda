@@ -7,7 +7,7 @@
       <version>3.55</version>
    </parent>
    <artifactId>org.umlmda.classic</artifactId>
-   <version>3.11-SNAPSHOT</version>
+   <version>3.11</version>
    <packaging>pom</packaging>
    <name>UMLMDA Classic</name>
    <description>UMLMDA maven project for umlmda classic modules.</description>
@@ -54,8 +54,8 @@
    </modules>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/trunk</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/trunk</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/releases/org.umlmda.classic-3.11</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/classic/releases/org.umlmda.classic-3.11</developerConnection>
    </scm>
 
    <dependencyManagement>
@@ -166,17 +166,17 @@
          <dependency>
             <groupId>org.umlmda</groupId>
             <artifactId>org.umlmda.generator.core</artifactId>
-            <version>3.11-SNAPSHOT</version>
+            <version>3.11</version>
          </dependency>
          <dependency>
             <groupId>org.umlmda</groupId>
             <artifactId>org.umlmda.generator.uml</artifactId>
-            <version>3.11-SNAPSHOT</version>
+            <version>3.11</version>
          </dependency>
          <dependency>
             <groupId>org.umlmda</groupId>
             <artifactId>org.umlmda.classic.generator</artifactId>
-            <version>3.11-SNAPSHOT</version>
+            <version>3.11</version>
          </dependency>
 
       </dependencies>
