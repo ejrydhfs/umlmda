@@ -21,6 +21,7 @@
         <body>Type containung binary data.</body>
       </ownedComment>
     </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_q4VeoEbfEd-UyvCg1roTYQ" name="long"/>
     <profileApplication xmi:id="_ghPL4PK4EdmFXfbQyopNVQ">
       <eAnnotations xmi:id="_ghPL4fK4EdmFXfbQyopNVQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w"/>
