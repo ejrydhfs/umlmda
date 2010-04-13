@@ -1,0 +1,119 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.common</artifactId>
+      <version>3.29</version>
+   </parent>
+
+   <artifactId>org.umlmda.umlmodel.uml2</artifactId>
+   <name>UMLMDA umlmodel uml2</name>
+   <description />
+
+   <properties>
+      <umlmda.uml2.profile.version>3.2.0</umlmda.uml2.profile.version>
+      <umlmda.uml2.profile.new.version>4.2.0</umlmda.uml2.profile.new.version>
+   </properties>
+
+   <dependencyManagement>
+      <dependencies>
+         <!-- UMLMDA Profile -->
+         <dependency>
+            <groupId>org.umlmda</groupId>
+            <artifactId>org.umlmda.uml2.profiles</artifactId>
+            <version>${umlmda.uml2.profile.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.umlmda</groupId>
+            <artifactId>org.umlmda.uml2.profiles.new</artifactId>
+            <version>${umlmda.uml2.profile.new.version}</version>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
+
+   <dependencies>
+      <dependency>
+         <groupId>commons-lang</groupId>
+         <artifactId>commons-lang</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>log4j</groupId>
+         <artifactId>log4j</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.eclipse.uml2</groupId>
+         <artifactId>resources</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.eclipse.uml2</groupId>
+         <artifactId>uml</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>${parent.groupId}</groupId>
+         <artifactId>org.umlmda.umlmodel</artifactId>
+         <version>${parent.version}</version>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+               <!-- Auspacken von UML Profilen, UMLMDA Generatorprofilen und -sets -->
+               <execution>
+                  <id>unpack</id>
+                  <phase>initialize</phase>
+                  <goals>
+                     <goal>unpack</goal>
+                  </goals>
+                  <configuration>
+                     <artifactItems>
+                        <artifactItem>
+                           <groupId>org.umlmda</groupId>
+                           <artifactId>org.umlmda.uml2.profiles</artifactId>
+                           <type>zip</type>
+                           <classifier>std</classifier>
+                           <overWrite>false</overWrite>
+                           <outputDirectory>${basedir}/profiles/rsm/3rd/umlmda/profiles</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                           <groupId>org.umlmda</groupId>
+                           <artifactId>org.umlmda.uml2.profiles.new</artifactId>
+                           <type>zip</type>
+                           <classifier>common</classifier>
+                           <overWrite>false</overWrite>
+                           <outputDirectory>${basedir}/profiles/rsm/3rd/umlmda/profiles</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                           <groupId>com.ibm.xtools.uml.msl</groupId>
+                           <artifactId>uml2_profiles</artifactId>
+                           <version>7.1.200</version>
+                           <type>zip</type>
+                           <overWrite>false</overWrite>
+                           <outputDirectory>${basedir}/profiles/rsm/3rd/ibm</outputDirectory>
+                        </artifactItem>
+                     </artifactItems>
+                     <overWriteReleases>false</overWriteReleases>
+                     <overWriteSnapshots>true</overWriteSnapshots>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+
+         <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+               <excludes>
+                  <exclude>**/ModelFactoryTest.java</exclude>
+                  <exclude>**/StereotypeTest.java</exclude>
+               </excludes>
+
+            </configuration>
+         </plugin>
+
+      </plugins>
+   </build>
+</project>
