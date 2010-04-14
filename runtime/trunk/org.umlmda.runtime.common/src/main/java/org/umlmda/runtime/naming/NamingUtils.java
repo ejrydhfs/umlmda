@@ -78,7 +78,7 @@ public class NamingUtils
          if ( nameTokenizer.hasMoreTokens()) {
           
             try {
-               context.lookup(contextEntry);
+               context.lookup(getGlobalNamespacePrefix()+contextEntry);
             }
             catch ( NameNotFoundException e ) {
                context.createSubcontext(contextEntry);

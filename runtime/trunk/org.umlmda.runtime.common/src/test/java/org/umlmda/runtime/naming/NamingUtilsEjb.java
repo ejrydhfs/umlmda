@@ -11,9 +11,10 @@ import javax.sql.DataSource;
 @Stateless(name="NamingUtilsEjb", mappedName=NamingUtilsEjbRemote.MAPPED_NAME)
 public class NamingUtilsEjb implements NamingUtilsEjbLocal, NamingUtilsEjbRemote
 {
-   public static final String RESOURCE_URL_WS_TEST = "url/ws/test";
+   public static final String RESOURCE_URL_WS_TEST1 = "url/ws/test1";
+   public static final String RESOURCE_URL_WS_TEST2 = "url/ws/test2";
 
-   @Resource(mappedName=RESOURCE_URL_WS_TEST)
+   @Resource(mappedName=RESOURCE_URL_WS_TEST1)
    URL wsURL;
    
    @Resource(mappedName="jdbc/fja/cor/sample")
@@ -30,7 +31,7 @@ public class NamingUtilsEjb implements NamingUtilsEjbLocal, NamingUtilsEjbRemote
    public URL getURL() {
       if ( wsURL == null ) {
          try {
-            wsURL = NamingUtils.lookup(URL.class, RESOURCE_URL_WS_TEST);
+            wsURL = NamingUtils.lookup(URL.class, RESOURCE_URL_WS_TEST1);
          }
          catch (NamingException e) {
             throw new RuntimeException(e.getMessage(), e);
