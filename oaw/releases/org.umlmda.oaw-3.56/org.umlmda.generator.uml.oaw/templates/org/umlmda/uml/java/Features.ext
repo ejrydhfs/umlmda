@@ -1,0 +1,29 @@
+import org::umlmda::uml::generator::java;
+
+extension org::umlmda::utils::String;
+
+private String GWTSupport() : 
+    GLOBALVAR GWTSupport;
+
+// return true if GWT is supported. Defaults to false.
+cached Boolean isGWTSupported() :
+	let var = GWTSupport() :
+	
+	isEmpty(var) ? false : var.booleanValue();
+	
+private String VisitorSupport() : 
+    GLOBALVAR VisitorSupport;
+
+// return true if Visitors are supported.
+// the visitor stuff is not compatible with GWT
+// if not set, the default is false if GWTSupport is true.
+cached Boolean isVisitorSupported() : 
+    let var2 = VisitorSupport() :
+    isEmpty(var2) ? !isGWTSupported() : var2.booleanValue();
+
+cached String javaNonGenericType(JavaModelStructuraleFeature feature) :
+    "Shouldn't be called, only derived javaNonGenericType() should be called"
+;
+
+
+    
