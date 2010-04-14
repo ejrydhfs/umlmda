@@ -1,6 +1,6 @@
 «IMPORT org::umlmda::model::uml»
 «IMPORT org::umlmda::uml::generator::java»
-«IMPORT org::umlmda::uml::generator::webservice»
+«IMPORT org::umlmda::uml::generator::webservices»
 «IMPORT org::umlmda::oaw::generator::model::java»
 «IMPORT org::umlmda::oaw::generator::model::webservice»
 «IMPORT org::umlmda::oaw::generator::util»
@@ -121,13 +121,21 @@
     */
    «EXPAND java::BOInterface::methodDecl("public") FOR pimMethod()» {
       try {
-			«requestClass().getScopedName("ws.Stub")» request = utils.create«requestParameter().type.name»(«requestParameter().name»);
+         «FOREACH parameters.typeSelect(WSModelParameter) AS param»
+            «EXPAND requestParameter(param) FOR param.type»
+         «ENDFOREACH»
 			utils.resolveReferences();
-			«responseClass().getScopedName("ws.Stub")» response = servicePort.«name»(request);
-			utils.resetReferences();
-			«responseClass().PIMClass.javaTypeName()» convertedResult = utils.create«responseClass().name»(response);
-			utils.resolveReferences();
-			return convertedResult;
+         «IF returnType != null»
+   			«EXPAND declResponseValue FOR returnType» 
+   		«ENDIF»	
+			servicePort.«name»(
+			   «FOREACH parameters.typeSelect(ModelParameter) AS param SEPARATOR ","»
+			         «param.name»Ws
+			   «ENDFOREACH»
+         );
+         «IF returnType != null»
+            «EXPAND handleReponseValue FOR returnType»
+         «ENDIF»
       }
       «FOREACH exceptions.typeSelect(WSModelClass) AS exceptionCls»
          catch («wsExceptionClass(exceptionCls)» e) {
@@ -138,4 +146,40 @@
          utils.resetReferences();
       }
    }
+«ENDDEFINE»
+
+«DEFINE requestParameter(WSModelParameter parameter) FOR ModelClassifier»
+«ENDDEFINE»
+
+«DEFINE requestParameter(WSModelParameter parameter) FOR WSModelClass»
+    «this.getScopedName("ws.Stub")» «parameter.name»Ws = utils.create«name»(«parameter.name»);
+«ENDDEFINE»
+
+«DEFINE requestParameter(WSModelParameter parameter) FOR WSModelDataType»
+    «this.WSJavaType» «parameter.name»Ws = «parameter.convertToWs»;
+«ENDDEFINE»
+
+«DEFINE declResponseValue FOR ModelClassifier»
+«ENDDEFINE»
+
+«DEFINE declResponseValue FOR WSModelClass»
+    «getScopedName("ws.Stub")» response = 
+«ENDDEFINE»
+
+«DEFINE declResponseValue FOR WSModelDataType»
+   «WSJavaType» response = 
+«ENDDEFINE»
+
+«DEFINE handleReponseValue FOR ModelClassifier»
+«ENDDEFINE»
+
+«DEFINE handleReponseValue FOR WSModelClass»
+    utils.resetReferences();
+    «PIMClass.javaTypeName()» convertedResult = utils.create«name»(response);
+    utils.resolveReferences();
+    return convertedResult;
+«ENDDEFINE»
+
+«DEFINE handleReponseValue FOR WSModelDataType»
+   return response;
 «ENDDEFINE»
