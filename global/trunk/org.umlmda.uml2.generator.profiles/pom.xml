@@ -45,6 +45,9 @@
                         <zip destfile="${project.build.directory}/ws-profiles.zip">
                            <fileset dir="${basedir}/etc/umlmda/self/profile" includes="ws*.ump" />
                         </zip>
+                        <zip destfile="${project.build.directory}/wsdl-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="wsdl*.ump" />
+                        </zip>
                         <zip destfile="${project.build.directory}/jaxws-profiles.zip">
                            <fileset dir="${basedir}/etc/umlmda/self/profile" includes="jaxWs*.ump" />
                         </zip>
@@ -103,6 +106,13 @@
                            </file>
                            <type>zip</type>
                            <classifier>ws-ump</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/wsdl-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>wsdl-ump</classifier>
                         </artifact>
                         <artifact>
                            <file>
