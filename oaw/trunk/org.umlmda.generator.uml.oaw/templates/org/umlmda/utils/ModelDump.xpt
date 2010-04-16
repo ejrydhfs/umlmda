@@ -78,7 +78,7 @@ Model «name»
 
 
 «REM» Attribute details «ENDREM»
-«DEFINE dump FOR ModelAttribute»        «name» : «dataType.name»«IF multivalue» («multiplicity»)«ENDIF»
+«DEFINE dump FOR ModelAttribute»        «name» : «dataType.name»«IF multivalue» («multiplicity»)«ENDIF»«IF initialValue.length > 0» = '«initialValue»'«ENDIF»
 «IF derived -»
          derived
 «ENDIF -»
