@@ -1,6 +1,7 @@
 package org.umlmda.runtime.reflect;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 /**
  * @author moroff
@@ -20,6 +21,12 @@ public class FieldAccessor
    public static void set(final Object object, String fieldName, Object value) {
       try {
          Field f = object.getClass().getDeclaredField(fieldName);
+         int modifiers = f.getModifiers();
+         
+         if ( Modifier.isFinal(modifiers) ) {
+            throw new IllegalArgumentException("field is final");
+         }
+
          boolean accessible = f.isAccessible();
          if ( !accessible ) {
             f.setAccessible(true);
@@ -53,7 +60,7 @@ public class FieldAccessor
     * @return
     *    value of the field
     */
-   public Object get(final Object object, String fieldName) {
+   public static Object get(final Object object, String fieldName) {
       try {
          Field f = object.getClass().getDeclaredField(fieldName);
          boolean accessible = f.isAccessible();
