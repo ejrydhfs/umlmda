@@ -1,0 +1,57 @@
+import uml;
+
+// Debugging output   
+extension org::openarchitectureware::util::stdlib::io;   
+
+extension org::umlmda::oaw::util::Model;
+extension org::umlmda::oaw::util::Element;
+
+ 
+// Entry point for appending n models to one base model.
+cached Object m2m_combineModels( uml::Model baseModel, List[uml::Model] appendixModels ) :
+    info("Combining model '"+baseModel.name+"' with models "+appendixModels.name) ->
+    baseModel.setName(baseModel.name+"_combined") ->
+    appendixModels.typeSelect(uml::Model).appendToBaseModel(baseModel) ->
+    baseModel
+;
+
+// Append one model to a base model.
+cached Boolean appendToBaseModel( uml::Model model, uml::Model baseModel ) :
+    info("Appending model '"+model.name+"' to '"+baseModel.name+"'") ->
+    model.ownedElement.typeSelect(uml::Package).appendToBaseModel(baseModel) ->
+    true
+;
+
+// Append package to the base model or search for the next package that is unique.
+cached Boolean appendToBaseModel( uml::Package package, uml::Model baseModel ) :
+	let basePackage = baseModel.ownedElement.typeSelect(uml::Package).select( p | p.name == package.name ).first() :
+
+	basePackage==null ? (
+	    info("  -> appending package '"+package.name+"' to base model '"+baseModel.name+"'") ->
+		// Package not in baseModel -> append it right here
+		basePackage.nestedPackage.add(package) ->
+		true
+	) : (
+		// Package exists in baseModel -> traverse the hierarchy
+	    debug("  traversing package '"+package.name+"' for existing base package '"+basePackage.name+"'") ->
+		package.ownedElement.typeSelect(uml::Package).appendToBasePackage(baseModel, basePackage)
+ 	) 
+;
+
+
+// Append package to a base model package or search for the next package that is unique.
+cached Boolean appendToBasePackage( uml::Package package, uml::Model baseModel, uml::Package basePackage ) :
+	let baseSubPackage = basePackage.ownedElement.typeSelect(uml::Package).select( p | p.name == package.name ).first() :
+
+	baseSubPackage==null ? (
+		// Package not in baseModel -> append it right here
+	    info("    -> appending package '"+package.name+"' to base package '"+basePackage.name+"'") ->
+		basePackage.nestedPackage.add(package) ->
+		true
+	) : (
+		// Package exists in baseModel -> continue
+	    debug("    baseSubPackage exists: "+baseSubPackage.name) ->
+		package.ownedElement.typeSelect(uml::Package).appendToBasePackage(baseModel, baseSubPackage) 
+	) 
+;
+
