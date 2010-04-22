@@ -833,17 +833,22 @@ public class Generator {
     * @return
     */
    private boolean matchPackage(GeneratorModel genModel, String qualifiedName) {
-      StringTokenizer packageFilterParser = new StringTokenizer(currentProfile.getPackagePrefix(), ",");
-      boolean match = false;
-      
-      while ( !match && packageFilterParser.hasMoreTokens() ) {
-         String packagePrefix = packageFilterParser.nextToken();
+      if ( StringUtils.isNotEmpty(currentProfile.getPackagePrefix())) {
+         StringTokenizer packageFilterParser = new StringTokenizer(currentProfile.getPackagePrefix(), ",");
+         boolean match = false;
          
-         if ( qualifiedName.startsWith(packagePrefix) ) {
-            match = true;
+         while ( !match && packageFilterParser.hasMoreTokens() ) {
+            String packagePrefix = packageFilterParser.nextToken();
+            
+            if ( qualifiedName.startsWith(packagePrefix) ) {
+               match = true;
+            }
          }
+         return match;
       }
-      return match;
+      else {
+         return true;
+      }
    }
 
    final AbstractWriter createWriter(Feedback feedback, String writerName) {
