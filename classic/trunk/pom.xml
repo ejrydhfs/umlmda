@@ -50,7 +50,9 @@
    <modules>
       <module>org.umlmda.generator.core</module>
       <module>org.umlmda.generator.uml</module>
+      <!-- 
       <module>org.umlmda.classic.generator</module>
+       -->
    </modules>
 
    <scm>
