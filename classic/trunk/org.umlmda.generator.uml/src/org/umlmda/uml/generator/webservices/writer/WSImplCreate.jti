@@ -319,10 +319,10 @@
    for ( Iterator ia = modelClass.getAttributes().iterator(); ia.hasNext(); ) {
       WSModelAttribute attribute = (WSModelAttribute)ia.next();
 
-      if ( attribute.isReadOnly() || attribute.isDerived() )
+      if ( attribute.isDerived() )
          continue;
-      if ( attribute.isMultivalue() ) {   
-%>      to.<%=attribute.getSetter()%>(<%=attribute.getConvertFromWs("from")%>.toArray(new <%=attribute.getJavaType().substring(0, attribute.getJavaType().length()-2)%>[<%=attribute.getConvertFromWs("from")%>.size()]));
+      else if ( attribute.isReadOnly() ) {
+%>      org.umlmda.runtime.reflect.FieldAccessor.set(to, <%=modelClass.getPIMClass().getJavaType()%>.PROPERTY_<%=attribute.getUpperCaseIdentifier()%>, <%=attribute.getConvertFromWs("from")%>);      
 <%    } else {
 %>      to.<%=attribute.getSetter()%>(<%=attribute.getConvertFromWs("from")%>);
 <%      }
