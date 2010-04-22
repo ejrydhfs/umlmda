@@ -170,6 +170,8 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
          // FIXME Parameter for JaxWS handling
     */
    public String getConvertFromWs(String srcInstance) {
+      
+      // Handle <<Enumeration>>s
       if ( getModelClassifier().hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION)) {
          WSModelClass enumClass = (WSModelClass) getModelClassifier();
          boolean isStringEnum = ((ModelAttribute)enumClass.getAttributes().get(0)).getDataType().getName().equals(ModelDataType.STRING);
@@ -198,11 +200,15 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
             }
          }
       }
+      
+      // Handle simple types
       else {
          if ( getDataType() != null && getDataType().getName().equals(ModelDataType.BOOLEAN)) {
             return getConvert(getConvertFromWsMethod((WSModelClassifier) getModelClassifier()), srcInstance, "is"+StringUtils.capitalize(getName()), getDataType());
          }
-         else {
+         else if ( isMultivalue()) {
+            return getConvert(getConvertFromWsMethod((WSModelClassifier) getModelClassifier()), srcInstance, getGetter(), getDataType())+".toArray(new "+((JavaModelDataType)getDataType()).getJavaType()+"[] {})";
+         } else {
             return getConvert(getConvertFromWsMethod((WSModelClassifier) getModelClassifier()), srcInstance, getGetter(), getDataType());
          }
       }
