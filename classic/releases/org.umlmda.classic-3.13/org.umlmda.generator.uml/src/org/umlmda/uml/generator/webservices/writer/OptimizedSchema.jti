@@ -1,0 +1,45 @@
+<% // Loop required types
+     for ( Iterator iter = classList.iterator(); iter.hasNext(); ) {
+        WSModelClass modelClass = (WSModelClass)iter.next();
+
+        // Skip classes from other packages
+        if ( packageFilter && modelClass.getPackage().equals(modelPackage) == false ) 
+           continue;
+
+        if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION) ) {
+           WSModelAttribute attr = (WSModelAttribute)modelClass.getAttributes().iterator().next();
+           String type = attr.getSchemaType();
+%>  <simpleType name="<%=modelClass.getName()%>">
+    <restriction base="<%=type%>">
+<%        for ( Iterator ia = modelClass.getAttributes().iterator(); ia.hasNext(); ) {
+             attr = (WSModelAttribute)ia.next();
+%>      <enumeration value="<%=(attr.getDataType().getName().equals(ModelDataType.STRING) && StringUtils.isNumeric(attr.getInitialValue().substring(0,1))?"C":"")+attr.getInitialValue()%>"/>
+<%        }
+%>    </restriction>
+  </simpleType>
+
+<%      }
+
+        // Skip everything that is not <<BusinessObject>> nor <<BusinessException>>
+        if ( (modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO) 
+           || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO_HIERARCHY)
+           || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO_REFERENCE)
+           || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE)
+           || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_REQUEST)) == false )
+           continue;
+           
+%><% @include WSDLType.jti template-relative %><%
+        // Create elements for request / response classes
+        if (  soapBinding.equals("document") 
+        &&  (  modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE)
+            || modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_REQUEST)) ) {
+%>  <element name="<%=modelClass.getName()%>Element" type="<%=modelClass.getSchemaType()%>"/>
+
+<%      }
+
+        if (  modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_EXCEPTION) ) {
+%>  <xsd:element name="<%=modelClass.getName()%>Element" type="<%=modelClass.getSchemaType()%>"/>
+
+<%      }
+     } // for
+%>     

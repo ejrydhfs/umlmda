@@ -1,0 +1,58 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = AdapterFactoryWriter
+main.CodeWriterFormat	     = format/ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.j2ee.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.java.AbstractBusinessFactoryWriter
+%><% import!
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.model.uml.*;
+import org.umlmda.profile.ModelStereotype;
+import org.umlmda.uml.generator.java.*;
+import org.umlmda.uml.generator.j2ee.*;
+import java.util.*;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %><%
+   JavaModelPackage genPackage = (JavaModelPackage)getGenPackage();
+   
+   genPackage.resetImports();
+   genPackage.registerImports(J2EEArtefacts.ADAPTER, genPackage.getClasses(), ModelStereotype.BUSINESS_SERVICE);
+   genPackage.registerImports(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, genPackage.getClasses(), ModelStereotype.BUSINESS_SERVICE);
+   genPackage.registerImport(JavaArtefacts.BUSINESS_OBJECT_FACTORY_IMPL);
+   genPackage.registerImport(JavaArtefacts.BUSINESS_FACTORY);
+%>//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+
+package <%=getPackageName()%>;
+
+<%=genPackage.registeredImports()%>
+
+/**
+ * Factory j2ee client adapters for the modelled classes of the package <%=getModelPackage().getQualifiedName()%>
+ */
+public class <%=genPackage.getGeneratedName()%> extends <%=genPackage.getScopedName(JavaArtefacts.BUSINESS_OBJECT_FACTORY_IMPL)%> implements <%=genPackage.getScopedName(JavaArtefacts.BUSINESS_FACTORY)%>
+{
+<% // Factory-Methods
+   for ( Iterator ia = getModelPackage().getClasses().iterator(); ia.hasNext(); ) {
+	   JavaModelClass modelClass = (JavaModelClass)ia.next();
+
+       if ( modelClass.hasStereotype(ModelStereotype.BUSINESS_SERVICE) ) {
+%>   /**
+   * Create Businessinterface for <%=modelClass.getName()%>
+   * @see <%=modelClass.getQualifiedName()%>
+   */
+   public <%=genPackage.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, modelClass)%> create<%=modelClass.getName()%>() {
+   	  return new <%=genPackage.getScopedName(J2EEArtefacts.ADAPTER, modelClass)%>();
+   }
+<%   } // if
+	 } // for
+%>	    
+
+};
+
+//@@UserSection-Begin RCSLog
+<%=RcsHelper.writeLog("// ")%>
+//@@UserSection-End RCSLog

@@ -1,0 +1,79 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = WSAdapterFactoryWriter
+main.CodeWriterFormat	   = format/ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.webservices.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.java.AbstractBusinessFactoryWriter
+%><% import!
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.model.uml.*;
+import org.umlmda.profile.ModelStereotype;
+import org.umlmda.uml.generator.java.*;
+import org.umlmda.uml.generator.webservices.*;
+import java.util.*;
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %><%
+   WSModelPackage genPackage = (WSModelPackage)getGenPackage();
+   
+   genPackage.resetImports();
+   genPackage.registerImports(WSArtefacts.WS_ADAPTER, genPackage.getClasses(), WSStereotypes.WEB_SERVICE);
+   genPackage.registerImports(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, genPackage.getClasses(), ModelStereotype.BUSINESS_SERVICE);
+   genPackage.registerImport(JavaArtefacts.BUSINESS_OBJECT_FACTORY_IMPL);
+   genPackage.registerImport(JavaArtefacts.BUSINESS_FACTORY);
+%>//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+
+package <%=getPackageName()%>;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+<%=genPackage.registeredImports()%>
+
+/**
+ * Factory webservice client adapters for the modelled classes of the package <%=getModelPackage().getQualifiedName()%>
+ */
+public class <%=genPackage.getGeneratedName()%> extends <%=genPackage.getScopedName(JavaArtefacts.BUSINESS_OBJECT_FACTORY_IMPL)%> implements <%=genPackage.getScopedName(JavaArtefacts.BUSINESS_FACTORY)%>
+{
+   private final Context context;
+   
+   public <%=genPackage.getGeneratedName()%>() {
+      super();
+      try {
+         context = new InitialContext();
+      } catch ( NamingException e ) {
+         throw new RuntimeException(e);
+      }
+   }
+
+   public <%=genPackage.getGeneratedName()%>(Context context) {
+      super();
+      this.context = context;
+   }
+   
+<% // Factory-Methods
+   for ( Iterator ia = genPackage.getWsPackage().getClasses().iterator(); ia.hasNext(); ) {
+	   WSModelClass modelClass = (WSModelClass)ia.next();
+	   JavaModelClass pimClass = modelClass.getPIMClass();
+
+       if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE) ) {
+%>   /**
+   * Create Businessinterface for <%=modelClass.getName()%>
+   * @see <%=pimClass.getQualifiedName()%>
+   */
+   public <%=genPackage.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, pimClass)%> create<%=modelClass.getName()%>() {
+   	  return <%=genPackage.getScopedName(WSArtefacts.WS_ADAPTER, modelClass)%>.create<%=modelClass.getName()%>(context);
+   }
+<%   } // if
+	 } // for
+%>	    
+
+};
+
+//@@UserSection-Begin RCSLog
+<%=RcsHelper.writeLog("// ")%>
+//@@UserSection-End RCSLog

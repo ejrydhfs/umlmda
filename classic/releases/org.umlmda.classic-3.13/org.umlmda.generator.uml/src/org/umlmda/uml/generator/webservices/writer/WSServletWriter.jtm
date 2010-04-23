@@ -1,0 +1,239 @@
+<% @conf 
+main.JostracaVersion       = 0.3
+main.CodeWriter            = WSServletWriter
+main.CodeWriterFormat	   = format/ParentJavaWriterFormat.jwf
+java.CodeWriter.package    = org.umlmda.uml.generator.webservices.writer
+java.CodeWriter.extends    = org.umlmda.uml.generator.webservices.AbstractWSImplWriter
+%><% import!
+import java.util.Iterator;
+import java.util.List;
+import org.apache.commons.lang.StringUtils;
+
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.generator.logging.LoggingWriter;
+import org.umlmda.model.uml.*;
+import org.umlmda.profile.ModelStereotype;
+import org.umlmda.uml.generator.java.*;
+import org.umlmda.uml.generator.j2ee.*;
+import org.umlmda.uml.generator.webservices.*;
+
+// ==== End of generation header ===============================================
+%><% @section declare %><%
+%><% @section %>//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+<%=RcsHelper.writeHeader("// ")%>
+//@@UserSection-End RCSHeader
+
+package <%=getPackageName()%>;
+
+<% WSModelClass genClass = (WSModelClass)getGenClass();
+   JavaModelClass pimClass = genClass.getPIMClass();
+   WSModelPackage genPackage = (WSModelPackage)genClass.getPackage();
+   WSModel genModel = (WSModel)genClass.getGeneratorModel();
+   final List classList = getModelClass().getSchemaTypes();
+   final List packageList = UMLModelHelper.getPackagesFromClassList( classList);
+   LoggingWriter logging = genModel.getLoggingWriter();
+   boolean springSupport = genModel.isSpringSupported();
+
+   genClass.resetImports();
+   genClass.registerImport(WSArtefacts.WS_UTILS);
+   genClass.registerImport(WSArtefacts.WS_SERVICE_PORT);
+   genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, pimClass);
+   for ( Iterator ip = packageList.iterator(); ip.hasNext(); ) {
+      WSModelPackage modelPackage = (WSModelPackage)ip.next();
+      JavaModelPackage pimPackage = modelPackage.getPIMPackage();
+      
+      if ( pimPackage.getClasses(ModelStereotype.BUSINESS_OBJECT).size() > 0 ) {
+         genClass.registerImport(JavaArtefacts.BUSINESS_OBJECT_FACTORY_IMPL, pimPackage);
+      }   
+   }
+
+%>import org.umlmda.runtime.webservice.WebserviceUtils;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
+<%=genClass.registeredImports()%>
+
+@Stateless
+@TransactionAttribute(TransactionAttributeType.NEVER)
+@WebService(name = "<%=genClass.getName()%>", serviceName="<%=genClass.getName()%>", targetNamespace = "<%=genPackage.getNamespace()%>")
+@SOAPBinding(style = SOAPBinding.Style.RPC)
+public class <%=getBaseName()%> implements <%=genClass.getScopedName("jaxWs.WSPortLocal")%> {
+   @EJB (beanInterface=<%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, pimClass)%>Local.class)
+   private <%=genClass.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, pimClass)%> delegate;
+   private <%=genClass.getScopedName(WSArtefacts.WS_UTILS)%> utils = new <%=genClass.getScopedName(WSArtefacts.WS_UTILS)%>();
+
+   /**
+    * Construktor, creates factories and creates delegate
+    */
+   public <%=getBaseName()%>() {
+      super();
+<% for ( Iterator ip = packageList.iterator(); ip.hasNext(); ) {
+     WSModelPackage modelPackage = (WSModelPackage)ip.next();
+     JavaModelPackage pimPackage = modelPackage.getPIMPackage();
+     if ( pimPackage.getClasses(ModelStereotype.BUSINESS_OBJECT).size() > 0 ) {
+        String factoryClass = genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_FACTORY_IMPL, pimPackage);
+        String factoryName = StringUtils.capitalize(pimPackage.getName());
+     
+%>      utils.set<%=factoryName%>Factory(new <%=factoryClass%>());
+<%    } // if
+   } // for
+%>   }
+
+<% // Modelled Methods
+   for ( Iterator im = getModelClass().getMethods(true).iterator(); im.hasNext(); ) {
+     WSModelMethod method = (WSModelMethod)im.next();
+     JavaModelMethod pimMethod = method.getPIMMethod();
+%>   /**
+    * <%=method.getDocumentation()%>
+    */
+    @WebMethod(action = "<%=genClass.getComponent().getStereotypeProperty("WSNamespace")%>/<%=method.getName()%>")
+    @WebResult(name = "returnValue", partName = "returnValue")
+    public <%=method.getWebServiceSignature()%> {
+       try {
+<%  if ( genModel.isSoapWrapping() ) {
+       WSModelParameter requestParameter = (WSModelParameter)method.getParameters().get(0);
+       WSModelClass requestClass = (WSModelClass)requestParameter.getType();
+
+       for ( Iterator ip = requestClass.getAttributes().iterator(); ip.hasNext(); ) {
+         WSModelAttribute parameterAttr = (WSModelAttribute)ip.next();
+         
+         if ( parameterAttr.getModelClassifier() instanceof ModelDataType ) {
+%>       <%=parameterAttr.getJavaType()%> <%=parameterAttr.getName()%> = <%=parameterAttr.getConvertFromWs("request")%>;
+<%       } else {
+            JavaModelClass pimParameterClass = ((WSModelClass)parameterAttr.getModelClass()).getPIMClass();
+%>       <%=pimParameterClass.getJavaType()%> <%=parameterAttr.getName()%> = utils.create<%=pimParameterClass.getName()%>(request.<%=parameterAttr.getGetter()%>());
+<%       }
+       } // for
+     } else {     
+         for ( Iterator ip = method.getParameters().iterator(); ip.hasNext(); ) {
+				WSModelParameter parameter = (WSModelParameter)ip.next();
+				
+				if ( parameter.getType() instanceof WSModelClass ) { 
+					WSModelClass parameterClass = (WSModelClass)parameter.getType();            
+%>       <%=parameterClass.getPIMClass().getJavaType()%> bs<%=parameter.getName()%> = utils.create<%=parameterClass.getPIMClass().getName()%>(<%=parameter.getName()%>);
+<%          } else {
+					WSModelDataType parameterType = (WSModelDataType)parameter.getType();            
+%>       <%=parameterType.getJavaType()%> bs<%=parameter.getName()%> = <%=parameter.getName()%>;
+<%          }
+         } // for
+     }
+     if ( pimMethod.getReturnType() != null ) {
+%>         <%=pimMethod.getJavaType()%> result;
+         
+         utils.resolveReferences();
+         result = <% 
+     } else {
+%>
+         utils.resolveReferences();
+         <%
+     }
+%><%=getCallDelegateSignature("delegate", "bs", false, pimMethod)%>
+<%   if ( genModel.isSoapWrapping() ) {
+        WSModelClass reponseClass = (WSModelClass)method.getReturnType();
+%>         <%=method.getWebServiceType()%> wsReturn 
+            = new <%=method.getWebServiceType()%>();
+         utils.resetReferences();   
+<%      if ( pimMethod.getReturnType() instanceof ModelClass ) {
+           WSModelClass returnClass = (WSModelClass)((ModelAttribute)reponseClass.getAttributes().get(0)).getModelClass();
+%>         wsReturn.setReturnValue(utils.create<%=returnClass.getName()%>(result));
+<%      } else if ( pimMethod.getReturnType() instanceof ModelDataType ) {
+           WSModelDataType returnType = (WSModelDataType)pimMethod.getReturnType();
+           
+%>         wsReturn.setReturnValue(<%=returnType.getConvertToWs()%>(result));
+<%      }
+%>         utils.resolveReferences();  
+         return wsReturn;  
+<%   } 
+     else if ( method.getReturnType() != null ) {
+        if ( method.getReturnType() instanceof ModelClass ) {
+%>         utils.resetReferences();
+         <%=((WSModelClass)method.getReturnType()).getJavaType()%> convertedResult = utils.create<%=method.getReturnType().getName()%>(result);
+         utils.resolveReferences();
+         return convertedResult;
+<%      } else {
+%>	       return WebserviceUtils.convertToWs(result);
+<%      }
+     }
+     for ( Iterator ie = method.getExceptions().iterator(); ie.hasNext(); ) {
+       WSModelClass exception = (WSModelClass)ie.next();
+       WSModelPackage exceptionPackage = (WSModelPackage) exception.getPackage();
+       JavaModelClass pimException = exception.getPIMClass();
+%>      } catch (<%=genClass.getQualifiedName(JavaArtefacts.BUSINESS_EXCEPTION, pimException)%> e) {
+         <%=exception.getScopedName(WSArtefacts.WS_STUB)%> exception = utils.create<%=exception.getName()%>(e);
+         utils.resolveReferences();
+         throw new <%=exceptionPackage.getQualifiedPackageName(WSArtefacts.WS_STUB)+"."+StringUtils.capitalize(method.getName())+exception.getGeneratedName(WSArtefacts.WS_STUB)%>(e.getMessage(), exception);
+<%   }
+%>      } finally {
+         utils.resetReferences();
+      }
+   }
+<%     
+   }
+
+   if ( springSupport ) {
+%>   
+   /**
+    *
+    */
+   protected void init() throws ServiceException {
+<% for ( Iterator ip = packageList.iterator(); ip.hasNext(); ) {
+     WSModelPackage modelPackage = (WSModelPackage)ip.next();
+     JavaModelPackage pimPackage = modelPackage.getPIMPackage();
+     String factoryClass = genClass.getScopedName(JavaArtefacts.BUSINESS_FACTORY, pimPackage);
+%>      <%=getFactoryMember(pimPackage)%> = (<%=factoryClass%>) getBeanFactory().getBean("<%=pimPackage.getQualifiedName(JavaArtefacts.BUSINESS_FACTORY)%>", <%=factoryClass%>.class);
+<% }
+%>
+   }
+   
+   /**
+    * Get the bean factory and register the bean factory with the name "BeanFactory"
+    */      
+    protected BeanFactory getBeanFactory() {
+      BeanFactory beanFactory = getApplicationContext();
+
+      if ( beanFactory.getType("BeanFactory") == null ) {
+         register("BeanFactory", beanFactory);
+      }
+      return beanFactory;
+   }
+   
+   private void register(String contextName, Object singleton) {
+      BeanFactory beanFactory = getApplicationContext();
+      
+      if (beanFactory instanceof ConfigurableBeanFactory) {
+         ConfigurableBeanFactory configurableBeanFactory = (ConfigurableBeanFactory)beanFactory;
+         
+         configurableBeanFactory.registerSingleton(contextName, singleton);
+      }
+      else if (beanFactory instanceof ConfigurableApplicationContext) {
+         ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext)beanFactory;
+         
+         applicationContext.getBeanFactory().registerSingleton(contextName, singleton);
+      }
+      else {
+         throw new RuntimeException("Unable to regsiter a bean in the beanFactory "+beanFactory.getClass().toString());
+      }
+   }
+
+   /**
+    * Create a new bean factory searching a xml file in the classpath called <b>applicationContext-ws.xml</b>.
+    */
+   private BeanFactory getApplicationContext() {
+      ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext-ws.xml");
+      
+      return applicationContext;
+   }
+
+
+<% }
+%>
+}

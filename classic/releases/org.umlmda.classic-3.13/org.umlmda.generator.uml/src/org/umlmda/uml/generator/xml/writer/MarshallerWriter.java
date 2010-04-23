@@ -1,0 +1,1129 @@
+
+
+
+
+package org.umlmda.uml.generator.xml.writer;
+
+
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.StringReader;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+
+import java.util.Hashtable;
+import java.util.Calendar;
+
+
+
+/* section:import << */
+//
+
+
+import java.util.Iterator;
+import java.util.ListIterator;
+import org.umlmda.model.uml.*;
+import org.umlmda.generator.model.util.RcsHelper;
+import org.umlmda.uml.generator.xml.*;
+import org.umlmda.uml.generator.java.*;
+
+// ==== End of generation header ===============================================
+
+
+
+//
+/* section:import >> */
+
+
+
+public class MarshallerWriter
+extends AbstractXMLWriter
+
+{
+  
+  /* Constants << */
+  
+  // Command line arguments
+  public static final String writer__ARGUMENT_CONTROL_PREFIX = "jsa:";
+  public static final String writer__ARGUMENT_OutputFolder   = "o=";
+  public static final String writer__ARGUMENT_BackupFolder   = "b=";
+  public static final String writer__ARGUMENT_NoBackup       = "B";
+  
+  // User Interface text message parts
+  public static final String writer__UITEXT_Method                   = "method ";
+  public static final String writer__UITEXT_Main                     = "main ";
+  public static final String writer__UITEXT_ExceptionIn              = "Exception in ";
+  public static final String writer__UITEXT_ColonNewLine             = ":\n";
+  public static final String writer__UITEXT_NewLine                  = "\n";
+  public static final String writer__UITEXT_Section                  = "section ";
+  public static final String writer__UITEXT_SavedFile                = "Saved file:       ";
+  public static final String writer__UITEXT_UnableToSaveFile         = "Unable to save file: ";
+  public static final String writer__UITEXT_UnableToBackupFile       = "Unable to backup file: ";
+  public static final String writer__UITEXT_ToBackupFolder           = " to backup folder: ";
+  public static final String writer__UITEXT_BackupFolderColon        = "Backup folder: ";
+  public static final String writer__UITEXT_BackupFolderExistFailure = " does not exist and cannot be created.";
+  public static final String writer__UITEXT_BackupFolderNotAFolder   = " is not a folder.";
+  public static final String writer__UITEXT_BackupFolderNotWritable  = " is not writable.";
+  public static final String writer__UITEXT_CodeWriterState          = "Code Writer State: ";
+  public static final String writer__UITEXT_GetFileIndexEquals       = "\n_getFileIndex()    = ";
+  public static final String writer__UITEXT_GetFullFileNameEquals    = "\n_getFullFileName() = ";
+  public static final String writer__UITEXT_GetOutputFolderEquals    = "\n_getOutputFolder() = ";
+  public static final String writer__UITEXT_ErrorHeader              = "\n\n--- CodeWriter Error Description Start ---\n\n";
+  public static final String writer__UITEXT_ErrorFooter              = "\n--- CodeWriter Error Description End -----\n\n";
+  public static final String writer__UITEXT_PlaceHolderException
+  = "This placeholder Exception should never be thrown: there is an error in the WriterFormat.";
+  
+  public static final int writer__FILE_BUFFER_SIZE  = 4096;                // initial size of StringBuffer
+  
+  /* Constants >> */
+  
+  
+  /* Writer Variables << */
+  
+  protected String[]     writer__iFileNameRoots     = new String[] {};     // generated file name roots
+  protected int          writer__iNumFiles          = 0;                   // number of generated files
+  
+  protected String       writer__iFileNamePrefix    = "";                  // failsafe default
+  protected String       writer__iFileNameSuffix    = "";                  // failsafe default
+  
+  protected String       writer__iBackupPrefix      = "";                  // failsafe default
+  protected String       writer__iBackupSuffix      = "";                  // failsafe default
+  
+  protected StringBuffer writer__iCurrentText       = new StringBuffer();  // current text
+  protected int          writer__iCurrentFileIndex  = 0;                   // current file index
+  
+  protected String[]     writer__iArgs              = new String[0];       // cmd line args
+  protected int          writer__iNumArgs           = 0;                   // number of cmd line args
+  
+  protected boolean      writer__iSave              = true;                // save generated code to disk
+  protected boolean      writer__iBackup            = true;                // make backups
+  
+  protected String       writer__iOutputFolder      = ".";                 // written code is output to this folder
+  protected String       writer__iBackupFolder      = ".";                 // overwritten files are placed here
+  
+  protected Hashtable    writer__iProperties            = new Hashtable(); // lookup table for compile time properties
+  protected boolean      writer__iPropertiesInitialised = false;           // true => lookup table initialiased
+  
+  /* Writer Variables >> */
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /** Execute Write */
+  public static void main( String rArgs[] ) {
+    MarshallerWriter codeWriter = new MarshallerWriter();
+    
+    try {
+      codeWriter.writer__initialize();
+      codeWriter.writer__handleArgs( rArgs );
+      codeWriter.writer__write();
+    }
+    catch( Exception e ) {
+      codeWriter.writer__handleException( writer__UITEXT_ExceptionIn + writer__UITEXT_Method + writer__UITEXT_Main, e );
+    }
+  }
+  
+  
+  
+  /* Writer Services << */
+  
+  /* Initialize. */
+  public void writer__initialize() {
+    writer__iCurrentFileIndex = 0;
+    writer__setDefaults();
+  }
+  
+  
+  
+  /** Main loop.
+  *  Template script is placed here in the @body section.
+  */
+  public void writer__write() throws Exception {
+    
+    // initialize
+    String writer__currentSection = "init";
+    
+    try {
+      if( false ) { throw new Exception( writer__UITEXT_PlaceHolderException ); }
+      
+      
+      
+      
+      // write files loop
+      int      writer__numFiles = _getNumFiles();
+      int      writer__fileI    = 0;
+      writer__next_file: for( writer__fileI = 0; writer__fileI < writer__numFiles; writer__fileI++ ) {
+        
+        try {
+          if( false ) { throw new Exception( writer__UITEXT_PlaceHolderException ); }
+          
+          
+          
+          
+          
+          if( ! writer__startFile() ) { continue writer__next_file; }
+          
+          
+          /* section:body << */
+          //
+          
+          writer__currentSection = "body";
+          //
+          // Writer is called once per business component a.k.a model package
+          //
+          JavaModelPackage genPackage = (JavaModelPackage)getGenPackage();
+          for ( Iterator iter = getComplexTypes().iterator(); iter.hasNext(); ) {
+            JavaModelClass modelClass = (JavaModelClass)iter.next();
+            
+            genPackage.registerImport(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, modelClass);
+            genPackage.registerImport(XMLArtefacts.JAXB_TYPE, modelClass);
+            if (isPolymorph(modelClass, NM_BASE)) {
+              genPackage.registerImport(XMLArtefacts.JAXB_HIERARCHIE_TYPE, modelClass);
+            }
+          }
+          _insert("//@@Generated file, please edit UserSections only\n//@@UserSection-Begin RCSHeader\n");
+          _insert(RcsHelper.writeHeader("// "));
+          _insert("\n//@@UserSection-End RCSHeader\n\npackage ");
+          _insert(getPackageName());
+          _insert(";\n\nimport java.io.Writer;\nimport java.util.HashMap;\nimport java.util.Iterator;\nimport java.util.List;\nimport java.util.Map;\n\nimport javax.xml.bind.JAXBContext;\nimport javax.xml.bind.JAXBException;\nimport javax.xml.bind.Marshaller;\n\nimport net.sourceforge.umlmda.xml.XMLUtils;\n");
+          _insert(genPackage.registeredImports());
+          _insert("\n\nimport ");
+          _insert(genPackage.getQualifiedPackageName(XMLArtefacts.JAXB_TYPE));
+          _insert(".ObjectFactory;\nimport ");
+          _insert(genPackage.getQualifiedPackageName(XMLArtefacts.JAXB_TYPE));
+          _insert(".RootType;\n\npublic class ");
+          _insert(getBaseName());
+          _insert(" {\n\n   private ObjectFactory objectFactory = null;\n   private Map objectMap = null;\n   private RootType rootType = null;\n\n   private ");
+          _insert(getBaseName());
+          _insert("() throws JAXBException {\n         ObjectFactory objectFactory = new ObjectFactory();\n         Map objectMap = new HashMap();\n\n         // create root element\n         RootType rootType = objectFactory.createRootType();\n\n         // create list elements\n");
+          for (Iterator iter = getRootTypes().iterator(); iter.hasNext(); ) {
+            ModelClass cls = (ModelClass)iter.next();
+            _insert("       rootType.set");
+            _insert(getName(cls, NM_PLAIN));
+            _insert("Items( objectFactory.create");
+            _insert(getName(cls, NM_PLAIN));
+            _insert("ItemsType());\n");
+          } // for
+          _insert("\n   }\n\n");
+          // generate the type converter functions
+          for ( Iterator iter = getComplexTypes().iterator(); iter.hasNext(); ) {
+            JavaModelClass cls = (JavaModelClass)iter.next();
+            String businessInterface = genPackage.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, cls);
+            String jaxbType = genPackage.getScopedName(XMLArtefacts.JAXB_TYPE, cls);
+            
+            _insert("   private void convert");
+            _insert(cls.getName());
+            _insert(" (");
+            _insert(jaxbType);
+            _insert(" out, ");
+            _insert(businessInterface);
+            _insert(" in) throws JAXBException {\n\n      // base classes");
+            for (Iterator is = cls.getSuperClasses().iterator(); is.hasNext(); ) {
+              ModelClass superCls = (ModelClass)is.next();
+              _insert("\n      convert");
+              _insert(superCls.getName());
+              _insert("(out, in);");
+            }
+            _insert("\n\n");
+            for (Iterator ia = cls.getAttributes().iterator(); ia.hasNext(); ) {
+              ModelAttribute attr = (ModelAttribute)ia.next();
+              if (attr.isPrimitiveType()) {
+                // primitive attributes
+                if (attr.isOptional()) {
+                  _insert("      if( in.");
+                  _insert(getName(attr, NM_GETTER));
+                  _insert("() != null)\n\t");
+                }
+                _insert("\t\tout.");
+                _insert(getName(attr, NM_SETTER));
+                _insert("(XMLUtils.convertToXMLType(in.");
+                _insert(getName(attr, NM_GETTER));
+                _insert("()));\n");
+              } else {
+                // complex type attributes
+                _insert("\t\tout.get");
+                _insert(getName(attr, NM_SETTER));
+                _insert("(convertObject(in.");
+                _insert(getName(attr, NM_GETTER));
+                _insert("());\n");
+              }
+            } // for attributes
+            // associations
+            for (Iterator ia = cls.getAssociations().iterator(); ia.hasNext(); ) {
+              ModelAssociation assoc = (ModelAssociation)ia.next();
+              if (assoc.isMultiple()) {
+                _insert("\t\tfor (Iterator iter = in.");
+                _insert(getName(assoc, NM_GETTER));
+                _insert("().iterator(); iter.hasNext(); ) {\n\t\t\tObjectType oref = convertObject( iter.next());\n\t\t\tout.");
+                _insert(getName(assoc, NM_GETTER));
+                _insert("().add( oref);\n\t\t}\n");
+              } else {
+                _insert("\t\tout.");
+                _insert(getName(assoc, NM_SETTER));
+                _insert("( convertObject( in.");
+                _insert(getName(assoc, NM_GETTER));
+                _insert("()));\n");
+              }
+            } // for associations
+            _insert("\n   }\n");
+          } // for complex types
+          _insert("\n\n\tprivate ObjectType convertObject(Object in) throws JAXBException {\n\n\t\t// check if object reference is contained in map\n\t\tObjectType oref = (ObjectType) objectMap.get(in);\n\t\tif (oref == null) {\n\n\t\t\t// create object reference \n\t\t\toref = objectFactory.createObjectType();\n\n\t\t\t// create referenced object\n\t\t\t");
+          for (ListIterator iter = getComplexTypes().listIterator(getComplexTypes().size()); iter.hasPrevious(); ) {
+            ModelClass cls = (ModelClass)iter.previous();
+            if (cls.isAbstract())
+            continue;
+            ModelClass baseCls = getPolymorphBase(cls);
+            if (!getRootTypes().contains(cls) && !getRootTypes().contains(baseCls))
+            continue;
+            _insert("if (in instanceof I");
+            _insert(cls.getName());
+            _insert(") {\n\t\t\t\t");
+            _insert(getName(cls, NM_BASE));
+            _insert(" item = objectFactory.create");
+            _insert(getName(cls, NM_BASE));
+            _insert("();\n\t\t\t\tconvert");
+            _insert(cls.getName());
+            _insert("( item, (I");
+            _insert(cls.getName());
+            _insert(")in);\n\t\t\t\titem.setORef( oref);\n");
+            if (baseCls != null) {
+              _insert("\t\t\t\t// handle choice\n\t\t\t\t");
+              _insert(getName(baseCls, NM_DERIVED));
+              _insert(" choice = objectFactory.create");
+              _insert(getName(baseCls, NM_DERIVED));
+              _insert("();\n\t\t\t\tchoice.set");
+              _insert(getName(cls, NM_PLAIN));
+              _insert("( item);\n\t\t\t\trootType.get");
+              _insert(getName(baseCls, NM_PLAIN));
+              _insert("Items().getItems().add(choice);\n");
+            } else {
+              _insert("\t\t\t\trootType.get");
+              _insert(getName(cls, NM_PLAIN));
+              _insert("Items().getItems().add(item);\n");
+            }
+            _insert("\n\t\t\t} else ");
+          } // for
+          _insert("{\n\t\t\t\tthrow new RuntimeException( \"marshal request for unknown type: \" + in.getClass().getName());\n\t\t\t}\n\t\t\toref.setId(\"REF\" + objectMap.size());\n\t\t\tobjectMap.put(in, oref);\n\t\t}\n\t\treturn oref;\n\t}\n\n\tstatic public void marshal(List in, Writer writer) throws JAXBException {\n\n\t\tJAXBContext context = JAXBContext.newInstance(getClass().getPackage().getName());\n      ");
+          _insert(getBaseName());
+          _insert(" self = new ");
+          _insert(getBaseName());
+          _insert("();\n\n\t\t// create XML types\n\t\tfor (Iterator iter = in.iterator(); iter.hasNext();) {\n\t\t\tself.convertObject( iter.next(), objectMap, objectFactory);\n\t\t}\n\n\t\t// marshal root element\n\t\tMarshaller marshaller = context.createMarshaller();\n\t\tmarshaller.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE );\n\t\tmarshaller.marshal(self.rootType, writer);\n\t}\n}\n");
+          
+          
+          //
+          /* section:body >> */
+          
+          
+          if( ! writer__endFile() ) { continue writer__next_file; }
+          
+          
+          
+          
+          
+        }
+        catch( Exception e ) {
+          writer__handleException( writer__UITEXT_ExceptionIn + writer__UITEXT_Section + writer__currentSection, e );
+        }
+        
+        writer__nextFile();
+      }
+      
+      
+      
+      
+      
+    }
+    catch( Exception e ) {
+      writer__handleException( writer__UITEXT_ExceptionIn + writer__UITEXT_Section + writer__currentSection, e );
+    }
+    
+  }
+  
+  
+  
+  /** Start writing a file. */
+  public boolean writer__startFile() {
+    writer__iCurrentText = new StringBuffer( writer__FILE_BUFFER_SIZE );
+    return true;
+  }
+  
+  
+  
+  /** End writing a file. */
+  public boolean writer__endFile() {
+    boolean endOK = true;
+    
+    String fileName = _getFullFileName();
+    String filePath
+    = writer__iOutputFolder
+    + "\\"
+    + fileName
+    ;
+    
+    if( writer__iBackup ) {
+      try {
+        writer__backup( filePath, fileName, writer__iBackupFolder );
+        
+      }
+      catch( Exception e ) {
+        writer__handleException( writer__UITEXT_UnableToBackupFile
+        + filePath
+        + writer__UITEXT_ToBackupFolder
+        + writer__iBackupFolder
+        ,e
+        );
+        endOK = false;
+      }
+    }
+    
+    if( endOK && writer__iSave ) {
+      try {
+        writer__save( filePath, writer__iCurrentText.toString() );
+        writer__userMessage( writer__UITEXT_SavedFile + filePath + writer__UITEXT_NewLine );
+        
+      }
+      catch( Exception e ) {
+        writer__handleException( writer__UITEXT_UnableToSaveFile + filePath, e );
+        endOK = false;
+      }
+    }
+    
+    return endOK;
+  }
+  
+  
+  
+  /** Move to next file. */
+  public void writer__nextFile() {
+    writer__iCurrentFileIndex = writer__iCurrentFileIndex + 1;
+  }
+  
+  
+  
+  /** Handle command line arguments to CodeWriter. */
+  public void writer__handleArgs( String[] rArgs ) {
+    
+    // set arg names
+    String argName_OutputFolder           = writer__ARGUMENT_CONTROL_PREFIX + writer__ARGUMENT_OutputFolder;
+    String argName_BackupFolder           = writer__ARGUMENT_CONTROL_PREFIX + writer__ARGUMENT_BackupFolder;
+    String argName_NoBackup               = writer__ARGUMENT_CONTROL_PREFIX + writer__ARGUMENT_NoBackup;
+    
+    // parse
+    int numArgs = rArgs.length;
+    for(int argI = 0; argI < numArgs; argI++ ) {
+      if( rArgs[argI].startsWith( argName_OutputFolder ) ) {
+        _setOutputFolder( rArgs[ argI ].substring( argName_OutputFolder.length() ) );
+      }
+      else if( rArgs[argI].startsWith( argName_BackupFolder ) ) {
+        _setBackupFolder( rArgs[ argI ].substring( argName_BackupFolder.length() ) );
+      }
+      else if( argName_NoBackup.equals( rArgs[ argI ] ) ) {
+        _backup( false ); // NOTE: -B => don't make backups
+      }
+    }
+    
+    writer__setArgs( rArgs.length, rArgs );
+  }
+  
+  
+  
+  /** Set defaults from configuration property set. */
+  public void writer__setDefaults() {
+    
+    _setFileNameRoot( "GeneratedFile" );
+    
+    _setFileNameSuffix( ".java" );
+    
+    _setOutputFolder( "C:\\devel\\umlmda.rsm7\\build\\plugins\\org.umlmda.generator.uml\\src\\org\\umlmda\\uml\\generator\\xml\\writer" );
+    
+    _setBackupFolder( ".jostraca" );
+    _setBackupPrefix( "-" );
+    _setBackupSuffix( "-backup.txt" );
+    _backup( "true".equals( "false" ) );
+    
+  }
+  
+  
+  
+  /** Store command line arguments */
+  public void writer__setArgs( int rNumArgs, String[] rArgs ) {
+    writer__iNumArgs = rNumArgs;
+    writer__iArgs    = rArgs;
+  }
+  
+  
+  
+  /** Print a user message */
+  public void writer__userMessage( String rMessage ) {
+    System.out.print( rMessage );
+  }
+  
+  
+  
+  /** Handle exceptions: print an explanation for user. */
+  public void writer__handleException( String rMessage, Exception rException ) {
+    
+    StringBuffer userMsg = new StringBuffer( 111 );
+    
+    userMsg.append( writer__UITEXT_ErrorHeader );
+    
+    userMsg.append( writer__describeState() + rMessage + writer__UITEXT_ColonNewLine );
+    
+    StringWriter stringWriter = new StringWriter();
+    rException.printStackTrace( new PrintWriter( stringWriter) );
+    userMsg.append( stringWriter.toString() );
+    
+    userMsg.append( writer__UITEXT_ErrorFooter );
+    
+    throw new RuntimeException( userMsg.toString(), rException );
+  }
+  
+  
+  
+  /** Provide a concise description of the state of the CodeWriter. */
+  public String writer__describeState() {
+    String currentState
+    = writer__UITEXT_CodeWriterState
+    + writer__UITEXT_GetFileIndexEquals    + _getFileIndex()
+    + writer__UITEXT_GetFullFileNameEquals + _getFullFileName()
+    + writer__UITEXT_GetOutputFolderEquals + _getOutputFolder()
+    + writer__UITEXT_NewLine
+    ;
+    return currentState;
+  }
+  
+  
+  
+  /** Save written files to disk.
+  *  @param rFilePath Save location.
+  *  @param rContent  File content.
+  */
+  public void writer__save( String rFilePath, String rContent ) throws Exception {
+    StringReader   sr = new StringReader( rContent );
+    BufferedReader br = new BufferedReader( sr );
+    FileWriter     fw = new FileWriter( rFilePath );
+    BufferedWriter bw = new BufferedWriter( fw );
+    
+    String line;
+    while( null != (line = br.readLine()) ) {
+      bw.write( line );
+      bw.newLine();
+    }
+    
+    bw.close();
+    br.close();
+  }
+  
+  
+  
+  /** Read file from disk.
+  *  @param rFilePath.
+  */
+  public String writer__read( String rFilePath ) throws Exception {
+    File       file       = new File( rFilePath );
+    FileReader in         = new FileReader( file );
+    int        size       = (int) file.length();
+    char[]     data       = new char[size];
+    int        charsRead  = 0;
+    
+    while( charsRead < size ) {
+      charsRead += in.read( data, charsRead, size - charsRead );
+    }
+    
+    return new String( data );
+  }
+  
+  
+  
+  /** Backup overwritten files, if they exist.
+  *  Backups have the format:
+  *  [YYYYMMDDhhmmss][prefix][filename][suffix]
+  *  @param rFilePath     Full Path of File to backup (including name).
+  *  @param rFileName     Name of File to backup.
+  *  @param rBackupFolder Folder to place backups in.
+  */
+  public void writer__backup( String rFilePath, String rFileName, String rBackupFolder ) throws Exception {
+    
+    File backupFolder = new File( rBackupFolder );
+    
+    // check backup folder ( create if necessary )
+    // ...
+    
+    if( ! backupFolder.exists() ) {
+      if( ! backupFolder.mkdir() ) {
+        throw new Exception( writer__UITEXT_BackupFolderColon
+        + backupFolder
+        + writer__UITEXT_BackupFolderExistFailure );
+      }
+    }
+    if( ! backupFolder.isDirectory() ) {
+      throw new Exception( writer__UITEXT_BackupFolderColon
+      + backupFolder
+      + writer__UITEXT_BackupFolderNotAFolder );
+    }
+    if( ! backupFolder.canWrite() ) {
+      throw new Exception( writer__UITEXT_BackupFolderColon
+      + backupFolder
+      + writer__UITEXT_BackupFolderNotWritable );
+    }
+    
+    // create backup file path
+    Calendar calendar = Calendar.getInstance();
+    String year_yyyy = _align( String.valueOf( calendar.get(Calendar.YEAR) ),         "0", 4, 'r' );
+    String month_mm  = _align( String.valueOf( (1+calendar.get(Calendar.MONTH)) ),    "0", 2, 'r' );
+    String day_dd    = _align( String.valueOf( calendar.get(Calendar.DAY_OF_MONTH) ), "0", 2, 'r' );
+    String hour_hh   = _align( String.valueOf( calendar.get(Calendar.HOUR_OF_DAY) ),  "0", 2, 'r' );
+    String minute_mm = _align( String.valueOf( calendar.get(Calendar.MINUTE) ),       "0", 2, 'r' );
+    String second_ss = _align( String.valueOf( calendar.get(Calendar.SECOND) ),       "0", 2, 'r' );
+    String dateTime       = year_yyyy+month_mm+day_dd+hour_hh+minute_mm+second_ss;
+    String backupFileName = dateTime + writer__iBackupPrefix + rFileName + writer__iBackupSuffix;
+    File   backupFilePath = new File( rBackupFolder, backupFileName );
+    
+    // save backup file
+    File fileToBackup = new File( rFilePath );
+    if( fileToBackup.exists() ) {
+      String fileContents = writer__read( rFilePath );
+      writer__save( backupFilePath.getPath(), fileContents );
+    }
+  }
+  
+  
+  
+  /** Set compile time properties. */
+  public void writer__initProperties() {
+    
+    String[] propertyList = new String[] { "parse.SectionMarker","!","java.implements","","lang.TemplateInsertTransforms","JavaStringEscapeTransform, TextElementTransform, AppendNewLineTransform","parse.OpenOuterChar","<","lang.FalseString","false","jostraca.regexp.SubmatchAnyWhiteSpaceAnyCharsAtEnd","(\\s*.*)$","main.WorkFolder","C:\\devel\\umlmda.rsm7\\build\\plugins\\org.umlmda.generator.uml\\src\\org\\umlmda\\uml\\generator\\xml\\writer","main.FileNameRoot","GeneratedFile","parse.regexp.OpenOuterChar","<","main.CodeWriterTransform.script","AppendNewLineTransform","jostraca.regexp.AnyWhiteSpaceAtStart","^\\s*","jostraca.regexp.IsExpression","^\\s*=","jostraca.template.isLibrary","false","jostraca.regexp.IsDirective","^\\s*@","parse.OpenInnerChar","%","lang.section.all.Modifiers","BlockIndenter","jostraca.system.pathSeparator",";","parse.regexp.OpenInnerChar","%","main.SaveCodeWriter","yes","jostraca.TemplateScript.CanonicalName.jv","java","parse.regexp.SectionMarker","!","jostraca.standard.TemplateScriptTransforms","AppendNewLineTransform","lang.InsertPrefix","_insert(","lang.CommentLineSuffix","","main.TemplatePath","C:\\devel\\umlmda.rsm7\\build\\plugins\\org.umlmda.generator.core\\lib\\jostraca\\conf\\../templates/src","java.extends","","lang.NameValueList.itemSeparator",",","lang.TrueString","true","main.TemplateScript","","main.EnableMeta","yes","main.ExternalCompilerOptions","","jostraca.Location","C:\\devel\\umlmda.rsm7\\build\\plugins\\org.umlmda.generator.core\\lib\\jostraca\\conf\\..","parse.Directives","SectionDirective, InitDirective, OneLineDirective, CollapseWhiteSpaceDirective, InsertSectionDirective, ReplaceDirective, ReplaceRegExpDirective","main.DumpPropertySet","no","jostraca.TemplateScript.CanonicalName.perl","perl","main.CodeWriterCompiler","org.jostraca.BasicJavaCodeWriterCompiler","java.CodeWriter.extends","AbstractXMLWriter","jostraca.standard.TemplateDirectiveTransforms","","main.ExecuteCodeWriter","no","main.CodeWriterTransform.expr","ExpressionElementTransform, AppendNewLineTransform","main.ExternalControllerOptions","","main.CodeWriter.argument.name.OutputFolder","o=","lang.InsertSuffix",");","jostraca.template.path","C:\\devel\\umlmda.rsm7\\build\\plugins\\org.umlmda.generator.uml\\src\\org\\umlmda\\uml\\generator\\xml\\writer\\MarshallerWriter.jtm","main.CodeWriterTransform.insert-section","InsertSectionTransform","main.FileNamePrefix","","jostraca.noexit","yes","lang.StringEscapeTransform","JavaStringEscapeTransform","jostraca.system.fileSeparator","\\","main.BackupPrefix","-","parse.regexp.ExpressionMarker","=","main.CodeWriter.argument.name.BackupFolder","b=","jostraca.regexp.template.IncludeDirective","<%\\s*@\\s*include\\s+(\".+?\"|[^ ]+)\\s*([a-z- ]*)\\s*%>","main.CodeWriterController","org.jostraca.BasicJavaCodeWriterController","jostraca.TemplateScript.CanonicalName.rebol","rebol","parse.CloseOuterChar",">","jostraca.MakeBackup","false","main.CompileCodeWriter","no","main.CodeBuilder","org.jostraca.BasicCodeBuilder","java.ClassPathPrefix","","jostraca.template.name","C:\\devel\\umlmda.rsm7\\build\\plugins\\org.umlmda.generator.uml/src/org/umlmda/uml/generator/xml/writer/MarshallerWriter.jtm","main.IncludeBase","","main.FileNameSuffix",".java","lang.CodeWriterTransforms","SimpleIndentTransform","jostraca.standard.Directives","SectionDirective, InitDirective, OneLineDirective, CollapseWhiteSpaceDirective","main.BackupFolder",".jostraca","parse.CloseInnerChar","%","fs","\\","jostraca.regexp.template.IncludeBlockDirective","<%\\s*@\\s*include-block\\s+[\\\"']?(.+?)[\\\"']?\\s+/(.+?)/\\s*%>","parse.regexp.DeclarationMarker","!","main.BackupSuffix","-backup.txt","main.OutputFolder","C:\\devel\\umlmda.rsm7\\build\\plugins\\org.umlmda.generator.uml\\src\\org\\umlmda\\uml\\generator\\xml\\writer","main.ExternalCompiler","javac","lang.NameValueList.nameQuote","\"","lang.TextQuote","\"","java.package","","jostraca.standard.TemplateInsertTransforms","JavaStringEscapeTransform, TextElementTransform, AppendNewLineTransform","jostraca.regexp.SubmatchDirectiveName","([a-zA-Z/_|\\.-][0-9a-zA-Z/_|\\.-]*)","jostraca.TemplateScript.CanonicalName.rb","ruby","lang.CommentBlockPrefix","/*","main.CodeWriterTransform.text","JavaStringEscapeTransform, TextElementTransform, AppendNewLineTransform","jostraca.standard.TemplateExpressionTransforms","ExpressionElementTransform, AppendNewLineTransform","main.DefaultTemplateScript","java","jostraca.strict.version","yes","parse.regexp.DirectiveMarker","@","lang.NameValueList.pairSeparator",",","jostraca.regexp.AnyWhiteSpace","\\s*","java.ClassPathSuffix","","jostraca.FormatFolder","C:\\devel\\umlmda.rsm7\\build\\plugins\\org.umlmda.generator.core\\lib\\jostraca\\conf\\../format","main.MakeBackup","no","java.CodeWriter.package","org.umlmda.uml.generator.xml.writer","main.MetaFolder",".jostraca","lang.TemplateScriptTransforms","AppendNewLineTransform","jostraca.TemplateScript.CanonicalName.py","python","java.ClassPath","","lang.NameValueList.valueQuote","\"","main.CodeWriter","MarshallerWriter","ps",";","jostraca.TemplateScript.CanonicalName.pl","perl","jostraca.TemplateScript.CanonicalName.java","java","jostraca.regexp.MatchDirective","^\\s*@\\s*([a-zA-Z/_|\\.-][0-9a-zA-Z/_|\\.-]*)(\\s*.*)$","lang.CommentBlockSuffix","*/","jostraca.regexp.MatchExpression","^\\s*=(\\s*.*)$","jostraca.TemplateScript.CanonicalName.r","rebol","main.CodeWriterPrefix","","jostraca.template.file","MarshallerWriter.jtm","o","<%","jostraca.TemplateScript.CanonicalName.c","c","c","%>","main.TemplateParser","org.jostraca.BasicTemplateParser","jostraca.TemplateScript.CanonicalName.ruby","ruby","parse.regexp.CloseOuterChar",">","parse.DeclarationMarker","!","lang.TemplateDirectiveTransforms","","jostraca.properties.modifiers","org.jostraca.NameValueListPSM","main.CodeWriterSuffix",".java","main.ShowDocumentation","no","jostraca.version","0.3","jostraca.template.folder","C:\\devel\\umlmda.rsm7\\build\\plugins\\org.umlmda.generator.uml\\src\\org\\umlmda\\uml\\generator\\xml\\writer","parse.DirectiveMarker","@","parse.regexp.CloseInnerChar","%","main.CodeWriterFormat","format\\ParentJavaWriterFormat.jwf","jostraca.regexp.template.ConfDirective","<%\\s*@\\s*conf\\s+(.+?)\\s*%>","main.DumpTemplate","no","jostraca.standard.TemplateTextTransforms","","main.CodeWriter.argument.ControlPrefix","jsa:","parse.ExpressionMarker","=","jostraca.regexp.MatchSectionName","^\\s*([a-zA-Z_\\.-][0-9a-zA-Z_\\.-]*)!(\\s*.*)$","main.JostracaVersion","0.3","jostraca.LocalConfigFileName","local.conf","jostraca.regexp.template.IncludeBaseDirective","<%\\s*@\\s*include-base\\s+[\\\"']?(.+?)[\\\"']?\\s*%>","jostraca.regexp.MatchDeclaration","^\\s*!(\\s*.*)$","lang.TemplateExpressionTransforms","ExpressionElementTransform, AppendNewLineTransform","main.ExternalController","java","main.DefaultTemplatePath","C:\\devel\\umlmda.rsm7\\build\\plugins\\org.umlmda.generator.core\\lib\\jostraca\\conf\\../templates/src","main.CodeWriter.argument.name.NoBackup","B","jostraca.regexp.SubmatchSectionName","([a-zA-Z_\\.-][0-9a-zA-Z_\\.-]*)","jostraca.TemplateScript.CanonicalName.python","python","main.CodeWriter.argument.name.CodeWriterOutputFolder","O=","lang.CommentLinePrefix","//","lang.TemplateTextTransforms","","java.CodeWriter.implements","","main.AlsoGenerate","" };
+    int numProperties = propertyList.length;
+    for( int propI = 0; propI < numProperties; propI += 2 ) {
+      writer__iProperties.put( propertyList[ propI ], propertyList[ propI+1 ] );
+    }
+    writer__iPropertiesInitialised = true;
+    
+  }
+  
+  protected StringBuffer _getOutputBuffer() {
+    return writer__iCurrentText;
+  }
+  /* Writer Services >> */
+  
+  
+  
+  
+  /* Template Services (File Generation) << */
+  
+  /** Set the prefix of the files to be written.
+  *  @param rPrefix Written files prefix.
+  */
+  public void _setFileNamePrefix( String rPrefix ) {
+    if( null == rPrefix ) {
+      return; // ignore
+    }
+    writer__iFileNamePrefix = rPrefix;
+  }
+  
+  
+  
+  /** Get prefix of files to be written. */
+  public String _getFileNamePrefix() {
+    return writer__iFileNamePrefix;
+  }
+  
+  
+  
+  /** Set the suffix of the files to be written.
+  *  @param rSuffix Written files suffix.
+  */
+  public void _setFileNameSuffix( String rSuffix ) {
+    if( null == rSuffix ) {
+      return; // ignore
+    }
+    writer__iFileNameSuffix = rSuffix;
+  }
+  
+  
+  
+  /** Get suffix of files to be written. */
+  public String _getFileNameSuffix() {
+    return writer__iFileNameSuffix;
+  }
+  
+  
+  
+  /** Set the full name of the file to be written.
+  *  Prefix and Suffix are set to empty
+  *  @param rName Full name of the file to write.
+  */
+  public void _setFullFileName( String rName ) {
+    _setFileNamePrefix( "" );
+    _setFileNameRoot(   rName );
+    _setFileNameSuffix( "" );
+  }
+  
+  
+  
+  /** Get the full name of current file being generated. */
+  public String _getFullFileName() {
+    return _getFileNamePrefix() + _getFileNameRoot() + _getFileNameSuffix();
+  }
+  
+  
+  
+  /** Set the names of the files to be written.
+  *  Prefix and Suffix are set to empty
+  *  @param rName Full name of the file to write.
+  */
+  public void _setFullFileNames( String[] rNames ) {
+    _setFileNamePrefix( "" );
+    _setFileNameRoots(  rNames );
+    _setFileNameSuffix( "" );
+  }
+  
+  
+  
+  /** Get the full names of the files to be written. */
+  public String[] _getFullFileNames() {
+    
+    String[] fileNameRoots  = _getFileNameRoots();
+    int      numFiles       = fileNameRoots.length;
+    String[] fullFileNames  = new String[ numFiles ];
+    String   fileNamePrefix = _getFileNamePrefix();
+    String   fileNameSuffix = _getFileNameSuffix();
+    
+    for( int fileI = 0; fileI < numFiles; fileI++ ) {
+      fullFileNames[ fileI ] = fileNamePrefix + fileNameRoots[ fileI ] + fileNameSuffix;
+    }
+    
+    return fullFileNames;
+  }
+  
+  
+  
+  /** Set the root of the name of the file to be written.
+  *  @param rFileNameRoot Root of the name of file to be written.
+  */
+  public void _setFileNameRoot( String rFileNameRoot ) {
+    if( null == rFileNameRoot ) {
+      return; // ignore
+    }
+    _setFileNameRoots( new String[] { rFileNameRoot } );
+  }
+  
+  
+  
+  /** Get the root of the name of current file being generated. */
+  public String _getFileNameRoot() {
+    if( 0 < writer__iFileNameRoots.length ) {
+      return writer__iFileNameRoots[ writer__iCurrentFileIndex ];
+    }
+    return "";
+  }
+  
+  
+  
+  /** Set the roots of the names of the files to be written.
+  *  @param rFileNameRoots Roots of names of files to be written.
+  */
+  public void _setFileNameRoots( String[] rFileNameRoots ) {
+    if( null == rFileNameRoots ) {
+      return; // ignore
+    }
+    
+    // copy
+    String[] roots = (String[]) rFileNameRoots.clone();
+    
+    // normalize - replace nulls
+    int numRoots = roots.length;
+    for(int rootI = 0; rootI < numRoots; rootI++) {
+      if( null == roots[ rootI ] ) {
+        roots[ rootI ] = "";
+      }
+    }
+    
+    // save roots
+    writer__iFileNameRoots = roots;
+    writer__iNumFiles      = numRoots;
+  }
+  
+  
+  
+  /** Get roots of the names of files to be written. */
+  public String[] _getFileNameRoots() {
+    return writer__iFileNameRoots;
+  }
+  
+  
+  
+  /** Get index of file currently being generated. */
+  public int _getFileIndex() {
+    return writer__iCurrentFileIndex;
+  }
+  
+  
+  
+  /** Get number of generated files. */
+  public int _getNumFiles() {
+    return writer__iNumFiles;
+  }
+  
+  
+  
+  /** Set output folder.
+  *  @param rOutputFolder Folder to output generated code to.
+  */
+  public void _setOutputFolder( String rOutputFolder ) {
+    writer__iOutputFolder = rOutputFolder;
+  }
+  
+  
+  
+  /** Get output folder. */
+  public String _getOutputFolder() {
+    return writer__iOutputFolder;
+  }
+  
+  
+  
+  /** Set backup folder.
+  *  @param rBackupFolder Folder to backup overwritten files to.
+  */
+  public void _setBackupFolder( String rBackupFolder ) {
+    writer__iBackupFolder = writer__iOutputFolder + "\\" + rBackupFolder;
+  }
+  
+  
+  
+  /** Get backup folder. */
+  public String _getBackupFolder() {
+    return writer__iBackupFolder;
+  }
+  
+  
+  
+  /** Set the suffix of backup files.
+  *  @param rSuffix Backup files suffix.
+  */
+  public void _setBackupSuffix( String rSuffix ) {
+    if( null == rSuffix ) {
+      return; // ignore
+    }
+    writer__iBackupSuffix = rSuffix;
+  }
+  
+  
+  
+  /** Set the prefix of backup files.
+  *  @param rPrefix Backup files prefix.
+  */
+  public void _setBackupPrefix( String rPrefix ) {
+    if( null == rPrefix ) {
+      return; // ignore
+    }
+    writer__iBackupPrefix = rPrefix;
+  }
+  
+  
+  
+  /** Set to true if written files are to be backed up to disk automatically.
+  *  @param rBackup True => Backup files to disk.
+  */
+  public void _backup( boolean rBackup ) {
+    writer__iBackup = rBackup;
+  }
+  
+  
+  
+  /** Set to true if written files are to be saved to disk automatically.
+  *  @param rSave True => Save written files to disk.
+  */
+  public void _save( boolean rSave ) {
+    writer__iSave = rSave;
+  }
+  
+  
+  /* Template Services (File Generation) >> */
+  
+  
+  
+  
+  /* Template Services (Control) << */
+  
+  /** Get compile time property
+  *  @param rName Name of property to get.
+  */
+  public String _getProperty( String rName ) {
+    String result = "";
+    
+    if( ! writer__iPropertiesInitialised ) {
+      writer__initProperties();
+    }
+    
+    if( writer__iProperties.containsKey( rName ) ) {
+      result = (String) writer__iProperties.get( rName );
+    }
+    
+    return result;
+  }
+  
+  
+  
+  /** Get first user arg - that is, first arg with no writer__ARGUMENT_CONTROL_PREFIX. */
+  public String _getFirstUserArg() {
+    return _getUserArg(0);
+  }
+  
+  
+  
+  /** Get second user arg - that is, second arg with no writer__ARGUMENT_CONTROL_PREFIX. */
+  public String _getSecondUserArg() {
+    return _getUserArg(1);
+  }
+  
+  
+  
+  /** Get third user arg - that is, third arg with no writer__ARGUMENT_CONTROL_PREFIX. */
+  public String _getThirdUserArg() {
+    return _getUserArg(2);
+  }
+  
+  
+  
+  /** Get user arg at specified ordinal.
+  *  @param rOrdinal ordinal of user arg to get.
+  */
+  public String _getUserArg( int rOrdinal ) {
+    if( null == writer__iArgs ) {
+      return "";
+    }
+    int ordinal = 0;
+    int numArgs = writer__iArgs.length;
+    next_arg: for(int argI = 0; argI < numArgs; argI++) {
+      if( writer__iArgs[argI].startsWith( writer__ARGUMENT_CONTROL_PREFIX ) ) {
+        continue next_arg;
+      } else {
+        if( ordinal == rOrdinal ) {
+          return writer__iArgs[argI];
+        } else {
+          ordinal++;
+        }
+      }
+    }
+    return "";
+  }
+  
+  
+  
+  /** Get command line arguments to CodeWriter. */
+  public String[] _getArgs() {
+    return writer__iArgs;
+  }
+  
+  
+  
+  /** Get number of command line arguments to CodeWriter. */
+  public int _getNumArgs() {
+    return writer__iNumArgs;
+  }
+  
+  
+  
+  /* Template Services (Control) >> */
+  
+  
+  
+  /* Template Services (Text Production) << */
+  
+  
+  // inserts
+  // ...
+  
+  /** Insert text into written file.
+  *  Abbreviated by <%=foobar%>.
+  *  @param rText Text to insert.
+  */
+  public void _insert( String rText ) {
+    writer__iCurrentText.append( rText );
+  }
+  
+  /** Insert string representation of object into written file.
+  *  Abbreviated by <%=foobar%>.
+  *  @param rObject Object to insert.
+  */
+  public void _insert( Object rObject ) {
+    writer__iCurrentText.append( ""+rObject );
+  }
+  
+  /** Insert string representation of primitive data type into written file.
+  *  Abbreviated by <%=foobar%>.
+  *  @param rInt int to insert
+  */
+  public void _insert( int rInt ) {
+    writer__iCurrentText.append( rInt );
+  }
+  
+  /** Insert string representation of primitive data type into written file.
+  *  Abbreviated by <%=foobar%>.
+  *  @param rLong long to insert
+  */
+  public void _insert( long rLong ) {
+    writer__iCurrentText.append( rLong );
+  }
+  
+  /** Insert string representation of primitive data type into written file.
+  *  Abbreviated by <%=foobar%>.
+  *  @param rShort short to insert
+  */
+  public void _insert( short rShort ) {
+    writer__iCurrentText.append( rShort );
+  }
+  
+  /** Insert string representation of primitive data type into written file.
+  *  Abbreviated by <%=foobar%>.
+  *  @param rByte byte to insert
+  */
+  public void _insert( byte rByte ) {
+    writer__iCurrentText.append( rByte );
+  }
+  
+  /** Insert string representation of primitive data type into written file.
+  *  Abbreviated by <%=foobar%>.
+  *  @param rDouble double to insert
+  */
+  public void _insert( double rDouble ) {
+    writer__iCurrentText.append( rDouble );
+  }
+  
+  /** Insert string representation of primitive data type into written file.
+  *  Abbreviated by <%=foobar%>.
+  *  @param rFloat float to insert
+  */
+  public void _insert( float rFloat ) {
+    writer__iCurrentText.append( rFloat );
+  }
+  
+  /** Insert string representation of primitive data type into written file.
+  *  Abbreviated by <%=foobar%>.
+  *  @param rChar char to insert
+  */
+  public void _insert( char rChar ) {
+    writer__iCurrentText.append( rChar );
+  }
+  
+  /** Insert string representation of primitive data type into written file.
+  *  Abbreviated by <%=foobar%>.
+  *  @param rBoolean boolean to insert
+  */
+  public void _insert( boolean rBoolean ) {
+    writer__iCurrentText.append( rBoolean );
+  }
+  
+  
+  
+  /** Create a String containing specified number of spaces.
+  *  @param rNumSpaces Number of spaces to place in String
+  */
+  public String _spaces( int rNumSpaces ) {
+    int numSpaces = rNumSpaces;
+    if( 0 > numSpaces ) { numSpaces *= -1; }
+    StringBuffer spaces = new StringBuffer( numSpaces );
+    for(int spaceI = 0; spaceI < numSpaces; spaceI++) {
+      spaces.append(" ");
+    }
+    return spaces.toString();
+  }
+  
+  
+  
+  /** Left align String with spaces. */
+  public String _left( String rText, int rColWidth ) {
+    return _align( rText, " ", rColWidth, 'l' );
+  }
+  
+  
+  
+  /** Right align String with spaces. */
+  public String _right( String rText, int rColWidth ) {
+    return _align( rText, " ", rColWidth, 'r' );
+  }
+  
+  
+  
+  /** Center align String with spaces. */
+  public String _center( String rText, int rColWidth ) {
+    return _align( rText, " ", rColWidth, 'c' );
+  }
+  
+  
+  
+  /** Align text within background text to specified column width.
+  *  Alignment can be 'l': left, 'c': center, 'r': right
+  */
+  public String _align( String rText, String rBackText, int rColWidth, char rAlignment ) {
+    String result = rText;
+    
+    if( null == rText ) {
+      result = "";
+    }
+    else if( null != rBackText ) {
+      try {
+        int textLen = rText.length();
+        if( rColWidth > textLen ) {
+          int    backTextLen     = rBackText.length();
+          int    remainWidth     = rColWidth - textLen;
+          int    backTextRepeats = remainWidth / backTextLen;
+          int    backTextRemain  = remainWidth % backTextLen;
+          String back            = "";
+          for( int backTextI = 0; backTextI < backTextRepeats; backTextI++ ) {
+            back = back + rBackText;
+          }
+          back = back + rBackText.substring( 0, backTextRemain );
+          
+          switch( rAlignment ) {
+            case 'l':
+            result = result + back;
+            break;
+            case 'c':
+            result = back.substring( 0, (back.length()/2) ) + result + back.substring( (back.length()/2) );
+            break;
+            case 'r':
+            result = back + result;
+            break;
+          }
+        }
+      }
+      catch( Exception e ) {
+        result = rText;
+      }
+    }
+    return result;
+  }
+  
+  
+  
+  /** Set current text of file currently being generated. */
+  public void _setText( String rText) {
+    writer__iCurrentText = new StringBuffer( rText );
+  }
+  
+  
+  
+  /** Get current text of file currently being generated. */
+  public String _getText() {
+    return writer__iCurrentText.toString();
+  }
+  
+  /* Template Services (Text Production) << */
+  
+}
+
+
+
