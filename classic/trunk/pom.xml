@@ -13,9 +13,9 @@
    <description>UMLMDA maven project for umlmda classic modules.</description>
 
    <properties>
-      <umlmda.uml2.profile.version>4.2.1</umlmda.uml2.profile.version>
-      <umlmda.uml2.profile.new.version>4.6.0</umlmda.uml2.profile.new.version>
-      <umlmda.generator.profile.version>3.10</umlmda.generator.profile.version>
+      <umlmda.uml2.profile.version>4.4</umlmda.uml2.profile.version>
+      <umlmda.uml2.profile.new.version>4.14</umlmda.uml2.profile.new.version>
+      <umlmda.generator.profile.version>3.11</umlmda.generator.profile.version>
       <umlmda.jostraca.version>3.1</umlmda.jostraca.version>
       <jostraca.version>0.3.3</jostraca.version>
    </properties>
@@ -50,9 +50,7 @@
    <modules>
       <module>org.umlmda.generator.core</module>
       <module>org.umlmda.generator.uml</module>
-      <!-- 
       <module>org.umlmda.classic.generator</module>
-       -->
    </modules>
 
    <scm>

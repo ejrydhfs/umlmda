@@ -153,6 +153,7 @@
    <build>
       <plugins>
          <!-- Assembly -->
+         <!-- 
          <plugin>
             <executions>
                <execution>
@@ -172,6 +173,7 @@
                </descriptors>
             </configuration>
          </plugin>
+          -->
       </plugins>
 
    </build>
