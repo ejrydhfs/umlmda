@@ -41,13 +41,8 @@ Model «name»
 «ENDDEFINE»
 
 
-«DEFINE dump FOR JavaBusinessObject»
-    Class «name»«EXPAND dumpClass -»
-«ENDDEFINE»
-
-
 «DEFINE dump FOR JavaModelClass»
-    Class «name» (native)«EXPAND dumpClass -»
+    Class «name»«EXPAND dumpClass -»
 «ENDDEFINE»
 
 
@@ -78,7 +73,7 @@ Model «name»
 
 
 «REM» Attribute details «ENDREM»
-«DEFINE dump FOR ModelAttribute»        «name» : «dataType.name»«IF multivalue» («multiplicity»)«ENDIF»«IF initialValue.length > 0» = '«initialValue»'«ENDIF»
+«DEFINE dump FOR ModelAttribute»        «name» : «modelClassifier»«IF multivalue» («multiplicity»)«ELSEIF optional» (0..1)«ENDIF»«IF initialValue.length > 0» = '«initialValue»'«ENDIF»
 «IF derived -»
          derived
 «ENDIF -»
@@ -94,10 +89,13 @@ Model «name»
 
 
 «REM» Method details «ENDREM»
-«DEFINE dump FOR ModelMethod»        «name» («parameters.typeSelect(ModelParameter).name») : «returnType.name»
+«DEFINE dump FOR ModelMethod»        «name» («EXPAND dump FOREACH parameters.typeSelect(ModelParameter) SEPARATOR ", "») : «returnType.name»
 «IF stereotypes.size>0 -»
 «EXPAND dumpStereotypes('         ')»«ENDIF -»
 «ENDDEFINE»
+
+
+«DEFINE dump FOR ModelParameter»«name» : «type.name»«ENDDEFINE»
 
 
 «REM» Association details «ENDREM»
