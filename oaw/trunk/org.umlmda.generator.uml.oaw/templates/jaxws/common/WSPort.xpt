@@ -1,0 +1,79 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::JmiReflect»
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+«EXTENSION org::umlmda::uml::java::Parameter»
+
+
+«DEFINE wsPortRoot FOR JavaModelClass»
+«LET generatedName(this, "jaxWs.WSPort") AS className»
+«FILE generatedPath+"/"+className+".java"»
+	package «generatorPackage.getQualifiedPackageName("jaxWs.WSPort")»;
+	
+	import javax.jws.WebMethod;
+	import javax.jws.WebParam;
+	import javax.jws.WebResult;
+	import javax.jws.WebService;
+	import javax.jws.soap.SOAPBinding;
+	import javax.xml.bind.annotation.XmlSeeAlso;
+
+   «resetImports()»
+   «REM» Method parameters and return types «ENDREM»
+   «FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+      «registerImport("jaxWs.WSObject", (JavaModelClass)method.returnType)»
+      «FOREACH method.parameters.typeSelect(ModelParameter) AS param»
+	      «registerImport("jaxWs.WSObject", (JavaModelClass)param.type)»
+	   «ENDFOREACH»
+   «ENDFOREACH»
+   «registeredImports()»
+
+   /**
+    * «documentation»
+    */
+   «EXPAND XmlAnnotations»
+	public interface «generatedName» {
+
+      «FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+         «EXPAND webMethod FOR method»
+      «ENDFOREACH»
+
+   }   
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE XmlAnnotations FOR JavaModelClass»
+	@WebService(name = "«generatedName»", targetNamespace = "«wsNamespace()»")
+	@SOAPBinding(style = SOAPBinding.Style.RPC)
+	@XmlSeeAlso( { «generatorPackage.getQualifiedPackageName("jaxWs.WSObject")».ObjectFactory.class, com.fja.cor.bs.runtime.ws.jax.ObjectFactory.class })
+«ENDDEFINE»
+
+
+«DEFINE webMethod FOR JavaModelMethod»
+   /**
+    * @param in
+    * @return returns «((JavaModelClass)returnType).getQualifiedName("jaxWs.WSObject")»
+   «FOREACH exceptions.typeSelect(ModelClass) AS exc -»
+      * @throws «exc.name»
+   «ENDFOREACH -»
+    */
+   @WebMethod(action = "«((ModelClass)owner).wsNamespace()»/«name»")
+   @WebResult(name = "returnValue", partName = "returnValue")
+   public «returnType.name» «name»(
+   «FOREACH parameters.typeSelect(ModelParameter) AS param SEPARATOR ", "»
+      @WebParam(name = "«param.name»", partName = "«param.name»") «param.type.name» «param.name»
+   «ENDFOREACH»
+   );
+«ENDDEFINE»
+

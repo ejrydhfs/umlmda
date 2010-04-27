@@ -1,0 +1,54 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+
+«DEFINE Root FOR JavaModel»
+   «REM» Define standard service artifacts supporting jaxws «ENDREM»
+   «ERROR ">>>> JavaModel = "+this.name»
+   «ERROR "Root called on <<Model>> "+name»
+   «EXPAND java::Root::initArtefacts FOR this»
+   «EXPAND Root FOREACH this.packages.typeSelect(WSModelPackage).select( p | p.hasStereotype("WebServiceComponent") )»
+«ENDDEFINE»
+
+«DEFINE Root FOR WSBusinessException»
+   «ERROR ">>>>>>>>>>>> WSBusinessException = "+this.name»
+«ENDDEFINE»
+
+«DEFINE Root FOR WSBusinessObject»
+   «ERROR ">>>>>>>>>>>> WSBusinessObject = "+this.name»
+   «IF hasStereotype("WebServiceObject")»
+      «EXPAND jaxws::common::WSBusinessObject::wsBORoot»
+   «ENDIF»
+«ENDDEFINE»
+
+«DEFINE Root FOR WSBusinessService»
+   «ERROR ">>>>>>>> WSBusinessService = "+this.name»
+   «IF hasStereotype("WebService")»
+      «EXPAND jaxws::common::WSPort::wsPortRoot FOR (JavaModelClass)this»
+      «EXPAND jaxws::common::WSClient::wsClientRoot FOR (JavaModelClass)this»
+   «ENDIF»
+«ENDDEFINE»
+
+«DEFINE Root FOR WSEnumeration»
+   «ERROR ">>>>>>>>>>>>>> WSEnumeration = "+this.name»
+«ENDDEFINE»
+
+«DEFINE Root FOR WSBusinessComponent»
+   «ERROR ">>>>>> WSBusinessComponent = "+this.name»
+	«REM»«EXPAND Root FOREACH classes.typeSelect(ModelClass).select( c | c.hasStereotype("WebServiceObject") )»«ENDREM»
+«ENDDEFINE»
+
+«DEFINE Root FOR WSModelPackage»
+   «ERROR "Root called on <<Package>> "+qualifiedName»
+   «ERROR ">>>>>> WSModelPackage = "+this.name»
+   «EXPAND Root FOREACH classes.typeSelect(ModelClass)»
+«ENDDEFINE»
+
+«DEFINE Root FOR ModelElement»
+   «ERROR ">>>>>>>>>>>> ModelElement = "+this.name»
+   «IF hasStereotype("WebServiceObject")»
+      «EXPAND jaxws::common::WSBusinessObject::wsBORoot FOR (JavaModelClass)this»
+   «ENDIF»
+«ENDDEFINE»
