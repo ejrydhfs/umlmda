@@ -7,12 +7,6 @@
 
 «EXTENSION jaxws::WSUtils»
 «EXTENSION java::UMLMDA»
-«EXTENSION java::JmiReflect»
-«EXTENSION org::umlmda::uml::java::Artefact»
-«EXTENSION org::umlmda::uml::java::Attribute»
-«EXTENSION org::umlmda::uml::java::DataType»
-«EXTENSION org::umlmda::uml::java::ModelClass»
-«EXTENSION org::umlmda::uml::java::Parameter»
 
 
 «DEFINE wsObjectFactoryRoot FOR JavaModelPackage»
@@ -24,16 +18,6 @@
 	import javax.xml.bind.annotation.XmlElementDecl;
 	import javax.xml.bind.annotation.XmlRegistry;
 	import javax.xml.namespace.QName;
-
-   «resetImports()»
-   «REM» Method parameters and return types «ENDREM»
-«REM»   «FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
-      «registerImport("jaxWs.WSObject", (JavaModelClass)method.returnType)»
-      «FOREACH method.parameters.typeSelect(ModelParameter) AS param»
-	      «registerImport("jaxWs.WSObject", (JavaModelClass)param.type)»
-	   «ENDFOREACH»
-   «ENDFOREACH»«ENDREM»
-   «registeredImports()»
 
 	/**
 	 * This object contains factory methods for each Java content interface and Java element interface generated in the

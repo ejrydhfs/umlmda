@@ -1,4 +1,3 @@
-«IMPORT org::umlmda::model::uml»
 «IMPORT org::umlmda::uml::generator::java»
 «IMPORT org::umlmda::uml::generator::webservices»
 «IMPORT org::umlmda::oaw::generator::model::java»
@@ -7,12 +6,8 @@
 
 «EXTENSION jaxws::WSUtils»
 «EXTENSION java::UMLMDA»
-«EXTENSION java::JmiReflect»
-«EXTENSION org::umlmda::uml::java::Artefact»
 «EXTENSION org::umlmda::uml::java::Attribute»
 «EXTENSION org::umlmda::uml::java::DataType»
-«EXTENSION org::umlmda::uml::java::ModelClass»
-«EXTENSION org::umlmda::uml::java::Parameter»
 
 
 «DEFINE wsBORoot FOR JavaModelClass»
@@ -94,7 +89,7 @@
       «ENDLET»
       «ENDLET»
    )
-   «LET subClasses.typeSelect(ModelClass).select( c | c.hasStereotype("WebServiceObject") && c.superClass==this ) AS wsSubclasses»
+   «LET subClasses.typeSelect(JavaModelClass).select( c | c.hasStereotype("WebServiceObject") && c.superClass==this ) AS wsSubclasses»
       «IF wsSubclasses.size > 0»
          @XmlSeeAlso( { «FOREACH wsSubclasses AS wsSubclass SEPARATOR ", "»«wsSubclass.name».class «ENDFOREACH» })
       «ENDIF»
@@ -119,7 +114,7 @@
             «IF {"date", "dateTime", "timestamp"}.contains(dataType.name)»
                @XmlSchemaType(name = "«dataType.name»")
             «ENDIF»
-            protected List<«((ModelDataType)modelClassifier).javaTypeName()»> «name»;
+            protected List<«((JavaModelDataType)modelClassifier).javaTypeName()»> «name»;
          «ELSE»
             protected List<«modelClassifier.name»> «name»;
          «ENDIF»
@@ -136,13 +131,13 @@
        * @return possible object is {@link «IF primitiveType»«javaTypeName()»«ELSE»«modelClassifier.name»«ENDIF» }
        */
       «IF primitiveType»
-         public «IF ! multivalue»«javaTypeName()»«ELSE»List<«((ModelDataType)modelClassifier).javaTypeName()»>«ENDIF» «getter»() {
+         public «IF ! multivalue»«javaTypeName()»«ELSE»List<«((JavaModelDataType)modelClassifier).javaTypeName()»>«ENDIF» «getter»() {
       «ELSE»
          public «IF ! multivalue»«modelClassifier.name»«ELSE»List<«modelClassifier.name»>«ENDIF» «getter»() {
       «ENDIF»
       «IF multivalue»
          if ( «name» == null ) {
-            «name» = new ArrayList<«IF primitiveType»«((ModelDataType)modelClassifier).javaTypeName()»«ELSE»«modelClassifier.name»«ENDIF»>();
+            «name» = new ArrayList<«IF primitiveType»«((JavaModelDataType)modelClassifier).javaTypeName()»«ELSE»«modelClassifier.name»«ENDIF»>();
          }
       «ENDIF»
          return «name»;

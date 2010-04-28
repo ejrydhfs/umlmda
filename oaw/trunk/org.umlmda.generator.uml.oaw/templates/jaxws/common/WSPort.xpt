@@ -1,4 +1,3 @@
-«IMPORT org::umlmda::model::uml»
 «IMPORT org::umlmda::uml::generator::java»
 «IMPORT org::umlmda::uml::generator::webservices»
 «IMPORT org::umlmda::oaw::generator::model::java»
@@ -7,15 +6,9 @@
 
 «EXTENSION jaxws::WSUtils»
 «EXTENSION java::UMLMDA»
-«EXTENSION java::JmiReflect»
-«EXTENSION org::umlmda::uml::java::Artefact»
-«EXTENSION org::umlmda::uml::java::Attribute»
-«EXTENSION org::umlmda::uml::java::DataType»
-«EXTENSION org::umlmda::uml::java::ModelClass»
-«EXTENSION org::umlmda::uml::java::Parameter»
 
 
-«DEFINE wsPortRoot FOR JavaModelClass»
+«DEFINE wsPortRoot FOR WSBusinessService»
 «LET generatedName(this, "jaxWs.WSPort") AS className»
 «FILE generatedPath+"/"+className+".java"»
 	package «generatorPackage.getQualifiedPackageName("jaxWs.WSPort")»;
@@ -29,9 +22,9 @@
 
    «resetImports()»
    «REM» Method parameters and return types «ENDREM»
-   «FOREACH methods.typeSelect(ModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+   «FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
       «registerImport("jaxWs.WSObject", (JavaModelClass)method.returnType)»
-      «FOREACH method.parameters.typeSelect(ModelParameter) AS param»
+      «FOREACH method.parameters.typeSelect(JavaModelParameter) AS param»
 	      «registerImport("jaxWs.WSObject", (JavaModelClass)param.type)»
 	   «ENDFOREACH»
    «ENDFOREACH»
@@ -43,7 +36,7 @@
    «EXPAND XmlAnnotations»
 	public interface «generatedName» {
 
-      «FOREACH methods.typeSelect(ModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+      «FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
          «EXPAND webMethod FOR method»
       «ENDFOREACH»
 
@@ -52,38 +45,36 @@
 «ENDLET»
 
 «REM» Special classes for method exceptions «ENDREM»
-«FOREACH methods.typeSelect(ModelMethod).select( m | m.hasStereotype("WebServiceMethod") && m.exceptions.size>0 ) AS method»
-   «FOREACH method.exceptions.typeSelect(JavaModelClass).select( e | e.hasStereotype("WebServiceException") ) AS exception»
-      «EXPAND jaxws::common::WSException::wsExceptionRoot(method) FOR exception»
-   «ENDFOREACH»
+«FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") && m.exceptions.size>0 ) AS method»
+   «EXPAND jaxws::common::WSException::wsExceptionRoot(method) FOREACH method.exceptions.typeSelect(JavaModelClass).select( e | e.hasStereotype("WebServiceException") )»
 «ENDFOREACH»
 «ENDDEFINE»
 
 
-«DEFINE XmlAnnotations FOR JavaModelClass»
+«DEFINE XmlAnnotations FOR WSBusinessService»
 	@WebService(name = "«generatedName»", targetNamespace = "«wsNamespace()»")
 	@SOAPBinding(style = SOAPBinding.Style.RPC)
 	@XmlSeeAlso( { «generatorPackage.getQualifiedPackageName("jaxWs.WSObject")».ObjectFactory.class, com.fja.cor.bs.runtime.ws.jax.ObjectFactory.class })
 «ENDDEFINE»
 
 
-«DEFINE webMethod FOR ModelMethod»
+«DEFINE webMethod FOR JavaModelMethod»
    /**
     * @param in
     * @return returns «((JavaModelClass)returnType).getQualifiedName("jaxWs.WSObject")»
-   «FOREACH exceptions.typeSelect(ModelClass) AS exc -»
+   «FOREACH exceptions.typeSelect(JavaModelClass) AS exc -»
       * @throws «name.toFirstUpper()»«exc.name»
    «ENDFOREACH -»
     */
-   @WebMethod(action = "«((ModelClass)owner).wsNamespace()»/«name»")
+   @WebMethod(action = "«((JavaModelClass)owner).wsNamespace()»/«name»")
    @WebResult(name = "returnValue", partName = "returnValue")
    public «returnType.name» «name»(
-   «FOREACH parameters.typeSelect(ModelParameter) AS param SEPARATOR ", "»
+   «FOREACH parameters.typeSelect(JavaModelParameter) AS param SEPARATOR ", "»
       @WebParam(name = "«param.name»", partName = "«param.name»") «param.type.name» «param.name»
    «ENDFOREACH»
    )
    «IF exceptions.size > 0»
-      throws «FOREACH exceptions.typeSelect(ModelClass) AS exc SEPARATOR ", "»«name.toFirstUpper()»«exc.name»«ENDFOREACH»
+      throws «FOREACH exceptions.typeSelect(JavaModelClass) AS exc SEPARATOR ", "»«name.toFirstUpper()»«exc.name»«ENDFOREACH»
    «ENDIF»
    ;
 «ENDDEFINE»
