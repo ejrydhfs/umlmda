@@ -31,16 +31,6 @@
 	import javax.xml.ws.WebServiceClient;
 	import javax.xml.ws.WebServiceFeature;
 
-   «resetImports()»
-   «REM» Method parameters and return types 
-   «FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
-      «registerImport("jaxWs.WSObject", (JavaModelClass)method.returnType)»
-      «FOREACH method.parameters.typeSelect(ModelParameter) AS param»
-	      «registerImport("jaxWs.WSObject", (JavaModelClass)param.type)»
-	   «ENDFOREACH»
-   «ENDFOREACH»«ENDREM»
-   «registeredImports()»
-
    /**
     * «documentation»
     */

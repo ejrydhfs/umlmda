@@ -16,8 +16,8 @@
    «ERROR ">>>>>>>>>>>> WSBusinessException = "+this.name»
 «ENDDEFINE»
 
-«DEFINE Root FOR WSBusinessObject»
-   «ERROR ">>>>>>>>>>>> WSBusinessObject = "+this.name»
+«DEFINE Root FOR JavaModelClass»
+   «ERROR ">>>>>>>>>>>> JavaModelClass = "+this.name»
    «IF hasStereotype("WebServiceObject")»
       «EXPAND jaxws::common::WSBusinessObject::wsBORoot»
    «ENDIF»
@@ -43,12 +43,12 @@
 «DEFINE Root FOR WSModelPackage»
    «ERROR "Root called on <<Package>> "+qualifiedName»
    «ERROR ">>>>>> WSModelPackage = "+this.name»
+   «IF hasStereotype("WebServiceComponent")»
+      «EXPAND jaxws::common::WSObjectFactory::wsObjectFactoryRoot FOR (JavaModelPackage)this»
+   «ENDIF»
    «EXPAND Root FOREACH classes.typeSelect(ModelClass)»
 «ENDDEFINE»
 
 «DEFINE Root FOR ModelElement»
-   «ERROR ">>>>>>>>>>>> ModelElement = "+this.name»
-   «IF hasStereotype("WebServiceObject")»
-      «EXPAND jaxws::common::WSBusinessObject::wsBORoot FOR (JavaModelClass)this»
-   «ENDIF»
+   «ERROR "Root should not be called on <<ModelElement>> "+qualifiedName»
 «ENDDEFINE»

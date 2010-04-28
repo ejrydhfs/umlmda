@@ -29,7 +29,7 @@
 
    «resetImports()»
    «REM» Method parameters and return types «ENDREM»
-   «FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+   «FOREACH methods.typeSelect(ModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
       «registerImport("jaxWs.WSObject", (JavaModelClass)method.returnType)»
       «FOREACH method.parameters.typeSelect(ModelParameter) AS param»
 	      «registerImport("jaxWs.WSObject", (JavaModelClass)param.type)»
@@ -43,13 +43,20 @@
    «EXPAND XmlAnnotations»
 	public interface «generatedName» {
 
-      «FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+      «FOREACH methods.typeSelect(ModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
          «EXPAND webMethod FOR method»
       «ENDFOREACH»
 
    }   
 «ENDFILE»
 «ENDLET»
+
+«REM» Special classes for method exceptions «ENDREM»
+«FOREACH methods.typeSelect(ModelMethod).select( m | m.hasStereotype("WebServiceMethod") && m.exceptions.size>0 ) AS method»
+   «FOREACH method.exceptions.typeSelect(JavaModelClass).select( e | e.hasStereotype("WebServiceException") ) AS exception»
+      «EXPAND jaxws::common::WSException::wsExceptionRoot(method) FOR exception»
+   «ENDFOREACH»
+«ENDFOREACH»
 «ENDDEFINE»
 
 
@@ -60,12 +67,12 @@
 «ENDDEFINE»
 
 
-«DEFINE webMethod FOR JavaModelMethod»
+«DEFINE webMethod FOR ModelMethod»
    /**
     * @param in
     * @return returns «((JavaModelClass)returnType).getQualifiedName("jaxWs.WSObject")»
    «FOREACH exceptions.typeSelect(ModelClass) AS exc -»
-      * @throws «exc.name»
+      * @throws «name.toFirstUpper()»«exc.name»
    «ENDFOREACH -»
     */
    @WebMethod(action = "«((ModelClass)owner).wsNamespace()»/«name»")
@@ -74,6 +81,10 @@
    «FOREACH parameters.typeSelect(ModelParameter) AS param SEPARATOR ", "»
       @WebParam(name = "«param.name»", partName = "«param.name»") «param.type.name» «param.name»
    «ENDFOREACH»
-   );
+   )
+   «IF exceptions.size > 0»
+      throws «FOREACH exceptions.typeSelect(ModelClass) AS exc SEPARATOR ", "»«name.toFirstUpper()»«exc.name»«ENDFOREACH»
+   «ENDIF»
+   ;
 «ENDDEFINE»
 
