@@ -91,7 +91,13 @@ cached List[JavaModelClass] modeledSuperClasses(ModelClass class) :
 ; 
 
 // Filters the given attribute list by name, returning only those attributes with unique names.
-cached List[ModelAttribute] filterDuplicateAttributesByName(ModelClass class, List[ModelAttribute] attributes) : 
-  JAVA org.umlmda.oaw.generator.util.ModelElementUtils.filterDuplicateAttributesByName(org.umlmda.model.uml.ModelClass, java.util.List)
+cached List[ModelAttribute] filterDuplicateAttributesByName(ModelClass class, List[ModelAttribute] attributes) :
+    filterDuplicateElementsByName(attributes)
+;
+
+
+// Filters the given element list by name, returning only those elements with unique names.
+cached List[ModelElement] filterDuplicateElementsByName(List[ModelElement] elements) : 
+    JAVA org.umlmda.oaw.generator.util.ModelElementUtils.filterDuplicateElementsByName(java.util.List)
 ;
 

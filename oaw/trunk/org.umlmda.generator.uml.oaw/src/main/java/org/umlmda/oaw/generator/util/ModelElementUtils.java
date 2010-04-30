@@ -5,8 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.umlmda.model.uml.ModelAttribute;
-import org.umlmda.model.uml.ModelClass;
 import org.umlmda.model.uml.ModelElement;
 
 /**
@@ -34,27 +32,27 @@ public class ModelElementUtils
    }
 
    /**
-    * Filters the given attribute list by name, returning only those attributes with unique names.
+    * Filters the given element list by name, returning only those with unique names.
     * 
     * @param clazz
     *           Used only to please the XTend parser
-    * @param attributes
-    *           List of attributes to filter by name uniqueness.
-    * @return Filtered list of attributes, now with unique names.
+    * @param elements
+    *           List of elements to filter by name uniqueness.
+    * @return Filtered list of elements, now with unique names.
     */
-   public static List<ModelAttribute> filterDuplicateAttributesByName(ModelClass clazz, List<ModelAttribute> attributes) {
-      List<ModelAttribute> collectedAttributes = new ArrayList<ModelAttribute>();
-      List<String> collectedAttributeNames = new ArrayList<String>();
-      for ( ModelAttribute attribute : attributes ) {
-         if ( !collectedAttributeNames.contains(attribute.getName()) ) {
-            collectedAttributeNames.add(attribute.getName());
-            collectedAttributes.add(attribute);
+   public static List<ModelElement> filterDuplicateElementsByName(List<ModelElement> elements) {
+      List<ModelElement> collectedElements = new ArrayList<ModelElement>();
+      List<String> collectedElementNames = new ArrayList<String>();
+      for ( ModelElement element : elements ) {
+         if ( !collectedElementNames.contains(element.getName()) ) {
+            collectedElementNames.add(element.getName());
+            collectedElements.add(element);
          }
          else if ( logger.isTraceEnabled() ) {
-            logger.trace("Filtering duplicate attribute " + attribute.getName() + " for class " + clazz.getName());
+            logger.trace("Filtering duplicate element " + element.getName());
          }
       }
-      return collectedAttributes;
+      return collectedElements;
    }
 
 }
