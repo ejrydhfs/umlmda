@@ -22,7 +22,7 @@ package «getQualifiedPackageName("java.BusinessObjectFactory")»;
 public interface «className» {
 	«FOREACH businessObjects.typeSelect(JavaBusinessObject) AS bo»
 		«IF bo.abstract == false»
-			«EXPAND createBODecl FOR bo»;
+			«EXPAND createBODecl(true) FOR bo»;
 		«ENDIF»
 	«ENDFOREACH»
 }
@@ -30,10 +30,13 @@ public interface «className» {
 «ENDLET»
 «ENDDEFINE»
 
+«DEFINE createBODecl(Boolean forInterface)  FOR JavaBusinessObject»
+   /**
+    * Create business service implementation for «getScopedName("java.BusinessObjectInterface")».
+    */
+   «IF ! forInterface»public «ENDIF»«getScopedName("java.BusinessObjectInterface")» create«name»()
+«ENDDEFINE» 
 «DEFINE createBODecl FOR JavaBusinessObject»
-	/**
-   	* Create Businessservice implementation for «getScopedName("java.BusinessObjectInterface")».
-   	*/
-   	public «getScopedName("java.BusinessObjectInterface")» create«name»()
+   «EXPAND createBODecl(false)»
 «ENDDEFINE» 
  

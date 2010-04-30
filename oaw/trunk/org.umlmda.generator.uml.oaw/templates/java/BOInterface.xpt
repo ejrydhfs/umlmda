@@ -24,33 +24,28 @@
 	«FILE generatedPath+"/"+interfaceName+".java"»
 		package «generatorPackage.getQualifiedPackageName(getDefaultArtefact())»;
 		
-		«EXPAND standardImports FOR this»
+		«EXPAND standardImports»
 		«this.registeredImports()»
 		
 		/**
 		 * «documentation»
 		 */
-		«EXPAND interfaceDecl(interfaceName) FOR this» 
+		«EXPAND interfaceDecl(interfaceName)» 
 		{
-			«EXPAND keyDecl FOR this»
+			«EXPAND keyDecl»
 			
-			«FOREACH javaAttributes() AS attr»
-				«EXPAND propertyNameConstantDecl FOR attr»
-			«ENDFOREACH»
-			«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
-				«EXPAND propertyNameConstantDecl FOR assoc»;
-			«ENDFOREACH»
+         «EXPAND constantDecl(true) FOREACH constants.typeSelect(JavaModelAttribute).select( a | a.initialValue!=null )»
+			
+			«EXPAND propertyNameConstantDecl(true) FOREACH javaAttributes()»
+			«EXPAND propertyNameConstantDecl(true) FOREACH associations.typeSelect(JavaModelAssociation)»
 	
-			«EXPAND handleAttributes FOR this»
-			«EXPAND handleAssociations FOR this»		
+			«EXPAND handleAttributes»
+			«EXPAND handleAssociations»		
 			
-			«FOREACH methods.typeSelect(JavaModelMethod) AS method»
-				«EXPAND handleMethod FOR method»
-			«ENDFOREACH»
-			
+			«EXPAND handleMethod(true) FOREACH methods.typeSelect(JavaModelMethod)»
 		}
 	«ENDFILE»
-   «EXPAND jeeInterfaces(interfaceName) FOR this»
+   «EXPAND jeeInterfaces(interfaceName)»
 	«ENDLET»
 «ENDDEFINE»
 
@@ -86,41 +81,54 @@
 «ENDDEFINE»
 
 «DEFINE interfaceDecl(String interfaceName) FOR JavaModelClass»
-	public interface «interfaceName» «EXPAND extendsDecl FOR this»
+	public interface «interfaceName» «EXPAND extendsDecl»
 «ENDDEFINE»
 
 «DEFINE interfaceDecl(String interfaceName) FOR JavaBusinessService»
-	public interface «interfaceName» «EXPAND extendsDecl FOR this»
+	public interface «interfaceName» «EXPAND extendsDecl»
 «ENDDEFINE»
 
 «DEFINE standardImports FOR JavaModelClass»
 «ENDDEFINE»
 
+
 «DEFINE handleAttributes FOR JavaModelClass»
 	«FOREACH javaAttributes() AS attr»
-		«EXPAND handleAttribute FOR attr»
+		«EXPAND handleAttribute(true) FOR attr»
 	«ENDFOREACH»
 «ENDDEFINE»
 
+«DEFINE handleAttribute(Boolean forInterface) FOR JavaModelAttribute»
+   «EXPAND attrGetterDecl(forInterface)»;
+   «EXPAND attrSetterDecl(forInterface)»;
+«ENDDEFINE»
 «DEFINE handleAttribute FOR JavaModelAttribute»
-	«EXPAND attrGetterDecl FOR this»;
-	«EXPAND attrSetterDecl FOR this»;
+	«EXPAND handleAttribute(false)»
 «ENDDEFINE»
 
-«DEFINE handleMethod FOR JavaModelMethod»
-	«EXPAND methodDecl FOR this»;
+
+«DEFINE handleMethod(Boolean forInterface) FOR JavaModelMethod»
+	«EXPAND methodDecl(forInterface)»;
 «ENDDEFINE»
+«DEFINE handleMethod FOR JavaModelMethod»
+   «EXPAND handleMethod(false)»
+«ENDDEFINE»
+
 
 «DEFINE handleAssociations FOR JavaModelClass»
 	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
-		«EXPAND handleAssociation FOR assoc»
+		«EXPAND handleAssociation(true) FOR assoc»
 	«ENDFOREACH»
 «ENDDEFINE»
 
-«DEFINE handleAssociation FOR JavaModelAssociation»
-	«EXPAND assocGetterDecl FOR this»;
-	«EXPAND assocSetterDecl FOR this»;
+«DEFINE handleAssociation(Boolean forInterface) FOR JavaModelAssociation»
+	«EXPAND assocGetterDecl(forInterface)»;
+	«EXPAND assocSetterDecl(forInterface)»;
 «ENDDEFINE»
+«DEFINE handleAssociation FOR JavaModelAssociation»
+   «EXPAND handleAssociation(false)»
+«ENDDEFINE»
+
 
 // Superclasses
 «DEFINE extendsDecl FOR JavaBusinessObject»
@@ -130,7 +138,7 @@
 			«this.getScopedName(superClass.getDefaultArtefact(scopeInterface()), superClass)»
 		«ENDFOREACH»
 	«ELSE»
-		«EXPAND standardBaseInterface FOR this»
+		«EXPAND standardBaseInterface»
 	«ENDIF»
 «ENDDEFINE»
 
@@ -146,7 +154,7 @@
 «ENDDEFINE»
 
 «DEFINE standardBaseInterface FOR JavaBusinessObject»
-	org.umlmda.runtime.model.ModeledElement, «EXPAND propertyChangeBaseInterface FOR this»
+	org.umlmda.runtime.model.ModeledElement, «EXPAND propertyChangeBaseInterface»
 «ENDDEFINE»
 
 «DEFINE propertyChangeBaseInterface FOR JavaBusinessObject»
@@ -154,50 +162,57 @@
 «ENDDEFINE»
 
 
-// Constants
-«DEFINE constantDecl FOR JavaModelAttribute»
+«REM» Parameter defines if the constant is generated for an interface (true) or a class (false) «ENDREM»
+«DEFINE constantDecl(Boolean forInterface) FOR JavaModelAttribute»
    /**
-   * Constant «name», «documentation»
+   * Constant «name»«IF documentation!=null && documentation.length>0», «documentation»«ENDIF»
    */
-   public static final «javaTypeName()» «name» = «initialValue»;
+   «IF ! forInterface»public static final «ENDIF»«javaTypeName()» «name» = «IF javaType=="String"»"«ENDIF»«initialValue»«IF javaType=="String"»"«ENDIF»;
+«ENDDEFINE»
+«REM» Kept for compatibility reasons. «ENDREM»
+«DEFINE constantDecl FOR JavaModelAttribute»
+   «EXPAND constantDecl(false)»
 «ENDDEFINE»
 
+
 «DEFINE attrGetterDecl FOR JavaModelAttribute»
-	«EXPAND attrGetterDecl(false, "") FOR this»
+	«EXPAND attrGetterDecl(false, "")»
 «ENDDEFINE»
 «DEFINE attrGetterDecl(Boolean forInterface) FOR JavaModelAttribute»
-   «EXPAND attrGetterDecl(forInterface, "") FOR this»
+   «EXPAND attrGetterDecl(forInterface, "")»
 «ENDDEFINE»
 «DEFINE attrGetterDecl(String context) FOR JavaModelAttribute»
-   «EXPAND attrGetterDecl(false, context) FOR this»
+   «EXPAND attrGetterDecl(false, context)»
 «ENDDEFINE»
 «DEFINE attrGetterDecl(Boolean forInterface, String context) FOR JavaModelAttribute»
    /**
-   * Get«context» «name», «getDocumentation("GETTER")»
+   * Get«context» «name»«IF getDocumentation("GETTER").length>0», «getDocumentation("GETTER")»«ENDIF»
    */
    «IF !forInterface»public«ENDIF» «javaTypeName()» «getter»()
 «ENDDEFINE»
 
+
 «DEFINE attrSetterDecl FOR JavaModelAttribute»
-	«EXPAND attrSetterDecl(false, "") FOR this»
+	«EXPAND attrSetterDecl(false, "")»
 «ENDDEFINE»
 «DEFINE attrSetterDecl(Boolean forInterface) FOR JavaModelAttribute»
-   «EXPAND attrSetterDecl(forInterface, "") FOR this»
+   «EXPAND attrSetterDecl(forInterface, "")»
 «ENDDEFINE»
 «DEFINE attrSetterDecl(String context) FOR JavaModelAttribute»
-   «EXPAND attrSetterDecl(false, context) FOR this»
+   «EXPAND attrSetterDecl(false, context)»
 «ENDDEFINE»
 «DEFINE attrSetterDecl(Boolean forInterface, String context) FOR JavaModelAttribute»
 «IF readOnly == false»
   /**
-   * Set«context» «name», «getDocumentation("SETTER")»
+   * Set«context» «name»«IF getDocumentation("SETTER").length>0», «getDocumentation("SETTER")»«ENDIF»
    */
    «IF !forInterface»public«ENDIF» void «setter»(«javaTypeName()» «name»)
 «ENDIF»
 «ENDDEFINE»
 
+
 «DEFINE assocGetterDecl FOR JavaModelAssociation»
-   «EXPAND assocGetterDecl(false) FOR this»
+   «EXPAND assocGetterDecl(false)»
 «ENDDEFINE»
 «DEFINE assocGetterDecl(Boolean forInterface) FOR JavaModelAssociation»
    /**
@@ -206,8 +221,9 @@
    «IF !forInterface»public«ENDIF» «interfaceType» «getter»()
 «ENDDEFINE»
 
+
 «DEFINE assocSetterDecl FOR JavaModelAssociation»
-   «EXPAND assocSetterDecl(false) FOR this»
+   «EXPAND assocSetterDecl(false)»
 «ENDDEFINE»
 «DEFINE assocSetterDecl(Boolean forInterface) FOR JavaModelAssociation»
 «IF readOnly == false»
@@ -221,12 +237,17 @@
 «ENDIF»
 «ENDDEFINE»
 
+
 «DEFINE methodDecl FOR JavaModelMethod»
+    «EXPAND methodDecl(false)»
+«ENDDEFINE»
+«DEFINE methodDecl(Boolean forInterface) FOR JavaModelMethod»
    /**
     * «documentation»
     */
-    «EXPAND methodDecl("public") FOR this»
+    «IF forInterface»«EXPAND methodDecl("")»«ELSE»«EXPAND methodDecl("public")»«ENDIF»
 «ENDDEFINE»
+
 
 «DEFINE methodDecl(String modifier) FOR JavaModelMethod»
    «modifier» «javaType» «name»(
@@ -242,22 +263,24 @@
    «ENDIF»
 «ENDDEFINE»
 
+
 «DEFINE keyDecl FOR JavaModelClass»
 	«IF this.owningAPKey»
-	   «EXPAND keyInterfaceDecl FOR this»
+	   «EXPAND keyInterfaceDecl»
 	«ENDIF»
 «ENDDEFINE»
+
 
 «DEFINE keyInterfaceDecl FOR JavaModelClass»
     public interface PKey extends java.io.Serializable {
         «FOREACH keyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
-            «EXPAND attrGetterDecl(" key attribute") FOR keyAttr»;
-            «EXPAND attrSetterDecl(" key attribute") FOR keyAttr»;
+            «EXPAND attrGetterDecl(true, " key attribute") FOR keyAttr»;
+            «EXPAND attrSetterDecl(true, " key attribute") FOR keyAttr»;
         «ENDFOREACH»   
     }
     
     «FOREACH inheritedKeyAttributes.typeSelect(JavaModelAttribute) AS keyAttr»
-        «EXPAND attrGetterDecl(" parent key attribute") FOR keyAttr»;
+        «EXPAND attrGetterDecl(true, " parent key attribute") FOR keyAttr»;
     «ENDFOREACH»
     
     /**
@@ -271,9 +294,16 @@
     public void set«name»Pkey(PKey pkey);
 «ENDDEFINE»
 
-«DEFINE propertyNameConstantDecl FOR JavaModelStructuraleFeature»
-	public static final String «EXPAND java::BOInterface::propertyNameConstant FOR this» = "«name»";
+
+«REM» Parameter defines if the constant is generated for an interface (true) or a class (false) «ENDREM»
+«DEFINE propertyNameConstantDecl(Boolean forInterface) FOR JavaModelStructuraleFeature»
+   «IF !forInterface»public static final «ENDIF»String «EXPAND java::BOInterface::propertyNameConstant» = "«name»";
 «ENDDEFINE»»
+«REM» Kept for compatibility reasons. «ENDREM»
+«DEFINE propertyNameConstantDecl FOR JavaModelStructuraleFeature»
+   «EXPAND java::BOInterface::propertyNameConstantDecl(false)»
+«ENDDEFINE»»
+
 
 «DEFINE propertyNameConstant FOR JavaModelStructuraleFeature»
 	PROPERTY_«upperCaseIdentifier»

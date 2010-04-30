@@ -21,14 +21,14 @@
 		 * Visitor interface for the business object of «qualifiedName» 
 		 */
 		public interface «className» extends Visitor {
-		«FOREACH this.visitedClasses() AS genClass»
-		   public void visit(«getScopedName("java.BusinessObjectInterface", genClass)» a«genClass.name»);
-		«ENDFOREACH»
+   		«FOREACH this.visitedClasses() AS genClass»
+            void visit(«getScopedName("java.BusinessObjectInterface", genClass)» a«genClass.name»);
+         «ENDFOREACH»
 		}
 	«ENDFILE»
 	«ENDLET»
 «ENDDEFINE»
 
 «DEFINE ImportVisitorBaseIface FOR JavaBusinessComponent»
-import org.umlmda.runtime.visitor.Visitor;
+   import org.umlmda.runtime.visitor.Visitor;
 «ENDDEFINE»
