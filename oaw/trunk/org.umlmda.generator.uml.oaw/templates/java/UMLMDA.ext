@@ -101,3 +101,10 @@ cached List[ModelElement] filterDuplicateElementsByName(List[ModelElement] eleme
     JAVA org.umlmda.oaw.generator.util.ModelElementUtils.filterDuplicateElementsByName(java.util.List)
 ;
 
+
+// Filters the given element list by name, returning an intersection.
+// I.e. only elements contained more than once will be returned.
+cached List[ModelElement] intersectElementsByName(List[ModelElement] elements) : 
+    JAVA org.umlmda.oaw.generator.util.ModelElementUtils.intersectElementsByName(java.util.List)
+;
+

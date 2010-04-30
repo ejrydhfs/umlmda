@@ -34,8 +34,6 @@ public class ModelElementUtils
    /**
     * Filters the given element list by name, returning only those with unique names.
     * 
-    * @param clazz
-    *           Used only to please the XTend parser
     * @param elements
     *           List of elements to filter by name uniqueness.
     * @return Filtered list of elements, now with unique names.
@@ -50,6 +48,37 @@ public class ModelElementUtils
          }
          else if ( logger.isTraceEnabled() ) {
             logger.trace("Filtering duplicate element " + element.getName());
+         }
+      }
+      return collectedElements;
+   }
+
+   /**
+    * Filters the given element list by name, returning an intersection.
+    * I.e. only elements contained more than once will be returned.
+    * 
+    * @param elements
+    *           List of elements to filter by name uniqueness.
+    * @return Elements contained more than once in the input list.
+    */
+   public static List<ModelElement> intersectElementsByName(List<ModelElement> elements) {
+      List<ModelElement> collectedElements = new ArrayList<ModelElement>();
+      List<String> allElementNames = new ArrayList<String>();
+      List<String> collectedElementNames = new ArrayList<String>();
+      for ( ModelElement element : elements ) {
+         // Returning element?
+         if ( allElementNames.contains(element.getName()) ) {
+            // New intersect element?
+            if ( ! collectedElementNames.contains(element.getName()) ) {
+               collectedElements.add(element);
+               collectedElementNames.add(element.getName());
+               if ( logger.isTraceEnabled() ) {
+                  logger.trace("Using duplicate element " + element.getName());
+               }
+            }
+         } else {
+            // Save the new name once
+            allElementNames.add(element.getName());
          }
       }
       return collectedElements;
