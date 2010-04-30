@@ -9,6 +9,7 @@ import org::umlmda::oaw::generator::util;
 import org::umlmda::oaw::generator::model::java;
 import org::umlmda::oaw::generator::model::webservice;
 
+extension java::UMLMDA;
 
 
 cached String wsNamespace(ModelClass class) :
@@ -31,3 +32,85 @@ cached String wsNamespace(ModelPackage package) :
     )
 ;
 
+
+// Checks if the given package is the Runtime WS package by comparing it to the one found in the current model
+cached Boolean isRuntimeWsPackage(JavaModelPackage package) :
+    package == package.findRuntimeWsPackage() 
+;
+
+// Finds the Runtime WS package in the current model
+cached JavaModelPackage findRuntimeWsPackage(JavaModelPackage package) :
+    ((JavaModel)package.model).allModelElements.typeSelect(JavaModelPackage).selectFirst( e | e.name=="ws" && e.owner.name=="runtime" ) 
+;
+
+
+// Returns all WebService classes of the given package
+cached List[JavaModelClass] webServices(ModelPackage package) :
+    package.classes.typeSelect(ModelClass).select( e | e.hasStereotype("WebService") )
+;
+
+
+// Returns all direct and indirect references of the given package and it's services
+cached List[ModelElement] referencedElements(ModelPackage package) :
+    let result = {} :
+
+    package.webServices().size>0 ? (
+	    // All services' elements
+	    result.addAll( referencedElements(package.webServices()) )->
+	    // Now filter complete result set
+	    result.intersectElementsByName()
+	) : (
+        // All own elements
+        result.addAll( package.classes.typeSelect(JavaModelClass).select( e | e.hasStereotype("WebServiceObject") ) )
+    )
+;
+
+// Returns all direct and indirect references of the given services' methods
+private cached List[ModelElement] referencedElements(List[JavaModelClass] services) :
+    services.collect( s | s.referencedElements(true) ).flatten()
+;
+
+
+// Returns all direct and indirect references of the given service's methods to DTO classes
+cached List[ModelElement] relevantReferencedElements(JavaModelClass service) :
+    let pkgElements = ((ModelPackage)service.owner).referencedElements() :
+    service.referencedElements(true).reject( e | pkgElements.contains(e) )
+;
+
+
+// Returns all direct and indirect references of the given service's methods to DTO classes
+cached List[ModelElement] referencedElements(JavaModelClass service, Boolean indirect) :
+    let result = {} :
+    let methods = service.methods.typeSelect(ModelMethod) :
+    
+    // References in service methods
+    result.addAll( methods.returnType.typeSelect(ModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
+    result.addAll( methods.parameters.typeSelect(ModelParameter).type.select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
+    result.addAll( methods.exceptions.select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
+    
+    // References of found elements
+    indirect ? (
+        result.addAll( result.typeSelect(ModelClass).referencedElements(service) )
+    ) : ( null ) ->
+
+    // Now filter complete result set
+    result.filterDuplicateElementsByName()
+;
+
+// Returns all direct and indirect references of the given class to other DTO classes
+private cached List[ModelElement] referencedElements(ModelClass class, JavaModelClass service) :
+    let result = {} :
+    let associations = class.associations.target.typeSelect(ModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) :
+    
+    // Local hierarchy
+    class.superClass != null && class.superClass.hasStereotype("WebServiceObject") && class.superClass.package==service.package ? (
+        result.add( class.superClass )
+    ) : ( null ) ->
+    result.addAll( class.subClasses.typeSelect(ModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
+
+    // Direct and indirect references
+    result.addAll( associations ) ->
+    result.addAll( associations.referencedElements(service) ) ->
+    
+    result
+;

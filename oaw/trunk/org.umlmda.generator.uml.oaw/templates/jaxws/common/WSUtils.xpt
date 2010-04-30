@@ -1,0 +1,218 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::generator::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION java::UMLMDA»
+
+
+«REM» Abstract utils for a package «ENDREM»
+«DEFINE wsUtilsRoot FOR WSModelPackage»
+«LET ((JavaModelElement)owner).generatedName("jaxWs.WSUtils") AS className»
+«FILE generatedPath+"/"+className+".java"»
+	package «getQualifiedPackageName("jaxWs.WSUtils")»;
+	
+	«IF ! isRuntimeWsPackage()»
+      import «findRuntimeWsPackage().getQualifiedPackageName("jaxWs.WSUtils")».«((JavaModelElement)findRuntimeWsPackage().owner).generatedName("jaxWs.WSUtils")»;
+	«ENDIF»
+	
+	/**
+	 * Contains all create and copy methods for objects used in more than one service interface.
+	 */
+	public abstract class «className» 
+      «IF ! isRuntimeWsPackage()»extends «((JavaModelElement)findRuntimeWsPackage().owner).generatedName("jaxWs.WSUtils")»«ENDIF» 
+   {
+      
+      // ----------------------------------------------------------------------------------------------------
+      // package objects:  «referencedElements().sortBy( e | e.name ).name»
+      // ----------------------------------------------------------------------------------------------------
+      // all ws: «webServices().name»
+      // ----------------------------------------------------------------------------------------------------
+
+      «REM» 
+         TODO: 
+            Services identifizieren + darin Objekte, die IN KEINEM oder MEHR ALS EINEM Service direkt oder indirekt genutzt werden, einbinden
+      «ENDREM»
+      «FOREACH classes.typeSelect(JavaModelClass).select( c | c.hasStereotype("WebService") ) AS service»
+      «ENDFOREACH»
+
+   }
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+
+«REM» ==================================================================================================== «ENDREM»
+«REM» ==================================================================================================== «ENDREM»
+«REM» ==================================================================================================== «ENDREM»
+
+
+«REM» Concrete utils for a web service «ENDREM»
+«DEFINE wsUtilsRoot FOR WSBusinessService»
+«LET ((JavaModelElement)owner.owner).generatedName("jaxWs.WSUtils") AS classNamePackageUtils»
+«LET generatedName("jaxWs.WSUtils") AS className»
+«FILE generatedPath+"/"+className+".java"»
+   package «generatorPackage.getQualifiedPackageName("jaxWs.WSUtils")»;
+
+   import java.util.Iterator;
+   
+   /**
+    * Contains all create and copy methods needed for the service interface.
+    */
+   public class «className» extends «classNamePackageUtils» {
+
+      «FOREACH relevantReferencedElements().select( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
+         «EXPAND exceptionMethods(this, true) FOR re»
+      «ENDFOREACH»
+
+      «FOREACH relevantReferencedElements().reject( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
+         «EXPAND dtoMethods(this, true) FOR re»
+      «ENDFOREACH»
+
+   }
+«ENDFILE»
+«ENDLET»
+«ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE dtoMethods(WSBusinessService service, Boolean serviceScope) FOR JavaModelClass»
+   «LET getQualifiedName("jaxWs.WSObject") AS wsObjectQualified»
+   «LET getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws", "") AS bsObjectQualified»
+   
+   // create «generatedName("jaxWs.WSObject")» web service DTO from interface DTO
+   public «wsObjectQualified» create«name»(«bsObjectQualified» src) {
+	   if ( src != null ) {
+         «wsObjectQualified» dest = new «wsObjectQualified»();
+
+         getRegistry().put(src, dest);
+         copy«name»(src, dest);
+	      return dest;
+	   }
+	   else {
+	      return null;
+	   }
+	}
+
+   // copy interface DTO to web service DTO
+   «IF serviceScope»private«ELSE»protected«ENDIF» void copy«name»(final «bsObjectQualified» from, final «wsObjectQualified» to) {
+      «EXPAND copyMethodContent»
+   }
+   
+   «REM» BS DTO creation only for objects referenced directly in the service «ENDREM»
+   «IF service.referencedElements(false).contains(this)»
+      «EXPAND createInterfaceDTOMethod(wsObjectQualified, bsObjectQualified, true)»
+   «ENDIF»
+
+   // copy web service DTO to interface DTO
+   «IF serviceScope»private«ELSE»protected«ENDIF» void copy«name»(final «wsObjectQualified» from, final «bsObjectQualified» to) {
+      «EXPAND copyMethodContent»
+   }
+   
+   «ENDLET»
+   «ENDLET»
+«ENDDEFINE»
+
+
+
+«DEFINE exceptionMethods(WSBusinessService service, Boolean serviceScope) FOR JavaModelClass»
+   «LET getQualifiedName("jaxWs.WSObject") AS wsObjectQualified»
+   «LET getQualifiedName("java.BusinessException").replaceFirst(".ws", "") AS bsObjectQualified»
+
+   // create «generatedName("jaxWs.WSObject")» web service exception from business service exception
+   public «wsObjectQualified» create«name»(final «bsObjectQualified» from) {
+      «wsObjectQualified» dest = new «wsObjectQualified»();
+
+      if ( from != null ) {
+         String _causeStackTraceAsString = from.getCauseStackTraceAsString();
+         String _messageCode = from.getMessageCode();
+         String _component = from.getComponent();
+         String[] _references = from.getReferences();
+         String _traceId = from.getTraceId();
+
+TODO: das hier muss alles noch abstrahiert werden!!!
+
+         for ( Iterator i = from.getLocalizedMessages().iterator(); i.hasNext(); ) {
+            dest.getLocalizedMessages().add(createBSLocalizedMessage((com.fja.cor.bs.runtime.dto.BSLocalizedMessage) i.next()));
+         }
+         dest.setCauseStackTraceAsString(_causeStackTraceAsString);
+         dest.setMessageCode(_messageCode);
+         dest.setComponent(_component);
+         for ( int jj = 0; jj < _references.length; ++jj ) {
+            dest.getReferences().add(_references[jj]);
+         }
+         dest.setTraceId(_traceId);
+
+         getRegistry().put(from, dest);
+         return dest;
+      }
+      else {
+         return null;
+      }
+   }
+
+   «EXPAND createInterfaceDTOMethod(wsObjectQualified, bsObjectQualified, false)»
+   
+   // copy web service DTO to interface DTO
+   «IF serviceScope»private«ELSE»protected«ENDIF» void copy«name»(final «wsObjectQualified» from, final «bsObjectQualified» to) {
+      «EXPAND copyMethodContent»
+   }
+   
+   «ENDLET»
+   «ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE createInterfaceDTOMethod(String wsObjectQualified, String bsObjectQualified, Boolean useFactory) FOR JavaModelClass»
+      // create «generatedName("java.BusinessObjectInterface")» interface DTO from web service DTO
+      public «bsObjectQualified» create«name»(«wsObjectQualified» src) {
+         if ( src != null ) {
+            «bsObjectQualified» dest = («bsObjectQualified») getRegistry().get(src);
+   
+            if ( dest==null ) {
+               dest = 
+                  «IF useFactory»
+                     get«((JavaModelElement)package.package).generatedName("java.BusinessObjectFactory")».create«name»();
+                  «ELSE»
+                     new «bsObjectQualified»();
+                  «ENDIF»
+               
+               getRegistry().put(src, dest);
+               copy«name»(src, dest);
+            }
+            return dest;
+         }
+         else {
+            return null;
+         }
+      }
+«ENDDEFINE»
+
+
+«DEFINE copyMethodContent FOR JavaModelClass»
+   «IF superClass!=null»
+      copy«((JavaModelClass)superClass).generatedName("jaxWs.WSObject")»(from, to);
+   «ENDIF»
+
+   «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»
+      to.«attrib.setter»(from.«attrib.getter»());
+   «ENDFOREACH»
+
+   «FOREACH associations.typeSelect(JavaModelAssociation).select( a | a.target.hasStereotype("WebServiceObject") ) AS assoc»
+      «LET ((JavaModelClass)assoc.target).generatedName("jaxWs.WSObject") AS targetName»
+      «IF assoc.multiple»
+         for ( «targetName» «targetName.toFirstLower()» : from.«assoc.getter»() ) {
+            to.«assoc.getter»().add(create«targetName»(«targetName.toFirstLower()»));
+         }
+      «ELSE»
+         if ( from.«assoc.getter»() != null ) {
+            to.«assoc.setter»(create«targetName»(from.«assoc.getter»()));
+         }
+      «ENDIF»
+      «ENDLET»
+   «ENDFOREACH»
+«ENDDEFINE»

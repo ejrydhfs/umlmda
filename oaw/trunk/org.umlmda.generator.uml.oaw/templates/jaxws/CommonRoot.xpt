@@ -11,8 +11,13 @@
    «EXPAND Root FOREACH this.packages.typeSelect(WSModelPackage).select( p | p.hasStereotype("WebServiceComponent") )»
 «ENDDEFINE»
 
-«DEFINE Root FOR WSBusinessException»
-   «ERROR ">>>>>>>>>>>> WSBusinessException = "+this.name»
+«DEFINE Root FOR WSModelPackage»
+   «ERROR "Root called on <<WSModelPackage>> "+qualifiedName»
+   «IF hasStereotype("WebServiceComponent")»
+      «EXPAND jaxws::common::WSObjectFactory::wsObjectFactoryRoot»
+      «EXPAND jaxws::common::WSUtils::wsUtilsRoot»
+   «ENDIF»
+   «EXPAND Root FOREACH classes.typeSelect(JavaModelClass)»
 «ENDDEFINE»
 
 «DEFINE Root FOR JavaModelClass»
@@ -27,7 +32,12 @@
    «IF hasStereotype("WebService")»
       «EXPAND jaxws::common::WSPort::wsPortRoot»
       «EXPAND jaxws::common::WSClient::wsClientRoot»
+      «EXPAND jaxws::common::WSUtils::wsUtilsRoot»
    «ENDIF»
+«ENDDEFINE»
+
+«DEFINE Root FOR WSBusinessException»
+   «ERROR ">>>>>>>>>>>> WSBusinessException = "+this.name»
 «ENDDEFINE»
 
 «DEFINE Root FOR WSEnumeration»
@@ -40,14 +50,6 @@
 «DEFINE Root FOR WSBusinessComponent»
    «ERROR ">>>>>> WSBusinessComponent = "+this.name»
 	«REM»«EXPAND Root FOREACH classes.typeSelect(ModelClass).select( c | c.hasStereotype("WebServiceObject") )»«ENDREM»
-«ENDDEFINE»
-
-«DEFINE Root FOR WSModelPackage»
-   «ERROR "Root called on <<WSModelPackage>> "+qualifiedName»
-   «IF hasStereotype("WebServiceComponent")»
-      «EXPAND jaxws::common::WSObjectFactory::wsObjectFactoryRoot FOR (JavaModelPackage)this»
-   «ENDIF»
-   «EXPAND Root FOREACH classes.typeSelect(ModelClass)»
 «ENDDEFINE»
 
 «DEFINE Root FOR ModelElement»

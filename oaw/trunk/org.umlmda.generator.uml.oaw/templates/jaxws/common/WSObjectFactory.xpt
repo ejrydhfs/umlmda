@@ -9,7 +9,7 @@
 «EXTENSION java::UMLMDA»
 
 
-«DEFINE wsObjectFactoryRoot FOR JavaModelPackage»
+«DEFINE wsObjectFactoryRoot FOR WSModelPackage»
 «LET generatedName(this, "jaxWs.WSObject") AS className»
 «FILE generatedPath+"/ObjectFactory.java"»
 	package «getQualifiedPackageName("jaxWs.WSObject")»;
