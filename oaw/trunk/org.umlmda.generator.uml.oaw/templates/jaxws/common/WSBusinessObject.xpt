@@ -15,33 +15,7 @@
 «FILE generatedPath+"/"+className+".java"»
 	package «generatorPackage.getQualifiedPackageName("jaxWs.WSObject")»;
 	
-	«IF associations.typeSelect(JavaModelAssociation).size > 0»
-		import java.util.ArrayList;
-		import java.util.List;
-	«ENDIF»
-	
-	import javax.xml.bind.annotation.XmlAccessType;
-	import javax.xml.bind.annotation.XmlAccessorType;
-	import javax.xml.bind.annotation.XmlElement;
-	import javax.xml.bind.annotation.XmlSchemaType;
-	import javax.xml.bind.annotation.XmlType;
-	import javax.xml.datatype.XMLGregorianCalendar;
-
-   «resetImports()»
-   «REM» Import sub classes «ENDREM»
-   «LET subClasses.typeSelect(JavaModelClass).select( c | c.hasStereotype("WebServiceObject") && c.superClass==this ) AS wsSubclasses»
-      «IF wsSubclasses.size > 0»
-         import javax.xml.bind.annotation.XmlSeeAlso;
-		   «FOREACH wsSubclasses AS wsSubclass»
-		      «registerImport("jaxWs.WSObject", wsSubclass)»
-		   «ENDFOREACH»
-      «ENDIF»
-   «ENDLET»
-   «REM» Import super class «ENDREM»
-   «IF superClass != null»
-      «registerImport("jaxWs.WSObject", (JavaModelClass)superClass)»
-   «ENDIF»
-   «registeredImports()»
+   «EXPAND imports»   
 
    /**
     * «documentation»
@@ -68,6 +42,42 @@
    }   
 «ENDFILE»
 «ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE imports FOR JavaModelClass»
+   «IF associations.typeSelect(JavaModelAssociation).size > 0»
+      import java.util.ArrayList;
+      import java.util.List;
+   «ENDIF»
+   
+   import javax.xml.bind.annotation.XmlAccessType;
+   import javax.xml.bind.annotation.XmlAccessorType;
+   import javax.xml.bind.annotation.XmlElement;
+   import javax.xml.bind.annotation.XmlSchemaType;
+   import javax.xml.bind.annotation.XmlType;
+   import javax.xml.datatype.XMLGregorianCalendar;
+
+   «resetImports()»
+   «REM» Import sub classes «ENDREM»
+   «LET subClasses.typeSelect(JavaModelClass).select( c | c.hasStereotype("WebServiceObject") && c.superClass==this ) AS wsSubclasses»
+      «IF wsSubclasses.size > 0»
+         import javax.xml.bind.annotation.XmlSeeAlso;
+         «FOREACH wsSubclasses AS wsSubclass»
+            «registerImport("jaxWs.WSObject", wsSubclass)»
+         «ENDFOREACH»
+      «ENDIF»
+   «ENDLET»
+   «REM» Import super class «ENDREM»
+   «IF superClass != null»
+      «registerImport("jaxWs.WSObject", (JavaModelClass)superClass)»
+   «ENDIF»
+   
+   «FOREACH attributes.typeSelect(JavaModelAttribute).select( a | !a.primitiveType && a.modelClassifier.hasStereotype("WebServiceEnumeration") ) AS attrib»
+      «registerImport("jaxWs.WSObject", (JavaModelClass)attrib.modelClassifier)»
+   «ENDFOREACH»
+
+   «registeredImports()»
 «ENDDEFINE»
 
 

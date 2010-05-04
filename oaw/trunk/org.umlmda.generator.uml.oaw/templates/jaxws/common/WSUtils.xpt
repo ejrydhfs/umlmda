@@ -16,9 +16,18 @@
 «FILE generatedPath+"/"+className+".java"»
 	package «getQualifiedPackageName("jaxWs.WSUtils")»;
 	
+	import java.util.ArrayList;
+	import java.util.HashMap;
+	import java.util.IdentityHashMap;
+	import java.util.Iterator;
+	import java.util.List;
+	import java.util.Map;
+	import java.util.NoSuchElementException;
+	
 	«IF ! isRuntimeWsPackage()»
       import «findRuntimeWsPackage().getQualifiedPackageName("jaxWs.WSUtils")».«((JavaModelElement)findRuntimeWsPackage().owner).generatedName("jaxWs.WSUtils")»;
 	«ENDIF»
+	import «getQualifiedPackageName("java.BusinessObjectFactory").replaceFirst(".ws", "")».«((JavaModelElement)owner).generatedName("java.BusinessObjectFactory")»;
 	
 	/**
 	 * Contains all create and copy methods for objects used in more than one service interface.
@@ -27,22 +36,122 @@
       «IF ! isRuntimeWsPackage()»extends «((JavaModelElement)findRuntimeWsPackage().owner).generatedName("jaxWs.WSUtils")»«ENDIF» 
    {
       
-      // ----------------------------------------------------------------------------------------------------
-      // package objects:  «referencedElements().sortBy( e | e.name ).name»
-      // ----------------------------------------------------------------------------------------------------
-      // all ws: «webServices().name»
-      // ----------------------------------------------------------------------------------------------------
+      «IF isRuntimeWsPackage()»
+         «EXPAND runtimeMethods»
+      «ELSE»
+         «EXPAND factoryMethods»
+      «ENDIF»
 
-      «REM» 
-         TODO: 
-            Services identifizieren + darin Objekte, die IN KEINEM oder MEHR ALS EINEM Service direkt oder indirekt genutzt werden, einbinden
-      «ENDREM»
-      «FOREACH classes.typeSelect(JavaModelClass).select( c | c.hasStereotype("WebService") ) AS service»
+      «FOREACH referencedElements().select( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
+         «EXPAND exceptionMethods(null) FOR re»
+      «ENDFOREACH»
+
+      «FOREACH referencedElements().reject( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
+         «EXPAND dtoMethods(null) FOR re»
       «ENDFOREACH»
 
    }
 «ENDFILE»
 «ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE runtimeMethods FOR WSModelPackage»
+   private final Map<Object, Object>          registry        = new HashMap<Object, Object>();
+
+   private List<ResolveReference>             resolvers       = new ArrayList<ResolveReference>();
+   private Map<String, Map<Class<?>, Object>> resolveRegistry = new HashMap<String, Map<Class<?>, Object>>();
+
+   /**
+    * @return the registry
+    */
+   protected Map<Object, Object> getRegistry() {
+      return registry;
+   }
+
+   protected <T> T getObject(Class<T> clazz, String id) {
+      Map<Class<?>, Object> idMap = resolveRegistry.get(id);
+      Object reference = null;
+
+      if ( idMap != null ) {
+         for ( Map.Entry<Class<?>, Object> classMapEntry : idMap.entrySet() ) {
+            if ( clazz.isAssignableFrom(classMapEntry.getValue().getClass()) ) {
+               if ( reference == null ) {
+                  reference = classMapEntry.getValue();
+               }
+               else {
+                  throw new IllegalStateException("Found more than one instance to resolve id " + id + " for class " + clazz);
+               }
+            }
+         }
+      }
+      if ( reference == null && id != null )
+         throw new NoSuchElementException("No instance to resolve id " + id + " for class " + clazz + " found!");
+
+      return (T) reference;
+   }
+
+   protected void registerObject(Object object, String id) {
+      Map<Class<?>, Object> idMap = resolveRegistry.get(id);
+      if ( idMap == null ) {
+         idMap = new IdentityHashMap<Class<?>, Object>();
+         idMap.put(object.getClass(), object);
+         resolveRegistry.put(id, idMap);
+      }
+      else
+         idMap.put(object.getClass(), object);
+   }
+
+   protected abstract class ResolveReference {
+      protected abstract void resolve();
+
+      Object lookup(Object objectRef) {
+         if ( objectRef != null ) {
+            return registry.get(objectRef);
+         }
+         else {
+            return null;
+         }
+      }
+   }
+
+   protected void register(ResolveReference resolveReference) {
+      resolvers.add(resolveReference);
+   }
+
+   public void resolveReferences() {
+      List<ResolveReference> resolver = new ArrayList<ResolveReference>(resolvers);
+      for ( Iterator<ResolveReference> iter = resolver.iterator(); iter.hasNext(); ) {
+         ResolveReference resolveReference = iter.next();
+         resolveReference.resolve();
+      }
+   }
+
+   public void resetReferences() {
+      resolveRegistry.clear();
+      resolvers.clear();
+      registry.clear();
+   }
+
+   «EXPAND factoryMethods»
+«ENDDEFINE»
+
+
+«DEFINE factoryMethods FOR WSModelPackage»
+   «LET ((JavaModelElement)package).generatedName("java.BusinessObjectFactory") AS factoryClass»
+      private «factoryClass» «factoryClass.toFirstLower()» = null;
+   
+      /**
+       * @return the «factoryClass.toFirstLower()»
+       */
+      protected «factoryClass» get«factoryClass»() {
+         return «factoryClass.toFirstLower()»;
+      }
+   
+      public void set«factoryClass»(«factoryClass» factory) {
+         «factoryClass.toFirstLower()» = factory;
+      }
+   «ENDLET»
 «ENDDEFINE»
 
 
@@ -66,11 +175,11 @@
    public class «className» extends «classNamePackageUtils» {
 
       «FOREACH relevantReferencedElements().select( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
-         «EXPAND exceptionMethods(this, true) FOR re»
+         «EXPAND exceptionMethods(this) FOR re»
       «ENDFOREACH»
 
       «FOREACH relevantReferencedElements().reject( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
-         «EXPAND dtoMethods(this, true) FOR re»
+         «EXPAND dtoMethods(this) FOR re»
       «ENDFOREACH»
 
    }
@@ -80,37 +189,60 @@
 «ENDDEFINE»
 
 
-«DEFINE dtoMethods(WSBusinessService service, Boolean serviceScope) FOR JavaModelClass»
+«REM» Create and Copy methods for normal DTOs «ENDREM»
+«DEFINE dtoMethods(WSBusinessService service) FOR JavaModelClass»
    «LET getQualifiedName("jaxWs.WSObject") AS wsObjectQualified»
-   «LET getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws", "") AS bsObjectQualified»
-   
-   // create «generatedName("jaxWs.WSObject")» web service DTO from interface DTO
-   public «wsObjectQualified» create«name»(«bsObjectQualified» src) {
-	   if ( src != null ) {
-         «wsObjectQualified» dest = new «wsObjectQualified»();
 
-         getRegistry().put(src, dest);
-         copy«name»(src, dest);
-	      return dest;
+   «IF hasStereotype("WebServiceDTO")»
+	   «LET getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws", "") AS bsObjectQualified»
+	   
+		«EXPAND createWebServiceDTOMethod(wsObjectQualified, bsObjectQualified)»
+	
+	   // Copy interface DTO to web service DTO
+	   «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
+	      «EXPAND copyMethodContent(wsObjectQualified)»
 	   }
-	   else {
-	      return null;
+	   
+	   «REM» BS DTO creation only for objects referenced directly in the service «ENDREM»
+	   «IF service==null || service.referencedElements(false).contains(this)»
+	      «EXPAND createInterfaceDTOMethod(wsObjectQualified, bsObjectQualified, true)»
+	   «ENDIF»
+	
+	   // Copy web service DTO to interface DTO
+	   «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
+	      «EXPAND copyMethodContent(null)»
 	   }
-	}
+	   
+	   «ENDLET»
+	«ELSEIF hasStereotype("WebServiceDTOReference")»
+      «LET getBSSiblingClass().getQualifiedName("java.BusinessObjectInterface") AS bsObjectQualified»
+	
+      «EXPAND createWebServiceReferenceDTOMethod(wsObjectQualified, bsObjectQualified)»
+	
+      «ENDLET»
+	«ENDIF»
+   «ENDLET»
+«ENDDEFINE»
 
-   // copy interface DTO to web service DTO
-   «IF serviceScope»private«ELSE»protected«ENDIF» void copy«name»(final «bsObjectQualified» from, final «wsObjectQualified» to) {
-      «EXPAND copyMethodContent»
+
+
+«REM» Create and Copy methods for Exception DTOs «ENDREM»
+«DEFINE exceptionMethods(WSBusinessService service) FOR JavaModelClass»
+   «LET getQualifiedName("jaxWs.WSObject") AS wsObjectQualified»
+   «LET getQualifiedName("java.BusinessException").replaceFirst(".ws", "") AS bsObjectQualified»
+
+   «EXPAND createWebServiceDTOMethod(wsObjectQualified, bsObjectQualified)»
+
+   // Copy interface DTO to web service DTO
+   «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
+      «EXPAND copyMethodContent(wsObjectQualified)»
    }
-   
-   «REM» BS DTO creation only for objects referenced directly in the service «ENDREM»
-   «IF service.referencedElements(false).contains(this)»
-      «EXPAND createInterfaceDTOMethod(wsObjectQualified, bsObjectQualified, true)»
-   «ENDIF»
 
-   // copy web service DTO to interface DTO
-   «IF serviceScope»private«ELSE»protected«ENDIF» void copy«name»(final «wsObjectQualified» from, final «bsObjectQualified» to) {
-      «EXPAND copyMethodContent»
+   «EXPAND createInterfaceDTOMethod(wsObjectQualified, bsObjectQualified, false)»
+   
+   // Copy web service DTO to interface DTO
+   «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
+      «EXPAND copyMethodContent(null)»
    }
    
    «ENDLET»
@@ -118,57 +250,39 @@
 «ENDDEFINE»
 
 
-
-«DEFINE exceptionMethods(WSBusinessService service, Boolean serviceScope) FOR JavaModelClass»
-   «LET getQualifiedName("jaxWs.WSObject") AS wsObjectQualified»
-   «LET getQualifiedName("java.BusinessException").replaceFirst(".ws", "") AS bsObjectQualified»
-
-   // create «generatedName("jaxWs.WSObject")» web service exception from business service exception
-   public «wsObjectQualified» create«name»(final «bsObjectQualified» from) {
-      «wsObjectQualified» dest = new «wsObjectQualified»();
-
-      if ( from != null ) {
-         String _causeStackTraceAsString = from.getCauseStackTraceAsString();
-         String _messageCode = from.getMessageCode();
-         String _component = from.getComponent();
-         String[] _references = from.getReferences();
-         String _traceId = from.getTraceId();
-
-TODO: das hier muss alles noch abstrahiert werden!!!
-
-         for ( Iterator i = from.getLocalizedMessages().iterator(); i.hasNext(); ) {
-            dest.getLocalizedMessages().add(createBSLocalizedMessage((com.fja.cor.bs.runtime.dto.BSLocalizedMessage) i.next()));
-         }
-         dest.setCauseStackTraceAsString(_causeStackTraceAsString);
-         dest.setMessageCode(_messageCode);
-         dest.setComponent(_component);
-         for ( int jj = 0; jj < _references.length; ++jj ) {
-            dest.getReferences().add(_references[jj]);
-         }
-         dest.setTraceId(_traceId);
-
-         getRegistry().put(from, dest);
+«DEFINE createWebServiceDTOMethod(String wsObjectQualified, String bsObjectQualified) FOR JavaModelClass»
+   // Create «generatedName("jaxWs.WSObject")» web service DTO from interface DTO
+   public «wsObjectQualified» create«name»(«bsObjectQualified» src) {
+      if ( src != null ) {
+         «wsObjectQualified» dest = new «wsObjectQualified»();
+   
+         getRegistry().put(src, dest);
+         copy«name»(src, dest);
          return dest;
       }
       else {
          return null;
       }
    }
+«ENDDEFINE»
 
-   «EXPAND createInterfaceDTOMethod(wsObjectQualified, bsObjectQualified, false)»
-   
-   // copy web service DTO to interface DTO
-   «IF serviceScope»private«ELSE»protected«ENDIF» void copy«name»(final «wsObjectQualified» from, final «bsObjectQualified» to) {
-      «EXPAND copyMethodContent»
+
+«REM» Reference objects only carry the ID of the original object «ENDREM»
+«DEFINE createWebServiceReferenceDTOMethod(String wsObjectQualified, String bsObjectQualified) FOR JavaModelClass»
+   // Create «generatedName("jaxWs.WSObject")» web service reference DTO from interface DTO
+   «LET getBSSiblingClass().attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.hasStereotype("Id")) AS key»
+   public «wsObjectQualified» create«name»(«bsObjectQualified» src) {
+      «wsObjectQualified» dest = new «wsObjectQualified»();
+      dest.«key.setter»(src.«key.getter»());
+      return dest;
    }
-   
-   «ENDLET»
    «ENDLET»
 «ENDDEFINE»
 
 
 «DEFINE createInterfaceDTOMethod(String wsObjectQualified, String bsObjectQualified, Boolean useFactory) FOR JavaModelClass»
-      // create «generatedName("java.BusinessObjectInterface")» interface DTO from web service DTO
+   «IF ! abstract»
+      // Create «generatedName("java.BusinessObjectInterface")» interface DTO from web service DTO
       public «bsObjectQualified» create«name»(«wsObjectQualified» src) {
          if ( src != null ) {
             «bsObjectQualified» dest = («bsObjectQualified») getRegistry().get(src);
@@ -176,13 +290,18 @@ TODO: das hier muss alles noch abstrahiert werden!!!
             if ( dest==null ) {
                dest = 
                   «IF useFactory»
-                     get«((JavaModelElement)package.package).generatedName("java.BusinessObjectFactory")».create«name»();
+                     get«((JavaModelElement)package.package).generatedName("java.BusinessObjectFactory")»().create«name»();
                   «ELSE»
                      new «bsObjectQualified»();
                   «ENDIF»
                
                getRegistry().put(src, dest);
                copy«name»(src, dest);
+               «LET getBSSiblingClass().attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.hasStereotype("Id")) AS key»
+	               «IF key != null»
+	                  registerObject(dest, dest.«key.getter»());
+	               «ENDIF»
+               «ENDLET»
             }
             return dest;
          }
@@ -190,28 +309,92 @@ TODO: das hier muss alles noch abstrahiert werden!!!
             return null;
          }
       }
+   «ENDIF»
 «ENDDEFINE»
 
 
-«DEFINE copyMethodContent FOR JavaModelClass»
+«REM» Copies element attributes and associations from BS to WS and backwards «ENDREM»
+«DEFINE copyMethodContent(String wsObjectQualified) FOR JavaModelClass»
    «IF superClass!=null»
-      copy«((JavaModelClass)superClass).generatedName("jaxWs.WSObject")»(from, to);
+      copy«((JavaModelClass)superClass).generatedName("jaxWs.WSObject")»(src, dest);
    «ENDIF»
 
    «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»
-      to.«attrib.setter»(from.«attrib.getter»());
+      «REM» Check for null value when copying to WS object «ENDREM»
+      «IF ! attrib.optional && wsObjectQualified!=null && attrib.modelClassifier.name!="boolean"»
+         if ( src.«attrib.getter»() == null ) {
+            throw new IllegalArgumentException(
+                  "None optional attribute «wsObjectQualified».«attrib.name» is null");
+         }
+      «ENDIF»
+
+      «IF attrib.multivalue»
+         «IF wsObjectQualified==null»
+            «REM» WS to BS: List to Array «ENDREM»
+            dest.«attrib.setter»(src.«attrib.getter»().toArray(new «((JavaModelClassifier)attrib.modelClassifier).javaType»[ src.«attrib.getter»().size() ]));
+         «ELSE»
+            «REM» BS to WS: Array to List «ENDREM»
+	         if ( src.«attrib.getter»()!=null ) {
+		         for ( int i = 0; i < src.«attrib.getter»().length; ++i ) {
+		            dest.«attrib.getter»().add( src.«attrib.getter»()[i] );
+		         }
+	         }
+         «ENDIF»
+      «ELSEIF ! attrib.primitiveType && attrib.modelClassifier.hasStereotype("WebServiceEnumeration")»
+         «REM» When copying an enum value use the correct target enum «ENDREM»
+         «LET getBSSiblingClass().attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.name==attrib.name) AS bsSiblingAttrib»
+         «IF wsObjectQualified==null»
+            «REM» WS to BS «ENDREM»
+            dest.«attrib.setter»(«((JavaModelClass)bsSiblingAttrib.modelClassifier).getQualifiedName("java.BusinessObjectInterface")».fromValue( src.«attrib.getter»().value() ));
+         «ELSE»
+            «REM» BS to WS «ENDREM»
+            dest.«attrib.setter»(«((JavaModelClass)attrib.modelClassifier).getQualifiedName("jaxWs.WSObject")».fromValue( src.«attrib.getter»().getValue() ));
+         «ENDIF»
+         «ENDLET»
+      «ELSE»
+         dest.«attrib.setter»(src.«attrib.getter»());
+      «ENDIF»
    «ENDFOREACH»
+
 
    «FOREACH associations.typeSelect(JavaModelAssociation).select( a | a.target.hasStereotype("WebServiceObject") ) AS assoc»
       «LET ((JavaModelClass)assoc.target).generatedName("jaxWs.WSObject") AS targetName»
-      «IF assoc.multiple»
-         for ( «targetName» «targetName.toFirstLower()» : from.«assoc.getter»() ) {
-            to.«assoc.getter»().add(create«targetName»(«targetName.toFirstLower()»));
+	   «IF assoc.multiple»
+         if ( src.«assoc.getter»() != null ) {
+            for ( 
+            «IF wsObjectQualified==null»
+               «REM» WS to BS «ENDREM»
+               «((JavaModelClass)assoc.target).getQualifiedName("jaxWs.WSObject")»
+            «ELSE»
+               «REM» BS to WS «ENDREM»
+               «((JavaModelClass)assoc.target).getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws", "")»
+            «ENDIF»
+            «targetName.toFirstLower()» : src.«assoc.getter»() ) {
+	            dest.«assoc.getter»().add(create«targetName»(«targetName.toFirstLower()»));
+	         }
          }
       «ELSE»
-         if ( from.«assoc.getter»() != null ) {
-            to.«assoc.setter»(create«targetName»(from.«assoc.getter»()));
-         }
+         «IF wsObjectQualified==null && assoc.target.hasStereotype("WebServiceDTOReference")»
+            «REM» WS to BS + reference object«ENDREM»
+		      register(new ResolveReference() {
+		         @Override
+		         protected void resolve() {
+		            if ( src.«assoc.getter»() != null ) {
+		               dest.«assoc.setter»(
+                        getObject(«assoc.target.getBSSiblingClass().getQualifiedName("java.BusinessObjectInterface")».class, 
+                           src.«assoc.getter»().«assoc.target.attributes.typeSelect(JavaModelAttribute).first().getter»()));
+		            }
+		            else {
+                     dest.«assoc.setter»(null);
+		            }
+		         }
+		      });
+         «ELSE»
+            «REM» BS to WS «ENDREM»
+            if ( src.«assoc.getter»() != null ) {
+               dest.«assoc.setter»(create«targetName»(src.«assoc.getter»()));
+            }
+         «ENDIF»
       «ENDIF»
       «ENDLET»
    «ENDFOREACH»

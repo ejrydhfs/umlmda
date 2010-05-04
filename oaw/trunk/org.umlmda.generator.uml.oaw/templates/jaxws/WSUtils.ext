@@ -33,6 +33,20 @@ cached String wsNamespace(ModelPackage package) :
 ;
 
 
+// Finds the BS class that is the sibling for the given WS class.
+// I.e. same name, but other package and other stereotype(s).
+// Reference objects are handled differently, as their name needs to be shortened to get the normal object name.
+cached JavaModelClass getBSSiblingClass(ModelClass wsElement) :
+    let allModelClasses = ((JavaModel)wsElement.model).allModelElements.typeSelect(JavaModelClass) :
+    wsElement.hasStereotype("WebServiceDTOReference") ? (
+        let shortName = wsElement.name.replaceFirst("Reference", "") :
+        allModelClasses.selectFirst(e|e.name==shortName && e.hasStereotype("BusinessObject"))
+    ) : (
+        allModelClasses.selectFirst(e|e.name==wsElement.name && e.hasStereotype("BusinessObject"))
+    )
+; 
+
+
 // Checks if the given package is the Runtime WS package by comparing it to the one found in the current model
 cached Boolean isRuntimeWsPackage(JavaModelPackage package) :
     package == package.findRuntimeWsPackage() 
