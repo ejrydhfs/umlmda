@@ -32,6 +32,27 @@ cached String wsNamespace(ModelPackage package) :
     )
 ;
 
+cached String wsNamespacePrefix(ModelClass class) :
+    class.component != null ? (
+        class.component.wsNamespacePrefix()
+    ) : (
+        class.package.wsNamespacePrefix()
+    )
+;
+
+cached String wsNamespacePrefix(ModelPackage package) :
+    package.getStereotypeProperty("WSNamespacePrefix") != null ? (
+        package.getStereotypeProperty("WSNamespacePrefix")
+    ) : (
+        package.package != null ? (
+            package.package.wsNamespacePrefix()
+        ) : (
+            ""
+        )
+    )
+;
+
+
 
 // Finds the BS class that is the sibling for the given WS class.
 // I.e. same name, but other package and other stereotype(s).
