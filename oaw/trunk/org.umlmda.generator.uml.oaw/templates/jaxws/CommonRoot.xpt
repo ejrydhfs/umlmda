@@ -16,6 +16,7 @@
    «IF hasStereotype("WebServiceComponent")»
       «EXPAND jaxws::common::WSObjectFactory::wsObjectFactoryRoot»
       «EXPAND jaxws::common::WSUtils::wsUtilsRoot»
+      «EXPAND jaxws::common::WSPackageXSD::xsdRoot»
    «ENDIF»
    «EXPAND Root FOREACH classes.typeSelect(JavaModelClass)»
 «ENDDEFINE»
