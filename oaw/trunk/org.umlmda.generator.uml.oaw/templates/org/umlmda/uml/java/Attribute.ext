@@ -6,8 +6,11 @@ import org::umlmda::uml::generator::java;
 
 extension org::umlmda::uml::java::DataType;
 
+// Returns the Java compatible type declaration with regard to multiplicity and optionality.
+// If it's a multivalue attribute, an array type will be returned. 
+// If a primitive attribute (e.g. "int") is optional the type will be the corresponding class (e.g. "Integer").
 cached String javaTypeName(JavaModelAttribute attr) :
-	attr.dataType == null ? attr.javaType
+	attr.dataType == null ? attr.javaComplexAttributeTypeName()
 	                      : attr.javaAttributeTypeName(attr.optional);
 
 cached String javaPropertyTypeName(JavaModelAttribute attr) :
@@ -19,6 +22,13 @@ private String javaAttributeTypeName(JavaModelAttribute attr, boolean optional) 
 		attr.dataType.javaTypeName(false)+"[]"
 	:	
 		attr.dataType.javaTypeName(optional)
+;
+
+private String javaComplexAttributeTypeName(JavaModelAttribute attr) :
+    attr.multivalue ?
+        attr.javaType+"[]"
+    :   
+        attr.javaType
 ;
 	
 /**
