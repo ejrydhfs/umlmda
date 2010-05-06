@@ -22,13 +22,13 @@
 	           xmlns="http://www.w3.org/2001/XMLSchema" 
 	           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       «REM» Own namespace «ENDREM»
-     xmlns:«wsNamespacePrefix()»="«wsNamespace()»"
-      «REM» Referenced namespace «ENDREM»
+      xmlns:«wsNamespacePrefix()»="«wsNamespace()»"
+      «REM» Referenced namespaces «ENDREM»
       «FOREACH referencedPackages.typeSelect(JavaModelPackage) AS component»
          xmlns:«component.wsNamespacePrefix()»="«component.wsNamespace()»"
       «ENDFOREACH»
 	 >
-      «REM» Import referenced namespace «ENDREM»
+      «REM» Import referenced namespaces «ENDREM»
 	   «IF ! isRuntimeWsPackage()»
 	      «FOREACH referencedPackages.typeSelect(JavaModelPackage) AS component»
 	         <xsd:import namespace="«component.wsNamespace()»" schemaLocation="«component.owner.name.toFirstLower()».xsd"/>
@@ -49,7 +49,7 @@
 	<complexType name="«wsObjectClassName»">
       «IF superClass!=null»
       <complexContent>
-         <extension base="«superClass.wsNamespacePrefix()»:«((JavaModelClass)superClass).getGeneratedName("jaxWs.WSObject")»">
+         <extension base="«((JavaModelClass)superClass).wsNamespacePrefix()»:«((JavaModelClass)superClass).getGeneratedName("jaxWs.WSObject")»">
       «ENDIF»
       «LET attributes.typeSelect(JavaModelAttribute) AS attribs»
       «LET associations.typeSelect(JavaModelAssociation) AS assocs»
@@ -109,6 +109,7 @@
    <simpleType name="«wsObjectClassName»">
       <restriction base="xsd:«((WSEnumeration)this).javaValueType.toFirstLower()»">
       «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»
+         <!-- «attrib.name» -->
          <enumeration value=«attrib.initialValue»/>
       «ENDFOREACH»
       </restriction>

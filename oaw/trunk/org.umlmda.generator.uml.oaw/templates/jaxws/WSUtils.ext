@@ -12,7 +12,12 @@ import org::umlmda::oaw::generator::model::webservice;
 extension java::UMLMDA;
 
 
-cached String wsNamespace(ModelClass class) :
+
+cached String wsNamespace(JavaModelMethod method) :
+    ((JavaModelClass)method.owner).wsNamespace()
+;
+
+cached String wsNamespace(JavaModelClass class) :
     class.component != null ? (
         class.component.wsNamespace()
     ) : (
@@ -32,7 +37,11 @@ cached String wsNamespace(ModelPackage package) :
     )
 ;
 
-cached String wsNamespacePrefix(ModelClass class) :
+cached String wsNamespacePrefix(JavaModelMethod method) :
+    ((JavaModelClass)method.owner).wsNamespacePrefix()
+;
+
+cached String wsNamespacePrefix(JavaModelClass class) :
     class.component != null ? (
         class.component.wsNamespacePrefix()
     ) : (

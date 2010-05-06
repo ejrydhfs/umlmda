@@ -42,11 +42,11 @@
          «EXPAND factoryMethods»
       «ENDIF»
 
-      «FOREACH referencedElements().select( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
+      «FOREACH referencedElements().typeSelect(JavaModelClass).select( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
          «EXPAND exceptionMethods(null) FOR re»
       «ENDFOREACH»
 
-      «FOREACH referencedElements().reject( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
+      «FOREACH referencedElements().typeSelect(JavaModelClass).reject( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
          «EXPAND dtoMethods(null) FOR re»
       «ENDFOREACH»
 
@@ -138,7 +138,7 @@
 
 
 «DEFINE factoryMethods FOR WSModelPackage»
-   «LET ((JavaModelElement)package).generatedName("java.BusinessObjectFactory") AS factoryClass»
+   «LET ((JavaModelPackage)package).generatedName("java.BusinessObjectFactory") AS factoryClass»
       private «factoryClass» «factoryClass.toFirstLower()» = null;
    
       /**
@@ -174,11 +174,11 @@
     */
    public class «className» extends «classNamePackageUtils» {
 
-      «FOREACH relevantReferencedElements().select( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
+      «FOREACH relevantReferencedElements().typeSelect(JavaModelClass).select( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
          «EXPAND exceptionMethods(this) FOR re»
       «ENDFOREACH»
 
-      «FOREACH relevantReferencedElements().reject( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
+      «FOREACH relevantReferencedElements().typeSelect(JavaModelClass).reject( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
          «EXPAND dtoMethods(this) FOR re»
       «ENDFOREACH»
 
@@ -290,7 +290,7 @@
             if ( dest==null ) {
                dest = 
                   «IF useFactory»
-                     get«((JavaModelElement)package.package).generatedName("java.BusinessObjectFactory")»().create«name»();
+                     get«((JavaModelPackage)package.package).generatedName("java.BusinessObjectFactory")»().create«name»();
                   «ELSE»
                      new «bsObjectQualified»();
                   «ENDIF»
@@ -319,7 +319,9 @@
       copy«((JavaModelClass)superClass).generatedName("jaxWs.WSObject")»(src, dest);
    «ENDIF»
 
+   «REM» -- Attributes -------------------------------------------------------------------------------------- «ENDREM»
    «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»
+
       «REM» Check for null value when copying to WS object «ENDREM»
       «IF ! attrib.optional && wsObjectQualified!=null && attrib.modelClassifier.name!="boolean"»
          if ( src.«attrib.getter»() == null ) {
@@ -329,34 +331,77 @@
       «ENDIF»
 
       «IF attrib.multivalue»
-         «IF wsObjectQualified==null»
-            «REM» WS to BS: List to Array «ENDREM»
-            dest.«attrib.setter»(src.«attrib.getter»().toArray(new «((JavaModelClassifier)attrib.modelClassifier).javaType»[ src.«attrib.getter»().size() ]));
-         «ELSE»
-            «REM» BS to WS: Array to List «ENDREM»
-	         if ( src.«attrib.getter»()!=null ) {
-		         for ( int i = 0; i < src.«attrib.getter»().length; ++i ) {
-		            dest.«attrib.getter»().add( src.«attrib.getter»()[i] );
+
+         «REM» Multivalue attribute «ENDREM»
+
+         «IF attrib.primitiveType»
+	         «IF wsObjectQualified==null»
+	            «REM» WS to BS: List to Array «ENDREM»
+	            dest.«attrib.setter»(src.«attrib.getter»().toArray(new «((JavaModelClassifier)attrib.modelClassifier).javaType»[ src.«attrib.getter»().size() ]));
+	         «ELSE»
+	            «REM» BS to WS: Array to List «ENDREM»
+		         if ( src.«attrib.getter»()!=null ) {
+			         for ( int i = 0; i < src.«attrib.getter»().length; i++ ) {
+			            dest.«attrib.getter»().add( src.«attrib.getter»()[i] );
+			         }
 		         }
+	         «ENDIF»
+         «ELSEIF attrib.modelClassifier.hasStereotype("WebServiceEnumeration")»
+            «REM» Enumeration type «ENDREM»
+	         if ( src.«attrib.getter»() != null ) {
+               «LET getBSSiblingClass().attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.name==attrib.name) AS bsSiblingAttrib»
+               «LET ((JavaModelClass)bsSiblingAttrib.modelClassifier).getQualifiedName("java.BusinessObjectInterface") AS bsEnumQualified»
+               «LET ((JavaModelClass)attrib.modelClassifier).getQualifiedName("jaxWs.WSObject") AS wsEnumQualified»
+
+	            «IF wsObjectQualified==null»
+	               «REM» WS to BS: List to Array «ENDREM»
+	               «LET "dest"+attrib.name.toFirstUpper() AS tempArray»
+                  «bsEnumQualified»[] «tempArray» = new «bsEnumQualified»[ src.«attrib.getter»().size() ];
+                  for ( int i = 0; i < src.«attrib.getter»().size(); i++ ) {
+                     «tempArray»[i] = «bsEnumQualified».fromValue( src.«attrib.getter»().get(i).value() );
+                  }
+                  dest.«attrib.setter»(«tempArray»);
+	               «ENDLET»
+	            «ELSE»
+	               «REM» BS to WS: Array to List «ENDREM»
+                  for ( int i = 0; i < src.«attrib.getter»().length; i++ ) {
+	                  dest.«attrib.getter»().add( «wsEnumQualified».fromValue( src.«attrib.getter»()[i].getValue() ) );
+	               }
+	            «ENDIF»
+
+               «ENDLET»
+               «ENDLET»
+               «ENDLET»
 	         }
+	      «ELSE»
+            // TODO: Unsupported multivalue attribute type for '«attrib.name»'!!
          «ENDIF»
+
       «ELSEIF ! attrib.primitiveType && attrib.modelClassifier.hasStereotype("WebServiceEnumeration")»
-         «REM» When copying an enum value use the correct target enum «ENDREM»
-         «LET getBSSiblingClass().attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.name==attrib.name) AS bsSiblingAttrib»
-         «IF wsObjectQualified==null»
-            «REM» WS to BS «ENDREM»
-            dest.«attrib.setter»(«((JavaModelClass)bsSiblingAttrib.modelClassifier).getQualifiedName("java.BusinessObjectInterface")».fromValue( src.«attrib.getter»().value() ));
-         «ELSE»
-            «REM» BS to WS «ENDREM»
-            dest.«attrib.setter»(«((JavaModelClass)attrib.modelClassifier).getQualifiedName("jaxWs.WSObject")».fromValue( src.«attrib.getter»().getValue() ));
-         «ENDIF»
-         «ENDLET»
+
+         «REM» Enumeration «ENDREM»
+         dest.«attrib.setter»(
+			   «IF wsObjectQualified==null»
+			      «REM» WS to BS «ENDREM»
+			      «LET getBSSiblingClass().attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.name==attrib.name) AS bsSiblingAttrib»
+			      «((JavaModelClass)bsSiblingAttrib.modelClassifier).getQualifiedName("java.BusinessObjectInterface")».fromValue( src.«attrib.getter»().value() )
+			      «ENDLET»
+			   «ELSE»
+			      «REM» BS to WS «ENDREM»
+			      «((JavaModelClass)attrib.modelClassifier).getQualifiedName("jaxWs.WSObject")».fromValue( src.«attrib.getter»().getValue() )
+			   «ENDIF»
+         );
+
       «ELSE»
+
+         «REM» Normal attribute «ENDREM»
          dest.«attrib.setter»(src.«attrib.getter»());
+
       «ENDIF»
    «ENDFOREACH»
 
 
+   «REM» -- Associations ------------------------------------------------------------------------------------ «ENDREM»
    «FOREACH associations.typeSelect(JavaModelAssociation).select( a | a.target.hasStereotype("WebServiceObject") ) AS assoc»
       «LET ((JavaModelClass)assoc.target).generatedName("jaxWs.WSObject") AS targetName»
 	   «IF assoc.multiple»
@@ -399,3 +444,4 @@
       «ENDLET»
    «ENDFOREACH»
 «ENDDEFINE»
+

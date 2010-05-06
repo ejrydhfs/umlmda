@@ -81,7 +81,7 @@
       * @throws «exc.name»
    «ENDFOREACH -»
     */
-   @WebMethod(action = "«((ModelClass)owner).wsNamespace()»/«name»")
+   @WebMethod(action = "«wsNamespace()»/«name»")
    @WebResult(name = "returnValue", partName = "returnValue")
    public «returnType.name» «name»(
    «FOREACH parameters.typeSelect(ModelParameter) AS param SEPARATOR ", "»

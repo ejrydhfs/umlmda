@@ -31,9 +31,20 @@
 «DEFINE Root FOR WSBusinessService»
    «ERROR "Root called on <<WSBusinessService>> "+name»
    «IF hasStereotype("WebService")»
+      «REM» WS classes «ENDREM»
       «EXPAND jaxws::common::WSPort::wsPortRoot»
       «EXPAND jaxws::common::WSClient::wsClientRoot»
+
+      «REM» Utility class «ENDREM»
       «EXPAND jaxws::common::WSUtils::wsUtilsRoot»
+      
+      «REM» WSDL definition «ENDREM»
+      «EXPAND jaxws::common::WSDL::wsdlRoot»
+
+		«REM» Special classes for method exceptions «ENDREM»
+		«FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") && m.exceptions.size>0 ) AS method»
+		   «EXPAND jaxws::common::WSException::wsExceptionRoot(method) FOREACH method.exceptions.typeSelect(JavaModelClass).select( e | e.hasStereotype("WebServiceException") )»
+		«ENDFOREACH»
    «ENDIF»
 «ENDDEFINE»
 

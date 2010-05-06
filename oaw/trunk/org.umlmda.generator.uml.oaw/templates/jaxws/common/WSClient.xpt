@@ -27,32 +27,32 @@
    /**
     * «documentation»
     */
-   @WebServiceClient(name = "«generatedName»", targetNamespace = "«wsNamespace()»", wsdlLocation = "/WEB-INF/wsdl/«generatedName».wsdl")
-	public class «generatedName» extends Service {
+   @WebServiceClient(name = "«className»", targetNamespace = "«wsNamespace()»", wsdlLocation = "/WEB-INF/wsdl/«className».wsdl")
+	public class «className» extends Service {
 
-	   private final static URL    «generatedName.toUpperCase()»_WSDL_LOCATION;
-	   private final static Logger logger = Logger.getLogger(«packageName».«generatedName».class.getName());
+	   private final static URL    «className.toUpperCase()»_WSDL_LOCATION;
+	   private final static Logger logger = Logger.getLogger(«packageName».«className».class.getName());
 	
 	   static {
 	      URL url = null;
 	      try {
 	         URL baseUrl;
-	         baseUrl = «packageName».«generatedName».class.getResource(".");
-	         url = new URL(baseUrl, "/WEB-INF/wsdl/«generatedName».wsdl");
+	         baseUrl = «packageName».«className».class.getResource(".");
+	         url = new URL(baseUrl, "/WEB-INF/wsdl/«className».wsdl");
 	      }
 	      catch (MalformedURLException e) {
-	         logger.warning("Failed to create URL for the wsdl Location: '/WEB-INF/wsdl/«generatedName».wsdl', retrying as a local file");
+	         logger.warning("Failed to create URL for the wsdl Location: '/WEB-INF/wsdl/«className».wsdl', retrying as a local file");
 	         logger.warning(e.getMessage());
 	      }
-	      «generatedName.toUpperCase()»_WSDL_LOCATION = url;
+	      «className.toUpperCase()»_WSDL_LOCATION = url;
 	   }
 	
-	   public «generatedName»(URL wsdlLocation, QName serviceName) {
+	   public «className»(URL wsdlLocation, QName serviceName) {
 	      super(wsdlLocation, serviceName);
 	   }
 	
-	   public «generatedName»() {
-	      super(«generatedName.toUpperCase()»_WSDL_LOCATION, new QName("«wsNamespace()»", "«generatedName»"));
+	   public «className»() {
+	      super(«className.toUpperCase()»_WSDL_LOCATION, new QName("«wsNamespace()»", "«className»"));
 	   }
 	
    «LET generatedName(this, "jaxWs.WSPort") AS portName»

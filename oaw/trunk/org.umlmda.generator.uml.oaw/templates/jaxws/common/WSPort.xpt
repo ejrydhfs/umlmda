@@ -43,11 +43,6 @@
    }   
 «ENDFILE»
 «ENDLET»
-
-«REM» Special classes for method exceptions «ENDREM»
-«FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") && m.exceptions.size>0 ) AS method»
-   «EXPAND jaxws::common::WSException::wsExceptionRoot(method) FOREACH method.exceptions.typeSelect(JavaModelClass).select( e | e.hasStereotype("WebServiceException") )»
-«ENDFOREACH»
 «ENDDEFINE»
 
 
@@ -66,15 +61,15 @@
       * @throws «name.toFirstUpper()»«exc.name»
    «ENDFOREACH -»
     */
-   @WebMethod(action = "«((JavaModelClass)owner).wsNamespace()»/«name»")
+   @WebMethod(action = "«wsNamespace()»/«name»")
    @WebResult(name = "returnValue", partName = "returnValue")
-   public «returnType.name» «name»(
+   public «((JavaModelClass)returnType).getGeneratedName("jaxWs.WSObject")» «name»(
    «FOREACH parameters.typeSelect(JavaModelParameter) AS param SEPARATOR ", "»
-      @WebParam(name = "«param.name»", partName = "«param.name»") «param.type.name» «param.name»
+      @WebParam(name = "«param.name»", partName = "«param.name»") «((JavaModelClass)param.type).getGeneratedName("jaxWs.WSObject")» «param.name»
    «ENDFOREACH»
    )
    «IF exceptions.size > 0»
-      throws «FOREACH exceptions.typeSelect(JavaModelClass) AS exc SEPARATOR ", "»«name.toFirstUpper()»«exc.name»«ENDFOREACH»
+      throws «FOREACH exceptions.typeSelect(JavaModelClass) AS exc SEPARATOR ", "»«name.toFirstUpper()»«exc.getGeneratedName("jaxWs.WSObject")»«ENDFOREACH»
    «ENDIF»
    ;
 «ENDDEFINE»
