@@ -4,7 +4,7 @@ import org::umlmda::profile;
 import org::umlmda::model::uml;
 import org::umlmda::uml::generator;
 import org::umlmda::uml::generator::java;
-import org::umlmda::uml::generator::webservice;
+import org::umlmda::uml::generator::webservices;
 import org::umlmda::oaw::generator::util;
 import org::umlmda::oaw::generator::model::java;
 import org::umlmda::oaw::generator::model::webservice;
@@ -12,49 +12,59 @@ import org::umlmda::oaw::generator::model::webservice;
 extension java::UMLMDA;
 
 
+    
+cached List[WSModelClass] schemaTypes(WSModelClass class) :
+    class.schemaTypes
+;
+        
+cached List[WSModelPackage] schemaPackages(WSModelClass class) :
+    class.schemaTypes().collect(e|e.package).toSet().typeSelect(WSModelPackage)
+;    
 
-cached String wsNamespace(JavaModelMethod method) :
-    ((JavaModelClass)method.owner).wsNamespace()
+cached JavaModelParameter requestParameter(JavaModelMethod method) :
+    method.parameters.typeSelect(JavaModelParameter).first()
+;     
+
+cached WSModelClass requestClass(JavaModelMethod method) :
+    (WSModelClass)(method.requestParameter().type)
+;        
+
+cached WSModelClass responseClass(JavaModelMethod method) :
+    method.returnType
+;    
+
+// Convenience method to get the namespace for a WS method
+cached String wsNamespace(WSModelMethod method) :
+    ((WSModelClass)method.owner).wsNamespace()
 ;
 
-cached String wsNamespace(JavaModelClass class) :
+// Convenience method to get the namespace for a WS class
+cached String wsNamespace(WSModelClass class) :
+    ((WSModelPackage)class.package).namespace
+;
+
+
+// Convenience method to get the namespace for a WS method
+cached String wsNamespacePrefix(WSModelMethod method) :
+    ((WSModelClass)method.owner).wsNamespacePrefix()
+;
+
+// Convenience method to get the namespace for a WS class
+cached String wsNamespacePrefix(WSModelClass class) :
     class.component != null ? (
-        class.component.wsNamespace()
+        ((WSBusinessComponent)class.component).wsNamespacePrefix()
     ) : (
-        class.package.wsNamespace()
+        ((WSModelPackage)class.package).wsNamespacePrefix()
     )
 ;
 
-cached String wsNamespace(ModelPackage package) :
-    package.getStereotypeProperty("WSNamespace") != null ? (
-        package.getStereotypeProperty("WSNamespace")
-    ) : (
-        package.package != null ? (
-            package.package.wsNamespace()
-        ) : (
-            ""
-        )
-    )
-;
-
-cached String wsNamespacePrefix(JavaModelMethod method) :
-    ((JavaModelClass)method.owner).wsNamespacePrefix()
-;
-
-cached String wsNamespacePrefix(JavaModelClass class) :
-    class.component != null ? (
-        class.component.wsNamespacePrefix()
-    ) : (
-        class.package.wsNamespacePrefix()
-    )
-;
-
-cached String wsNamespacePrefix(ModelPackage package) :
+// Convenience method to get the namespace for a WS package
+cached String wsNamespacePrefix(WSModelPackage package) :
     package.getStereotypeProperty("WSNamespacePrefix") != null ? (
         package.getStereotypeProperty("WSNamespacePrefix")
     ) : (
         package.package != null ? (
-            package.package.wsNamespacePrefix()
+            ((WSModelPackage)package.package).wsNamespacePrefix()
         ) : (
             ""
         )
@@ -63,39 +73,29 @@ cached String wsNamespacePrefix(ModelPackage package) :
 
 
 
-// Finds the BS class that is the sibling for the given WS class.
-// I.e. same name, but other package and other stereotype(s).
-// Reference objects are handled differently, as their name needs to be shortened to get the normal object name.
-cached JavaModelClass getBSSiblingClass(ModelClass wsElement) :
-    let allModelClasses = ((JavaModel)wsElement.model).allModelElements.typeSelect(JavaModelClass) :
-    wsElement.hasStereotype("WebServiceDTOReference") ? (
-        let shortName = wsElement.name.replaceFirst("Reference", "") :
-        allModelClasses.selectFirst(e|e.name==shortName && e.hasStereotype("BusinessObject"))
-    ) : (
-        allModelClasses.selectFirst(e|e.name==wsElement.name && e.hasStereotype("BusinessObject"))
-    )
-; 
-
-
 // Checks if the given package is the Runtime WS package by comparing it to the one found in the current model
-cached Boolean isRuntimeWsPackage(JavaModelPackage package) :
+cached Boolean isRuntimeWsPackage(WSModelPackage package) :
     package == package.findRuntimeWsPackage() 
 ;
 
 // Finds the Runtime WS package in the current model
-cached JavaModelPackage findRuntimeWsPackage(JavaModelPackage package) :
-    ((JavaModel)package.model).allModelElements.typeSelect(JavaModelPackage).selectFirst( e | e.name=="ws" && e.owner.name=="runtime" ) 
+cached WSModelPackage findRuntimeWsPackage(JavaModelElement element) :
+    ((JavaModel)element.model).allModelElements.typeSelect(WSModelPackage).selectFirst( e | e.name=="ws" && e.owner.name=="runtime" ) 
 ;
+
+
 
 
 // Returns all WebService classes of the given package
-cached List[JavaModelClass] webServices(ModelPackage package) :
-    package.classes.typeSelect(ModelClass).select( e | e.hasStereotype("WebService") )
+cached List[WSModelClass] webServices(WSModelPackage package) :
+    package.classes.typeSelect(WSModelClass).select( e | e.hasStereotype("WebService") )
 ;
 
 
+
+
 // Returns all direct and indirect references of the given package and it's services
-cached List[ModelElement] referencedElements(ModelPackage package) :
+cached List[ModelElement] referencedElements(WSModelPackage package) :
     let result = {} :
 
     package.webServices().size>0 ? (
@@ -105,36 +105,36 @@ cached List[ModelElement] referencedElements(ModelPackage package) :
 	    result.intersectElementsByName()
 	) : (
         // All own elements
-        result.addAll( package.classes.typeSelect(JavaModelClass).select( e | e.hasStereotype("WebServiceObject") ) )
+        result.addAll( package.classes.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") ) )
     )
 ;
 
 // Returns all direct and indirect references of the given services' methods
-private cached List[ModelElement] referencedElements(List[JavaModelClass] services) :
+private cached List[ModelElement] referencedElements(List[WSModelClass] services) :
     services.collect( s | s.referencedElements(true) ).flatten()
 ;
 
 
 // Returns all direct and indirect references of the given service's methods to DTO classes
-cached List[ModelElement] relevantReferencedElements(JavaModelClass service) :
-    let pkgElements = ((ModelPackage)service.owner).referencedElements() :
+cached List[ModelElement] relevantReferencedElements(WSModelClass service) :
+    let pkgElements = ((WSModelPackage)service.owner).referencedElements() :
     service.referencedElements(true).reject( e | pkgElements.contains(e) )
 ;
 
 
 // Returns all direct and indirect references of the given service's methods to DTO classes
-cached List[ModelElement] referencedElements(JavaModelClass service, Boolean indirect) :
+cached List[ModelElement] referencedElements(WSModelClass service, Boolean indirect) :
     let result = {} :
     let methods = service.methods.typeSelect(ModelMethod) :
     
     // References in service methods
-    result.addAll( methods.returnType.typeSelect(ModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
-    result.addAll( methods.parameters.typeSelect(ModelParameter).type.select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
-    result.addAll( methods.exceptions.select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
+    result.addAll( methods.returnType.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
+    result.addAll( methods.parameters.typeSelect(ModelParameter).type.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
+    result.addAll( methods.exceptions.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
     
     // References of found elements
     indirect ? (
-        result.addAll( result.typeSelect(ModelClass).referencedElements(service) )
+        result.addAll( result.typeSelect(WSModelClass).referencedElements(service) )
     ) : ( null ) ->
 
     // Now filter complete result set
@@ -142,15 +142,15 @@ cached List[ModelElement] referencedElements(JavaModelClass service, Boolean ind
 ;
 
 // Returns all direct and indirect references of the given class to other DTO classes
-private cached List[ModelElement] referencedElements(ModelClass class, JavaModelClass service) :
+private cached List[ModelElement] referencedElements(WSModelClass class, WSModelClass service) :
     let result = {} :
-    let associations = class.associations.target.typeSelect(ModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) :
+    let associations = class.associations.typeSelect(ModelAssociation).target.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) :
     
     // Local hierarchy
     class.superClass != null && class.superClass.hasStereotype("WebServiceObject") && class.superClass.package==service.package ? (
         result.add( class.superClass )
     ) : ( null ) ->
-    result.addAll( class.subClasses.typeSelect(ModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
+    result.addAll( class.subClasses.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
 
     // Direct and indirect references
     result.addAll( associations ) ->
@@ -158,3 +158,4 @@ private cached List[ModelElement] referencedElements(ModelClass class, JavaModel
     
     result
 ;
+

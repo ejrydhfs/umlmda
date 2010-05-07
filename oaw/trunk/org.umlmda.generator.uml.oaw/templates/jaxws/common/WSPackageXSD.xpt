@@ -15,41 +15,41 @@
 «DEFINE xsdRoot FOR WSModelPackage»
 	«FILE "WEB-INF/wsdl/"+owner.name.toFirstLower()+".xsd" resourceGenPath»
 	<?xml version="1.0" encoding="ISO-8859-1"?>
-	<xsd:schema targetNamespace="«wsNamespace()»" 
+	<xsd:schema targetNamespace="«namespace»" 
 	           elementFormDefault="qualified" 
 	           attributeFormDefault="unqualified" 
 	           version="1.1"
 	           xmlns="http://www.w3.org/2001/XMLSchema" 
 	           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       «REM» Own namespace «ENDREM»
-      xmlns:«wsNamespacePrefix()»="«wsNamespace()»"
+      xmlns:«wsNamespacePrefix()»="«namespace»"
       «REM» Referenced namespaces «ENDREM»
-      «FOREACH referencedPackages.typeSelect(JavaModelPackage) AS component»
-         xmlns:«component.wsNamespacePrefix()»="«component.wsNamespace()»"
+      «FOREACH referencedPackages.typeSelect(WSModelPackage) AS component»
+         xmlns:«component.wsNamespacePrefix()»="«component.namespace»"
       «ENDFOREACH»
 	 >
       «REM» Import referenced namespaces «ENDREM»
 	   «IF ! isRuntimeWsPackage()»
-	      «FOREACH referencedPackages.typeSelect(JavaModelPackage) AS component»
-	         <xsd:import namespace="«component.wsNamespace()»" schemaLocation="«component.owner.name.toFirstLower()».xsd"/>
+	      «FOREACH referencedPackages.typeSelect(WSModelPackage) AS component»
+	         <xsd:import namespace="«component.namespace»" schemaLocation="«component.owner.name.toFirstLower()».xsd"/>
 	      «ENDFOREACH»
 	   «ENDIF» 
 
-      «EXPAND complexType FOREACH classes.typeSelect(JavaModelClass).select( c | c.hasStereotype("WebServiceObject") ).sortBy(e|e.name)»
+      «EXPAND complexType FOREACH classes.typeSelect(WSModelClass).select( c | c.hasStereotype("WebServiceObject") ).sortBy(e|e.name)»
 
-      «EXPAND enumSimpleType FOREACH classes.typeSelect(JavaModelClass).select( c | c.hasStereotype("WebServiceEnumeration") ).sortBy(e|e.name)»
+      «EXPAND enumSimpleType FOREACH classes.typeSelect(WSModelClass).select( c | c.hasStereotype("WebServiceEnumeration") ).sortBy(e|e.name)»
 
 	</xsd:schema>
 	«ENDFILE»
 «ENDDEFINE»
 
 
-«DEFINE complexType FOR JavaModelClass»
-	«LET getGeneratedName("jaxWs.WSObject") AS wsObjectClassName»
+«DEFINE complexType FOR WSModelClass»
+	«LET getGeneratedName("jaxWs.Stub") AS wsObjectClassName»
 	<complexType name="«wsObjectClassName»">
       «IF superClass!=null»
       <complexContent>
-         <extension base="«((JavaModelClass)superClass).wsNamespacePrefix()»:«((JavaModelClass)superClass).getGeneratedName("jaxWs.WSObject")»">
+         <extension base="«((WSModelClass)superClass).wsNamespacePrefix()»:«((WSModelClass)superClass).getGeneratedName("jaxWs.Stub")»">
       «ENDIF»
       «LET attributes.typeSelect(JavaModelAttribute) AS attribs»
       «LET associations.typeSelect(JavaModelAssociation) AS assocs»
@@ -67,13 +67,13 @@
 					         «IF attrib.primitiveType»
 					            "xsd:«attrib.dataType.name.toFirstLower()»"
 					         «ELSE»
-					            "«((JavaModelClass)attrib.modelClassifier).wsNamespacePrefix()»:«attrib.modelClassifier.name»"
+					            "«((WSModelClass)attrib.modelClassifier).wsNamespacePrefix()»:«attrib.modelClassifier.name»"
 					         «ENDIF»
 					      «ELSE»
 					         «IF attrib.primitiveType»
 					            "xsd:«((JavaModelDataType)attrib.modelClassifier).name.toFirstLower()»"
 					         «ELSE»
-					            "«((JavaModelClass)attrib.modelClassifier).wsNamespacePrefix()»:«attrib.modelClassifier.name.toFirstLower()»"
+					            "«((WSModelClass)attrib.modelClassifier).wsNamespacePrefix()»:«attrib.modelClassifier.name.toFirstLower()»"
 					         «ENDIF»
 					      «ENDIF»
 					      />
@@ -83,7 +83,7 @@
                <element 
                   name="«assoc.name»" 
                   minOccurs="«assoc.multiplicity.lower»" maxOccurs="«IF assoc.multiplicity.unbound»unbounded«ELSE»«assoc.multiplicity.upper»«ENDIF»" 
-                  type="«((JavaModelClass)assoc.target).wsNamespacePrefix()»:«((JavaModelClass)assoc.target).getGeneratedName("jaxWs.WSObject")»"
+                  type="«((WSModelClass)assoc.target).wsNamespacePrefix()»:«((WSModelClass)assoc.target).getGeneratedName("jaxWs.Stub")»"
                      />
             «ENDFOREACH»
             </sequence>
@@ -104,8 +104,8 @@
 «ENDDEFINE»
 
 
-«DEFINE enumSimpleType FOR JavaModelClass»
-   «LET getGeneratedName("jaxWs.WSObject") AS wsObjectClassName»
+«DEFINE enumSimpleType FOR WSModelClass»
+   «LET getGeneratedName("jaxWs.Stub") AS wsObjectClassName»
    <simpleType name="«wsObjectClassName»">
       <restriction base="xsd:«((WSEnumeration)this).javaValueType.toFirstLower()»">
       «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»

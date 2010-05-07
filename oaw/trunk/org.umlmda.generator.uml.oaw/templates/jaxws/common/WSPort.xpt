@@ -9,9 +9,9 @@
 
 
 «DEFINE wsPortRoot FOR WSBusinessService»
-«LET generatedName(this, "jaxWs.WSPort") AS className»
+«LET generatedName(this, "jaxWs.Port") AS className»
 «FILE generatedPath+"/"+className+".java"»
-	package «generatorPackage.getQualifiedPackageName("jaxWs.WSPort")»;
+	package «generatorPackage.getQualifiedPackageName("jaxWs.Port")»;
 	
 	import javax.jws.WebMethod;
 	import javax.jws.WebParam;
@@ -22,10 +22,10 @@
 
    «resetImports()»
    «REM» Method parameters and return types «ENDREM»
-   «FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
-      «registerImport("jaxWs.WSObject", (JavaModelClass)method.returnType)»
+   «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+      «registerImport("jaxWs.Stub", (JavaModelClass)method.returnType)»
       «FOREACH method.parameters.typeSelect(JavaModelParameter) AS param»
-	      «registerImport("jaxWs.WSObject", (JavaModelClass)param.type)»
+	      «registerImport("jaxWs.Stub", (JavaModelClass)param.type)»
 	   «ENDFOREACH»
    «ENDFOREACH»
    «registeredImports()»
@@ -36,8 +36,8 @@
    «EXPAND XmlAnnotations»
 	public interface «generatedName» {
 
-      «FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
-         «EXPAND webMethod FOR method»
+      «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+         «EXPAND wsMethodDecl FOR method»;
       «ENDFOREACH»
 
    }   
@@ -49,28 +49,29 @@
 «DEFINE XmlAnnotations FOR WSBusinessService»
 	@WebService(name = "«generatedName»", targetNamespace = "«wsNamespace()»")
 	@SOAPBinding(style = SOAPBinding.Style.RPC)
-	@XmlSeeAlso( { «generatorPackage.getQualifiedPackageName("jaxWs.WSObject")».ObjectFactory.class, com.fja.cor.bs.runtime.ws.jax.ObjectFactory.class })
+	@XmlSeeAlso( { «generatorPackage.getQualifiedPackageName("jaxWs.Stub")».ObjectFactory.class, com.fja.cor.bs.runtime.ws.jax.ObjectFactory.class })
 «ENDDEFINE»
 
 
-«DEFINE webMethod FOR JavaModelMethod»
+«DEFINE wsMethodDecl FOR WSModelMethod»
    /**
-    * @param in
-    * @return returns «((JavaModelClass)returnType).getQualifiedName("jaxWs.WSObject")»
+   «FOREACH parameters.typeSelect(JavaModelParameter) AS param -»
+     * @param «param.name»
+   «ENDFOREACH -»
+    * @return returns «((JavaModelClass)returnType).getQualifiedName("jaxWs.Stub")»
    «FOREACH exceptions.typeSelect(JavaModelClass) AS exc -»
       * @throws «name.toFirstUpper()»«exc.name»
    «ENDFOREACH -»
     */
    @WebMethod(action = "«wsNamespace()»/«name»")
    @WebResult(name = "returnValue", partName = "returnValue")
-   public «((JavaModelClass)returnType).getGeneratedName("jaxWs.WSObject")» «name»(
+   public «((JavaModelClass)returnType).getGeneratedName("jaxWs.Stub")» «name»(
    «FOREACH parameters.typeSelect(JavaModelParameter) AS param SEPARATOR ", "»
-      @WebParam(name = "«param.name»", partName = "«param.name»") «((JavaModelClass)param.type).getGeneratedName("jaxWs.WSObject")» «param.name»
+      @WebParam(name = "«param.name»", partName = "«param.name»") «((JavaModelClass)param.type).getGeneratedName("jaxWs.Stub")» «param.name»
    «ENDFOREACH»
    )
    «IF exceptions.size > 0»
-      throws «FOREACH exceptions.typeSelect(JavaModelClass) AS exc SEPARATOR ", "»«name.toFirstUpper()»«exc.getGeneratedName("jaxWs.WSObject")»«ENDFOREACH»
+      throws «FOREACH exceptions.typeSelect(JavaModelClass) AS exc SEPARATOR ", "»«name.toFirstUpper()»«exc.getGeneratedName("jaxWs.Stub")»«ENDFOREACH»
    «ENDIF»
-   ;
 «ENDDEFINE»
 

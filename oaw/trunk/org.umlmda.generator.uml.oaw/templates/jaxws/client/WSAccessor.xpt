@@ -5,7 +5,8 @@
 «IMPORT org::umlmda::oaw::generator::model::webservice»
 «IMPORT org::umlmda::oaw::generator::util»
 
-«EXTENSION jaxws::WSAccessor»
+«EXTENSION jaxws::WSUtils»
+«EXTENSION jaxws::client::WSAccessor»
 «EXTENSION java::UMLMDA»
 «EXTENSION java::JmiReflect»
 «EXTENSION org::umlmda::uml::java::Artefact»
@@ -15,9 +16,9 @@
 «EXTENSION org::umlmda::uml::java::Parameter»
 
 «DEFINE WSAccessor FOR WSBusinessService»
-«LET generatedName(this, "jaxWs.WSAccessor") AS className»
+«LET generatedName(this, "jaxWs.Accessor") AS className»
 «FILE generatedPath+"/"+className+".java"»
-   package «generatorPackage.getQualifiedPackageName("jaxWs.WSAccessor")»;
+   package «generatorPackage.getQualifiedPackageName("jaxWs.Accessor")»;
 
 	import java.net.MalformedURLException;
 	import java.net.URL;
@@ -38,10 +39,10 @@
    import org.umlmda.runtime.naming.NamingUtils;
    
    «resetImports()»
-   «registerImport("ws.Utils")»
+   «registerImport("jaxWs.Utils")»
    «registerImport("jee.EJBLocal", PIMClass)»
    «registerImport("jee.EJBRemote", PIMClass)»
-   «registerImport("ws.ServicePort")»
+   «registerImport("jaxWs.Port")»
    «FOREACH schemaPackages().select(e|e.PIMPackage.getClasses("BusinessObject").size > 0) AS pkg»
       «registerImport("java.BusinessObjectFactoryImpl", pkg.PIMPackage)»
    «ENDFOREACH»
@@ -56,9 +57,9 @@
 
    private Logger logger = Logger.getLogger(«generatedName».class);
    // Accessor Utilities
-   private final «getScopedName("ws.Utils")» utils = new «getScopedName("ws.Utils")»();
+   private final «getScopedName("jaxWs.Utils")» utils = new «getScopedName("jaxWs.Utils")»();
    // Service port
-   private final «getScopedName("ws.ServicePort")» servicePort;
+   private final «getScopedName("jaxWs.Port")» servicePort;
    // Namespace entry containing the service URL
    public final static String COMP_SERVICE_URL = "«PIMClass.wsUrlJNDIEntry()»";
    
@@ -99,11 +100,11 @@
       }
       // Init accessor utilities
       «FOREACH schemaPackages().select(e|e.PIMPackage.getClasses("BusinessObject").size > 0) AS pkg»
-         utils.set«pkg.PIMPackage.name.toFirstUpper()»Factory(new «pkg.PIMPackage.getScopedName("java.BusinessObjectFactoryImpl")»());
+         utils.set«pkg.PIMPackage.getGeneratedName("java.BusinessObjectFactory")»(new «pkg.PIMPackage.getScopedName("java.BusinessObjectFactoryImpl")»());
       «ENDFOREACH»
       
 
-      «getScopedName("ws.ServiceLocator")» locator = new «getScopedName("ws.ServiceLocator")»(serviceURL, new QName("«wsPackage().namespace»", "«name»"));
+      «getScopedName("jaxWs.ServiceLocator")» locator = new «getScopedName("jaxWs.ServiceLocator")»(serviceURL, new QName("«wsNamespace()»", "«name»"));
       servicePort = locator.get«name»Port();
    }
    
@@ -122,11 +123,11 @@
    «EXPAND java::BOInterface::methodDecl("public") FOR pimMethod()» {
       try {
          «FOREACH parameters.typeSelect(WSModelParameter) AS param»
-            «EXPAND requestParameter(param) FOR param.type»
+            «EXPAND requestParameter(param) FOR (WSModelClassifier)param.type»
          «ENDFOREACH»
 			utils.resolveReferences();
          «IF returnType != null»
-   			«EXPAND declResponseValue FOR returnType» 
+   			«EXPAND declResponseValue FOR (WSModelClassifier)returnType» 
    		«ENDIF»	
 			servicePort.«name»(
 			   «FOREACH parameters.typeSelect(ModelParameter) AS param SEPARATOR ","»
@@ -134,7 +135,7 @@
 			   «ENDFOREACH»
          );
          «IF returnType != null»
-            «EXPAND handleReponseValue FOR returnType»
+            «EXPAND handleReponseValue FOR (WSModelClassifier)returnType»
          «ENDIF»
       }
       «FOREACH exceptions.typeSelect(WSModelClass) AS exceptionCls»
@@ -148,29 +149,29 @@
    }
 «ENDDEFINE»
 
-«DEFINE requestParameter(WSModelParameter parameter) FOR ModelClassifier»
+«DEFINE requestParameter(WSModelParameter parameter) FOR WSModelClassifier»
 «ENDDEFINE»
 
 «DEFINE requestParameter(WSModelParameter parameter) FOR WSModelClass»
-    «this.getScopedName("ws.Stub")» «parameter.name»Ws = utils.create«name»(«parameter.name»);
+    «this.getScopedName("jaxWs.Stub")» «parameter.name»Ws = utils.create«name»(«parameter.name»);
 «ENDDEFINE»
 
 «DEFINE requestParameter(WSModelParameter parameter) FOR WSModelDataType»
     «this.WSJavaType» «parameter.name»Ws = «parameter.convertToWs»;
 «ENDDEFINE»
 
-«DEFINE declResponseValue FOR ModelClassifier»
+«DEFINE declResponseValue FOR WSModelClassifier»
 «ENDDEFINE»
 
 «DEFINE declResponseValue FOR WSModelClass»
-    «getScopedName("ws.Stub")» response = 
+    «getScopedName("jaxWs.Stub")» response = 
 «ENDDEFINE»
 
 «DEFINE declResponseValue FOR WSModelDataType»
    «WSJavaType» response = 
 «ENDDEFINE»
 
-«DEFINE handleReponseValue FOR ModelClassifier»
+«DEFINE handleReponseValue FOR WSModelClassifier»
 «ENDDEFINE»
 
 «DEFINE handleReponseValue FOR WSModelClass»

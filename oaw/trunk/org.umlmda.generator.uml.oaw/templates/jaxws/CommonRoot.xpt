@@ -18,11 +18,11 @@
       «EXPAND jaxws::common::WSUtils::wsUtilsRoot»
       «EXPAND jaxws::common::WSPackageXSD::xsdRoot»
    «ENDIF»
-   «EXPAND Root FOREACH classes.typeSelect(JavaModelClass)»
+   «EXPAND Root FOREACH classes.typeSelect(WSModelClass)»
 «ENDDEFINE»
 
-«DEFINE Root FOR JavaModelClass»
-   «ERROR "Root called on <<JavaModelClass>> "+name»
+«DEFINE Root FOR WSBusinessObject»
+   «ERROR "Root called on <<WSBusinessObject>> "+name»
    «IF hasStereotype("WebServiceObject")»
       «EXPAND jaxws::common::WSBusinessObject::wsBORoot»
    «ENDIF»
@@ -43,7 +43,7 @@
 
 		«REM» Special classes for method exceptions «ENDREM»
 		«FOREACH methods.typeSelect(JavaModelMethod).select( m | m.hasStereotype("WebServiceMethod") && m.exceptions.size>0 ) AS method»
-		   «EXPAND jaxws::common::WSException::wsExceptionRoot(method) FOREACH method.exceptions.typeSelect(JavaModelClass).select( e | e.hasStereotype("WebServiceException") )»
+		   «EXPAND jaxws::common::WSException::wsExceptionRoot(method) FOREACH method.exceptions.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceException") )»
 		«ENDFOREACH»
    «ENDIF»
 «ENDDEFINE»

@@ -7,7 +7,7 @@
 «DEFINE Root FOR JavaModel»
    «REM» Define standard service artifacts supporting jaxws«ENDREM»
    «ERROR "Root called on <<Model>> "+name»
-   «EXPAND java::Root::initArtefacts FOR this»
+   «EXPAND java::Root::initArtefacts»
    «EXPAND Root FOREACH this.packages.typeSelect(WSModelPackage)»
 «ENDDEFINE»
 
@@ -19,7 +19,8 @@
 
 «DEFINE Root FOR WSBusinessService»
    «IF hasStereotype("WebService")»
-      «EXPAND jaxws::WSPortLocal::WSPortLocal FOR this»
+      «EXPAND jaxws::server::WSPortLocal::WSPortLocal»
+      «EXPAND jaxws::server::WSServlet::servletRoot»
    «ENDIF»
 «ENDDEFINE»
 

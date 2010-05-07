@@ -13,19 +13,19 @@
 «EXTENSION org::umlmda::uml::java::Parameter»
 
 «DEFINE WSPortLocal FOR WSBusinessService»
-«LET generatedName(this, "jaxWs.WSPortLocal") AS className»
+«LET generatedName(this, "jaxWs.PortLocal") AS className»
 «FILE generatedPath+"/"+className+".java"»
-   package «generatorPackage.getQualifiedPackageName("jaxWs.WSPortLocal")»;
+   package «generatorPackage.getQualifiedPackageName("jaxWs.PortLocal")»;
 
 	«resetImports()»
-	«registerImport("ws.ServicePort")»
+	«registerImport("jaxWs.Port")»
 	«registeredImports()»
 
 	/**
 	 * Local interface for the ejb deployed as an webservice
 	 */
 	@javax.ejb.Local
-	public interface «generatedName» extends «getScopedName("ws.ServicePort")»
+	public interface «generatedName» extends «getScopedName("jaxWs.Port")»
 	{
 	}
 «ENDFILE»

@@ -10,10 +10,10 @@
 «EXTENSION org::umlmda::uml::java::DataType»
 
 
-«DEFINE wsBORoot FOR JavaModelClass»
-«LET generatedName(this, "jaxWs.WSObject") AS className»
+«DEFINE wsBORoot FOR WSModelClass»
+«LET generatedName(this, "jaxWs.Stub") AS className»
 «FILE generatedPath+"/"+className+".java"»
-	package «generatorPackage.getQualifiedPackageName("jaxWs.WSObject")»;
+	package «generatorPackage.getQualifiedPackageName("jaxWs.Stub")»;
 	
    «EXPAND imports»   
 
@@ -45,7 +45,7 @@
 «ENDDEFINE»
 
 
-«DEFINE imports FOR JavaModelClass»
+«DEFINE imports FOR WSModelClass»
    «IF associations.typeSelect(JavaModelAssociation).size > 0»
       import java.util.ArrayList;
       import java.util.List;
@@ -64,26 +64,26 @@
       «IF wsSubclasses.size > 0»
          import javax.xml.bind.annotation.XmlSeeAlso;
          «FOREACH wsSubclasses AS wsSubclass»
-            «registerImport("jaxWs.WSObject", wsSubclass)»
+            «registerImport("jaxWs.Stub", wsSubclass)»
          «ENDFOREACH»
       «ENDIF»
    «ENDLET»
    «REM» Import super class «ENDREM»
    «IF superClass != null»
-      «registerImport("jaxWs.WSObject", (JavaModelClass)superClass)»
+      «registerImport("jaxWs.Stub", (JavaModelClass)superClass)»
    «ENDIF»
    
    «FOREACH attributes.typeSelect(JavaModelAttribute).select( a | !a.primitiveType && a.modelClassifier.hasStereotype("WebServiceEnumeration") ) AS attrib»
-      «registerImport("jaxWs.WSObject", (JavaModelClass)attrib.modelClassifier)»
+      «registerImport("jaxWs.Stub", (JavaModelClass)attrib.modelClassifier)»
    «ENDFOREACH»
 
    «registeredImports()»
 «ENDDEFINE»
 
 
-«DEFINE XmlAnnotations FOR JavaModelClass»
+«DEFINE XmlAnnotations FOR WSModelClass»
    @XmlAccessorType(XmlAccessType.FIELD)
-   @XmlType(name = "«generatedName»", namespace = "«wsNamespace()»"
+   @XmlType(name = "«generatedName»", namespace = "«((WSModelPackage)package).namespace»"
       «LET attributes.typeSelect(JavaModelAttribute) AS attribs»
       «LET associations.typeSelect(JavaModelAssociation) AS assocs»
          «IF attribs.size > 0 || assocs.size > 0»

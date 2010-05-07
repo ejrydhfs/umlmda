@@ -10,38 +10,14 @@ import org::umlmda::oaw::generator::model::java;
 import org::umlmda::oaw::generator::model::webservice;
 
 extension org::umlmda::utils::CollectionUtils;
-    
-cached List[WSModelClass] schemaTypes(WSModelClass class) :
-    class.schemaTypes
-;
-        
-cached List[WSModelPackage] schemaPackages(WSModelClass class) :
-    class.schemaTypes().collect(e|e.package).toSet().typeSelect(WSModelPackage)
-;    
-
-cached WSModelPackage wsPackage(WSModelClass class) : 
-    class.package
-;
-
-cached JavaModelParameter requestParameter(JavaModelMethod method) :
-    method.parameters.typeSelect(JavaModelParameter).first()
-;     
-
-cached JavaModelClass requestClass(JavaModelMethod method) :
-    (JavaModelClass)(method.requestParameter().type)
-;        
-
-cached WSModelClass responseClass(JavaModelMethod method) :
-    method.returnType
-;    
 
 cached JavaModelMethod pimMethod(JavaModelMethod method) :
     ((WSModelClass)method.owner).PIMClass.methods.typeSelect(JavaModelMethod).select(e|e.name == method.name).first()
 ;    
 
 cached String wsExceptionClass(JavaModelMethod method, JavaModelClass exceptionClass) :
-    exceptionClass.javaPackage.getQualifiedPackageName("ws.Stub")
-   +"."+method.name.toFirstUpper()+exceptionClass.getGeneratedName("ws.Stub")
+    exceptionClass.javaPackage.getQualifiedPackageName("jaxWs.Stub")
+   +"."+method.name.toFirstUpper()+exceptionClass.getGeneratedName("jaxWs.Stub")
 ;
 
 cached String wsUrlJNDIEntry(JavaModelClass class) :

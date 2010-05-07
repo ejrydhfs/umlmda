@@ -9,8 +9,8 @@
 
 
 «DEFINE wsClientRoot FOR WSBusinessService»
-«LET generatedName(this, "jaxWs.WSClient") AS className»
-«LET generatorPackage.getQualifiedPackageName("jaxWs.WSClient") AS packageName»
+«LET generatedName(this, "jaxWs.Client") AS className»
+«LET generatorPackage.getQualifiedPackageName("jaxWs.Client") AS packageName»
 «FILE generatedPath+"/"+className+".java"»
 	package «packageName»;
 	
@@ -55,7 +55,7 @@
 	      super(«className.toUpperCase()»_WSDL_LOCATION, new QName("«wsNamespace()»", "«className»"));
 	   }
 	
-   «LET generatedName(this, "jaxWs.WSPort") AS portName»
+   «LET generatedName(this, "jaxWs.Port") AS portName»
 	   /**
 	    * @return returns «portName»
 	    */

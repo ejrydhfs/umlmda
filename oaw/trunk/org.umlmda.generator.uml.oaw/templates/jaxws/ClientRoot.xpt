@@ -19,7 +19,7 @@
 
 «DEFINE Root FOR WSBusinessService»
    «IF hasStereotype("WebService")»
-      «EXPAND jaxws::WSAccessor::WSAccessor FOR this»
+      «EXPAND jaxws::client::WSAccessor::WSAccessor FOR this»
    «ENDIF»
 «ENDDEFINE»
 

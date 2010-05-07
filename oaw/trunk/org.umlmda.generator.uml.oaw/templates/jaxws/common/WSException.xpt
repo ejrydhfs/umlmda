@@ -8,10 +8,10 @@
 «EXTENSION java::UMLMDA»
 
 
-«DEFINE wsExceptionRoot(JavaModelMethod usingMethod) FOR JavaModelClass»
-«LET generatedName(this, "jaxWs.WSObject") AS className»
+«DEFINE wsExceptionRoot(JavaModelMethod usingMethod) FOR WSModelClass»
+«LET generatedName(this, "jaxWs.Stub") AS className»
 «LET usingMethod.name.toFirstUpper()+name AS classNameForMethod»
-«LET ((JavaModelClass)usingMethod.owner).generatorPackage.getQualifiedPackageName("jaxWs.WSPort") AS packageName»
+«LET ((JavaModelClass)usingMethod.owner).generatorPackage.getQualifiedPackageName("jaxWs.Port") AS packageName»
 «FILE generatedPath+"/"+classNameForMethod+".java"»
 	package «packageName»;
 	
@@ -19,7 +19,7 @@
 
    /**
     * This is the method specific representation of «className» for WS method <i>«usingMethod.name»</i> 
-    * in <i>«((JavaModelClass)usingMethod.owner).getScopedName("jaxWs.WSPort")»</i>. 
+    * in <i>«((JavaModelClass)usingMethod.owner).getScopedName("jaxWs.Port")»</i>. 
     */
    @WebFault(name = "«name»Element", targetNamespace = "«wsNamespace()»")
    public class «classNameForMethod» extends Exception {
@@ -49,7 +49,7 @@
 	   }
 	
 	   /**
-	    * @return returns fault bean: «getQualifiedName("jaxWs.WSObject")»
+	    * @return returns fault bean: «getQualifiedName("jaxWs.Stub")»
 	    */
 	   public «className» getFaultInfo() {
 	      return faultInfo;
