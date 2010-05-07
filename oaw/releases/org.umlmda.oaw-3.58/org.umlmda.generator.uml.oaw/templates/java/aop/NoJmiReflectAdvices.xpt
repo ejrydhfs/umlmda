@@ -1,0 +1,12 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+
+«AROUND java::JmiReflect::Impl FOR JavaModelClass»
+«ENDAROUND»
+
+«AROUND java::JmiReflect::Imports FOR JavaModelClass»
+«ENDAROUND»

@@ -1,0 +1,39 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+«EXTENSION org::umlmda::uml::java::Parameter»
+
+// ======================================
+// Base interface is java.io.Serializable
+// ======================================
+«AROUND java::BOInterface::standardBaseInterface FOR JavaBusinessObject»
+	java.io.Serializable
+«ENDAROUND»
+
+// ========================================
+// Skip derived attributes and associations
+// ========================================
+«AROUND java::BOInterface::handleAttributes FOR JavaModelClass»
+	«FOREACH javaAttributes() AS attr»
+		«IF attr.derived == false»
+			«EXPAND java::BOInterface::attrGetterDecl FOR attr»;
+			«EXPAND java::BOInterface::attrSetterDecl FOR attr»;
+		«ENDIF»
+	«ENDFOREACH»
+«ENDAROUND»
+
+«AROUND java::BOInterface::handleAssociations FOR JavaModelClass»
+	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+		«IF assoc.derived == false»
+			«EXPAND java::BOInterface::assocGetterDecl FOR assoc»;
+			«EXPAND java::BOInterface::assocSetterDecl FOR assoc»;
+		«ENDIF»
+	«ENDFOREACH»
+«ENDAROUND»

@@ -1,0 +1,67 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION java::UMLMDA»
+
+
+«DEFINE wsEnumerationRoot FOR WSEnumeration»
+«LET generatedName(this, "jaxWs.Stub") AS className»
+«FILE generatedPath+"/"+className+".java"»
+	package «generatorPackage.getQualifiedPackageName("jaxWs.Stub")»;
+	
+	import javax.xml.bind.annotation.XmlEnum;
+	import javax.xml.bind.annotation.XmlType;
+
+   «resetImports()»
+   «REM» Import super class «ENDREM»
+   «IF superClass != null»
+      «registerImport("jaxWs.Stub", (JavaModelClass)superClass)»
+   «ENDIF»
+   «registeredImports()»
+
+   /**
+    * «documentation»
+    */
+	@XmlType(name = "«generatedName»", namespace = "«wsNamespace()»")
+	@XmlEnum
+	public enum «generatedName» «IF superClass!=null»extends «superClass.name»«ENDIF» {
+
+      «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib SEPARATOR ", "»
+         «attrib.name» («attrib.initialValue»)
+      «ENDFOREACH»;
+
+	   private final «javaValueType» value;
+	
+	   «generatedName»(«javaValueType» value) {
+	      this.value = value;
+	   }
+	
+	   public «javaValueType» value() {
+	      return value;
+	   }
+	
+	   /**
+	    * Creates an enumeration instance from the value
+	    * 
+	    * @param value
+	    *           of the literal type to be converted to an enumeration instance
+	    * @return the enumeration instance
+	    */
+	   public static «generatedName» fromValue(«javaValueType» value) {
+	      for ( «generatedName» literal : values() ) {
+	         if ( literal.value().equals(value) ) {
+	            return literal;
+	         }
+	      }
+	      throw new IllegalArgumentException("" + value);
+	   }
+
+   }   
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
