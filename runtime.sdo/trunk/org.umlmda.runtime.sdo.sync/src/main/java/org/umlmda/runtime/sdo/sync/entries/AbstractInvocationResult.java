@@ -6,13 +6,13 @@ import java.util.List;
 public abstract class AbstractInvocationResult implements Serializable
 {
    private List<AbstractChangeLogEntry> remoteChanges;
-   private String remoteExceptionMessage; 
-   private String remoteExceptionStack; 
-   
+   private String                       remoteExceptionMessage;
+   private String                       remoteExceptionStack;
+
    public AbstractInvocationResult() {
-      
+
    }
-   
+
    public AbstractInvocationResult(List<AbstractChangeLogEntry> remoteChanges) {
       this.remoteChanges = remoteChanges;
    }

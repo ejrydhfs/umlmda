@@ -1,14 +1,13 @@
 package org.umlmda.runtime.sdo.sync;
 
-import java.util.Iterator;
 import java.util.ListIterator;
 
 import org.umlmda.runtime.exception.FeatureNotImplemementedException;
 
-public class SynchronizedListIteratorWrapper<T> extends SynchronizedIteratorWrapper<T> implements ListIterator<T> {
+public class SynchronizedListIteratorWrapper<T> extends SynchronizedIteratorWrapper<T> implements ListIterator<T>
+{
 
    private final ListIterator<T> wrappedListIterator;
-   
 
    public SynchronizedListIteratorWrapper(SynchronizedCollection<T> collection, ListIterator<T> wrappedIterator) {
       super(collection, wrappedIterator);
@@ -20,7 +19,7 @@ public class SynchronizedListIteratorWrapper<T> extends SynchronizedIteratorWrap
       // TODO Auto-generated method stub
       throw new FeatureNotImplemementedException();
    }
-   
+
    public void add(Object o) {
       // TODO Auto-generated method stub
       throw new FeatureNotImplemementedException();

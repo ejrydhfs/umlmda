@@ -1,7 +1,7 @@
 package org.umlmda.runtime.sdo.sync.entries;
 
-
-public class ChangeToNull extends AbstractChangeEntry {
+public class ChangeToNull extends AbstractChangeEntry
+{
 
    /**
     * 

@@ -2,16 +2,15 @@ package org.umlmda.runtime.sdo.sync;
 
 import java.io.Serializable;
 
-import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
-
-public class SynchronizedObjectProxy implements SynchronizedObject, Serializable {
+public class SynchronizedObjectProxy implements SynchronizedObject, Serializable
+{
 
    private static final long serialVersionUID = 100L;
-   private int recordObjectId;
+   private int               recordObjectId;
 
    public SynchronizedObjectProxy() {
    }
-   
+
    public SynchronizedObjectProxy(int recordObjectId) {
       this.recordObjectId = recordObjectId;
    }
@@ -26,7 +25,7 @@ public class SynchronizedObjectProxy implements SynchronizedObject, Serializable
 
    @Override
    public String toString() {
-      return "Proxy to ROID="+recordObjectId;
+      return "Proxy to ROID=" + recordObjectId;
    }
 
    public String getModelName() {
@@ -36,24 +35,24 @@ public class SynchronizedObjectProxy implements SynchronizedObject, Serializable
    public String getModelVersion() {
       throw new UnsupportedOperationException();
    }
-   
+
    @Override
    public boolean equals(Object obj) {
-      
+
       boolean bReturn = false;
-      
-      if (obj instanceof SynchronizedObjectProxy){
-         
+
+      if ( obj instanceof SynchronizedObjectProxy ) {
+
          SynchronizedObjectProxy proxy = (SynchronizedObjectProxy) obj;
-         
+
          bReturn = (recordObjectId == proxy.getRecordObjectId());
       }
-      
+
       return bReturn;
-         
-   }  
-  
+
+   }
+
    public Recorder getRecorder() {
-	   return null;
+      return null;
    }
 }

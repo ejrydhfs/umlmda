@@ -7,13 +7,12 @@ import org.umlmda.runtime.sdo.sync.impl.ServiceCallWrapperImpl;
  * The interface a service call implementation must inherit.
  * 
  * @author Marco Metzen
- *
  */
 public interface ServiceCall<TypeOfResult>
 {
-   public abstract void onExecute(ServiceCallWrapperImpl<TypeOfResult> wrapper);
-   
-   public abstract void onSucess(TypeOfResult result, SyncServiceCallback callback);
+   void onExecute(ServiceCallWrapperImpl<TypeOfResult> wrapper);
 
-   public abstract void onException(Throwable throwable, SyncServiceCallback callback);   
+   void onSucess(TypeOfResult result, SyncServiceCallback callback);
+
+   void onException(Throwable throwable, SyncServiceCallback callback);
 }

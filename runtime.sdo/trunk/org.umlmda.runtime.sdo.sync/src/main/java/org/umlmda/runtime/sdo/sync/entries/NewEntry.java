@@ -6,9 +6,10 @@ import org.umlmda.runtime.model.ModeledElementProxy;
 /*
  * Change entry for new instances
  */
-public class NewEntry extends AbstractChangeLogEntry {
+public class NewEntry extends AbstractChangeLogEntry
+{
 
-   private static final long serialVersionUID = 100L;
+   private static final long   serialVersionUID = 100L;
    private ModeledElementProxy elementProxy;
 
    /**
@@ -29,20 +30,20 @@ public class NewEntry extends AbstractChangeLogEntry {
 
    @Override
    public String toString() {
-      return "NewEntry: ROID="+getRecordId()+" element="+elementProxy.getModelName()+" version="+elementProxy.getModelVersion();
+      return "NewEntry: ROID=" + getRecordId() + " element=" + elementProxy.getModelName() + " version="
+            + elementProxy.getModelVersion();
    }
-
 
    @Override
    public boolean equals(Object obj) {
 
       boolean bReturn = false;
 
-      if (obj instanceof NewEntry){
+      if ( obj instanceof NewEntry ) {
 
          NewEntry entry = (NewEntry) obj;
 
-         if (super.equals(obj)){
+         if ( super.equals(obj) ) {
             bReturn = elementProxy.equals(entry.getElementProxy());
          }
       }

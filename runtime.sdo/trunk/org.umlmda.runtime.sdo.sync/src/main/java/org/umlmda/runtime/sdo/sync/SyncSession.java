@@ -4,10 +4,11 @@ package org.umlmda.runtime.sdo.sync;
  * Holds the player and the recorder.
  */
 
-public interface SyncSession {
+public interface SyncSession
+{
 
-    public Player getPlayer();
+   Player getPlayer();
 
-    public Recorder getRecorder();
+   Recorder getRecorder();
 
 }

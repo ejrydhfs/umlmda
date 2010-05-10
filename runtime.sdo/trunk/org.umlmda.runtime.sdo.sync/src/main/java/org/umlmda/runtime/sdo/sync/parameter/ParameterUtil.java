@@ -8,12 +8,13 @@ import org.umlmda.runtime.lang.Enumeration;
 import org.umlmda.runtime.sdo.sync.Player;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 
-public class ParameterUtil {
+public class ParameterUtil
+{
 
-   static public List<AbstractParameter> toList(Object [] parameters) {
+   static public List<AbstractParameter> toList(Object[] parameters) {
       List<AbstractParameter> parameterList = new ArrayList<AbstractParameter>(parameters.length);
 
-      for (int i = 0; i < parameters.length; i++) {
+      for ( int i = 0; i < parameters.length; i++ ) {
          Object parameter = parameters[i];
 
          if ( parameter instanceof String ) {
@@ -39,7 +40,7 @@ public class ParameterUtil {
          }
 
          else {
-            throw new IllegalArgumentException(parameter.getClass()+ " not supported");
+            throw new IllegalArgumentException(parameter.getClass() + " not supported");
          }
       }
 
@@ -50,12 +51,11 @@ public class ParameterUtil {
       Object[] parameters = new Object[parameterList.size()];
 
       int i = 0;
-      for (AbstractParameter parameter : parameterList) {
-          parameters[i++] = parameter.getTranslatedValue(player);
+      for ( AbstractParameter parameter : parameterList ) {
+         parameters[i++] = parameter.getTranslatedValue(player);
       }
 
       return parameters;
    }
-
 
 }

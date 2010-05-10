@@ -2,8 +2,8 @@ package org.umlmda.runtime.sdo.sync.entries;
 
 import java.util.List;
 
-public class VoidInvocationResult extends AbstractInvocationResult {
-
+public class VoidInvocationResult extends AbstractInvocationResult
+{
 
    private static final long serialVersionUID = 100L;
 

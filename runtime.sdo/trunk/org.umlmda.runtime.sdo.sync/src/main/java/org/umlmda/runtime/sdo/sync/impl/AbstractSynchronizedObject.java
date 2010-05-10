@@ -1,11 +1,12 @@
 package org.umlmda.runtime.sdo.sync.impl;
 
-import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.Recorder;
+import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 
-public abstract class AbstractSynchronizedObject implements SynchronizedObject {
+public abstract class AbstractSynchronizedObject implements SynchronizedObject
+{
    protected final transient Recorder recorder;
-   private int recordObjectId;
+   private int                        recordObjectId;
 
    protected AbstractSynchronizedObject(Recorder recorder) {
       this(recorder, true);
@@ -23,7 +24,7 @@ public abstract class AbstractSynchronizedObject implements SynchronizedObject {
    public void setRecordObjectId(int recordObjectId) {
       this.recordObjectId = recordObjectId;
    }
-   
+
    public String getModelName() {
       throw new UnsupportedOperationException();
    }
@@ -35,6 +36,5 @@ public abstract class AbstractSynchronizedObject implements SynchronizedObject {
    public Recorder getRecorder() {
       return recorder;
    }
- 
-   
+
 }

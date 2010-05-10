@@ -1,10 +1,11 @@
 package org.umlmda.runtime.sdo.sync.entries;
 
-public class ChangeIntegerEntry extends AbstractChangeEntry {
+public class ChangeIntegerEntry extends AbstractChangeEntry
+{
 
    private static final long serialVersionUID = 100L;
-   private Integer value;
-   
+   private Integer           value;
+
    public ChangeIntegerEntry() {
    }
 
@@ -20,24 +21,23 @@ public class ChangeIntegerEntry extends AbstractChangeEntry {
 
    @Override
    public boolean equals(Object obj) {
-      
+
       boolean bReturn = false;
-      
-      if (obj instanceof ChangeIntegerEntry){
-         
+
+      if ( obj instanceof ChangeIntegerEntry ) {
+
          ChangeIntegerEntry chgEntry = (ChangeIntegerEntry) obj;
-         
-         if (super.equals(obj)){
-            if (value == chgEntry.getValue())
+
+         if ( super.equals(obj) ) {
+            if ( value == chgEntry.getValue() )
                bReturn = true; // Values are the same String or both are null
             else
                bReturn = (value != null) && value.equals(chgEntry.getValue());
          }
       }
-      
-      return bReturn;
-         
-   }  
 
-   
+      return bReturn;
+
+   }
+
 }

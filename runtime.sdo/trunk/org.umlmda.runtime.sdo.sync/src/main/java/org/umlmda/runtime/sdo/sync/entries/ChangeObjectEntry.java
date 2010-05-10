@@ -3,9 +3,10 @@ package org.umlmda.runtime.sdo.sync.entries;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 
-public class ChangeObjectEntry extends AbstractChangeEntry {
+public class ChangeObjectEntry extends AbstractChangeEntry
+{
 
-   private static final long serialVersionUID = 100L;
+   private static final long       serialVersionUID = 100L;
    private SynchronizedObjectProxy proxy;
 
    public ChangeObjectEntry() {
@@ -24,22 +25,22 @@ public class ChangeObjectEntry extends AbstractChangeEntry {
 
    @Override
    public boolean equals(Object obj) {
-      
+
       boolean bReturn = false;
-      
-      if (obj instanceof ChangeObjectEntry){
-         
+
+      if ( obj instanceof ChangeObjectEntry ) {
+
          ChangeObjectEntry chgEntry = (ChangeObjectEntry) obj;
-         
-         if (super.equals(obj)){
-            if (chgEntry.getValue() == proxy)
+
+         if ( super.equals(obj) ) {
+            if ( chgEntry.getValue() == proxy )
                bReturn = true;
             else
                bReturn = chgEntry.getValue().equals(proxy);
          }
       }
-      
+
       return bReturn;
-         
-   }  
+
+   }
 }

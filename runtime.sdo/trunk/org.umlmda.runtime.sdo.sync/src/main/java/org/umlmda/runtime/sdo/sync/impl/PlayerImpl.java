@@ -24,187 +24,188 @@ import org.umlmda.runtime.sdo.sync.entries.ListRemoveEntry;
 import org.umlmda.runtime.sdo.sync.entries.NewEntry;
 import org.umlmda.runtime.sdo.sync.entries.SetAddEntry;
 
-public class PlayerImpl implements Player {
-    private static final long serialVersionUID = 1L;
+public class PlayerImpl implements Player
+{
+   private static final long                          serialVersionUID    = 1L;
 
-    private static long counter;
+   private static long                                counter;
 
-    // Player info - useful for debugging
-    private final long id;
-    private final String mode;
+   // Player info - useful for debugging
+   private final long                                 id;
+   private final String                               mode;
 
-    private final Logger logger;
-    private transient Map<Integer, SynchronizedObject> synchronizedObjects = new HashMap<Integer, SynchronizedObject>();
-    private final SynchronizedObjectFactory objectFactory;
-    private final Factory beanInvocationFactory;
-    private int recordedObjectCount = 0;
+   private final Logger                               logger;
+   private transient Map<Integer, SynchronizedObject> synchronizedObjects = new HashMap<Integer, SynchronizedObject>();
+   private final SynchronizedObjectFactory            objectFactory;
+   private final Factory                              beanInvocationFactory;
+   private int                                        recordedObjectCount = 0;
 
-    private static synchronized long getNextId() {
-        return ++counter;
-    }
+   private static synchronized long getNextId() {
+      return ++counter;
+   }
 
-    public PlayerImpl(String mode, SynchronizedObjectFactory objectFactory, BeanInvocation.Factory beanInvocationFactory) {
-        this.id = getNextId();
-        this.mode = mode;
+   public PlayerImpl(String mode, SynchronizedObjectFactory objectFactory, BeanInvocation.Factory beanInvocationFactory) {
+      this.id = getNextId();
+      this.mode = mode;
 
-        this.objectFactory = objectFactory;
-        this.beanInvocationFactory = beanInvocationFactory;
-        this.logger = Logger.getLogger(PlayerImpl.class);
-    }
+      this.objectFactory = objectFactory;
+      this.beanInvocationFactory = beanInvocationFactory;
+      this.logger = Logger.getLogger(PlayerImpl.class);
+   }
 
-    public void register(int recordObjectId, SynchronizedObject recordedObject) {
-        debug("Register: ROID=" + recordObjectId);
+   public void register(int recordObjectId, SynchronizedObject recordedObject) {
+      debug("Register: ROID=" + recordObjectId);
 
-        synchronizedObjects.put(recordObjectId, recordedObject);
-    }
+      synchronizedObjects.put(recordObjectId, recordedObject);
+   }
 
-    public synchronized void reset() {
-        debug("Got reset");
+   public synchronized void reset() {
+      debug("Got reset");
 
-        recordedObjectCount = 0;
-        synchronizedObjects.clear();
-    }
+      recordedObjectCount = 0;
+      synchronizedObjects.clear();
+   }
 
-    public synchronized SynchronizedObject playback(List<AbstractChangeLogEntry> changeEntries, SynchronizedObject rootObject) {
-        int count = changeEntries.size();
-        Set<NewEntry> processedNewEntries = new HashSet<NewEntry>();
+   public synchronized SynchronizedObject playback(List<AbstractChangeLogEntry> changeEntries, SynchronizedObject rootObject) {
+      int count = changeEntries.size();
+      Set<NewEntry> processedNewEntries = new HashSet<NewEntry>();
 
-        if (logger.isDebugEnabled()) {
-            debug("Got " + count + " messages to play back");
-        }
+      if ( logger.isDebugEnabled() ) {
+         debug("Got " + count + " messages to play back");
+      }
 
-        // Create new Objects first
-        int index = 0;
-        for (Iterator ile = changeEntries.iterator(); ile.hasNext();) {
-            AbstractChangeLogEntry logEntry = (AbstractChangeLogEntry) ile.next();
+      // Create new Objects first
+      int index = 0;
+      for ( Iterator ile = changeEntries.iterator(); ile.hasNext(); ) {
+         AbstractChangeLogEntry logEntry = (AbstractChangeLogEntry) ile.next();
 
-            if (logEntry instanceof NewEntry) {
-                SynchronizedObject object = synchronizedObjects.get(logEntry.getRecordId());
-
-                if (object == null) {
-                    NewEntry createEntry = (NewEntry) logEntry;
-
-                    object = objectFactory.create(createEntry.getElementProxy());
-                    synchronizedObjects.put(createEntry.getRecordId(), object);
-                    processedNewEntries.add(createEntry);
-
-                    debug("Created (" + index + "/" + count + "): " + logEntry + " as " + object.getClass().getName());
-                }
-            }
-        }
-
-        // Playback other entries
-        index = 0;
-        for (AbstractChangeLogEntry logEntry : changeEntries) {
+         if ( logEntry instanceof NewEntry ) {
             SynchronizedObject object = synchronizedObjects.get(logEntry.getRecordId());
 
-            if (logger.isDebugEnabled()) {
-                ++index;
-                debug("About to playback (" + index + "/" + count + "): " + logEntry);
+            if ( object == null ) {
+               NewEntry createEntry = (NewEntry) logEntry;
+
+               object = objectFactory.create(createEntry.getElementProxy());
+               synchronizedObjects.put(createEntry.getRecordId(), object);
+               processedNewEntries.add(createEntry);
+
+               debug("Created (" + index + "/" + count + "): " + logEntry + " as " + object.getClass().getName());
             }
+         }
+      }
 
-            if (logEntry instanceof NewEntry && processedNewEntries.contains(logEntry)) {
-                // Done before
-            }
+      // Playback other entries
+      index = 0;
+      for ( AbstractChangeLogEntry logEntry : changeEntries ) {
+         SynchronizedObject object = synchronizedObjects.get(logEntry.getRecordId());
 
-            else if (logEntry instanceof AbstractChangeEntry) {
-                AbstractChangeEntry changeEntry = (AbstractChangeEntry) logEntry;
-                Object changeValue = getValue(changeEntry.getValue());
-                BeanInvocation beanInvocation = beanInvocationFactory.create(object);
+         if ( logger.isDebugEnabled() ) {
+            ++index;
+            debug("About to playback (" + index + "/" + count + "): " + logEntry);
+         }
 
-                beanInvocation.setValue(changeEntry.getPropertyName(), changeValue);
-            }
+         if ( logEntry instanceof NewEntry && processedNewEntries.contains(logEntry) ) {
+            // Done before
+         }
 
-            else if (logEntry instanceof ListAddEntry) {
-                ListAddEntry listAddEntry = (ListAddEntry) logEntry;
-                Object listElement = getValue(listAddEntry.getValue());
-                List<Object> list = (List<Object>) object;
+         else if ( logEntry instanceof AbstractChangeEntry ) {
+            AbstractChangeEntry changeEntry = (AbstractChangeEntry) logEntry;
+            Object changeValue = getValue(changeEntry.getValue());
+            BeanInvocation beanInvocation = beanInvocationFactory.create(object);
 
-                list.add(listAddEntry.getIndex(), listElement);
-            }
+            beanInvocation.setValue(changeEntry.getPropertyName(), changeValue);
+         }
 
-            else if (logEntry instanceof SetAddEntry) {
-                SetAddEntry setAddEntry = (SetAddEntry) logEntry;
-                Object setElement = getValue(setAddEntry.getValue());
-                Set<Object> set = (Set<Object>) object;
+         else if ( logEntry instanceof ListAddEntry ) {
+            ListAddEntry listAddEntry = (ListAddEntry) logEntry;
+            Object listElement = getValue(listAddEntry.getValue());
+            List<Object> list = (List<Object>) object;
 
-                set.add(setElement);
-            }
+            list.add(listAddEntry.getIndex(), listElement);
+         }
 
-            else if (logEntry instanceof CollectionRemoveEntry) {
-                CollectionRemoveEntry removeEntry = (CollectionRemoveEntry) logEntry;
-                Object listElement = getValue(removeEntry.getValue());
-                Collection<Object> collection = (Collection<Object>) object;
+         else if ( logEntry instanceof SetAddEntry ) {
+            SetAddEntry setAddEntry = (SetAddEntry) logEntry;
+            Object setElement = getValue(setAddEntry.getValue());
+            Set<Object> set = (Set<Object>) object;
 
-                collection.remove(listElement);
-            }
+            set.add(setElement);
+         }
 
-            else if (logEntry instanceof CollectionClearEntry) {
-                CollectionClearEntry removeEntry = (CollectionClearEntry) logEntry;
-                Collection<Object> collection = (Collection<Object>) object;
+         else if ( logEntry instanceof CollectionRemoveEntry ) {
+            CollectionRemoveEntry removeEntry = (CollectionRemoveEntry) logEntry;
+            Object listElement = getValue(removeEntry.getValue());
+            Collection<Object> collection = (Collection<Object>) object;
 
-                collection.clear();
-            }
+            collection.remove(listElement);
+         }
 
-            else if (logEntry instanceof ListRemoveEntry) {
-                ListRemoveEntry removeEntry = (ListRemoveEntry) logEntry;
-                List<Object> list = (List<Object>) object;
+         else if ( logEntry instanceof CollectionClearEntry ) {
+            CollectionClearEntry removeEntry = (CollectionClearEntry) logEntry;
+            Collection<Object> collection = (Collection<Object>) object;
 
-                list.remove(removeEntry.getIndex());
-            }
+            collection.clear();
+         }
 
-            else {
-                printDebugInfo(logEntry);
-                throw new IllegalArgumentException();
-            }
-        }
+         else if ( logEntry instanceof ListRemoveEntry ) {
+            ListRemoveEntry removeEntry = (ListRemoveEntry) logEntry;
+            List<Object> list = (List<Object>) object;
 
-        return synchronizedObjects.get(new Integer(1));
-    }
+            list.remove(removeEntry.getIndex());
+         }
 
-    private void printDebugInfo(AbstractChangeLogEntry logEntry) {
-        if (!logger.isDebugEnabled()) {
-            return;
-        }
+         else {
+            printDebugInfo(logEntry);
+            throw new IllegalArgumentException();
+         }
+      }
 
-        debug("Problem with entry: " + logEntry);
-    }
+      return synchronizedObjects.get(new Integer(1));
+   }
 
-    private Object getValue(Object changeValue) {
-        if (changeValue instanceof SynchronizedObjectProxy) {
-            SynchronizedObjectProxy proxy = (SynchronizedObjectProxy) changeValue;
+   private void printDebugInfo(AbstractChangeLogEntry logEntry) {
+      if ( !logger.isDebugEnabled() ) {
+         return;
+      }
 
-            changeValue = synchronizedObjects.get(proxy.getRecordObjectId());
-        }
-        return changeValue;
-    }
+      debug("Problem with entry: " + logEntry);
+   }
 
-    public SynchronizedObject getObject(SynchronizedObjectProxy proxy) {
-        return synchronizedObjects.get(proxy.getRecordObjectId());
-    }
+   private Object getValue(Object changeValue) {
+      if ( changeValue instanceof SynchronizedObjectProxy ) {
+         SynchronizedObjectProxy proxy = (SynchronizedObjectProxy) changeValue;
 
-    public SynchronizedObject getObjectById(int recordObjectId) {
-        return synchronizedObjects.get(recordObjectId);
-    }
+         changeValue = synchronizedObjects.get(proxy.getRecordObjectId());
+      }
+      return changeValue;
+   }
 
-    public SynchronizedObjectFactory getObjectFactory() {
-        return objectFactory;
-    }
+   public SynchronizedObject getObject(SynchronizedObjectProxy proxy) {
+      return synchronizedObjects.get(proxy.getRecordObjectId());
+   }
 
-    synchronized int getNextRecordObjectId() {
-        return ++recordedObjectCount;
-    }
+   public SynchronizedObject getObjectById(int recordObjectId) {
+      return synchronizedObjects.get(recordObjectId);
+   }
 
-    void debug(String msg) {
-        if (!logger.isDebugEnabled()) {
-            return;
-        }
+   public SynchronizedObjectFactory getObjectFactory() {
+      return objectFactory;
+   }
 
-        logger.debug(toString() + " " + msg);
-    }
+   synchronized int getNextRecordObjectId() {
+      return ++recordedObjectCount;
+   }
 
-    public String toString() {
-        return "PlayerImpl [Id=" + id + ", mode=" + mode + "]";
-    }
+   void debug(String msg) {
+      if ( !logger.isDebugEnabled() ) {
+         return;
+      }
+
+      logger.debug(toString() + " " + msg);
+   }
+
+   public String toString() {
+      return "PlayerImpl [Id=" + id + ", mode=" + mode + "]";
+   }
 
 }

@@ -1,9 +1,10 @@
 package org.umlmda.runtime.sdo.sync.entries;
 
-public class ChangeStringArrayEntry extends AbstractChangeEntry {
+public class ChangeStringArrayEntry extends AbstractChangeEntry
+{
 
    private static final long serialVersionUID = 100L;
-   private String[] values;
+   private String[]          values;
 
    public ChangeStringArrayEntry() {
    }

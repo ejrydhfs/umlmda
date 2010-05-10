@@ -14,7 +14,7 @@ public interface SyncService extends RemoteService {
     /**
      * Starts the conversation and returns a unique conversation id.
      */
-    public String startConversation();
+    String startConversation();
 
     /**
      * Finish the conversation. A new conversation can be started. The old
@@ -26,7 +26,7 @@ public interface SyncService extends RemoteService {
      * @param conversationId
      *            unique conversation id
      */
-    public void finishConversation(String conversationId);
+    void finishConversation(String conversationId);
 
     /**
      * Synchronize changes with remote peer.
@@ -40,7 +40,7 @@ public interface SyncService extends RemoteService {
      * @param callback
      */
 
-    public List<AbstractChangeLogEntry> synchronizeChanges(String conversationId, List<AbstractChangeLogEntry> changes);
+    List<AbstractChangeLogEntry> synchronizeChanges(String conversationId, List<AbstractChangeLogEntry> changes);
 
     /**
      * Invoke a method on the remote peer.
@@ -50,6 +50,6 @@ public interface SyncService extends RemoteService {
      * @return
      */
 
-    public AbstractInvocationResult invokeMethod(String conversationId, SynchronizedObjectProxy object, String methodName, List<AbstractParameter> parameters);
+    AbstractInvocationResult invokeMethod(String conversationId, SynchronizedObjectProxy object, String methodName, List<AbstractParameter> parameters);
 
 }

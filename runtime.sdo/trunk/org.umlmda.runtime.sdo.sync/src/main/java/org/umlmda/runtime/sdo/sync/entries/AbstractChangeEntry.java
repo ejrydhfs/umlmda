@@ -1,11 +1,11 @@
 package org.umlmda.runtime.sdo.sync.entries;
 
-
-public abstract class AbstractChangeEntry extends AbstractChangeLogEntry {
+public abstract class AbstractChangeEntry extends AbstractChangeLogEntry
+{
 
    private static final long serialVersionUID = 100L;
 
-   private String propertyName;
+   private String            propertyName;
 
    public AbstractChangeEntry() {
    }
@@ -23,25 +23,25 @@ public abstract class AbstractChangeEntry extends AbstractChangeLogEntry {
 
    @Override
    public String toString() {
-      return "ChangeEntry: ROID="+getRecordId()+" property="+propertyName+" value=\""+getValue()+"\"";
+      return "ChangeEntry: ROID=" + getRecordId() + " property=" + propertyName + " value=\"" + getValue() + "\"";
    }
-   
+
    @Override
    public boolean equals(Object obj) {
-      
+
       boolean bReturn = false;
-      
-      if (obj instanceof AbstractChangeEntry){
-         
+
+      if ( obj instanceof AbstractChangeEntry ) {
+
          AbstractChangeEntry entry = (AbstractChangeEntry) obj;
-         
-         if (super.equals(obj)){
-            bReturn = (propertyName != null) && propertyName.equals(entry.getPropertyName());   
+
+         if ( super.equals(obj) ) {
+            bReturn = (propertyName != null) && propertyName.equals(entry.getPropertyName());
          }
       }
-      
+
       return bReturn;
-         
-   }  
+
+   }
 
 }

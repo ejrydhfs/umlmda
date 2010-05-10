@@ -4,54 +4,56 @@ import java.util.List;
 
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 
-
 /**
  * Interface of the property change recorder
+ * 
  * @author moroff
- *
  */
-public interface Recorder {
+public interface Recorder
+{
 
-   public abstract List<AbstractChangeLogEntry>   getChangeEntries();
-   
-   public abstract void startRecording();
+   List<AbstractChangeLogEntry> getChangeEntries();
 
-   public abstract boolean stopRecording();
-   
-   public abstract boolean isRecording();
-   
-   public abstract void register(SynchronizedObject recordedObject, boolean recordCreation);
+   void startRecording();
 
-   public abstract void recordNew(SynchronizedObject object);
-   
-   public abstract void recordChange(SynchronizedObject object, String propertyName, Object value);
-   
-   public abstract void recordAdd(SynchronizedList<?> list, Object value, int index);
-   
-   public abstract void recordRemove(SynchronizedCollection<?> collection, Object object);
-   
-   public abstract void recordRemoveIndex(SynchronizedList<?> list, int index, Object object);
-   
-   public abstract void recordAdd(SynchronizedSet<?> set, Object value);
-   
-   public abstract void recordClear(SynchronizedCollection<?> collection);
+   boolean stopRecording();
+
+   boolean isRecording();
+
+   void register(SynchronizedObject recordedObject, boolean recordCreation);
+
+   void recordNew(SynchronizedObject object);
+
+   void recordChange(SynchronizedObject object, String propertyName, Object value);
+
+   void recordAdd(SynchronizedList<?> list, Object value, int index);
+
+   void recordRemove(SynchronizedCollection<?> collection, Object object);
+
+   void recordRemoveIndex(SynchronizedList<?> list, int index, Object object);
+
+   void recordAdd(SynchronizedSet<?> set, Object value);
+
+   void recordClear(SynchronizedCollection<?> collection);
 
    /**
     * Invoke a method without parameters on the remote peer
+    * 
     * @param method
     * @return
     */
-   public abstract void recordInvoke(SynchronizedObject recordedObject, String string);
-   
+   void recordInvoke(SynchronizedObject recordedObject, String string);
+
    /**
     * Invoke a method with parameters on the remote peer
+    * 
     * @param method
     */
-   public abstract void recordInvoke(SynchronizedObject recordedObject, String method, Object... parameters);
+   void recordInvoke(SynchronizedObject recordedObject, String method, Object... parameters);
 
-   public abstract void reset();
-   
-   public abstract void setSynchronizeStrategy(SynchronizeStrategy strategy);
+   void reset();
 
-   public SynchronizeStrategy getSynchronizeStrategy();
+   void setSynchronizeStrategy(SynchronizeStrategy strategy);
+
+   SynchronizeStrategy getSynchronizeStrategy();
 }

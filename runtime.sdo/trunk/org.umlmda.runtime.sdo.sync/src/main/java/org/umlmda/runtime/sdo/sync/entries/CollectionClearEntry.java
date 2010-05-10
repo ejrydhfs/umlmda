@@ -5,9 +5,9 @@ package org.umlmda.runtime.sdo.sync.entries;
 
 /**
  * @author MOROFF
- *
  */
-public class CollectionClearEntry extends AbstractChangeLogEntry {
+public class CollectionClearEntry extends AbstractChangeLogEntry
+{
 
    private static final long serialVersionUID = 100L;
 
@@ -26,7 +26,7 @@ public class CollectionClearEntry extends AbstractChangeLogEntry {
 
    @Override
    public String toString() {
-      return "CollectionClearEntry: ROID="+getRecordId()+"\"";
+      return "CollectionClearEntry: ROID=" + getRecordId() + "\"";
    }
-   
+
 }

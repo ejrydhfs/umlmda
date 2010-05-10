@@ -6,16 +6,18 @@ import java.util.List;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 
 /**
- * Interface of the playback part of synchonizer. 
+ * Interface of the playback part of synchonizer.
+ * 
  * @author Dieter Moroff (11.4.2008)
- *
  */
-public interface Player extends Serializable {
-   public static final String CLIENT = "Client";
-   public static final String SERVER = "Server";
-   
+public interface Player extends Serializable
+{
+   String CLIENT = "Client";
+   String SERVER = "Server";
+
    /**
     * Starts the playback with a given change recording.
+    * 
     * @param changeEntries
     * @param rootObject
     * @return

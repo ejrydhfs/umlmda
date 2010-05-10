@@ -2,10 +2,11 @@ package org.umlmda.runtime.sdo.sync.parameter;
 
 import org.umlmda.runtime.sdo.sync.Player;
 
-public class IntegerParameter extends AbstractParameter {
+public class IntegerParameter extends AbstractParameter
+{
 
    private static final long serialVersionUID = 1L;
-   private Integer parameter;
+   private Integer           parameter;
 
    public IntegerParameter() {
    }
@@ -13,7 +14,7 @@ public class IntegerParameter extends AbstractParameter {
    public IntegerParameter(Integer parameter) {
       this.parameter = parameter;
    }
-   
+
    @Override
    public Object getTranslatedValue(Player player) {
       return parameter;

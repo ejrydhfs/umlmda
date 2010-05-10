@@ -1,8 +1,9 @@
 package org.umlmda.runtime.sdo.sync;
 
-public interface SyncServiceCallback {
-   public abstract void onSuccess();
-   
-   public abstract void onException(Throwable throwable);
+public interface SyncServiceCallback
+{
+   void onSuccess();
+
+   void onException(Throwable throwable);
 
 }

@@ -2,11 +2,11 @@ package org.umlmda.runtime.sdo.sync;
 
 import org.umlmda.runtime.model.ModeledElement;
 
-public interface SynchronizedObject extends ModeledElement {
+public interface SynchronizedObject extends ModeledElement
+{
 
    /**
-    * Set the record object id. Only the Recorder should call this method, never call in
-    * application code!
+    * Set the record object id. Only the Recorder should call this method, never call in application code!
     * 
     * @param recordObjectId
     */
@@ -14,6 +14,6 @@ public interface SynchronizedObject extends ModeledElement {
 
    int getRecordObjectId();
 
-   public abstract Recorder getRecorder();
+   Recorder getRecorder();
 
 }

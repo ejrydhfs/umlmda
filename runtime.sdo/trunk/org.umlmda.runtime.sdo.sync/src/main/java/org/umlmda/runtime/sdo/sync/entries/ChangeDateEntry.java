@@ -2,11 +2,12 @@ package org.umlmda.runtime.sdo.sync.entries;
 
 import java.util.Date;
 
-public class ChangeDateEntry extends AbstractChangeEntry {
+public class ChangeDateEntry extends AbstractChangeEntry
+{
 
    private static final long serialVersionUID = 100L;
-   private Date value;
-   
+   private Date              value;
+
    public ChangeDateEntry() {
    }
 
@@ -22,24 +23,23 @@ public class ChangeDateEntry extends AbstractChangeEntry {
 
    @Override
    public boolean equals(Object obj) {
-      
+
       boolean bReturn = false;
-      
-      if (obj instanceof ChangeDateEntry){
-         
+
+      if ( obj instanceof ChangeDateEntry ) {
+
          ChangeDateEntry chgEntry = (ChangeDateEntry) obj;
-         
-         if (super.equals(obj)){
-            if (value == chgEntry.getValue())
+
+         if ( super.equals(obj) ) {
+            if ( value == chgEntry.getValue() )
                bReturn = true; // Values are the same String or both are null
             else
                bReturn = (value != null) && value.equals(chgEntry.getValue());
          }
       }
-      
-      return bReturn;
-         
-   }  
 
-   
+      return bReturn;
+
+   }
+
 }

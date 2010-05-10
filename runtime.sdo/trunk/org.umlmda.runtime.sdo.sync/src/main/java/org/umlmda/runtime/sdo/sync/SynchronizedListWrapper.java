@@ -8,18 +8,19 @@ import java.util.ListIterator;
 import org.umlmda.runtime.exception.FeatureNotImplemementedException;
 import org.umlmda.runtime.sdo.sync.impl.AbstractSynchronizedObject;
 
-public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject implements SynchronizedList<T> {
-   private final List<T> wrappedList;
+public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject implements SynchronizedList<T>
+{
+   private final List<T>            wrappedList;
    private final transient Recorder recorder;
-   
+
    public SynchronizedListWrapper(Recorder recorder, List<T> wrappedList) {
       super(recorder, false);
       this.recorder = recorder;
       this.wrappedList = wrappedList;
    }
-   
+
    public void add(int index, T o) {
-      if (o instanceof SynchronizedObject) {
+      if ( o instanceof SynchronizedObject ) {
          SynchronizedObject recordedObject = (SynchronizedObject) o;
 
          wrappedList.add(index, o);
@@ -31,7 +32,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
    }
 
    public boolean add(T o) {
-      if (o instanceof SynchronizedObject) {
+      if ( o instanceof SynchronizedObject ) {
          SynchronizedObject recordedObject = (SynchronizedObject) o;
          boolean listResult = wrappedList.add(o);
 
@@ -47,7 +48,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
 
    public boolean addAll(Collection<? extends T> collection) {
       boolean added = true;
-      for (T element : collection) {
+      for ( T element : collection ) {
          if ( add(element) == false )
             added = false;
       }
@@ -76,7 +77,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
    }
 
    public boolean remove(Object o) {
-      if (o instanceof SynchronizedObject) {
+      if ( o instanceof SynchronizedObject ) {
          int listIndex = wrappedList.indexOf(o);
          boolean listResult = wrappedList.remove(o);
 
@@ -92,7 +93,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
 
    public boolean removeAll(Collection<?> collection) {
       boolean removedAll = true;
-      for (Object element : collection) {
+      for ( Object element : collection ) {
          if ( remove(element) == false )
             removedAll = false;
       }
@@ -143,7 +144,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
 
    public T remove(int index) {
       T element = wrappedList.remove(index);
-      
+
       if ( element != null ) {
          recorder.recordRemoveIndex(this, index, element);
       }
@@ -153,7 +154,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
 
    public T set(int index, T element) {
       T oldElement = wrappedList.set(index, element);
-      
+
       recorder.recordRemoveIndex(this, index, oldElement);
       recorder.recordAdd(this, element, index);
 
@@ -165,8 +166,7 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
    }
 
    private IllegalArgumentException createIllegalArgumentException(Object o) {
-      return new IllegalArgumentException(o.getClass().getName()+" not instanceof "+SynchronizedObject.class.getName());
+      return new IllegalArgumentException(o.getClass().getName() + " not instanceof " + SynchronizedObject.class.getName());
    }
 
-   
 }

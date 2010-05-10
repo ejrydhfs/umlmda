@@ -2,10 +2,10 @@ package org.umlmda.runtime.sdo.sync.entries;
 
 import org.umlmda.runtime.lang.GenericEnumeration;
 
+public class ChangeEnumerationEntry extends AbstractChangeEntry
+{
 
-public class ChangeEnumerationEntry extends AbstractChangeEntry {
-
-   private static final long serialVersionUID = 100L;
+   private static final long  serialVersionUID = 100L;
    private GenericEnumeration value;
 
    public ChangeEnumerationEntry() {

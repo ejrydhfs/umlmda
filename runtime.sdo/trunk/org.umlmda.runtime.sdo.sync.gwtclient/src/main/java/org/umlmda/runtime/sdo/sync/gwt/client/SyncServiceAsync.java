@@ -15,15 +15,15 @@ public interface SyncServiceAsync {
      * Start the conversation
      */
     @SuppressWarnings("unchecked")
-    public void startConversation(AsyncCallback callback);
+    void startConversation(AsyncCallback callback);
 
     /**
      * Finish the conversation. A new conversation can be started.
      */
     @SuppressWarnings("unchecked")
-    public void finishConversation(String conversationId, AsyncCallback callback);
+    void finishConversation(String conversationId, AsyncCallback callback);
 
-    public void synchronizeChanges(String conversationId, List<AbstractChangeLogEntry> changes, AsyncCallback<List<AbstractChangeLogEntry>> callback);
+    void synchronizeChanges(String conversationId, List<AbstractChangeLogEntry> changes, AsyncCallback<List<AbstractChangeLogEntry>> callback);
 
     /**
      * Invoke a method on the remote peer.
@@ -32,6 +32,6 @@ public interface SyncServiceAsync {
      * @param methodName
      * @return
      */
-    public void invokeMethod(String conversationId, SynchronizedObjectProxy object, String methodName, List<AbstractParameter> parameters, AsyncCallback<AbstractInvocationResult> callback);
+    void invokeMethod(String conversationId, SynchronizedObjectProxy object, String methodName, List<AbstractParameter> parameters, AsyncCallback<AbstractInvocationResult> callback);
 
 }

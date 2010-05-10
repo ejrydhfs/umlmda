@@ -6,11 +6,9 @@ import org.umlmda.runtime.sdo.sync.internal.ServiceCall;
 import org.umlmda.runtime.sdo.sync.internal.ServiceQueueListener;
 
 /**
- * This class wraps a service call and notifies the queue listener
- * to of a successful or failed service call.
+ * This class wraps a service call and notifies the queue listener to of a successful or failed service call.
  * 
  * @author Marco Metzen
- *
  */
 public class ServiceCallWrapperImpl<TypeOfResult>
 {
@@ -19,7 +17,7 @@ public class ServiceCallWrapperImpl<TypeOfResult>
    private static Logger             logger = Logger.getLogger(ServiceCallWrapperImpl.class);
 
    public void onSucess(TypeOfResult result, SyncServiceCallback callback) {
-      if (logger.isDebugEnabled()) {
+      if ( logger.isDebugEnabled() ) {
          logger.debug("onSucess on wrapper called");
       }
       _callback.onSucess(result, callback);
@@ -27,7 +25,7 @@ public class ServiceCallWrapperImpl<TypeOfResult>
    }
 
    public void onException(Throwable throwable, SyncServiceCallback callback) {
-      if (logger.isDebugEnabled()) {
+      if ( logger.isDebugEnabled() ) {
          logger.debug("onException on wrapper called");
       }
       _callback.onException(throwable, callback);
@@ -35,7 +33,7 @@ public class ServiceCallWrapperImpl<TypeOfResult>
    }
 
    public void execute() {
-      if (logger.isDebugEnabled()) {
+      if ( logger.isDebugEnabled() ) {
          logger.debug("execute on wrapper called");
       }
       if ( null != _callback && null != _listener ) {

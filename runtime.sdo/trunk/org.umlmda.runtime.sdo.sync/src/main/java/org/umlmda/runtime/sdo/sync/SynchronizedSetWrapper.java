@@ -7,18 +7,19 @@ import java.util.Set;
 import org.umlmda.runtime.exception.FeatureNotImplemementedException;
 import org.umlmda.runtime.sdo.sync.impl.AbstractSynchronizedObject;
 
-public class SynchronizedSetWrapper<T> extends AbstractSynchronizedObject implements SynchronizedSet<T> {
-   private final Set<T> wrappedSet;
+public class SynchronizedSetWrapper<T> extends AbstractSynchronizedObject implements SynchronizedSet<T>
+{
+   private final Set<T>             wrappedSet;
    private final transient Recorder recorder;
-   
+
    public SynchronizedSetWrapper(Recorder recorder, Set<T> wrappedList) {
       super(recorder, false);
       this.recorder = recorder;
       this.wrappedSet = wrappedList;
    }
-   
+
    public boolean add(T o) {
-      if (o instanceof SynchronizedObject) {
+      if ( o instanceof SynchronizedObject ) {
          SynchronizedObject recordedObject = (SynchronizedObject) o;
          boolean listResult = wrappedSet.add(o);
 
@@ -34,7 +35,7 @@ public class SynchronizedSetWrapper<T> extends AbstractSynchronizedObject implem
 
    public boolean addAll(Collection<? extends T> collection) {
       boolean added = true;
-      for (T element : collection) {
+      for ( T element : collection ) {
          if ( add(element) == false )
             added = false;
       }
@@ -63,7 +64,7 @@ public class SynchronizedSetWrapper<T> extends AbstractSynchronizedObject implem
    }
 
    public boolean remove(Object o) {
-      if (o instanceof SynchronizedObject) {
+      if ( o instanceof SynchronizedObject ) {
          boolean listResult = wrappedSet.remove(o);
 
          if ( listResult == true ) {
@@ -78,7 +79,7 @@ public class SynchronizedSetWrapper<T> extends AbstractSynchronizedObject implem
 
    public boolean removeAll(Collection<?> collection) {
       boolean removedAll = true;
-      for (Object element : collection) {
+      for ( Object element : collection ) {
          if ( remove(element) == false )
             removedAll = false;
       }
@@ -108,7 +109,7 @@ public class SynchronizedSetWrapper<T> extends AbstractSynchronizedObject implem
    }
 
    private IllegalArgumentException createIllegalArgumentException(Object o) {
-      return new IllegalArgumentException(o.getClass().getName()+" not instanceof "+SynchronizedObject.class.getName());
+      return new IllegalArgumentException(o.getClass().getName() + " not instanceof " + SynchronizedObject.class.getName());
    }
-   
+
 }
