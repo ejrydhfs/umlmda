@@ -28,16 +28,15 @@ import java.util.Set;
  * 
  * @author Dieter Moroff (13.05.2009)
  */
-public interface ChildNavigatable {
+public interface ChildNavigatable
+{
 
    /**
     * Returns a set containing reference of all children objects.
     * 
     * @param recursive
-    *   Flag, if it is possible to navigate to the grandchildren
-    *   and so on.
-    * @return
-    *   Set with the children, grandchildren, ...
+    *           Flag, if it is possible to navigate to the grandchildren and so on.
+    * @return Set with the children, grandchildren, ...
     */
-   public Set<Object> getChildren(boolean recursive);
+   Set<Object> getChildren(boolean recursive);
 }

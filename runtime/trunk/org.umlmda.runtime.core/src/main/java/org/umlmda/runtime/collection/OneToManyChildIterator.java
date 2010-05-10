@@ -23,10 +23,11 @@ package org.umlmda.runtime.collection;
 
 import java.util.Iterator;
 
-public class OneToManyChildIterator<TParent, TChild> implements Iterator<TChild> {
+public class OneToManyChildIterator<TParent, TChild> implements Iterator<TChild>
+{
 
-   private final Iterator<TChild> wrappedIterator;
-   private TChild lastReadChild = null;
+   private final Iterator<TChild>                   wrappedIterator;
+   private TChild                                   lastReadChild = null;
    private final OneToManyChildSet<TParent, TChild> childrenSet;
 
    OneToManyChildIterator(OneToManyChildSet<TParent, TChild> childrenSet, Iterator<TChild> wrappedIterator) {
@@ -39,7 +40,7 @@ public class OneToManyChildIterator<TParent, TChild> implements Iterator<TChild>
    }
 
    public TChild next() {
-      lastReadChild = wrappedIterator.next(); 
+      lastReadChild = wrappedIterator.next();
       return lastReadChild;
    }
 

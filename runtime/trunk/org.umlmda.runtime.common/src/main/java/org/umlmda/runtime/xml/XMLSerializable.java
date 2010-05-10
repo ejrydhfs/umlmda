@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/xml/XMLSerializable.java,v 1.1 2008/03/25 13:04:02 moroff Exp $
  *  Copyright (C) 2003, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -25,18 +24,20 @@ package org.umlmda.runtime.xml;
 
 /**
  * Interface to add the capability to stream an object to XML
+ * 
  * @author MOROFF
  */
-public interface XMLSerializable {
+public interface XMLSerializable
+{
 
    /**
     * XML serialization
     */
-   public String toXmlString();
-   
+   String toXmlString();
+
    /**
     * XML serialization of the elements and all children
     */
-   public void marshal(String elementName, XMLMarshalContext context, boolean isRoot);
-   
+   void marshal(String elementName, XMLMarshalContext context, boolean isRoot);
+
 }

@@ -7,10 +7,11 @@ import java.beans.PropertyChangeEvent;
 
 /**
  * Property change support supporting the queuing of events with the {@link PropertyChangeEventManager}.
- *
+ * 
  * @author Dieter Moroff (26.06.2008)
  */
-public class ManagedPropertyChangeSupportHelper extends PropertyChangeSupportHelper {
+public class ManagedPropertyChangeSupportHelper extends PropertyChangeSupportHelper
+{
 
    /**
     * 
@@ -35,7 +36,7 @@ public class ManagedPropertyChangeSupportHelper extends PropertyChangeSupportHel
 
    public void finishQueuing() {
       PropertyChangeEventManager.INSTANCE.finishQueuing();
-      
+
    }
-   
+
 }

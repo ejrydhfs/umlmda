@@ -1,12 +1,4 @@
 /*
- * $Header: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/visitor/Visitable.java,v 1.1 2008/03/25 09:54:06 moroff Exp $
- * $Source: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/visitor/Visitable.java,v $
- * $Revision: 1.1 $
- *  $State: Exp $
- *   $Name:  $
- *   $Date: 2008/03/25 09:54:06 $
- * $Locker:  $
- * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either

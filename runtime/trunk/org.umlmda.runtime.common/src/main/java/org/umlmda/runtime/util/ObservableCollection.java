@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/util/ObservableCollection.java,v 1.1 2008/04/09 12:05:16 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/util/ObservableCollection.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2008/04/09 12:05:16 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -31,11 +26,11 @@ import java.util.Observer;
 
 /**
  * Implementation of a collection which can be observed for changes.
- * @author Dieter Moroff (13.04.2006), last change $Date: 2008/04/09 12:05:16 $ $Name:  $
- * @version $Revision: 1.1 $
  */
-public class ObservableCollection extends Observable implements Collection, Observer {
+public class ObservableCollection extends Observable implements Collection, Observer
+{
    private final Collection collection;
+
    /**
     * 
     */
@@ -44,14 +39,16 @@ public class ObservableCollection extends Observable implements Collection, Obse
       this.collection = collection;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#size()
     */
    public int size() {
       return collection.size();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#clear()
     */
    public void clear() {
@@ -60,21 +57,24 @@ public class ObservableCollection extends Observable implements Collection, Obse
       notifyObservers();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#isEmpty()
     */
    public boolean isEmpty() {
       return collection.isEmpty();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#toArray()
     */
    public Object[] toArray() {
       return collection.toArray();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#add(java.lang.Object)
     */
    public boolean add(Object o) {
@@ -84,14 +84,16 @@ public class ObservableCollection extends Observable implements Collection, Obse
       return added;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#contains(java.lang.Object)
     */
    public boolean contains(Object o) {
       return collection.contains(o);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#remove(java.lang.Object)
     */
    public boolean remove(Object o) {
@@ -101,7 +103,8 @@ public class ObservableCollection extends Observable implements Collection, Obse
       return removed;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#addAll(java.util.Collection)
     */
    public boolean addAll(Collection c) {
@@ -111,14 +114,16 @@ public class ObservableCollection extends Observable implements Collection, Obse
       return false;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#containsAll(java.util.Collection)
     */
    public boolean containsAll(Collection c) {
       return collection.containsAll(c);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#removeAll(java.util.Collection)
     */
    public boolean removeAll(Collection c) {
@@ -128,7 +133,8 @@ public class ObservableCollection extends Observable implements Collection, Obse
       return removed;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#retainAll(java.util.Collection)
     */
    public boolean retainAll(Collection c) {
@@ -138,21 +144,24 @@ public class ObservableCollection extends Observable implements Collection, Obse
       return retained;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#iterator()
     */
    public Iterator iterator() {
       return new ObservableIterator(this, collection.iterator());
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Collection#toArray(java.lang.Object[])
     */
    public Object[] toArray(Object[] a) {
       return collection.toArray(a);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
     */
    public void update(Observable o, Object arg) {

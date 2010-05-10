@@ -11,12 +11,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class PropertyChangeSupportHelper implements IPropertyChangeSupport, Serializable {
+public class PropertyChangeSupportHelper implements IPropertyChangeSupport, Serializable
+{
 
    /**
     * 
     */
-   private static final long serialVersionUID = 6401253773779951803L;
+   private static final long                 serialVersionUID = 6401253773779951803L;
 
    private ArrayList<PropertyChangeListener> listeners;
 
@@ -46,16 +47,17 @@ public class PropertyChangeSupportHelper implements IPropertyChangeSupport, Seri
       // + lsnrArray.length);
       // }
 
-      for (int i = 0; i < lsnrArray.length; i++) {
+      for ( int i = 0; i < lsnrArray.length; i++ ) {
          lsnrArray[i].propertyChange(evt);
       }
    }
 
    protected PropertyChangeListener[] getPropertyChangeListeners(PropertyChangeEvent evt) {
       PropertyChangeListener[] lsnrArray;
-      if (evt.getPropertyName() != null && evt.getPropertyName().length() > 0) {
+      if ( evt.getPropertyName() != null && evt.getPropertyName().length() > 0 ) {
          lsnrArray = getPropertyChangeListeners(evt.getPropertyName());
-      } else {
+      }
+      else {
          lsnrArray = getPropertyChangeListeners();
       }
       return lsnrArray;
@@ -86,16 +88,17 @@ public class PropertyChangeSupportHelper implements IPropertyChangeSupport, Seri
 
       List<PropertyChangeListener> pptLsnrs = new ArrayList<PropertyChangeListener>();
 
-      for (Iterator<PropertyChangeListener> i = listeners.iterator(); i.hasNext();) {
+      for ( Iterator<PropertyChangeListener> i = listeners.iterator(); i.hasNext(); ) {
          PropertyChangeListener nextObj = i.next();
 
-         if (nextObj instanceof PropertyChangeListenerProxy) {
+         if ( nextObj instanceof PropertyChangeListenerProxy ) {
             PropertyChangeListenerProxy proxy = (PropertyChangeListenerProxy) nextObj;
 
-            if (proxy.getPropertyName().equals(propertyName)) {
+            if ( proxy.getPropertyName().equals(propertyName) ) {
                pptLsnrs.add(nextObj);
             }
-         } else {
+         }
+         else {
             pptLsnrs.add(nextObj);
          }
 
@@ -110,13 +113,13 @@ public class PropertyChangeSupportHelper implements IPropertyChangeSupport, Seri
    public synchronized boolean hasListeners(String propertyName) {
       boolean bFound = false;
 
-      for (Iterator<PropertyChangeListener> i = listeners.iterator(); i.hasNext();) {
+      for ( Iterator<PropertyChangeListener> i = listeners.iterator(); i.hasNext(); ) {
          Object nextObj = i.next();
 
-         if (nextObj instanceof PropertyChangeListenerProxy) {
+         if ( nextObj instanceof PropertyChangeListenerProxy ) {
             PropertyChangeListenerProxy proxy = (PropertyChangeListenerProxy) nextObj;
 
-            if (proxy.getPropertyName().equals(propertyName)) {
+            if ( proxy.getPropertyName().equals(propertyName) ) {
                bFound = true;
                break;
             }
@@ -134,9 +137,9 @@ public class PropertyChangeSupportHelper implements IPropertyChangeSupport, Seri
 
       PropertyChangeListener[] pptLsnr = getPropertyChangeListeners(propertyName);
 
-      for (int i = 0; i < pptLsnr.length; i++) {
+      for ( int i = 0; i < pptLsnr.length; i++ ) {
          PropertyChangeListenerProxy proxy = (PropertyChangeListenerProxy) pptLsnr[i];
-         if (proxy.getListener() == listener) {
+         if ( proxy.getListener() == listener ) {
             listeners.remove(proxy);
          }
       }

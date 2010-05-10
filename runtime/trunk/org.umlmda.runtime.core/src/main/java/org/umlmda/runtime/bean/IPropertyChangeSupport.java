@@ -7,20 +7,21 @@ import java.beans.PropertyChangeListener;
  * 
  * @author moroff
  */
-public interface IPropertyChangeSupport {
+public interface IPropertyChangeSupport
+{
 
-	abstract public void addPropertyChangeListener(PropertyChangeListener listener);
-	
-	abstract public void addPropertyChangeListener(String propertyName,PropertyChangeListener listener);
+   void addPropertyChangeListener(PropertyChangeListener listener);
 
-	abstract public PropertyChangeListener[] getPropertyChangeListeners();
+   void addPropertyChangeListener(String propertyName, PropertyChangeListener listener);
 
-	abstract public PropertyChangeListener[] getPropertyChangeListeners(String propertyName); 
+   PropertyChangeListener[] getPropertyChangeListeners();
 
-	abstract public boolean hasListeners(String propertyName);
-	
-	abstract public void removePropertyChangeListener(PropertyChangeListener listener);
+   PropertyChangeListener[] getPropertyChangeListeners(String propertyName);
 
-	abstract public void removePropertyChangeListener(String propertyName,PropertyChangeListener listener);	
+   boolean hasListeners(String propertyName);
+
+   void removePropertyChangeListener(PropertyChangeListener listener);
+
+   void removePropertyChangeListener(String propertyName, PropertyChangeListener listener);
 
 }

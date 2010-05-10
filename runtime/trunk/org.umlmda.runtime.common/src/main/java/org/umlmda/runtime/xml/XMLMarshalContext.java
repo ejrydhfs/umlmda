@@ -1,10 +1,5 @@
 /*
- * $Header: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/xml/XMLMarshalContext.java,v 1.1 2008/03/25 13:04:02 moroff Exp $
- * $Source: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/xml/XMLMarshalContext.java,v $
- * $Revision: 1.1 $
  *  $State: Exp $
- *   $Name:  $
- *   $Date: 2008/03/25 13:04:02 $
  * $Locker:  $
  * 
  * This library is free software; you can redistribute it and/or
@@ -34,15 +29,17 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * Context for marshalling objects to a xml stream.
+ * 
  * @author MOROFF
  */
-public class XMLMarshalContext  {
-   private final StringBuffer buffer;
-   private int identLevel = 0;
-   private int id = 0;
-   private Map idMap = new HashMap();
-   private static final String NEWLINE = System.getProperty("line.separator", "/n"); 
-   
+public class XMLMarshalContext
+{
+   private final StringBuffer  buffer;
+   private int                 identLevel = 0;
+   private int                 id         = 0;
+   private Map                 idMap      = new HashMap();
+   private static final String NEWLINE    = System.getProperty("line.separator", "/n");
+
    /**
     * 
     */
@@ -51,28 +48,28 @@ public class XMLMarshalContext  {
       buffer.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>");
       buffer.append(NEWLINE);
    }
-   
+
    /**
     * 
     */
    public XMLMarshalContext(StringBuffer buffer) {
       this.buffer = buffer;
    }
-   
+
    private void incrementIdentLevel() {
       ++identLevel;
    }
-   
+
    private void decrementIdentLevel() {
       --identLevel;
    }
-   
+
    private void ident() {
       for ( int i = 0; i < identLevel; ++i ) {
          buffer.append("  ");
       }
    }
-   
+
    /**
     * @param elementName
     */
@@ -90,15 +87,16 @@ public class XMLMarshalContext  {
       ident();
       appendEndTag(elementName);
    }
-   
+
    /**
     * Starts a element start tag.
+    * 
     * @param elementName
     * @return the id which was given for the element
     */
    public void startElement(String elementName, XMLSerializable object, boolean isRoot) {
       String idTag = getOrCreateIdTag(object);
-      
+
       ident();
       buffer.append("<");
       buffer.append(elementName);
@@ -120,11 +118,11 @@ public class XMLMarshalContext  {
    private String getObjectClass(XMLSerializable object) {
       String className = object.getClass().getName();
       int index = className.lastIndexOf(".");
-      
+
       if ( index > 0 ) {
-         className = className.substring(index+1);
+         className = className.substring(index + 1);
       }
-      
+
       return className;
    }
 
@@ -137,16 +135,15 @@ public class XMLMarshalContext  {
       appendEndTag(elementName);
    }
 
-   
    /**
     * @param object
     * @return
     */
    private String getOrCreateIdTag(Object object) {
       String idTag = (String) idMap.get(object);
-      
+
       if ( idTag == null ) {
-         idTag = "ID"+Integer.toString(id++);
+         idTag = "ID" + Integer.toString(id++);
          idMap.put(object, idTag);
       }
       return idTag;
@@ -154,6 +151,7 @@ public class XMLMarshalContext  {
 
    /**
     * Creates an element reference
+    * 
     * @param elementName
     * @param object
     */
@@ -169,7 +167,7 @@ public class XMLMarshalContext  {
       buffer.append("/>");
       buffer.append(NEWLINE);
    }
-   
+
    /**
     * @param elementName
     */
@@ -215,19 +213,19 @@ public class XMLMarshalContext  {
       buffer.append(value);
       appendEndTag(elementName);
    }
-   
+
    /**
     * @param string
     * @param value
     */
    public void simpleElement(String elementName, int[] value) {
       if ( value != null ) {
-         for (int i = 0; i < value.length; i++) {
+         for ( int i = 0; i < value.length; i++ ) {
             simpleElement(elementName, value[i]);
          }
       }
    }
-   
+
    /**
     * @param string
     * @param nr
@@ -239,7 +237,7 @@ public class XMLMarshalContext  {
          appendEndTag(elementName);
       }
    }
-   
+
    /**
     * @param string
     * @param nr
@@ -249,19 +247,19 @@ public class XMLMarshalContext  {
       buffer.append(value);
       appendEndTag(elementName);
    }
-   
+
    /**
     * @param string
     * @param shortArrayAttr
     */
    public void simpleElement(String elementName, long[] value) {
       if ( value != null ) {
-         for (int i = 0; i < value.length; i++) {
+         for ( int i = 0; i < value.length; i++ ) {
             simpleElement(elementName, value[i]);
          }
       }
    }
-   
+
    /**
     * @param string
     * @param nr
@@ -285,19 +283,19 @@ public class XMLMarshalContext  {
          appendEndTag(elementName);
       }
    }
-   
+
    /**
     * @param string
     * @param nr
     */
-   public void simpleElement(String elementName, java.math.BigDecimal [] value) {
+   public void simpleElement(String elementName, java.math.BigDecimal[] value) {
       if ( value != null ) {
-         for (int i = 0; i < value.length; i++) {
+         for ( int i = 0; i < value.length; i++ ) {
             simpleElement(elementName, value[i]);
          }
       }
    }
-   
+
    /**
     * @param string
     * @param nr
@@ -307,19 +305,19 @@ public class XMLMarshalContext  {
       buffer.append(value);
       appendEndTag(elementName);
    }
-   
+
    /**
     * @param string
     * @param shortArrayAttr
     */
    public void simpleElement(String elementName, short[] value) {
       if ( value != null ) {
-         for (int i = 0; i < value.length; i++) {
+         for ( int i = 0; i < value.length; i++ ) {
             simpleElement(elementName, value[i]);
          }
       }
    }
-   
+
    /**
     * @param string
     * @param nr
@@ -331,7 +329,7 @@ public class XMLMarshalContext  {
          appendEndTag(elementName);
       }
    }
-   
+
    /**
     * @param string
     * @param nr
@@ -343,7 +341,7 @@ public class XMLMarshalContext  {
          appendEndTag(elementName);
       }
    }
-   
+
    /**
     * @param string
     * @param nr
@@ -353,7 +351,7 @@ public class XMLMarshalContext  {
       buffer.append(value);
       appendEndTag(elementName);
    }
-   
+
    /**
     * @param string
     * @param nr
@@ -365,7 +363,7 @@ public class XMLMarshalContext  {
          appendEndTag(elementName);
       }
    }
-   
+
    /**
     * @param string
     * @param nr
@@ -375,14 +373,14 @@ public class XMLMarshalContext  {
       buffer.append(value);
       appendEndTag(elementName);
    }
-   
+
    /**
     * @param string
     * @param value
     */
    public void simpleElement(String elementName, double[] value) {
       if ( value != null ) {
-         for (int i = 0; i < value.length; i++) {
+         for ( int i = 0; i < value.length; i++ ) {
             simpleElement(elementName, value[i]);
          }
       }
@@ -416,12 +414,11 @@ public class XMLMarshalContext  {
     */
    public void simpleElement(String elementName, float[] value) {
       if ( value != null ) {
-         for (int i = 0; i < value.length; i++) {
+         for ( int i = 0; i < value.length; i++ ) {
             simpleElement(elementName, value[i]);
          }
       }
    }
-
 
    /**
     * @param string
@@ -451,12 +448,12 @@ public class XMLMarshalContext  {
     */
    public void simpleElement(String elementName, boolean[] value) {
       if ( value != null ) {
-         for (int i = 0; i < value.length; i++) {
+         for ( int i = 0; i < value.length; i++ ) {
             simpleElement(elementName, value[i]);
          }
       }
    }
-   
+
    /**
     * @param string
     * @param employee
@@ -487,7 +484,7 @@ public class XMLMarshalContext  {
     */
    public void simpleElement(String elementName, String[] value) {
       if ( value != null ) {
-         for (int i = 0; i < value.length; i++) {
+         for ( int i = 0; i < value.length; i++ ) {
             simpleElement(elementName, value[i]);
          }
       }
@@ -507,13 +504,10 @@ public class XMLMarshalContext  {
     */
    public void simpleElement(String elementName, XMLGregorianCalendar[] value) {
       if ( value != null ) {
-         for (int i = 0; i < value.length; i++) {
+         for ( int i = 0; i < value.length; i++ ) {
             simpleElement(elementName, value[i]);
          }
       }
    }
-   
 
-
-   
 }

@@ -23,8 +23,9 @@ package org.umlmda.runtime.collection.test;
 
 import java.util.Set;
 
-public interface ParentSample {
-   
-   public Set<ChildSample> getChildren();
+public interface ParentSample
+{
+
+   Set<ChildSample> getChildren();
 
 }

@@ -1,14 +1,12 @@
 /*
  * Copyright: (C) 2008 COR AG Insurance Technologies
- * Name:      $Id: ObjectStreamException.java,v 1.1 2008/03/20 22:42:18 moroff Exp $Version 27.02.2008 12:49:32 {user} Exp $
  */
 package java.io;
 
 /**
  * Document me!
  * 
- * @author moroff (Last change: $Author: moroff $ $Date: 2008/03/20 22:42:18 $)
- * @version $Revision: 1.1 $
+ * @author moroff
  */
 public class ObjectStreamException extends IOException
 {

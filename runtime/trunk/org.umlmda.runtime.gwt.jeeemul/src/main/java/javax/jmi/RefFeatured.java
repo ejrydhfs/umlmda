@@ -2,11 +2,17 @@ package javax.jmi;
 
 import java.util.List;
 
-public interface RefFeatured extends RefBaseObject {
-    public void refSetValue(RefObject feature, Object value);
-    public void refSetValue(String featureName, Object value);
-    public Object refGetValue(RefObject feature);
-    public Object refGetValue(String featureName);
-    public Object refInvokeOperation(RefObject requestedOperation, List args) throws RefException;
-    public Object refInvokeOperation(String requestedOperation, List args) throws RefException;
+public interface RefFeatured extends RefBaseObject
+{
+   void refSetValue(RefObject feature, Object value);
+
+   void refSetValue(String featureName, Object value);
+
+   Object refGetValue(RefObject feature);
+
+   Object refGetValue(String featureName);
+
+   Object refInvokeOperation(RefObject requestedOperation, List args) throws RefException;
+
+   Object refInvokeOperation(String requestedOperation, List args) throws RefException;
 }

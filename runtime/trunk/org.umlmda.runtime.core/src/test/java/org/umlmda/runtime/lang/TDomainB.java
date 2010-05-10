@@ -1,13 +1,13 @@
 /*
  * Copyright: (C) 2009 COR AG Financial Technologies
- * Name:      $Id: TDomainA.java,v $Version 12.05.2009 22:07:36 {user} Exp $
  */
 package org.umlmda.runtime.lang;
 
-public class TDomainB implements EqualityCheckable {
+public class TDomainB implements EqualityCheckable
+{
    private final String aId;
-   private String b;
-   
+   private String       b;
+
    public TDomainB(String id) {
       super();
       aId = id;
@@ -21,7 +21,7 @@ public class TDomainB implements EqualityCheckable {
    public String getAId() {
       return aId;
    }
-   
+
    public String getB() {
       return b;
    }
@@ -40,27 +40,27 @@ public class TDomainB implements EqualityCheckable {
 
    @Override
    public boolean equals(Object obj) {
-      if (this == obj)
+      if ( this == obj )
          return true;
-      if (obj == null)
+      if ( obj == null )
          return false;
-      if (getClass() != obj.getClass())
+      if ( getClass() != obj.getClass() )
          return false;
       TDomainB other = (TDomainB) obj;
-      if (aId == null) {
-         if (other.aId != null)
+      if ( aId == null ) {
+         if ( other.aId != null )
             return false;
       }
-      else if (!aId.equals(other.aId))
+      else if ( !aId.equals(other.aId) )
          return false;
       return true;
    }
 
    public boolean arePropertiesEqual(Object obj) {
-      
+
       if ( equals(obj) && obj instanceof TDomainB ) {
          TDomainB other = (TDomainB) obj;
-         
+
          return b == other.getB() || (b != null && b.equals(other.getB()));
       }
       else {

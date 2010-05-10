@@ -8,11 +8,12 @@ import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
 
 /**
- * Property descriptor forces to overwrite createPropertyEditor. 
+ * Property descriptor forces to overwrite createPropertyEditor.
+ * 
  * @author MOROFF
- *
  */
-public abstract class DynamicEditorPropertyDescriptor extends PropertyDescriptor {
+public abstract class DynamicEditorPropertyDescriptor extends PropertyDescriptor
+{
 
    public DynamicEditorPropertyDescriptor(String propertyName, Class<?> beanClass) throws IntrospectionException {
       super(propertyName, beanClass);
@@ -21,5 +22,4 @@ public abstract class DynamicEditorPropertyDescriptor extends PropertyDescriptor
    @Override
    public abstract PropertyEditor createPropertyEditor(Object bean);
 
-   
 }

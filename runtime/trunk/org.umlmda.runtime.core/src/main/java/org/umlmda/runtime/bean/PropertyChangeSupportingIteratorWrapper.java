@@ -3,10 +3,11 @@ package org.umlmda.runtime.bean;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class PropertyChangeSupportingIteratorWrapper<T> implements Iterator<T> {
+public class PropertyChangeSupportingIteratorWrapper<T> implements Iterator<T>
+{
 
    private final PropertyChangeSupportingCollectionWrapper<T> owner;
-   private final Iterator<T> wrappedIterator;
+   private final Iterator<T>                                  wrappedIterator;
 
    PropertyChangeSupportingIteratorWrapper(PropertyChangeSupportingCollectionWrapper<T> owner, Iterator<T> wrappedIterator) {
       this.owner = owner;

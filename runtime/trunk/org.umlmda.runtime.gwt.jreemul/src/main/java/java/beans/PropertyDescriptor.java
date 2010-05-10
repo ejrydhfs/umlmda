@@ -24,12 +24,13 @@ import java.lang.reflect.Method;
  * 
  * @author Dieter Moroff (14.04.2008)
  */
-public abstract class PropertyDescriptor extends FeatureDescriptor {
-   boolean constrained;
-   boolean bound;
+public abstract class PropertyDescriptor extends FeatureDescriptor
+{
+   boolean                constrained;
+   boolean                bound;
    private final Class<?> beanClass;
-   private String getterName;
-   private String setterName;
+   private String         getterName;
+   private String         setterName;
 
    public PropertyDescriptor(String propertyName, Class<?> beanClass, String getterName, String setterName)
          throws IntrospectionException {

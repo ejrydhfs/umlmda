@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/runtime/org.umlmda.runtime.core/src/main/java/org/umlmda/runtime/exception/FeatureNotImplemementedException.java,v 1.1 2008/03/20 22:42:19 moroff Exp $
- *   $Source: /cvsroot/umlmda/runtime/org.umlmda.runtime.core/src/main/java/org/umlmda/runtime/exception/FeatureNotImplemementedException.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2008/03/20 22:42:19 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,10 +20,12 @@
 package org.umlmda.runtime.exception;
 
 /**
- * Exception thrown if a method with an empty user section was called 
+ * Exception thrown if a method with an empty user section was called
+ * 
  * @author moroff
  */
-public class FeatureNotImplemementedException extends RuntimeException {
+public class FeatureNotImplemementedException extends RuntimeException
+{
 
    /**
     * 

@@ -14,7 +14,8 @@ import java.util.Set;
  * @author Dieter Moroff (24.4.2008)
  * @param <T>
  */
-public class PropertyChangeSupportingSetWrapper<T> extends PropertyChangeSupportingCollectionWrapper<T> implements Set<T> {
+public class PropertyChangeSupportingSetWrapper<T> extends PropertyChangeSupportingCollectionWrapper<T> implements Set<T>
+{
 
    private final Set<T> wrappedSet;
 
@@ -28,7 +29,8 @@ public class PropertyChangeSupportingSetWrapper<T> extends PropertyChangeSupport
       this.wrappedSet = wrappedSet;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.runtime.bean.PropertyChangeSupportingCollection#createClone()
     */
    @Override

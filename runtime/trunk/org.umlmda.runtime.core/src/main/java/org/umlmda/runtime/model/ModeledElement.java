@@ -1,14 +1,15 @@
 package org.umlmda.runtime.model;
 
-public interface ModeledElement {
+public interface ModeledElement
+{
 
    /**
-    * Returns the name of the element in the corresponding UML model 
+    * Returns the name of the element in the corresponding UML model
     */
-   public abstract String getModelName();
+   String getModelName();
 
    /**
-    * Returns the version in the corresponding UML model 
+    * Returns the version in the corresponding UML model
     */
-   public abstract String getModelVersion();
+   String getModelVersion();
 }

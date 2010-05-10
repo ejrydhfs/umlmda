@@ -9,36 +9,39 @@ import java.util.ListIterator;
 
 import junit.framework.TestCase;
 
-public class PropertyChangeSupportingListWrapperTest extends TestCase {
-   static class Element {
+public class PropertyChangeSupportingListWrapperTest extends TestCase
+{
+   static class Element
+   {
       String name;
-      
+
       public Element(String name) {
          this.name = name;
       }
 
    }
-   
+
    PropertyChangeSupportHelper propertyChangeSupport = new PropertyChangeSupportHelper(this);
-   boolean gotEvent = false;
-   List<Element> elements = new PropertyChangeSupportingListWrapper<Element>(propertyChangeSupport, "elements", new ArrayList<Element>());
-   
-   
+   boolean                     gotEvent              = false;
+   List<Element>               elements              = new PropertyChangeSupportingListWrapper<Element>(propertyChangeSupport,
+                                                           "elements", new ArrayList<Element>());
+
    public void testAddIntT() {
       gotEvent = false;
       propertyChangeSupport.addPropertyChangeListener("elements", new PropertyChangeListener() {
 
          public void propertyChange(PropertyChangeEvent evt) {
             gotEvent = true;
-            
-         }});
+
+         }
+      });
 
       elements.add(new Element("Hallo"));
       assertTrue(gotEvent);
       assertTrue(elements.size() == 1);
-      
+
       Iterator<Element> it = elements.iterator();
-      
+
       assertTrue(it.hasNext());
       assertNotNull(it.next());
       assertFalse(it.hasNext());
@@ -46,10 +49,10 @@ public class PropertyChangeSupportingListWrapperTest extends TestCase {
 
    public void testListIterator() {
       setupList();
-      
+
       gotEvent = false;
       ListIterator<Element> listIterator = elements.listIterator();
-      
+
       listIterator.next();
       listIterator.remove();
       assertTrue(gotEvent);
@@ -59,7 +62,7 @@ public class PropertyChangeSupportingListWrapperTest extends TestCase {
       setupList();
 
       gotEvent = false;
-      
+
       elements.remove(0);
       assertTrue(gotEvent);
    }
@@ -68,7 +71,7 @@ public class PropertyChangeSupportingListWrapperTest extends TestCase {
       setupList();
 
       gotEvent = false;
-      
+
       elements.clear();
       assertTrue(gotEvent);
    }
@@ -78,8 +81,9 @@ public class PropertyChangeSupportingListWrapperTest extends TestCase {
 
          public void propertyChange(PropertyChangeEvent evt) {
             gotEvent = true;
-            
-         }});
+
+         }
+      });
 
       elements.add(new Element("Hallo"));
    }

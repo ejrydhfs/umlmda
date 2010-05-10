@@ -21,9 +21,10 @@
  */
 package org.umlmda.runtime.collection.test;
 
-public interface ChildSample {
+public interface ChildSample
+{
 
    ParentSample getParentSample();
-   
+
    void setParentSample(ParentSample parent);
 }

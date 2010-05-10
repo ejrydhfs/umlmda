@@ -1,6 +1,5 @@
 /*
  * Copyright: (C) 2008 COR AG Insurance Technologies
- * Name:      $Id: MyVisitableIterator.java,v $Version 15.02.2010 09:59:01 {user} Exp $
  */
 package org.umlmda.runtime.visitor;
 

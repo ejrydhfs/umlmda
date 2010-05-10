@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/constraint/ConstraintViolation.java,v 1.1 2008/03/25 09:54:05 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/constraint/ConstraintViolation.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2008/03/25 09:54:05 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -48,7 +43,8 @@ public class ConstraintViolation
       return feature;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.lang.Object#toString()
     */
    public String toString() {

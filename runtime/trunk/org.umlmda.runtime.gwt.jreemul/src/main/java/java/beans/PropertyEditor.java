@@ -25,35 +25,35 @@ import java.awt.Rectangle;
  * GWT compatible interface (derived from Harmony).
  * 
  * @author Dieter Moroff
- * 
  */
-public interface PropertyEditor {
+public interface PropertyEditor
+{
 
    // Supported stuff
-   public void setValue(Object value);
+   void setValue(Object value);
 
-   public Object getValue();
+   Object getValue();
 
-   public void removePropertyChangeListener(PropertyChangeListener listener);
+   void removePropertyChangeListener(PropertyChangeListener listener);
 
-   public void addPropertyChangeListener(PropertyChangeListener listener);
+   void addPropertyChangeListener(PropertyChangeListener listener);
 
    // Future supported stuff
-   public String getAsText();
+   String getAsText();
 
-   public void setAsText(String text) throws IllegalArgumentException;
+   void setAsText(String text) throws IllegalArgumentException;
 
-   public String[] getTags();
+   String[] getTags();
 
-   public String getJavaInitializationString();
+   String getJavaInitializationString();
 
    // Unsupported stuff, for compatibility only
-   public void paintValue(Graphics gfx, Rectangle box);
+   void paintValue(Graphics gfx, Rectangle box);
 
-   public Component getCustomEditor();
+   Component getCustomEditor();
 
-   public boolean supportsCustomEditor();
+   boolean supportsCustomEditor();
 
-   public boolean isPaintable();
+   boolean isPaintable();
 
 }

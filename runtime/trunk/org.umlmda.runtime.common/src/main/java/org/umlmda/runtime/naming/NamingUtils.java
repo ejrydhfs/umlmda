@@ -20,10 +20,10 @@ import org.apache.log4j.Logger;
  */
 public class NamingUtils
 {
-   public static Logger logger = Logger.getLogger(NamingUtils.class);
+   public static Logger       logger                          = Logger.getLogger(NamingUtils.class);
    public static final String OPENEJB_GLOBAL_NAMESPACE_PREFIX = "openejb:";
-   private static String globalNamespacePrefix = null;
-   
+   private static String      globalNamespacePrefix           = null;
+
    private static String getGlobalNamespacePrefix() {
       try {
          if ( globalNamespacePrefix == null ) {
@@ -63,58 +63,58 @@ public class NamingUtils
    public static void bind(Context context, String fullname, Object object) throws NamingException {
       StringTokenizer nameTokenizer = new StringTokenizer(fullname, "/");
       StringBuffer contextEntryBuffer = new StringBuffer();
-      
+
       do {
          String token = nameTokenizer.nextToken();
-         
+
          if ( contextEntryBuffer.length() > 0 ) {
             contextEntryBuffer.append("/");
          }
          contextEntryBuffer.append(token);
 
          String contextEntry = contextEntryBuffer.toString();
-         
+
          // Lookup or create subcontext
-         if ( nameTokenizer.hasMoreTokens()) {
-          
+         if ( nameTokenizer.hasMoreTokens() ) {
+
             try {
-               context.lookup(getGlobalNamespacePrefix()+contextEntry);
+               context.lookup(getGlobalNamespacePrefix() + contextEntry);
             }
-            catch ( NameNotFoundException e ) {
+            catch (NameNotFoundException e) {
                context.createSubcontext(contextEntry);
             }
          }
-         
+
          // Create binding
          else {
             context.bind(contextEntry, object);
          }
-      } while( nameTokenizer.hasMoreTokens() );
+      } while ( nameTokenizer.hasMoreTokens() );
    }
-   
+
    /**
     * Type safe lookup in jdni.
-    *  
+    * 
     * @param <T>
     * @param clazz
     * @param name
     * @return
-    * @throws NamingException 
+    * @throws NamingException
     */
    @SuppressWarnings("unchecked")
    public static <T> T lookup(Class<T> clazz, String name) throws NamingException {
       Context context = new InitialContext();
-      
-      Object object = context.lookup(getGlobalNamespacePrefix()+name);
-      
+
+      Object object = context.lookup(getGlobalNamespacePrefix() + name);
+
       if ( clazz.isAssignableFrom(clazz) ) {
-         return (T)object;
+         return (T) object;
       }
       else {
-         throw new IllegalArgumentException("Class "+object.getClass()+" not compatible with "+clazz);
+         throw new IllegalArgumentException("Class " + object.getClass() + " not compatible with " + clazz);
       }
    }
-   
+
    /**
     * Dumps global namespace to logger.
     * 
@@ -127,8 +127,8 @@ public class NamingUtils
 
    public static void dumpNamespace(Logger logger, Level logLevel, String name) {
       dumpNamespace(logger, logLevel, getGlobalNamespacePrefix(), name);
-   }   
-   
+   }
+
    private static void dumpNamespace(Logger logger, Level logLevel, String name, String namespacePrefix) {
       try {
          dumpNamespace(logger, logLevel, name, namespacePrefix, new InitialContext());
@@ -137,20 +137,21 @@ public class NamingUtils
          throw new RuntimeException(e);
       }
    }
-   
-   private static void dumpNamespace(Logger logger, Level logLevel, String name, String prefix, Context context) throws NamingException {
+
+   private static void dumpNamespace(Logger logger, Level logLevel, String name, String prefix, Context context)
+         throws NamingException {
       String prefixInNameSpace = StringUtils.isNotEmpty(prefix) ? (prefix + "/" + name) : name;
       NamingEnumeration<Binding> iEntries = context.listBindings(prefixInNameSpace);
 
-      while (iEntries != null && iEntries.hasMore() ) {
+      while ( iEntries != null && iEntries.hasMore() ) {
          Binding binding = iEntries.next();
          String nameInNampeSpace = prefixInNameSpace + "/" + binding.getName();
-         
-         logger.log(logLevel, "["+nameInNampeSpace+"]: "+binding.toString());
+
+         logger.log(logLevel, "[" + nameInNampeSpace + "]: " + binding.toString());
          if ( binding.getObject() instanceof Context ) {
             dumpNamespace(logger, logLevel, binding.getName(), prefixInNameSpace, (Context) binding.getObject());
          }
       }
    }
-   
+
 }

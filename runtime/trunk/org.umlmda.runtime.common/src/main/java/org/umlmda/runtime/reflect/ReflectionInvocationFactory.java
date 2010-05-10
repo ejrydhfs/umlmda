@@ -8,11 +8,12 @@ import org.umlmda.runtime.bean.BeanInvocation.Factory;
 
 /**
  * @author moroff
- *
  */
-public class ReflectionInvocationFactory implements Factory {
+public class ReflectionInvocationFactory implements Factory
+{
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.runtime.bean.BeanInvocation.Factory#create(java.lang.Object)
     */
    public BeanInvocation create(Object object) {

@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/runtime/org.umlmda.runtime.core/src/main/java/org/umlmda/runtime/lang/IntEnumeration.java,v 1.1 2008/03/20 22:42:18 moroff Exp $
- *   $Source: /cvsroot/umlmda/runtime/org.umlmda.runtime.core/src/main/java/org/umlmda/runtime/lang/IntEnumeration.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2008/03/20 22:42:18 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,10 +21,12 @@ package org.umlmda.runtime.lang;
 
 /**
  * Interface for Enumerations with int type values.
+ * 
  * @author Dieter Moroff
  */
-public interface IntEnumeration extends GenericEnumeration {
-   
+public interface IntEnumeration extends GenericEnumeration
+{
+
    /**
     * Returns the underlying value of the enumeration.
     */

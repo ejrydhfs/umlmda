@@ -25,22 +25,23 @@ import java.util.Set;
 
 import org.umlmda.runtime.collection.OneToManyChildSet;
 
-public class ParentSampleImpl implements ParentSample {
-   
-   private OneToManyChildSet<ParentSample, ChildSample> childrenSet =
-      new OneToManyChildSet<ParentSample, ChildSample>(this) {
+public class ParentSampleImpl implements ParentSample
+{
 
-         @Override
-         protected ParentSample getParent(ChildSample child) {
-            return child.getParentSample();
-         }
+   private OneToManyChildSet<ParentSample, ChildSample> childrenSet = new OneToManyChildSet<ParentSample, ChildSample>(this) {
 
-         @Override
-         protected void setParent(ChildSample child, ParentSample parent) {
-            child.setParentSample(parent);
-         }
-      
-   };
+                                                                       @Override
+                                                                       protected ParentSample getParent(ChildSample child) {
+                                                                          return child.getParentSample();
+                                                                       }
+
+                                                                       @Override
+                                                                       protected void setParent(ChildSample child,
+                                                                             ParentSample parent) {
+                                                                          child.setParentSample(parent);
+                                                                       }
+
+                                                                    };
 
    public Set<ChildSample> getChildren() {
       return childrenSet;

@@ -8,11 +8,10 @@ import org.umlmda.runtime.bean.BeanInvocation;
 import org.umlmda.runtime.exception.FeatureNotImplemementedException;
 
 /**
- * 
  * @author moroff
- *
  */
-public class ReflectionInvocation implements BeanInvocation {
+public class ReflectionInvocation implements BeanInvocation
+{
 
    private final Object bean;
 
@@ -23,13 +22,16 @@ public class ReflectionInvocation implements BeanInvocation {
    public Object getValue(String propertyName) {
       try {
          PropertyDescriptor descriptor = getDescriptor(propertyName);
-         
-         return descriptor.getReadMethod().invoke(bean, (Object [])null);
-      } catch (IllegalArgumentException e) {
+
+         return descriptor.getReadMethod().invoke(bean, (Object[]) null);
+      }
+      catch (IllegalArgumentException e) {
          throw new RuntimeException(e);
-      } catch (IllegalAccessException e) {
+      }
+      catch (IllegalAccessException e) {
          throw new RuntimeException(e);
-      } catch (InvocationTargetException e) {
+      }
+      catch (InvocationTargetException e) {
          throw new RuntimeException(e);
       }
    }
@@ -38,15 +40,19 @@ public class ReflectionInvocation implements BeanInvocation {
       try {
          PropertyDescriptor descriptor = getDescriptor(propertyName);
 
-         descriptor.getWriteMethod().invoke(bean, new Object[] {value});
-      } catch (IllegalArgumentException e) {
+         descriptor.getWriteMethod().invoke(bean, new Object[] { value });
+      }
+      catch (IllegalArgumentException e) {
          throw new RuntimeException(e);
-      } catch (IllegalAccessException e) {
+      }
+      catch (IllegalAccessException e) {
          throw new RuntimeException(e);
-      } catch (InvocationTargetException e) {
+      }
+      catch (InvocationTargetException e) {
          throw new RuntimeException(e);
-      } finally {
-         
+      }
+      finally {
+
       }
 
    }
@@ -55,15 +61,15 @@ public class ReflectionInvocation implements BeanInvocation {
       throw new FeatureNotImplemementedException();
    }
 
-   private PropertyDescriptor getDescriptor(String propertyName)  {
+   private PropertyDescriptor getDescriptor(String propertyName) {
       try {
          PropertyDescriptor descriptor = new PropertyDescriptor(propertyName, bean.getClass());
 
          return descriptor;
-      } catch (IntrospectionException e) {
+      }
+      catch (IntrospectionException e) {
          throw new RuntimeException(e);
       }
    }
-
 
 }

@@ -1,10 +1,5 @@
 /*
- * $Header: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/visitor/VisitorContext.java,v 1.1 2008/03/25 09:54:06 moroff Exp $
- * $Source: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/visitor/VisitorContext.java,v $
- * $Revision: 1.1 $
  *  $State: Exp $
- *   $Name:  $
- *   $Date: 2008/03/25 09:54:06 $
  * $Locker:  $
  * 
  * This library is free software; you can redistribute it and/or
@@ -28,18 +23,21 @@ package org.umlmda.runtime.visitor;
 
 /**
  * Interface of the visitor context
+ * 
  * @author Dieter Moroff (16.02.2006)
  */
-public interface VisitorContext {
+public interface VisitorContext
+{
 
    /**
     * Returns the objekt level, @link VisitableIterator#getLevel().
+    * 
     * @return
     */
-   public int getObjectLevel();
-   
+   int getObjectLevel();
+
    /**
     * Set the new objekt level, @link VisitableIterator#getLevel().
     */
-   public void setObjectLevel(int objectLevel);
+   void setObjectLevel(int objectLevel);
 }

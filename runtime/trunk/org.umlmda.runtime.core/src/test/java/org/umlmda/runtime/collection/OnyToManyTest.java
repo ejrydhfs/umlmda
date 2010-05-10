@@ -23,41 +23,42 @@ package org.umlmda.runtime.collection;
 
 import java.util.Iterator;
 
+import junit.framework.TestCase;
+
 import org.umlmda.runtime.collection.test.ChildSample;
 import org.umlmda.runtime.collection.test.ChildSampleImpl;
 import org.umlmda.runtime.collection.test.ParentSample;
 import org.umlmda.runtime.collection.test.ParentSampleImpl;
 
-import junit.framework.TestCase;
-
-public class OnyToManyTest extends TestCase {
+public class OnyToManyTest extends TestCase
+{
 
    public void testSetFromParent() {
       ChildSample child = new ChildSampleImpl();
       ParentSample parent = new ParentSampleImpl();
-      
+
       parent.getChildren().add(child);
-      
+
       assertNotNull(child.getParentSample());
       assertTrue(child.getParentSample() == parent);
-      
+
       parent.getChildren().remove(child);
       assertNull(child.getParentSample());
    }
-   
+
    public void testSetFromChild() {
       ChildSample child = new ChildSampleImpl();
       ParentSample parent = new ParentSampleImpl();
 
       child.setParentSample(parent);
-      
+
       assertTrue(parent.getChildren().contains(child));
-      
+
       child.setParentSample(null);
-      
+
       assertFalse(parent.getChildren().contains(child));
    }
-   
+
    public void testRemoveWithIterator() {
       ChildSample child = new ChildSampleImpl();
       ParentSample parent = new ParentSampleImpl();
@@ -65,13 +66,13 @@ public class OnyToManyTest extends TestCase {
       parent.getChildren().add(child);
 
       assertNotNull(child.getParentSample());
-      
-      for (Iterator<ChildSample> iterator = parent.getChildren().iterator(); iterator.hasNext();) {
+
+      for ( Iterator<ChildSample> iterator = parent.getChildren().iterator(); iterator.hasNext(); ) {
          ChildSample child1 = iterator.next();
-         
+
          iterator.remove();
       }
-      
+
       assertNull(child.getParentSample());
    }
 }

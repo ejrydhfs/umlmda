@@ -5,11 +5,12 @@ import java.beans.PropertyChangeListener;
 
 import junit.framework.TestCase;
 
-public class PropertyChangeEventManagerTest extends TestCase {
-   private int eventCount;
+public class PropertyChangeEventManagerTest extends TestCase
+{
+   private int                                eventCount;
    private ManagedPropertyChangeSupportHelper propertyChangeSupport;
-   private PropertyChangeListener listener;
-   
+   private PropertyChangeListener             listener;
+
    @Override
    protected void setUp() throws Exception {
       super.setUp();
@@ -18,15 +19,16 @@ public class PropertyChangeEventManagerTest extends TestCase {
       propertyChangeSupport.addPropertyChangeListener(new PropertyChangeListener() {
 
          public void propertyChange(PropertyChangeEvent evt) {
-            ++eventCount; 
-         }});   
+            ++eventCount;
+         }
+      });
    }
-   
+
    public void testFirePropertyChange() {
       propertyChangeSupport.firePropertyChange(new PropertyChangeEvent(this, "property", null, null));
-      
+
       assertEquals(1, eventCount);
-      
+
       propertyChangeSupport.startQueuing();
 
       propertyChangeSupport.firePropertyChange(new PropertyChangeEvent(this, "property", null, null));

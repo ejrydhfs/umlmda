@@ -23,18 +23,17 @@ package org.umlmda.runtime.lang;
  * 
  * @author Dieter Moroff (12.05.2009)
  */
-public interface EqualityCheckable {
-   
-   /** 
-    * Checks if all properties (attributes and none composite associations) are equals. 
-    * In contrast to {@link Object#equals(Object)}, which checks the identity of instances. 
-    * If the object has an identity (for example a domain model entity has a so called domain 
-    * key) the equals method checks only the domain key properties.
+public interface EqualityCheckable
+{
+
+   /**
+    * Checks if all properties (attributes and none composite associations) are equals. In contrast to
+    * {@link Object#equals(Object)}, which checks the identity of instances. If the object has an identity (for example a domain
+    * model entity has a so called domain key) the equals method checks only the domain key properties.
     * 
     * @param other
-    *   Instance to compare with
-    * @return
-    *   <b>true</b> is all properties of the class instance are equals.
+    *           Instance to compare with
+    * @return <b>true</b> is all properties of the class instance are equals.
     */
    boolean arePropertiesEqual(Object other);
 }

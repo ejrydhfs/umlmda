@@ -1,10 +1,5 @@
 /*
- * $Header: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/visitor/Visitor.java,v 1.1 2008/03/25 09:54:06 moroff Exp $
- * $Source: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/visitor/Visitor.java,v $
- * $Revision: 1.1 $
  *  $State: Exp $
- *   $Name:  $
- *   $Date: 2008/03/25 09:54:06 $
  * $Locker:  $
  * 
  * This library is free software; you can redistribute it and/or
@@ -28,23 +23,24 @@ package org.umlmda.runtime.visitor;
 
 /**
  * Base interface for all visitors
+ * 
  * @author MOROFF
  */
-public interface Visitor {
+public interface Visitor
+{
 
    /**
     * Gets the current visitor context
     */
-   public VisitorContext getContext();
+   VisitorContext getContext();
 
    /**
     * Sets the visitor context
     */
-   public void setContext(VisitorContext context);
+   void setContext(VisitorContext context);
 
    /**
-    * Checks if the Visitor is applicable for the visitable class
-    * as a visitor.
+    * Checks if the Visitor is applicable for the visitable class as a visitor.
     */
-   public boolean isApplicable(Class<?> visitableClass);
+   boolean isApplicable(Class<?> visitableClass);
 }

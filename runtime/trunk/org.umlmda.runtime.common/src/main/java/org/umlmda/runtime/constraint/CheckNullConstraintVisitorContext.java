@@ -21,39 +21,35 @@ package org.umlmda.runtime.constraint;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.umlmda.runtime.constraint.ConstraintViolation;
-import org.umlmda.runtime.constraint.ConstraintVisitorContext;
-import org.umlmda.runtime.constraint.MultiplicityConstraintViolation;
 
 /**
- * Checked zusätzlich die String Attribute, sind haben diese mindestens eine zu 1 Kardinalität,
- * darf der String nicht leer sein. (Das ist die default Belegung beim UMLMDA Generator,
- * weswegen dann alle Strings als belegt erkannt werden)  
+ * Checked zusätzlich die String Attribute, sind haben diese mindestens eine zu 1 Kardinalität, darf der String nicht leer sein.
+ * (Das ist die default Belegung beim UMLMDA Generator, weswegen dann alle Strings als belegt erkannt werden)
+ * 
  * @author eisenmann
  */
 public class CheckNullConstraintVisitorContext extends ConstraintVisitorContext
 {
-   
-      /**
-       * Checked zusätzlich die String Attribute, sind haben diese mindestens eine zu 1 Kardinalit�t,
-       * darf der String nicht leer sein. (Das ist die default Belegung beim UMLMDA Generator,
-       * weswegen dann alle Strings als belegt erkannt werden)  
-       */
-      public void checkMultiplicityContraint(String feature, int lower, int upper, Object value){
-         if(lower > 0) {
-            List<ConstraintViolation> violations = getViolations();
-            if(value == null) {
+
+   /**
+    * Checked zusätzlich die String Attribute, sind haben diese mindestens eine zu 1 Kardinalit�t, darf der String nicht leer
+    * sein. (Das ist die default Belegung beim UMLMDA Generator, weswegen dann alle Strings als belegt erkannt werden)
+    */
+   public void checkMultiplicityContraint(String feature, int lower, int upper, Object value) {
+      if ( lower > 0 ) {
+         List<ConstraintViolation> violations = getViolations();
+         if ( value == null ) {
+            violations.add(new MultiplicityConstraintViolation(feature, "lower", 0, lower));
+            return;
+         }
+         if ( value instanceof String ) {
+            if ( StringUtils.isBlank((String) value) ) {
                violations.add(new MultiplicityConstraintViolation(feature, "lower", 0, lower));
                return;
             }
-            if(value instanceof String) {
-               if(StringUtils.isBlank((String) value)) {
-                  violations.add(new MultiplicityConstraintViolation(feature, "lower", 0, lower));
-                  return;
-               }
-            }
          }
-         super.checkMultiplicityContraint(feature, lower, upper, value);
       }
-   
+      super.checkMultiplicityContraint(feature, lower, upper, value);
+   }
+
 }

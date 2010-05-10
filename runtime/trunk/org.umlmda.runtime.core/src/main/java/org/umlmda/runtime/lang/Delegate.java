@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/runtime/org.umlmda.runtime.core/src/main/java/org/umlmda/runtime/lang/Delegate.java,v 1.1 2008/03/20 22:42:18 moroff Exp $
- *   $Source: /cvsroot/umlmda/runtime/org.umlmda.runtime.core/src/main/java/org/umlmda/runtime/lang/Delegate.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2008/03/20 22:42:18 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,10 +20,12 @@
 package org.umlmda.runtime.lang;
 
 /**
- * Marking interface for delegates for none generated code. Required to
- * simplifed the generation process for the delegate interfaces.
+ * Marking interface for delegates for none generated code. Required to simplifed the generation process for the delegate
+ * interfaces.
+ * 
  * @author moroff
  */
-public interface Delegate {
+public interface Delegate
+{
 
 }

@@ -1,10 +1,5 @@
 /*
- * $Header: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/visitor/VisitableIterator.java,v 1.1 2008/03/25 09:54:06 moroff Exp $
- * $Source: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/visitor/VisitableIterator.java,v $
- * $Revision: 1.1 $
  *  $State: Exp $
- *   $Name:  $
- *   $Date: 2008/03/25 09:54:06 $
  * $Locker:  $
  * 
  * This library is free software; you can redistribute it and/or
@@ -29,22 +24,23 @@ package org.umlmda.runtime.visitor;
 import java.util.Iterator;
 
 /**
- * Iterator to iterate over an object tree, and returns all objects
- * that are visitable
+ * Iterator to iterate over an object tree, and returns all objects that are visitable
+ * 
  * @author Dieter Moroff (17.02.2006)
  */
-public interface VisitableIterator extends Iterator {
+public interface VisitableIterator extends Iterator
+{
 
    /*
-    * Returns the level in the object tree, can be used for ident
-    * in a logger visitor.
+    * Returns the level in the object tree, can be used for ident in a logger visitor.
     */
-   public int getLevel();
+   int getLevel();
 
    /**
     * Returns the next visitable object
+    * 
     * @return
     */
    public Visitable nextVisitable();
-   
+
 }

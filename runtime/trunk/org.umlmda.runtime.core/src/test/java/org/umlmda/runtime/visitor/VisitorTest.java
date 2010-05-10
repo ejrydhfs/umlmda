@@ -1,18 +1,17 @@
 /*
  * Copyright: (C) 2008 COR AG Insurance Technologies
- * Name:      $Id: VisitorTest.java,v $Version 15.02.2010 09:46:49 {user} Exp $
  */
 package org.umlmda.runtime.visitor;
+
+import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.umlmda.runtime.constraint.ConstraintVisitorContext;
 
-import junit.framework.TestCase;
-
 public class VisitorTest extends TestCase
 {
    private final Logger logger = Logger.getLogger(VisitorTest.class);
-   
+
    public void testVisitorRoot() {
       MyVisitableObject object = new MyVisitableObject("object");
 

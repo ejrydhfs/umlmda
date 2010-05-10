@@ -28,24 +28,24 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * A wrapper around a {@link Set} to support bidirectionality in a one to many aggregation or composition. 
- * If an element added or removed from the set the parent in the element is modified too.
+ * A wrapper around a {@link Set} to support bidirectionality in a one to many aggregation or composition. If an element added or
+ * removed from the set the parent in the element is modified too.
  * 
  * @author Dieter Moroff
- *
  * @param <TParent>
  * @param <TChild>
  */
-public abstract class OneToManyChildSet<TParent, TChild> implements Set<TChild>, Serializable {
+public abstract class OneToManyChildSet<TParent, TChild> implements Set<TChild>, Serializable
+{
 
    private static final long serialVersionUID = 1L;
    private final Set<TChild> wrappedSet;
-   private final TParent parent;
+   private final TParent     parent;
 
    public OneToManyChildSet(TParent parent) {
       this(parent, new LinkedHashSet<TChild>());
    }
-   
+
    public OneToManyChildSet(TParent parent, Set<TChild> wrappedSet) {
       this.parent = parent;
       this.wrappedSet = wrappedSet;
@@ -53,23 +53,25 @@ public abstract class OneToManyChildSet<TParent, TChild> implements Set<TChild>,
 
    /**
     * Method to be overwritten to set the parent to the child object.
+    * 
     * @param child
     * @param parent
     */
    protected abstract void setParent(TChild child, TParent parent);
-   
+
    /**
     * Method to get the parent of a child element.
+    * 
     * @param child
     * @return
     */
    protected abstract TParent getParent(TChild child);
-   
+
    public boolean add(TChild child) {
       boolean added = wrappedSet.add(child);
-      
+
       if ( added ) {
-         if ( parent != getParent(child)) {
+         if ( parent != getParent(child) ) {
             setParent(child, parent);
          }
       }
@@ -78,8 +80,8 @@ public abstract class OneToManyChildSet<TParent, TChild> implements Set<TChild>,
 
    public boolean addAll(Collection<? extends TChild> children) {
       boolean added = false;
-      for (TChild child : children) {
-         if ( add(child)) {
+      for ( TChild child : children ) {
+         if ( add(child) ) {
             added = true;
          }
       }
@@ -87,8 +89,8 @@ public abstract class OneToManyChildSet<TParent, TChild> implements Set<TChild>,
    }
 
    public void clear() {
-      for (TChild child : wrappedSet) {
-         if ( parent == getParent(child)) {
+      for ( TChild child : wrappedSet ) {
+         if ( parent == getParent(child) ) {
             setParent(child, parent);
          }
       }
@@ -121,16 +123,16 @@ public abstract class OneToManyChildSet<TParent, TChild> implements Set<TChild>,
 
    @SuppressWarnings("unchecked")
    public boolean remove(Object child) {
-      if ( parent == getParent((TChild)child)) {
-         setParent((TChild)child, null);
+      if ( parent == getParent((TChild) child) ) {
+         setParent((TChild) child, null);
       }
       return wrappedSet.remove(child);
    }
 
    public boolean removeAll(Collection<?> children) {
       boolean removed = false;
-      for (Object child : children) {
-         if ( remove(child)) {
+      for ( Object child : children ) {
+         if ( remove(child) ) {
             removed = true;
          }
       }
@@ -139,13 +141,13 @@ public abstract class OneToManyChildSet<TParent, TChild> implements Set<TChild>,
 
    public boolean retainAll(Collection<?> c) {
       boolean changed = false;
-      
-      for (Iterator<TChild> iterator = wrappedSet.iterator(); iterator.hasNext();) {
+
+      for ( Iterator<TChild> iterator = wrappedSet.iterator(); iterator.hasNext(); ) {
          TChild child = iterator.next();
-         
+
          if ( c.contains(child) == false ) {
             iterator.remove();
-            if ( parent == getParent((TChild)child)) {
+            if ( parent == getParent((TChild) child) ) {
                setParent(child, null);
             }
             changed = true;
@@ -165,5 +167,5 @@ public abstract class OneToManyChildSet<TParent, TChild> implements Set<TChild>,
    public <T> T[] toArray(T[] a) {
       return wrappedSet.toArray(a);
    }
-   
+
 }

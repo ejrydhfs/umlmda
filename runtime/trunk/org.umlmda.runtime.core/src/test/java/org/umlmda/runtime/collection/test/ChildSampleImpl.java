@@ -21,9 +21,9 @@
  */
 package org.umlmda.runtime.collection.test;
 
+public class ChildSampleImpl implements ChildSample
+{
 
-public class ChildSampleImpl implements ChildSample {
-   
    private ParentSample parent = null;
 
    public ParentSample getParentSample() {
@@ -31,14 +31,14 @@ public class ChildSampleImpl implements ChildSample {
    }
 
    public void setParentSample(ParentSample parent) {
-      if (parent != this.parent) {
+      if ( parent != this.parent ) {
          ParentSample oldValue = this.parent;
 
          this.parent = parent;
-         if (oldValue != null && oldValue.getChildren().contains(this)) {
+         if ( oldValue != null && oldValue.getChildren().contains(this) ) {
             oldValue.getChildren().remove(this);
          }
-         if (parent != null && parent.getChildren().contains(this) == false) {
+         if ( parent != null && parent.getChildren().contains(this) == false ) {
             parent.getChildren().add(this);
          }
       }

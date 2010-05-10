@@ -12,17 +12,17 @@ public class FieldAccessor
     * Direct field set.
     * 
     * @param object
-    *    bean containing the field
+    *           bean containing the field
     * @param fieldName
-    *    name of the field to be set
+    *           name of the field to be set
     * @param value
-    *    value to be set
+    *           value to be set
     */
    public static void set(final Object object, String fieldName, Object value) {
       try {
          Field f = object.getClass().getDeclaredField(fieldName);
          int modifiers = f.getModifiers();
-         
+
          if ( Modifier.isFinal(modifiers) ) {
             throw new IllegalArgumentException("field is final");
          }
@@ -54,11 +54,10 @@ public class FieldAccessor
     * Direct field get
     * 
     * @param object
-    *    bean containing the field
+    *           bean containing the field
     * @param fieldName
-    *    name of the field to be set
-    * @return
-    *    value of the field
+    *           name of the field to be set
+    * @return value of the field
     */
    public static Object get(final Object object, String fieldName) {
       try {
@@ -71,7 +70,7 @@ public class FieldAccessor
          if ( !accessible ) {
             f.setAccessible(false);
          }
-         
+
          return value;
       }
       catch (NoSuchFieldException e) {
@@ -86,6 +85,6 @@ public class FieldAccessor
       catch (IllegalAccessException e) {
          throw new RuntimeException(e);
       }
-      
+
    }
 }

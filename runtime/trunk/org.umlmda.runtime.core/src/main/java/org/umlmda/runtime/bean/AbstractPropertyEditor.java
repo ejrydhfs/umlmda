@@ -6,9 +6,10 @@ import java.awt.Rectangle;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyEditor;
 
-public abstract class AbstractPropertyEditor<TBeanClass> implements PropertyEditor {
+public abstract class AbstractPropertyEditor<TBeanClass> implements PropertyEditor
+{
 
-   private final String propertyName;
+   private final String     propertyName;
    private final TBeanClass bean;
 
    public AbstractPropertyEditor(TBeanClass bean, String propertyName) {
@@ -19,27 +20,27 @@ public abstract class AbstractPropertyEditor<TBeanClass> implements PropertyEdit
    protected final String getPropertyName() {
       return propertyName;
    }
-   
+
    protected final TBeanClass getBean() {
       return bean;
    }
-   
+
    public void addPropertyChangeListener(PropertyChangeListener listener) {
       if ( bean instanceof PropertyChangeSupportHelper ) {
-         ((PropertyChangeSupportHelper)bean).addPropertyChangeListener(propertyName, listener);
+         ((PropertyChangeSupportHelper) bean).addPropertyChangeListener(propertyName, listener);
       }
    }
 
    public void removePropertyChangeListener(PropertyChangeListener listener) {
       if ( bean instanceof PropertyChangeSupportHelper ) {
-         ((PropertyChangeSupportHelper)bean).removePropertyChangeListener(propertyName, listener);
+         ((PropertyChangeSupportHelper) bean).removePropertyChangeListener(propertyName, listener);
       }
    }
 
    public abstract Object getValue();
 
    public abstract void setValue(Object value);
-   
+
    public String getAsText() {
       throw new UnsupportedOperationException("Supported in future release");
    }

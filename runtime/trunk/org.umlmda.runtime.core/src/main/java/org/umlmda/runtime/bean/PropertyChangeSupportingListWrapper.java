@@ -12,11 +12,13 @@ import java.util.ListIterator;
  * @author Dieter Moroff (24.4.2008)
  * @param <T>
  */
-public class PropertyChangeSupportingListWrapper<T> extends PropertyChangeSupportingCollectionWrapper<T> implements List<T> {
+public class PropertyChangeSupportingListWrapper<T> extends PropertyChangeSupportingCollectionWrapper<T> implements List<T>
+{
 
    private final List<T> wrappedList;
 
-   public PropertyChangeSupportingListWrapper(PropertyChangeSupportHelper owner, String collectionPropertyName, List<T> wrappedList) {
+   public PropertyChangeSupportingListWrapper(PropertyChangeSupportHelper owner, String collectionPropertyName,
+         List<T> wrappedList) {
       super(owner, collectionPropertyName, wrappedList);
       this.wrappedList = wrappedList;
    }
@@ -39,7 +41,7 @@ public class PropertyChangeSupportingListWrapper<T> extends PropertyChangeSuppor
    public boolean addAll(int index, Collection<? extends T> c) {
       Collection<T> oldValue = keepOldValue();
       boolean added = wrappedList.addAll(index, c);
-      
+
       if ( added && oldValue != null ) {
          owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
@@ -69,7 +71,7 @@ public class PropertyChangeSupportingListWrapper<T> extends PropertyChangeSuppor
    public T remove(int index) {
       Collection<T> oldValue = keepOldValue();
       T removed = wrappedList.remove(index);
-      
+
       if ( removed != null && oldValue != null ) {
          owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
@@ -79,7 +81,7 @@ public class PropertyChangeSupportingListWrapper<T> extends PropertyChangeSuppor
    public T set(int index, T element) {
       Collection<T> oldValue = keepOldValue();
       T removed = wrappedList.set(index, element);
-      
+
       if ( removed != null && oldValue != null ) {
          owner.firePropertyChange(collectionPropertyName, oldValue, createClone());
       }
@@ -90,7 +92,7 @@ public class PropertyChangeSupportingListWrapper<T> extends PropertyChangeSuppor
       throw new UnsupportedOperationException("Support in GWT 1.5.x missing");
       // TODO if back in GWT (see Issue http://code.google.com/p/google-web-toolkit/issues/detail?id=1791)
       // add again.
-      //return wrappedList.subList(fromIndex, toIndex);
+      // return wrappedList.subList(fromIndex, toIndex);
    }
 
 }

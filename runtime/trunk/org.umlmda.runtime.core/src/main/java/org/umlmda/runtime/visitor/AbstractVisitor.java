@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/visitor/AbstractVisitor.java,v 1.1 2008/03/25 09:54:06 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.runtime.common/src/main/java/org/umlmda/runtime/visitor/AbstractVisitor.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2008/03/25 09:54:06 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,13 +20,12 @@
 package org.umlmda.runtime.visitor;
 
 /**
- * Abstract baseclass for all visitor implementations. 
- * @author Dieter Moroff (20.02.2006), last change $Date: 2008/03/25 09:54:06 $ $Name:  $
- * @version $Revision: 1.1 $
+ * Abstract baseclass for all visitor implementations.
  */
-public abstract class AbstractVisitor implements Visitor {
+public abstract class AbstractVisitor implements Visitor
+{
    private VisitorContext context;
-   
+
    /**
     * 
     */
@@ -39,19 +33,20 @@ public abstract class AbstractVisitor implements Visitor {
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.runtime.visitor.Visitor#getContext()
     */
    public VisitorContext getContext() {
       return context;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.runtime.visitor.Visitor#setContext(org.umlmda.runtime.visitor.VisitorContext)
     */
    public void setContext(VisitorContext context) {
       this.context = context;
    }
-
 
 }

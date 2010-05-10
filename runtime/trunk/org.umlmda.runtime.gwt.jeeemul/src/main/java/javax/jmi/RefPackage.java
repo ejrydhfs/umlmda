@@ -1,20 +1,35 @@
 package javax.jmi;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
-public interface RefPackage extends RefBaseObject {
-    public RefClass refClass(RefObject type);
-    public RefClass refClass(String typeName);
-    public RefPackage refPackage(RefObject nestedPackage);
-    public RefPackage refPackage(String nestedPackageName);
-    public RefAssociation refAssociation(RefObject association);
-    public RefAssociation refAssociation(String associationName);
-    public Collection refAllPackages();
-    public Collection refAllClasses();
-    public Collection refAllAssociations();
-    public RefStruct refCreateStruct(RefObject struct, List params);
-    public RefStruct refCreateStruct(String structName, List params);
-    public RefEnum refGetEnum(RefObject enumObject, String name);
-    public RefEnum refGetEnum(String enumName, String name);
-    public void refDelete();
-} 
+public interface RefPackage extends RefBaseObject
+{
+   RefClass refClass(RefObject type);
+
+   RefClass refClass(String typeName);
+
+   RefPackage refPackage(RefObject nestedPackage);
+
+   RefPackage refPackage(String nestedPackageName);
+
+   RefAssociation refAssociation(RefObject association);
+
+   RefAssociation refAssociation(String associationName);
+
+   Collection refAllPackages();
+
+   Collection refAllClasses();
+
+   Collection refAllAssociations();
+
+   RefStruct refCreateStruct(RefObject struct, List params);
+
+   RefStruct refCreateStruct(String structName, List params);
+
+   RefEnum refGetEnum(RefObject enumObject, String name);
+
+   RefEnum refGetEnum(String enumName, String name);
+
+   void refDelete();
+}

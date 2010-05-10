@@ -21,10 +21,10 @@ package org.umlmda.runtime.lang;
 import java.util.Collection;
 import java.util.List;
 
-public class EqualityUtil {
+public class EqualityUtil
+{
    /**
-    * Checks if two collections contains the identical elements (compared with
-    * {@link Object#equals(Object)}).
+    * Checks if two collections contains the identical elements (compared with {@link Object#equals(Object)}).
     * 
     * @param one
     *           Set one
@@ -33,9 +33,9 @@ public class EqualityUtil {
     * @return <b>true</b> if both sets contains the same elements.
     */
    public static boolean equals(Collection<?> one, Collection<?> two) {
-      if (one.size() == two.size()) {
-         for (Object object : one) {
-            if (two.contains(object) == false)
+      if ( one.size() == two.size() ) {
+         for ( Object object : one ) {
+            if ( two.contains(object) == false )
                return false;
          }
          return true;
@@ -44,22 +44,19 @@ public class EqualityUtil {
          return false;
       }
    }
-   
+
    /**
-    * Checks if two list contains the identical elements (compared with
-    * {@link Object#equals(Object)} on the same position.
+    * Checks if two list contains the identical elements (compared with {@link Object#equals(Object)} on the same position.
     * 
     * @param one
-    *   List one
+    *           List one
     * @param two
-    *   List two
-    * @return
-    *   <b>true</b> if both lists contains identical elements on the same
-    *   positions.
+    *           List two
+    * @return <b>true</b> if both lists contains identical elements on the same positions.
     */
    public static boolean equals(List<?> one, List<?> two) {
-      if (one.size() == two.size()) {
-         for (int i=0; i<one.size(); ++i) {
+      if ( one.size() == two.size() ) {
+         for ( int i = 0; i < one.size(); ++i ) {
             if ( one.get(i).equals(two.get(i)) == false ) {
                return false;
             }

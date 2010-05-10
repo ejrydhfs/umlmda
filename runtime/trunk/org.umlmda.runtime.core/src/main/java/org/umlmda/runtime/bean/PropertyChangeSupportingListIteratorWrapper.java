@@ -8,24 +8,27 @@ import java.util.ListIterator;
 
 /**
  * @author MOROFF
- *
  */
-public class PropertyChangeSupportingListIteratorWrapper<T> extends PropertyChangeSupportingIteratorWrapper<T> implements ListIterator<T> {
+public class PropertyChangeSupportingListIteratorWrapper<T> extends PropertyChangeSupportingIteratorWrapper<T> implements
+      ListIterator<T>
+{
 
-   private final ListIterator<T> wrappedListIterator;
+   private final ListIterator<T>                              wrappedListIterator;
    private final PropertyChangeSupportingCollectionWrapper<T> owner;
 
    /**
     * @param owner
     * @param wrappedIterator
     */
-   public PropertyChangeSupportingListIteratorWrapper(PropertyChangeSupportingCollectionWrapper<T> owner, ListIterator<T> wrappedListIterator) {
+   public PropertyChangeSupportingListIteratorWrapper(PropertyChangeSupportingCollectionWrapper<T> owner,
+         ListIterator<T> wrappedListIterator) {
       super(owner, wrappedListIterator);
       this.owner = owner;
       this.wrappedListIterator = wrappedListIterator;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.ListIterator#add(java.lang.Object)
     */
    public void add(T o) {
@@ -36,7 +39,8 @@ public class PropertyChangeSupportingListIteratorWrapper<T> extends PropertyChan
       }
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.ListIterator#set(java.lang.Object)
     */
    public void set(T o) {

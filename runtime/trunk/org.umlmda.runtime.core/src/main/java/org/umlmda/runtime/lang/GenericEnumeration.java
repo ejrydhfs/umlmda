@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/runtime/org.umlmda.runtime.core/src/main/java/org/umlmda/runtime/lang/GenericEnumeration.java,v 1.1 2008/03/20 22:42:18 moroff Exp $
- *   $Source: /cvsroot/umlmda/runtime/org.umlmda.runtime.core/src/main/java/org/umlmda/runtime/lang/GenericEnumeration.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2008/03/20 22:42:18 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,13 +21,15 @@ package org.umlmda.runtime.lang;
 
 /**
  * Interface for untypes access to enumeration values.
+ * 
  * @author Dieter Moroff
  */
-public interface GenericEnumeration extends Enumeration {
+public interface GenericEnumeration extends Enumeration
+{
 
    /**
     * Returns the underlying value of the enumeration converted as String.
     */
-   public String getValueAsString();
+   String getValueAsString();
 
 }

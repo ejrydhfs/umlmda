@@ -8,10 +8,10 @@ import javax.sql.DataSource;
 @Remote
 public interface NamingUtilsEjbRemote
 {
-   public static String MAPPED_NAME = "umlmda/test/NamingUtilsEjb";
+   String MAPPED_NAME = "umlmda/test/NamingUtilsEjb";
    void helloRemote();
    
    URL getURL();
 
-   public DataSource getDataSource();
+   DataSource getDataSource();
 }

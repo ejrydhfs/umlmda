@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/runtime/org.umlmda.runtime.core/src/main/java/org/umlmda/runtime/lang/Enumeration.java,v 1.1 2008/03/20 22:42:18 moroff Exp $
- *   $Source: /cvsroot/umlmda/runtime/org.umlmda.runtime.core/src/main/java/org/umlmda/runtime/lang/Enumeration.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2008/03/20 22:42:18 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -27,16 +22,18 @@ package org.umlmda.runtime.lang;
 import java.io.Serializable;
 
 /**
- * Marking interface for enumeration classes. Because functions like
- * getValues() or fromValue() are static they can't be defined on
- * this interface.
+ * Marking interface for enumeration classes. Because functions like getValues() or fromValue() are static they can't be defined
+ * on this interface.
+ * 
  * @author Dieter Moroff (27.07.2006)
  */
-public interface Enumeration extends Serializable {
+public interface Enumeration extends Serializable
+{
 
    /**
     * Returns the qualified model name of the enumeration class
+    * 
     * @return
     */
-   public abstract String getQualifiedModelName();
+   String getQualifiedModelName();
 }

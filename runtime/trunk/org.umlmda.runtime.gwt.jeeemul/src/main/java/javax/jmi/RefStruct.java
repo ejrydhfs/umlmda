@@ -1,12 +1,17 @@
 package javax.jmi;
 
-import java.util.List;
 import java.io.Serializable;
+import java.util.List;
 
-public interface RefStruct extends Serializable {
-    public List refFieldNames();
-    public Object refGetValue(String fieldName);
-    public List refTypeName();
-    public boolean equals(Object other);
-    public int hashCode();
+public interface RefStruct extends Serializable
+{
+   List refFieldNames();
+
+   Object refGetValue(String fieldName);
+
+   List refTypeName();
+
+   boolean equals(Object other);
+
+   int hashCode();
 }

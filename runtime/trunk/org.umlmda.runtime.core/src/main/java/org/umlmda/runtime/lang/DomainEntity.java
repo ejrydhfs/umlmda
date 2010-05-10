@@ -25,12 +25,12 @@ package org.umlmda.runtime.lang;
  * A domain entity contains a domain key.
  * 
  * @author MOROFF
- *
  */
-public interface DomainEntity {
-   
+public interface DomainEntity
+{
+
    /**
     * Returns the domain key of the domain entity object.
     */
-   public DomainKey getDomainKey();
+   DomainKey getDomainKey();
 }

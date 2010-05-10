@@ -32,7 +32,7 @@ import java.util.List;
 public interface DomainKey
 {
 
-   public static class Element
+   class Element
    {
       public final String name;
       public final Object value;
@@ -41,8 +41,9 @@ public interface DomainKey
          this.name = name;
          this.value = value;
       }
-      
-      /* (non-Javadoc)
+
+      /*
+       * (non-Javadoc)
        * @see java.lang.Object#toString()
        */
       @Override
@@ -51,7 +52,7 @@ public interface DomainKey
          sb.append("DomainKey.Element [name=").append(name).append(", value='").append(value).append("']");
          return sb.toString();
       }
-      
+
    }
 
    boolean equals(Object obj);
