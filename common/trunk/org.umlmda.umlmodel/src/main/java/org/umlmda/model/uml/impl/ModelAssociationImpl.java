@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelAssociationImpl.java,v 1.4 2006/10/29 10:44:10 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelAssociationImpl.java,v $
- * $Revision: 1.4 $
- *     $Name:  $
- *     $Date: 2006/10/29 10:44:10 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -36,21 +31,21 @@ import org.umlmda.utils.observer.ObservableList;
 
 /**
  * Basic implementation of a model association.
- * @author Dieter Moroff (03.04.2006), last change $Date: 2006/10/29 10:44:10 $ $Name:  $
- * @version $Revision: 1.4 $
+ * 
  */
-public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements ModelAssociationBase {
-   private ModelClassBase sourceBase;
-   private ModelClassBase targetBase;
+public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements ModelAssociationBase
+{
+   private ModelClassBase       sourceBase;
+   private ModelClassBase       targetBase;
    private ModelAssociationBase reverseBase;
-   private boolean aggregation = false;
-   private boolean composition = false;
-   private boolean navigatableToTarget = true;
-   private boolean navigatableToSource = false;
-   private ObservableList qualifiers = new ObservableList(new ArrayList());
-   private boolean ordered = false;
-   private boolean unique = true;
-   
+   private boolean              aggregation         = false;
+   private boolean              composition         = false;
+   private boolean              navigatableToTarget = true;
+   private boolean              navigatableToSource = false;
+   private ObservableList       qualifiers          = new ObservableList(new ArrayList());
+   private boolean              ordered             = false;
+   private boolean              unique              = true;
+
    /**
     * @param model
     * @param owner
@@ -60,7 +55,8 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       qualifiers.addObserver(this);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
     */
    public void update(Observable o, Object arg) {
@@ -69,8 +65,9 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
          notifyObservers(PROPERTY_QUALIFIER);
       }
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#getSourceBase()
     */
    public ModelClassBase getSourceBase() {
@@ -82,7 +79,8 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       notifyObservers(PROPERTY_SOURCE_BASE);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#getTargetBase()
     */
    public ModelClassBase getTargetBase() {
@@ -94,7 +92,8 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       notifyObservers(PROPERTY_TARGET_BASE);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#getReverseBase()
     */
    public ModelAssociationBase getReverseBase() {
@@ -106,7 +105,8 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       notifyObservers(PROPERTY_REVERSE_BASE);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#isAggregation()
     */
    public boolean isAggregation() {
@@ -118,7 +118,8 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       notifyObservers(PROPERTY_AGGREGATION);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#isComposition()
     */
    public boolean isComposition() {
@@ -130,14 +131,16 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       notifyObservers(PROPERTY_COMPOSITION);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#isMultiple()
     */
    public boolean isMultiple() {
       return getMultiplicity().isMultiple();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#isNavigatableToTarget()
     */
    public boolean isNavigatableToTarget() {
@@ -149,7 +152,8 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       notifyObservers(PROPERTY_NAVIGATABLE_TO_TARGET);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#isNavigatableToSource()
     */
    public boolean isNavigatableToSource() {
@@ -163,11 +167,12 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
 
    /**
     * Creates the reverse association from target to source
+    * 
     * @return
     */
    public ModelAssociationImpl createReverse() {
       ModelAssociationImpl reverse = new ModelAssociationImpl(getModelBase(), getTargetBase());
-      
+
       reverse.setName(null);
       reverse.setNavigatableToSource(isNavigatableToTarget());
       reverse.setNavigatableToTarget(isNavigatableToSource());
@@ -176,19 +181,20 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       reverse.setReverseBase(this);
 
       setReverseBase(reverse);
-      
+
       return reverse;
    }
 
-   
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#getQualifiers()
     */
    public List getQualifiers() {
       return qualifiers;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#isOrdered()
     */
    public boolean isOrdered() {
@@ -199,13 +205,14 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       this.ordered = ordered;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#isUnique()
     */
    public boolean isUnique() {
       return unique;
    }
-   
+
    public void setUnique(boolean unique) {
       this.unique = unique;
    }

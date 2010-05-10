@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFModelAssociationAdapter.java,v 1.2 2007/01/03 21:15:54 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFModelAssociationAdapter.java,v $
- * $Revision: 1.2 $
- *     $Name:  $
- *     $Date: 2007/01/03 21:15:54 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -32,11 +27,9 @@ import org.umlmda.uml.generator.webservices.WSModelAssocationAdapter;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class EMFModelAssociationAdapter extends WSModelAssocationAdapter implements EMFAnnotationHolder {
+public class EMFModelAssociationAdapter extends WSModelAssocationAdapter implements EMFAnnotationHolder
+{
 
    /**
     * @param modelAssociation
@@ -46,19 +39,20 @@ public class EMFModelAssociationAdapter extends WSModelAssocationAdapter impleme
       super(modelAssociation, model);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.emf.EMFAnnotationHolder#getEmfAnnotation()
     */
    public String getEmfAnnotation() {
       StringBuffer buffer = new StringBuffer();
-      JavaModelClass target = (JavaModelClass)getTarget();
-      
+      JavaModelClass target = (JavaModelClass) getTarget();
+
       buffer.append("@model");
       if ( isComposition() ) {
          buffer.append(" containment=\"true\"");
       }
       if ( isMultiple() ) {
-         buffer.append(" many=\"true\" type=\""+target.getQualifiedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE)+"\"");
+         buffer.append(" many=\"true\" type=\"" + target.getQualifiedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE) + "\"");
       }
       if ( isOptional() == false ) {
          buffer.append(" required=\"true\"");
@@ -69,11 +63,12 @@ public class EMFModelAssociationAdapter extends WSModelAssocationAdapter impleme
       if ( isDerived() ) {
          buffer.append(" transient=\"true\"");
       }
-      
+
       return buffer.toString();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelAssociation#getInterfaceType()
     */
    public String getInterfaceType() {

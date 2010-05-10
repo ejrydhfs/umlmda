@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.model/src/org/umlmda/generator/model/uml/GeneratorDataType.java,v 1.1 2006/12/04 09:33:21 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.model/src/org/umlmda/generator/model/uml/GeneratorDataType.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/12/04 09:33:21 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -28,16 +23,17 @@ import org.umlmda.model.uml.ModelDataType;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public interface GeneratorDataType extends GeneratorModelElement {
+public interface GeneratorDataType extends GeneratorModelElement
+{
 
    /**
     * Returns the plattform specific datatype
-    * @param optional datatype used with an optional attribute
-    * @param multivalue datatype used with an multivalue attribute
+    * 
+    * @param optional
+    *           datatype used with an optional attribute
+    * @param multivalue
+    *           datatype used with an multivalue attribute
     */
-   public String getPSMType(boolean optional, boolean multivalue);
+   String getPSMType(boolean optional, boolean multivalue);
 }

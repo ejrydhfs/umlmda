@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFStereotypes.java,v 1.1 2007/01/03 21:15:54 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFStereotypes.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2007/01/03 21:15:54 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,11 +21,9 @@ package org.umlmda.uml.generator.emf;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class EMFStereotypes {
+public class EMFStereotypes
+{
 
    public static final String EMF_TEST = "EMFTest";
 }

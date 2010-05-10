@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelAssociationImpl.java,v 1.6.2.1.2.2 2008/02/28 08:40:53 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelAssociationImpl.java,v $
-// $Revision: 1.6.2.1.2.2 $
-//    $State: Exp $
-//     $Name: RSM7 $
-//     $Date: 2008/02/28 08:40:53 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -239,16 +232,16 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
     * @see org.umlmda.model.uml.ModelAssociationBase#getReverseBase()
     */
    public ModelAssociationBase getReverseBase() {
-		if (reverseAssoc == null) {
-			ModelClassBase target = getTargetBase();
-			for (Iterator iter = target.getAllAssociations().iterator(); iter.hasNext();) {
-				ModelAssociationImpl otherAssoc = (ModelAssociationImpl) iter.next();
-				if (ownerEnd != otherAssoc.ownerEnd && ownerEnd.getAssociation() == otherAssoc.ownerEnd.getAssociation()) {
-					reverseAssoc = otherAssoc;
-				}
-			}
-		}
-		return reverseAssoc;
+      if ( reverseAssoc == null ) {
+         ModelClassBase target = getTargetBase();
+         for ( Iterator iter = target.getAllAssociations().iterator(); iter.hasNext(); ) {
+            ModelAssociationImpl otherAssoc = (ModelAssociationImpl) iter.next();
+            if ( ownerEnd != otherAssoc.ownerEnd && ownerEnd.getAssociation() == otherAssoc.ownerEnd.getAssociation() ) {
+               reverseAssoc = otherAssoc;
+            }
+         }
+      }
+      return reverseAssoc;
    }
 
    /*

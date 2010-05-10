@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelMDR/src/org/umlmda/model/uml/mdr/ModelMethodImpl.java,v 1.1 2005/12/19 08:11:24 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelMDR/src/org/umlmda/model/uml/mdr/ModelMethodImpl.java,v $
-// $Revision: 1.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2005/12/19 08:11:24 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public

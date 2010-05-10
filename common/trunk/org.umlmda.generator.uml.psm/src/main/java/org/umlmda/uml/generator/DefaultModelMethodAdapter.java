@@ -1,8 +1,5 @@
 /*
  * Created on 29.06.2006
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.uml.generator;
 
@@ -22,11 +19,9 @@ import org.umlmda.model.uml.impl.ModelMethodAdapter;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class DefaultModelMethodAdapter extends ModelMethodAdapter implements GeneratorMethod {
+public class DefaultModelMethodAdapter extends ModelMethodAdapter implements GeneratorMethod
+{
 
    /**
     * @param modelMethod
@@ -36,49 +31,56 @@ public class DefaultModelMethodAdapter extends ModelMethodAdapter implements Gen
       super(modelMethod, model);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorModelElement#getGeneratedName()
     */
    public String getGeneratedName() {
       return getName();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorMethod#getGeneratedName(java.lang.String)
     */
    public String getGeneratedName(String artefactName) {
       return getName();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorMethod#getGeneratorClass()
     */
    public GeneratorClass getGeneratorClass() {
       return (GeneratorClass) getOwningClass();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorModelElement#getGeneratorModel()
     */
    public GeneratorModel getGeneratorModel() {
       return (GeneratorModel) getModel();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorModelElement#getReplacementName()
     */
    public String getReplacementName() {
       return getName();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorModelElement#getDocumentation(java.lang.String)
     */
    public String getDocumentation(String context) {
       return getDocumentation();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorModelElement#setAsCurrentArtefact(java.lang.String)
     */
    public void setAsCurrentArtefact(String artefact) {
@@ -86,31 +88,32 @@ public class DefaultModelMethodAdapter extends ModelMethodAdapter implements Gen
       getGeneratorModel().getContext().setCurrentArtefact(getGeneratorModel().getArtefact(artefact, this));
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorMethod#getSignature()
     */
    public String getSignature() {
       StringBuffer signature = new StringBuffer(1024);
 
-      signature.append(((GeneratorClassifier)getReturnType()).getPsmType());
+      signature.append(((GeneratorClassifier) getReturnType()).getPsmType());
       signature.append(" ");
-      //TODO Check for Class or instance scope in feature
+      // TODO Check for Class or instance scope in feature
       signature.append(getClassScopeSignature());
       signature.append(getGeneratedName());
       signature.append(" (");
-      for (Iterator ip = getParameters().iterator(); ip.hasNext();) {
-         ModelParameter	parameter = (ModelParameter) ip.next();
+      for ( Iterator ip = getParameters().iterator(); ip.hasNext(); ) {
+         ModelParameter parameter = (ModelParameter) ip.next();
 
-         signature.append(((GeneratorClassifier)parameter.getType()).getPsmType());
+         signature.append(((GeneratorClassifier) parameter.getType()).getPsmType());
          signature.append(" ");
          signature.append(parameter.getName());
-         
+
          if ( ip.hasNext() ) {
             signature.append(", ");
          }
       }
       signature.append(")");
-      signature.append(getExceptionSignature());      
+      signature.append(getExceptionSignature());
       return signature.toString();
    }
 
@@ -120,10 +123,10 @@ public class DefaultModelMethodAdapter extends ModelMethodAdapter implements Gen
     */
    protected String getExceptionSignature() {
       String platformExceptions = getPsmExceptions();
-      
+
       if ( getExceptions().size() > 0 || !StringUtils.isEmpty(platformExceptions) ) {
          StringBuffer signature = new StringBuffer(1024);
-         
+
          signature.append(" ");
          signature.append(getExceptionDeclKeyword());
          signature.append(" ");
@@ -132,9 +135,9 @@ public class DefaultModelMethodAdapter extends ModelMethodAdapter implements Gen
             if ( getExceptions().isEmpty() == false )
                signature.append(", ");
          }
-         for (Iterator iter = getExceptions().iterator(); iter.hasNext();) {
+         for ( Iterator iter = getExceptions().iterator(); iter.hasNext(); ) {
             GeneratorClass exceptionClass = (GeneratorClass) iter.next();
-            
+
             signature.append(exceptionClass.getPsmType());
             if ( iter.hasNext() ) {
                signature.append(", ");
@@ -146,10 +149,11 @@ public class DefaultModelMethodAdapter extends ModelMethodAdapter implements Gen
       else
          return StringUtil.EMPTY;
    }
-   
+
    /**
-    * Override to return the plattform specific keyword to finish a methods exception declaration. 
-    * This default implementation returns and empty string. 
+    * Override to return the plattform specific keyword to finish a methods exception declaration. This default implementation
+    * returns and empty string.
+    * 
     * @return
     */
    protected String getExceptionEndDeclKeyword() {
@@ -157,8 +161,8 @@ public class DefaultModelMethodAdapter extends ModelMethodAdapter implements Gen
    }
 
    /**
-    * Override to return the plattform specific keyword to start a methods exception declaration. 
-    * This default implementation returns <code>throws</code>. 
+    * Override to return the plattform specific keyword to start a methods exception declaration. This default implementation
+    * returns <code>throws</code>.
     */
    protected String getExceptionDeclKeyword() {
       return "throws";
@@ -166,6 +170,7 @@ public class DefaultModelMethodAdapter extends ModelMethodAdapter implements Gen
 
    /**
     * TODO
+    * 
     * @return
     */
    private String getPsmExceptions() {
@@ -179,23 +184,22 @@ public class DefaultModelMethodAdapter extends ModelMethodAdapter implements Gen
       return StringUtils.EMPTY;
    }
 
-   
    public String getCallSignature() {
       return getCallSignature("");
    }
-   
+
    public String getCallSignature(String parameterPrefix) {
       return getCallSignature(this, parameterPrefix);
    }
-   
+
    public static String getCallSignature(ModelMethod method, String parameterPrefix) {
       StringBuffer buffer = new StringBuffer();
-      
+
       buffer.append(method.getName());
       buffer.append("(");
-      for (Iterator ip = method.getParameters().iterator(); ip.hasNext();) {
+      for ( Iterator ip = method.getParameters().iterator(); ip.hasNext(); ) {
          ModelParameter parameter = (ModelParameter) ip.next();
-         
+
          buffer.append(parameterPrefix);
          buffer.append(parameter.getName());
          if ( ip.hasNext() ) {

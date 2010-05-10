@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.oaw/src/org/umlmda/oaw/generator/model/j2ee/J2EEModelAdapterFactory.java,v 1.2 2006/10/23 09:45:17 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.oaw/src/org/umlmda/oaw/generator/model/j2ee/J2EEModelAdapterFactory.java,v $
- * $Revision: 1.2 $
- *     $Name:  $
- *     $Date: 2006/10/23 09:45:17 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -32,11 +27,12 @@ import org.umlmda.model.uml.ModelPackageBase;
 import org.umlmda.oaw.generator.model.java.JavaModelAdapterFactory;
 import org.umlmda.profile.ModelStereotype;
 
-public class J2EEModelAdapterFactory extends JavaModelAdapterFactory {
+public class J2EEModelAdapterFactory extends JavaModelAdapterFactory
+{
 
    @Override
    public ModelPackage createModelPackage(ModelPackageBase modelPackage, Model destModel) {
-      if ( modelPackage.getStereotypes().contains(ModelStereotype.BUSINESS_COMPONENT)) {
+      if ( modelPackage.getStereotypes().contains(ModelStereotype.BUSINESS_COMPONENT) ) {
          return new J2EEBusinessComponentAdapter(modelPackage, destModel);
       }
       else {
@@ -46,7 +42,7 @@ public class J2EEModelAdapterFactory extends JavaModelAdapterFactory {
 
    @Override
    public ModelClass createModelClass(ModelClassBase modelClassBase, Model destModel) {
-      if ( modelClassBase.getStereotypes().contains(ModelStereotype.BUSINESS_SERVICE)) {
+      if ( modelClassBase.getStereotypes().contains(ModelStereotype.BUSINESS_SERVICE) ) {
          return new J2EEBusinessServiceAdapter(modelClassBase, destModel);
       }
       else {

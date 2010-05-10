@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelGeneralizationBase.java,v 1.1 2006/08/09 10:40:27 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelGeneralizationBase.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/08/09 10:40:27 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,9 +21,11 @@ package org.umlmda.model.uml;
 
 /**
  * Interface for generalization associations between model classes
+ * 
  * @author MOROFF
  */
-public interface ModelGeneralizationBase extends ModelElementBase {
+public interface ModelGeneralizationBase extends ModelElementBase
+{
 
    /**
     * Returns the specific child (subclass) of the generalization

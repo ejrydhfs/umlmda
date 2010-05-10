@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)
@@ -33,14 +32,16 @@ import org.umlmda.model.uml.impl.ModelAdapterFactoryImpl;
 
 /**
  * Implementation of model adapter factory for default adapters
+ * 
  * @author MOROFF
  */
-public class DefaultModelAdapterFactory extends ModelAdapterFactoryImpl {
+public class DefaultModelAdapterFactory extends ModelAdapterFactoryImpl
+{
 
    public DefaultModelAdapterFactory() {
       super();
    }
-   
+
    protected Model createPsmModel(Model model) {
       return new DefaultModelAdapter(this, model);
    }
@@ -51,12 +52,12 @@ public class DefaultModelAdapterFactory extends ModelAdapterFactoryImpl {
       else
          return new DefaultClassAdapter(modelClassBase, destModel);
    }
-   
+
    public ModelPackage createModelPackage(ModelPackageBase modelPackage, Model destModel) {
       if ( modelPackage instanceof DefaultPackageAdapter )
          return (ModelPackage) modelPackage;
       else
          return new DefaultPackageAdapter(modelPackage, destModel);
    }
-      
+
 }

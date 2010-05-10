@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelMethod.java,v 1.2 2006/04/12 20:18:30 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelMethod.java,v $
-// $Revision: 1.2 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/12 20:18:30 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -26,17 +19,14 @@
 //  Created on Nov 9, 2004
 package org.umlmda.model.uml;
 
-
 /**
  * @author moroff
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public interface ModelMethod extends ModelMethodBase, ModelElement, ModelVisitable {
+public interface ModelMethod extends ModelMethodBase, ModelElement, ModelVisitable
+{
    /**
     * Returns the return type of the method
     */
-   public abstract ModelClassifier getReturnType();
+   ModelClassifier getReturnType();
 
 }

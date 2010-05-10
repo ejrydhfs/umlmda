@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelElementAdapter.java,v 1.10 2007/12/20 22:26:29 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelElementAdapter.java,v $
-// $Revision: 1.10 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2007/12/20 22:26:29 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -44,45 +37,44 @@ import org.umlmda.model.uml.ModelElement;
 import org.umlmda.model.uml.ModelElementBase;
 
 /**
- * platform independent adapter to MOF model element. extend for specific
- * platform to override the following properties: tagged values, stereotypes,
- * name, documentation, qualified name, owner
+ * platform independent adapter to MOF model element. extend for specific platform to override the following properties: tagged
+ * values, stereotypes, name, documentation, qualified name, owner
  * 
  * @author vpussel
- *  
  */
-public class ModelElementAdapter extends Observable implements ModelElement, Observer {
+public class ModelElementAdapter extends Observable implements ModelElement, Observer
+{
 
-   protected final Model adaptedModel; // the adapter model used for lazy
-                                       // creation
+   protected final Model          adaptedModel;                                              // the adapter model used for lazy
+   // creation
 
    // model relations
-   private final ModelElementBase modelElement; // reference to source model
-                                                // element
+   private final ModelElementBase modelElement;                                              // reference to source model
+   // element
 
-   private final static Logger logger = Logger.getLogger(ModelElementAdapter.class);
-   
-   private ModelElement owner = null;
+   private final static Logger    logger       = Logger.getLogger(ModelElementAdapter.class);
 
-   private Set stereotypes = null;
+   private ModelElement           owner        = null;
 
-   private Collection dependencies = null;
-   
-   private String constraints = null;
+   private Set                    stereotypes  = null;
+
+   private Collection             dependencies = null;
+
+   private String                 constraints  = null;
 
    /**
     * create adapter from ModelElement
     */
    public ModelElementAdapter(ModelElementBase modelElement, Model adaptedModel) {
-      if (adaptedModel == null && this instanceof Model)
+      if ( adaptedModel == null && this instanceof Model )
          this.adaptedModel = (Model) this;
       else
          this.adaptedModel = adaptedModel;
       this.modelElement = modelElement;
-      
+
       if ( modelElement instanceof Observable ) {
          Observable observableModelElement = (Observable) modelElement;
-         
+
          observableModelElement.addObserver(this);
       }
    }
@@ -90,13 +82,14 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
    public final void detach() {
       if ( modelElement instanceof Observable ) {
          Observable observableModelElement = (Observable) modelElement;
-         
+
          observableModelElement.deleteObserver(this);
       }
    }
-   
+
    /**
-    * Reset cached information 
+    * Reset cached information
+    * 
     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
     */
    public void update(Observable o, Object arg) {
@@ -112,10 +105,9 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
          constraints = null;
       }
    }
-   
+
    /*
     * (non-Javadoc)
-    * 
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getModel()
     */
    public final Model getModel() {
@@ -124,7 +116,6 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getModel()
     */
    public final ModelBase getModelBase() {
@@ -133,7 +124,6 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getTaggedValues()
     */
    public Properties getTaggedValues() {
@@ -142,16 +132,15 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getStereotype()
     */
    public String getStereotype() {
       Collection stereotypes = getStereotypes();
 
-      if (stereotypes.size() > 1) {
+      if ( stereotypes.size() > 1 ) {
          throw new RuntimeException("More than one stereotype applied");
       }
-      else if (stereotypes.size() == 0) {
+      else if ( stereotypes.size() == 0 ) {
          return StringUtils.EMPTY;
       }
       else {
@@ -161,11 +150,10 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getStereotypes()
     */
    public Collection getStereotypes() {
-      if (stereotypes == null) {
+      if ( stereotypes == null ) {
          stereotypes = new HashSet(modelElement.getStereotypes());
       }
       return stereotypes;
@@ -173,7 +161,6 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#hasStereotype(java.lang.String)
     */
    public boolean hasStereotype(String stereotype) {
@@ -182,7 +169,6 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#removeStereotype(java.lang.String)
     */
    public void removeStereotype(String stereotype) {
@@ -191,7 +177,6 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getName()
     */
    public String getName() {
@@ -200,7 +185,6 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getDocumentation()
     */
    public String getDocumentation() {
@@ -209,13 +193,12 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getQualifiedName()
     */
    public String getQualifiedName() {
       ModelElement owner = (ModelElement) getOwner();
 
-      if (owner != null && !(owner instanceof ModelBase) && owner.getName().equals("Logical View") == false)
+      if ( owner != null && !(owner instanceof ModelBase) && owner.getName().equals("Logical View") == false )
          return owner.getQualifiedName() + "." + getName();
       else
          return getName();
@@ -223,7 +206,6 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see java.lang.Comparable#compareTo(java.lang.Object)
     */
    public int compareTo(Object modelElement) {
@@ -232,21 +214,20 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getOwner()
     */
    public ModelElement getOwner() {
-      if (owner == null) {
+      if ( owner == null ) {
          ModelElementBase ownerBase = modelElement.getOwnerBase();
          if ( ownerBase == adaptedModel ) {
             owner = adaptedModel;
          }
          else {
             owner = adaptedModel.getModelElement(ownerBase);
-            
-//            if ( owner == null ) {
-//               logger.warn("Count not get owner of element "+getName());
-//            }
+
+            // if ( owner == null ) {
+            // logger.warn("Count not get owner of element "+getName());
+            // }
          }
       }
       return owner;
@@ -254,7 +235,6 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see net.sourceforge.umlmda.xmi.uml.ModelElementBase#getOwnerBase()
     */
    public ModelElementBase getOwnerBase() {
@@ -269,12 +249,12 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
    }
 
    public boolean equals(Object obj) {
-      if (obj instanceof ModelElement) {
+      if ( obj instanceof ModelElement ) {
          ModelElement modelElement = (ModelElement) obj;
 
          return getQualifiedName().equals(modelElement.getQualifiedName());
       }
-      else if (obj instanceof ModelElementBase) {
+      else if ( obj instanceof ModelElementBase ) {
          ModelElementBase modelElementBase = (ModelElementBase) obj;
          ModelElement modelElement = adaptedModel.getModelElement(modelElementBase);
 
@@ -290,15 +270,14 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see org.umlmda.model.uml.ModelElement#getDependency()
     */
    public Collection getDependencies() {
-      if (dependencies == null) {
+      if ( dependencies == null ) {
          dependencies = new ArrayList(modelElement.getDependencies().size());
-         for (Iterator id = modelElement.getDependencies().iterator(); id.hasNext();) {
+         for ( Iterator id = modelElement.getDependencies().iterator(); id.hasNext(); ) {
             ModelDependencyBase dependencyBase = (ModelDependencyBase) id.next();
-            
+
             dependencies.add(getModel().getModelDependency(dependencyBase));
          }
       }
@@ -307,11 +286,10 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see org.umlmda.model.uml.ModelElement#getBase()
     */
    public final ModelElementBase getBase() {
-      if (modelElement instanceof ModelElement)
+      if ( modelElement instanceof ModelElement )
          return ((ModelElement) modelElement).getBase();
       else
          return modelElement;
@@ -319,7 +297,6 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see org.umlmda.model.uml.ModelElementBase#getStereotypeProperty()
     */
    public String getStereotypeProperty(String name) {
@@ -328,7 +305,6 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
 
    /*
     * (non-Javadoc)
-    * 
     * @see org.umlmda.model.uml.ModelElementBase#getStereotypeProperty(java.lang.String)
     */
    public String getStereotypeProperty(String name, String defaultValue) {
@@ -341,35 +317,37 @@ public class ModelElementAdapter extends Observable implements ModelElement, Obs
     * @param supplierElement
     * @param model
     */
-   static public void addDependency(ModelElement clientElement, String dependencyStereotype, ModelElementBase supplierElement, Model model) {
+   static public void addDependency(ModelElement clientElement, String dependencyStereotype, ModelElementBase supplierElement,
+         Model model) {
       ModelDependencyImpl dependency = new ModelDependencyImpl(model, supplierElement);
-      
+
       dependency.getStereotypes().add(dependencyStereotype);
       dependency.getSuppliers().add(supplierElement);
       dependency.getClients().add(clientElement.getBase());
       supplierElement.getDependencies().add(dependency);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElementBase#getModelUId()
     */
    public final String getModelUId() {
       return modelElement.getModelUId();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#getConstraints()
     */
    public String getConstraints() {
       if ( constraints == null ) {
          constraints = modelElement.getConstraints();
-         
+
          if ( constraints == null ) {
             constraints = StringUtils.EMPTY;
          }
       }
-      return constraints; 
+      return constraints;
    }
-	   
-   
+
 }

@@ -1,11 +1,4 @@
-/*
- *   $Header$
- *   $Source$
- * $Revision$
- *     $Name$
- *     $Date$
- * 
- * This library is free software; you can redistribute it and/or
+/* This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
@@ -35,13 +28,11 @@ import org.umlmda.profile.ModelStereotype;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class StandardModelAttributeValidator extends AbstractModelAttributeValidator {
+public class StandardModelAttributeValidator extends AbstractModelAttributeValidator
+{
    final private boolean noTypesAllowed;
-   
+
    /**
     * 
     */
@@ -57,13 +48,15 @@ public class StandardModelAttributeValidator extends AbstractModelAttributeValid
       this.noTypesAllowed = noTypesAllowed;
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.generator.model.uml.validate.ModelElementValidator#validate(org.umlmda.generator.model.uml.GeneratorModelElement)
+   /*
+    * (non-Javadoc)
+    * @see
+    * org.umlmda.generator.model.uml.validate.ModelElementValidator#validate(org.umlmda.generator.model.uml.GeneratorModelElement)
     */
    public List validateAttribute(ModelAttribute modelAttribute) {
       List results = Collections.EMPTY_LIST;
       ModelClassifier classifier = modelAttribute.getModelClassifier();
-      
+
       results = validateTypeExistence(modelAttribute, results, classifier);
       results = validateTypeValidity(modelAttribute, results, classifier);
       return results;
@@ -71,6 +64,7 @@ public class StandardModelAttributeValidator extends AbstractModelAttributeValid
 
    /**
     * Checks if the attribute has a type
+    * 
     * @param modelAttribute
     * @param results
     * @param classifier
@@ -87,6 +81,7 @@ public class StandardModelAttributeValidator extends AbstractModelAttributeValid
 
    /**
     * Checks if the attribute has a type
+    * 
     * @param modelAttribute
     * @param results
     * @param classifier
@@ -101,6 +96,4 @@ public class StandardModelAttributeValidator extends AbstractModelAttributeValid
       return results;
    }
 
-   
-   
 }

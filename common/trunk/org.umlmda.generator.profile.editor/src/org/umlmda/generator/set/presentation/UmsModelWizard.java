@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmsModelWizard.java,v 1.4 2005/11/08 08:06:56 moroff Exp $
  */
 package org.umlmda.generator.set.presentation;
 

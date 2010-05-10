@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelClassifierImpl.java,v 1.1 2005/10/27 19:34:14 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelClassifierImpl.java,v $
-// $Revision: 1.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2005/10/27 19:34:14 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -30,29 +23,29 @@ import org.umlmda.model.uml.ModelClassifierBase;
 import ru.novosoft.uml.foundation.core.MClassifier;
 
 /**
- * primitive DataType of a UML model. This class wraps ru.novosoft.uml.foundation.core.MDataType to make
- * a more easy access.
- *  
+ * primitive DataType of a UML model. This class wraps ru.novosoft.uml.foundation.core.MDataType to make a more easy access.
+ * 
  * @author Dieter Moroff
  */
-public class ModelClassifierImpl extends ModelElementImpl implements ModelClassifierBase {
-	private final MClassifier modelClassifier;
-	
-	ModelClassifierImpl() {
-		super(null, null);
-		this.modelClassifier = null;
-	}
-	
-	public ModelClassifierImpl(ModelImpl model, MClassifier modelClassifier) {
-		super(model, modelClassifier);
-		this.modelClassifier = modelClassifier;	
-	}
-	
-	/**
-	 * @return the fully qualified name of the class
-	 */
-	public String getQualifiedName() {
+public class ModelClassifierImpl extends ModelElementImpl implements ModelClassifierBase
+{
+   private final MClassifier modelClassifier;
+
+   ModelClassifierImpl() {
+      super(null, null);
+      this.modelClassifier = null;
+   }
+
+   public ModelClassifierImpl(ModelImpl model, MClassifier modelClassifier) {
+      super(model, modelClassifier);
+      this.modelClassifier = modelClassifier;
+   }
+
+   /**
+    * @return the fully qualified name of the class
+    */
+   public String getQualifiedName() {
       return getName();
-	}
-   
+   }
+
 }

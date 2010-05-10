@@ -1,8 +1,5 @@
 /*
  * Created on 10.02.2006
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.model.uml.attributes;
 
@@ -10,19 +7,21 @@ import java.util.Observable;
 
 /**
  * Multiplicity for structural features.
+ * 
  * @author MOROFF (10.02.2006)
  * @see org.umlmda.model.uml.ModelStructuralFeature
  */
-public class Multiplicity extends Observable {
+public class Multiplicity extends Observable
+{
    /** Definition for a unbound (upper) range */
    public static final int UNBOUND = -1;
-   
+
    /** Lower range of the multiplicity **/
-   private int lower;
+   private int             lower;
 
    /** Upper range of the multiplicity **/
-   private int upper;
-   
+   private int             upper;
+
    /**
     *  
     */
@@ -38,27 +37,32 @@ public class Multiplicity extends Observable {
    public int getLower() {
       return lower;
    }
+
    /**
-    * @param lower The lower range of the multiplicity to set.
+    * @param lower
+    *           The lower range of the multiplicity to set.
     */
    public void setLower(int lower) {
       this.lower = lower;
       notifyObservers("lower");
    }
+
    /**
     * @return Returns the upper range of the multiplicity.
     */
    public int getUpper() {
       return upper;
    }
+
    /**
-    * @param upper The upper range of the multiplicity to set.
+    * @param upper
+    *           The upper range of the multiplicity to set.
     */
    public void setUpper(int upper) {
       this.upper = upper;
       notifyObservers("upper");
    }
-   
+
    /**
     * Returns if the upper range is unbounded
     */
@@ -68,12 +72,13 @@ public class Multiplicity extends Observable {
 
    /**
     * Returns if the upper range is multiple (>1) or unbounded
+    * 
     * @return
     */
    public boolean isMultiple() {
       return upper > 1 || isUnbound();
    }
-   
+
    public String toString() {
       if ( upper == 1 && lower == 1 ) {
          return "1";
@@ -94,19 +99,18 @@ public class Multiplicity extends Observable {
 
    @Override
    public boolean equals(Object obj) {
-      if (this == obj)
+      if ( this == obj )
          return true;
-      if (obj == null)
+      if ( obj == null )
          return false;
-      if (getClass() != obj.getClass())
+      if ( getClass() != obj.getClass() )
          return false;
       Multiplicity other = (Multiplicity) obj;
-      if (lower != other.lower)
+      if ( lower != other.lower )
          return false;
-      if (upper != other.upper)
+      if ( upper != other.upper )
          return false;
       return true;
    }
-   
-      
+
 }

@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelGeneralizationImpl.java,v 1.1 2006/08/09 10:40:25 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelGeneralizationImpl.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/08/09 10:40:25 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -31,12 +26,14 @@ import org.umlmda.model.uml.ModelGeneralizationBase;
 
 /**
  * Basic implementation of a generalization
+ * 
  * @author MOROFF
  */
-public class ModelGeneralizationImpl extends ModelElementImpl implements ModelGeneralizationBase {
+public class ModelGeneralizationImpl extends ModelElementImpl implements ModelGeneralizationBase
+{
    private ModelClassBase specific;
    private ModelClassBase general;
-   
+
    /**
     * @param model
     * @param owner
@@ -58,7 +55,8 @@ public class ModelGeneralizationImpl extends ModelElementImpl implements ModelGe
       this.general = source.getGeneralBase();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelGeneralizationBase#getSpecificBase()
     */
    public ModelClassBase getSpecificBase() {
@@ -68,8 +66,9 @@ public class ModelGeneralizationImpl extends ModelElementImpl implements ModelGe
    public void setSpecific(ModelClassBase specific) {
       this.specific = specific;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelGeneralizationBase#getGeneralBase()
     */
    public ModelClassBase getGeneralBase() {

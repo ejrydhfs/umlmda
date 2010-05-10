@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.oaw/src/org/umlmda/oaw/generator/model/j2ee/J2EEModelPackage.java,v 1.1 2006/08/09 11:49:59 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.oaw/src/org/umlmda/oaw/generator/model/j2ee/J2EEModelPackage.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/08/09 11:49:59 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,6 +21,7 @@ package org.umlmda.oaw.generator.model.j2ee;
 
 import org.umlmda.oaw.generator.model.java.JavaModelPackage;
 
-public interface J2EEModelPackage extends JavaModelPackage, org.umlmda.uml.generator.j2ee.J2EEModelPackage {
+public interface J2EEModelPackage extends JavaModelPackage, org.umlmda.uml.generator.j2ee.J2EEModelPackage
+{
 
 }

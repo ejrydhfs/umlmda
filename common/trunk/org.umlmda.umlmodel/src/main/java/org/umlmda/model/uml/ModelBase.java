@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelBase.java,v 1.3 2006/11/23 13:37:32 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelBase.java,v $
-// $Revision: 1.3 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/11/23 13:37:32 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -28,36 +21,38 @@ package org.umlmda.model.uml;
 
 import java.util.Collection;
 
-
 /**
- * interface for a model suitable for UMLMDA 
+ * interface for a model suitable for UMLMDA
+ * 
  * @author moroff
  */
-public interface ModelBase extends ModelElementBase {
-   public static final String PROPERTY_PACKAGES = "packages";
-   public static final String PROPERTY_CLASSES = "classes";
-   public static final String PROPERTY_DATATYPES = "datatypes";
-   
-	/**
-	 * @return a list of all packages in the model
-	 */
-   public abstract Collection getPackages();
-	/**
-	 * @return a list of all classes in the model
-	 */
-   public abstract Collection getClasses();
-	/**
-	 * @return a list of all primitive datatypes in the model
-	 */
-  public abstract Collection getDatatypes();
+public interface ModelBase extends ModelElementBase
+{
+   String PROPERTY_PACKAGES  = "packages";
+   String PROPERTY_CLASSES   = "classes";
+   String PROPERTY_DATATYPES = "datatypes";
 
-  /**
-   * Find a Class by its name
-   * 
-   * @param classname
-   * @return
-   */
-  public ModelClassBase findClassByName(String classname);
-  
-  
+   /**
+    * @return a list of all packages in the model
+    */
+   Collection getPackages();
+
+   /**
+    * @return a list of all classes in the model
+    */
+   Collection getClasses();
+
+   /**
+    * @return a list of all primitive datatypes in the model
+    */
+   Collection getDatatypes();
+
+   /**
+    * Find a Class by its name
+    * 
+    * @param classname
+    * @return
+    */
+   ModelClassBase findClassByName(String classname);
+
 }

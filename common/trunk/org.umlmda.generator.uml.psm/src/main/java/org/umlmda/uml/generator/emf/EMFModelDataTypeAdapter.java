@@ -16,28 +16,27 @@ import org.umlmda.uml.generator.webservices.WSModelDataTypeAdapter;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class EMFModelDataTypeAdapter extends WSModelDataTypeAdapter {
-   
-   private static Map typeMapping = new HashMap();
-   private static Map optionalTypeMapping = new HashMap();
+public class EMFModelDataTypeAdapter extends WSModelDataTypeAdapter
+{
+
+   private static Map                typeMapping         = new HashMap();
+   private static Map                optionalTypeMapping = new HashMap();
    private final TypeMappingStrategy typeMappingStrategy = new TypeMappingStrategy() {
 
-      public String getPSMType(ModelDataType dataType, boolean optional, boolean multivalue) {
-         String type;
-         if ( !multivalue) 
-            type = EMFModelDataTypeAdapter.super.getPSMType(optional, multivalue);
-         else
-            type = "org.eclipse.emf.common.util.EList";
+                                                            public String getPSMType(ModelDataType dataType, boolean optional,
+                                                                  boolean multivalue) {
+                                                               String type;
+                                                               if ( !multivalue )
+                                                                  type = EMFModelDataTypeAdapter.super.getPSMType(optional,
+                                                                        multivalue);
+                                                               else
+                                                                  type = "org.eclipse.emf.common.util.EList";
 
-         return type;
-      }
-      
-   };
-   
+                                                               return type;
+                                                            }
+
+                                                         };
 
    /**
     * @param modelDataType
@@ -46,13 +45,13 @@ public class EMFModelDataTypeAdapter extends WSModelDataTypeAdapter {
    public EMFModelDataTypeAdapter(ModelDataTypeBase modelDataType, Model model) {
       super(modelDataType, model);
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorDataType#getPSMType(boolean, boolean)
     */
    public String getPSMType(boolean optional, boolean multivalue) {
       return typeMappingStrategy.getPSMType(this, optional, multivalue);
    }
 
-   
 }

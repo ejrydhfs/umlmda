@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.oaw/src/org/umlmda/oaw/generator/model/j2ee/J2EEBusinessComponentAdapter.java,v 1.1 2006/10/23 09:45:17 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.oaw/src/org/umlmda/oaw/generator/model/j2ee/J2EEBusinessComponentAdapter.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/10/23 09:45:17 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -29,9 +24,9 @@ import org.umlmda.model.uml.ModelPackageBase;
 
 /**
  * @author MOROFF
- *
  */
-public class J2EEBusinessComponentAdapter extends J2EEModelPackageAdapter implements J2EEBusinessComponent {
+public class J2EEBusinessComponentAdapter extends J2EEModelPackageAdapter implements J2EEBusinessComponent
+{
 
    /**
     * @param modelPackage

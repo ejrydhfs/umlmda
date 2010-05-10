@@ -1,12 +1,5 @@
-//jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 //
-//$Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelStructuralFeatureAdapter.java,v 1.4 2006/11/18 11:57:57 moroff Exp $
-//$Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelStructuralFeatureAdapter.java,v $
-//$Revision: 1.4 $
-// $State: Exp $
-//  $Name:  $
-//  $Date: 2006/11/18 11:57:57 $
-//$Locker:  $
 //
 //This library is free software; you can redistribute it and/or
 //modify it under the terms of the GNU Library General Public
@@ -34,74 +27,75 @@ import org.umlmda.model.uml.ModelStructuralFeatureBase;
 import org.umlmda.model.uml.attributes.Multiplicity;
 import org.umlmda.profile.ModelStereotype;
 
-
 /**
- * platform independent adapter to MOF model structural feature.
- * extend for specific platform to override the following properties:
- * isDerived, owning class
- *
+ * platform independent adapter to MOF model structural feature. extend for specific platform to override the following
+ * properties: isDerived, owning class
+ * 
  * @author vpussel
- *
  */
-public abstract class ModelStructuralFeatureAdapter extends ModelElementAdapter
-		implements ModelStructuralFeature {
+public abstract class ModelStructuralFeatureAdapter extends ModelElementAdapter implements ModelStructuralFeature
+{
 
-	private final ModelStructuralFeatureBase modelStructuralFeature;
-	private ModelClass owningClass = null;
-	
-	public ModelStructuralFeatureAdapter(ModelStructuralFeatureBase modelStructuralFeature, Model model) {
-		super( modelStructuralFeature, model);
+   private final ModelStructuralFeatureBase modelStructuralFeature;
+   private ModelClass                       owningClass = null;
+
+   public ModelStructuralFeatureAdapter(ModelStructuralFeatureBase modelStructuralFeature, Model model) {
+      super(modelStructuralFeature, model);
       this.modelStructuralFeature = modelStructuralFeature;
-	}
+   }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelStructuralFeature#getOwningClass()
-	 */
-	public ModelClassBase getOwningClassBase() {
-		if (owningClass == null) {
-			owningClass = adaptedModel.getModelClass(modelStructuralFeature.getOwningClassBase());
-		}
-		return owningClass;
-	}
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelStructuralFeature#getOwningClass()
+    */
+   public ModelClassBase getOwningClassBase() {
+      if ( owningClass == null ) {
+         owningClass = adaptedModel.getModelClass(modelStructuralFeature.getOwningClassBase());
+      }
+      return owningClass;
+   }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelStructuralFeature#isDerived()
-	 */
-	public boolean isDerived() {
-		return modelStructuralFeature.isDerived();
-	}
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelStructuralFeature#isDerived()
+    */
+   public boolean isDerived() {
+      return modelStructuralFeature.isDerived();
+   }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelStructuralFeature#isDerived()
-	 */
-	public boolean isReadOnly() {
-		return modelStructuralFeature.isReadOnly();
-	}
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelStructuralFeature#isDerived()
+    */
+   public boolean isReadOnly() {
+      return modelStructuralFeature.isReadOnly();
+   }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#isOptional()
-	 */
-	public boolean isOptional() {
-		boolean result = getMultiplicity().getLower() == 0
-                      || hasStereotype(ModelStereotype.FEATURE_OPTIONAL) 
-                      || hasStereotype(ModelStereotype.FEATURE_OPTIONAL_MULTIVALUE);
-		return result;
-	}
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#isOptional()
+    */
+   public boolean isOptional() {
+      boolean result = getMultiplicity().getLower() == 0 || hasStereotype(ModelStereotype.FEATURE_OPTIONAL)
+            || hasStereotype(ModelStereotype.FEATURE_OPTIONAL_MULTIVALUE);
+      return result;
+   }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeature#isMultivalue()
     */
    public boolean isMultivalue() {
-      return getMultiplicity().isMultiple()
-          || hasStereotype(ModelStereotype.FEATURE_MULTIVALUE) 
-          || hasStereotype(ModelStereotype.FEATURE_OPTIONAL_MULTIVALUE);
+      return getMultiplicity().isMultiple() || hasStereotype(ModelStereotype.FEATURE_MULTIVALUE)
+            || hasStereotype(ModelStereotype.FEATURE_OPTIONAL_MULTIVALUE);
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeatureBase#getMultiplicity()
     */
    public Multiplicity getMultiplicity() {
       return modelStructuralFeature.getMultiplicity();
    }
-   
+
 }

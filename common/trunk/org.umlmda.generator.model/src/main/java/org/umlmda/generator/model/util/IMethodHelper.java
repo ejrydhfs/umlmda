@@ -1,13 +1,5 @@
-// jUMLMDA, GeneratorBase-API
+// UMLMDA, GeneratorBase-API
 //  
-//   $Header$
-//   $Source$
-// $Revision$
-//    $State$
-//     $Name$
-//     $Date$
-//   $Locker$
-//
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Library General Public
 // License as published by the Free Software Foundation; either
@@ -31,31 +23,15 @@ import org.umlmda.model.uml.ModelMethod;
 
 /**
  * Interface of the method helper classes
+ * 
  * @author moroff
  */
-public interface IMethodHelper {
-   public abstract String getMethodSignature(ModelMethod method);
-   
-   public IClassHelper getClassHelper();
+public interface IMethodHelper
+{
+   String getMethodSignature(ModelMethod method);
 
-   public void setClassHelper(IClassHelper helper);
+   IClassHelper getClassHelper();
+
+   void setClassHelper(IClassHelper helper);
 
 }
-
-//-------------------------------------------------------------------------
-//$Log$
-//Revision 1.1  2006/07/10 15:32:34  moroff
-//Refactoring base functionality to org.umlmda.generator.model
-//
-//Revision 1.2  2005/10/27 10:52:45  moroff
-//*** empty log message ***
-//
-//Revision 1.1  2005/10/26 13:03:37  moroff
-//* Refactoring package names to org.umlmda
-//* Generator configuration based on profiles and sets
-//
-//Revision 1.1  2004/10/06 19:33:14  moroff
-//* Target language specific signatures put in help-classes, delegating to these 
-//   classes inside the writer classes
-//
-//-------------------------------------------------------------------------

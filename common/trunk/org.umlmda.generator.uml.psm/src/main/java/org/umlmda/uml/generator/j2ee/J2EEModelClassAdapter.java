@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/j2ee/J2EEModelClassAdapter.java,v 1.2 2007/04/04 21:18:43 moroff Exp $
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)
@@ -39,13 +38,11 @@ import org.umlmda.uml.generator.java.JavaModelClassAdapter;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class J2EEModelClassAdapter extends JavaModelClassAdapter implements J2EEModelClass {
+public class J2EEModelClassAdapter extends JavaModelClassAdapter implements J2EEModelClass
+{
    private String jndiName = null;
-   
+
    /**
     * @param modelClassBase
     * @param model
@@ -54,7 +51,8 @@ public class J2EEModelClassAdapter extends JavaModelClassAdapter implements J2EE
       super(modelClassBase, model);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.j2ee.J2EEModelClass#getJndiName()
     */
    public String getJndiName() {
@@ -66,15 +64,16 @@ public class J2EEModelClassAdapter extends JavaModelClassAdapter implements J2EE
          String replacement = genModel.getJNDIReplacement();
          String jndiNameTemplate = genModel.getJNDIName();
 
-         if (jndiNameTemplate == null) {
+         if ( jndiNameTemplate == null ) {
             try {
                jndiName = StringUtil.regexReplacement(nameBase, pattern, replacement);
-            } catch (PatternNotMatchException e) {
+            }
+            catch (PatternNotMatchException e) {
                jndiName = nameBase;
             }
          }
          else {
-            // Prepare the model 
+            // Prepare the model
             Context model = new VelocityContext();
 
             model.put("genClass", this);
@@ -86,13 +85,14 @@ public class J2EEModelClassAdapter extends JavaModelClassAdapter implements J2EE
                engine.init(new Properties());
 
                StringWriter writer = new StringWriter();
-               if (engine.evaluate(model, writer, "JNDIName", jndiNameTemplate)) {
+               if ( engine.evaluate(model, writer, "JNDIName", jndiNameTemplate) ) {
                   jndiName = writer.toString();
                }
                else {
                   jndiName = "Check velocity template " + jndiNameTemplate;
                }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                throw new RuntimeException(e);
             }
 
@@ -101,18 +101,19 @@ public class J2EEModelClassAdapter extends JavaModelClassAdapter implements J2EE
       return jndiName;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.j2ee.J2EEModelClass#isStateful()
     */
    public boolean isStateful() {
       boolean stateful = Boolean.valueOf(getStereotypeProperty(ModelStereotype.PROPERTY_STATEFUL, "false")).booleanValue();
-      
-      if ( ! stateful && getSuperClass() != null ) {
-         return ((J2EEModelClass)getSuperClass()).isStateful();
+
+      if ( !stateful && getSuperClass() != null ) {
+         return ((J2EEModelClass) getSuperClass()).isStateful();
       }
       else {
          return stateful;
       }
    }
-   
+
 }

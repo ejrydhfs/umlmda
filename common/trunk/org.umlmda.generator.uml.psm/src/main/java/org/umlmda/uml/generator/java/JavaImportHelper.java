@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -31,11 +30,9 @@ import org.umlmda.generator.model.uml.GeneratorPackage;
 
 /**
  * @author moroff
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public interface JavaImportHelper {
+public interface JavaImportHelper
+{
 
    /**
     * 
@@ -44,16 +41,18 @@ public interface JavaImportHelper {
 
    /**
     * Register an artefact of the current model element (class or package) as import
+    * 
     * @param business_factory
     */
-   public void registerImport(String artefactName);
+   void registerImport(String artefactName);
 
-   public void registerImport(String artefactName, JavaModelClass genClass);
+   void registerImport(String artefactName, JavaModelClass genClass);
 
-   public void registerImport(String artefactName, JavaModelPackage genClass);
-   
+   void registerImport(String artefactName, JavaModelPackage genClass);
+
    /**
     * Register all classes in collection as import
+    * 
     * @param business_interface
     * @param classes
     */
@@ -61,6 +60,7 @@ public interface JavaImportHelper {
 
    /**
     * Register all classes in collection which have the given stereotype as import
+    * 
     * @param business_interface
     * @param classes
     */
@@ -77,7 +77,7 @@ public interface JavaImportHelper {
     * @return
     */
    String getScopedName(String artefactName);
-   
+
    /**
     * @param business_interface
     * @param genClass
@@ -91,6 +91,5 @@ public interface JavaImportHelper {
     * @return
     */
    String getScopedName(String artefactName, GeneratorPackage genPackage);
- 
-   
+
 }

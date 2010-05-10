@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/DefaultModelVisitor.java,v 1.3.2.1 2008/03/11 15:47:36 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/DefaultModelVisitor.java,v $
- * $Revision: 1.3.2.1 $
- *     $Name:  $
- *     $Date: 2008/03/11 15:47:36 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,15 +21,14 @@ package org.umlmda.model.uml;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * Default implementation of a model visitor, does nothing.
- * @author Dieter Moroff (13.04.2006), last change $Date: 2008/03/11 15:47:36 $ $Name:  $
- * @version $Revision: 1.3.2.1 $
+ * 
  */
-public class DefaultModelVisitor implements ModelVisitor {
+public class DefaultModelVisitor implements ModelVisitor
+{
    protected Logger logger = Logger.getLogger(getClass().getName());
-   
+
    /**
     * 
     */
@@ -51,92 +45,101 @@ public class DefaultModelVisitor implements ModelVisitor {
       logger = Logger.getLogger(getClass().getName());
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.Model)
     */
    public boolean visit(Model model) {
-      if ( logger.isDebugEnabled()) {
-         logger.debug("visiting model "+model.getQualifiedName());
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("visiting model " + model.getQualifiedName());
       }
       return true;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.ModelPackage)
     */
    public boolean visit(ModelPackage modelPackage) {
-      if ( logger.isDebugEnabled()) {
-         logger.debug("visiting modelPackage "+modelPackage.getQualifiedName());
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("visiting modelPackage " + modelPackage.getQualifiedName());
       }
       return true;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.ModelClass)
     */
    public boolean visit(ModelClass modelClass) {
-      if ( logger.isDebugEnabled()) {
-         logger.debug("visiting modelClass "+modelClass.getQualifiedName());
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("visiting modelClass " + modelClass.getQualifiedName());
       }
       return true;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.ModelAttribute)
     */
    public boolean visit(ModelAttribute attribute) {
-      if ( logger.isDebugEnabled()) {
-         logger.debug("visiting attribute "+attribute.getQualifiedName());
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("visiting attribute " + attribute.getQualifiedName());
       }
       return true;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.ModelAssociation)
     */
    public boolean visit(ModelAssociation association) {
-      if ( logger.isDebugEnabled()) {
-         logger.debug("visiting association "+association.getQualifiedName());
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("visiting association " + association.getQualifiedName());
       }
       return true;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.ModelMethod)
     */
    public boolean visit(ModelMethod method) {
-      if ( logger.isDebugEnabled()) {
-         logger.debug("visiting method "+method.getQualifiedName());
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("visiting method " + method.getQualifiedName());
       }
       return true;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.ModelParameter)
     */
    public boolean visit(ModelParameter parameter) {
-      if ( logger.isDebugEnabled()) {
-         logger.debug("visiting parameter "+parameter.getQualifiedName());
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("visiting parameter " + parameter.getQualifiedName());
       }
       return true;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.ModelDataType)
     */
    public boolean visit(ModelDataType dataType) {
-      if ( logger.isDebugEnabled()) {
-         logger.debug("visiting dataType "+dataType.getQualifiedName());
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("visiting dataType " + dataType.getQualifiedName());
       }
       return true;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.ModelDependency)
     */
    public boolean visit(ModelDependency dependency) {
-      if ( logger.isDebugEnabled()) {
-         logger.debug("visiting dependency "+dependency.getStereotypes());
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("visiting dependency " + dependency.getStereotypes());
       }
       return true;
    }

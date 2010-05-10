@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelMDR/src/org/umlmda/model/uml/mdr/ModelAttributeImpl.java,v 1.2 2006/02/15 19:44:02 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelMDR/src/org/umlmda/model/uml/mdr/ModelAttributeImpl.java,v $
-// $Revision: 1.2 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/02/15 19:44:02 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -44,7 +37,6 @@ import org.umlmda.model.uml.attributes.Multiplicity;
 /**
  * @author moroff
  *
- * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements ModelAttributeBase {

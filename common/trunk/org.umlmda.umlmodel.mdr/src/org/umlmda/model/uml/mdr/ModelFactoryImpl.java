@@ -2,7 +2,6 @@
  * Created on Nov 16, 2004
  *
  * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 package org.umlmda.model.uml.mdr;
 
@@ -41,8 +40,6 @@ import org.umlmda.model.uml.ModelFactory;
 /**
  * @author moroff
  *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class ModelFactoryImpl implements ModelFactory {
 

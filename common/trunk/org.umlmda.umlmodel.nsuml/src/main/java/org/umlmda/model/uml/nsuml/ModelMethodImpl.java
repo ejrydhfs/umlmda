@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelMethodImpl.java,v 1.2 2006/04/13 23:03:54 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelMethodImpl.java,v $
-// $Revision: 1.2 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/13 23:03:54 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -43,35 +36,36 @@ import ru.novosoft.uml.foundation.core.MParameter;
 /**
  * @author moroff
  */
-public class ModelMethodImpl extends ModelElementImpl implements ModelMethodBase {
-   private final MOperation method;
-   private List parameters;
-   private List exceptions;
+public class ModelMethodImpl extends ModelElementImpl implements ModelMethodBase
+{
+   private final MOperation    method;
+   private List                parameters;
+   private List                exceptions;
    private ModelClassifierBase returnType;
-      
+
    public ModelMethodImpl(ModelImpl model, MOperation method) {
       super(model, method);
       this.method = method;
    }
-   
+
    /**
     * @return
     */
    public List getParameters() {
       if ( parameters == null ) {
          parameters = new ArrayList(method.getParameters().size());
-                 
-         for (Iterator iter = method.getParameters().iterator(); iter.hasNext();) {
+
+         for ( Iterator iter = method.getParameters().iterator(); iter.hasNext(); ) {
             MParameter parameter = (MParameter) iter.next();
 
             if ( parameter.getName().equals("return") ) {
                if ( parameter.getType().getName().equals(ModelDataType.VOID) == false ) {
-                  returnType = model.findClassifier((MClassifier)parameter.getType());
+                  returnType = model.findClassifier((MClassifier) parameter.getType());
                }
             }
             else
                parameters.add(new ModelParameterImpl(model, parameter));
-         }                 
+         }
       }
       return parameters;
    }
@@ -79,15 +73,16 @@ public class ModelMethodImpl extends ModelElementImpl implements ModelMethodBase
    public List getExceptions() {
       if ( exceptions == null ) {
          exceptions = new ArrayList();
-         
-         for (Iterator iter = method.getRaisedSignals().iterator(); iter.hasNext();) {
+
+         for ( Iterator iter = method.getRaisedSignals().iterator(); iter.hasNext(); ) {
             MSignal signal = (MSignal) iter.next();
-            
+
             exceptions.add(model.findClassifier(signal));
          }
       }
       return exceptions;
    }
+
    /**
     * @return
     */
@@ -105,11 +100,12 @@ public class ModelMethodImpl extends ModelElementImpl implements ModelMethodBase
       return method.getName();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#getOwningClass()
     */
    public ModelClassBase getOwningClass() {
-      return model.findClass((MClass)method.getOwner());
+      return model.findClass((MClass) method.getOwner());
    }
-   
+
 }

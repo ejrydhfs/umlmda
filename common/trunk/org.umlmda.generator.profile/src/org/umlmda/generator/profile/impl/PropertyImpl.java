@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: PropertyImpl.java,v 1.3 2005/11/08 08:06:52 moroff Exp $
  */
 package org.umlmda.generator.profile.impl;
 
@@ -15,51 +14,47 @@ import org.umlmda.generator.profile.Property;
 import org.umlmda.generator.profile.UmpPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Property</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Property</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.umlmda.generator.profile.impl.PropertyImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.umlmda.generator.profile.impl.PropertyImpl#getValue <em>Value</em>}</li>
+ * <li>{@link org.umlmda.generator.profile.impl.PropertyImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.umlmda.generator.profile.impl.PropertyImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
-public class PropertyImpl extends EObjectImpl implements Property {
+public class PropertyImpl extends EObjectImpl implements Property
+{
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
-   public static final String copyright = "www.umlmda.org";
+   public static final String    copyright      = "www.umlmda.org";
 
    /**
-    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @see #getName()
     * @generated
     * @ordered
     */
-   protected static final String NAME_EDEFAULT = null;
+   protected static final String NAME_EDEFAULT  = null;
 
    /**
-    * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @see #getName()
     * @generated
     * @ordered
     */
-   protected String name = NAME_EDEFAULT;
+   protected String              name           = NAME_EDEFAULT;
 
    /**
-    * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * The default value of the '{@link #getValue() <em>Value</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @see #getValue()
     * @generated
     * @ordered
@@ -67,18 +62,17 @@ public class PropertyImpl extends EObjectImpl implements Property {
    protected static final String VALUE_EDEFAULT = null;
 
    /**
-    * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * The cached value of the '{@link #getValue() <em>Value</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @see #getValue()
     * @generated
     * @ordered
     */
-   protected String value = VALUE_EDEFAULT;
+   protected String              value          = VALUE_EDEFAULT;
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    protected PropertyImpl() {
@@ -86,8 +80,8 @@ public class PropertyImpl extends EObjectImpl implements Property {
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    protected EClass eStaticClass() {
@@ -95,8 +89,8 @@ public class PropertyImpl extends EObjectImpl implements Property {
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public String getName() {
@@ -104,20 +98,20 @@ public class PropertyImpl extends EObjectImpl implements Property {
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public void setName(String newName) {
       String oldName = name;
       name = newName;
-      if (eNotificationRequired())
+      if ( eNotificationRequired() )
          eNotify(new ENotificationImpl(this, Notification.SET, UmpPackage.PROPERTY__NAME, oldName, name));
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public String getValue() {
@@ -125,88 +119,89 @@ public class PropertyImpl extends EObjectImpl implements Property {
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public void setValue(String newValue) {
       String oldValue = value;
       value = newValue;
-      if (eNotificationRequired())
+      if ( eNotificationRequired() )
          eNotify(new ENotificationImpl(this, Notification.SET, UmpPackage.PROPERTY__VALUE, oldValue, value));
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public Object eGet(EStructuralFeature eFeature, boolean resolve) {
       switch (eDerivedStructuralFeatureID(eFeature)) {
-         case UmpPackage.PROPERTY__NAME:
-            return getName();
-         case UmpPackage.PROPERTY__VALUE:
-            return getValue();
+      case UmpPackage.PROPERTY__NAME:
+         return getName();
+      case UmpPackage.PROPERTY__VALUE:
+         return getValue();
       }
       return eDynamicGet(eFeature, resolve);
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public void eSet(EStructuralFeature eFeature, Object newValue) {
       switch (eDerivedStructuralFeatureID(eFeature)) {
-         case UmpPackage.PROPERTY__NAME:
-            setName((String)newValue);
-            return;
-         case UmpPackage.PROPERTY__VALUE:
-            setValue((String)newValue);
-            return;
+      case UmpPackage.PROPERTY__NAME:
+         setName((String) newValue);
+         return;
+      case UmpPackage.PROPERTY__VALUE:
+         setValue((String) newValue);
+         return;
       }
       eDynamicSet(eFeature, newValue);
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public void eUnset(EStructuralFeature eFeature) {
       switch (eDerivedStructuralFeatureID(eFeature)) {
-         case UmpPackage.PROPERTY__NAME:
-            setName(NAME_EDEFAULT);
-            return;
-         case UmpPackage.PROPERTY__VALUE:
-            setValue(VALUE_EDEFAULT);
-            return;
+      case UmpPackage.PROPERTY__NAME:
+         setName(NAME_EDEFAULT);
+         return;
+      case UmpPackage.PROPERTY__VALUE:
+         setValue(VALUE_EDEFAULT);
+         return;
       }
       eDynamicUnset(eFeature);
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public boolean eIsSet(EStructuralFeature eFeature) {
       switch (eDerivedStructuralFeatureID(eFeature)) {
-         case UmpPackage.PROPERTY__NAME:
-            return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-         case UmpPackage.PROPERTY__VALUE:
-            return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+      case UmpPackage.PROPERTY__NAME:
+         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case UmpPackage.PROPERTY__VALUE:
+         return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
       }
       return eDynamicIsSet(eFeature);
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public String toString() {
-      if (eIsProxy()) return super.toString();
+      if ( eIsProxy() )
+         return super.toString();
 
       StringBuffer result = new StringBuffer(super.toString());
       result.append(" (name: ");
@@ -217,4 +212,4 @@ public class PropertyImpl extends EObjectImpl implements Property {
       return result.toString();
    }
 
-} //PropertyImpl
+} // PropertyImpl

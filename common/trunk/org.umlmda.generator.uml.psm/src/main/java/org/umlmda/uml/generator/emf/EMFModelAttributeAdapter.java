@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFModelAttributeAdapter.java,v 1.2 2007/01/03 21:15:54 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFModelAttributeAdapter.java,v $
- * $Revision: 1.2 $
- *     $Name:  $
- *     $Date: 2007/01/03 21:15:54 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -34,9 +29,11 @@ import org.umlmda.uml.generator.webservices.WSModelAttributeAdapter;
 
 /**
  * PSM Adapter for generation emf code from model attributes.
+ * 
  * @author MOROFF
  */
-public class EMFModelAttributeAdapter extends WSModelAttributeAdapter implements EMFAnnotationHolder {
+public class EMFModelAttributeAdapter extends WSModelAttributeAdapter implements EMFAnnotationHolder
+{
 
    /**
     * @param modelAttribute
@@ -46,22 +43,23 @@ public class EMFModelAttributeAdapter extends WSModelAttributeAdapter implements
       super(modelAttribute, model);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.emf.EMFAnnotationHolder#getAnnotaion()
     */
    public String getEmfAnnotation() {
       StringBuffer buffer = new StringBuffer();
       JavaModelClassifier classifier = (JavaModelClassifier) getModelClassifier();
-      
+
       buffer.append("@model");
       if ( StringUtils.isNotEmpty(getInitialValue()) ) {
-         buffer.append(" default=\""+getInitialValue()+"\"");
+         buffer.append(" default=\"" + getInitialValue() + "\"");
       }
       if ( hasStereotype(ModelStereotype.ATTRIBUTE_PKEY) ) {
          buffer.append(" id=\"true\"");
       }
       if ( isMultivalue() ) {
-         buffer.append(" type=\""+classifier.getJavaType()+"\" ordered=\"true\"");
+         buffer.append(" type=\"" + classifier.getJavaType() + "\" ordered=\"true\"");
       }
       if ( isOptional() == false ) {
          buffer.append(" required=\"true\"");
@@ -72,7 +70,7 @@ public class EMFModelAttributeAdapter extends WSModelAttributeAdapter implements
       if ( isDerived() ) {
          buffer.append(" transient=\"true\"");
       }
-      
+
       return buffer.toString();
    }
 

@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelParameterImpl.java,v 1.1.2.1 2006/11/20 10:47:08 moroff Exp $
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)
@@ -32,10 +31,11 @@ import org.umlmda.model.uml.ModelParameterBase;
 /**
  * @author Dieter Moroff
  */
-public class ModelParameterImpl extends ModelElementImpl implements ModelParameterBase {
-   private final Parameter modelParameter;
+public class ModelParameterImpl extends ModelElementImpl implements ModelParameterBase
+{
+   private final Parameter     modelParameter;
    private ModelClassifierBase modelClassifier = null;
-   
+
    /**
     * @param modelElement
     */
@@ -46,20 +46,21 @@ public class ModelParameterImpl extends ModelElementImpl implements ModelParamet
 
    /**
     * Returns the parameters direction <code></code>
+    * 
     * @return
     */
    public String getDirection() {
-      if ( modelParameter.getDirection().getValue() == ParameterDirectionKind.IN  )
+      if ( modelParameter.getDirection().getValue() == ParameterDirectionKind.IN )
          return IN;
-      else if ( modelParameter.getDirection().getValue() == ParameterDirectionKind.OUT  )
+      else if ( modelParameter.getDirection().getValue() == ParameterDirectionKind.OUT )
          return OUT;
       else
          return IN_OUT;
    }
-   
+
    public ModelClassifierBase getTypeBase() {
       if ( modelClassifier == null ) {
-         modelClassifier = model.findClassifier((Classifier)modelParameter.getType());      
+         modelClassifier = model.findClassifier((Classifier) modelParameter.getType());
       }
       return modelClassifier;
    }

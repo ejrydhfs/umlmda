@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -30,11 +29,13 @@ import org.umlmda.model.uml.ModelParameter;
 
 /**
  * Shows an method in uml signature
+ * 
  * @author MOROFF
  */
-public class DefaultMethodHelper implements IMethodHelper {
+public class DefaultMethodHelper implements IMethodHelper
+{
    IClassHelper classHelper;
-   
+
    /**
     * 
     */
@@ -42,17 +43,18 @@ public class DefaultMethodHelper implements IMethodHelper {
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.generator.IMethodHelper#getMethodSignature(org.umlmda.model.uml.ModelMethod)
     */
    public String getMethodSignature(ModelMethod method) {
       StringBuffer buffer = new StringBuffer();
-      
+
       if ( method.getStereotypes().size() > 0 ) {
          buffer.append("<<");
-         for (Iterator is = method.getStereotypes().iterator(); is.hasNext();) {
+         for ( Iterator is = method.getStereotypes().iterator(); is.hasNext(); ) {
             String stereotype = (String) is.next();
-            
+
             buffer.append(stereotype);
             if ( is.hasNext() ) {
                buffer.append(", ");
@@ -62,9 +64,9 @@ public class DefaultMethodHelper implements IMethodHelper {
       }
       buffer.append(method.getName());
       buffer.append("(");
-      for (Iterator ip = method.getParameters().iterator(); ip.hasNext();) {
+      for ( Iterator ip = method.getParameters().iterator(); ip.hasNext(); ) {
          ModelParameter parameter = (ModelParameter) ip.next();
-         
+
          buffer.append(parameter.getName());
          buffer.append(" : ");
          buffer.append(classHelper.getType(parameter.getType()));
@@ -80,14 +82,16 @@ public class DefaultMethodHelper implements IMethodHelper {
       return null;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.generator.IMethodHelper#getClassHelper()
     */
    public IClassHelper getClassHelper() {
       return classHelper;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.generator.IMethodHelper#setClassHelper(net.sourceforge.umlmda.generator.IClassHelper)
     */
    public void setClassHelper(IClassHelper classHelper) {

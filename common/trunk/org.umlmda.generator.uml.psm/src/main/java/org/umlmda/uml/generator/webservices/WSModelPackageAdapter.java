@@ -1,10 +1,5 @@
 /* UMLMDA, UMLModel-API
  *
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSModelPackageAdapter.java,v 1.3 2007/01/16 21:12:09 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSModelPackageAdapter.java,v $
- * $Revision: 1.3 $
- *     $Name:  $
- *     $Date: 2007/01/16 21:12:09 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -50,27 +45,28 @@ import org.umlmda.uml.generator.java.JavaModelPackageAdapter;
  * 
  * @author Dieter Moroff
  */
-public class WSModelPackageAdapter extends JavaModelPackageAdapter implements WSModelPackage {
+public class WSModelPackageAdapter extends JavaModelPackageAdapter implements WSModelPackage
+{
 
-   private boolean isWsPackage = false;
-   
-   private String packagePrefix = null;
+   private boolean               isWsPackage     = false;
 
-   private String namespacePrefix = null;
+   private String                packagePrefix   = null;
 
-   private List classes = null;
+   private String                namespacePrefix = null;
 
-   private WSModelPackageAdapter wsPackage = null;
-   
+   private List                  classes         = null;
+
+   private WSModelPackageAdapter wsPackage       = null;
+
    public WSModelPackageAdapter(ModelPackageBase modelPackage, Model model) {
       super(modelPackage, model);
    }
 
    /**
-    * @return the reverse java package qualifier for the web service namespace 
+    * @return the reverse java package qualifier for the web service namespace
     */
    public String getWSPackagePrefix() {
-      if (packagePrefix == null) {
+      if ( packagePrefix == null ) {
          String namespace = getTaggedValues().getProperty(ModelTaggedValues.WSNAMESPACE, null);
 
          // transform a namespace URI into a java package
@@ -78,57 +74,60 @@ public class WSModelPackageAdapter extends JavaModelPackageAdapter implements WS
             URI uri = new URI(namespace);
             String host[] = uri.getHost().split("\\.");
             StringBuffer buffer = new StringBuffer();
-            for (int ii = host.length - 1; ii >= 0; --ii) {
+            for ( int ii = host.length - 1; ii >= 0; --ii ) {
                buffer.append(host[ii]);
                buffer.append(".");
             }
 
             String path[] = uri.getPath().split("/");
-            for (int ii = 1; ii < path.length - 1; ++ii) {
+            for ( int ii = 1; ii < path.length - 1; ++ii ) {
                buffer.append(path[ii]);
                buffer.append(".");
             }
             buffer.append(path[path.length - 1]);
             packagePrefix = buffer.toString();
-         } catch (URISyntaxException ex) {
+         }
+         catch (URISyntaxException ex) {
             throw new RuntimeException(ex.getMessage());
          }
       }
       return packagePrefix;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelPackage#getNamespace()
     */
    public String getNamespace() {
       String nameSpace = getTaggedValues().getProperty(ModelTaggedValues.WSNAMESPACE);
 
-      if (nameSpace != null)
+      if ( nameSpace != null )
          return nameSpace;
       else {
          StringBuffer buffer = new StringBuffer("http://");
          ModelPackage modelPackage2 = this;
-         while (modelPackage2 != null) {
+         while ( modelPackage2 != null ) {
             buffer.append(modelPackage2.getQualifiedName());
             modelPackage2 = modelPackage2.getPackage();
-            if (modelPackage2 != null)
+            if ( modelPackage2 != null )
                buffer.append(".");
          }
          return buffer.toString();
       }
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelPackage#getNamespacePrefix()
     */
    public String getNamespacePrefix(WSModelPackage basePackage) {
       boolean useNamespace = Boolean.valueOf(getGeneratorModel().getProperties().getProperty("UseNamespace", "true"))
             .booleanValue();
 
-      if (useNamespace) {
+      if ( useNamespace ) {
          String prefix = getTaggedValues().getProperty(ModelTaggedValues.WSNAMESPACE_PREFIX, null);
 
-         if (prefix != null) {
+         if ( prefix != null ) {
             this.namespacePrefix = prefix;
          }
          else {
@@ -156,7 +155,8 @@ public class WSModelPackageAdapter extends JavaModelPackageAdapter implements WS
    }
 
    /**
-    * @param namespacePrefix The namespacePrefix to set.
+    * @param namespacePrefix
+    *           The namespacePrefix to set.
     */
    public void setNamespacePrefix(String namespacePrefix) {
       this.namespacePrefix = namespacePrefix;
@@ -171,24 +171,24 @@ public class WSModelPackageAdapter extends JavaModelPackageAdapter implements WS
             String name = getReplacedName();
             String qualifiedName = getReplacedQualifiedName();
             ModelPackageBase parent = (ModelPackageBase) getOrCreateParent(qualifiedName).getBase();
-            
+
             wsPackage = (WSModelPackageAdapter) getModel().find(qualifiedName);
             if ( wsPackage == null ) {
                ModelPackageImpl wsPackageImpl = new ModelPackageImpl(getModelBase(), parent);
-               
+
                wsPackageImpl.setName(name);
                wsPackageImpl.getStereotypes().add(WSStereotypes.WEB_SERVICE_COMPONENT);
-               wsPackage = (WSModelPackageAdapter)getModel().getModelPackage(wsPackageImpl);
+               wsPackage = (WSModelPackageAdapter) getModel().getModelPackage(wsPackageImpl);
                wsPackage.isWsPackage = true;
                wsPackageImpl.getTaggedValues().putAll(getTaggedValues());
-               
+
                // Dependency to the PIM package
                ModelDependencyImpl dependency = new ModelDependencyImpl(getModel(), wsPackageImpl);
                dependency.getStereotypes().add("PIMPackage");
                dependency.getSuppliers().add(wsPackageImpl);
                dependency.getClients().add(getBase());
                wsPackageImpl.getDependencies().add(dependency);
-               
+
                getModel().getPackages().add(wsPackage);
             }
             else {
@@ -200,7 +200,7 @@ public class WSModelPackageAdapter extends JavaModelPackageAdapter implements WS
          return wsPackage;
       }
    }
- 
+
    /**
     * @param qualifiedName
     * @return
@@ -212,27 +212,27 @@ public class WSModelPackageAdapter extends JavaModelPackageAdapter implements WS
       String qualifiedParentName = "";
       StringTokenizer parseQualifiedName = new StringTokenizer(qualifiedName, ".");
       int count = parseQualifiedName.countTokens();
-      
-      for ( int i=0; i<count-1; ++i) {
+
+      for ( int i = 0; i < count - 1; ++i ) {
          String name = parseQualifiedName.nextToken();
 
-         if ( StringUtils.isNotEmpty(qualifiedParentName)) {
+         if ( StringUtils.isNotEmpty(qualifiedParentName) ) {
             qualifiedParentName = qualifiedParentName + "." + name;
          }
          else {
             qualifiedParentName = name;
          }
-         
+
          parent = (ModelPackage) getModel().find(qualifiedParentName);
          if ( parent == null ) {
             parentBase = parentImpl = new ModelPackageImpl(getModelBase(), parentBase);
-         
+
             parentImpl.setName(name);
             parent = getModel().getModelPackage(parentImpl);
             getModel().getPackages().add(parent);
          }
          else {
-            if (parent.getBase() instanceof ModelPackageBase) {
+            if ( parent.getBase() instanceof ModelPackageBase ) {
                parentBase = (ModelPackageBase) parent.getBase();
             }
             else
@@ -255,22 +255,22 @@ public class WSModelPackageAdapter extends JavaModelPackageAdapter implements WS
     * @return
     */
    protected String getReplacedName() {
-      String name = "ws"; //TODO use property or artefact
+      String name = "ws"; // TODO use property or artefact
       return name;
    }
 
    public JavaModelPackage getPIMPackage() {
       if ( isWsPackage ) {
          JavaModelPackage pimPackage = null;
-         
-         for (Iterator id = getDependencies().iterator(); id.hasNext();) {
+
+         for ( Iterator id = getDependencies().iterator(); id.hasNext(); ) {
             ModelDependency dependency = (ModelDependency) id.next();
-            
+
             if ( dependency.hasStereotype("PIMPackage") ) {
-               pimPackage = (JavaModelPackage)dependency.getClients().iterator().next();
+               pimPackage = (JavaModelPackage) dependency.getClients().iterator().next();
             }
          }
-         
+
          if ( pimPackage == null ) {
             throw new RuntimeException("Model is not constistence");
          }

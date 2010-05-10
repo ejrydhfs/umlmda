@@ -9,10 +9,11 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Namespace;
 import org.eclipse.uml2.uml.Type;
 
-public class TypeMapper {
+public class TypeMapper
+{
    private static Map<String, Namespace> namespaceMap = new HashMap<String, Namespace>();
 
-   private static Logger logger = Logger.getLogger(TypeMapper.class);
+   private static Logger                 logger       = Logger.getLogger(TypeMapper.class);
 
    public static void registerNamespace(Namespace namespace, String sourcePrefix) {
       namespaceMap.put(sourcePrefix, namespace);
@@ -23,10 +24,10 @@ public class TypeMapper {
       String qualifiedTypeName = type.getQualifiedName();
       String sourcePrefix = qualifiedTypeName.substring(0, qualifiedTypeName.lastIndexOf("::"));
       Namespace destNamespace = namespaceMap.get(sourcePrefix);
-      if (destNamespace != null) {
+      if ( destNamespace != null ) {
          EList<Element> allOwnedElements = destNamespace.allOwnedElements();
-         for (Element element : allOwnedElements) {
-            if (element instanceof Type && ((Type) element).getName().equals(type.getName())) {
+         for ( Element element : allOwnedElements ) {
+            if ( element instanceof Type && ((Type) element).getName().equals(type.getName()) ) {
                Type mappedType = (Type) element;
 
                logger.debug(type.getQualifiedName() + " mapped to " + mappedType.getQualifiedName());

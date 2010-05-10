@@ -2,83 +2,79 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Property.java,v 1.3 2005/11/08 08:06:52 moroff Exp $
  */
 package org.umlmda.generator.profile;
 
-
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Property</b></em>'.
- * <!-- end-user-doc -->
- *
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Property</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.umlmda.generator.profile.Property#getName <em>Name</em>}</li>
- *   <li>{@link org.umlmda.generator.profile.Property#getValue <em>Value</em>}</li>
+ * <li>{@link org.umlmda.generator.profile.Property#getName <em>Name</em>}</li>
+ * <li>{@link org.umlmda.generator.profile.Property#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.umlmda.generator.profile.UmpPackage#getProperty()
- * @model 
+ * @model
  * @generated
  */
-public interface Property {
+public interface Property
+{
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    String copyright = "www.umlmda.org";
 
    /**
-    * Returns the value of the '<em><b>Name</b></em>' attribute.
-    * <!-- begin-user-doc -->
+    * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
     * <p>
-    * If the meaning of the '<em>Name</em>' attribute isn't clear,
-    * there really should be more of a description here...
+    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
     * </p>
     * <!-- end-user-doc -->
+    * 
     * @return the value of the '<em>Name</em>' attribute.
     * @see #setName(String)
     * @see org.umlmda.generator.profile.UmpPackage#getProperty_Name()
-    * @model 
+    * @model
     * @generated
     */
    String getName();
 
    /**
-    * Sets the value of the '{@link org.umlmda.generator.profile.Property#getName <em>Name</em>}' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @param value the new value of the '<em>Name</em>' attribute.
+    * Sets the value of the '{@link org.umlmda.generator.profile.Property#getName <em>Name</em>}' attribute. <!-- begin-user-doc
+    * --> <!-- end-user-doc -->
+    * 
+    * @param value
+    *           the new value of the '<em>Name</em>' attribute.
     * @see #getName()
     * @generated
     */
    void setName(String value);
 
    /**
-    * Returns the value of the '<em><b>Value</b></em>' attribute.
-    * <!-- begin-user-doc -->
+    * Returns the value of the '<em><b>Value</b></em>' attribute. <!-- begin-user-doc -->
     * <p>
-    * If the meaning of the '<em>Value</em>' attribute isn't clear,
-    * there really should be more of a description here...
+    * If the meaning of the '<em>Value</em>' attribute isn't clear, there really should be more of a description here...
     * </p>
     * <!-- end-user-doc -->
+    * 
     * @return the value of the '<em>Value</em>' attribute.
     * @see #setValue(String)
     * @see org.umlmda.generator.profile.UmpPackage#getProperty_Value()
-    * @model 
+    * @model
     * @generated
     */
    String getValue();
 
    /**
-    * Sets the value of the '{@link org.umlmda.generator.profile.Property#getValue <em>Value</em>}' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @param value the new value of the '<em>Value</em>' attribute.
+    * Sets the value of the '{@link org.umlmda.generator.profile.Property#getValue <em>Value</em>}' attribute. <!-- begin-user-doc
+    * --> <!-- end-user-doc -->
+    * 
+    * @param value
+    *           the new value of the '<em>Value</em>' attribute.
     * @see #getValue()
     * @generated
     */

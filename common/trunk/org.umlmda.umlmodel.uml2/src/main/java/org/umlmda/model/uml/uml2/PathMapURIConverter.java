@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 //
-//   $Header: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/PathMapURIConverter.java,v 1.1.4.1 2008/03/11 15:51:25 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/PathMapURIConverter.java,v $
-// $Revision: 1.1.4.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2008/03/11 15:51:25 $
-//   $Locker:  $
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Library General Public

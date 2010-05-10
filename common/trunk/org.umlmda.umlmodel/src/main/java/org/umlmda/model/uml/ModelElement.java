@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelElement.java,v 1.5 2006/02/15 19:42:27 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelElement.java,v $
-// $Revision: 1.5 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/02/15 19:42:27 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -26,51 +19,51 @@
 //  Created on Nov 9, 2004
 package org.umlmda.model.uml;
 
-
-
 /**
  * @author moroff
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public interface ModelElement extends ModelElementBase, Comparable {
+public interface ModelElement extends ModelElementBase, Comparable
+{
    /**
     * Returns the base element
+    * 
     * @param stereotype
     */
-   public ModelElementBase getBase();
-   
+   ModelElementBase getBase();
+
    /**
     * Removes a stereotype from the adapter model
+    * 
     * @return
     */
-   public abstract void removeStereotype(String stereotype);
+   void removeStereotype(String stereotype);
+
    /**
     * @return
-    * @deprecated Used getStereotypes() or hasStereotype() since UML2 allows more than
-    * one stereotype
+    * @deprecated Used getStereotypes() or hasStereotype() since UML2 allows more than one stereotype
     */
-   public abstract String getStereotype();
+   String getStereotype();
+
    /**
-    * Checks whether the modelelement has a stereotype with the given 
-    * name
+    * Checks whether the modelelement has a stereotype with the given name
     */
-   public abstract boolean hasStereotype(String string);
+   boolean hasStereotype(String string);
+
    /**
     * Returns the full qualified name of the model element
     */
-   public abstract String getQualifiedName();
+   String getQualifiedName();
+
    /**
-    * Returns the Owner of the modelelement or null if owner is 
-    * the model.
+    * Returns the Owner of the modelelement or null if owner is the model.
     */
-   public abstract ModelElement getOwner();
+   ModelElement getOwner();
+
    /**
     * Returns the model containing this element
     * 
     * @deprecated introduces hard to find inconsistencies. Model should be supplied by caller where needed
     */
-   public abstract Model getModel();
-   
+   Model getModel();
+
 }

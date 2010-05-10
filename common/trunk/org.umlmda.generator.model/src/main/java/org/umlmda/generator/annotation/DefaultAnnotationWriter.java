@@ -1,8 +1,5 @@
 /*
  * Created on 28.11.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.generator.annotation;
 
@@ -15,13 +12,11 @@ import org.umlmda.generator.model.uml.GeneratorModelElement;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class DefaultAnnotationWriter implements AnnotationWriter {
+public class DefaultAnnotationWriter implements AnnotationWriter
+{
    static private DefaultAnnotationWriter instance = new DefaultAnnotationWriter();
-   
+
    /**
     * 
     */
@@ -35,50 +30,57 @@ public class DefaultAnnotationWriter implements AnnotationWriter {
    public static DefaultAnnotationWriter getInstance() {
       return instance;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.annotation.AnnotationWriter#getAnnotation(org.umlmda.generator.model.uml.GeneratorClass)
     */
    public String getAnnotation(GeneratorClass genClass) {
       return StringUtils.EMPTY;
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.generator.annotation.AnnotationWriter#getAnnotation(org.umlmda.generator.model.uml.GeneratorAttribute, java.lang.String)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.generator.annotation.AnnotationWriter#getAnnotation(org.umlmda.generator.model.uml.GeneratorAttribute,
+    * java.lang.String)
     */
    public String getAnnotation(GeneratorAttribute genAttribute, String context) {
       return StringUtils.EMPTY;
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.generator.annotation.AnnotationWriter#getAnnotation(org.umlmda.generator.model.uml.GeneratorAssociation, java.lang.String)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.generator.annotation.AnnotationWriter#getAnnotation(org.umlmda.generator.model.uml.GeneratorAssociation,
+    * java.lang.String)
     */
    public String getAnnotation(GeneratorAssociation genAssociation, String context) {
       return StringUtils.EMPTY;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.annotation.AnnotationWriter#getAnnotation(org.umlmda.generator.model.uml.GeneratorMethod)
     */
    public String getAnnotation(GeneratorMethod genMethod) {
       return StringUtils.EMPTY;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.annotation.AnnotationWriter#getAnnotation(org.umlmda.generator.model.uml.GeneratorModelElement)
     */
    public final String getAnnotation(GeneratorModelElement genElement, String context) {
       if ( genElement instanceof GeneratorClass ) {
-         return getAnnotation((GeneratorClass)genElement);
+         return getAnnotation((GeneratorClass) genElement);
       }
       else if ( genElement instanceof GeneratorAssociation ) {
-         return getAnnotation((GeneratorAssociation)genElement, context);
+         return getAnnotation((GeneratorAssociation) genElement, context);
       }
       else if ( genElement instanceof GeneratorAttribute ) {
-         return getAnnotation((GeneratorAttribute)genElement, context);
+         return getAnnotation((GeneratorAttribute) genElement, context);
       }
       else if ( genElement instanceof GeneratorMethod ) {
-         return getAnnotation((GeneratorMethod)genElement);
+         return getAnnotation((GeneratorMethod) genElement);
       }
       else {
          return StringUtils.EMPTY;

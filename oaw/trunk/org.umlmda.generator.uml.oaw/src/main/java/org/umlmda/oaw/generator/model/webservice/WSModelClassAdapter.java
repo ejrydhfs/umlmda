@@ -12,10 +12,9 @@ import org.umlmda.uml.generator.webservices.WSModelMethod;
 
 /**
  * @author MOROFF
- * 
  */
-public class WSModelClassAdapter extends org.umlmda.uml.generator.webservices.WSModelClassAdapter implements
-      WSModelClass {
+public class WSModelClassAdapter extends org.umlmda.uml.generator.webservices.WSModelClassAdapter implements WSModelClass
+{
 
    /**
     * @param modelClassBase

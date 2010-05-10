@@ -8,9 +8,9 @@ import org.umlmda.model.uml.ModelClassBase;
 
 /**
  * @author MOROFF
- *
  */
-public class JavaBusinessObjectAdapter extends JavaModelClassAdapter implements JavaBusinessObject {
+public class JavaBusinessObjectAdapter extends JavaModelClassAdapter implements JavaBusinessObject
+{
 
    /**
     * @param modelClassBase

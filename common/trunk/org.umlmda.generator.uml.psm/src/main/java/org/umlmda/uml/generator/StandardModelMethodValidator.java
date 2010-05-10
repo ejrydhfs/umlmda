@@ -1,11 +1,4 @@
-/*
- *   $Header$
- *   $Source$
- * $Revision$
- *     $Name$
- *     $Date$
- * 
- * This library is free software; you can redistribute it and/or
+/* This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
@@ -37,10 +30,11 @@ import org.umlmda.profile.ModelStereotype;
 
 /**
  * TODO Insert type javadoc
- * @author Dieter Moroff (02.05.2006), last change $Date$ $Name$
- * @version $Revision$
+ * 
+ * @author Dieter Moroff (02.05.2006)
  */
-public class StandardModelMethodValidator extends AbstractModelMethodValidator {
+public class StandardModelMethodValidator extends AbstractModelMethodValidator
+{
 
    /**
     * 
@@ -49,12 +43,13 @@ public class StandardModelMethodValidator extends AbstractModelMethodValidator {
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.validate.AbstractModelMethodValidator#validateMethod(org.umlmda.model.uml.ModelMethod)
     */
    protected List validateMethod(ModelMethod method) {
       List results = Collections.EMPTY_LIST;
-      
+
       results = validateReturnType(method, method.getReturnType(), results);
       results = validateExceptions(method, method.getExceptions(), results);
       return results;
@@ -62,6 +57,7 @@ public class StandardModelMethodValidator extends AbstractModelMethodValidator {
 
    /**
     * Checks if the attribute has a type
+    * 
     * @param modelAttribute
     * @param results
     * @param classifier
@@ -83,17 +79,16 @@ public class StandardModelMethodValidator extends AbstractModelMethodValidator {
     * @return
     */
    protected List validateExceptions(ModelMethod method, List exceptions, List results) {
-      for (Iterator ie = exceptions.iterator(); ie.hasNext();) {
+      for ( Iterator ie = exceptions.iterator(); ie.hasNext(); ) {
          ModelClass exception = (ModelClass) ie.next();
-         
-         if ( exception.hasStereotype(ModelStereotype.BUSINESS_EXCEPTION) == false 
-           && exception.hasStereotype(ModelStereotype.NATIVE_CLASS) == false ) {
-            return addResult(method, results, "Exception classes, must contain stereotype <<"+ModelStereotype.BUSINESS_EXCEPTION
-                  +">> or <<"+ModelStereotype.NATIVE_CLASS+">>");
+
+         if ( exception.hasStereotype(ModelStereotype.BUSINESS_EXCEPTION) == false
+               && exception.hasStereotype(ModelStereotype.NATIVE_CLASS) == false ) {
+            return addResult(method, results, "Exception classes, must contain stereotype <<"
+                  + ModelStereotype.BUSINESS_EXCEPTION + ">> or <<" + ModelStereotype.NATIVE_CLASS + ">>");
          }
       }
       return results;
    }
 
-   
 }

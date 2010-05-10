@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelClassifierAdapter.java,v 1.1 2005/10/27 19:10:37 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelClassifierAdapter.java,v $
-// $Revision: 1.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2005/10/27 19:10:37 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -31,24 +24,22 @@ import org.umlmda.model.uml.ModelClassifier;
 import org.umlmda.model.uml.ModelClassifierBase;
 
 /**
- * platform independent adapter to MOF model classifier.
- * extend for specific platform to override the following properties:
+ * platform independent adapter to MOF model classifier. extend for specific platform to override the following properties:
  * qualified name
- *
+ * 
  * @author vpussel
- *
  */
-public abstract class ModelClassifierAdapter extends ModelElementAdapter implements
-		ModelClassifier {
+public abstract class ModelClassifierAdapter extends ModelElementAdapter implements ModelClassifier
+{
 
-	private final ModelClassifierBase modelClassifier;
+   private final ModelClassifierBase modelClassifier;
 
-	/**
-     * create adapter from model classifier
-	 */
-	public ModelClassifierAdapter(ModelClassifierBase modelClassifier, Model model) {
-		super(modelClassifier, model);
-		this.modelClassifier = modelClassifier;
-	}
+   /**
+    * create adapter from model classifier
+    */
+   public ModelClassifierAdapter(ModelClassifierBase modelClassifier, Model model) {
+      super(modelClassifier, model);
+      this.modelClassifier = modelClassifier;
+   }
 
 }

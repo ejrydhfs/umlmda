@@ -4,7 +4,8 @@ import org.umlmda.generator.model.uml.GeneratorModel;
 import org.umlmda.generator.model.uml.GeneratorModelElement;
 
 /**
- * Utility and convenience methods for {@link GeneratorModelElement} and other classes of the scope <i>org.umlmda.generator.model.uml</i>.
+ * Utility and convenience methods for {@link GeneratorModelElement} and other classes of the scope
+ * <i>org.umlmda.generator.model.uml</i>.
  */
 public class GeneratorModelElementUtils
 {

@@ -8,11 +8,11 @@ import org.umlmda.model.uml.ModelClassBase;
 
 /**
  * @author MOROFF
- *
  */
-public class WSBusinessExceptionAdapter extends WSModelClassAdapter implements WSBusinessException {
+public class WSBusinessExceptionAdapter extends WSModelClassAdapter implements WSBusinessException
+{
    private WSModelClass superClass;
-   
+
    /**
     * @param modelClassBase
     * @param model
@@ -24,12 +24,11 @@ public class WSBusinessExceptionAdapter extends WSModelClassAdapter implements W
    @Override
    public WSModelClass getSuperClass() {
       superClass = (WSModelClass) super.getSuperClass();
-      
+
       if ( superClass == null ) {
          superClass = (WSModelClass) getModel().find(Exception.class.getName());
       }
       return superClass;
    }
 
-   
 }

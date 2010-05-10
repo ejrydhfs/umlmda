@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelAttributeBase.java,v 1.3 2006/04/13 23:04:37 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelAttributeBase.java,v $
-// $Revision: 1.3 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/13 23:04:37 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -27,42 +20,46 @@
 package org.umlmda.model.uml;
 
 /**
- * Model interface to the persistent UML attribute. Extended information
- * available in @link org.umlmda.model.uml.ModelAttribute.
+ * Model interface to the persistent UML attribute. Extended information available in @link org.umlmda.model.uml.ModelAttribute.
+ * 
  * @author moroff
  */
-public interface ModelAttributeBase extends ModelStructuralFeatureBase {
-   public static final String PROPERTY_INITIAL_VALUE = "initialValue";
-   public static final String PROPERTY_READ_ONLY = "readOnly";
-   public static final String PROPERTY_TRANSIENT = "transient";
-   public static final String PROPERTY_CONSTANT = "constant";
-   public static final String PROPERTY_MODEL_CLASS_BASE = "modelClassBase";
-   public static final String PROPERTY_DATA_TYPE_BASE = "dataTypeBase";
+public interface ModelAttributeBase extends ModelStructuralFeatureBase
+{
+   String PROPERTY_INITIAL_VALUE    = "initialValue";
+   String PROPERTY_READ_ONLY        = "readOnly";
+   String PROPERTY_TRANSIENT        = "transient";
+   String PROPERTY_CONSTANT         = "constant";
+   String PROPERTY_MODEL_CLASS_BASE = "modelClassBase";
+   String PROPERTY_DATA_TYPE_BASE   = "dataTypeBase";
 
-   public abstract String getType();
+   String getType();
+
    /**
     * @return
     */
-   public abstract ModelClassBase getModelClassBase();
+   ModelClassBase getModelClassBase();
+
    /**
     * @return
     */
-   public abstract ModelDataTypeBase getDataTypeBase();
+   ModelDataTypeBase getDataTypeBase();
+
    /**
     * Checks whether the type of the attribute is a primitve type
-    * @return <code>true</code> attribute type is primitive, <code>false</code>
-    * attribute type is not primitive.
+    * 
+    * @return <code>true</code> attribute type is primitive, <code>false</code> attribute type is not primitive.
     */
-   public abstract boolean isPrimitiveType();
-   
-   public abstract boolean isConstant();
+   boolean isPrimitiveType();
 
-   public abstract boolean isTransient();
-   
+   boolean isConstant();
+
+   boolean isTransient();
+
    /**
     * Attribute is readonly, no setter available
     */
-   public abstract boolean isReadOnly();
-   
-   public abstract String getInitialValue();
+   boolean isReadOnly();
+
+   String getInitialValue();
 }

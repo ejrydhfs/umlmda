@@ -32,11 +32,11 @@ import org.umlmda.uml.generator.webservices.WSPSMClassCreatorVisitor;
 import org.umlmda.uml.generator.webservices.WSStereotypes;
 
 /**
- * Creates web service classes 
- * @author Dieter Moroff (12.04.2006), last change $Date: 2007/07/16 07:43:21 $ $Name:  $
- * @version $Revision: 1.4 $
+ * Creates web service classes
+ * 
  */
-public class WSSchemaPSMClassCreatorVisitor extends WSPSMClassCreatorVisitor {
+public class WSSchemaPSMClassCreatorVisitor extends WSPSMClassCreatorVisitor
+{
 
    /**
     * 
@@ -45,142 +45,145 @@ public class WSSchemaPSMClassCreatorVisitor extends WSPSMClassCreatorVisitor {
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.ModelClass)
     */
    public boolean visit(ModelPackage modelPackage) {
       super.visit(modelPackage);
-	   
-	  for (Iterator iterator = modelPackage.getClasses().iterator(); iterator.hasNext();) {
-		ModelClass boClass = (ModelClass) iterator.next();
-			
-		boClass.accept(this);
-	  }      
-	  return true;
-   }
-   
-   
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.ModelClass)
-    */
-   public boolean visit(ModelClass modelClass) {
- 	  if ( logger.isDebugEnabled()) {
-		     logger.debug("visiting modelClass "+modelClass.getQualifiedName());
-		  }
 
-      WSModelClass wsClass = (WSModelClass) modelClass;
+      for ( Iterator iterator = modelPackage.getClasses().iterator(); iterator.hasNext(); ) {
+         ModelClass boClass = (ModelClass) iterator.next();
 
-      if (wsClass.hasStereotype(ModelStereotype.BUSINESS_OBJECT)) {
-    	           
-         createOrFindWsDTO(wsClass, WSStereotypes.WEB_SERVICE_DTO, "", null);
-      }
-      
-      else if (wsClass.hasStereotype(ModelStereotype.BUSINESS_SERVICE)) {
-          createOrFindWsService(wsClass);
-       }
-       
-      else if (wsClass.hasStereotype(ModelStereotype.ENUMERATION)) {
-              createOrFindWsEnumeration(wsClass);
-          }
-              
-      else if (wsClass.hasStereotype(ModelStereotype.BUSINESS_EXCEPTION)) {
-         createOrFindWsDTO(wsClass, WSStereotypes.WEB_SERVICE_EXCEPTION, "", null);
-      }
-      
-      else {
-         if (!(wsClass.hasStereotype(WSStereotypes.WEB_SERVICE)
-                         || wsClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO)
-                         || wsClass.hasStereotype(WSStereotypes.WEB_SERVICE_OBJECT)
-                         || wsClass.hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION)
-                         || wsClass.hasStereotype(WSStereotypes.WEB_SERVICE_EXCEPTION)
-                         )) 
-                 logger.info("model object " + modelClass.getName() + " ignored Stereotypes: " + logStereotypes(modelClass) );
+         boClass.accept(this);
       }
       return true;
    }
 
-   private String logStereotypes(ModelClass modelClass){
-           StringBuffer stereoTypes = new StringBuffer();
-           
-           for (Iterator iterator = modelClass.getStereotypes().iterator(); iterator.hasNext();) {
-                stereoTypes.append(iterator.next().toString());
-                stereoTypes.append(";");
-                
-        }
-           
-           return stereoTypes.toString();
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.ModelClass)
+    */
+   public boolean visit(ModelClass modelClass) {
+      if ( logger.isDebugEnabled() ) {
+         logger.debug("visiting modelClass " + modelClass.getQualifiedName());
+      }
+
+      WSModelClass wsClass = (WSModelClass) modelClass;
+
+      if ( wsClass.hasStereotype(ModelStereotype.BUSINESS_OBJECT) ) {
+
+         createOrFindWsDTO(wsClass, WSStereotypes.WEB_SERVICE_DTO, "", null);
+      }
+
+      else if ( wsClass.hasStereotype(ModelStereotype.BUSINESS_SERVICE) ) {
+         createOrFindWsService(wsClass);
+      }
+
+      else if ( wsClass.hasStereotype(ModelStereotype.ENUMERATION) ) {
+         createOrFindWsEnumeration(wsClass);
+      }
+
+      else if ( wsClass.hasStereotype(ModelStereotype.BUSINESS_EXCEPTION) ) {
+         createOrFindWsDTO(wsClass, WSStereotypes.WEB_SERVICE_EXCEPTION, "", null);
+      }
+
+      else {
+         if ( !(wsClass.hasStereotype(WSStereotypes.WEB_SERVICE) || wsClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO)
+               || wsClass.hasStereotype(WSStereotypes.WEB_SERVICE_OBJECT)
+               || wsClass.hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION) || wsClass
+               .hasStereotype(WSStereotypes.WEB_SERVICE_EXCEPTION)) )
+            logger.info("model object " + modelClass.getName() + " ignored Stereotypes: " + logStereotypes(modelClass));
+      }
+      return true;
    }
-           
-           
+
+   private String logStereotypes(ModelClass modelClass) {
+      StringBuffer stereoTypes = new StringBuffer();
+
+      for ( Iterator iterator = modelClass.getStereotypes().iterator(); iterator.hasNext(); ) {
+         stereoTypes.append(iterator.next().toString());
+         stereoTypes.append(";");
+
+      }
+
+      return stereoTypes.toString();
+   }
+
    protected ModelClass createOrFindWsInDTO(ModelClass modelClass) {
-         return createOrFindWsDTO(modelClass, WSStereotypes.WEB_SERVICE_OBJECT, "", null);
+      return createOrFindWsDTO(modelClass, WSStereotypes.WEB_SERVICE_OBJECT, "", null);
    }
-           
+
    protected ModelClass createOrFindWsOutDTO(ModelClass modelClass) {
-         return createOrFindWsDTO(modelClass, WSStereotypes.WEB_SERVICE_OBJECT, "", null);
+      return createOrFindWsDTO(modelClass, WSStereotypes.WEB_SERVICE_OBJECT, "", null);
    }
-   
+
    /**
     * @param modelClass
-    * @param stereotype TODO
+    * @param stereotype
+    *           TODO
     * @param postFix
     * @param excludeFeatureStereotype
     */
-   protected ModelClass createOrFindWsDTO(ModelClass modelClass, String stereotype, String postFix, String excludeFeatureStereotype) {
+   protected ModelClass createOrFindWsDTO(ModelClass modelClass, String stereotype, String postFix,
+         String excludeFeatureStereotype) {
       WSModelPackage modelPackage = (WSModelPackage) modelClass.getPackage();
       WSModel model = (WSModel) modelPackage.getModel();
-      ModelClassBase wsClassImpl = createOrFindWsClassImpl(modelClass, postFix, excludeFeatureStereotype, WSStereotypes.WEB_SERVICE_DTO, PIMStereotypes.PIM_OBJECT);
+      ModelClassBase wsClassImpl = createOrFindWsClassImpl(modelClass, postFix, excludeFeatureStereotype,
+            WSStereotypes.WEB_SERVICE_DTO, PIMStereotypes.PIM_OBJECT);
       JavaModelClass javaModelClass = (JavaModelClass) modelClass;
 
-      //modelPackage.accept(this);
-      
-      // If already an adapter, all work is done 
+      // modelPackage.accept(this);
+
+      // If already an adapter, all work is done
       if ( wsClassImpl instanceof ModelClass ) {
          return (ModelClass) wsClassImpl;
       }
-      
+
       else {
-         logger.info("creating ws dto class for model object " + modelClass.getName() );
+         logger.info("creating ws dto class for model object " + modelClass.getName());
          ModelClass wsClass = createWsClassAdapter(model, wsClassImpl);
-         
+
          wsClassImpl.getStereotypes().add(stereotype);
          wsClassImpl.getStereotypes().add(WSStereotypes.WEB_SERVICE_OBJECT);
-         
+
          // Handle attributes
-         for (Iterator iattr = javaModelClass.getImplementedAttributes().iterator(); iattr.hasNext();) {
+         for ( Iterator iattr = javaModelClass.getImplementedAttributes().iterator(); iattr.hasNext(); ) {
             ModelAttribute attribute = (ModelAttribute) iattr.next();
-   
+
             if ( attribute.isDerived() )
                continue;
-            
-            if (excludeFeatureStereotype == null || attribute.hasStereotype(excludeFeatureStereotype) == false) {
+
+            if ( excludeFeatureStereotype == null || attribute.hasStereotype(excludeFeatureStereotype) == false ) {
                ModelAttributeImpl wsAttributeImpl = new ModelAttributeImpl(model, wsClassImpl, attribute);
-               
+
                if ( attribute.isPrimitiveType() == false ) {
-                   if (attribute.getModelClass()== null){
-                           logger.error(attribute.getQualifiedName());
-                   }
+                  if ( attribute.getModelClass() == null ) {
+                     logger.error(attribute.getQualifiedName());
+                  }
                   if ( attribute.getModelClass().hasStereotype(ModelStereotype.ENUMERATION) ) {
-                     wsAttributeImpl.setModelClassBase((ModelClassBase) createOrFindWsEnumeration((ModelClass)attribute.getModelClassBase()).getBase());
+                     wsAttributeImpl.setModelClassBase((ModelClassBase) createOrFindWsEnumeration(
+                           (ModelClass) attribute.getModelClassBase()).getBase());
                   }
                   else {
-                     wsAttributeImpl.setModelClassBase((ModelClassBase) createOrFindWsDTO((ModelClass)attribute.getModelClassBase(), stereotype, postFix, excludeFeatureStereotype).getBase());
+                     wsAttributeImpl.setModelClassBase((ModelClassBase) createOrFindWsDTO(
+                           (ModelClass) attribute.getModelClassBase(), stereotype, postFix, excludeFeatureStereotype).getBase());
                   }
                }
                wsClassImpl.getAttributes().add(wsAttributeImpl);
             }
          }
-   
+
          // Handle associations
-         for (Iterator iassoc = javaModelClass.getImplementedAssociations().iterator(); iassoc.hasNext();) {
+         for ( Iterator iassoc = javaModelClass.getImplementedAssociations().iterator(); iassoc.hasNext(); ) {
             ModelAssociation association = (ModelAssociation) iassoc.next();
-   
+
             if ( association.isDerived() )
                continue;
-            
-            if (excludeFeatureStereotype == null || association.hasStereotype(excludeFeatureStereotype) == false) {
+
+            if ( excludeFeatureStereotype == null || association.hasStereotype(excludeFeatureStereotype) == false ) {
                ModelAssociationImpl wsAssociationImpl = new ModelAssociationImpl(model, wsClassImpl);
-   
+
                wsAssociationImpl.setAggregation(association.isAggregation());
                wsAssociationImpl.setComposition(association.isComposition());
                wsAssociationImpl.setDerived(association.isDerived());
@@ -190,28 +193,28 @@ public class WSSchemaPSMClassCreatorVisitor extends WSPSMClassCreatorVisitor {
                wsAssociationImpl.setNavigatableToSource(association.isNavigatableToSource());
                wsAssociationImpl.setNavigatableToTarget(association.isNavigatableToTarget());
                wsAssociationImpl.setSourceBase(wsClassImpl);
-               
+
                WSModelClass targetClass = (WSModelClass) association.getTarget();
                WSModelClass wsTargetClass;
                ModelClassBase wsTargetClassBase;
-               
-              wsTargetClass = createOrFindAssociationTargetClass(postFix,targetClass);
-   
+
+               wsTargetClass = createOrFindAssociationTargetClass(postFix, targetClass);
+
                wsTargetClassBase = (ModelClassBase) wsTargetClass.getBase();
                wsAssociationImpl.setTargetBase(wsTargetClassBase);
-               //TODO check if reverse have to be set
+               // TODO check if reverse have to be set
                wsAssociationImpl.setReverseBase(wsAssociationImpl.createReverse());
-   
+
                wsClassImpl.getAssociations().add(wsAssociationImpl);
                wsClassImpl.getAllAssociations().add(wsAssociationImpl);
                wsTargetClassBase.getAllAssociations().add(wsAssociationImpl.getReverseBase());
             }
          }
-   
+
          return wsClass;
       }
    }
-           
+
    /**
     * Refactored from createOrFindWsDTO to override it in WSSchemaPSMClassVisitor
     * 
@@ -220,7 +223,7 @@ public class WSSchemaPSMClassCreatorVisitor extends WSPSMClassCreatorVisitor {
     * @return
     */
    protected WSModelClass createOrFindAssociationTargetClass(String postFix, WSModelClass targetClass) {
-      return (WSModelClass) createOrFindWsDTO(targetClass,WSStereotypes.WEB_SERVICE_DTO, "", null);
+      return (WSModelClass) createOrFindWsDTO(targetClass, WSStereotypes.WEB_SERVICE_DTO, "", null);
    }
-   
+
 }

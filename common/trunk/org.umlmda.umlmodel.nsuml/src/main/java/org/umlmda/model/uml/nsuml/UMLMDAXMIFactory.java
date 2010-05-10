@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/UMLMDAXMIFactory.java,v 1.1 2005/10/27 19:34:14 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/UMLMDAXMIFactory.java,v $
-// $Revision: 1.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2005/10/27 19:34:14 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -52,13 +45,12 @@ import cb.xmi.XMIGenerator;
 
 /**
  * @author moroff
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class UMLMDAXMIFactory extends cb.xmi.XMIFactory {
+public class UMLMDAXMIFactory extends cb.xmi.XMIFactory
+{
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see cb.xmi.XMIFactory#createClass(cb.petal.Class)
     */
    public MClassifier createClass(Class clazz) {
@@ -68,7 +60,8 @@ public class UMLMDAXMIFactory extends cb.xmi.XMIFactory {
       return classifier;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see cb.xmi.XMIFactory#createPackage(cb.petal.ClassCategory)
     */
    public MPackage createPackage(ClassCategory cat) {
@@ -83,12 +76,12 @@ public class UMLMDAXMIFactory extends cb.xmi.XMIFactory {
     * @param classifier
     */
    private void copyTaggedValues(QuidObject clazz, MModelElement classifier) {
-      List attributes = (List)clazz.getProperty("attributes");
+      List attributes = (List) clazz.getProperty("attributes");
       if ( attributes != null ) {
-         for (Iterator iter = attributes.getElements().iterator(); iter.hasNext();) {
+         for ( Iterator iter = attributes.getElements().iterator(); iter.hasNext(); ) {
             Attribute element = (Attribute) iter.next();
-   
-            if ( element.getPropertyAsString("tool").startsWith("UMLMDA")) {
+
+            if ( element.getPropertyAsString("tool").startsWith("UMLMDA") ) {
                MTaggedValue taggedValue = new MTaggedValueImpl();
                taggedValue.setTag(element.getPropertyAsString("name"));
                taggedValue.setValue(element.getPropertyAsString("value"));
@@ -97,7 +90,7 @@ public class UMLMDAXMIFactory extends cb.xmi.XMIFactory {
          }
       }
    }
-   
+
    /**
     * 
     */
@@ -113,26 +106,27 @@ public class UMLMDAXMIFactory extends cb.xmi.XMIFactory {
       super(tree, gen);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see cb.xmi.XMIFactory#createAttribute(cb.petal.ClassAttribute)
     */
    public MAttribute createAttribute(ClassAttribute attr) {
       MAttribute attribute = super.createAttribute(attr);
-      List attributes = (List)attr.getProperty("attributes");  
-      
+      List attributes = (List) attr.getProperty("attributes");
+
       if ( attributes != null ) {
-         for (Iterator iter = attributes.getElements().iterator(); iter.hasNext();) {
+         for ( Iterator iter = attributes.getElements().iterator(); iter.hasNext(); ) {
             Attribute element = (Attribute) iter.next();
-   
-            if ( element.getPropertyAsString("tool").startsWith("UMLMDA")) {
+
+            if ( element.getPropertyAsString("tool").startsWith("UMLMDA") ) {
                String tagName = element.getPropertyAsString("name");
-                
-               if ( tagName.equals("changeable") && element.getPropertyAsBoolean("value") == false) {
-                  attribute.setChangeability(MChangeableKind.FROZEN);  
+
+               if ( tagName.equals("changeable") && element.getPropertyAsBoolean("value") == false ) {
+                  attribute.setChangeability(MChangeableKind.FROZEN);
                }
                else {
                   MTaggedValue taggedValue = new MTaggedValueImpl();
-                  
+
                   taggedValue.setTag(tagName);
                   taggedValue.setValue(element.getPropertyAsString("value"));
                   attribute.addTaggedValue(taggedValue);
@@ -143,18 +137,19 @@ public class UMLMDAXMIFactory extends cb.xmi.XMIFactory {
       return attribute;
    }
 
-   
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see cb.xmi.XMIFactory#createAssociationEnd(cb.petal.Role)
     */
    public MAssociationEnd createAssociationEnd(Role role) {
       MAssociationEnd associationEnd = super.createAssociationEnd(role);
-      
+
       copyTaggedValues(role, associationEnd);
       return associationEnd;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see cb.xmi.XMIFactory#createAssociation(cb.petal.Association)
     */
    public MAssociation createAssociation(Association assoc) {
@@ -163,10 +158,10 @@ public class UMLMDAXMIFactory extends cb.xmi.XMIFactory {
       copyTaggedValues(assoc, association);
       return association;
    }
-   
+
    public MOperation createOperation(Operation op) {
       MOperation operation = super.createOperation(op);
-      
+
       copyTaggedValues(op, operation);
       return operation;
    }

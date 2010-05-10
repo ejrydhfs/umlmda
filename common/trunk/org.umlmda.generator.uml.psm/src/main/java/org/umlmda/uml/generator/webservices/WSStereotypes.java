@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSStereotypes.java,v 1.1 2006/12/04 10:49:49 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSStereotypes.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/12/04 10:49:49 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,23 +21,23 @@ package org.umlmda.uml.generator.webservices;
 
 /**
  * TODO Insert type javadoc
- * @author Dieter Moroff (27.03.2006), last change $Date: 2006/12/04 10:49:49 $ $Name:  $
- * @version $Revision: 1.1 $
+ * 
  */
-public class WSStereotypes {
+public class WSStereotypes
+{
 
-   public static final String WEB_SERVICE = "WebService";
-   public static final String WEB_SERVICE_OBJECT = "WebServiceObject";
-   public static final String WEB_SERVICE_DTO = "WebServiceDTO";
+   public static final String WEB_SERVICE               = "WebService";
+   public static final String WEB_SERVICE_OBJECT        = "WebServiceObject";
+   public static final String WEB_SERVICE_DTO           = "WebServiceDTO";
    public static final String WEB_SERVICE_DTO_HIERARCHY = "WebServiceDTOHierarchy";
    public static final String WEB_SERVICE_DTO_REFERENCE = "WebServiceDTOReference";
-   public static final String WEB_SERVICE_ENUMERATION = "WebServiceEnumeration";
-   public static final String WEB_SERVICE_EXCEPTION = "WebServiceException";
-   public static final String WEB_SERVICE_RESPONSE = "WebServiceResponse";
-   public static final String WEB_SERVICE_REQUEST = "WebServiceRequest";
-   public static final String WEB_SERVICE_METHOD = "WebServiceMethod";
-   public static final String WEB_SERVICE_COMPONENT = "WebServiceComponent";
-   
+   public static final String WEB_SERVICE_ENUMERATION   = "WebServiceEnumeration";
+   public static final String WEB_SERVICE_EXCEPTION     = "WebServiceException";
+   public static final String WEB_SERVICE_RESPONSE      = "WebServiceResponse";
+   public static final String WEB_SERVICE_REQUEST       = "WebServiceRequest";
+   public static final String WEB_SERVICE_METHOD        = "WebServiceMethod";
+   public static final String WEB_SERVICE_COMPONENT     = "WebServiceComponent";
+
    /**
     * 
     */

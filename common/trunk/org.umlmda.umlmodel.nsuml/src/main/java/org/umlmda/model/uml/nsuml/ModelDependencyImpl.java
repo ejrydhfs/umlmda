@@ -1,8 +1,5 @@
 /*
  * Created on 04.11.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.model.uml.nsuml;
 
@@ -20,15 +17,13 @@ import ru.novosoft.uml.foundation.core.MModelElement;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ModelDependencyImpl extends ModelElementImpl implements ModelDependencyBase {
+public class ModelDependencyImpl extends ModelElementImpl implements ModelDependencyBase
+{
    private final MDependency modelDependency;
-   private List suppliers = null;
-   private List clients = null;
-   
+   private List              suppliers = null;
+   private List              clients   = null;
+
    /**
     * @param model
     * @param owner
@@ -38,7 +33,8 @@ public class ModelDependencyImpl extends ModelElementImpl implements ModelDepend
       this.modelDependency = modelDependency;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelDependencyBase#getClients()
     */
    public Collection getClients() {
@@ -49,7 +45,8 @@ public class ModelDependencyImpl extends ModelElementImpl implements ModelDepend
       return suppliers;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelDependencyBase#getSuppliers()
     */
    public Collection getSuppliers() {
@@ -61,13 +58,13 @@ public class ModelDependencyImpl extends ModelElementImpl implements ModelDepend
    }
 
    private static void addElements(ModelImpl model, Collection elementList, Collection modelElementList) {
-      for (Iterator ic = modelElementList.iterator(); ic.hasNext();) {
+      for ( Iterator ic = modelElementList.iterator(); ic.hasNext(); ) {
          MModelElement element = (MModelElement) ic.next();
-         
+
          if ( element instanceof MClassifier ) {
             MClassifier classifier = (MClassifier) element;
             ModelClassifierBase modelClassifier = model.findClassifier(classifier);
-            
+
             if ( modelClassifier != null ) {
                elementList.add(modelClassifier);
             }
@@ -76,10 +73,10 @@ public class ModelDependencyImpl extends ModelElementImpl implements ModelDepend
             }
          }
          else {
-            // TODO handle all types 
+            // TODO handle all types
          }
-         
+
       }
-      
+
    }
 }

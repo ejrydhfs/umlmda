@@ -8,9 +8,9 @@ import org.umlmda.model.uml.ModelClassBase;
 
 /**
  * @author MOROFF
- *
  */
-public class WSBusinessObjectAdapter extends WSModelClassAdapter implements WSBusinessObject {
+public class WSBusinessObjectAdapter extends WSModelClassAdapter implements WSBusinessObject
+{
 
    /**
     * @param modelClassBase

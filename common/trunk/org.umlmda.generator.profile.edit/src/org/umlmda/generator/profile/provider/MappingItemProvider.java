@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MappingItemProvider.java,v 1.8 2006/07/27 07:37:32 moroff Exp $
  */
 package org.umlmda.generator.profile.provider;
 

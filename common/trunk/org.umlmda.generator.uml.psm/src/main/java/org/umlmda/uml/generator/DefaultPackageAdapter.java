@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)
@@ -37,9 +36,11 @@ import org.umlmda.model.uml.impl.ModelPackageAdapter;
 
 /**
  * Default implementation of generator package for uml models
+ * 
  * @author MOROFF
  */
-public class DefaultPackageAdapter extends ModelPackageAdapter implements GeneratorPackage {
+public class DefaultPackageAdapter extends ModelPackageAdapter implements GeneratorPackage
+{
 
    /**
     * @param modelPackage
@@ -52,18 +53,18 @@ public class DefaultPackageAdapter extends ModelPackageAdapter implements Genera
    public String getGeneratedPath() {
       StringBuffer buffer = new StringBuffer();
       Artefact artefact = getGeneratorModel().getContext().getCurrentArtefact();
-      
-      if ( artefact.getUseNamespace() == NamespaceUsage.FULL_QUALIFIED_LITERAL 
-        || artefact.getUseNamespace() == NamespaceUsage.TRUE_LITERAL ) {
+
+      if ( artefact.getUseNamespace() == NamespaceUsage.FULL_QUALIFIED_LITERAL
+            || artefact.getUseNamespace() == NamespaceUsage.TRUE_LITERAL ) {
          StringTokenizer parsePackage = new StringTokenizer(getQualifiedPackageName(artefact.getName()), ".");
          while ( parsePackage.hasMoreTokens() ) {
             buffer.append(File.separator);
-            buffer.append(parsePackage.nextToken()); 
+            buffer.append(parsePackage.nextToken());
          }
       }
       else if ( artefact.getUseNamespace() == NamespaceUsage.NAME_ONLY_LITERAL ) {
          buffer.append(File.separator);
-         
+
          String genName = GeneratorUtils.getGeneratedName(this, artefact.getName());
          buffer.append(genName.replace('/', File.separatorChar));
       }
@@ -71,55 +72,63 @@ public class DefaultPackageAdapter extends ModelPackageAdapter implements Genera
          // Do nothing
       }
       else {
-         throw new RuntimeException("Unsupported namespace usage "+artefact.getUseNamespace().toString());
+         throw new RuntimeException("Unsupported namespace usage " + artefact.getUseNamespace().toString());
       }
-      
+
       return buffer.toString();
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorPackage#getGeneratedName(java.lang.String)
     */
    public String getGeneratedName(String artefactName) {
       return getName();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorPackage#getGeneratedName()
     */
    public String getGeneratedName() {
       return getName();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorPackage#getQualifiedPackageName(java.lang.String)
     */
    public String getQualifiedPackageName(String artefactType) {
       return getQualifiedName(artefactType);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorPackage#getQualifiedName(java.lang.String)
     */
    public String getQualifiedName(String artefactType) {
       return getQualifiedName();
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.generator.model.uml.GeneratorPackage#getQualifiedName(java.lang.String, org.umlmda.generator.model.uml.GeneratorPackage)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.generator.model.uml.GeneratorPackage#getQualifiedName(java.lang.String,
+    * org.umlmda.generator.model.uml.GeneratorPackage)
     */
    public String getQualifiedName(String artefactType, GeneratorPackage modelPackage) {
       return modelPackage.getQualifiedName(artefactType);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorModelElement#getGeneratorModel()
     */
    public GeneratorModel getGeneratorModel() {
       return (GeneratorModel) getModel();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorModelElement#getReplacementName()
     */
    public String getReplacementName() {
@@ -129,10 +138,10 @@ public class DefaultPackageAdapter extends ModelPackageAdapter implements Genera
    public String getDocumentation(String context) {
       return getDocumentation();
    }
-   
+
    public void setAsCurrentArtefact(String artefact) {
       getGeneratorModel().getContext().setCurrentModelElement(this);
       getGeneratorModel().getContext().setCurrentArtefact(getGeneratorModel().getArtefact(artefact, this));
    }
-   
+
 }

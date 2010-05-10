@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelPackageImpl.java,v 1.1 2005/10/27 19:34:14 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelPackageImpl.java,v $
-// $Revision: 1.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2005/10/27 19:34:14 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public

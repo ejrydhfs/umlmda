@@ -14,9 +14,9 @@ import org.umlmda.profile.ModelStereotype;
 
 /**
  * @author MOROFF
- *
  */
-public class JavaModelAdapterFactory extends org.umlmda.uml.generator.java.JavaModelAdapterFactory {
+public class JavaModelAdapterFactory extends org.umlmda.uml.generator.java.JavaModelAdapterFactory
+{
 
    /**
     * 
@@ -26,33 +26,35 @@ public class JavaModelAdapterFactory extends org.umlmda.uml.generator.java.JavaM
 
    @Override
    public ModelPackage createModelPackage(ModelPackageBase modelPackage, Model destModel) {
-      if ( modelPackage.getStereotypes().contains(ModelStereotype.BUSINESS_COMPONENT)) {
+      if ( modelPackage.getStereotypes().contains(ModelStereotype.BUSINESS_COMPONENT) ) {
          return new JavaBusinessComponentAdapter(modelPackage, destModel);
       }
       else {
          return new JavaModelPackageAdapter(modelPackage, destModel);
-         
+
       }
    }
 
    /**
     * Creates a modelclass depending on the class's stereotype
-    * @see org.umlmda.uml.generator.java.JavaModelAdapterFactory#createModelClass(org.umlmda.model.uml.ModelClassBase, org.umlmda.model.uml.Model)
+    * 
+    * @see org.umlmda.uml.generator.java.JavaModelAdapterFactory#createModelClass(org.umlmda.model.uml.ModelClassBase,
+    *      org.umlmda.model.uml.Model)
     */
    public ModelClass createModelClass(ModelClassBase modelClassBase, Model destModel) {
-      if ( modelClassBase.getStereotypes().contains(ModelStereotype.BUSINESS_OBJECT)) {
+      if ( modelClassBase.getStereotypes().contains(ModelStereotype.BUSINESS_OBJECT) ) {
          return new JavaBusinessObjectAdapter(modelClassBase, destModel);
       }
-      else if ( modelClassBase.getStereotypes().contains(ModelStereotype.BUSINESS_SERVICE)) {
+      else if ( modelClassBase.getStereotypes().contains(ModelStereotype.BUSINESS_SERVICE) ) {
          return new JavaBusinessServiceAdapter(modelClassBase, destModel);
       }
-      else if ( modelClassBase.getStereotypes().contains(ModelStereotype.BUSINESS_EXCEPTION)) {
+      else if ( modelClassBase.getStereotypes().contains(ModelStereotype.BUSINESS_EXCEPTION) ) {
          return new JavaBusinessExceptionAdapter(modelClassBase, destModel);
       }
-      else if ( modelClassBase.getStereotypes().contains(ModelStereotype.ENUMERATION)) {
+      else if ( modelClassBase.getStereotypes().contains(ModelStereotype.ENUMERATION) ) {
          return new JavaEnumerationAdapter(modelClassBase, destModel);
       }
-      else   
+      else
          return new JavaModelClassAdapter(modelClassBase, destModel);
    }
 
@@ -61,5 +63,4 @@ public class JavaModelAdapterFactory extends org.umlmda.uml.generator.java.JavaM
       return new JavaModelAttributeAdapter(modelAttribute, destModel);
    }
 
-   
 }

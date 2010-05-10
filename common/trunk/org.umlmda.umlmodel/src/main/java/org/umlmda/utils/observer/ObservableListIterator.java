@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/utils/observer/ObservableListIterator.java,v 1.1 2006/04/13 22:53:18 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/utils/observer/ObservableListIterator.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/04/13 22:53:18 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -28,15 +23,14 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Implementation of a list iterator which can be observed if the 
- * underlying  * collection is changed through this iterator.
- * @author Dieter Moroff (13.04.2006), last change $Date: 2006/04/13 22:53:18 $ $Name:  $
- * @version $Revision: 1.1 $
+ * Implementation of a list iterator which can be observed if the underlying * collection is changed through this iterator.
+ * 
  */
-public class ObservableListIterator extends ObservableIterator implements ListIterator {
-   private final List list;
+public class ObservableListIterator extends ObservableIterator implements ListIterator
+{
+   private final List         list;
    private final ListIterator listIterator;
-   
+
    /**
     * @param list
     */
@@ -46,35 +40,40 @@ public class ObservableListIterator extends ObservableIterator implements ListIt
       this.listIterator = listIterator;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.ListIterator#nextIndex()
     */
    public int nextIndex() {
       return listIterator.nextIndex();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.ListIterator#previousIndex()
     */
    public int previousIndex() {
       return listIterator.previousIndex();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.ListIterator#hasPrevious()
     */
    public boolean hasPrevious() {
       return listIterator.hasPrevious();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.ListIterator#previous()
     */
    public Object previous() {
       return listIterator.previous();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.ListIterator#add(java.lang.Object)
     */
    public void add(Object o) {
@@ -83,7 +82,8 @@ public class ObservableListIterator extends ObservableIterator implements ListIt
       notifyObservers(list);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.ListIterator#set(java.lang.Object)
     */
    public void set(Object o) {

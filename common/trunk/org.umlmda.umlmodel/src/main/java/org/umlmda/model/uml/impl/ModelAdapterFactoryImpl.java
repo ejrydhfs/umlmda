@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelAdapterFactoryImpl.java,v 1.5 2006/08/09 10:40:24 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelAdapterFactoryImpl.java,v $
-// $Revision: 1.5 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/08/09 10:40:24 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -64,38 +57,36 @@ import org.umlmda.model.uml.validate.ValidationResult;
  * 
  * @see ModelAdapterFactory
  * @author vpussel
- *  
  */
-public class ModelAdapterFactoryImpl implements ModelAdapterFactory {
+public class ModelAdapterFactoryImpl implements ModelAdapterFactory
+{
 
    /**
-    * create a model adapter from the original model, applies the
-    * pattern and checks standard validations if defined. Init
-    * is not executed on the model because profile and generation
-    * set is not yet assigned.
+    * create a model adapter from the original model, applies the pattern and checks standard validations if defined. Init is not
+    * executed on the model because profile and generation set is not yet assigned.
     */
-   public final Model createModel(ModelBase model)  throws ModelValidationException {
+   public final Model createModel(ModelBase model) throws ModelValidationException {
       Model pimModel;
-      
-      if ((model instanceof Model) == false) {
+
+      if ( (model instanceof Model) == false ) {
          pimModel = new ModelAdapter(new ModelAdapterFactoryImpl(), model);
          pimModel.init();
       }
       else {
-         pimModel = (Model) model; 
+         pimModel = (Model) model;
       }
-      
+
       // Validate the pim model
       if ( getValidatorFactory() != null ) {
          ModelValidator validator = new ModelValidator();
          List results;
          boolean hasErrors = false;
-         
+
          getValidatorFactory().registerValidators(validator);
          results = validator.validate(pimModel);
-         for (Iterator ir = results.iterator(); ir.hasNext();) {
+         for ( Iterator ir = results.iterator(); ir.hasNext(); ) {
             ValidationResult result = (ValidationResult) ir.next();
-            
+
             if ( result.getSeverity() == ValidationResult.ERROR ) {
                hasErrors = true;
             }
@@ -104,14 +95,14 @@ public class ModelAdapterFactoryImpl implements ModelAdapterFactory {
             throw new ModelValidationException(results);
          }
       }
-      
+
       // Apply the patterns on the pim modell
       if ( getPatternFactory() != null ) {
          new ModelPatternIterator(getPatternFactory()).apply(pimModel);
       }
-      
+
       Model psmModel = createPsmModel(pimModel);
-      
+
       if ( psmModel != null ) {
          return psmModel;
       }
@@ -196,57 +187,58 @@ public class ModelAdapterFactoryImpl implements ModelAdapterFactory {
 
    /*
     * (non-Javadoc)
-    * 
     * @see org.umlmda.model.uml.ModelAdapterFactory#createModelDependency(org.umlmda.model.uml.ModelDependencyBase,
-    *      org.umlmda.model.uml.Model)
+    * org.umlmda.model.uml.Model)
     */
    public ModelDependency createModelDependency(ModelDependencyBase modelDependency, Model destModel) {
       return new ModelDependencyAdapter(modelDependency, destModel);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelGeneralization(org.umlmda.model.uml.ModelGeneralizationBase, org.umlmda.model.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelGeneralization(org.umlmda.model.uml.ModelGeneralizationBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelGeneralization createModelGeneralization(ModelGeneralizationBase modelGeneralization, Model destModel) {
       return new ModelGeneralizationAdapter(modelGeneralization, destModel);
    }
-   
+
    /*
     * (non-Javadoc)
-    * 
     * @see org.umlmda.model.uml.ModelAdapterFactory#createModelElement(org.umlmda.model.uml.ModelElementBase,
-    *      org.umlmda.model.uml.Model)
+    * org.umlmda.model.uml.Model)
     */
    public ModelElement createModelElement(ModelElementBase elementBase, Model model) {
-      if (elementBase instanceof ModelBase) {
+      if ( elementBase instanceof ModelBase ) {
          try {
             return createModel((ModelBase) elementBase);
-         } catch (ModelValidationException e) {
+         }
+         catch (ModelValidationException e) {
             throw new RuntimeException(e);
          }
       }
-      else if (elementBase instanceof ModelPackageBase) {
+      else if ( elementBase instanceof ModelPackageBase ) {
          return createModelPackage((ModelPackageBase) elementBase, model);
       }
-      else if (elementBase instanceof ModelClassBase) {
+      else if ( elementBase instanceof ModelClassBase ) {
          return createModelClass((ModelClassBase) elementBase, model);
       }
-      else if (elementBase instanceof ModelAssociationBase) {
+      else if ( elementBase instanceof ModelAssociationBase ) {
          return createModelAssociation((ModelAssociationBase) elementBase, model);
       }
-      else if (elementBase instanceof ModelAttributeBase) {
+      else if ( elementBase instanceof ModelAttributeBase ) {
          return createModelAttribute((ModelAttributeBase) elementBase, model);
       }
-      else if (elementBase instanceof ModelDataTypeBase) {
+      else if ( elementBase instanceof ModelDataTypeBase ) {
          return createModelDataType((ModelDataTypeBase) elementBase, model);
       }
-      else if (elementBase instanceof ModelDependencyBase) {
+      else if ( elementBase instanceof ModelDependencyBase ) {
          return createModelDependency((ModelDependencyBase) elementBase, model);
       }
-      else if (elementBase instanceof ModelMethodBase) {
+      else if ( elementBase instanceof ModelMethodBase ) {
          return createModelMethod((ModelMethodBase) elementBase, model);
       }
-      else if (elementBase instanceof ModelParameterBase) {
+      else if ( elementBase instanceof ModelParameterBase ) {
          return createModelParameter((ModelParameterBase) elementBase, model);
       }
       else {

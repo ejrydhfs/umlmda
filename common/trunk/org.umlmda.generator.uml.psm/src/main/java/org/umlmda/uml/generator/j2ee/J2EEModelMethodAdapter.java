@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/j2ee/J2EEModelMethodAdapter.java,v 1.2 2007/01/15 09:26:55 moroff Exp $
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -39,11 +38,9 @@ import org.umlmda.uml.generator.java.JavaModelPackage;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class J2EEModelMethodAdapter extends JavaModelMethodAdapter implements J2EEModelMethod {
+public class J2EEModelMethodAdapter extends JavaModelMethodAdapter implements J2EEModelMethod
+{
 
    /**
     * @param modelMethod
@@ -53,32 +50,33 @@ public class J2EEModelMethodAdapter extends JavaModelMethodAdapter implements J2
       super(modelMethod, model);
    }
 
-   protected ModelParameterImpl createAsyncParameter(JavaModelClass ownerClass, JavaModelPackage genPackage,
-         JavaModel genModel) {
-      
+   protected ModelParameterImpl createAsyncParameter(JavaModelClass ownerClass, JavaModelPackage genPackage, JavaModel genModel) {
+
       ModelParameterImpl parameterImpl = new ModelParameterImpl(getModel(), this);
       parameterImpl.setTypeBase((ModelClassifierBase) getModel().find("javax.jms.Queue"));
       parameterImpl.setName("queue");
       return parameterImpl;
    }
-   
+
    public ModelClassifier getReturnType() {
-      if ( hasStereotype(ModelStereotype.ASYNC_CALL)) {
+      if ( hasStereotype(ModelStereotype.ASYNC_CALL) ) {
          return null;
       }
       else {
          return super.getReturnType();
       }
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.j2ee.J2EEModelMethod#getRemoteSignature()
     */
    public String getRemoteSignature() {
       // TODO Auto-generated method stub
       JavaClassHelper classHelper = new JavaClassHelper();
       JavaMethodHelper methodHelper = new JavaMethodHelper(classHelper) {
-         /* (non-Javadoc)
+         /*
+          * (non-Javadoc)
           * @see org.umlmda.uml.generator.AbstractMethodHelper#getPlatformExceptions()
           */
          protected String getPlatformExceptions() {

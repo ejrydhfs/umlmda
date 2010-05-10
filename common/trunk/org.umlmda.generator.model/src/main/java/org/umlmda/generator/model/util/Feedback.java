@@ -1,12 +1,5 @@
-// jUMLMDA, GeneratorBase-API
+// UMLMDA, GeneratorBase-API
 //  
-//   $Header: /cvsroot/umlmda/org.umlmda.generator.model/src/org/umlmda/generator/model/util/Feedback.java,v 1.1 2006/08/09 11:48:18 moroff Exp $
-//   $Source: /cvsroot/umlmda/org.umlmda.generator.model/src/org/umlmda/generator/model/util/Feedback.java,v $
-// $Revision: 1.1 $
-// 	$State: Exp $
-// 	 $Name:  $
-// 	 $Date: 2006/08/09 11:48:18 $
-//   $Locker:  $
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Library General Public
@@ -29,35 +22,42 @@ package org.umlmda.generator.model.util;
 
 /**
  * Interface for the generator to give feedback about the progress of the work
+ * 
  * @author Dieter Moroff
  */
-public interface Feedback {
-   static final int ERROR = 0;
-   static final int WARNING = 1;
-   static final int INFO = 2;
-   static final int DEBUG = 3;
- 
+public interface Feedback
+{
+   int ERROR   = 0;
+   int WARNING = 1;
+   int INFO    = 2;
+   int DEBUG   = 3;
+
    /**
-    * Give information if the generator enters an new step (generate, merge, ...) 
+    * Give information if the generator enters an new step (generate, merge, ...)
+    * 
     * @param newStep
-    */  
-   public void tellNewStep(String newStep);
-   
+    */
+   void tellNewStep(String newStep);
+
    /**
     * Give information about the current work
+    * 
     * @param message
     */
-   public void tellWork(String message);
-   
+   void tellWork(String message);
+
    /**
-    * Gives message back to the caller about errors, warnings or informations 
-    * @param severity severity of the message
-    * @param message content of the message
+    * Gives message back to the caller about errors, warnings or informations
+    * 
+    * @param severity
+    *           severity of the message
+    * @param message
+    *           content of the message
     */
-   public void message(int severity, String message);
-   
+   void message(int severity, String message);
+
    /**
-    * Prints the Stacktrace 
+    * Prints the Stacktrace
     */
-   public void printStackTrace(Throwable throwable);
+   void printStackTrace(Throwable throwable);
 }

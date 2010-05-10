@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelAssociationImpl.java,v 1.10 2006/11/28 10:01:17 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelAssociationImpl.java,v $
-// $Revision: 1.10 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/11/28 10:01:17 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -53,43 +46,41 @@ import ru.novosoft.uml.foundation.data_types.MAggregationKind;
 import ru.novosoft.uml.foundation.extension_mechanisms.MTaggedValue;
 
 /**
- * @author moroff
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * @author moroff Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements ModelAssociationBase {
+public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements ModelAssociationBase
+{
    final private MAssociationEnd sourceEnd;
 
    final private MAssociationEnd targetEnd;
 
-   private ModelClassBase target;
+   private ModelClassBase        target;
 
-   private ModelClassBase source;
+   private ModelClassBase        source;
 
-   private ModelAssociationBase reverseAssoc = null;
+   private ModelAssociationBase  reverseAssoc = null;
 
-   private Properties taggedValues = null;
+   private Properties            taggedValues = null;
 
-   private Multiplicity multiplicity = null;
-   
-   private List qualifiers = null;
-   
-   private Boolean ordered = null;
-   
-   private Boolean unique = null;
-   
-   private Boolean readOnly = null;
-   
-   private Set stereoTypes = null;
-   
+   private Multiplicity          multiplicity = null;
+
+   private List                  qualifiers   = null;
+
+   private Boolean               ordered      = null;
+
+   private Boolean               unique       = null;
+
+   private Boolean               readOnly     = null;
+
+   private Set                   stereoTypes  = null;
+
    /**
     * @param modelElement
     */
    ModelAssociationImpl(ModelImpl model, MAssociationEnd associationEnd) {
       super(model, associationEnd);
       this.sourceEnd = associationEnd;
-      if (sourceEnd.getAssociation().getConnections().get(0) != sourceEnd) {
+      if ( sourceEnd.getAssociation().getConnections().get(0) != sourceEnd ) {
          targetEnd = (MAssociationEnd) sourceEnd.getAssociation().getConnections().get(0);
       }
       else {
@@ -102,7 +93,7 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
     * @return
     */
    public ModelClassBase getTargetBase() {
-      if (target == null) {
+      if ( target == null ) {
          target = model.findClass((MClass) targetEnd.getType());
       }
       return target;
@@ -112,7 +103,7 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
     * @return
     */
    public ModelClassBase getSourceBase() {
-      if (source == null) {
+      if ( source == null ) {
          source = model.findClass((MClass) sourceEnd.getType());
       }
       return source;
@@ -153,24 +144,27 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
 
    /**
     * checks whether the target could be navigated through this association
+    * 
     * @return
     */
    public boolean isNavigatableToTarget() {
       return targetEnd.isNavigable();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelAssociation#isNavigatableToSource()
     */
    public boolean isNavigatableToSource() {
       return sourceEnd.isNavigable();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getName()
     */
    public String getName() {
-      if (StringUtils.isEmpty(targetEnd.getName())) {
+      if ( StringUtils.isEmpty(targetEnd.getName()) ) {
          return Introspector.decapitalize(getTargetBase().getName());
       }
       else {
@@ -178,21 +172,23 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       }
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.nsuml.ModelElementImpl#getModelElement()
     */
    protected MModelElement getModelElement() {
       return sourceEnd.getAssociation();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getStereotype()
     */
    public Collection getStereotypes() {
       if ( stereoTypes == null ) {
          stereoTypes = new HashSet();
-         
-         if (sourceEnd.getAssociation().getStereotype() != null) {
+
+         if ( sourceEnd.getAssociation().getStereotype() != null ) {
             stereoTypes.add(sourceEnd.getAssociation().getStereotype().getName());
          }
          if ( targetEnd.getStereotype() != null ) {
@@ -202,17 +198,18 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       return stereoTypes;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelElement#getTaggedValues()
     */
    public Properties getTaggedValues() {
-      if (taggedValues == null) {
+      if ( taggedValues == null ) {
          taggedValues = new Properties();
-         if (targetEnd != null) {
-            for (Iterator itv = targetEnd.getTaggedValues().iterator(); itv.hasNext();) {
+         if ( targetEnd != null ) {
+            for ( Iterator itv = targetEnd.getTaggedValues().iterator(); itv.hasNext(); ) {
                addTaggedValue(itv);
             }
-            for (Iterator itv = targetEnd.getAssociation().getTaggedValues().iterator(); itv.hasNext();) {
+            for ( Iterator itv = targetEnd.getAssociation().getTaggedValues().iterator(); itv.hasNext(); ) {
                addTaggedValue(itv);
             }
          }
@@ -222,11 +219,12 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
 
    private void addTaggedValue(Iterator itv) {
       MTaggedValue taggedValue = (MTaggedValue) itv.next();
-      if (taggedValue.getTag().length() > 0 && taggedValue.getValue() != null)
+      if ( taggedValue.getTag().length() > 0 && taggedValue.getValue() != null )
          taggedValues.put(taggedValue.getTag(), taggedValue.getValue());
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelStructuralFeature#isDerived()
     */
    public boolean isDerived() {
@@ -240,23 +238,24 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       return StringUtils.isEmpty(documentation) ? EMPTY : documentation;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelStructuralFeature#getOwningClass()
     */
    public ModelClassBase getOwningClassBase() {
       return getSourceBase();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelAssociationBase#getReverse()
     */
    public ModelAssociationBase getReverseBase() {
-      if (reverseAssoc == null) {
+      if ( reverseAssoc == null ) {
          ModelClassBase target = getTargetBase();
-         for (Iterator iter = target.getAllAssociations().iterator(); iter.hasNext();) {
+         for ( Iterator iter = target.getAllAssociations().iterator(); iter.hasNext(); ) {
             ModelAssociationImpl otherAssoc = (ModelAssociationImpl) iter.next();
-            if (sourceEnd != otherAssoc.sourceEnd
-                  && sourceEnd.getAssociation() == otherAssoc.sourceEnd.getAssociation()) {
+            if ( sourceEnd != otherAssoc.sourceEnd && sourceEnd.getAssociation() == otherAssoc.sourceEnd.getAssociation() ) {
                reverseAssoc = otherAssoc;
             }
          }
@@ -264,28 +263,27 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       return reverseAssoc;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeatureBase#getMultiplicity()
     */
    public Multiplicity getMultiplicity() {
-      if (multiplicity == null) {
-         multiplicity = new Multiplicity(
-               targetEnd.getMultiplicity().getLower(),
-               targetEnd.getMultiplicity().getUpper());
+      if ( multiplicity == null ) {
+         multiplicity = new Multiplicity(targetEnd.getMultiplicity().getLower(), targetEnd.getMultiplicity().getUpper());
       }
       return multiplicity;
    }
 
-   
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#getQualifiers()
     */
    public List getQualifiers() {
       qualifiers = new ArrayList();
-      for (Iterator ia = targetEnd.getQualifiers().iterator(); ia.hasNext();) {
+      for ( Iterator ia = targetEnd.getQualifiers().iterator(); ia.hasNext(); ) {
          MFeature feature = (MFeature) ia.next();
 
-         if (feature instanceof MAttribute) {
+         if ( feature instanceof MAttribute ) {
             MAttribute attribute = (MAttribute) feature;
 
             qualifiers.add(new ModelAttributeImpl(model, (MAttribute) feature));
@@ -294,14 +292,16 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       return qualifiers;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#getConstraints()
     */
    public String getConstraints() {
       return getConstraints(targetEnd);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#isOrdered()
     */
    public boolean isOrdered() {
@@ -311,7 +311,8 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       return ordered.booleanValue();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAssociationBase#isUnique()
     */
    public boolean isUnique() {
@@ -320,8 +321,9 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       }
       return unique.booleanValue();
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeatureBase#isReadOnly()
     */
    public boolean isReadOnly() {
@@ -330,30 +332,31 @@ public class ModelAssociationImpl extends ModelStructuralFeatureImpl implements 
       }
       return readOnly.booleanValue();
    }
-   
+
    private Boolean hasConstraint(String constraintName) {
       Boolean hasConstraint = null;
-      
-      for (Iterator ic = targetEnd.getConstraints().iterator(); ic.hasNext();) {
+
+      for ( Iterator ic = targetEnd.getConstraints().iterator(); ic.hasNext(); ) {
          MConstraint constraint = (MConstraint) ic.next();
-         
+
          if ( constraint.getBody().getBody().indexOf(constraintName) != -1 ) {
             hasConstraint = Boolean.TRUE;
          }
       }
-      
+
       if ( hasConstraint == null ) {
          hasConstraint = Boolean.FALSE;
       }
-      
+
       return hasConstraint;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelElementBase#getOwnerBase()
     */
    public ModelElementBase getOwnerBase() {
-      return ((ModelImpl)model).findClassifier(sourceEnd.getType());
+      return ((ModelImpl) model).findClassifier(sourceEnd.getType());
    }
-   
+
 }

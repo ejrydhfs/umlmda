@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/utils/ModelVisitableIterator.java,v 1.1 2006/05/04 15:16:30 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/utils/ModelVisitableIterator.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/05/04 15:16:30 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -40,12 +35,11 @@ import org.umlmda.model.uml.ModelVisitable;
 import org.umlmda.model.uml.ModelVisitor;
 
 /**
- * Iterator which walks over all elements of a model and applies the visitor
- * the the model elements.
- * @author Dieter Moroff (12.04.2006), last change $Date: 2006/05/04 15:16:30 $ $Name:  $
- * @version $Revision: 1.1 $
+ * Iterator which walks over all elements of a model and applies the visitor the the model elements.
+ * 
  */
-public class ModelVisitableIterator extends ModelIterator {
+public class ModelVisitableIterator extends ModelIterator
+{
 
    /**
     *  
@@ -58,7 +52,7 @@ public class ModelVisitableIterator extends ModelIterator {
                ((ModelVisitable) modelElement).accept(visitor);
             }
          }
-         });
+      });
    }
 
 }

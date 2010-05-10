@@ -1,8 +1,5 @@
 /*
  * Created on 17.11.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.model.uml.validate;
 
@@ -16,13 +13,11 @@ import org.umlmda.model.uml.utils.ModelIterator;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ModelValidator {
+public class ModelValidator
+{
    List validators = new ArrayList();
-   
+
    /**
     * 
     */
@@ -33,28 +28,28 @@ public class ModelValidator {
    public void register(ModelElementValidator validator) {
       validators.add(validator);
    }
-   
+
    public List validate(Model model) {
       final List results = new ArrayList();
-      
+
       new ModelIterator(new ModelIterator.Action() {
 
          public void process(ModelElement modelElement) {
             validateElement(results, modelElement);
-            
-         }}).iterate(model);
-      
+
+         }
+      }).iterate(model);
+
       return results;
    }
-   
+
    private void validateElement(List results, ModelElement element) {
-      for (Iterator iv = validators.iterator(); iv.hasNext();) {
+      for ( Iterator iv = validators.iterator(); iv.hasNext(); ) {
          ModelElementValidator validator = (ModelElementValidator) iv.next();
-         
-         if ( validator.isAppropriateFor(element.getClass()) 
-           && validator.isAppropriateForStereotypes(element.getStereotypes()) ) {
+
+         if ( validator.isAppropriateFor(element.getClass()) && validator.isAppropriateForStereotypes(element.getStereotypes()) ) {
             List result = validator.validate(element);
-            
+
             results.addAll(result);
          }
       }

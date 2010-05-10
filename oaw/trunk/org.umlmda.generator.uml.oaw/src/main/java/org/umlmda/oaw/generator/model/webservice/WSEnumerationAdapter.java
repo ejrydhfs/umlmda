@@ -9,9 +9,9 @@ import org.umlmda.uml.generator.java.JavaModelAttribute;
 
 /**
  * @author MOROFF
- *
  */
-public class WSEnumerationAdapter extends WSModelClassAdapter implements WSEnumeration {
+public class WSEnumerationAdapter extends WSModelClassAdapter implements WSEnumeration
+{
 
    /**
     * @param modelClassBase
@@ -22,11 +22,11 @@ public class WSEnumerationAdapter extends WSModelClassAdapter implements WSEnume
    }
 
    public String getJavaValueType() {
-      return ((JavaModelAttribute)getAttributes().get(0)).getJavaType();
+      return ((JavaModelAttribute) getAttributes().get(0)).getJavaType();
    }
 
    public boolean isValuePrimitive() {
-      return ((JavaModelAttribute)getAttributes().get(0)).isJavaPrimitiveType();
+      return ((JavaModelAttribute) getAttributes().get(0)).isJavaPrimitiveType();
    }
 
 }

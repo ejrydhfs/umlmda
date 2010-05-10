@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.model/test/org/umlmda/generator/model/util/StringUtilTest.java,v 1.1.2.2 2008/04/17 19:33:12 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.model/test/org/umlmda/generator/model/util/StringUtilTest.java,v $
- * $Revision: 1.1.2.2 $
- *     $Name:  $
- *     $Date: 2008/04/17 19:33:12 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -31,23 +26,25 @@ import junit.framework.TestCase;
 
 /**
  * @author MOROFF
- *
  */
-public class StringUtilTest extends TestCase {
+public class StringUtilTest extends TestCase
+{
 
    /**
-    * Test method for {@link org.umlmda.generator.model.util.StringUtil#regexReplacement(java.lang.String, java.lang.String, java.lang.String)}.
-    * @throws PatternNotMatchException 
+    * Test method for
+    * {@link org.umlmda.generator.model.util.StringUtil#regexReplacement(java.lang.String, java.lang.String, java.lang.String)}.
+    * 
+    * @throws PatternNotMatchException
     */
    public void testRegexReplacement() throws PatternNotMatchException {
-      
+
       String replaced = StringUtil.regexReplacement("sample", "(.*)", "\\u$1Factory");
       assertEquals("SampleFactory", replaced);
    }
 
-//   public void testOroVersion() {
-//      Package oroPackage = PatternCompiler.class.getPackage();
-//      
-//      assertEquals("2.0.8", oroPackage.getImplementationVersion());
-//   }
+   // public void testOroVersion() {
+   // Package oroPackage = PatternCompiler.class.getPackage();
+   //      
+   // assertEquals("2.0.8", oroPackage.getImplementationVersion());
+   // }
 }

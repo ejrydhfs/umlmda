@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelImpl.java,v 1.3.2.3.2.1 2008/03/11 16:18:34 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelImpl.java,v $
-// $Revision: 1.3.2.3.2.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2008/03/11 16:18:34 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -212,11 +205,11 @@ public class ModelImpl extends ModelElementImpl implements ModelBase
    public ModelClassBase findClassByName(String classname) {
       ModelClassBase modelClassBase = null;
 
-      for (Iterator<ModelClassBase> it = classes.values().iterator(); modelClassBase == null && it.hasNext(); ) {
-    	  ModelClassBase mcb = it.next();
-    	  if (mcb.getName().equals(classname)) {
-    	      modelClassBase = mcb;
-    	  }
+      for ( Iterator<ModelClassBase> it = classes.values().iterator(); modelClassBase == null && it.hasNext(); ) {
+         ModelClassBase mcb = it.next();
+         if ( mcb.getName().equals(classname) ) {
+            modelClassBase = mcb;
+         }
       }
 
       return modelClassBase;

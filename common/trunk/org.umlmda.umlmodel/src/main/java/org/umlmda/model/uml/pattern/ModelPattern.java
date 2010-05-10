@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/pattern/ModelPattern.java,v 1.1 2006/05/04 15:16:30 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/pattern/ModelPattern.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/05/04 15:16:30 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -29,29 +24,32 @@ import org.umlmda.model.uml.ModelElement;
 
 /**
  * TODO Insert type javadoc
- * @author Dieter Moroff (28.04.2006), last change $Date: 2006/05/04 15:16:30 $ $Name:  $
- * @version $Revision: 1.1 $
+ * 
  */
-public interface ModelPattern {
+public interface ModelPattern
+{
    /**
     * Checks of the pattern is usable for the given model element type
+    * 
     * @param modelElementClass
     * @return <code>true</code> if pattern can be applies
     */
-   public boolean isPatternFor(Class modelElementClass);
-   
+   boolean isPatternFor(Class modelElementClass);
+
    /**
     * Checks of the pattern is usable for the given model element
+    * 
     * @param modelElement
     * @return <code>true</code> if pattern can be applies
     */
-   public boolean isPatternFor(ModelElement modelElement);
-   
+   boolean isPatternFor(ModelElement modelElement);
+
    /**
     * Applies the pattern to the model class.
-    * @param modelElement 
-    * @return 
+    * 
+    * @param modelElement
+    * @return
     */
-   public ModelElement apply(ModelElement modelElement);
+   ModelElement apply(ModelElement modelElement);
 
 }

@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.oaw/src/org/umlmda/oaw/generator/model/java/JavaBusinessComponentAdapter.java,v 1.1 2006/08/09 11:50:15 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.oaw/src/org/umlmda/oaw/generator/model/java/JavaBusinessComponentAdapter.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/08/09 11:50:15 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -33,9 +28,9 @@ import org.umlmda.profile.ModelStereotype;
 
 /**
  * @author MOROFF
- *
  */
-public class WSBusinessComponentAdapter extends WSModelPackageAdapter implements WSBusinessComponent {
+public class WSBusinessComponentAdapter extends WSModelPackageAdapter implements WSBusinessComponent
+{
 
    /**
     * @param modelPackage

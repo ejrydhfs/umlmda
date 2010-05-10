@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelGeneralizationImpl.java,v 1.1.2.1 2006/11/20 10:47:08 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelGeneralizationImpl.java,v $
- * $Revision: 1.1.2.1 $
- *     $Name: oAW $
- *     $Date: 2006/11/20 10:47:08 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -29,16 +24,17 @@ import org.eclipse.uml2.uml.Generalization;
 import org.umlmda.model.uml.ModelClassBase;
 import org.umlmda.model.uml.ModelGeneralizationBase;
 
-
 /**
  * Generalization implementation for eclipse uml2
+ * 
  * @author Dieter Moroff
  */
-public class ModelGeneralizationImpl extends ModelElementImpl implements ModelGeneralizationBase {
+public class ModelGeneralizationImpl extends ModelElementImpl implements ModelGeneralizationBase
+{
    private final Generalization generalization;
-   private ModelClassBase specific = null;
-   private ModelClassBase general = null;
-   
+   private ModelClassBase       specific = null;
+   private ModelClassBase       general  = null;
+
    /**
     * @param model
     * @param owner
@@ -46,27 +42,28 @@ public class ModelGeneralizationImpl extends ModelElementImpl implements ModelGe
    public ModelGeneralizationImpl(ModelImpl model, Generalization generalization) {
       super(model, generalization);
       this.generalization = generalization;
-    }
+   }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelGeneralizationBase#getChildBase()
     */
    public ModelClassBase getSpecificBase() {
       if ( specific == null && generalization.getSpecific() instanceof Class ) {
-         specific = ((ModelImpl)getModelBase()).findClass((Class)generalization.getSpecific());
+         specific = ((ModelImpl) getModelBase()).findClass((Class) generalization.getSpecific());
       }
       return specific;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelGeneralizationBase#getParentBase()
     */
    public ModelClassBase getGeneralBase() {
       if ( general == null && generalization.getGeneral() instanceof Class ) {
-         general = ((ModelImpl)getModelBase()).findClass((Class)generalization.getGeneral());
+         general = ((ModelImpl) getModelBase()).findClass((Class) generalization.getGeneral());
       }
       return general;
    }
-
 
 }

@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelAdapterFactory.java,v 1.5 2006/08/09 10:40:27 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelAdapterFactory.java,v $
-// $Revision: 1.5 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/08/09 10:40:27 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -31,98 +24,85 @@ import org.umlmda.model.uml.validate.ModelValidationException;
 import org.umlmda.model.uml.validate.ModelValidatorFactory;
 
 /**
- * Interface for platform specific model factories.
- *
- * Implementors must overload the create methods or delegate to ModelAdapterFactoryImpl
- * Overloaded create methods must create Adapters derived from appropriate
- * Adapter classes. Derivations of Adapter classes must call the base class ctor.
- * 
- * instances of ModelElement, ModelClassifier or ModelStructuralFeature must not be 
+ * Interface for platform specific model factories. Implementors must overload the create methods or delegate to
+ * ModelAdapterFactoryImpl Overloaded create methods must create Adapters derived from appropriate Adapter classes. Derivations of
+ * Adapter classes must call the base class ctor. instances of ModelElement, ModelClassifier or ModelStructuralFeature must not be
  * created since they are base classes.
- *
+ * 
  * @see ModelAdapterFactoryImpl
  * @author vpussel
- *
  */
-public interface ModelAdapterFactory {
+public interface ModelAdapterFactory
+{
 
    /**
-    * Returns the pattern factory to apply on the pim model before 
-    * creating the model adapter 
+    * Returns the pattern factory to apply on the pim model before creating the model adapter
+    * 
     * @return
     */
-   public ModelPatternFactory getPatternFactory();
-   
+   ModelPatternFactory getPatternFactory();
+
    /**
-    * Returns the validation factory to ensure the model is appropriate 
-    * for the adapter. 
+    * Returns the validation factory to ensure the model is appropriate for the adapter.
+    * 
     * @param model
     * @return
     */
-   public ModelValidatorFactory getValidatorFactory();
-   
-	/**
-	 * create and initialize an adapter for a model
-	 */
-	public abstract Model createModel(ModelBase model) throws ModelValidationException;
+   ModelValidatorFactory getValidatorFactory();
 
-	/**
-	 * create an adapter for a model assocication
-	 */
-	public abstract ModelAssociation createModelAssociation(
-			ModelAssociationBase modelAssociation, Model destModel);
+   /**
+    * create and initialize an adapter for a model
+    */
+   Model createModel(ModelBase model) throws ModelValidationException;
 
-	/**
-	 * create an adapter for a model generalization
-	 */
-	public abstract ModelGeneralization createModelGeneralization(
-			ModelGeneralizationBase modelGeneralization, Model destModel);
+   /**
+    * create an adapter for a model assocication
+    */
+   ModelAssociation createModelAssociation(ModelAssociationBase modelAssociation, Model destModel);
 
-	/**
-	 * create an adapter for a model attribute
-	 */
-	public abstract ModelAttribute createModelAttribute(
-			ModelAttributeBase modelAttribute, Model destModel);
+   /**
+    * create an adapter for a model generalization
+    */
+   ModelGeneralization createModelGeneralization(ModelGeneralizationBase modelGeneralization, Model destModel);
 
-	/**
-	 * create an adapter for a model class
-	 */
-	public abstract ModelClass createModelClass(
-			ModelClassBase modelClass, Model destModel);
-			
-	/**
-	 * create an adapter for a model data type
-	 */
-	public abstract ModelDataType createModelDataType(
-			ModelDataTypeBase modelDataType, Model destModel);
+   /**
+    * create an adapter for a model attribute
+    */
+   ModelAttribute createModelAttribute(ModelAttributeBase modelAttribute, Model destModel);
 
-	/**
-	 * create an adapter for a model method
-	 */
-	public abstract ModelMethod createModelMethod(
-			ModelMethodBase modelMethod, Model destModel);
+   /**
+    * create an adapter for a model class
+    */
+   ModelClass createModelClass(ModelClassBase modelClass, Model destModel);
 
-	/**
-	 * create an adapter for a model package
-	 */
-	public abstract ModelPackage createModelPackage(
-			ModelPackageBase modelPackage, Model destModel);
+   /**
+    * create an adapter for a model data type
+    */
+   ModelDataType createModelDataType(ModelDataTypeBase modelDataType, Model destModel);
 
-	/**
-	 * create an adapter for a model parameter
-	 */
-	public abstract ModelParameter createModelParameter(
-			ModelParameterBase modelParameter, Model destModel);
+   /**
+    * create an adapter for a model method
+    */
+   ModelMethod createModelMethod(ModelMethodBase modelMethod, Model destModel);
 
-   public abstract ModelDependency createModelDependency(
-         ModelDependencyBase modelDependency, Model destModel);
+   /**
+    * create an adapter for a model package
+    */
+   ModelPackage createModelPackage(ModelPackageBase modelPackage, Model destModel);
+
+   /**
+    * create an adapter for a model parameter
+    */
+   ModelParameter createModelParameter(ModelParameterBase modelParameter, Model destModel);
+
+   ModelDependency createModelDependency(ModelDependencyBase modelDependency, Model destModel);
 
    /**
     * Creates an adapter for any model element type
+    * 
     * @param elementBase
     * @param model
     * @return
     */
-   public abstract ModelElement createModelElement(
-         ModelElementBase elementBase, Model model);
+   ModelElement createModelElement(ModelElementBase elementBase, Model model);
 }

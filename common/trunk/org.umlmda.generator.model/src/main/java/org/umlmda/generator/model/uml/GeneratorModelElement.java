@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -28,22 +27,24 @@ import java.util.Collection;
 /**
  * @author moroff
  */
-public interface GeneratorModelElement {
+public interface GeneratorModelElement
+{
 
    String getQualifiedName();
-   
+
    /**
     * Non qualified name of a model element
+    * 
     * @return
     */
    String getName();
-   
+
    /**
-    * Returns the generated name of the current model element
-    * and current generated artefact
+    * Returns the generated name of the current model element and current generated artefact
+    * 
     * @return
     */
-   public String getGeneratedName();
+   String getGeneratedName();
 
    /**
     * @return
@@ -52,22 +53,24 @@ public interface GeneratorModelElement {
 
    /**
     * Returns the generator model containing the model element
+    * 
     * @return
     */
    GeneratorModel getGeneratorModel();
 
    /**
     * Returns the name of the model element used in pattern replacement
+    * 
     * @return
     */
    String getReplacementName();
 
    /**
-    * Returns the documentation of the model element in the given 
-    * generation context.
+    * Returns the documentation of the model element in the given generation context.
+    * 
     * @see GeneratorContext
     */
    String getDocumentation(String context);
-   
+
    void setAsCurrentArtefact(String artefact);
 }

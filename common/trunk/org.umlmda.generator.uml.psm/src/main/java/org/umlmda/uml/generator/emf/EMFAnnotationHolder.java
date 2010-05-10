@@ -1,10 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFAnnotationHolder.java,v 1.1 2006/12/04 10:45:59 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFAnnotationHolder.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/12/04 10:45:59 $
- * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
@@ -27,7 +21,8 @@ package org.umlmda.uml.generator.emf;
 /**
  * @author MOROFF
  */
-public interface EMFAnnotationHolder {
+public interface EMFAnnotationHolder
+{
 
-   public String getEmfAnnotation();
+   String getEmfAnnotation();
 }

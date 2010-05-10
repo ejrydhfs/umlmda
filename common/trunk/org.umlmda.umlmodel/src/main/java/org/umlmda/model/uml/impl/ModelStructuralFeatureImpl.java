@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelStructuralFeatureImpl.java,v 1.3 2006/11/18 11:57:57 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelStructuralFeatureImpl.java,v $
- * $Revision: 1.3 $
- *     $Name:  $
- *     $Date: 2006/11/18 11:57:57 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -34,14 +29,14 @@ import org.umlmda.model.uml.attributes.Multiplicity;
 
 /**
  * Basic implementation of a structural feature
- * @author Dieter Moroff (03.04.2006), last change $Date: 2006/11/18 11:57:57 $ $Name:  $
- * @version $Revision: 1.3 $
+ * 
  */
-public class ModelStructuralFeatureImpl extends ModelElementImpl implements ModelStructuralFeatureBase {
-   private boolean derived = false;
-   private boolean readOnly = false;
+public class ModelStructuralFeatureImpl extends ModelElementImpl implements ModelStructuralFeatureBase
+{
+   private boolean      derived      = false;
+   private boolean      readOnly     = false;
    private Multiplicity multiplicity = new Multiplicity(0, 1);
-   
+
    /**
     * @param model
     * @param owner
@@ -67,7 +62,8 @@ public class ModelStructuralFeatureImpl extends ModelElementImpl implements Mode
       multiplicity.addObserver(this);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
     */
    public void update(Observable o, Object arg) {
@@ -76,8 +72,9 @@ public class ModelStructuralFeatureImpl extends ModelElementImpl implements Mode
          notifyObservers(PROPERTY_MULTIPLICITY);
       }
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeatureBase#isDerived()
     */
    public boolean isDerived() {
@@ -88,22 +85,25 @@ public class ModelStructuralFeatureImpl extends ModelElementImpl implements Mode
       this.derived = derived;
       notifyObservers(PROPERTY_DERIVED);
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeatureBase#isOptional()
     */
    public boolean isOptional() {
       return multiplicity.getLower() < 1;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeatureBase#getOwningClassBase()
     */
    public ModelClassBase getOwningClassBase() {
       return (ModelClassBase) getOwner();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeatureBase#getMultiplicity()
     */
    public Multiplicity getMultiplicity() {
@@ -116,15 +116,17 @@ public class ModelStructuralFeatureImpl extends ModelElementImpl implements Mode
       this.multiplicity.addObserver(this);
       notifyObservers(PROPERTY_MULTIPLICITY);
    }
-   
+
    /**
     * @return Returns the readOnly.
     */
    public boolean isReadOnly() {
       return readOnly;
    }
+
    /**
-    * @param readOnly The readOnly to set.
+    * @param readOnly
+    *           The readOnly to set.
     */
    public void setReadOnly(boolean readOnly) {
       this.readOnly = readOnly;

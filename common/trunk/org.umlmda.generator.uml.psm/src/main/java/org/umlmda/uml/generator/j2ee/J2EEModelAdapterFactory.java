@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/j2ee/J2EEModelAdapterFactory.java,v 1.1 2006/08/09 11:46:57 moroff Exp $
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)
@@ -35,58 +34,67 @@ import org.umlmda.uml.generator.java.JavaModelAdapterFactory;
 
 /**
  * Implementation for a model adapter factory for the j2ee model adaption
+ * 
  * @author MOROFF
  */
-public class J2EEModelAdapterFactory extends JavaModelAdapterFactory {
+public class J2EEModelAdapterFactory extends JavaModelAdapterFactory
+{
 
    public J2EEModelAdapterFactory() {
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAdapterFactory#createModel(org.umlmda.model.uml.ModelBase)
     */
    protected Model createPsmModel(Model model) {
       return new J2EEModelAdapter(this, model);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelClass(org.umlmda.model.uml.ModelClassBase, org.umlmda.model.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelClass(org.umlmda.model.uml.ModelClassBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelClass createModelClass(ModelClassBase modelClassBase, Model destModel) {
-//      if ( modelClassBase instanceof J2EEModelClassAdapter )
-//         return (ModelClass) modelClassBase;
-//      else {
-//         ModelClass modelClass = null;
-//         
-//         if ( modelClassBase instanceof ModelClass ) {
-//            modelClass = (ModelClass) modelClassBase;
-//         }
-//         else {
-//            modelClass = super.createModelClass(modelClassBase, destModel);
-//         }
-   
-         return new J2EEModelClassAdapter(modelClassBase, destModel);
-//      }
+      // if ( modelClassBase instanceof J2EEModelClassAdapter )
+      // return (ModelClass) modelClassBase;
+      // else {
+      // ModelClass modelClass = null;
+      //         
+      // if ( modelClassBase instanceof ModelClass ) {
+      // modelClass = (ModelClass) modelClassBase;
+      // }
+      // else {
+      // modelClass = super.createModelClass(modelClassBase, destModel);
+      // }
+
+      return new J2EEModelClassAdapter(modelClassBase, destModel);
+      // }
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelPackage(org.umlmda.model.uml.ModelPackageBase, org.umlmda.model.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelPackage(org.umlmda.model.uml.ModelPackageBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelPackage createModelPackage(ModelPackageBase modelPackage, Model destModel) {
-//      if ( modelPackage instanceof J2EEModelPackageAdapter )
-//         return (ModelPackage) modelPackage;
-//      else
-         return new J2EEModelPackageAdapter(modelPackage, destModel);
+      // if ( modelPackage instanceof J2EEModelPackageAdapter )
+      // return (ModelPackage) modelPackage;
+      // else
+      return new J2EEModelPackageAdapter(modelPackage, destModel);
    }
-   
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelMethod(org.umlmda.model.uml.ModelMethodBase, org.umlmda.model.uml.Model)
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelMethod(org.umlmda.model.uml.ModelMethodBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelMethod createModelMethod(ModelMethodBase modelMethod, Model destModel) {
-//      if ( modelMethod instanceof J2EEModelMethodAdapter )
-//         return (ModelMethod) modelMethod;
-//      else
-         return new J2EEModelMethodAdapter(modelMethod, destModel);
+      // if ( modelMethod instanceof J2EEModelMethodAdapter )
+      // return (ModelMethod) modelMethod;
+      // else
+      return new J2EEModelMethodAdapter(modelMethod, destModel);
    }
 }

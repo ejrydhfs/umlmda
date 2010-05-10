@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelDataTypeImpl.java,v 1.2 2006/04/13 23:04:37 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelDataTypeImpl.java,v $
- * $Revision: 1.2 $
- *     $Name:  $
- *     $Date: 2006/04/13 23:04:37 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -31,7 +26,8 @@ import org.umlmda.model.uml.ModelElementBase;
 /**
  * Basic implementation of a primitiv model datatype
  */
-public class ModelDataTypeImpl extends ModelElementImpl implements ModelDataTypeBase {
+public class ModelDataTypeImpl extends ModelElementImpl implements ModelDataTypeBase
+{
 
    /**
     * @param model

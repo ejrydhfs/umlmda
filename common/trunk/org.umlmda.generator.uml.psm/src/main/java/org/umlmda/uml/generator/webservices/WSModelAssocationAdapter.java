@@ -1,8 +1,5 @@
 /*
  * Created on 13.12.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.uml.generator.webservices;
 
@@ -16,12 +13,14 @@ import org.umlmda.uml.generator.java.JavaModelAssociationAdapter;
 import org.umlmda.uml.generator.java.JavaModelClass;
 
 /**
- * Implementation of the java webservice model adapter for associations. 
+ * Implementation of the java webservice model adapter for associations.
+ * 
  * @author MOROFF
  */
-public class WSModelAssocationAdapter extends JavaModelAssociationAdapter implements WSModelAssociation {
+public class WSModelAssocationAdapter extends JavaModelAssociationAdapter implements WSModelAssociation
+{
    private final WSModelStructuralFeature delegate;
-   
+
    /**
     * @param modelAssociation
     * @param model
@@ -32,57 +31,64 @@ public class WSModelAssocationAdapter extends JavaModelAssociationAdapter implem
          public String getNillableTag() {
             return WSModelAssocationAdapter.this.getNillableTag();
          }
+
          public String getMinOccursTag() {
             return WSModelAssocationAdapter.this.getMaxOccursTag();
          }
+
          public String getMaxOccursTag() {
             return WSModelAssocationAdapter.this.getMinOccursTag();
          }
       };
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelStructuralFeature#matchDirection(java.lang.String)
     */
    public boolean matchDirection(String direction) {
       return delegate.matchDirection(direction);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getNillableTag()
     */
    public String getNillableTag() {
       return StringUtils.EMPTY;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getMinOccursTag()
     */
    public String getMinOccursTag() {
       return "minOccurs=\"" + (isOptional() ? "0" : "1") + "\" ";
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getMaxOccursTag()
     */
    public String getMaxOccursTag() {
       return "maxOccurs=\"" + (isMultivalue() ? "unbounded" : "1") + "\" ";
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAssociation#getPIMAssociation()
     */
    public ModelAssociation getPIMAssociation() {
       WSModelClass wsSource = (WSModelClass) getSource();
       JavaModelClass pimSource = wsSource.getPIMClass();
-      
-      for (Iterator ia = pimSource.getAssociations(true).iterator(); ia.hasNext();) {
+
+      for ( Iterator ia = pimSource.getAssociations(true).iterator(); ia.hasNext(); ) {
          ModelAssociation pimAssoc = (ModelAssociation) ia.next();
-         
-         if ( pimAssoc.getName().equals(getName())) {
+
+         if ( pimAssoc.getName().equals(getName()) ) {
             return pimAssoc;
          }
       }
-      throw new IllegalStateException("No PIM exception found for "+this);
+      throw new IllegalStateException("No PIM exception found for " + this);
    }
 }

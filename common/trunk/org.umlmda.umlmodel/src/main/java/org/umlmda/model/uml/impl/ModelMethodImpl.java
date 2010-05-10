@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelMethodImpl.java,v 1.2 2006/04/13 23:04:37 moroff Exp $
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -34,15 +33,16 @@ import org.umlmda.model.uml.ModelElementBase;
 import org.umlmda.model.uml.ModelMethodBase;
 import org.umlmda.utils.observer.ObservableList;
 
-
 /**
  * Basic implementation of a method
+ * 
  * @author Dieter Moroff (08.08.2005)
  */
-public class ModelMethodImpl extends ModelElementImpl implements ModelMethodBase {
+public class ModelMethodImpl extends ModelElementImpl implements ModelMethodBase
+{
 
-   private ObservableList parameters = new ObservableList(new ArrayList());
-   private ObservableList exceptions = new ObservableList(new ArrayList());
+   private ObservableList      parameters     = new ObservableList(new ArrayList());
+   private ObservableList      exceptions     = new ObservableList(new ArrayList());
    private ModelClassifierBase returnTypeBase = null;
 
    /**
@@ -59,7 +59,8 @@ public class ModelMethodImpl extends ModelElementImpl implements ModelMethodBase
       exceptions.addObserver(this);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
     */
    public void update(Observable o, Object arg) {
@@ -71,22 +72,25 @@ public class ModelMethodImpl extends ModelElementImpl implements ModelMethodBase
          notifyObservers(PROPERTY_EXCEPTIONS);
       }
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelMethodBase#getParameters()
     */
    public List getParameters() {
       return parameters;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelMethodBase#getExceptions()
     */
    public List getExceptions() {
       return exceptions;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelMethodBase#getReturnTypeBase()
     */
    public ModelClassifierBase getReturnTypeBase() {
@@ -98,12 +102,13 @@ public class ModelMethodImpl extends ModelElementImpl implements ModelMethodBase
       setChanged();
       notifyObservers(PROPERTY_RETURN_TYPE_BASE);
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelMethodBase#getOwningClass()
     */
    public ModelClassBase getOwningClass() {
-      return (ModelClassBase)getOwnerBase();
+      return (ModelClassBase) getOwnerBase();
    }
 
 }

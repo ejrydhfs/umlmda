@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSPSMClassHierarchyCreatorVisitor.java,v 1.4 2007/07/31 13:05:34 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSPSMClassHierarchyCreatorVisitor.java,v $
- * $Revision: 1.4 $
- *     $Name:  $
- *     $Date: 2007/07/31 13:05:34 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -48,32 +43,31 @@ import org.umlmda.profile.ModelStereotype;
 import org.umlmda.uml.generator.PIMStereotypes;
 
 /**
- * Creates web service dto hierarchie for polymorphic associations,
- * parameters and return types. 
- * @author Dieter Moroff (13.04.2006), last change $Date: 2007/07/31 13:05:34 $ $Name:  $
- * @version $Revision: 1.4 $
+ * Creates web service dto hierarchie for polymorphic associations, parameters and return types.
+ * 
  */
-public class WSPSMClassReferenceCreatorVisitor extends DefaultModelVisitor {
-   
+public class WSPSMClassReferenceCreatorVisitor extends DefaultModelVisitor
+{
+
    public static final String REFERENCE_POSTFIX = "Reference";
-   
+
    /**
     * 
     */
    public WSPSMClassReferenceCreatorVisitor() {
       super();
    }
-   
+
    /**
     * @param classifier
     * @return
     */
    protected ModelClassBase createOrFindWsDtoReference(Model model, ModelClassifierBase classifier) {
       ModelClassBase classReference = null;
-      
-      if (  classifier instanceof ModelClassBase ) {
+
+      if ( classifier instanceof ModelClassBase ) {
          ModelClass modelClass = model.getModelClass((ModelClassBase) classifier);
-         
+
          if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO) ) {
             classReference = createOrFindWsDtoReference(modelClass);
          }
@@ -83,26 +77,26 @@ public class WSPSMClassReferenceCreatorVisitor extends DefaultModelVisitor {
 
    @Override
    public boolean visit(ModelAssociation association) {
-      
+
       super.visit(association);
       ModelClass source = association.getSource();
       ModelAssociationBase associationBase = (ModelAssociationBase) association.getBase();
-      
-      if ( source.hasStereotype(WSStereotypes.WEB_SERVICE_DTO_REFERENCE) == false && association.isComposition() == false && associationBase instanceof ModelAssociationImpl) {
+
+      if ( source.hasStereotype(WSStereotypes.WEB_SERVICE_DTO_REFERENCE) == false && association.isComposition() == false
+            && associationBase instanceof ModelAssociationImpl ) {
          ModelAssociationImpl associationImpl = (ModelAssociationImpl) association.getBase();
          ModelClassBase targetReference = createOrFindWsDtoReference(association.getModel(), associationImpl.getTargetBase());
-         
-         if (targetReference != null) {
+
+         if ( targetReference != null ) {
             associationImpl.setTargetBase(targetReference);
-         }     
-      }      
+         }
+      }
       return true;
    }
-   
-   
+
    /**
-    * If not existing creates a reference class with an assocation on every none abstract 
-    * subclass of the given modelclass
+    * If not existing creates a reference class with an assocation on every none abstract subclass of the given modelclass
+    * 
     * @param modelClass
     * @param postFix
     * @return
@@ -113,7 +107,7 @@ public class WSPSMClassReferenceCreatorVisitor extends DefaultModelVisitor {
       String name = modelClass.getName() + REFERENCE_POSTFIX;
       String qualifiedName = modelPackage.getWsPackage().getQualifiedName() + "." + name;
       ModelClass wsClass = (ModelClass) model.find(qualifiedName);
-      
+
       if ( wsClass != null ) {
          return (ModelClassBase) wsClass.getBase();
       }
@@ -124,23 +118,24 @@ public class WSPSMClassReferenceCreatorVisitor extends DefaultModelVisitor {
          wsClassImpl.setAbstract(false);
          wsClassImpl.getStereotypes().add(WSStereotypes.WEB_SERVICE_DTO_REFERENCE);
          wsClassImpl.getStereotypes().add(WSStereotypes.WEB_SERVICE_OBJECT);
-         for ( Iterator iterator = ((WSModelClass)modelClass).getPIMClass().getAttributes(true).iterator(); iterator.hasNext(); ) {
+         for ( Iterator iterator = ((WSModelClass) modelClass).getPIMClass().getAttributes(true).iterator(); iterator.hasNext(); ) {
             ModelAttribute attr = (ModelAttribute) iterator.next();
 
-            if ( attr.hasStereotype("Id")) {
+            if ( attr.hasStereotype("Id") ) {
                ModelAttributeImpl wsAttributeImpl = new ModelAttributeImpl(model, wsClassImpl, attr);
-               
+
                wsClassImpl.getAttributes().add(wsAttributeImpl);
             }
          }
-         
-         ModelElementAdapter.addDependency(((WSModelClass)modelClass).getPIMClass(), PIMStereotypes.PIM_OBJECT, wsClassImpl, model);
-         
+
+         ModelElementAdapter.addDependency(((WSModelClass) modelClass).getPIMClass(), PIMStereotypes.PIM_OBJECT, wsClassImpl,
+               model);
+
          wsClass = model.getModelClass(wsClassImpl);
          modelPackage.getWsPackage().getClasses().add(wsClass);
          model.getClasses().add(wsClass);
 
          return wsClassImpl;
       }
-   }   
+   }
 }

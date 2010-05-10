@@ -23,48 +23,50 @@ import org.umlmda.model.uml.impl.ModelAdapterFactoryImpl;
 import org.umlmda.model.uml.validate.ModelValidationException;
 import org.umlmda.profile.ModelStereotype;
 
-public class ModelFactoryTest extends TestCase {
-   private Logger logger = Logger.getLogger(getClass()); 
-   private static final String UML_METAMODEL = "metamodels/UML.metamodel.uml";
-   private static final String MODEL_FOLDER = "model/rsm/self";
-   
-   private File umlmdaProfiles = new File(".", "profiles/rsm/3rd/umlmda/profiles");
-   private File rsmProfiles = new File(".", "profiles/rsm/3rd/ibm");
-   private String umlResoures;
+public class ModelFactoryTest extends TestCase
+{
+   private Logger              logger         = Logger.getLogger(getClass());
+   private static final String UML_METAMODEL  = "metamodels/UML.metamodel.uml";
+   private static final String MODEL_FOLDER   = "model/rsm/self";
+
+   private File                umlmdaProfiles = new File(".", "profiles/rsm/3rd/umlmda/profiles");
+   private File                rsmProfiles    = new File(".", "profiles/rsm/3rd/ibm");
+   private String              umlResoures;
 
    @Override
    protected void setUp() throws Exception {
       super.setUp();
-      
+
       UMLPackageImpl.init();
-      
+
       Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("uml", UMLResource.Factory.INSTANCE);
       Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("emx", UMLResource.Factory.INSTANCE);
       Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("epx", UMLResource.Factory.INSTANCE);
 
-      EPackage.Registry.INSTANCE.put("http://www.eclipse.org/uml2/2.0.0/UML", EPackage.Registry.INSTANCE.get(UMLPackage.eINSTANCE.getNsURI()));
-      
+      EPackage.Registry.INSTANCE.put("http://www.eclipse.org/uml2/2.0.0/UML", EPackage.Registry.INSTANCE.get(UMLPackage.eINSTANCE
+            .getNsURI()));
+
       URL url = getClass().getClassLoader().getResource(UML_METAMODEL);
-      
+
       if ( url == null ) {
-         String msg = UML_METAMODEL+" not found, check classpath";
-         
+         String msg = UML_METAMODEL + " not found, check classpath";
+
          logger.error(msg);
          throw new RuntimeException(msg);
       }
-   
+
       umlResoures = url.toExternalForm().replace(UML_METAMODEL, "");
-      logger.info("Load UML resoruces from "+umlResoures);
-      
+      logger.info("Load UML resoruces from " + umlResoures);
+
       assert url != null;
    }
-   
+
    public void testLoadRSMModelFile() {
       File file = new File(MODEL_FOLDER, "TestWithUMLMDAProfile.emx");
 
-      assertTrue("Model doesn't exists "+file.getAbsolutePath(), file.exists());
-      assertTrue("Profile doesn't exists "+umlmdaProfiles.getAbsolutePath(), umlmdaProfiles.exists());
-      assertTrue("Profile doesn't exists "+rsmProfiles.getAbsolutePath(), rsmProfiles.exists());
+      assertTrue("Model doesn't exists " + file.getAbsolutePath(), file.exists());
+      assertTrue("Profile doesn't exists " + umlmdaProfiles.getAbsolutePath(), umlmdaProfiles.exists());
+      assertTrue("Profile doesn't exists " + rsmProfiles.getAbsolutePath(), rsmProfiles.exists());
 
       Map pathMap = getStandardPathMaps();
       ModelFactoryImpl modelFactory = new ModelFactoryImpl();
@@ -82,9 +84,11 @@ public class ModelFactoryTest extends TestCase {
 
          assertNotNull("Package found", modelPackage);
          assertTrue("Package stereotype found", modelPackage.hasStereotype(ModelStereotype.BUSINESS_COMPONENT));
-      } catch (IOException e) {
+      }
+      catch (IOException e) {
          fail(e.getMessage());
-      } catch (ModelValidationException e) {
+      }
+      catch (ModelValidationException e) {
          fail(e.getValidationResults().toString());
       }
    }
@@ -102,9 +106,9 @@ public class ModelFactoryTest extends TestCase {
    public void testReferenceModels() {
       File file = new File(MODEL_FOLDER, "ReferencingModel.emx");
 
-      assertTrue("Model doesn't exists "+file.getAbsolutePath(), file.exists());
-      assertTrue("Profile doesn't exists "+umlmdaProfiles.getAbsolutePath(), umlmdaProfiles.exists());
-      assertTrue("Profile doesn't exists "+rsmProfiles.getAbsolutePath(), rsmProfiles.exists());
+      assertTrue("Model doesn't exists " + file.getAbsolutePath(), file.exists());
+      assertTrue("Profile doesn't exists " + umlmdaProfiles.getAbsolutePath(), umlmdaProfiles.exists());
+      assertTrue("Profile doesn't exists " + rsmProfiles.getAbsolutePath(), rsmProfiles.exists());
 
       Map pathMap = getStandardPathMaps();
       ModelFactoryImpl modelFactory = new ModelFactoryImpl();
@@ -121,12 +125,14 @@ public class ModelFactoryTest extends TestCase {
          ModelPackage modelPackage = (ModelPackage) model.find("org.umlmda.test");
 
          assertNotNull("Package found", modelPackage);
-         
+
          ModelClass base = (ModelClass) model.find("org.umlmda.test.base.TestBaseClass");
-         
-      } catch (IOException e) {
+
+      }
+      catch (IOException e) {
          fail(e.getMessage());
-      } catch (ModelValidationException e) {
+      }
+      catch (ModelValidationException e) {
          fail(e.getValidationResults().toString());
       }
    }

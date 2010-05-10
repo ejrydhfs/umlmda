@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -28,10 +27,11 @@ import org.umlmda.generator.profile.Artefact;
 /**
  * Implementation of the generator context
  */
-public class GeneratorContextImpl implements GeneratorContext {
-   private GeneratorModelElement currentModelElement = null;
-   private Artefact currentGeneratorArtefact = null;
-   
+public class GeneratorContextImpl implements GeneratorContext
+{
+   private GeneratorModelElement currentModelElement      = null;
+   private Artefact              currentGeneratorArtefact = null;
+
    /**
     * 
     */
@@ -39,28 +39,32 @@ public class GeneratorContextImpl implements GeneratorContext {
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorContext#getCurrentModelElement()
     */
    public GeneratorModelElement getCurrentModelElement() {
       return currentModelElement;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorContext#setCurrentModelElement(net.sourceforge.umlmda.xmi.uml.ModelElement)
     */
    public void setCurrentModelElement(GeneratorModelElement currentModelElement) {
       this.currentModelElement = currentModelElement;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorContext#getCurrentArtefact()
     */
    public Artefact getCurrentArtefact() {
       return currentGeneratorArtefact;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorContext#setCurrentArtefact(org.umlmda.uml.generator.GeneratorArtefact)
     */
    public void setCurrentArtefact(Artefact currentGeneratorArtefact) {

@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)
@@ -58,21 +57,23 @@ import org.umlmda.uml.generator.util.ArtefactUtils;
 
 /**
  * Implementation of a model and generator class for common java generation
+ * 
  * @author MOROFF
  */
-public class JavaModelClassAdapter extends ModelClassAdapter implements GeneratorClass, JavaModelClass {
-   private final JavaImportHelper importHelper = new JavaImportHelperImpl(this);
-   private final GeneratorClassHelper classHelper = new GeneratorClassHelper(this);
-//   private Map registeredImports = null;
-//   private Set ambiguousImports = null;
-//   private JavaModelPackage genPackage = (JavaModelPackage) getPackage();
+public class JavaModelClassAdapter extends ModelClassAdapter implements GeneratorClass, JavaModelClass
+{
+   private final JavaImportHelper       importHelper = new JavaImportHelperImpl(this);
+   private final GeneratorClassHelper   classHelper  = new GeneratorClassHelper(this);
+   // private Map registeredImports = null;
+   // private Set ambiguousImports = null;
+   // private JavaModelPackage genPackage = (JavaModelPackage) getPackage();
    private final JavaModelElementHelper delegate;
-   private List attributes = null;
-   private List associations = null;
-   private List methods = null;
-   private List implementationReferencedTypes;
-   private static Logger logger = Logger.getLogger(JavaModelClassAdapter.class);
-      
+   private List                         attributes   = null;
+   private List                         associations = null;
+   private List                         methods      = null;
+   private List                         implementationReferencedTypes;
+   private static Logger                logger       = Logger.getLogger(JavaModelClassAdapter.class);
+
    /**
     * @param modelClassBase
     * @param model
@@ -83,12 +84,13 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
    }
 
    /**
-    * Reset cached information 
+    * Reset cached information
+    * 
     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
     */
    public void update(Observable o, Object arg) {
       super.update(o, arg);
-      
+
       if ( PROPERTY_ATTRIBUTES.equals(arg) && attributes != null ) {
          attributes.clear();
          attributes = null;
@@ -101,14 +103,15 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
          associations.clear();
          associations = null;
       }
-      
+
    }
-   
+
    public JavaModelPackage getJavaPackage() {
       return (JavaModelPackage) getPackage();
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorClass#getQualifiedName(java.lang.String)
     */
    public String getQualifiedName(String artefactType) {
@@ -120,44 +123,50 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
    }
 
    public String getGeneratedPath() {
-	   String packageName = ((JavaModelPackage)getGeneratorPackage()).getQualifiedPackageName(getGeneratorModel().getArtefact().getName());
-	   
-	   return packageName.replace('.', '/');
+      String packageName = ((JavaModelPackage) getGeneratorPackage()).getQualifiedPackageName(getGeneratorModel().getArtefact()
+            .getName());
+
+      return packageName.replace('.', '/');
    }
-   
+
    public String getGeneratedName(String artefactType) {
       return classHelper.getGeneratedName(artefactType);
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorClass#getQualifiedName(java.lang.String, org.umlmda.uml.generator.GeneratorClass)
     */
    public String getQualifiedName(String artefactType, GeneratorClass genClass) {
       ModelClass modelClass = (ModelClass) genClass;
-      String packageName = ((GeneratorPackage)modelClass.getPackage()).getQualifiedPackageName(artefactType);
-      
-      return packageName + "." + genClass.getGeneratedName(artefactType); 
+      String packageName = ((GeneratorPackage) modelClass.getPackage()).getQualifiedPackageName(artefactType);
+
+      return packageName + "." + genClass.getGeneratedName(artefactType);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.generator.model.uml.GeneratorClass#getQualifiedName(java.lang.String, org.umlmda.generator.model.uml.GeneratorMethod)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.generator.model.uml.GeneratorClass#getQualifiedName(java.lang.String,
+    * org.umlmda.generator.model.uml.GeneratorMethod)
     */
    public String getQualifiedName(String artefactName, GeneratorMethod method) {
       GeneratorClass modelClass = method.getGeneratorClass();
       GeneratorPackage genPackage = modelClass.getGeneratorPackage();
       String packageName = genPackage.getQualifiedPackageName(artefactName);
-      
-      return packageName + "." + method.getGeneratedName(artefactName); 
+
+      return packageName + "." + method.getGeneratedName(artefactName);
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorModelElement#getGeneratorModel()
     */
    public GeneratorModel getGeneratorModel() {
       return (GeneratorModel) getModel();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorClass#getGeneratorPackage()
     */
    public GeneratorPackage getGeneratorPackage() {
@@ -172,7 +181,6 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
       return getScopedName(artefactName, this);
    }
 
-
    public void registerImport(String artefactName) {
       registerImport(artefactName, this);
    }
@@ -180,15 +188,15 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
    public String getScopedName(String business_interface, GeneratorClass genClass) {
       return importHelper.getScopedName(business_interface, genClass);
    }
-   
+
    public String getScopedName(String artefactName, GeneratorPackage genPackage) {
       return importHelper.getScopedName(artefactName, genPackage);
    }
-   
+
    public String registeredImports() {
       return importHelper.registeredImports();
    }
-   
+
    public void registerImport(String artefactName, JavaModelPackage genClass) {
       importHelper.registerImport(artefactName, genClass);
    }
@@ -196,11 +204,11 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
    public void registerImport(String artefactName, JavaModelClass genClass) {
       importHelper.registerImport(artefactName, genClass);
    }
-   
+
    public void registerImports(String business_interface, Collection classes) {
       importHelper.registerImports(business_interface, classes);
    }
-   
+
    public void registerImports(String business_interface, Collection classes, String stereotype) {
       importHelper.registerImports(business_interface, classes, stereotype);
    }
@@ -209,21 +217,23 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
       importHelper.resetImports();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#hasAsyncMethods()
     */
    public boolean hasAsyncMethods() {
-      boolean asyncMethods = false; 
-      for (Iterator im = getMethods().iterator(); asyncMethods == false && im.hasNext();) {
+      boolean asyncMethods = false;
+      for ( Iterator im = getMethods().iterator(); asyncMethods == false && im.hasNext(); ) {
          ModelMethod method = (ModelMethod) im.next();
-         
-         if ( method.hasStereotype(ModelStereotype.ASYNC_CALL))
+
+         if ( method.hasStereotype(ModelStereotype.ASYNC_CALL) )
             asyncMethods = true;
       }
       return asyncMethods;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorModelElement#getReplacementName()
     */
    public String getReplacementName() {
@@ -234,7 +244,8 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
       return delegate.getDocumentation(context);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClassifier#getType(java.lang.String)
     */
    public String getType(String artefact) {
@@ -247,28 +258,30 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
    public JavaModelPackage getComponent() {
       try {
          ModelPackage component = getPackage();
-         
+
          while ( component != null && component.hasStereotype(ModelStereotype.BUSINESS_COMPONENT) == false ) {
             component = component.getPackage();
          }
-         return (JavaModelPackage)component;
-      } catch (RuntimeException e) {
-         logger.error(e.getMessage()+" determining component of "+getQualifiedName(), e);
+         return (JavaModelPackage) component;
+      }
+      catch (RuntimeException e) {
+         logger.error(e.getMessage() + " determining component of " + getQualifiedName(), e);
          throw e;
       }
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#getModelVersion()
     */
    public String getModelVersion() {
       String modelVersion;
       ModelPackage component = getComponent();
-      
+
       if ( component != null ) {
          String majorVersion = component.getStereotypeProperty(ModelTaggedValues.MAJOR_VERSION, "1");
          String minorVersion = component.getStereotypeProperty(ModelTaggedValues.MINOR_VERSION, "0");
-         
+
          modelVersion = majorVersion + "." + minorVersion;
       }
       else {
@@ -278,105 +291,110 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
       return modelVersion;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#getSerialVersionUID()
     */
    public String getSerialVersionUID() {
       long serialVersionUID;
       ModelPackage component = getComponent();
-      
+
       if ( component != null ) {
          long majorVersion = Long.parseLong(component.getStereotypeProperty(ModelTaggedValues.MAJOR_VERSION, "1"));
          long minorVersion = Long.parseLong(component.getStereotypeProperty(ModelTaggedValues.MINOR_VERSION, "0"));
-         
+
          serialVersionUID = majorVersion * 1000 + minorVersion;
       }
       else {
          serialVersionUID = 0;
       }
 
-      return Long.toString(serialVersionUID)+"L";
+      return Long.toString(serialVersionUID) + "L";
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClassifier#getJavaType()
     */
    public String getJavaType() {
       if ( getGeneratorModel().getContext().getCurrentModelElement() instanceof JavaModelClass ) {
          JavaModelClass genClass = (JavaModelClass) getGeneratorModel().getContext().getCurrentModelElement();
 
-         if (hasStereotype(ModelStereotype.BUSINESS_OBJECT)) {
+         if ( hasStereotype(ModelStereotype.BUSINESS_OBJECT) ) {
             return genClass.getScopedName(ArtefactUtils.getDefaultMapping(ModelStereotype.BUSINESS_OBJECT), this);
          }
-         else if (hasStereotype(ModelStereotype.BUSINESS_SERVICE)) {
+         else if ( hasStereotype(ModelStereotype.BUSINESS_SERVICE) ) {
             return genClass.getScopedName(ArtefactUtils.getDefaultMapping(ModelStereotype.BUSINESS_SERVICE), this);
          }
-         else if (hasStereotype(ModelStereotype.BUSINESS_EXCEPTION)) {
+         else if ( hasStereotype(ModelStereotype.BUSINESS_EXCEPTION) ) {
             return genClass.getScopedName(ArtefactUtils.getDefaultMapping(ModelStereotype.BUSINESS_EXCEPTION), this);
          }
-         else if (hasStereotype(ModelStereotype.ENUMERATION)) {
+         else if ( hasStereotype(ModelStereotype.ENUMERATION) ) {
             return genClass.getScopedName(ArtefactUtils.getDefaultMapping(ModelStereotype.ENUMERATION), this);
          }
-         else if (hasStereotype(ModelStereotype.NATIVE_CLASS)) {
+         else if ( hasStereotype(ModelStereotype.NATIVE_CLASS) ) {
             return genClass.getScopedName(ArtefactUtils.getDefaultMapping(ModelStereotype.NATIVE_CLASS), this);
          }
-         else if (hasStereotype(ModelStereotype.NATIVE_INTERFACE)) {
+         else if ( hasStereotype(ModelStereotype.NATIVE_INTERFACE) ) {
             return genClass.getScopedName(ArtefactUtils.getDefaultMapping(ModelStereotype.NATIVE_INTERFACE), this);
-         } 
-         else if (hasStereotype(ModelStereotype.SERVICE_LISTENER)) {
+         }
+         else if ( hasStereotype(ModelStereotype.SERVICE_LISTENER) ) {
             return genClass.getScopedName(JavaArtefacts.SERVICE_LISTENER, this);
          }
-      } 
-      else if ( getGeneratorModel().getContext().getCurrentModelElement() instanceof JavaModelPackage )  {
+      }
+      else if ( getGeneratorModel().getContext().getCurrentModelElement() instanceof JavaModelPackage ) {
          JavaModelPackage genPackage = (JavaModelPackage) getGeneratorModel().getContext().getCurrentModelElement();
 
-         if (hasStereotype(ModelStereotype.BUSINESS_OBJECT)) {
+         if ( hasStereotype(ModelStereotype.BUSINESS_OBJECT) ) {
             return genPackage.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, this);
          }
-         else if (hasStereotype(ModelStereotype.BUSINESS_SERVICE)) {
+         else if ( hasStereotype(ModelStereotype.BUSINESS_SERVICE) ) {
             return genPackage.getScopedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE, this);
          }
-         else if (hasStereotype(ModelStereotype.BUSINESS_EXCEPTION)) {
+         else if ( hasStereotype(ModelStereotype.BUSINESS_EXCEPTION) ) {
             return genPackage.getScopedName(JavaArtefacts.BUSINESS_EXCEPTION, this);
          }
-         else if (hasStereotype(ModelStereotype.ENUMERATION)) {
+         else if ( hasStereotype(ModelStereotype.ENUMERATION) ) {
             return genPackage.getScopedName(JavaArtefacts.ENUMERATION, this);
          }
-         else if (hasStereotype(ModelStereotype.NATIVE_CLASS)) {
+         else if ( hasStereotype(ModelStereotype.NATIVE_CLASS) ) {
             return genPackage.getScopedName(JavaArtefacts.PLAIN_CLASS, this);
          }
-         else if (hasStereotype(ModelStereotype.NATIVE_INTERFACE)) {
+         else if ( hasStereotype(ModelStereotype.NATIVE_INTERFACE) ) {
             return genPackage.getScopedName(JavaArtefacts.PLAIN_INTERFACE, this);
-         } 
+         }
       }
-      throw new IllegalArgumentException(getQualifiedName()+" have no supported stereotype <<"+getStereotypes().toString()+">>");
+      throw new IllegalArgumentException(getQualifiedName() + " have no supported stereotype <<" + getStereotypes().toString()
+            + ">>");
    }
-   
+
    public void setAsCurrentArtefact(String artefact) {
       getGeneratorModel().getContext().setCurrentModelElement(this);
       getGeneratorModel().getContext().setCurrentArtefact(getGeneratorModel().getArtefact(artefact, this));
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorClassifier#getPsmType()
     */
    public String getPsmType() {
       return getJavaType();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#getExtendedClass()
     */
    public JavaModelClass getExtendedClass() {
-      if ( getSuperClasses().size() == 1) {
+      if ( getSuperClasses().size() == 1 ) {
          return (JavaModelClass) getSuperClasses().get(0);
       }
       else if ( getSuperClasses().size() > 1 ) {
          JavaModelClass superClass = null;
-         
-         for (Iterator ig = getGeneralizations().iterator(); superClass == null && ig.hasNext();) {
-            ModelGeneralization	generalization = (ModelGeneralization) ig.next();
-            
+
+         for ( Iterator ig = getGeneralizations().iterator(); superClass == null && ig.hasNext(); ) {
+            ModelGeneralization generalization = (ModelGeneralization) ig.next();
+
             if ( generalization.hasStereotype(ModelStereotype.EXTENDS) ) {
                superClass = (JavaModelClass) generalization.getGeneral();
             }
@@ -388,35 +406,35 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
       }
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#getImplementedInterfaces()
     */
    public List getImplementedInterfaces() {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    /**
     * Returns all own attributes and all attributes of none <<Extends>> base classes.
     */
    public List getImplementedAttributes() {
       if ( attributes == null ) {
          attributes = new ArrayList();
-         
+
          if ( getGeneralizations().size() > 1 ) {
             List allExtendedClasses = getAllExtendedClasses();
 
             // Add attributes from none extended bases classes
             iterateNoneExtendedBaseClasses(this, allExtendedClasses, new ModelIterator.Action() {
 
-	               public void process(ModelElement modelElement) {
-	                  ModelClass modelClass = (ModelClass) modelElement;
+               public void process(ModelElement modelElement) {
+                  ModelClass modelClass = (ModelClass) modelElement;
 
-	                  
-	                  addNoneExistierungAttributes(attributes, modelClass.getAttributes(false));
-	               }
-               });
-            
+                  addNoneExistierungAttributes(attributes, modelClass.getAttributes(false));
+               }
+            });
+
             // Add own attributes
             addNoneExistierungAttributes(attributes, super.getAttributes());
          }
@@ -428,60 +446,62 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
    }
 
    private static void addNoneExistierungAttributes(List attributes, List attributesToAdd) {
-      for (Iterator iaa = attributesToAdd.iterator(); iaa.hasNext();) {
+      for ( Iterator iaa = attributesToAdd.iterator(); iaa.hasNext(); ) {
          ModelAttribute attributeToAdd = (ModelAttribute) iaa.next();
          boolean alreadyExisting = false;
-         
-         for (Iterator ia = attributes.iterator(); ia.hasNext();) {
+
+         for ( Iterator ia = attributes.iterator(); ia.hasNext(); ) {
             ModelAttribute attribute = (ModelAttribute) ia.next();
-            
-            if ( attribute.getName().equals(attributeToAdd.getName())) {
+
+            if ( attribute.getName().equals(attributeToAdd.getName()) ) {
                if ( attribute.getDataType() != null && attribute.getDataType().equals(attributeToAdd.getDataType()) == false ) {
-                  logger.warn(attribute.getQualifiedName()+" has different type than "+attributeToAdd.getQualifiedName()+" in derived class");
+                  logger.warn(attribute.getQualifiedName() + " has different type than " + attributeToAdd.getQualifiedName()
+                        + " in derived class");
                }
                alreadyExisting = true;
             }
          }
-         
+
          if ( alreadyExisting == false ) {
             attributes.add(attributeToAdd);
          }
       }
    }
-   
+
    private static void iterateNoneExtendedBaseClasses(ModelClass modelClass, List allExtendedClasses, ModelIterator.Action action) {
       // Add attributes from none <<Extends>> generalizations
-      for (Iterator ig = modelClass.getGeneralizations().iterator(); ig.hasNext();) {
+      for ( Iterator ig = modelClass.getGeneralizations().iterator(); ig.hasNext(); ) {
          ModelGeneralization generalization = (ModelGeneralization) ig.next();
          ModelClass generalClass = generalization.getGeneral();
-         
-         if (generalization.hasStereotype(ModelStereotype.EXTENDS) == false && allExtendedClasses.contains(generalClass) == false ) {
+
+         if ( generalization.hasStereotype(ModelStereotype.EXTENDS) == false
+               && allExtendedClasses.contains(generalClass) == false ) {
             action.process(generalClass);
             iterateNoneExtendedBaseClasses(generalClass, allExtendedClasses, action);
          }
       }
    }
-   
+
    /**
     * Returns all own associations and all associations of none <<Extends>> base classes.
     */
    public List getImplementedAssociations() {
       if ( associations == null ) {
          associations = new ArrayList();
-         
+
          if ( getGeneralizations().size() > 1 ) {
             List allExtendedClasses = getAllExtendedClasses();
-            
+
             // Add attributes from none extended bases classes
             iterateNoneExtendedBaseClasses(this, allExtendedClasses, new ModelIterator.Action() {
 
-	               public void process(ModelElement modelElement) {
-	                  ModelClass modelClass = (ModelClass) modelElement;
-	                  
-	                  associations.addAll(modelClass.getAssociations(false));
-	               }
-               });
-            
+               public void process(ModelElement modelElement) {
+                  ModelClass modelClass = (ModelClass) modelElement;
+
+                  associations.addAll(modelClass.getAssociations(false));
+               }
+            });
+
             // Add own attributes
             associations.addAll(super.getAssociations());
          }
@@ -498,20 +518,20 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
    public List getImplementedMethods() {
       if ( methods == null ) {
          methods = new ArrayList();
-         
+
          if ( getGeneralizations().size() > 1 ) {
             List allExtendedClasses = getAllExtendedClasses();
-            
+
             // Add attributes from none extended bases classes
             iterateNoneExtendedBaseClasses(this, allExtendedClasses, new ModelIterator.Action() {
 
-	               public void process(ModelElement modelElement) {
-	                  ModelClass modelClass = (ModelClass) modelElement;
-	                  
-	                  methods.addAll(modelClass.getMethods(false));
-	               }
-               });
-            
+               public void process(ModelElement modelElement) {
+                  ModelClass modelClass = (ModelClass) modelElement;
+
+                  methods.addAll(modelClass.getMethods(false));
+               }
+            });
+
             // Add own attributes
             methods.addAll(super.getMethods());
          }
@@ -522,41 +542,44 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
       return methods;
    }
 
-   
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#getAllExtendedClasses()
     */
    public List getAllExtendedClasses() {
       List allExtendedClasses = new ArrayList(getAllExtendedClasses(this, new HashSet()));
-      
+
       return allExtendedClasses;
    }
-   
+
    private static Set getAllExtendedClasses(JavaModelClass modelClass, Set extendedClassSet) {
       JavaModelClass extendedClass = modelClass.getExtendedClass();
-      
+
       if ( extendedClass != null && extendedClassSet.add(extendedClass) ) {
          getAllExtendedClasses(extendedClass, extendedClassSet);
       }
-      
+
       return extendedClassSet;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#getDeclaredAttributes()
     */
    public List getDeclaredAttributes() {
       return super.getAttributes(false);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#getDeclaredAssociations()
     */
    public List getDeclaredAssociations() {
       return super.getAssociations(false);
    }
 
-  /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#getDeclaredMethods()
     */
    public List getDeclaredMethods() {
@@ -568,123 +591,128 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
    }
 
    /**
-    * Checks whether the given class has an own primary key. That happensc if 
-    * it has own pkey attributes or inherited pkey attributes from it's 
-    * parent.
+    * Checks whether the given class has an own primary key. That happensc if it has own pkey attributes or inherited pkey
+    * attributes from it's parent.
     */
    public boolean isOwningAPKey() {
       int keyAttrCount = getKeyAttributes().size();
       boolean hasOwnPKey = keyAttrCount > 1;
-      
-      for (Iterator is = getSuperClasses().iterator(); is.hasNext();) {
+
+      for ( Iterator is = getSuperClasses().iterator(); is.hasNext(); ) {
          ModelClass superClass = (ModelClass) is.next();
          int scKeyAttrCount = superClass.getKeyAttributes().size();
-         
-         if ( scKeyAttrCount > 0  && scKeyAttrCount == keyAttrCount ) {
+
+         if ( scKeyAttrCount > 0 && scKeyAttrCount == keyAttrCount ) {
             hasOwnPKey = false;
          }
       }
-      
+
       return hasOwnPKey;
    }
-   
+
    public boolean isPKeyInheritedFromParent() {
       ModelAssociation parentComposition = getParentComposition();
-      
+
       if ( parentComposition != null ) {
-         return Boolean.valueOf(parentComposition.getStereotypeProperty(ModelTaggedValues.DB_PKEY_INHERIT, "false")).booleanValue();
+         return Boolean.valueOf(parentComposition.getStereotypeProperty(ModelTaggedValues.DB_PKEY_INHERIT, "false"))
+               .booleanValue();
       }
       else {
          return false;
       }
    }
 
-   
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelClass#hasNoneGenerateableFeatures()
     */
    public boolean hasNoneGenerateableFeatures() {
       boolean derivedFeatures = false;
-      
+
       if ( getMethods().size() == 0 ) {
-         for (Iterator iattr = getImplementedAttributes().iterator(); derivedFeatures == false && iattr.hasNext();) {
+         for ( Iterator iattr = getImplementedAttributes().iterator(); derivedFeatures == false && iattr.hasNext(); ) {
             ModelStructuralFeature feature = (ModelStructuralFeature) iattr.next();
 
-            if (feature.isDerived()) {
+            if ( feature.isDerived() ) {
                derivedFeatures = true;
             }
          }
 
-         for (Iterator iassoc = getImplementedAssociations().iterator(); derivedFeatures == false && iassoc.hasNext();) {
+         for ( Iterator iassoc = getImplementedAssociations().iterator(); derivedFeatures == false && iassoc.hasNext(); ) {
             ModelStructuralFeature feature = (ModelStructuralFeature) iassoc.next();
 
-            if (feature.isDerived()) {
+            if ( feature.isDerived() ) {
                derivedFeatures = true;
             }
          }
       }
-      
+
       return derivedFeatures || getMethods().size() > 0;
    }
- 
+
    public boolean isDelegationInterfaceNeeded() {
       Collection abstractBaseClassesWithNoneGenerateableFeatures = getAbstractBaseClassesWithNoneGenerateableFeatures();
-      
+
       return hasNoneGenerateableFeatures() || abstractBaseClassesWithNoneGenerateableFeatures.size() > 0;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#hasBoundProperties()
     */
    public boolean hasBoundProperties() {
       GeneratorModel genModel = getGeneratorModel();
-      boolean propertyChangeSupport = Boolean.valueOf(genModel.getArtefact().getProperties().getProperty("PropertyChangeSupport", "false")).booleanValue();
+      boolean propertyChangeSupport = Boolean.valueOf(
+            genModel.getArtefact().getProperties().getProperty("PropertyChangeSupport", "false")).booleanValue();
 
       if ( propertyChangeSupport )
          return propertyChangeSupport;
-      
-      return propertyHasStereotype(ModelStereotype.BOUND, getAttributes()) ||
-             propertyHasStereotype(ModelStereotype.BOUND, getAssociations());
+
+      return propertyHasStereotype(ModelStereotype.BOUND, getAttributes())
+            || propertyHasStereotype(ModelStereotype.BOUND, getAssociations());
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#hasConstrainedProperties()
     */
    public boolean hasConstrainedProperties() {
-      return propertyHasStereotype(ModelStereotype.CONSTRAINED, getAttributes()) ||
-             propertyHasStereotype(ModelStereotype.CONSTRAINED, getAssociations());
+      return propertyHasStereotype(ModelStereotype.CONSTRAINED, getAttributes())
+            || propertyHasStereotype(ModelStereotype.CONSTRAINED, getAssociations());
    }
 
    private boolean propertyHasStereotype(String stereotype, List features) {
       boolean hasConstrainedProperty = false;
-      
-      for (Iterator im = features.iterator(); im.hasNext() && !hasConstrainedProperty;) {
+
+      for ( Iterator im = features.iterator(); im.hasNext() && !hasConstrainedProperty; ) {
          ModelStructuralFeature feature = (ModelStructuralFeature) im.next();
-         
-         if ( feature.hasStereotype(stereotype)) {
+
+         if ( feature.hasStereotype(stereotype) ) {
             hasConstrainedProperty = true;
          }
       }
       return hasConstrainedProperty;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#hasInitializer()
     */
    public ModelMethod getInitializerMethod() {
       boolean hasInitializer = false;
-      
-      for (Iterator im = getMethods().iterator(); im.hasNext() && !hasInitializer;) {
+
+      for ( Iterator im = getMethods().iterator(); im.hasNext() && !hasInitializer; ) {
          ModelMethod method = (ModelMethod) im.next();
-         
-         if ( method.hasStereotype(ModelStereotype.INITIALIZER)) {
+
+         if ( method.hasStereotype(ModelStereotype.INITIALIZER) ) {
             return method;
          }
       }
       return null;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClass#superClassHasBoundProperties()
     */
    public boolean superClassHasBoundProperties() {
@@ -693,19 +721,20 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
       else
          return false;
    }
-   
+
    public String getUpperCaseIdentifier() {
       return StringUtil.toUpperCaseIdentifier(getName());
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelClass#getReferencedTypes()
     */
    public List getImplementationReferencedTypes() {
       if ( implementationReferencedTypes == null ) {
          final Set referencedTypeSet = new HashSet();
-         
-         for (Iterator iter = getImplementedAttributes().iterator(); iter.hasNext();) {
+
+         for ( Iterator iter = getImplementedAttributes().iterator(); iter.hasNext(); ) {
             ModelAttribute attribute = (ModelAttribute) iter.next();
 
             if ( attribute.getModelClassifier() != null ) {
@@ -713,33 +742,33 @@ public class JavaModelClassAdapter extends ModelClassAdapter implements Generato
             }
          }
 
-         for (Iterator iter = getImplementedAssociations().iterator(); iter.hasNext();) {
+         for ( Iterator iter = getImplementedAssociations().iterator(); iter.hasNext(); ) {
             ModelAssociation association = (ModelAssociation) iter.next();
-            if (association.isNavigatableToTarget()) {
+            if ( association.isNavigatableToTarget() ) {
                ModelClassBase modelClass = association.getTarget();
 
                addReferencedType(referencedTypeSet, modelClass, getModelClass());
             }
          }
 
-         for (Iterator iter = getImplementedMethods().iterator(); iter.hasNext();) {
+         for ( Iterator iter = getImplementedMethods().iterator(); iter.hasNext(); ) {
             ModelMethod method = (ModelMethod) iter.next();
 
-            for (Iterator ip = method.getExceptions().iterator(); ip.hasNext();) {
+            for ( Iterator ip = method.getExceptions().iterator(); ip.hasNext(); ) {
                ModelClass exceptionClass = (ModelClass) ip.next();
-               
+
                addReferencedType(referencedTypeSet, exceptionClass, getModelClass());
             }
 
-            for (Iterator ip = method.getParameters().iterator(); ip.hasNext();) {
+            for ( Iterator ip = method.getParameters().iterator(); ip.hasNext(); ) {
                addReferencedType(referencedTypeSet, ((ModelParameter) ip.next()).getType(), getModelClass());
             }
 
             addReferencedType(referencedTypeSet, method.getReturnTypeBase(), getModelClass());
          }
-         
+
          implementationReferencedTypes = new ArrayList(referencedTypeSet);
-         Collections.sort(implementationReferencedTypes); 
+         Collections.sort(implementationReferencedTypes);
       }
       return implementationReferencedTypes;
    }

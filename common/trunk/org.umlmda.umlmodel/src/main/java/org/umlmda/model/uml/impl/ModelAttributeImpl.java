@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelAttributeImpl.java,v 1.3 2006/11/18 12:03:57 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelAttributeImpl.java,v $
- * $Revision: 1.3 $
- *     $Name:  $
- *     $Date: 2006/11/18 12:03:57 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -35,18 +30,18 @@ import org.umlmda.model.uml.ModelElementBase;
 
 /**
  * Basic implementation of an attribute.
- * @author Dieter Moroff (10.04.2006), last change $Date: 2006/11/18 12:03:57 $ $Name:  $
- * @version $Revision: 1.3 $
+ * 
  */
-public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements ModelAttributeBase {
+public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements ModelAttributeBase
+{
    private ModelClassifierBase classifierBase;
-   private ModelDataTypeBase dataTypeBase;
-   private ModelClassBase modelClassBase;
-   private boolean constant = false;
-   private boolean readOnly = false;
-   private boolean _transient = false;
-   private String initialValue = null;
-   
+   private ModelDataTypeBase   dataTypeBase;
+   private ModelClassBase      modelClassBase;
+   private boolean             constant     = false;
+   private boolean             readOnly     = false;
+   private boolean             _transient   = false;
+   private String              initialValue = null;
+
    /**
     * @param model
     * @param owner
@@ -68,25 +63,28 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
          setModelClassBase(source.getModelClassBase());
       initObserver();
    }
-   
+
    private void initObserver() {
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
     */
    public void update(Observable o, Object arg) {
       super.update(o, arg);
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttributeBase#getType()
     */
    public String getType() {
       return classifierBase.getName();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttributeBase#getModelClassBase()
     */
    public ModelClassBase getModelClassBase() {
@@ -102,8 +100,9 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
       }
       notifyObservers(PROPERTY_MODEL_CLASS_BASE);
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttributeBase#getDataTypeBase()
     */
    public ModelDataTypeBase getDataTypeBase() {
@@ -118,16 +117,18 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
          notifyObservers(PROPERTY_MODEL_CLASS_BASE);
       }
       notifyObservers(PROPERTY_DATA_TYPE_BASE);
-}
-   
-   /* (non-Javadoc)
+   }
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttributeBase#isPrimitiveType()
     */
    public boolean isPrimitiveType() {
       return dataTypeBase != null;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttributeBase#isConstant()
     */
    public boolean isConstant() {
@@ -138,8 +139,9 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
       this.constant = constant;
       notifyObservers(PROPERTY_CONSTANT);
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttributeBase#isTransient()
     */
    public boolean isTransient() {
@@ -150,8 +152,9 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
       this._transient = _transient;
       notifyObservers(PROPERTY_TRANSIENT);
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttributeBase#getInitialValue()
     */
    public String getInitialValue() {
@@ -168,10 +171,10 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
     */
    public void setModelClassifierBase(ModelClassifierBase classifierBase) {
       if ( classifierBase instanceof ModelClassBase ) {
-         setModelClassBase((ModelClassBase)classifierBase);
+         setModelClassBase((ModelClassBase) classifierBase);
       }
       else {
-         setDataTypeBase((ModelDataTypeBase)classifierBase);
+         setDataTypeBase((ModelDataTypeBase) classifierBase);
       }
    }
 }

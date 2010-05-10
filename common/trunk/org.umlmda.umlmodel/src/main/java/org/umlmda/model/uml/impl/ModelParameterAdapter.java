@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelParameterAdapter.java,v 1.3 2006/04/13 23:04:37 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelParameterAdapter.java,v $
-// $Revision: 1.3 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/13 23:04:37 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -36,69 +29,71 @@ import org.umlmda.model.uml.ModelParameterBase;
 import org.umlmda.model.uml.ModelVisitor;
 
 /**
- * platform independent adapter to MOF model parameter.
- * extend for specific platform to override the following properties:
+ * platform independent adapter to MOF model parameter. extend for specific platform to override the following properties:
  * direction, type
- *
+ * 
  * @author vpussel
- *
  */
-public class ModelParameterAdapter extends ModelElementAdapter implements
-		ModelParameter {
+public class ModelParameterAdapter extends ModelElementAdapter implements ModelParameter
+{
 
-	private final ModelParameterBase modelParameter;
+   private final ModelParameterBase modelParameter;
 
-	private ModelClassifier type = null;
+   private ModelClassifier          type = null;
 
-	/**
-	 * create adapter to model parameter
-	 */
-	public ModelParameterAdapter( ModelParameterBase modelParameter, Model model) {
-		super(modelParameter, model);
-		
-		this.modelParameter = modelParameter;
-	}
+   /**
+    * create adapter to model parameter
+    */
+   public ModelParameterAdapter(ModelParameterBase modelParameter, Model model) {
+      super(modelParameter, model);
 
-    /**
-     * Reset cached information 
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
-    public void update(Observable o, Object arg) {
-       if ( PROPERTY_TYPEBASE.equals(arg) && type != null ) {
-          type = null;
-       }
-    }
-   
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelParameter#getDirection()
-	 */
-	public String getDirection() {
-		return modelParameter.getDirection();
-	}
+      this.modelParameter = modelParameter;
+   }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelParameter#getType()
-	 */
-	public ModelClassifier getType() {
-		if (type == null) {
-			type = adaptedModel.getModelClassifier(modelParameter.getTypeBase());
-		}
-		return type;
-	}
+   /**
+    * Reset cached information
+    * 
+    * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+    */
+   public void update(Observable o, Object arg) {
+      if ( PROPERTY_TYPEBASE.equals(arg) && type != null ) {
+         type = null;
+      }
+   }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelParameter#getDirection()
+    */
+   public String getDirection() {
+      return modelParameter.getDirection();
+   }
+
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelParameter#getType()
+    */
+   public ModelClassifier getType() {
+      if ( type == null ) {
+         type = adaptedModel.getModelClassifier(modelParameter.getTypeBase());
+      }
+      return type;
+   }
+
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelParameterBase#getTypeBase()
     */
    public ModelClassifierBase getTypeBase() {
       return getType();
    }
 
-
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitable#accept(org.umlmda.model.uml.ModelVisitor)
     */
    public void accept(ModelVisitor visitor) {
       visitor.visit(this);
    }
-   
+
 }

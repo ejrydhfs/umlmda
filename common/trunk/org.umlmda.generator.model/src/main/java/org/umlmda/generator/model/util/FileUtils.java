@@ -1,12 +1,5 @@
-// jUMLMDA, GeneratorBase-API
+// UMLMDA, GeneratorBase-API
 //  
-//   $Header$
-//   $Source$
-// $Revision$
-//    $State$
-//     $Name$
-//     $Date$
-//   $Locker$
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Library General Public
@@ -36,13 +29,16 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * Collection of utilites for file and directory access
+ * 
  * @author moroff
  */
-public class FileUtils {
+public class FileUtils
+{
    static public final String newLine = System.getProperty("line.separator", "\n");
 
    /**
     * Copy a file, if the destination directory does not exist it will be created
+    * 
     * @param sourceFile
     * @param destFile
     * @throws IOException
@@ -54,14 +50,14 @@ public class FileUtils {
 
    static public void copyFile(File sourceFile, File destFile, boolean preserveLastModified) throws IOException {
 
-      if (destFile.exists() && destFile.isFile()) {
+      if ( destFile.exists() && destFile.isFile() ) {
          destFile.delete();
       }
 
       // ensure that parent dir of dest file exists!
       // not using getParentFile method to stay 1.1 compat
       File parent = destFile.getParentFile();
-      if (!parent.exists()) {
+      if ( !parent.exists() ) {
          parent.mkdirs();
       }
 
@@ -76,19 +72,18 @@ public class FileUtils {
          do {
             out.write(buffer, 0, count);
             count = in.read(buffer, 0, buffer.length);
-         }
-         while (count != -1);
+         } while ( count != -1 );
       }
       finally {
-         if (out != null) {
+         if ( out != null ) {
             out.close();
          }
-         if (in != null) {
+         if ( in != null ) {
             in.close();
          }
       }
 
-      if (preserveLastModified) {
+      if ( preserveLastModified ) {
          destFile.setLastModified(sourceFile.lastModified());
       }
    }
@@ -102,7 +97,7 @@ public class FileUtils {
       int extStartPos = fileName.lastIndexOf(".");
 
       if ( extStartPos >= 0 ) {
-         return fileName.substring(extStartPos+1);
+         return fileName.substring(extStartPos + 1);
       }
       else {
          return StringUtils.EMPTY;

@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/internal/utils/ModelBaseUtils.java,v 1.1 2006/05/04 15:16:00 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/internal/utils/ModelBaseUtils.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/05/04 15:16:00 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -33,10 +28,10 @@ import org.umlmda.model.uml.attributes.Multiplicity;
 
 /**
  * TODO Insert type javadoc
- * @author Dieter Moroff (04.05.2006), last change $Date: 2006/05/04 15:16:00 $ $Name:  $
- * @version $Revision: 1.1 $
+ * 
  */
-public class ModelBaseUtils {
+public class ModelBaseUtils
+{
 
    /**
     * 
@@ -49,23 +44,23 @@ public class ModelBaseUtils {
    public static Multiplicity getMultiplicityByStereotype(ModelAttributeBase attribute) {
       Multiplicity multiplicity = null;
       Pattern multiplicityPattern = Pattern.compile("([0-9]+)..([0-9n*]+)");
-      for (Iterator is = attribute.getStereotypes().iterator(); is.hasNext();) {
+      for ( Iterator is = attribute.getStereotypes().iterator(); is.hasNext(); ) {
          String stereotype = (String) is.next();
          Matcher matcher = multiplicityPattern.matcher(stereotype);
-         
+
          if ( matcher.matches() ) {
             String lowerRange = matcher.group(1);
             String upperRange = matcher.group(2);
-            int lower = 0; 
+            int lower = 0;
             int upper = 1;
-            
+
             if ( upperRange.equals("n") || upperRange.equals("*") ) {
                upper = Multiplicity.UNBOUND;
             }
             else {
                upper = Integer.parseInt(upperRange);
             }
-            
+
             lower = Integer.parseInt(lowerRange);
             multiplicity = new Multiplicity(lower, upper);
             break;

@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmpItemProviderAdapterFactory.java,v 1.6 2006/06/24 19:09:07 moroff Exp $
  */
 package org.umlmda.generator.profile.provider;
 

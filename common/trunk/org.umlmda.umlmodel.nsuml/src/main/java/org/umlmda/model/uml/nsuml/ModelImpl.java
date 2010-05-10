@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelImpl.java,v 1.6 2006/11/23 13:38:24 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelImpl.java,v $
-// $Revision: 1.6 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/11/23 13:38:24 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -58,43 +51,44 @@ import ru.novosoft.uml.model_management.MPackage;
 /**
  * @author MOROFF
  */
-public class ModelImpl extends ModelElementImpl implements ModelBase {
-	private final MModel mmodel;
-//	private final ModelClassBase javaLangObject = new ModelClassImpl(this, null);
-	private Hashtable classes;
-   private Hashtable dataTypes;
-   private Hashtable packages;
-	
-	public ModelImpl(MModel mmodel) {
-		super(null, mmodel); // passing this in ctor is not allowed
-		this.mmodel = mmodel;
-      
-	}
-	
-	/**
-	 * overload ModelElementImpl.getModel() which would return null for ModelImpl
-	 */
-	public ModelBase getModel() {
-		return this;
-	}
-	
+public class ModelImpl extends ModelElementImpl implements ModelBase
+{
+   private final MModel mmodel;
+   // private final ModelClassBase javaLangObject = new ModelClassImpl(this, null);
+   private Hashtable    classes;
+   private Hashtable    dataTypes;
+   private Hashtable    packages;
+
+   public ModelImpl(MModel mmodel) {
+      super(null, mmodel); // passing this in ctor is not allowed
+      this.mmodel = mmodel;
+
+   }
+
+   /**
+    * overload ModelElementImpl.getModel() which would return null for ModelImpl
+    */
+   public ModelBase getModel() {
+      return this;
+   }
+
    public Collection getPackages() {
       if ( packages == null ) {
          getClasses();
       }
       return packages.values();
    }
-   
+
    public Collection getDatatypes() {
       if ( dataTypes == null ) {
          getClasses();
       }
       return dataTypes.values();
    }
-   
-	public Collection getClasses() {
-		if ( classes == null ) {
-			classes = new Hashtable();
+
+   public Collection getClasses() {
+      if ( classes == null ) {
+         classes = new Hashtable();
          dataTypes = new Hashtable();
          packages = new Hashtable();
 
@@ -113,12 +107,12 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
          addPrimitive(ModelDataType.STRING);
          addPrimitive(ModelDataType.TIMESTAMP);
          addPrimitive(ModelDataType.VOID);
-         
+
          // Modellklassen erzeugen
-			addClasses(classes, dataTypes, packages, this, mmodel);
-		}
-		return classes.values();
-	}
+         addClasses(classes, dataTypes, packages, this, mmodel);
+      }
+      return classes.values();
+   }
 
    private void addPrimitive(String name) {
       MDataType dataType = new MDataTypeImpl();
@@ -126,12 +120,13 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
       dataType.setNamespace(mmodel);
       dataTypes.put(dataType, new ModelDataTypeImpl(this, dataType));
    }
-	
-	private static void addClasses(Hashtable classes, Hashtable dataTypes, Hashtable packages, ModelImpl model, MNamespace namespace) {	
-		Collection elements = namespace.getOwnedElements();
-		for (Iterator ie = elements.iterator(); ie.hasNext();) {
-			Object element = (Object) ie.next();
-			
+
+   private static void addClasses(Hashtable classes, Hashtable dataTypes, Hashtable packages, ModelImpl model,
+         MNamespace namespace) {
+      Collection elements = namespace.getOwnedElements();
+      for ( Iterator ie = elements.iterator(); ie.hasNext(); ) {
+         Object element = (Object) ie.next();
+
          // Ignored stuff
          if ( element instanceof MStereotype ) {
          }
@@ -143,40 +138,39 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
          }
          else if ( element instanceof MConstraint ) {
          }
-		 else if ( element instanceof MDependency ) {
-		 }
+         else if ( element instanceof MDependency ) {
+         }
          // Processed stuff
-		 else if (element instanceof MClass) 
-			classes.put(element, new ModelClassImpl(model, (MClass)element));
-         else if (element instanceof MInterface) 
-            throw new RuntimeException("Modeltype interface not supported, ref="+((MInterface)element).getName());
+         else if ( element instanceof MClass )
+            classes.put(element, new ModelClassImpl(model, (MClass) element));
+         else if ( element instanceof MInterface )
+            throw new RuntimeException("Modeltype interface not supported, ref=" + ((MInterface) element).getName());
          else if ( element instanceof MDataType )
-            dataTypes.put(element, new ModelDataTypeImpl(model, (MDataType)element));   
-		 else if ( element instanceof MPackage ) {
-            packages.put(element, new ModelPackageImpl(model, (MPackage)element));
-			addClasses(classes, dataTypes, packages, model, (MNamespace) element);
+            dataTypes.put(element, new ModelDataTypeImpl(model, (MDataType) element));
+         else if ( element instanceof MPackage ) {
+            packages.put(element, new ModelPackageImpl(model, (MPackage) element));
+            addClasses(classes, dataTypes, packages, model, (MNamespace) element);
          }
          else
-            System.err.println("Unknown modeltype type="+element.getClass()+", ref="+element.toString());
-		}	
-	}
+            System.err.println("Unknown modeltype type=" + element.getClass() + ", ref=" + element.toString());
+      }
+   }
 
+   // /**
+   // * @return
+   // */
+   // public ModelClassBase getJavaLangObject() {
+   // return javaLangObject;
+   // }
 
-//	/**
-//	 * @return
-//	 */
-//	public ModelClassBase getJavaLangObject() {
-//		return javaLangObject;
-//	}
+   /**
+    * @param class1
+    * @return
+    */
+   ModelClassImpl findClass(MClass modelClass) {
+      return (ModelClassImpl) classes.get(modelClass);
+   }
 
-	/**
-	 * @param class1
-	 * @return
-	 */
-	ModelClassImpl findClass(MClass modelClass) {
-		return (ModelClassImpl) classes.get(modelClass);
-	}
-	
    ModelDataTypeBase findDataType(MDataType dataType) {
       return (ModelDataTypeBase) dataTypes.get(dataType);
    }
@@ -187,11 +181,11 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
     */
    public ModelClassifierBase findClassifier(MClassifier classifier) {
       if ( classifier instanceof MDataType )
-         return findDataType((MDataType)classifier);
-      else if ( classifier instanceof MSignal ) 
-         return findClass(classifier.getNamespace(), classifier.getName());   
+         return findDataType((MDataType) classifier);
+      else if ( classifier instanceof MSignal )
+         return findClass(classifier.getNamespace(), classifier.getName());
       else
-         return findClass((MClass)classifier);   
+         return findClass((MClass) classifier);
    }
 
    /**
@@ -201,10 +195,10 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
     */
    private ModelClassifierImpl findClass(MNamespace namespace, String className) {
       ModelPackageBase modelPackage = findPackage(namespace);
-      for (Iterator iter = classes.values().iterator(); iter.hasNext();) {
+      for ( Iterator iter = classes.values().iterator(); iter.hasNext(); ) {
          ModelClassImpl modelClass = (ModelClassImpl) iter.next();
-         
-         if ( modelClass.getPackageBase() == modelPackage  &&  modelClass.getName().equals(className))
+
+         if ( modelClass.getPackageBase() == modelPackage && modelClass.getName().equals(className) )
             return modelClass;
       }
       return null;
@@ -215,7 +209,7 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
     * @return
     */
    public ModelPackageBase findPackage(MNamespace namespace) {
-      return (ModelPackageBase)packages.get(namespace);
+      return (ModelPackageBase) packages.get(namespace);
    }
 
    /**
@@ -224,10 +218,10 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
     */
    public ModelElementBase findMethod(MClass clazz, MOperation operation) {
       ModelClassBase modelClass = (ModelClassBase) findClassifier(clazz);
-      
-      for (Iterator im = modelClass.getMethods().iterator(); im.hasNext();) {
+
+      for ( Iterator im = modelClass.getMethods().iterator(); im.hasNext(); ) {
          ModelMethodBase methodBase = (ModelMethodBase) im.next();
-         
+
          if ( methodBase.getName().equals(operation.getName()) ) {
             return methodBase;
          }
@@ -235,8 +229,8 @@ public class ModelImpl extends ModelElementImpl implements ModelBase {
       return null;
    }
 
-public ModelClass findClassByName(String classname) {
-	   throw new IllegalArgumentException("Not supported yet!");
-}
-   
+   public ModelClass findClassByName(String classname) {
+      throw new IllegalArgumentException("Not supported yet!");
+   }
+
 }

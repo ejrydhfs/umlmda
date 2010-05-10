@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: GenerationProfileItemProvider.java,v 1.7 2006/07/27 07:37:31 moroff Exp $
  */
 package org.umlmda.generator.set.provider;
 

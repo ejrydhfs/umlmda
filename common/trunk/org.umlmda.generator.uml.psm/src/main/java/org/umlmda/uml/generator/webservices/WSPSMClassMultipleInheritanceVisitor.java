@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSPSMClassMultipleInheritanceVisitor.java,v 1.1 2007/04/12 06:45:54 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSPSMClassMultipleInheritanceVisitor.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2007/04/12 06:45:54 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -41,11 +36,11 @@ import org.umlmda.model.uml.impl.ModelClassImpl;
 import org.umlmda.profile.ModelStereotype;
 
 /**
- * Creates web service classes 
- * @author Dieter Moroff (12.04.2006), last change $Date: 2007/04/12 06:45:54 $ $Name:  $
- * @version $Revision: 1.1 $
+ * Creates web service classes
+ * 
  */
-public class WSPSMClassMultipleInheritanceVisitor extends DefaultModelVisitor {
+public class WSPSMClassMultipleInheritanceVisitor extends DefaultModelVisitor
+{
 
    /**
     * 
@@ -54,47 +49,49 @@ public class WSPSMClassMultipleInheritanceVisitor extends DefaultModelVisitor {
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitor#visit(org.umlmda.model.uml.ModelClass)
     */
    public boolean visit(ModelClass modelClass) {
       super.visit(modelClass);
-      
+
       WSModelClass wsClass = (WSModelClass) modelClass;
       WSModel wsModel = (WSModel) wsClass.getModel();
 
-      if (wsClass.hasStereotype(WSStereotypes.WEB_SERVICE_OBJECT) && wsClass.getGeneralizations().size() > 1 ) {
+      if ( wsClass.hasStereotype(WSStereotypes.WEB_SERVICE_OBJECT) && wsClass.getGeneralizations().size() > 1 ) {
          ModelClassImpl wsClassImpl = (ModelClassImpl) wsClass.getBase();
-         List generalizations = ((ModelClassBase)wsClass.getBase()).getGeneralizations();
-         
+         List generalizations = ((ModelClassBase) wsClass.getBase()).getGeneralizations();
+
          // Copy attributes and associations from class, remove generalization
-         for (Iterator igen = generalizations.iterator(); igen.hasNext();) {
-            ModelGeneralizationBase	generalizationBase = (ModelGeneralizationBase) igen.next();
+         for ( Iterator igen = generalizations.iterator(); igen.hasNext(); ) {
+            ModelGeneralizationBase generalizationBase = (ModelGeneralizationBase) igen.next();
             ModelGeneralization generalization = wsModel.getModelGeneralization(generalizationBase);
-            
+
             if ( generalization.hasStereotype(ModelStereotype.EXTENDS) == false ) {
-//               List inheritedAttr = new ArrayList(wsClass.getImplementedAttributes());
-//               
-//               inheritedAttr.removeAll(wsClass.getDeclaredAttributes());
-//               
-//               for (Iterator ia = inheritedAttr.iterator(); ia.hasNext();) {
-//                  ModelAttribute attribute = (ModelAttribute) ia.next();
-//                  ModelAttributeImpl wsAttributeImpl = new ModelAttributeImpl(wsModel, wsClassImpl, attribute);
-//                  ModelClassifier attrClassifer = (ModelClassifier) wsModel.find(attribute.getModelClassifier().getQualifiedName());
-//                  
-//                  if ( attribute.isPrimitiveType() == false ) {
-//                     wsAttributeImpl.setModelClassBase((ModelClassBase) attrClassifer.getBase());
-//                  }
-//                  else {
-//                     wsAttributeImpl.setDataTypeBase((ModelDataTypeBase) attrClassifer.getBase());
-//                  }
-//                  wsClassImpl.getAttributes().add(wsAttributeImpl);
-//               }
+               // List inheritedAttr = new ArrayList(wsClass.getImplementedAttributes());
+               //               
+               // inheritedAttr.removeAll(wsClass.getDeclaredAttributes());
+               //               
+               // for (Iterator ia = inheritedAttr.iterator(); ia.hasNext();) {
+               // ModelAttribute attribute = (ModelAttribute) ia.next();
+               // ModelAttributeImpl wsAttributeImpl = new ModelAttributeImpl(wsModel, wsClassImpl, attribute);
+               // ModelClassifier attrClassifer = (ModelClassifier)
+               // wsModel.find(attribute.getModelClassifier().getQualifiedName());
+               //                  
+               // if ( attribute.isPrimitiveType() == false ) {
+               // wsAttributeImpl.setModelClassBase((ModelClassBase) attrClassifer.getBase());
+               // }
+               // else {
+               // wsAttributeImpl.setDataTypeBase((ModelDataTypeBase) attrClassifer.getBase());
+               // }
+               // wsClassImpl.getAttributes().add(wsAttributeImpl);
+               // }
                igen.remove();
             }
          }
       }
       return true;
    }
-   
+
 }

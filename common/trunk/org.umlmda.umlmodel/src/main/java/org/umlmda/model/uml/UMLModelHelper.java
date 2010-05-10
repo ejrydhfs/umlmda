@@ -1,12 +1,5 @@
-//jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 //
-// $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/UMLModelHelper.java,v 1.1 2005/10/27 19:10:37 moroff Exp $
-// $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/UMLModelHelper.java,v $
-// $Revision: 1.1 $
-//  $State: Exp $
-//   $Name:  $
-//   $Date: 2005/10/27 19:10:37 $
-// $Locker:  $
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Library General Public
@@ -38,33 +31,33 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * @author pussel
- *
- * helper functionality for any UML model
+ * @author pussel helper functionality for any UML model
  */
-public class UMLModelHelper {
+public class UMLModelHelper
+{
 
    static public List<ModelPackage> getPackagesFromClassList(Collection<ModelClass> classList) {
       return getPackagesFromClassList(classList, null);
    }
-   
-	/**
-	 * @param classList to examine for different packages
-	 * @return alphabetically sorted list of all packages occurring in the given class list 
-	 */
-	static public List<ModelPackage> getPackagesFromClassList(Collection<ModelClass> classList, String packageStereotype) {
-		Set<ModelPackage> set = new HashSet<ModelPackage>();
-		for (Iterator<ModelClass> iter = classList.iterator(); iter.hasNext();) {
-			ModelClass mClass = iter.next();
-			ModelPackage mPackage = mClass.getPackage();
-			
-			if ( StringUtils.isEmpty(packageStereotype) || mPackage.hasStereotype(packageStereotype) )
-			   set.add(mClass.getPackage());
-		}
-		List<ModelPackage> packageList = new ArrayList<ModelPackage>(set.size());
-		packageList.addAll(set);
-		Collections.sort(packageList);
-		return packageList;
-	}
-	
+
+   /**
+    * @param classList
+    *           to examine for different packages
+    * @return alphabetically sorted list of all packages occurring in the given class list
+    */
+   static public List<ModelPackage> getPackagesFromClassList(Collection<ModelClass> classList, String packageStereotype) {
+      Set<ModelPackage> set = new HashSet<ModelPackage>();
+      for ( Iterator<ModelClass> iter = classList.iterator(); iter.hasNext(); ) {
+         ModelClass mClass = iter.next();
+         ModelPackage mPackage = mClass.getPackage();
+
+         if ( StringUtils.isEmpty(packageStereotype) || mPackage.hasStereotype(packageStereotype) )
+            set.add(mClass.getPackage());
+      }
+      List<ModelPackage> packageList = new ArrayList<ModelPackage>(set.size());
+      packageList.addAll(set);
+      Collections.sort(packageList);
+      return packageList;
+   }
+
 }

@@ -1,11 +1,4 @@
-/*
- *   $Header$
- *   $Source$
- * $Revision$
- *     $Name$
- *     $Date$
- * 
- * This library is free software; you can redistribute it and/or
+/* This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
@@ -25,16 +18,16 @@
 package org.umlmda.uml.generator;
 
 /**
- * Stereotypes used in pim to psm transformations, to reference the
- * pim object from the psm objects.
- * @author Dieter Moroff (15.04.2006), last change $Date$ $Name$
- * @version $Revision$
+ * Stereotypes used in pim to psm transformations, to reference the pim object from the psm objects.
+ * 
+ * @author Dieter Moroff (15.04.2006)
  */
-public class PIMStereotypes {
+public class PIMStereotypes
+{
 
-   public static final String PIM_OBJECT = "PIMObject";
+   public static final String PIM_OBJECT  = "PIMObject";
    public static final String PIM_PACKAGE = "PIMPackage";
-   public static final String PIM_METHOD = "PIMMethod";
+   public static final String PIM_METHOD  = "PIMMethod";
    public static final String PIM_SERVICE = "PIMService";
-   
+
 }

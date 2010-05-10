@@ -11,14 +11,15 @@ import org.openarchitectureware.xpand2.XpandExecutionContext;
 import org.openarchitectureware.xpand2.output.Outlet;
 import org.openarchitectureware.xpand2.output.Output;
 
-public class XpandOutputImpl implements Output {
+public class XpandOutputImpl implements Output
+{
    List<SyntaxElement> stack = new ArrayList<SyntaxElement>();
-   File file;
-   FileWriter writer;
-   String outputFolder;
-   
+   File                file;
+   FileWriter          writer;
+   String              outputFolder;
+
    public XpandOutputImpl() {
-      
+
    }
 
    public void closeFile() {
@@ -27,7 +28,8 @@ public class XpandOutputImpl implements Output {
             writer.close();
          }
          writer = null;
-      } catch (IOException e) {
+      }
+      catch (IOException e) {
          throw new RuntimeException(e);
       }
    }
@@ -35,10 +37,11 @@ public class XpandOutputImpl implements Output {
    public void openFile(String path, String fileMode) {
       try {
          // Ignore given path
-         String name = path.lastIndexOf("/") >= 0 ? path.substring(path.lastIndexOf("/")+1) : path;
+         String name = path.lastIndexOf("/") >= 0 ? path.substring(path.lastIndexOf("/") + 1) : path;
          file = new File(outputFolder, name);
          writer = new FileWriter(file);
-      } catch (IOException e) {
+      }
+      catch (IOException e) {
          throw new RuntimeException(e);
       }
    }
@@ -56,7 +59,8 @@ public class XpandOutputImpl implements Output {
          if ( writer != null ) {
             writer.write(bytes);
          }
-      } catch (IOException e) {
+      }
+      catch (IOException e) {
          throw new RuntimeException(e);
       }
    }
@@ -67,6 +71,6 @@ public class XpandOutputImpl implements Output {
 
    public void addOutlet(Outlet outlet) {
       // TODO Auto-generated method stub
-      
+
    }
 }

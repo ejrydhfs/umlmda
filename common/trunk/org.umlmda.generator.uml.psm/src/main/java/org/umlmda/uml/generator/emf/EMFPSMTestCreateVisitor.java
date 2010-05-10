@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFPSMTestCreateVisitor.java,v 1.1 2007/01/03 21:15:54 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFPSMTestCreateVisitor.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2007/01/03 21:15:54 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -49,12 +44,11 @@ import org.umlmda.uml.generator.webservices.WSPSMClassCreatorVisitor;
 import org.umlmda.uml.generator.webservices.WSStereotypes;
 
 /**
- * Visitor to creates web service request and reponse classes for method,
- * used for soap wrapping.
- * @author Dieter Moroff (13.04.2006), last change $Date: 2007/01/03 21:15:54 $ $Name:  $
- * @version $Revision: 1.1 $
+ * Visitor to creates web service request and reponse classes for method, used for soap wrapping.
+ * 
  */
-public class EMFPSMTestCreateVisitor extends DefaultModelVisitor {
+public class EMFPSMTestCreateVisitor extends DefaultModelVisitor
+{
 
    /**
     * 
@@ -66,12 +60,12 @@ public class EMFPSMTestCreateVisitor extends DefaultModelVisitor {
    public boolean visit(ModelMethod method) {
       super.visit(method);
 
-      if (method.hasStereotype(WSStereotypes.WEB_SERVICE_METHOD) && method.getBase() instanceof ModelMethodImpl ) {
+      if ( method.hasStereotype(WSStereotypes.WEB_SERVICE_METHOD) && method.getBase() instanceof ModelMethodImpl ) {
          createTestClass(method);
       }
       return true;
    }
-   
+
    /**
     * @param methodImpl
     * @return
@@ -92,10 +86,10 @@ public class EMFPSMTestCreateVisitor extends DefaultModelVisitor {
          emfTestClassImpl.getStereotypes().add(EMFStereotypes.EMF_TEST);
 
          // Handle parameters
-         for (Iterator ip = methodImpl.getParameters().iterator(); ip.hasNext();) {
+         for ( Iterator ip = methodImpl.getParameters().iterator(); ip.hasNext(); ) {
             ModelParameterBase parameter = (ModelParameterBase) ip.next();
             ModelAttributeImpl attributeImpl = new ModelAttributeImpl(model, emfTestClassImpl);
-            
+
             attributeImpl.setName(parameter.getName());
             attributeImpl.setModelClassifierBase(parameter.getTypeBase());
             attributeImpl.setMultiplicity(multiplicity);
@@ -103,7 +97,7 @@ public class EMFPSMTestCreateVisitor extends DefaultModelVisitor {
          }
 
          // Handle returntype
-         if (methodImpl.getReturnTypeBase() != null) {
+         if ( methodImpl.getReturnTypeBase() != null ) {
             ModelAttributeImpl attributeImpl = new ModelAttributeImpl(model, emfTestClassImpl);
 
             attributeImpl.setModelClassifierBase(methodImpl.getReturnTypeBase());
@@ -111,10 +105,10 @@ public class EMFPSMTestCreateVisitor extends DefaultModelVisitor {
             attributeImpl.setMultiplicity(new Multiplicity(1, 1));
             emfTestClassImpl.getAttributes().add(attributeImpl);
          }
-         
+
          WSPSMClassCreatorVisitor.createWsClassAdapter(model, emfTestClassImpl);
       }
-      
+
    }
 
    /**
@@ -125,7 +119,7 @@ public class EMFPSMTestCreateVisitor extends DefaultModelVisitor {
    private String getTestName(ModelMethodBase method, String postfix) {
       ModelClassBase modelClass = method.getOwningClass();
 
-      return modelClass.getName()+StringUtils.capitalize(method.getName())+postfix;
+      return modelClass.getName() + StringUtils.capitalize(method.getName()) + postfix;
    }
-   
+
 }

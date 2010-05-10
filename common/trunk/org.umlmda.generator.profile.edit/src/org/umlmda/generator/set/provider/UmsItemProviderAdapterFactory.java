@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmsItemProviderAdapterFactory.java,v 1.3 2005/11/08 08:06:42 moroff Exp $
  */
 package org.umlmda.generator.set.provider;
 

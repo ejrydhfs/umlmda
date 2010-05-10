@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/UMLModelMDR/src/org/umlmda/model/uml/mdr/ModelParameterImpl.java,v 1.1 2005/12/19 08:11:24 moroff Exp $
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)

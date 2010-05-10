@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelAttribute.java,v 1.2 2006/04/12 20:18:30 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelAttribute.java,v $
-// $Revision: 1.2 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/12 20:18:30 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -28,39 +21,37 @@ package org.umlmda.model.uml;
 
 /**
  * @author moroff
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public interface ModelAttribute extends ModelStructuralFeature, ModelAttributeBase, ModelVisitable {
+public interface ModelAttribute extends ModelStructuralFeature, ModelAttributeBase, ModelVisitable
+{
 
-	/**
-	 * @return the type name of this attribute 
-	 */
-	public abstract String getType();
+   /**
+    * @return the type name of this attribute
+    */
+   String getType();
 
-	/**
+   /**
     * @return the class of this attribute or null if it is a primitive type
     */
-   public abstract ModelClass getModelClass();
+   ModelClass getModelClass();
 
-	/**
+   /**
     * @return the abstract type classifier of this attribute
     */
-   public abstract ModelClassifier getModelClassifier();
+   ModelClassifier getModelClassifier();
 
-	/**
-	 * @return the class owning this attribute
-	 */
-	public abstract ModelClass getOwningClass();
+   /**
+    * @return the class owning this attribute
+    */
+   ModelClass getOwningClass();
 
    /**
     * @return
     */
-   public abstract ModelDataType getDataType();
+   ModelDataType getDataType();
 
    /**
     * @return true if the attribute is a class type
     */
-   public abstract boolean isClassInstance();
+   boolean isClassInstance();
 }

@@ -1,8 +1,5 @@
 /*
  * Created on 03.11.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.uml.generator.j2ee;
 
@@ -11,14 +8,13 @@ import org.umlmda.uml.generator.java.JavaModelMethod;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public interface J2EEModelMethod extends JavaModelMethod {
+public interface J2EEModelMethod extends JavaModelMethod
+{
 
    /**
     * Returns the remote signature of this method
+    * 
     * @return
     */
    String getRemoteSignature();

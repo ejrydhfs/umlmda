@@ -8,11 +8,11 @@ import org.umlmda.model.uml.ModelClassBase;
 
 /**
  * @author MOROFF
- *
  */
-public class JavaBusinessExceptionAdapter extends JavaModelClassAdapter implements JavaBusinessException {
+public class JavaBusinessExceptionAdapter extends JavaModelClassAdapter implements JavaBusinessException
+{
    private JavaModelClass superClass;
-   
+
    /**
     * @param modelClassBase
     * @param model
@@ -24,12 +24,11 @@ public class JavaBusinessExceptionAdapter extends JavaModelClassAdapter implemen
    @Override
    public JavaModelClass getSuperClass() {
       superClass = (JavaModelClass) super.getSuperClass();
-      
+
       if ( superClass == null ) {
          superClass = (JavaModelClass) getModel().find(Exception.class.getName());
       }
       return superClass;
    }
 
-   
 }

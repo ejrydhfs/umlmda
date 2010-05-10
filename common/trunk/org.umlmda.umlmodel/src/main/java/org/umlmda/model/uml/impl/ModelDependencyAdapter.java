@@ -1,8 +1,5 @@
 /*
  * Created on 04.11.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.model.uml.impl;
 
@@ -20,15 +17,13 @@ import org.umlmda.model.uml.ModelVisitor;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ModelDependencyAdapter extends ModelElementAdapter implements ModelDependency {
+public class ModelDependencyAdapter extends ModelElementAdapter implements ModelDependency
+{
    private final ModelDependencyBase modelDependency;
-   private List<ModelElementBase> clients = null;
-   private List<ModelElementBase> suppliers = null;
-   
+   private List<ModelElementBase>    clients   = null;
+   private List<ModelElementBase>    suppliers = null;
+
    /**
     * @param modelElement
     * @param adaptedModel
@@ -38,51 +33,55 @@ public class ModelDependencyAdapter extends ModelElementAdapter implements Model
       this.modelDependency = modelDependency;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelDependencyBase#getClients()
     */
    public Collection<ModelElementBase> getClients() {
       if ( clients == null ) {
          clients = new ArrayList<ModelElementBase>();
-         
-         for (Iterator<ModelElementBase> ic = modelDependency.getClients().iterator(); ic.hasNext();) {
+
+         for ( Iterator<ModelElementBase> ic = modelDependency.getClients().iterator(); ic.hasNext(); ) {
             ModelElementBase elementBase = ic.next();
-            
+
             clients.add(getModel().getModelElement(elementBase));
          }
       }
       return clients;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelDependencyBase#getSuppliers()
     */
    public Collection<ModelElementBase> getSuppliers() {
       if ( suppliers == null ) {
          suppliers = new ArrayList<ModelElementBase>();
-         
-         for (Iterator<ModelElementBase> is = modelDependency.getSuppliers().iterator(); is.hasNext();) {
+
+         for ( Iterator<ModelElementBase> is = modelDependency.getSuppliers().iterator(); is.hasNext(); ) {
             ModelElementBase elementBase = is.next();
-            
+
             suppliers.add(getModel().getModelElement(elementBase));
          }
       }
       return suppliers;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitable#accept(org.umlmda.model.uml.ModelVisitor)
     */
    public void accept(ModelVisitor visitor) {
       visitor.visit(this);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelDependency#getSupplier()
     */
    public ModelElement getSupplier() {
       if ( getSuppliers().size() == 1 ) {
-         return (ModelElement)getSuppliers().iterator().next();
+         return (ModelElement) getSuppliers().iterator().next();
       }
       else {
          throw new IllegalStateException("More than one supplier exist in this dependency");

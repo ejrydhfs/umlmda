@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ArtefactItemProvider.java,v 1.10 2007/01/03 21:07:42 moroff Exp $
  */
 package org.umlmda.generator.profile.provider;
 

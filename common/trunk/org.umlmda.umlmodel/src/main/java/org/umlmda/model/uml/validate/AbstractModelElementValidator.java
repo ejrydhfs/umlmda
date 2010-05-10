@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/validate/AbstractModelElementValidator.java,v 1.1 2006/05/04 15:16:30 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/validate/AbstractModelElementValidator.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/05/04 15:16:30 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -33,10 +28,10 @@ import org.umlmda.model.uml.ModelElement;
 
 /**
  * TODO Insert type javadoc
- * @author Dieter Moroff (02.05.2006), last change $Date: 2006/05/04 15:16:30 $ $Name:  $
- * @version $Revision: 1.1 $
+ * 
  */
-public abstract class AbstractModelElementValidator implements ModelElementValidator {
+public abstract class AbstractModelElementValidator implements ModelElementValidator
+{
 
    /**
     * 
@@ -45,7 +40,8 @@ public abstract class AbstractModelElementValidator implements ModelElementValid
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.validate.ModelElementValidator#isAppropriateForStereotypes(java.util.Collection)
     */
    public boolean isAppropriateForStereotypes(Collection stereotypes) {
@@ -58,7 +54,7 @@ public abstract class AbstractModelElementValidator implements ModelElementValid
     * @return
     */
    protected static List addResult(ModelElement modelElement, List results, String message) {
-      if (results == Collections.EMPTY_LIST) {
+      if ( results == Collections.EMPTY_LIST ) {
          results = new ArrayList();
       }
       results.add(ValidationResult.createError(message, modelElement));

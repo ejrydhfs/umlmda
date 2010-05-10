@@ -13,10 +13,9 @@ import org.umlmda.uml.generator.java.JavaModelMethod;
 
 /**
  * @author MOROFF
- * 
  */
-public class JavaModelClassAdapter extends org.umlmda.uml.generator.java.JavaModelClassAdapter implements
-      JavaModelClass {
+public class JavaModelClassAdapter extends org.umlmda.uml.generator.java.JavaModelClassAdapter implements JavaModelClass
+{
 
    /**
     * @param modelClassBase

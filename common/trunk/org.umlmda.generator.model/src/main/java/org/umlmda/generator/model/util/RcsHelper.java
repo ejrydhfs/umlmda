@@ -1,12 +1,5 @@
-// jUMLMDA, GeneratorBase-API
+// UMLMDA, GeneratorBase-API
 //  
-//   $Header$
-//   $Source$
-// $Revision$
-//    $State$
-//     $Name$
-//     $Date$
-//   $Locker$
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Library General Public
@@ -32,47 +25,43 @@ package org.umlmda.generator.model.util;
  */
 public class RcsHelper
 {
-	private static final String KEYWORD_PREFIX = "$";
-	private static final String KEYWORD_POSTFIX = "$";
-   private static final String NEWLINE = "\n";
-	private static final String HEADER = "Header";
-	private static final String SOURCE = "Source";
-	private static final String REVISION = "Revision";
-	private static final String STATE = "State";
-	private static final String NAME = "Name";
-	private static final String DATE = "Date";
-	private static final String LOCKER = "Locker";
-   private static final String LOG = "Log";
+   private static final String KEYWORD_PREFIX  = "$";
+   private static final String KEYWORD_POSTFIX = "$";
+   private static final String NEWLINE         = "\n";
+   private static final String HEADER          = "Header";
+   private static final String SOURCE          = "Source";
+   private static final String REVISION        = "Revision";
+   private static final String STATE           = "State";
+   private static final String NAME            = "Name";
+   private static final String DATE            = "Date";
+   private static final String LOCKER          = "Locker";
+   private static final String LOG             = "Log";
 
-	public static String writeHeader(String prefix)
-	{
+   public static String writeHeader(String prefix) {
       StringBuffer buffer = new StringBuffer();
-		writeKeyword(prefix, buffer, HEADER, NEWLINE);
+      writeKeyword(prefix, buffer, HEADER, NEWLINE);
       writeKeyword(prefix, buffer, SOURCE, NEWLINE);
       writeKeyword(prefix, buffer, REVISION, NEWLINE);
       writeKeyword(prefix, buffer, STATE, NEWLINE);
       writeKeyword(prefix, buffer, NAME, NEWLINE);
       writeKeyword(prefix, buffer, DATE, NEWLINE);
       writeKeyword(prefix, buffer, LOCKER, "");
-		return buffer.toString();
-	}
+      return buffer.toString();
+   }
 
-	private static void writeKeyword(String prefix, StringBuffer buffer, String keyword, String newline)
-	{
-		buffer.append(prefix);
-		buffer.append(KEYWORD_PREFIX);
-		buffer.append(keyword);
-		buffer.append(KEYWORD_POSTFIX);
+   private static void writeKeyword(String prefix, StringBuffer buffer, String keyword, String newline) {
+      buffer.append(prefix);
+      buffer.append(KEYWORD_PREFIX);
+      buffer.append(keyword);
+      buffer.append(KEYWORD_POSTFIX);
       buffer.append(newline);
-	}
+   }
 
-	public static String writeLog()
-	{
-		return KEYWORD_PREFIX + LOG + KEYWORD_POSTFIX;
-	}
+   public static String writeLog() {
+      return KEYWORD_PREFIX + LOG + KEYWORD_POSTFIX;
+   }
 
-   public static String writeLog(String prefix)
-   {
+   public static String writeLog(String prefix) {
       return prefix + writeLog();
    }
 

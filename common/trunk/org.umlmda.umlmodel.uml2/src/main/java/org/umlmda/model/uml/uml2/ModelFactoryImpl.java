@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelFactoryImpl.java,v 1.1.2.3.2.1 2008/03/11 15:51:10 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelFactoryImpl.java,v $
-// $Revision: 1.1.2.3.2.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2008/03/11 15:51:10 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -48,90 +41,90 @@ import org.umlmda.model.uml.ModelFactory;
 
 /**
  * @author moroff
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class ModelFactoryImpl implements ModelFactory {
-   private Map pathMap = Collections.EMPTY_MAP;
-   private static Logger logger = Logger.getLogger(ModelFactoryImpl.class);
-   
-   /* (non-Javadoc)
+public class ModelFactoryImpl implements ModelFactory
+{
+   private Map           pathMap = Collections.EMPTY_MAP;
+   private static Logger logger  = Logger.getLogger(ModelFactoryImpl.class);
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelFactory#loadModel(java.io.InputStream)
     */
    public ModelBase loadModel(InputStream modelStream) throws IOException {
-      //TODO ModelFactoryImpl.loadModel(modelStream)
-//      try {
-//         UML2ResourceFactoryImpl resourceFactory = new UML2ResourceFactoryImpl();
-//         
-//         resourceFactory.c
-//         XMIReader xmiReader = new XMIReader();
-//         return new ModelImpl(xmiReader.parse(new InputSource(modelStream))); 
-//      } catch (SAXException e) {
-//         throw new RuntimeException(e);
-//      } catch (ParserConfigurationException e) {
-//         throw new RuntimeException(e);
-//      } finally {
-//         modelStream.close();     
-//      }
+      // TODO ModelFactoryImpl.loadModel(modelStream)
+      // try {
+      // UML2ResourceFactoryImpl resourceFactory = new UML2ResourceFactoryImpl();
+      //         
+      // resourceFactory.c
+      // XMIReader xmiReader = new XMIReader();
+      // return new ModelImpl(xmiReader.parse(new InputSource(modelStream)));
+      // } catch (SAXException e) {
+      // throw new RuntimeException(e);
+      // } catch (ParserConfigurationException e) {
+      // throw new RuntimeException(e);
+      // } finally {
+      // modelStream.close();
+      // }
       return null;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelFactory#loadModel(java.io.File)
     */
    public ModelBase loadModel(File modelFile) throws IOException {
-//      Resource.Factory factory = new com.ibm.xtools.emf.core.resource.RMPResourceFactory();
-//      Resource.Factory factory = new GMFResourceFactory();
-//      Resource.Factory factory = new com.ibm.xtools.emf.msl.internal.resources.MSLResourceFactory();
-//      Resource.Factory rsmFactory = new RSMResourceFactory();
+      // Resource.Factory factory = new com.ibm.xtools.emf.core.resource.RMPResourceFactory();
+      // Resource.Factory factory = new GMFResourceFactory();
+      // Resource.Factory factory = new com.ibm.xtools.emf.msl.internal.resources.MSLResourceFactory();
+      // Resource.Factory rsmFactory = new RSMResourceFactory();
       Resource.Factory factory = new UMLResourceFactoryImpl();
 
       UMLPackageImpl.init();
       Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("emx", factory);
       Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("epx", factory);
       Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("uml2", factory);
-      
+
       URI uri = URI.createFileURI(modelFile.getAbsolutePath());
-      
+
       ResourceSet resourceSet = new ResourceSetImpl();
       resourceSet.getLoadOptions().put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
       resourceSet.getLoadOptions().put(XMLResource.OPTION_PROCESS_DANGLING_HREF_RECORD, Boolean.TRUE);
       resourceSet.setURIConverter(new PathMapURIConverter(resourceSet.getURIConverter(), pathMap));
-      Resource resource = resourceSet.getResource(uri,true);
-      
+      Resource resource = resourceSet.getResource(uri, true);
+
       try {
          resource.load(null);
-      } catch (IOException e) {
+      }
+      catch (IOException e) {
          e.printStackTrace();
       }
 
       EList errors = resource.getErrors();
-      for (Iterator ie = errors.iterator(); ie.hasNext();) {
+      for ( Iterator ie = errors.iterator(); ie.hasNext(); ) {
          Object error = (Object) ie.next();
 
          logger.error(error.toString());
       }
 
-      for (Iterator iw = resource.getWarnings().iterator(); iw.hasNext();) {
+      for ( Iterator iw = resource.getWarnings().iterator(); iw.hasNext(); ) {
          Object warning = (Object) iw.next();
-         
+
          logger.warn(warning);
       }
       EList list = resource.getContents();
       Iterator contentIterator = list.iterator();
       if ( contentIterator.hasNext() ) {
-         Model model = (Model)contentIterator.next();
-         
-         // Stereotypes hinzufügen
+         Model model = (Model) contentIterator.next();
+
+         // Stereotypes hinzufï¿½gen
          while ( contentIterator.hasNext() ) {
             Object element = (Object) contentIterator.next();
-            
+
             if ( logger.isDebugEnabled() )
                logger.debug(element);
          }
-         
-         
+
          return new ModelImpl(model);
       }
       else {
@@ -139,12 +132,12 @@ public class ModelFactoryImpl implements ModelFactory {
       }
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelFactory#setPathMap(java.util.Map)
     */
    public void setPathMap(Map pathMap) {
       this.pathMap = pathMap;
    }
-
 
 }

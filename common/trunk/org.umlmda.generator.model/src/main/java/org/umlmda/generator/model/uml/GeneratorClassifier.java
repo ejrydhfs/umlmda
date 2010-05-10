@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -24,14 +23,16 @@
 package org.umlmda.generator.model.uml;
 
 /**
- * Interface for generator specific extension to classifiers (classes
- * or datatypes)
+ * Interface for generator specific extension to classifiers (classes or datatypes)
+ * 
  * @author MOROFF
  */
-public interface GeneratorClassifier extends GeneratorModelElement {
+public interface GeneratorClassifier extends GeneratorModelElement
+{
 
    /**
     * Returns the plattform specific type
+    * 
     * @return
     */
    String getPsmType();

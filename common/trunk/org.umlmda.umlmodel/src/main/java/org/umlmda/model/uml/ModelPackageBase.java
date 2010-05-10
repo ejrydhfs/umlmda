@@ -27,23 +27,23 @@ import java.util.List;
  */
 public interface ModelPackageBase extends ModelElementBase
 {
-   static final String PROPERTY_CLASSES  = "classes";
-   static final String PROPERTY_PACKAGES = "packages";
-   static final String PACKAGE_SEPARATOR = ".";
+   String PROPERTY_CLASSES  = "classes";
+   String PROPERTY_PACKAGES = "packages";
+   String PACKAGE_SEPARATOR = ".";
 
    /**
     * Returns a list containing all classes of the package
     */
-   public abstract List getClasses();
+   List getClasses();
 
    /**
     * Returns the package containing this package
     */
-   public abstract ModelPackageBase getPackageBase();
+   ModelPackageBase getPackageBase();
 
    /**
     * @return A list with nested packages.
     */
-   public abstract List<? extends ModelPackageBase> getNestedPackagesBase();
+   List<? extends ModelPackageBase> getNestedPackagesBase();
 
 }

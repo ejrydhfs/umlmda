@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)
@@ -49,83 +48,99 @@ import org.umlmda.uml.generator.StandardModelValidatorFactory;
 
 /**
  * Implementation for a model adapter factory for the java model adaption
+ * 
  * @author MOROFF
  */
-public class JavaModelAdapterFactory extends ModelAdapterFactoryImpl {
+public class JavaModelAdapterFactory extends ModelAdapterFactoryImpl
+{
 
    public JavaModelAdapterFactory() {
       super();
    }
-   
+
    public ModelPatternFactory getPatternFactory() {
       return new ModelPatternFactory() {
 
          public List createPatterns() {
-               List patterns = new ArrayList();
-               
-               patterns.add(new PersistenceServicePattern());
-               return patterns;
-            }
-         
+            List patterns = new ArrayList();
+
+            patterns.add(new PersistenceServicePattern());
+            return patterns;
+         }
+
       };
    }
 
-   
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAdapterFactory#getValidatorFactory()
     */
    public ModelValidatorFactory getValidatorFactory() {
       return new StandardModelValidatorFactory();
    }
-   
+
    protected Model createPsmModel(Model model) {
       return new JavaModelAdapter(this, model);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelClass(org.umlmda.model.uml.ModelClassBase, org.umlmda.model.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelClass(org.umlmda.model.uml.ModelClassBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelClass createModelClass(ModelClassBase modelClassBase, Model destModel) {
       return new JavaModelClassAdapter(modelClassBase, destModel);
    }
-   
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelDataType(org.umlmda.model.uml.ModelDataTypeBase, org.umlmda.model.uml.Model)
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelDataType(org.umlmda.model.uml.ModelDataTypeBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelDataType createModelDataType(ModelDataTypeBase modelDataType, Model destModel) {
       return new JavaModelDataTypeAdapter(modelDataType, destModel);
    }
-   
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelPackage(org.umlmda.model.uml.ModelPackageBase, org.umlmda.model.uml.Model)
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelPackage(org.umlmda.model.uml.ModelPackageBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelPackage createModelPackage(ModelPackageBase modelPackage, Model destModel) {
       return new JavaModelPackageAdapter(modelPackage, destModel);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelMethod(org.umlmda.model.uml.ModelMethodBase, org.umlmda.model.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelMethod(org.umlmda.model.uml.ModelMethodBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelMethod createModelMethod(ModelMethodBase modelMethod, Model destModel) {
       return new JavaModelMethodAdapter(modelMethod, destModel);
    }
-   
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelAssociation(org.umlmda.model.uml.ModelAssociationBase, org.umlmda.model.uml.Model)
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelAssociation(org.umlmda.model.uml.ModelAssociationBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelAssociation createModelAssociation(ModelAssociationBase modelAssociation, Model destModel) {
       return new JavaModelAssociationAdapter(modelAssociation, destModel);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelAttribute(org.umlmda.model.uml.ModelAttributeBase, org.umlmda.model.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelAttribute(org.umlmda.model.uml.ModelAttributeBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelAttribute createModelAttribute(ModelAttributeBase modelAttribute, Model destModel) {
       return new JavaModelAttributeAdapter(modelAttribute, destModel);
    }
-   
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelParameter(org.umlmda.model.uml.ModelParameterBase, org.umlmda.model.uml.Model)
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelParameter(org.umlmda.model.uml.ModelParameterBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelParameter createModelParameter(ModelParameterBase modelParameter, Model destModel) {
       return new JavaModelParameterAdapter(modelParameter, destModel);

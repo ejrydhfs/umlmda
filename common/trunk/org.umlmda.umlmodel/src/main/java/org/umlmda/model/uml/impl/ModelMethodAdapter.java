@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelMethodAdapter.java,v 1.4 2006/04/27 11:30:49 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelMethodAdapter.java,v $
-// $Revision: 1.4 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/27 11:30:49 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -42,114 +35,117 @@ import org.umlmda.model.uml.ModelParameter;
 import org.umlmda.model.uml.ModelParameterBase;
 import org.umlmda.model.uml.ModelVisitor;
 
-
 /**
- * platform independent adapter to MOF model method.
- * extend for specific platform to override the following properties:
+ * platform independent adapter to MOF model method. extend for specific platform to override the following properties:
  * parameters, exceptions, return type, owning class
- *
+ * 
  * @author vpussel
- *
  */
-public class ModelMethodAdapter extends ModelElementAdapter implements
-		ModelMethod {
+public class ModelMethodAdapter extends ModelElementAdapter implements ModelMethod
+{
 
-	private final ModelMethodBase modelMethod;
-	private List parameters = null;
-	private List exceptions = null;
-	private ModelClassifier returnType = null;
-	private ModelClass owningClass = null;
+   private final ModelMethodBase modelMethod;
+   private List                  parameters  = null;
+   private List                  exceptions  = null;
+   private ModelClassifier       returnType  = null;
+   private ModelClass            owningClass = null;
 
-	/**
-	 * create adapter for model method
-	 */
-	public ModelMethodAdapter(ModelMethodBase modelMethod, Model model) {
-		super(modelMethod, model);
-		
-		this.modelMethod = modelMethod;
-	}
+   /**
+    * create adapter for model method
+    */
+   public ModelMethodAdapter(ModelMethodBase modelMethod, Model model) {
+      super(modelMethod, model);
 
-    /**
-     * Reset cached information 
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
-    public void update(Observable o, Object arg) {
-       if ( PROPERTY_PARAMETERS.equals(arg) && parameters != null ) {
-          parameters.clear();
-          parameters = null;
-       }
-       else if ( PROPERTY_EXCEPTIONS.equals(arg) && exceptions != null ) {
-          exceptions.clear();
-          exceptions = null;
-       }
-       else if ( PROPERTY_RETURN_TYPE_BASE.equals(arg) && returnType != null ) {
-          returnType = null;
-       }
-    }
-   
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelMethod#getParameters()
-	 */
-	public final List getParameters() {
-		if (parameters == null) {
-			parameters = new ArrayList();
-			for (Iterator iter = modelMethod.getParameters().iterator(); iter.hasNext();) {
-				ModelParameterBase parm = (ModelParameterBase) iter.next();
-				ModelParameter newParm = adaptedModel.getModelParameter(parm);
-				parameters.add(newParm);
-			}
-		}
-		return parameters;
-	}
+      this.modelMethod = modelMethod;
+   }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelMethod#getExceptions()
-	 */
-	public List getExceptions() {
-		if (exceptions == null) {
-			exceptions = new ArrayList();
-			for (Iterator iter = modelMethod.getExceptions().iterator(); iter.hasNext();) {
-				ModelClassBase exc = (ModelClassBase) iter.next();
-				ModelClass newExc = adaptedModel.getModelClass(exc);
-				exceptions.add(newExc);
-			}
-		}
-		return exceptions;
-	}
+   /**
+    * Reset cached information
+    * 
+    * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+    */
+   public void update(Observable o, Object arg) {
+      if ( PROPERTY_PARAMETERS.equals(arg) && parameters != null ) {
+         parameters.clear();
+         parameters = null;
+      }
+      else if ( PROPERTY_EXCEPTIONS.equals(arg) && exceptions != null ) {
+         exceptions.clear();
+         exceptions = null;
+      }
+      else if ( PROPERTY_RETURN_TYPE_BASE.equals(arg) && returnType != null ) {
+         returnType = null;
+      }
+   }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelMethod#getReturnType()
-	 */
-	public ModelClassifier getReturnType() {
-		if (returnType == null) {
-			returnType = adaptedModel.getModelClassifier(modelMethod.getReturnTypeBase());
-		}
-		return returnType;
-	}
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelMethod#getParameters()
+    */
+   public final List getParameters() {
+      if ( parameters == null ) {
+         parameters = new ArrayList();
+         for ( Iterator iter = modelMethod.getParameters().iterator(); iter.hasNext(); ) {
+            ModelParameterBase parm = (ModelParameterBase) iter.next();
+            ModelParameter newParm = adaptedModel.getModelParameter(parm);
+            parameters.add(newParm);
+         }
+      }
+      return parameters;
+   }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelMethod#getExceptions()
+    */
+   public List getExceptions() {
+      if ( exceptions == null ) {
+         exceptions = new ArrayList();
+         for ( Iterator iter = modelMethod.getExceptions().iterator(); iter.hasNext(); ) {
+            ModelClassBase exc = (ModelClassBase) iter.next();
+            ModelClass newExc = adaptedModel.getModelClass(exc);
+            exceptions.add(newExc);
+         }
+      }
+      return exceptions;
+   }
+
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelMethod#getReturnType()
+    */
+   public ModelClassifier getReturnType() {
+      if ( returnType == null ) {
+         returnType = adaptedModel.getModelClassifier(modelMethod.getReturnTypeBase());
+      }
+      return returnType;
+   }
+
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelMethodBase#getReturnTypeBase()
     */
    public ModelClassifierBase getReturnTypeBase() {
       return getReturnType();
    }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelMethod#getOwningClass()
-	 */
-	public ModelClassBase getOwningClass() {
-		if (owningClass == null) {
-			owningClass = adaptedModel.getModelClass(modelMethod.getOwningClass());
-		}
-		return owningClass;
-	}
-
-
-      /* (non-Javadoc)
-       * @see org.umlmda.model.uml.ModelVisitable#accept(org.umlmda.model.uml.ModelVisitor)
-       */
-      public void accept(ModelVisitor visitor) {
-         visitor.visit(this);
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelMethod#getOwningClass()
+    */
+   public ModelClassBase getOwningClass() {
+      if ( owningClass == null ) {
+         owningClass = adaptedModel.getModelClass(modelMethod.getOwningClass());
       }
-   
+      return owningClass;
+   }
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelVisitable#accept(org.umlmda.model.uml.ModelVisitor)
+    */
+   public void accept(ModelVisitor visitor) {
+      visitor.visit(this);
+   }
+
 }

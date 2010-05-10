@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelClassImpl.java,v 1.2.2.1.2.1 2008/02/25 14:51:10 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelClassImpl.java,v $
-// $Revision: 1.2.2.1.2.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2008/02/25 14:51:10 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -59,7 +52,7 @@ public class ModelClassImpl extends ModelClassifierImpl implements ModelClassBas
 
    private List<ModelAssociationBase>    allAssociations = new ArrayList<ModelAssociationBase>();
 
-   @SuppressWarnings({ "unchecked", "unused" })
+   @SuppressWarnings( { "unchecked", "unused" })
    private List                          referencedTypes = null;
 
    private List<ModelGeneralizationImpl> generalizations = null;

@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelVisitor.java,v 1.2 2007/01/03 21:12:44 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelVisitor.java,v $
- * $Revision: 1.2 $
- *     $Name:  $
- *     $Date: 2007/01/03 21:12:44 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,42 +21,45 @@ package org.umlmda.model.uml;
 
 /**
  * TODO Insert type javadoc
- * @author Dieter Moroff (12.04.2006), last change $Date: 2007/01/03 21:12:44 $ $Name:  $
- * @version $Revision: 1.2 $
+ * 
  */
-public interface ModelVisitor {
+public interface ModelVisitor
+{
 
    /**
     * Visits a model
+    * 
     * @param model
     * @return <b>true</b> visit the model childs (packages and classes)
     */
-   public boolean visit(Model model);
-   
+   boolean visit(Model model);
+
    /**
     * Visits a model package
+    * 
     * @param modelPackage
     * @return <b>true</b> visit the package childs (packages and classes)
     */
-   public boolean visit(ModelPackage modelPackage);
-   
+   boolean visit(ModelPackage modelPackage);
+
    /**
     * Visits a model class
+    * 
     * @param modelClass
     * @return <b>true</b> visit the models class childs (attributes, associations, ...)
     */
-   public boolean visit(ModelClass modelClass);
-   
-   public boolean visit(ModelAttribute attribute);
+   boolean visit(ModelClass modelClass);
 
-   public boolean visit(ModelAssociation association);
+   boolean visit(ModelAttribute attribute);
 
-   public boolean visit(ModelMethod method);
+   boolean visit(ModelAssociation association);
 
-   public boolean visit(ModelParameter parameter);
-   
-   public boolean visit(ModelDataType dataType);
-   
-   public boolean visit(ModelDependency dependency);
+   boolean visit(ModelMethod method);
+
+   boolean visit(ModelParameter parameter);
+
+   boolean visit(ModelDataType dataType);
+
+   boolean visit(ModelDependency dependency);
 
 }

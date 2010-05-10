@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.model/src/org/umlmda/generator/model/uml/GeneratorStructuralFeature.java,v 1.1 2007/11/08 09:32:47 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.model/src/org/umlmda/generator/model/uml/GeneratorStructuralFeature.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2007/11/08 09:32:47 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,17 +21,14 @@ package org.umlmda.generator.model.uml;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public interface GeneratorStructuralFeature extends GeneratorModelElement {
+public interface GeneratorStructuralFeature extends GeneratorModelElement
+{
 
    /**
-    * Returns the name of a constant to get the features name. Usually 
-    * this is the model element name converted to uppercase with underline
-    * as word seperator.
+    * Returns the name of a constant to get the features name. Usually this is the model element name converted to uppercase with
+    * underline as word seperator.
     */
-   public abstract String getFeatureIdentifier();
-   
+   String getFeatureIdentifier();
+
 }

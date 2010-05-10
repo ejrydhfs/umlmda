@@ -54,8 +54,8 @@ public class ModelElementUtils
    }
 
    /**
-    * Filters the given element list by name, returning an intersection.
-    * I.e. only elements contained more than once will be returned.
+    * Filters the given element list by name, returning an intersection. I.e. only elements contained more than once will be
+    * returned.
     * 
     * @param elements
     *           List of elements to filter by name uniqueness.
@@ -69,14 +69,15 @@ public class ModelElementUtils
          // Returning element?
          if ( allElementNames.contains(element.getName()) ) {
             // New intersect element?
-            if ( ! collectedElementNames.contains(element.getName()) ) {
+            if ( !collectedElementNames.contains(element.getName()) ) {
                collectedElements.add(element);
                collectedElementNames.add(element.getName());
                if ( logger.isTraceEnabled() ) {
                   logger.trace("Using duplicate element " + element.getName());
                }
             }
-         } else {
+         }
+         else {
             // Save the new name once
             allElementNames.add(element.getName());
          }

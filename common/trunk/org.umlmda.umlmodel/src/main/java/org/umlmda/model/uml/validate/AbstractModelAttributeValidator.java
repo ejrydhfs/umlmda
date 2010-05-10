@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/validate/AbstractModelAttributeValidator.java,v 1.1 2006/05/04 15:16:30 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/validate/AbstractModelAttributeValidator.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/05/04 15:16:30 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -32,10 +27,10 @@ import org.umlmda.model.uml.ModelElement;
 
 /**
  * TODO Insert type javadoc
- * @author Dieter Moroff (01.05.2006), last change $Date: 2006/05/04 15:16:30 $ $Name:  $
- * @version $Revision: 1.1 $
+ * 
  */
-public abstract class AbstractModelAttributeValidator extends AbstractModelElementValidator {
+public abstract class AbstractModelAttributeValidator extends AbstractModelElementValidator
+{
 
    /**
     * 
@@ -44,20 +39,23 @@ public abstract class AbstractModelAttributeValidator extends AbstractModelEleme
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.validate.ModelElementValidator#isAppropriateFor(java.lang.Class)
     */
    public final boolean isAppropriateFor(Class modelElementType) {
       return ModelAttribute.class.isAssignableFrom(modelElementType);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.generator.model.uml.validate.ModelElementValidator#validate(org.umlmda.generator.model.uml.GeneratorModelElement)
+   /*
+    * (non-Javadoc)
+    * @see
+    * org.umlmda.generator.model.uml.validate.ModelElementValidator#validate(org.umlmda.generator.model.uml.GeneratorModelElement)
     */
    public final List validate(ModelElement modelElement) {
-      return validateAttribute((ModelAttribute)modelElement);
+      return validateAttribute((ModelAttribute) modelElement);
    }
-   
-   protected abstract List validateAttribute(ModelAttribute attribute); 
-   
+
+   protected abstract List validateAttribute(ModelAttribute attribute);
+
 }

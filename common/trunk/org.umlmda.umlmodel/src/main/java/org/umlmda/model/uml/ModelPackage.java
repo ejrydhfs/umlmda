@@ -31,25 +31,25 @@ public interface ModelPackage extends ModelElement, ModelPackageBase, ModelVisit
    /**
     * @return the package containing this package
     */
-   public abstract ModelPackage getPackage();
+   ModelPackage getPackage();
 
    /**
     * @return an alphabetically sorted list of all packages on with this package depends
     */
-   public abstract List getReferencedPackages();
+   List getReferencedPackages();
 
    /**
     * @return an alphabetically sorted list of all referenced classes
     */
-   public abstract List getReferencedClasses();
+   List getReferencedClasses();
 
    /**
     * Returns a list containing only objects of the given stereotype
     */
-   public abstract List getClasses(String stereotype);
+   List getClasses(String stereotype);
 
    /**
     * @return A list of nested packages.
     */
-   public abstract List<? extends ModelPackageBase> getNestedPackages();
+   List<? extends ModelPackageBase> getNestedPackages();
 }

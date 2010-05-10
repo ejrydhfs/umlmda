@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmpActionBarContributor.java,v 1.3 2005/11/08 08:06:56 moroff Exp $
  */
 package org.umlmda.generator.profile.presentation;
 

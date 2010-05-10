@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelPackageImpl.java,v 1.2 2006/04/13 23:04:37 moroff Exp $
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -64,7 +63,8 @@ public class ModelPackageImpl extends ModelElementImpl implements ModelPackageBa
       super.update(o, arg);
       if ( o == classes ) {
          notifyObservers(PROPERTY_CLASSES);
-      } else if ( o == nestedPackages ) {
+      }
+      else if ( o == nestedPackages ) {
          notifyObservers(PROPERTY_PACKAGES);
       }
    }

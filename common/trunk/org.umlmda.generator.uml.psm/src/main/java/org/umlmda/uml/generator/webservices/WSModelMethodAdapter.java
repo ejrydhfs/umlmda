@@ -1,8 +1,5 @@
 /*
  * Created on 04.11.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.uml.generator.webservices;
 
@@ -24,11 +21,9 @@ import org.umlmda.uml.generator.java.JavaModelMethodAdapter;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSModelMethod {
+public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSModelMethod
+{
 
    /**
     * @param modelMethod
@@ -38,40 +33,44 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
       super(modelMethod, model);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelMethod#getReponseClass()
     */
    public String getReponseClass() {
       WSModelClass genClass = (WSModelClass) getGeneratorModel().getContext().getCurrentModelElement();
-      
-      if ( getReturnType().hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE)) {
-         return genClass.getScopedName(WSArtefacts.WS_STUB, (GeneratorClass)getReturnType());
+
+      if ( getReturnType().hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE) ) {
+         return genClass.getScopedName(WSArtefacts.WS_STUB, (GeneratorClass) getReturnType());
       }
-      
+
       throw new RuntimeException("method has no wrapping response");
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getConvertToWs(java.lang.String)
     */
    public String getConvertToWs() {
       return getConvert("WebserviceUtils.convertToWs");
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getConvertToWs(java.lang.String)
     */
    public String getConvertFromWs() {
-      WSModelClassifier returnType = ((WSModel)getGeneratorModel()).isSoapWrapping() ? getWrappedReturnType() : (WSModelClassifier) getReturnType();
-      
+      WSModelClassifier returnType = ((WSModel) getGeneratorModel()).isSoapWrapping() ? getWrappedReturnType()
+            : (WSModelClassifier) getReturnType();
+
       return getConvert(WSModelAttributeAdapter.getConvertFromWsMethod(returnType));
    }
 
    private String getConvert(String convertFunction) {
       String returnGetter;
       WSModelClassifier returnType;
-      
-      if ( ((WSModel)getGeneratorModel()).isSoapWrapping() ) {
+
+      if ( ((WSModel) getGeneratorModel()).isSoapWrapping() ) {
          returnGetter = getWrappedReturnValueGetter();
          returnType = getWrappedReturnType();
       }
@@ -79,16 +78,16 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
          returnGetter = getReturnGetter();
          returnType = (WSModelClassifier) getReturnType();
       }
-      
 
       if ( returnType.getJavaType().equals(returnType.getWSJavaType()) == false && returnType instanceof WSModelDataType ) {
-         return WSModelAttributeAdapter.getConvertSignature(convertFunction, (WSModelDataType)returnType, "response."+returnGetter);
-         //return convertFunction+"(response."+returnGetter+"())";
+         return WSModelAttributeAdapter.getConvertSignature(convertFunction, (WSModelDataType) returnType, "response."
+               + returnGetter);
+         // return convertFunction+"(response."+returnGetter+"())";
       }
       else
-         return "response."+returnGetter+"()";
+         return "response." + returnGetter + "()";
    }
-   
+
    public String getReturnGetter() {
       if ( getReturnType().getName().equals(ModelDataType.BOOLEAN) ) {
          return "isReturnValue()";
@@ -97,19 +96,20 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
          return "getReturnValue()";
       }
    }
+
    public boolean isConvertionNeeded() {
       return getJavaType().equals(super.getJavaType()) == false;
    }
-   
+
    /**
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getJavaType()
     */
    public String getJavaType() {
       ModelClassifier classifier = getReturnType();
-      
+
       if ( classifier instanceof WSModelDataType ) {
          WSModelDataType dataType = (WSModelDataType) classifier;
-         
+
          return dataType.getJavaType();
       }
       else {
@@ -117,7 +117,8 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
       }
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelMethod#getWebServiceSignature()
     */
    public String getWebServiceSignature() {
@@ -127,7 +128,7 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
       String returnSignature = getWebServiceType();
       String parameterSignature = getWebServiceParameter();
       String exceptionSignature = getWebServiceExceptions();
-      
+
       return returnSignature + " " + getName() + "(" + parameterSignature + ")" + exceptionSignature;
    }
 
@@ -138,21 +139,21 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
       String exceptionSignature = null;
       StringBuffer buffer = new StringBuffer();
       WSModelClass genClass = (WSModelClass) getGeneratorModel().getContext().getCurrentModelElement();
-      
+
       // FIXME Parameter for JaxWS handling
       if ( getExceptions().size() > 0 )
-      buffer.append(" throws ");
-      for (Iterator ie = getExceptions().iterator(); ie.hasNext();) {
+         buffer.append(" throws ");
+      for ( Iterator ie = getExceptions().iterator(); ie.hasNext(); ) {
          WSModelClass exceptionClass = (WSModelClass) ie.next();
          WSModelPackage exceptionPackage = (WSModelPackage) exceptionClass.getPackage();
-         
-         buffer.append(exceptionPackage.getQualifiedPackageName(WSArtefacts.WS_STUB)+".");
+
+         buffer.append(exceptionPackage.getQualifiedPackageName(WSArtefacts.WS_STUB) + ".");
          buffer.append(StringUtils.capitalize(getName()));
          buffer.append(exceptionClass.getGeneratedName(WSArtefacts.WS_STUB));
          if ( ie.hasNext() )
             buffer.append(", ");
       }
-      
+
       return buffer.toString();
    }
 
@@ -165,17 +166,17 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
       String parameterSignature = null;
       WSModelClass genClass = (WSModelClass) getGeneratorModel().getContext().getCurrentModelElement();
       WSModel genModel = (WSModel) genClass.getGeneratorModel();
-      
+
       if ( genModel.isSoapWrapping() ) {
 
          buffer.append("@WebParam(name = \"request\", partName = \"request\")");
          buffer.append(getRequestClass() + " request");
       }
       else {
-         for (Iterator ip = getParameters().iterator(); ip.hasNext();) {
+         for ( Iterator ip = getParameters().iterator(); ip.hasNext(); ) {
             WSModelParameter parameter = (WSModelParameter) ip.next();
-            
-            buffer.append("@WebParam(name = \""+parameter.getName()+"\", partName = \""+parameter.getName()+"\")");
+
+            buffer.append("@WebParam(name = \"" + parameter.getName() + "\", partName = \"" + parameter.getName() + "\")");
             buffer.append(parameter.getJavaType());
             buffer.append(" ");
             buffer.append(parameter.getName());
@@ -185,7 +186,7 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
          }
       }
       parameterSignature = buffer.toString();
-      
+
       return parameterSignature;
    }
 
@@ -197,83 +198,84 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
       WSModelClass genClass = (WSModelClass) getGeneratorModel().getContext().getCurrentModelElement();
       WSModel genModel = (WSModel) genClass.getGeneratorModel();
       String returnSignature = null;
-      
+
       if ( genModel.isSoapWrapping() ) {
          returnSignature = getReponseClass();
       }
       else if ( getReturnType() instanceof WSModelClass ) {
          WSModelClass returnClass = (WSModelClass) getReturnType();
-         
+
          returnSignature = genClass.getScopedName(WSArtefacts.WS_STUB, returnClass);
       }
-      else if ( getReturnType() instanceof WSModelDataType ){
+      else if ( getReturnType() instanceof WSModelDataType ) {
          WSModelDataType returnType = (WSModelDataType) getReturnType();
-         
+
          returnSignature = returnType.getJavaType();
       }
       else if ( getReturnType() == null ) {
          returnSignature = "void";
       }
-      
+
       return returnSignature;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelMethod#getPIMMethod()
     */
    public JavaModelMethod getPIMMethod() {
-      if (  hasStereotype(WSStereotypes.WEB_SERVICE_METHOD) ) {
-         for (Iterator id = getDependencies().iterator(); id.hasNext();) {
+      if ( hasStereotype(WSStereotypes.WEB_SERVICE_METHOD) ) {
+         for ( Iterator id = getDependencies().iterator(); id.hasNext(); ) {
             ModelDependency dependency = (ModelDependency) id.next();
-            
+
             if ( dependency.hasStereotype(PIMStereotypes.PIM_METHOD) ) {
                return (JavaModelMethod) dependency.getClients().iterator().next();
             }
          }
-         
+
          throw new RuntimeException("Model is not constistence");
       }
       else {
          return this;
       }
    }
-   
+
    public String getRequestClass() {
       WSModelClass genClass = (WSModelClass) getGeneratorModel().getContext().getCurrentModelElement();
-      
+
       if ( getParameters().size() == 1 ) {
          WSModelParameter parameter = (WSModelParameter) getParameters().get(0);
-         
-         if ( parameter.getType().hasStereotype(WSStereotypes.WEB_SERVICE_REQUEST)) {
-            return genClass.getScopedName(WSArtefacts.WS_STUB, (GeneratorClass)parameter.getType());
+
+         if ( parameter.getType().hasStereotype(WSStereotypes.WEB_SERVICE_REQUEST) ) {
+            return genClass.getScopedName(WSArtefacts.WS_STUB, (GeneratorClass) parameter.getType());
          }
       }
-      
+
       throw new RuntimeException("method has no wrapping request");
    }
-   
+
    public String getRequestSignature() {
       StringBuffer buffer = new StringBuffer();
-      WSModelClass wsRequestClass = (WSModelClass) ((WSModelParameter)getParameters().get(0)).getType();
-      
-      for (Iterator ia = wsRequestClass.getAttributes().iterator(); ia.hasNext();) {
+      WSModelClass wsRequestClass = (WSModelClass) ((WSModelParameter) getParameters().get(0)).getType();
+
+      for ( Iterator ia = wsRequestClass.getAttributes().iterator(); ia.hasNext(); ) {
          WSModelAttribute parameterAttribute = (WSModelAttribute) ia.next();
-         
+
          if ( parameterAttribute.getModelClassifier() instanceof ModelDataType ) {
             WSModelDataType wsDataType = (WSModelDataType) parameterAttribute.getModelClassifier();
-            
+
             if ( wsDataType.isConvertionRequired() ) {
                buffer.append(getConvertToWs());
                buffer.append("(");
             }
             buffer.append(parameterAttribute.getName());
-            if ( wsDataType.isConvertionRequired() ) 
+            if ( wsDataType.isConvertionRequired() )
                buffer.append(")");
          }
          else {
             WSModelClass wsParamClass = (WSModelClass) parameterAttribute.getModelClassifier();
             JavaModelClass pimParamClass = wsParamClass.getPIMClass();
-            
+
             buffer.append("utils.create");
             buffer.append(wsParamClass.getName());
             buffer.append("(");
@@ -287,36 +289,38 @@ public class WSModelMethodAdapter extends JavaModelMethodAdapter implements WSMo
       return buffer.toString();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelMethod#getWrappedReturnType()
     */
    public WSModelClassifier getWrappedReturnType() {
-      if ( getReturnType().hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE)) {
+      if ( getReturnType().hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE) ) {
          WSModelClass wsReturnClass = (WSModelClass) getReturnType();
-         
+
          if ( wsReturnClass.getAttributes().size() == 0 ) {
             return null;
          }
          else if ( wsReturnClass.getAttributes().size() == 1 ) {
-            return (WSModelClassifier) ((ModelAttribute)wsReturnClass.getAttributes().get(0)).getModelClassifier();
+            return (WSModelClassifier) ((ModelAttribute) wsReturnClass.getAttributes().get(0)).getModelClassifier();
          }
       }
-      
+
       throw new RuntimeException("method has no wrapped response");
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelMethod#getWrappedReturnValueGetter()
     */
    public String getWrappedReturnValueGetter() {
-      if ( getReturnType().hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE)) {
+      if ( getReturnType().hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE) ) {
          WSModelClass wsReturnClass = (WSModelClass) getReturnType();
-         
+
          if ( wsReturnClass.getAttributes().size() == 1 ) {
-            return ((JavaModelAttribute)wsReturnClass.getAttributes().get(0)).getGetter();
+            return ((JavaModelAttribute) wsReturnClass.getAttributes().get(0)).getGetter();
          }
       }
-      
+
       throw new RuntimeException("method has no wrapped response");
    }
 }

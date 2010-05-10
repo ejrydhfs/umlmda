@@ -1,12 +1,5 @@
-//jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 //
-//$Header: /cvsroot/umlmda/UMLMDAProfile/src/org/umlmda/profile/ModelTaggedValues.java,v 1.4 2007/07/31 12:52:35 moroff Exp $
-//$Source: /cvsroot/umlmda/UMLMDAProfile/src/org/umlmda/profile/ModelTaggedValues.java,v $
-//$Revision: 1.4 $
-// $State: Exp $
-//  $Name:  $
-//  $Date: 2007/07/31 12:52:35 $
-//$Locker:  $
 //
 //This library is free software; you can redistribute it and/or
 //modify it under the terms of the GNU Library General Public
@@ -29,17 +22,17 @@ package org.umlmda.profile;
 public interface ModelTaggedValues {
 
 
-	public static final String CORBA_MODULE       = "CORBAModule";
-	public static final String CPP_NAMESPACE      = "CPPNamespace";
-	public static final String DB_COLUMN          = "DBColumn";
-	public static final String DB_COL_LENGTH      = "DBColLength";
-	public static final String DB_MAPPING         = "DBMapping";
-	public static final String DB_PKEY_INHERIT    = "inheritParentKeys";
-	public static final String DB_TABLE           = "DBTable";
+	String CORBA_MODULE       = "CORBAModule";
+	String CPP_NAMESPACE      = "CPPNamespace";
+	String DB_COLUMN          = "DBColumn";
+	String DB_COL_LENGTH      = "DBColLength";
+	String DB_MAPPING         = "DBMapping";
+	String DB_PKEY_INHERIT    = "inheritParentKeys";
+	String DB_TABLE           = "DBTable";
 	
-	public static final String EBJ_COMPONENT      = "EJBComponent";
-	public static final String WSNAMESPACE        = "WSNamespace";
-	public static final String WSNAMESPACE_PREFIX = "WSNamespacePrefix";
-    public static final String MINOR_VERSION      = "MinorVersion";
-    public static final String MAJOR_VERSION      = "MajorVersion";
+	String EBJ_COMPONENT      = "EJBComponent";
+	String WSNAMESPACE        = "WSNamespace";
+	String WSNAMESPACE_PREFIX = "WSNamespacePrefix";
+    String MINOR_VERSION      = "MinorVersion";
+    String MAJOR_VERSION      = "MajorVersion";
 }

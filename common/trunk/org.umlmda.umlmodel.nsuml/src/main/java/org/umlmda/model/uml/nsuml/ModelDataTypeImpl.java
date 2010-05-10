@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelDataTypeImpl.java,v 1.1 2005/10/27 19:34:14 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelDataTypeImpl.java,v $
-// $Revision: 1.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2005/10/27 19:34:14 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -30,30 +23,29 @@ import org.umlmda.model.uml.ModelDataTypeBase;
 import ru.novosoft.uml.foundation.core.MDataType;
 
 /**
- * primitive DataType of a UML model. This class wraps ru.novosoft.uml.foundation.core.MDataType to make
- * a more easy access.
- *  
+ * primitive DataType of a UML model. This class wraps ru.novosoft.uml.foundation.core.MDataType to make a more easy access.
+ * 
  * @author Dieter Moroff
  */
-public class ModelDataTypeImpl extends ModelClassifierImpl implements ModelDataTypeBase {
-	private final MDataType modelDataType;
-	
-	ModelDataTypeImpl() {
-		super();
-		this.modelDataType = null;
-	}
-	
-	public ModelDataTypeImpl(ModelImpl model, MDataType modelDataType) {
-		super(model, modelDataType);
-		this.modelDataType = modelDataType;	
-	}
-	
-	/**
-	 * @return the fully qualified name of the class
-	 */
-	public String getQualifiedName() {
-      return getName();
-	}
+public class ModelDataTypeImpl extends ModelClassifierImpl implements ModelDataTypeBase
+{
+   private final MDataType modelDataType;
 
+   ModelDataTypeImpl() {
+      super();
+      this.modelDataType = null;
+   }
+
+   public ModelDataTypeImpl(ModelImpl model, MDataType modelDataType) {
+      super(model, modelDataType);
+      this.modelDataType = modelDataType;
+   }
+
+   /**
+    * @return the fully qualified name of the class
+    */
+   public String getQualifiedName() {
+      return getName();
+   }
 
 }

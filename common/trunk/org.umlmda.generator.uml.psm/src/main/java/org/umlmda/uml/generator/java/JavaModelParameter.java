@@ -1,11 +1,4 @@
-/*
- *   $Header$
- *   $Source$
- * $Revision$
- *     $Name$
- *     $Date$
- * 
- * This library is free software; you can redistribute it and/or
+/* This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
@@ -28,14 +21,15 @@ import org.umlmda.model.uml.ModelParameter;
 
 /**
  * TODO Insert type javadoc
- * @author Dieter Moroff (13.03.2006), last change $Date$ $Name$
- * @version $Revision$
+ * 
+ * @author Dieter Moroff (13.03.2006)
  */
-public interface JavaModelParameter extends ModelParameter {
+public interface JavaModelParameter extends ModelParameter
+{
 
    /**
     * Returns the java data type of the parameter
     */
-   public String getJavaType();
-   
+   String getJavaType();
+
 }

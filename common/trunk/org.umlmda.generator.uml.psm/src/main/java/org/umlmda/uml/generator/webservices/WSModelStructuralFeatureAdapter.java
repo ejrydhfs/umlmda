@@ -1,8 +1,5 @@
 /*
  * Created on 13.12.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.uml.generator.webservices;
 
@@ -13,11 +10,9 @@ import org.umlmda.profile.ModelStereotype;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public abstract class WSModelStructuralFeatureAdapter extends ModelStructuralFeatureAdapter implements WSModelStructuralFeature {
+public abstract class WSModelStructuralFeatureAdapter extends ModelStructuralFeatureAdapter implements WSModelStructuralFeature
+{
 
    /**
     * @param modelStructuralFeature
@@ -27,7 +22,8 @@ public abstract class WSModelStructuralFeatureAdapter extends ModelStructuralFea
       super(modelStructuralFeature, model);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see WSModelStructuralFeature#matchDirection(java.lang.String)
     */
    public boolean matchDirection(String direction) {
@@ -41,5 +37,4 @@ public abstract class WSModelStructuralFeatureAdapter extends ModelStructuralFea
          return true;
    }
 
-   
 }

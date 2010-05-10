@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -139,8 +138,8 @@ public class JavaImportHelperImpl implements JavaImportHelper
       if ( getOwnName().equals(name) == false ) {
          // If the name is known for being ambigious or if another class with the same name has been registered,
          // remove the registered import and remember the ambiguity.
-         if ( ambiguousImports.contains(name) 
-            || (registeredImports.containsKey(name) && ! registeredImports.containsValue(qualifiedName)) ) {
+         if ( ambiguousImports.contains(name)
+               || (registeredImports.containsKey(name) && !registeredImports.containsValue(qualifiedName)) ) {
             if ( ambiguousImports.add(name) ) {
                registeredImports.remove(name);
             }

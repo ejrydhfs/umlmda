@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSPSMClassHierarchyFixVisitor.java,v 1.1 2007/07/31 13:05:34 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSPSMClassHierarchyFixVisitor.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2007/07/31 13:05:34 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -34,13 +29,12 @@ import org.umlmda.model.uml.ModelMethod;
 import org.umlmda.model.uml.ModelParameter;
 
 /**
- * Fix web service dto hierarchie for polymorphic associations,
- * parameters and return types to avoid class cast exceptions.
- * @author Dieter Moroff (13.04.2006), last change $Date: 2007/07/31 13:05:34 $ $Name:  $
- * @version $Revision: 1.1 $
+ * Fix web service dto hierarchie for polymorphic associations, parameters and return types to avoid class cast exceptions.
+ * 
  */
-public class WSPSMClassHierarchyFixVisitor extends WSPSMClassHierarchyCreatorVisitor {
-   
+public class WSPSMClassHierarchyFixVisitor extends WSPSMClassHierarchyCreatorVisitor
+{
+
    /**
     * 
     */
@@ -54,48 +48,49 @@ public class WSPSMClassHierarchyFixVisitor extends WSPSMClassHierarchyCreatorVis
     */
    protected ModelClassBase createOrFindWsDtoHierarchie(Model model, ModelClassifierBase classifier) {
       ModelClassBase classHierary = null;
-      
+
       if ( classifier instanceof ModelClassBase ) {
          ModelClass modelClass = model.getModelClass((ModelClassBase) classifier);
-         
+
          if ( modelClass.hasStereotype(WSStereotypes.WEB_SERVICE_DTO) ) {
             return getBaseClassHierarchy(modelClass);
          }
       }
       return classHierary;
    }
-   
-   
+
    /**
     * @param modelClass
     * @return
     */
    private ModelClassBase getBaseClassHierarchy(ModelClass modelClass) {
       ModelClassBase baseClassHierarchy;
-      
-      for (Iterator isc = modelClass.getSuperClasses().iterator(); isc.hasNext();) {
+
+      for ( Iterator isc = modelClass.getSuperClasses().iterator(); isc.hasNext(); ) {
          ModelClass superClass = (ModelClass) isc.next();
          WSModelPackage modelPackage = (WSModelPackage) superClass.getPackage();
          WSModel model = (WSModel) modelPackage.getModel();
          String name = superClass.getName() + HIERARCHY_POSTFIX;
          String qualifiedName = modelPackage.getWsPackage().getQualifiedName() + "." + name;
          ModelClass wsClass = (ModelClass) model.find(qualifiedName);
-         
+
          if ( wsClass != null ) {
             return wsClass;
          }
       }
       return null;
-   }   
-   
-   /* (non-Javadoc)
+   }
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSPSMClassHierarchyCreatorVisitor#visit(org.umlmda.model.uml.ModelParameter)
     */
    public boolean visit(ModelParameter parameter) {
       return false;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSPSMClassHierarchyCreatorVisitor#visit(org.umlmda.model.uml.ModelMethod)
     */
    public boolean visit(ModelMethod method) {

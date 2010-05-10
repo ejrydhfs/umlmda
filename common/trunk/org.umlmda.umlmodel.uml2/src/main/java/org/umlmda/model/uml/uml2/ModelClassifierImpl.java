@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelClassifierImpl.java,v 1.1.2.1 2006/11/20 10:47:08 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelClassifierImpl.java,v $
-// $Revision: 1.1.2.1 $
-//    $State: Exp $
-//     $Name: oAW $
-//     $Date: 2006/11/20 10:47:08 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public

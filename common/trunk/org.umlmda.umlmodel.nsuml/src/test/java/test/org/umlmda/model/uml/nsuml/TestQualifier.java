@@ -1,8 +1,5 @@
 /*
  * Created on 18.11.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package test.org.umlmda.model.uml.nsuml;
 
@@ -18,41 +15,41 @@ import junit.framework.TestCase;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class TestQualifier extends TestCase {
+public class TestQualifier extends TestCase
+{
    ModelBase modelBase = null;
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see junit.framework.TestCase#setUp()
     */
    protected void setUp() throws Exception {
       modelBase = new ModelFactoryImpl().loadModel(new File("model/rose/qualifier.mdl"));
-      
+
       super.setUp();
    }
-   
+
    public void testQualifier() {
-      for (Iterator ic = modelBase.getClasses().iterator(); ic.hasNext();) {
+      for ( Iterator ic = modelBase.getClasses().iterator(); ic.hasNext(); ) {
          ModelClassBase modelClass = (ModelClassBase) ic.next();
 
-         for (Iterator ia = modelClass.getAssociations().iterator(); ia.hasNext();) {
+         for ( Iterator ia = modelClass.getAssociations().iterator(); ia.hasNext(); ) {
             ModelAssociationBase association = (ModelAssociationBase) ia.next();
-            
-            if ( modelClass.getName().equals("A") && association.getName().equals("theB")) {
+
+            if ( modelClass.getName().equals("A") && association.getName().equals("theB") ) {
                assertTrue(association.isMultiple());
             }
 
-            if ( modelClass.getName().equals("C") && association.getName().equals("theD")) {
+            if ( modelClass.getName().equals("C") && association.getName().equals("theD") ) {
                assertTrue(association.isMultiple());
             }
          }
       }
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see junit.framework.TestCase#tearDown()
     */
    protected void tearDown() throws Exception {

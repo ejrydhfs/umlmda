@@ -1,11 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 //
-// $Header: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelStructuralFeatureImpl.java,v 1.1.2.1 2006/11/20 10:47:08 moroff Exp $
-// $Source: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelStructuralFeatureImpl.java,v $
-// $Revision: 1.1.2.1 $
-//  $State: Exp $
-//   $Name: oAW $
-//   $Date: 2006/11/20 10:47:08 $
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Library General Public
@@ -29,12 +23,11 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.StructuralFeature;
 import org.umlmda.model.uml.ModelStructuralFeatureBase;
 
-
 /**
  * @author moroff
  */
-public abstract class ModelStructuralFeatureImpl extends ModelElementImpl implements
-      ModelStructuralFeatureBase {
+public abstract class ModelStructuralFeatureImpl extends ModelElementImpl implements ModelStructuralFeatureBase
+{
 
    /**
     * @param model
@@ -44,19 +37,20 @@ public abstract class ModelStructuralFeatureImpl extends ModelElementImpl implem
       super(model, modelElement);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeature#isDerived()
     */
    public boolean isDerived() {
       StructuralFeature feature = (StructuralFeature) modelElement;
 
-      if (feature instanceof Property) {
+      if ( feature instanceof Property ) {
          Property property = (Property) feature;
-         
+
          return property.isDerived();
       }
       else
          return false;
    }
-   
+
 }

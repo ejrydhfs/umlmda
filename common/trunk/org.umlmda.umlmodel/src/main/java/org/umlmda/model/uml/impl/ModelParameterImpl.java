@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelParameterImpl.java,v 1.2 2006/04/13 23:04:37 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelParameterImpl.java,v $
- * $Revision: 1.2 $
- *     $Name:  $
- *     $Date: 2006/04/13 23:04:37 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -31,12 +26,14 @@ import org.umlmda.model.uml.ModelParameterBase;
 
 /**
  * Basic implementation of a model methods parameter
+ * 
  * @author MOROFF
  */
-public class ModelParameterImpl extends ModelElementImpl implements ModelParameterBase {
+public class ModelParameterImpl extends ModelElementImpl implements ModelParameterBase
+{
 
-   private String direction = IN;
-   private ModelClassifierBase typeBase = null;
+   private String              direction = IN;
+   private ModelClassifierBase typeBase  = null;
 
    /**
     * @param model
@@ -46,14 +43,16 @@ public class ModelParameterImpl extends ModelElementImpl implements ModelParamet
       super(model, owner);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelParameterBase#getDirection()
     */
    public String getDirection() {
       return direction;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelParameterBase#getTypeBase()
     */
    public ModelClassifierBase getTypeBase() {

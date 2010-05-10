@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -28,18 +27,17 @@ import org.umlmda.model.uml.ModelMethod;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public interface JavaModelMethod extends JavaModelElement, ModelMethod, GeneratorMethod {
+public interface JavaModelMethod extends JavaModelElement, ModelMethod, GeneratorMethod
+{
 
    /**
     * Returns a synchronous method for an asynchronous method
+    * 
     * @return
     */
    JavaModelMethod getSyncMethod();
-   
+
    /**
     * 
     */
@@ -59,27 +57,27 @@ public interface JavaModelMethod extends JavaModelElement, ModelMethod, Generato
     * 
     */
    String registeredImports();
-   
+
    /**
     * @param business_object_interface
     * @param type
     * @return
     */
    String getScopedName(String artefactName, JavaModelClass type);
-   
+
    /**
-    * Returns the java logging code to the methods parameters 
+    * Returns the java logging code to the methods parameters
     */
    String logParameters(int level, int identLevel);
 
    /**
-    * Returns the java code at method entry 
+    * Returns the java code at method entry
     */
    String traceEntry(int identLevel);
 
    /**
     * Returns the java data type of the return type of the method
     */
-   public String getJavaType();
-   
+   String getJavaType();
+
 }

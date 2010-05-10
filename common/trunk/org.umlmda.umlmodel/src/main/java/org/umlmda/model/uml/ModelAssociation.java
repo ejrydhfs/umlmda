@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelAssociation.java,v 1.2 2006/04/12 20:18:30 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelAssociation.java,v $
-// $Revision: 1.2 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/12 20:18:30 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -31,26 +24,27 @@ package org.umlmda.model.uml;
  * 
  * @author vpussel
  */
-public interface ModelAssociation extends ModelStructuralFeature, ModelAssociationBase, ModelVisitable {
+public interface ModelAssociation extends ModelStructuralFeature, ModelAssociationBase, ModelVisitable
+{
 
-	/**
+   /**
     * @return the association target
     */
-   public abstract ModelClass getTarget();
+   ModelClass getTarget();
 
-	/**
+   /**
     * @return the association source
     */
-   public abstract ModelClass getSource();
-   
+   ModelClass getSource();
+
    /**
     * Searches the same association looking from the other class
     */
-   public abstract ModelAssociation getReverse();
+   ModelAssociation getReverse();
 
-	/**
+   /**
     * @return true if the association is not qualified as composition or aggregation
     */
-   public abstract boolean isUnspecified();
+   boolean isUnspecified();
 
 }

@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.oaw/src/org/umlmda/oaw/generator/model/java/JavaModelPackageAdapter.java,v 1.2 2006/10/23 09:45:06 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.oaw/src/org/umlmda/oaw/generator/model/java/JavaModelPackageAdapter.java,v $
- * $Revision: 1.2 $
- *     $Name:  $
- *     $Date: 2006/10/23 09:45:06 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -34,9 +29,9 @@ import org.umlmda.profile.ModelStereotype;
 
 /**
  * @author MOROFF
- *
  */
-public class JavaModelPackageAdapter extends org.umlmda.uml.generator.java.JavaModelPackageAdapter implements JavaModelPackage {
+public class JavaModelPackageAdapter extends org.umlmda.uml.generator.java.JavaModelPackageAdapter implements JavaModelPackage
+{
 
    /**
     * @param modelPackage
@@ -48,21 +43,21 @@ public class JavaModelPackageAdapter extends org.umlmda.uml.generator.java.JavaM
 
    public List<JavaBusinessObject> getBusinessObjects() {
       List<JavaBusinessObject> businessObjects = new ArrayList<JavaBusinessObject>();
-      
-      for (Iterator ic = getClasses(ModelStereotype.BUSINESS_OBJECT).iterator(); ic.hasNext();) {
+
+      for ( Iterator ic = getClasses(ModelStereotype.BUSINESS_OBJECT).iterator(); ic.hasNext(); ) {
          JavaBusinessObject businessObject = (JavaBusinessObject) ic.next();
-         
+
          businessObjects.add(businessObject);
       }
       return businessObjects;
-    }
+   }
 
    public List<JavaBusinessService> getBusinessServices() {
       List<JavaBusinessService> businessServices = new ArrayList<JavaBusinessService>();
-      
-      for (Iterator ic = getClasses(ModelStereotype.BUSINESS_SERVICE).iterator(); ic.hasNext();) {
+
+      for ( Iterator ic = getClasses(ModelStereotype.BUSINESS_SERVICE).iterator(); ic.hasNext(); ) {
          JavaBusinessService businessService = (JavaBusinessService) ic.next();
-         
+
          businessServices.add(businessService);
       }
       return businessServices;

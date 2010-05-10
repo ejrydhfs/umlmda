@@ -4,23 +4,21 @@ package org.umlmda.generator.model.uml;
 
 import org.umlmda.generator.profile.Artefact;
 
-
 /**
- * The context holds information about the current generated model element and 
- * artefact to simplify the writers.
+ * The context holds information about the current generated model element and artefact to simplify the writers.
  */
-public interface GeneratorContext 
+public interface GeneratorContext
 {
-   public final static String CONTEXT_DEFAULT = "default";
-   public final static String CONTEXT_SETTER  = "setter";
-   public final static String CONTEXT_GETTER  = "getter";
-   
-   public GeneratorModelElement getCurrentModelElement();
+   String CONTEXT_DEFAULT = "default";
+   String CONTEXT_SETTER  = "setter";
+   String CONTEXT_GETTER  = "getter";
 
-   public void setCurrentModelElement(GeneratorModelElement currentModelElement);
-   
-   public Artefact getCurrentArtefact();
-   
-   public void setCurrentArtefact(Artefact currentGeneratorArtefact);
-   
+   GeneratorModelElement getCurrentModelElement();
+
+   void setCurrentModelElement(GeneratorModelElement currentModelElement);
+
+   Artefact getCurrentArtefact();
+
+   void setCurrentArtefact(Artefact currentGeneratorArtefact);
+
 }

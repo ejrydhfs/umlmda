@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/j2ee/J2EEModelAdapter.java,v 1.1 2006/08/09 11:46:57 moroff Exp $
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)
@@ -33,19 +32,17 @@ import org.umlmda.uml.generator.java.JavaModelAdapter;
 
 /**
  * @author moroff
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class J2EEModelAdapter extends JavaModelAdapter implements J2EEModel {
+public class J2EEModelAdapter extends JavaModelAdapter implements J2EEModel
+{
 
-   public static final String PROPERTY_J2EE_SPEC = "J2EESpec";
-   public static final String PROPERTY_DEFAULT_J2EE_SPEC = "2.1";
-   public static final String PROPERTY_JNDI_REPLACEMENT_PATTERN = "JNDIReplacementPattern";
+   public static final String PROPERTY_J2EE_SPEC                        = "J2EESpec";
+   public static final String PROPERTY_DEFAULT_J2EE_SPEC                = "2.1";
+   public static final String PROPERTY_JNDI_REPLACEMENT_PATTERN         = "JNDIReplacementPattern";
    public static final String PROPERTY_DEFAULT_JNDI_REPLACEMENT_PATTERN = "(.*)";
-   public static final String PROPERTY_JNDI_REPLACEMENT = "JNDIReplacement";
-   public static final String PROPERTY_DEFAULT_JNDI_REPLACEMENT = "env/$1Bean";
-   public static final String PROPERTY_JNDI_NAME = "JNDIName";
+   public static final String PROPERTY_JNDI_REPLACEMENT                 = "JNDIReplacement";
+   public static final String PROPERTY_DEFAULT_JNDI_REPLACEMENT         = "env/$1Bean";
+   public static final String PROPERTY_JNDI_NAME                        = "JNDIName";
 
    /**
     * @param factory
@@ -55,52 +52,55 @@ public class J2EEModelAdapter extends JavaModelAdapter implements J2EEModel {
       super(factory, srcModel);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.j2ee.J2EEModel#getJNDIReplacementPattern()
     */
    public String getJNDIName() {
       return getProperties().getProperty(PROPERTY_JNDI_NAME);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.j2ee.J2EEModel#getJNDIReplacementPattern()
     */
    public String getJNDIReplacementPattern() {
       return getProperties().getProperty(PROPERTY_JNDI_REPLACEMENT_PATTERN, PROPERTY_DEFAULT_JNDI_REPLACEMENT_PATTERN);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.j2ee.J2EEModel#getJNDIReplacement()
     */
    public String getJNDIReplacement() {
       return getProperties().getProperty(PROPERTY_JNDI_REPLACEMENT, PROPERTY_DEFAULT_JNDI_REPLACEMENT);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.j2ee.J2EEModel#getJ2EESpec()
     */
    public String getJ2EESpec() {
       return getProperties().getProperty(PROPERTY_J2EE_SPEC, PROPERTY_DEFAULT_J2EE_SPEC);
    }
-   
+
    /**
-    * Create common elements used in the writers for the java plattform. 
+    * Create common elements used in the writers for the java plattform.
     */
    protected void createCommonModelElements() {
       // Create common java classes
-      ModelPackage javax = (ModelPackage) find("javax"); 
+      ModelPackage javax = (ModelPackage) find("javax");
       if ( javax == null ) {
          javax = createPackage("javax", getModel());
       }
-      ModelPackage javaxJms = (ModelPackage) find("javax.jms"); 
+      ModelPackage javaxJms = (ModelPackage) find("javax.jms");
       if ( javaxJms == null ) {
          javaxJms = createPackage("jms", javax);
       }
-      ModelClass javaxJmsQueue = (ModelClass)find("javax.jms.Queue");
+      ModelClass javaxJmsQueue = (ModelClass) find("javax.jms.Queue");
       if ( javaxJmsQueue == null ) {
          javaxJmsQueue = createClass("Queue", javaxJms, ModelStereotype.NATIVE_CLASS);
       }
    }
 
-   
 }

@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/utils/ModelStatistic.java,v 1.2 2007/01/03 21:12:44 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/utils/ModelStatistic.java,v $
- * $Revision: 1.2 $
- *     $Name:  $
- *     $Date: 2007/01/03 21:12:44 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -37,19 +32,19 @@ import org.umlmda.model.uml.ModelVisitor;
 
 /**
  * Diagnostic utility to get some model statistics.
- * @author Dieter Moroff (28.04.2006), last change $Date: 2007/01/03 21:12:44 $ $Name:  $
- * @version $Revision: 1.2 $
+ * 
  */
-public class ModelStatistic {
+public class ModelStatistic
+{
    private final Model model;
-   private int packages = 0;
-   private int classes = 0;
-   private int methods = 0;
-   private int parameters = 0;
-   private int attributes = 0;
-   private int assocations = 0;
-   private int dataTypes = 0; 
-   
+   private int         packages    = 0;
+   private int         classes     = 0;
+   private int         methods     = 0;
+   private int         parameters  = 0;
+   private int         attributes  = 0;
+   private int         assocations = 0;
+   private int         dataTypes   = 0;
+
    /**
     * 
     */
@@ -100,17 +95,13 @@ public class ModelStatistic {
 
          public boolean visit(ModelDependency dependency) {
             return true;
-         }}).iterate(model);
+         }
+      }).iterate(model);
    }
 
    public String toString() {
-      return "Model "+model.getName()+" has\n  " +
-             packages+" packages\n  "+
-             classes+" classes\n  "+
-             attributes+" attributes\n  "+
-             assocations+" assocations\n  "+
-             methods+" methods\n  "+
-             parameters+" parameters\n  "+
-             dataTypes+" datatypes";
+      return "Model " + model.getName() + " has\n  " + packages + " packages\n  " + classes + " classes\n  " + attributes
+            + " attributes\n  " + assocations + " assocations\n  " + methods + " methods\n  " + parameters + " parameters\n  "
+            + dataTypes + " datatypes";
    }
 }

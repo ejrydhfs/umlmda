@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelAttributeImpl.java,v 1.2.2.1.2.1 2008/04/09 13:05:33 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelAttributeImpl.java,v $
-// $Revision: 1.2.2.1.2.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2008/04/09 13:05:33 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -38,40 +31,38 @@ import org.umlmda.model.uml.ModelDataTypeBase;
 import org.umlmda.model.uml.attributes.Multiplicity;
 
 /**
- * @author moroff
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * @author moroff Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements ModelAttributeBase {
-   private ModelClassBase modelClass = null;
+public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements ModelAttributeBase
+{
+   private ModelClassBase    modelClass    = null;
    private ModelDataTypeBase modelDataType = null;
-   private final Property attribute;
-   private Multiplicity multiplicity = null;
-	
-	/**
-	 * @param attribute
-	 */
-	public ModelAttributeImpl(ModelImpl model, Property attribute) {
-		super(model, attribute);
-		this.attribute = attribute;
-	}
+   private final Property    attribute;
+   private Multiplicity      multiplicity  = null;
 
-	public String toString() {
-		return attribute.getName() + " : " + attribute.getType().getName();
-	}
-   
+   /**
+    * @param attribute
+    */
+   public ModelAttributeImpl(ModelImpl model, Property attribute) {
+      super(model, attribute);
+      this.attribute = attribute;
+   }
+
+   public String toString() {
+      return attribute.getName() + " : " + attribute.getType().getName();
+   }
+
    public String getType() {
       return attribute.getType().getName();
    }
-   
+
    /**
     * @return
     */
    public ModelClassBase getModelClassBase() {
       if ( attribute.getType() != null ) {
          if ( modelClass == null && !isPrimitiveType() )
-            modelClass = model.findClass((Class)attribute.getType());
+            modelClass = model.findClass((Class) attribute.getType());
       }
       return modelClass;
    }
@@ -81,7 +72,7 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
     */
    public ModelDataTypeBase getDataTypeBase() {
       if ( modelDataType == null && isPrimitiveType() )
-         modelDataType = model.findDataType((DataType)attribute.getType());
+         modelDataType = model.findDataType((DataType) attribute.getType());
       return modelDataType;
    }
 
@@ -89,39 +80,41 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
       return isConstant(attribute);
    }
 
-   /* (non-Javadoc)
-	 * @see org.umlmda.model.uml.ModelStructuralFeature#isOptional()
-	 */
-	public boolean isOptional() {
-		return false;
-	}
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelStructuralFeature#isOptional()
+    */
+   public boolean isOptional() {
+      return false;
+   }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttributeBase#isReadOnly()
     */
    public boolean isReadOnly() {
       return attribute.isReadOnly();
    }
-   
-	/**
-	 * Checks whether the type of the attribute is a primitve type
-	 * @return <code>true</code> attribute type is primitive, <code>false</code>
-	 * attribute type is not primitive.
-	 */
-	public boolean isPrimitiveType() {
-	   return attribute.getType() instanceof DataType;
-	}
 
-	public boolean isTransient() {
-      //TODO ModelAttributeImpl.isTransient()
-      //return Boolean.getBoolean(attribute.getTaggedValue("transient", "false"));
+   /**
+    * Checks whether the type of the attribute is a primitve type
+    * 
+    * @return <code>true</code> attribute type is primitive, <code>false</code> attribute type is not primitive.
+    */
+   public boolean isPrimitiveType() {
+      return attribute.getType() instanceof DataType;
+   }
+
+   public boolean isTransient() {
+      // TODO ModelAttributeImpl.isTransient()
+      // return Boolean.getBoolean(attribute.getTaggedValue("transient", "false"));
       return false;
    }
 
    public String getInitialValue() {
       ValueSpecification expr = attribute.getDefaultValue();
       String initialValue = expr != null ? expr.stringValue() : null;
-      
+
       if ( getDataTypeBase() != null && getDataTypeBase().getName().equals(ModelDataType.STRING) && expr instanceof LiteralString ) {
          return "\"" + initialValue + "\"";
       }
@@ -129,28 +122,28 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
          return initialValue;
       }
    }
-   
+
    static boolean isConstant(Property attribute) {
       return attribute.isStatic() && attribute.isReadOnly() && StringUtils.isNotEmpty(attribute.getDefault());
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttribute#getOwningClass()
     */
    public ModelClassBase getOwningClassBase() {
-      return model.findClass((Class)attribute.getOwner());
+      return model.findClass((Class) attribute.getOwner());
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeatureBase#getMultiplicity()
     */
    public Multiplicity getMultiplicity() {
-      if (multiplicity == null) {
-         multiplicity = new Multiplicity(
-               attribute.getLower(),
-               attribute.getUpper());
+      if ( multiplicity == null ) {
+         multiplicity = new Multiplicity(attribute.getLower(), attribute.getUpper());
       }
       return multiplicity;
    }
-   
+
 }

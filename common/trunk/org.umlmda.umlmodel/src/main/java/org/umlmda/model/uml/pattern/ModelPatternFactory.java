@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/pattern/ModelPatternFactory.java,v 1.1 2006/05/04 15:16:30 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/pattern/ModelPatternFactory.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/05/04 15:16:30 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -27,15 +22,15 @@ package org.umlmda.model.uml.pattern;
 import java.util.List;
 
 /**
- * Pattern which replaces a model element with one or more other elements
- * or modifies an existing element on a pim model.
- * @author Dieter Moroff (28.04.2006), last change $Date: 2006/05/04 15:16:30 $ $Name:  $
- * @version $Revision: 1.1 $
+ * Pattern which replaces a model element with one or more other elements or modifies an existing element on a pim model.
+ * 
  */
-public interface ModelPatternFactory {
+public interface ModelPatternFactory
+{
 
    /**
     * Creates a list of model patterns to be applies on the pim model
+    * 
     * @return
     */
    List createPatterns();

@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/pattern/ModelPatternIterator.java,v 1.1 2006/05/04 15:16:30 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/pattern/ModelPatternIterator.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/05/04 15:16:30 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -45,13 +40,13 @@ import org.umlmda.model.uml.utils.ModelVisitableIterator;
 
 /**
  * Iterates the model and applies all patterns
- * @author Dieter Moroff (28.04.2006), last change $Date: 2006/05/04 15:16:30 $ $Name:  $
- * @version $Revision: 1.1 $
+ * 
  */
-public class ModelPatternIterator {
+public class ModelPatternIterator
+{
    private final List patterns;
-   private Logger logger = Logger.getLogger(getClass().getName());
-   
+   private Logger     logger = Logger.getLogger(getClass().getName());
+
    /**
     * 
     */
@@ -67,23 +62,24 @@ public class ModelPatternIterator {
 
    /**
     * Apply all patterns on the modell
+    * 
     * @param model
     */
    public void apply(Model model) {
       if ( patterns.size() > 0 ) {
-      new ModelIterator(new ModelIterator.Action() {
-         public void process(ModelElement modelElement) {
-            ModelPatternIterator.this.applyModelElement(modelElement);
-         }}).iterate(model);
+         new ModelIterator(new ModelIterator.Action() {
+            public void process(ModelElement modelElement) {
+               ModelPatternIterator.this.applyModelElement(modelElement);
+            }
+         }).iterate(model);
       }
    }
-   
+
    private void applyModelElement(ModelElement modelElement) {
-      for (Iterator ip = patterns.iterator(); ip.hasNext();) {
+      for ( Iterator ip = patterns.iterator(); ip.hasNext(); ) {
          ModelPattern pattern = (ModelPattern) ip.next();
-         
-         if ( pattern.isPatternFor(modelElement.getClass()) 
-           && pattern.isPatternFor(modelElement) ) {
+
+         if ( pattern.isPatternFor(modelElement.getClass()) && pattern.isPatternFor(modelElement) ) {
             pattern.apply(modelElement);
          }
       }

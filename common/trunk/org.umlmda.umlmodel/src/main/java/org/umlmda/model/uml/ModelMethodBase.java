@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelMethodBase.java,v 1.2 2006/04/13 23:04:37 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelMethodBase.java,v $
-// $Revision: 1.2 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/13 23:04:37 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -30,31 +23,30 @@ import java.util.List;
 
 /**
  * @author moroff
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public interface ModelMethodBase extends ModelElementBase {
-   public static final String PROPERTY_EXCEPTIONS = "exceptions";
-   public static final String PROPERTY_PARAMETERS = "parameters";
-   public static final String PROPERTY_RETURN_TYPE_BASE = "returnTypeBase";
+public interface ModelMethodBase extends ModelElementBase
+{
+   String PROPERTY_EXCEPTIONS       = "exceptions";
+   String PROPERTY_PARAMETERS       = "parameters";
+   String PROPERTY_RETURN_TYPE_BASE = "returnTypeBase";
 
    /**
     * Returns al list with the methods parameter
     */
-   public abstract List getParameters();
-   
+   List getParameters();
+
    /**
     * Returns a list with the declared exceptions
     */
-   public abstract List getExceptions();
+   List getExceptions();
+
    /**
     * Returns the return type of the method
     */
-   public abstract ModelClassifierBase getReturnTypeBase();
+   ModelClassifierBase getReturnTypeBase();
 
    /**
     * @return
     */
-   public abstract ModelClassBase getOwningClass();
+   ModelClassBase getOwningClass();
 }

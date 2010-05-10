@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSModelAdapter.java,v 1.4 2007/07/31 13:05:34 moroff Exp $
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)
@@ -31,21 +30,23 @@ import org.umlmda.model.uml.utils.ModelVisitableIterator;
 
 import org.umlmda.uml.generator.java.JavaModelAdapter;
 
+public class WSModelAdapter extends JavaModelAdapter implements WSModel
+{
 
-public class WSModelAdapter extends JavaModelAdapter implements WSModel {
+   private String  dateMapping = null;
+   private boolean init        = false;
 
-   private String dateMapping = null;
-   private boolean init = false;
-   
    public WSModelAdapter(ModelAdapterFactory factory, ModelBase srcModel) {
       super(factory, srcModel);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModel#isSoapWrapping()
     */
    public boolean isSoapWrapping() {
-      return Boolean.valueOf(getProperties().getProperty(WSModel.PROPERTY_SOAP_WRAPPING, WSModel.PROPERTY_SOAP_WRAPPING_DEFAULT)).booleanValue();
+      return Boolean.valueOf(getProperties().getProperty(WSModel.PROPERTY_SOAP_WRAPPING, WSModel.PROPERTY_SOAP_WRAPPING_DEFAULT))
+            .booleanValue();
    }
 
    public void init() {
@@ -59,13 +60,13 @@ public class WSModelAdapter extends JavaModelAdapter implements WSModel {
    protected void wsInit() {
       if ( !init ) {
          ModelVisitableIterator modelIterator;
-         
+
          this.init = true;
-         
+
          // Create web service classes
          modelIterator = new ModelVisitableIterator(new WSPSMClassCreatorVisitor());
          modelIterator.iterate(this);
-         
+
          // Create reference classes for polymorphic types
          modelIterator = new ModelVisitableIterator(new WSPSMClassReferenceCreatorVisitor());
          modelIterator.iterate(this);
@@ -81,7 +82,7 @@ public class WSModelAdapter extends JavaModelAdapter implements WSModel {
          // Handle multiple inheritance
          modelIterator = new ModelVisitableIterator(new WSPSMClassMultipleInheritanceVisitor());
          modelIterator.iterate(this);
-         
+
          if ( isSoapWrapping() ) {
             modelIterator = new ModelVisitableIterator(new WSPSMRequestReponseCreateVisitor());
             modelIterator.iterate(this);
@@ -89,7 +90,8 @@ public class WSModelAdapter extends JavaModelAdapter implements WSModel {
       }
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModel#getDateMapping()
     */
    public String getDateMapping() {
@@ -98,5 +100,5 @@ public class WSModelAdapter extends JavaModelAdapter implements WSModel {
       }
       return dateMapping;
    }
-   
+
 }

@@ -1,12 +1,5 @@
-//jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 //
-//$Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSModelAttributeAdapter.java,v 1.4 2007/01/15 21:21:12 moroff Exp $
-//$Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSModelAttributeAdapter.java,v $
-//$Revision: 1.4 $
-// $State: Exp $
-//  $Name:  $
-//  $Date: 2007/01/15 21:21:12 $
-//$Locker:  $
 //
 //This library is free software; you can redistribute it and/or
 //modify it under the terms of the GNU Library General Public
@@ -45,103 +38,114 @@ import org.umlmda.uml.generator.java.JavaModelDataType;
  * @author vpussel
  * @author Dieter Moroff
  */
-public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implements WSModelAttribute {
-   static final String WEBSERVICEUTILS_CONVERTCALENDARTOXMLGREGORIANCALENDAR = "WebserviceUtils.convertCalendarToXMLGregorianCalendar";
-   static final String WEBSERVICEUTILS_CONVERTDATETOXMLGREGORIANCALENDAR = "WebserviceUtils.convertDateToXMLGregorianCalendar";
-   static final String WEBSERVICEUTILS_CONVERT_TO_WS = "WebserviceUtils.convertToWs";
-   static final String WEBSERVICEUTILS_CONVERT_FROM_WS = "WebserviceUtils.convertFromWs";
+public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implements WSModelAttribute
+{
+   static final String                    WEBSERVICEUTILS_CONVERTCALENDARTOXMLGREGORIANCALENDAR = "WebserviceUtils.convertCalendarToXMLGregorianCalendar";
+   static final String                    WEBSERVICEUTILS_CONVERTDATETOXMLGREGORIANCALENDAR     = "WebserviceUtils.convertDateToXMLGregorianCalendar";
+   static final String                    WEBSERVICEUTILS_CONVERT_TO_WS                         = "WebserviceUtils.convertToWs";
+   static final String                    WEBSERVICEUTILS_CONVERT_FROM_WS                       = "WebserviceUtils.convertFromWs";
    private final WSModelStructuralFeature delegate;
 
    public WSModelAttributeAdapter(ModelAttributeBase modelAttribute, Model model) {
       super(modelAttribute, model);
-      delegate = new WSModelStructuralFeatureAdapter(modelAttribute, model)  {
+      delegate = new WSModelStructuralFeatureAdapter(modelAttribute, model) {
          public String getNillableTag() {
             return WSModelAttributeAdapter.this.getNillableTag();
          }
+
          public String getMinOccursTag() {
             return WSModelAttributeAdapter.this.getMaxOccursTag();
          }
+
          public String getMaxOccursTag() {
             return WSModelAttributeAdapter.this.getMinOccursTag();
          }
       };
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelStructuralFeature#matchDirection(java.lang.String)
     */
    public boolean matchDirection(String direction) {
       return delegate.matchDirection(direction);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getSchemaType()
     */
    public String getSchemaType() {
       if ( getDataType() != null ) {
-         if ( getDataType().getName().equals("char"))
+         if ( getDataType().getName().equals("char") )
             return "xsd:string";
-         else if ( getDataType().getName().equals(ModelDataType.BINARY))
+         else if ( getDataType().getName().equals(ModelDataType.BINARY) )
             return "xsd:hexBinary";
          else
-            return "xsd:"+getDataType().getName();
+            return "xsd:" + getDataType().getName();
       }
       else if ( getModelClass() instanceof WSModelClass ) {
          WSModelClass modelClass = (WSModelClass) getModelClass();
-         
+
          return modelClass.getSchemaType();
       }
-      else 
+      else
          return null;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getConvertToWs(java.lang.String)
     */
    public String getConvertToWs() {
-      if ( getModelClassifier().hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION)) {
+      if ( getModelClassifier().hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION) ) {
          JavaModelClass genClass = (JavaModelClass) getGeneratorModel().getContext().getCurrentModelElement();
          WSModelClass enumClass = (WSModelClass) getModelClassifier();
          JavaModelClass pimEnumClass = enumClass.getPIMClass();
-         String wsEnum = genClass.getScopedName(WSArtefacts.WS_STUB, enumClass); 
-         boolean isStringEnum = ((ModelAttribute)enumClass.getAttributes().get(0)).getDataType().getName().equals(ModelDataType.STRING);
-         boolean isEnumWithNumbers = StringUtils.isNumeric(((ModelAttribute)enumClass.getAttributes().get(0)).getInitialValue().substring(0, 1));
-       
+         String wsEnum = genClass.getScopedName(WSArtefacts.WS_STUB, enumClass);
+         boolean isStringEnum = ((ModelAttribute) enumClass.getAttributes().get(0)).getDataType().getName().equals(
+               ModelDataType.STRING);
+         boolean isEnumWithNumbers = StringUtils.isNumeric(((ModelAttribute) enumClass.getAttributes().get(0)).getInitialValue()
+               .substring(0, 1));
+
          // FIXME Parameter for JaxWS handling
          if ( isOptional() ) {
-        	 if ( isStringEnum && isEnumWithNumbers ) {
-        		 return "from."+getGetter()+"() != null ? "+wsEnum+".fromValue(\"C\"+from."+getGetter()+"().getValue()) : null";
-        	 }
-        	 else {
-        		 return "from."+getGetter()+"() != null ? "+wsEnum+".fromValue(from."+getGetter()+"().getValue()) : null";
-        	 }	 
+            if ( isStringEnum && isEnumWithNumbers ) {
+               return "from." + getGetter() + "() != null ? " + wsEnum + ".fromValue(\"C\"+from." + getGetter()
+                     + "().getValue()) : null";
+            }
+            else {
+               return "from." + getGetter() + "() != null ? " + wsEnum + ".fromValue(from." + getGetter()
+                     + "().getValue()) : null";
+            }
          }
          else {
             if ( isStringEnum ) {
-               if ( isEnumWithNumbers ) {	
-            	   return wsEnum+".fromValue(\"C\"+from."+getGetter()+"().getValue())";
+               if ( isEnumWithNumbers ) {
+                  return wsEnum + ".fromValue(\"C\"+from." + getGetter() + "().getValue())";
                }
                else {
-            	   return wsEnum+".fromValue(from."+getGetter()+"().getValue())";
+                  return wsEnum + ".fromValue(from." + getGetter() + "().getValue())";
                }
             }
             else {
-               return "from."+getGetter()+"().getValue()";
+               return "from." + getGetter() + "().getValue()";
             }
          }
       }
       else {
-         return getConvert(getConvertToWsMethod((WSModelClassifier)getModelClassifier()), "from", getGetter(), getDataType());
+         return getConvert(getConvertToWsMethod((WSModelClassifier) getModelClassifier()), "from", getGetter(), getDataType());
       }
    }
 
    /**
-    * @param classifier TODO
+    * @param classifier
+    *           TODO
     * @return
     */
    String getConvertToWsMethod(WSModelClassifier classifier) {
-      if ( getJavaType().equals("javax.xml.datatype.XMLGregorianCalendar")) {
-         if ( getWSJavaType().equals(Calendar.class.getName())) 
+      if ( getJavaType().equals("javax.xml.datatype.XMLGregorianCalendar") ) {
+         if ( getWSJavaType().equals(Calendar.class.getName()) )
             return "WebserviceUtils.convertXMLGregorianCalendarToCalendar";
          else
             return "WebserviceUtils.convertXMLGregorianCalendarToDate";
@@ -151,92 +155,101 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
    }
 
    /**
-    * @param classifier TODO
+    * @param classifier
+    *           TODO
     * @return
     */
    static String getConvertFromWsMethod(WSModelClassifier classifier) {
-      if ( classifier instanceof JavaModelDataType && classifier.getJavaType().equals("javax.xml.datatype.XMLGregorianCalendar")) {
-         if ( classifier.getWSJavaType().equals(Calendar.class.getName())) 
+      if ( classifier instanceof JavaModelDataType && classifier.getJavaType().equals("javax.xml.datatype.XMLGregorianCalendar") ) {
+         if ( classifier.getWSJavaType().equals(Calendar.class.getName()) )
             return WEBSERVICEUTILS_CONVERTCALENDARTOXMLGREGORIANCALENDAR;
          else
             return WEBSERVICEUTILS_CONVERTDATETOXMLGREGORIANCALENDAR;
       }
-      else  
+      else
          return WEBSERVICEUTILS_CONVERT_FROM_WS;
    }
-   
-   /* (non-Javadoc)
-    * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getConvertToWs(java.lang.String)
-         // FIXME Parameter for JaxWS handling
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getConvertToWs(java.lang.String) // FIXME Parameter for JaxWS
+    * handling
     */
    public String getConvertFromWs(String srcInstance) {
-      
+
       // Handle <<Enumeration>>s
-      if ( getModelClassifier().hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION)) {
+      if ( getModelClassifier().hasStereotype(WSStereotypes.WEB_SERVICE_ENUMERATION) ) {
          WSModelClass enumClass = (WSModelClass) getModelClassifier();
-         boolean isStringEnum = ((ModelAttribute)enumClass.getAttributes().get(0)).getDataType().getName().equals(ModelDataType.STRING);
-         boolean isEnumWithNumbers = StringUtils.isNumeric(((ModelAttribute)enumClass.getAttributes().get(0)).getInitialValue().substring(0, 1));
-         String javaEnum = enumClass.getPIMClass().getQualifiedName(JavaArtefacts.ENUMERATION); 
-         
+         boolean isStringEnum = ((ModelAttribute) enumClass.getAttributes().get(0)).getDataType().getName().equals(
+               ModelDataType.STRING);
+         boolean isEnumWithNumbers = StringUtils.isNumeric(((ModelAttribute) enumClass.getAttributes().get(0)).getInitialValue()
+               .substring(0, 1));
+         String javaEnum = enumClass.getPIMClass().getQualifiedName(JavaArtefacts.ENUMERATION);
+
          if ( isOptional() ) {
-        	 if ( isStringEnum && isEnumWithNumbers ) {           
-        		 return srcInstance+"."+getGetter()+"() != null ? "+javaEnum+".fromValue(StringUtils.substring("+srcInstance+"."+getGetter()+"().value(),1)) : null";
-        	 }
-        	 else {
-        		 return srcInstance+"."+getGetter()+"() != null ? "+javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().value()) : null";
-        	 }
+            if ( isStringEnum && isEnumWithNumbers ) {
+               return srcInstance + "." + getGetter() + "() != null ? " + javaEnum + ".fromValue(StringUtils.substring("
+                     + srcInstance + "." + getGetter() + "().value(),1)) : null";
+            }
+            else {
+               return srcInstance + "." + getGetter() + "() != null ? " + javaEnum + ".fromValue(" + srcInstance + "."
+                     + getGetter() + "().value()) : null";
+            }
          }
          else {
             if ( isStringEnum ) {
-            	if ( isEnumWithNumbers ) {
-            		return javaEnum+".fromValue(StringUtils.substring("+srcInstance+"."+getGetter()+"().value(),1))";
-            	}
-            	else {
-            		return javaEnum+".fromValue("+srcInstance+"."+getGetter()+"().value())";
-            	}
+               if ( isEnumWithNumbers ) {
+                  return javaEnum + ".fromValue(StringUtils.substring(" + srcInstance + "." + getGetter() + "().value(),1))";
+               }
+               else {
+                  return javaEnum + ".fromValue(" + srcInstance + "." + getGetter() + "().value())";
+               }
             }
             else {
-               return javaEnum+".fromValue("+srcInstance+"."+getGetter()+"())";
+               return javaEnum + ".fromValue(" + srcInstance + "." + getGetter() + "())";
             }
          }
       }
-      
+
       // Handle simple types
       else {
-         if ( getDataType() != null && getDataType().getName().equals(ModelDataType.BOOLEAN)) {
-            return getConvert(getConvertFromWsMethod((WSModelClassifier) getModelClassifier()), srcInstance, "is"+StringUtils.capitalize(getName()), getDataType());
+         if ( getDataType() != null && getDataType().getName().equals(ModelDataType.BOOLEAN) ) {
+            return getConvert(getConvertFromWsMethod((WSModelClassifier) getModelClassifier()), srcInstance, "is"
+                  + StringUtils.capitalize(getName()), getDataType());
          }
-         else if ( isMultivalue()) {
-            return getConvert(getConvertFromWsMethod((WSModelClassifier) getModelClassifier()), srcInstance, getGetter(), getDataType())+".toArray(new "+((JavaModelDataType)getDataType()).getJavaType()+"[] {})";
-         } else {
-            return getConvert(getConvertFromWsMethod((WSModelClassifier) getModelClassifier()), srcInstance, getGetter(), getDataType());
+         else if ( isMultivalue() ) {
+            return getConvert(getConvertFromWsMethod((WSModelClassifier) getModelClassifier()), srcInstance, getGetter(),
+                  getDataType())
+                  + ".toArray(new " + ((JavaModelDataType) getDataType()).getJavaType() + "[] {})";
+         }
+         else {
+            return getConvert(getConvertFromWsMethod((WSModelClassifier) getModelClassifier()), srcInstance, getGetter(),
+                  getDataType());
          }
       }
    }
 
-
    private String getConvert(String convertFunction, String srcInstance, String getterName, ModelDataType dataType) {
       String getter = srcInstance + "." + getterName;
-      
-      if (isConvertionNeeded()) {
+
+      if ( isConvertionNeeded() ) {
          return getConvertSignature(convertFunction, dataType, getter);
       }
       else
          return "" + getter + "()";
    }
-   
 
    static String getConvertSignature(String convertFunction, ModelDataType dataType, String getter) {
-      if (dataType != null
+      if ( dataType != null
             && ModelDataType.DATE.equals(dataType.getName())
             && (convertFunction.equals(WEBSERVICEUTILS_CONVERTDATETOXMLGREGORIANCALENDAR) || convertFunction
-                  .equals(WEBSERVICEUTILS_CONVERTCALENDARTOXMLGREGORIANCALENDAR))) {
+                  .equals(WEBSERVICEUTILS_CONVERTCALENDARTOXMLGREGORIANCALENDAR)) ) {
          return convertFunction + "(" + getter + "(), false, false)";
       }
-      else if (dataType != null
+      else if ( dataType != null
             && ModelDataType.DATE_TIME.equals(dataType.getName())
             && (convertFunction.equals(WEBSERVICEUTILS_CONVERTDATETOXMLGREGORIANCALENDAR) || convertFunction
-                  .equals(WEBSERVICEUTILS_CONVERTCALENDARTOXMLGREGORIANCALENDAR))) {
+                  .equals(WEBSERVICEUTILS_CONVERTCALENDARTOXMLGREGORIANCALENDAR)) ) {
          return convertFunction + "(" + getter + "(), true, false)";
       }
       else {
@@ -245,97 +258,98 @@ public class WSModelAttributeAdapter extends JavaModelAttributeAdapter implement
    }
 
    /**
-    * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getJavaType()
-    * Special handling for date and dateTime, mapped to <code>java.util.Calendar</code>,
-    * default for other types.
+    * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getJavaType() Special handling for date and dateTime, mapped to
+    *      <code>java.util.Calendar</code>, default for other types.
     */
    public String getWSJavaType() {
       return getType(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, WSModelDataTypeAdapter.typeMappingStrategy);
    }
-   
+
    public boolean isConvertionNeeded() {
       String javaType = getJavaType();
       String wsType = getWSJavaType();
-      return getModelClassifier().hasStereotype(ModelStereotype.ENUMERATION) 
-          || wsType.equals(javaType) == false;
+      return getModelClassifier().hasStereotype(ModelStereotype.ENUMERATION) || wsType.equals(javaType) == false;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getNillableTag()
     */
    public String getNillableTag() {
       String nillableTag = StringUtils.EMPTY;
-      
+
       if ( isMultivalue() == false ) {
          nillableTag = "nillable=\"" + (isOptional() ? "true" : "false") + "\" ";
       }
       return nillableTag;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getMinOccursTag()
     */
    public String getMinOccursTag() {
       String minOccursTag = StringUtils.EMPTY;
-      
+
       if ( isMultivalue() == true ) {
          minOccursTag = "minOccurs=\"" + (isOptional() ? "0" : "1") + "\" ";
       }
       return minOccursTag;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getMaxOccursTag()
     */
    public String getMaxOccursTag() {
       String maxOccursTag = StringUtils.EMPTY;
-      
+
       if ( isMultivalue() == true ) {
          maxOccursTag = "maxOccurs=\"unbounded\" ";
       }
       return maxOccursTag;
    }
- 
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttributeBase#getInitialValue()
     */
    public String getInitialValue() {
       String initialValue = super.getInitialValue();
-      
-      if ( initialValue != null && initialValue.startsWith("\"")) {
-         return initialValue.substring(1, initialValue.length()-1);
+
+      if ( initialValue != null && initialValue.startsWith("\"") ) {
+         return initialValue.substring(1, initialValue.length() - 1);
       }
       else {
          return initialValue;
       }
    }
 
-   
    public String getConvertParameterToWs() {
       StringBuffer buffer = new StringBuffer();
-      
+
       if ( getModelClassifier() instanceof ModelDataType ) {
          WSModelDataType wsDataType = (WSModelDataType) getModelClassifier();
-         
+
          if ( wsDataType.isConvertionRequired() ) {
-            buffer.append(getConvertToWsMethod((WSModelClassifier)getModelClassifier()));
+            buffer.append(getConvertToWsMethod((WSModelClassifier) getModelClassifier()));
             buffer.append("(");
          }
          buffer.append(getName());
-         if ( wsDataType.isConvertionRequired() ) 
+         if ( wsDataType.isConvertionRequired() )
             buffer.append(")");
       }
       else {
          WSModelClass wsParamClass = (WSModelClass) getModelClassifier();
          JavaModelClass pimParamClass = wsParamClass.getPIMClass();
-         
+
          buffer.append("utils.create");
          buffer.append(wsParamClass.getName());
          buffer.append("(");
          buffer.append(getName());
          buffer.append(")");
       }
-      
+
       return buffer.toString();
    }
 }

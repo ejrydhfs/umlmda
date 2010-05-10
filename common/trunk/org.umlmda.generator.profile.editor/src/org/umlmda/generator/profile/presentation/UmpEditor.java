@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmpEditor.java,v 1.5 2006/06/24 19:09:33 moroff Exp $
  */
 package org.umlmda.generator.profile.presentation;
 

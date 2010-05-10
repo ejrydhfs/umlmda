@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -48,23 +47,25 @@ import org.umlmda.generator.set.GenerationSet;
 /**
  * Implementation of the GeneratorModel, can be used as delegate in PSM model adapters
  */
-public abstract class GeneratorModelImpl implements GeneratorModel {
+public abstract class GeneratorModelImpl implements GeneratorModel
+{
    private GenerationProfile profile;
-   private GenerationSet generationSet;
-   private GeneratorContext context = new GeneratorContextImpl();
-   private Properties properties = null;
-   private LoggingWriter loggingWriter = null;
-   
-   /* (non-Javadoc)
+   private GenerationSet     generationSet;
+   private GeneratorContext  context       = new GeneratorContextImpl();
+   private Properties        properties    = null;
+   private LoggingWriter     loggingWriter = null;
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorModel#createEmitter()
     */
    public CodeEmitter createEmitter() {
       boolean useSpaces = Boolean.valueOf(getProperties().getProperty("UseSpaces", "true")).booleanValue();
       int identDepth = Integer.parseInt(getProperties().getProperty("IdentDepth", "3"));
-      
+
       return new CodeEmitter(identDepth, 0, useSpaces);
    }
-   
+
    /**
     * 
     */
@@ -72,14 +73,16 @@ public abstract class GeneratorModelImpl implements GeneratorModel {
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorModel#getProfile()
     */
    public GenerationProfile getProfile() {
       return profile;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorModel#setProfile(org.umlmda.generator.set.GenerationProfile)
     */
    public void setProfile(GenerationProfile profile) {
@@ -90,19 +93,21 @@ public abstract class GeneratorModelImpl implements GeneratorModel {
    public GenerationSet getGenerationSet() {
       return generationSet;
    }
-   
+
    public void setGenerationSet(GenerationSet generationSet) {
       this.generationSet = generationSet;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorModel#getContext()
     */
    public GeneratorContext getContext() {
       return context;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorModel#getRcsHelper()
     */
    public RcsHelper getRcsHelper() {
@@ -110,16 +115,17 @@ public abstract class GeneratorModelImpl implements GeneratorModel {
       return null;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorModel#getArtefacts(java.lang.String)
     */
    @SuppressWarnings("unchecked")
    public Set<Artefact> getArtefacts(String stereotypeName) {
       Stereotype stereotype = getStereotype(stereotypeName);
-      
+
       if ( stereotype != null ) {
          Set<Artefact> artefacts = new HashSet<Artefact>();
-         for (Iterator im = stereotype.getMappings().iterator(); im.hasNext();) {
+         for ( Iterator im = stereotype.getMappings().iterator(); im.hasNext(); ) {
             Mapping mapping = (Mapping) im.next();
 
             artefacts.add(mapping.getArtefact());
@@ -132,26 +138,27 @@ public abstract class GeneratorModelImpl implements GeneratorModel {
    }
 
    public Stereotype getStereotype(String stereotypeName) {
-      for (Iterator is = profile.getProfile().getStereotypes().iterator(); is.hasNext();) {
+      for ( Iterator is = profile.getProfile().getStereotypes().iterator(); is.hasNext(); ) {
          Stereotype stereotype = (Stereotype) is.next();
-         
+
          if ( stereotypeName.equals(stereotype.getName()) ) {
             return stereotype;
          }
       }
-      
+
       return null;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorModel#getProperties()
     */
    public Properties getProperties() {
       if ( properties == null ) {
          properties = new Properties();
-         
+
          if ( profile != null ) {
-            for (Iterator ip = profile.getProperties().iterator(); ip.hasNext();) {
+            for ( Iterator ip = profile.getProperties().iterator(); ip.hasNext(); ) {
                Property property = (Property) ip.next();
 
                properties.put(property.getName(), property.getValue());
@@ -161,78 +168,81 @@ public abstract class GeneratorModelImpl implements GeneratorModel {
       }
       return properties;
    }
-   
+
    /**
     * @param profile
     */
    private void addDefaultProperties(Profile profile) {
-      for (Iterator ip = profile.getDefaultProperties().iterator(); ip.hasNext();) {
+      for ( Iterator ip = profile.getDefaultProperties().iterator(); ip.hasNext(); ) {
          Property property = (Property) ip.next();
 
          if ( properties.containsKey(property.getName()) == false )
             properties.put(property.getName(), property.getValue());
       }
-      for (Iterator ib = profile.getBasedOn().iterator(); ib.hasNext();) {
+      for ( Iterator ib = profile.getBasedOn().iterator(); ib.hasNext(); ) {
          Profile baseProfile = (Profile) ib.next();
-         
+
          addDefaultProperties(baseProfile);
       }
    }
 
    public Artefact getArtefact() {
-      return ( getContext() != null ) ? getContext().getCurrentArtefact() : null;
+      return (getContext() != null) ? getContext().getCurrentArtefact() : null;
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.GeneratorModel#getArtefact(java.lang.String)
     */
    public Artefact getArtefact(String artefactName, GeneratorModelElement modelElement) {
       String qualifiedName = modelElement.getQualifiedName();
       Artefact artefact = null;
-      
-      if ( StringUtils.isNotEmpty(qualifiedName) && (StringUtils.isEmpty(profile.getPackagePrefix()) || qualifiedName.startsWith(profile.getPackagePrefix())))
+
+      if ( StringUtils.isNotEmpty(qualifiedName)
+            && (StringUtils.isEmpty(profile.getPackagePrefix()) || qualifiedName.startsWith(profile.getPackagePrefix())) )
          artefact = getArtefact(artefactName, profile, modelElement);
       else {
-         for (Iterator irs = generationSet.getReferencedSets().iterator(); artefact == null && irs.hasNext();) {
+         for ( Iterator irs = generationSet.getReferencedSets().iterator(); artefact == null && irs.hasNext(); ) {
             GenerationSet referencedSet = (GenerationSet) irs.next();
-            
-            for (Iterator igp = referencedSet.getGenerationProfile().iterator(); artefact == null && igp.hasNext();) {
+
+            for ( Iterator igp = referencedSet.getGenerationProfile().iterator(); artefact == null && igp.hasNext(); ) {
                GenerationProfile generationProfile = (GenerationProfile) igp.next();
-               
-               if ( qualifiedName.startsWith(generationProfile.getPackagePrefix()))
+
+               if ( qualifiedName.startsWith(generationProfile.getPackagePrefix()) )
                   artefact = getArtefact(artefactName, generationProfile, modelElement);
             }
          }
       }
-      
-      // No artefact found with respect to the correct package prefix, 
-      // use the current profile 
+
+      // No artefact found with respect to the correct package prefix,
+      // use the current profile
       if ( artefact == null ) {
          artefact = getArtefact(artefactName, profile, modelElement);
-         //TODO Warning to logging
+         // TODO Warning to logging
       }
-      
+
       if ( artefact == null ) {
-         throw new RuntimeException("Artefact "+artefactName+" not found in profiles");
+         throw new RuntimeException("Artefact " + artefactName + " not found in profiles");
       }
-      
+
       return artefact;
    }
 
    /**
     * Search a artefact by name or alias
+    * 
     * @param artefactName
     * @param profile
     * @return
     */
    private static Artefact getArtefact(String artefactName, GenerationProfile genProfile, GeneratorModelElement modelElement) {
-      
+
       Profile profile = genProfile.getProfile();
       Artefact a = getArtefact(artefactName, profile, modelElement);
-      
+
       return a;
    }
-   
+
    /**
     * @param artefactName
     * @param profile
@@ -241,11 +251,11 @@ public abstract class GeneratorModelImpl implements GeneratorModel {
     */
    private static Artefact getArtefact(String artefactName, Profile profile, GeneratorModelElement modelElement) {
       Artefact a = null;
-      
+
       // Search in own profile
-      for (Iterator ia = profile.getArtefacts().iterator(); a == null && ia.hasNext();) {
+      for ( Iterator ia = profile.getArtefacts().iterator(); a == null && ia.hasNext(); ) {
          Artefact artefact = (Artefact) ia.next();
-         
+
          if ( artefactName.equals(artefact.getName()) ) {
             a = artefact;
          }
@@ -255,28 +265,29 @@ public abstract class GeneratorModelImpl implements GeneratorModel {
       }
 
       // Search in based profiles
-      for (Iterator ip = profile.getBasedOn().iterator(); a == null && ip.hasNext();) {
+      for ( Iterator ip = profile.getBasedOn().iterator(); a == null && ip.hasNext(); ) {
          Profile p = (Profile) ip.next();
-      
+
          a = getArtefact(artefactName, p, modelElement);
       }
       return a;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorModel#getLoggingWriter()
     */
    public LoggingWriter getLoggingWriter() {
       if ( loggingWriter == null ) {
          String loggingType = getProperties().getProperty("Logging");
-         
-         if ( "log4j".equalsIgnoreCase(loggingType)) {
+
+         if ( "log4j".equalsIgnoreCase(loggingType) ) {
             loggingWriter = new Log4jWriter(createEmitter());
          }
-         else if ( "commons".equalsIgnoreCase(loggingType)) {
+         else if ( "commons".equalsIgnoreCase(loggingType) ) {
             loggingWriter = new CommonsLoggingWriter(createEmitter());
          }
-         else if ( "none".equalsIgnoreCase(loggingType)) {
+         else if ( "none".equalsIgnoreCase(loggingType) ) {
             loggingWriter = new NoneLoggingWriter(createEmitter());
          }
          else {
@@ -285,5 +296,5 @@ public abstract class GeneratorModelImpl implements GeneratorModel {
       }
       return loggingWriter;
    }
-   
+
 }

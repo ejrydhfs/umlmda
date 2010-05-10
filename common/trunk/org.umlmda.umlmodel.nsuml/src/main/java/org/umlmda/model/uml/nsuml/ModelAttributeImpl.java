@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelAttributeImpl.java,v 1.4 2006/05/04 15:15:56 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelAttributeImpl.java,v $
-// $Revision: 1.4 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/05/04 15:15:56 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -25,7 +18,6 @@
 //
 package org.umlmda.model.uml.nsuml;
 
-
 import org.umlmda.model.uml.ModelAttributeBase;
 import org.umlmda.model.uml.ModelClassBase;
 import org.umlmda.model.uml.ModelDataTypeBase;
@@ -41,40 +33,38 @@ import ru.novosoft.uml.foundation.data_types.MMultiplicity;
 import ru.novosoft.uml.foundation.data_types.MScopeKind;
 
 /**
- * @author moroff
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * @author moroff Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements ModelAttributeBase {
-   private ModelClassBase modelClass = null;
+public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements ModelAttributeBase
+{
+   private ModelClassBase    modelClass    = null;
    private ModelDataTypeBase modelDataType = null;
-   private final MAttribute attribute;
-   private Multiplicity multiplicity = null;
-	
-	/**
-	 * @param attribute
-	 */
-	public ModelAttributeImpl(ModelImpl model, MAttribute attribute) {
-		super(model, attribute);
-		this.attribute = attribute;
-	}
+   private final MAttribute  attribute;
+   private Multiplicity      multiplicity  = null;
 
-	public String toString() {
-		return attribute.getName() + " : " + attribute.getType().getName();
-	}
-   
+   /**
+    * @param attribute
+    */
+   public ModelAttributeImpl(ModelImpl model, MAttribute attribute) {
+      super(model, attribute);
+      this.attribute = attribute;
+   }
+
+   public String toString() {
+      return attribute.getName() + " : " + attribute.getType().getName();
+   }
+
    public String getType() {
       return attribute.getType().getName();
    }
-   
+
    /**
     * @return
     */
    public ModelClassBase getModelClassBase() {
       if ( attribute.getType() != null ) {
          if ( modelClass == null && !isPrimitiveType() )
-            modelClass = model.findClass((MClass)attribute.getType());
+            modelClass = model.findClass((MClass) attribute.getType());
       }
       return modelClass;
    }
@@ -84,37 +74,39 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
     */
    public ModelDataTypeBase getDataTypeBase() {
       if ( modelDataType == null && isPrimitiveType() )
-         modelDataType = model.findDataType((MDataType)attribute.getType());
+         modelDataType = model.findDataType((MDataType) attribute.getType());
       return modelDataType;
    }
 
-   /* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelStructuralFeature#isOptional()
-	 */
-	public boolean isOptional() {
-		return false;
-	}
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelStructuralFeature#isOptional()
+    */
+   public boolean isOptional() {
+      return false;
+   }
 
-	/**
-	 * Checks whether the type of the attribute is a primitve type
-	 * @return <code>true</code> attribute type is primitive, <code>false</code>
-	 * attribute type is not primitive.
-	 */
-	public boolean isPrimitiveType() {
-	   return attribute.getType() instanceof MDataType;
-	}
+   /**
+    * Checks whether the type of the attribute is a primitve type
+    * 
+    * @return <code>true</code> attribute type is primitive, <code>false</code> attribute type is not primitive.
+    */
+   public boolean isPrimitiveType() {
+      return attribute.getType() instanceof MDataType;
+   }
 
-	public boolean isConstant() {
+   public boolean isConstant() {
       return isConstant(attribute);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttributeBase#isReadOnly()
     */
    public boolean isReadOnly() {
       return attribute.getChangeability() == MChangeableKind.FROZEN;
    }
-   
+
    public boolean isTransient() {
       return Boolean.valueOf(attribute.getTaggedValue("transient", "false")).booleanValue();
    }
@@ -124,26 +116,29 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
 
       return expr != null ? expr.getBody() : null;
    }
-   
+
    static boolean isConstant(MAttribute attribute) {
-      return (attribute.getInitialValue() != null && attribute.getOwnerScope() == MScopeKind.CLASSIFIER && attribute.getChangeability() ==  MChangeableKind.FROZEN );
+      return (attribute.getInitialValue() != null && attribute.getOwnerScope() == MScopeKind.CLASSIFIER && attribute
+            .getChangeability() == MChangeableKind.FROZEN);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelAttributeBase#getOwningClassBase()
     */
    public ModelClassBase getOwningClassBase() {
-      return model.findClass((MClass)attribute.getOwner());
+      return model.findClass((MClass) attribute.getOwner());
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelStructuralFeatureBase#getMultiplicity()
     */
    public Multiplicity getMultiplicity() {
-      if (multiplicity == null) {
+      if ( multiplicity == null ) {
          MMultiplicity range = attribute.getMultiplicity();
 
-         if (range != null) {
+         if ( range != null ) {
             multiplicity = new Multiplicity(range.getLower(), range.getUpper());
          }
          else {
@@ -152,5 +147,5 @@ public class ModelAttributeImpl extends ModelStructuralFeatureImpl implements Mo
       }
       return multiplicity;
    }
-   
+
 }

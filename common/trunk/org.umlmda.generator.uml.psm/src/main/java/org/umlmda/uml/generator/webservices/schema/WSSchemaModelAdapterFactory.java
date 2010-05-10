@@ -7,20 +7,20 @@ import org.umlmda.uml.generator.webservices.WSModelAdapter;
 import org.umlmda.uml.generator.webservices.WSModelAdapterFactory;
 import org.umlmda.uml.generator.webservices.WSModelPackageAdapter;
 
-public class WSSchemaModelAdapterFactory extends WSModelAdapterFactory {
-	
-	@Override
-	public ModelPackage createModelPackage(ModelPackageBase modelPackage,
-			Model model) {
-	      if (modelPackage instanceof WSModelPackageAdapter)
-	          return (ModelPackage) modelPackage;
-	       else
-	          return new WSSchemaModelPackageAdapter(modelPackage, model);
-	}
+public class WSSchemaModelAdapterFactory extends WSModelAdapterFactory
+{
 
-	@Override
-	protected Model createPsmModel(Model model) {
-	      return new WSSchemaModelAdapter(this, model);
-	}
-	   
+   @Override
+   public ModelPackage createModelPackage(ModelPackageBase modelPackage, Model model) {
+      if ( modelPackage instanceof WSModelPackageAdapter )
+         return (ModelPackage) modelPackage;
+      else
+         return new WSSchemaModelPackageAdapter(modelPackage, model);
+   }
+
+   @Override
+   protected Model createPsmModel(Model model) {
+      return new WSSchemaModelAdapter(this, model);
+   }
+
 }

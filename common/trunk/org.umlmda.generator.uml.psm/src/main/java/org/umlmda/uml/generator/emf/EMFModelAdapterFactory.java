@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFModelAdapterFactory.java,v 1.3 2007/01/03 21:15:54 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFModelAdapterFactory.java,v $
- * $Revision: 1.3 $
- *     $Name:  $
- *     $Date: 2007/01/03 21:15:54 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -39,11 +34,9 @@ import org.umlmda.uml.generator.webservices.WSModelAdapterFactory;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class EMFModelAdapterFactory extends WSModelAdapterFactory {
+public class EMFModelAdapterFactory extends WSModelAdapterFactory
+{
 
    /**
     * 
@@ -52,43 +45,54 @@ public class EMFModelAdapterFactory extends WSModelAdapterFactory {
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.impl.ModelAdapterFactoryImpl#createPsmModel(org.umlmda.model.uml.Model)
     */
    protected Model createPsmModel(Model model) {
       return new EMFModelAdapter(this, model);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelDataType(org.umlmda.model.uml.ModelDataTypeBase, org.umlmda.model.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelDataType(org.umlmda.model.uml.ModelDataTypeBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelDataType createModelDataType(ModelDataTypeBase modelDataType, Model destModel) {
       return new EMFModelDataTypeAdapter(modelDataType, destModel);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelAttribute(org.umlmda.model.uml.ModelAttributeBase, org.umlmda.model.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelAttribute(org.umlmda.model.uml.ModelAttributeBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelAttribute createModelAttribute(ModelAttributeBase modelAttribute, Model destModel) {
       return new EMFModelAttributeAdapter(modelAttribute, destModel);
    }
-   
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelAssociation(org.umlmda.model.uml.ModelAssociationBase, org.umlmda.model.uml.Model)
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelAssociation(org.umlmda.model.uml.ModelAssociationBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelAssociation createModelAssociation(ModelAssociationBase modelAssociation, Model destModel) {
       return new EMFModelAssociationAdapter(modelAssociation, destModel);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelClass(org.umlmda.model.uml.ModelClassBase, org.umlmda.model.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelClass(org.umlmda.model.uml.ModelClassBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelClass createModelClass(ModelClassBase modelClassBase, Model destModel) {
       return new EMFModelClassAdapter(modelClassBase, destModel);
    }
-   
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelPackage(org.umlmda.model.uml.ModelPackageBase, org.umlmda.model.uml.Model)
+
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelPackage(org.umlmda.model.uml.ModelPackageBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelPackage createModelPackage(ModelPackageBase modelPackage, Model model) {
       return new EMFModelPackageAdapter(modelPackage, model);

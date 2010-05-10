@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: GenerationSetItemProvider.java,v 1.4 2006/02/08 12:20:53 moroff Exp $
  */
 package org.umlmda.generator.set.provider;
 

@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/utils/observer/ObservableIterator.java,v 1.1 2006/04/13 22:53:18 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/utils/observer/ObservableIterator.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/04/13 22:53:18 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -29,15 +24,14 @@ import java.util.Iterator;
 import java.util.Observable;
 
 /**
- * Implementation of an iterator which can be observed if the underlying
- * collection is changed through this iterator.
- * @author Dieter Moroff (13.04.2006), last change $Date: 2006/04/13 22:53:18 $ $Name:  $
- * @version $Revision: 1.1 $
+ * Implementation of an iterator which can be observed if the underlying collection is changed through this iterator.
+ * 
  */
-public class ObservableIterator extends Observable implements Iterator {
-   private final Iterator iterator;
+public class ObservableIterator extends Observable implements Iterator
+{
+   private final Iterator   iterator;
    private final Collection collection;
-   
+
    /**
     * 
     */
@@ -45,12 +39,13 @@ public class ObservableIterator extends Observable implements Iterator {
       super();
       this.collection = collection;
       this.iterator = iterator;
-      
+
       // Notify collection on iterator.remove
       addObserver(collection);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Iterator#remove()
     */
    public void remove() {
@@ -59,14 +54,16 @@ public class ObservableIterator extends Observable implements Iterator {
       notifyObservers(collection);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Iterator#hasNext()
     */
    public boolean hasNext() {
       return iterator.hasNext();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Iterator#next()
     */
    public Object next() {

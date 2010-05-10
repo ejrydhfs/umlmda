@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelClassBase.java,v 1.3 2006/08/09 10:40:26 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelClassBase.java,v $
-// $Revision: 1.3 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/08/09 10:40:26 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -33,53 +26,53 @@ import java.util.List;
  * 
  * @author vpussel
  */
-public interface ModelClassBase extends ModelClassifierBase {
-   public static final String PROPERTY_ASSOCIATIONS = "associations";
-   public static final String PROPERTY_ALL_ASSOCIATIONS = "allAssociations";
-   public static final String PROPERTY_SUPER_CLASSES = "superClasses";
-   public static final String PROPERTY_METHODS = "methods";
-   public static final String PROPERTY_CONSTANTS = "constants";
-   public static final String PROPERTY_ATTRIBUTES = "attributes";
-   public static final String PROPERTY_GENERALIZATIONS = "generalizations";
+public interface ModelClassBase extends ModelClassifierBase
+{
+   String PROPERTY_ASSOCIATIONS     = "associations";
+   String PROPERTY_ALL_ASSOCIATIONS = "allAssociations";
+   String PROPERTY_SUPER_CLASSES    = "superClasses";
+   String PROPERTY_METHODS          = "methods";
+   String PROPERTY_CONSTANTS        = "constants";
+   String PROPERTY_ATTRIBUTES       = "attributes";
+   String PROPERTY_GENERALIZATIONS  = "generalizations";
 
-	/**
-	 * @return the package holding this class 
-	 */
-   public abstract ModelPackageBase getPackageBase();
+   /**
+    * @return the package holding this class
+    */
+   ModelPackageBase getPackageBase();
 
-	/**
+   /**
     * @return the list of variable attributes
     */
-   public abstract List getAttributes();
+   List getAttributes();
 
-	/**
-    * Returns the list of constant attributes (a constant must be mark frozen, 
-    * scope classifier and have an initial value).
+   /**
+    * Returns the list of constant attributes (a constant must be mark frozen, scope classifier and have an initial value).
     */
-   public abstract List getConstants();
+   List getConstants();
 
-	/**
+   /**
     * @return the list of methods, sorted by name
     */
-   public abstract List getMethods();
+   List getMethods();
 
-	/**
+   /**
     * Returns the associations which are navigatable from the class, sorted by name
     */
-   public abstract List getAssociations();
+   List getAssociations();
 
    /**
     * Returns all associations (navigatable or not), sorted by name
     */
-   public abstract List getAllAssociations();
+   List getAllAssociations();
 
    /**
     * @return true if the class is abstract
     */
-   public abstract boolean isAbstract();
+   boolean isAbstract();
 
    /**
     * Gets a list of associations to generalizations of the current class
     */
-   public abstract List getGeneralizations();
+   List getGeneralizations();
 }

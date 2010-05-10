@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 //
-// $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelStructuralFeatureBase.java,v 1.4 2006/11/18 11:57:35 moroff Exp $
-// $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelStructuralFeatureBase.java,v $
-// $Revision: 1.4 $
-//  $State: Exp $
-//   $Name:  $
-//   $Date: 2006/11/18 11:57:35 $
-// $Locker:  $
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Library General Public
@@ -30,38 +23,37 @@ import org.umlmda.model.uml.attributes.Multiplicity;
 
 /**
  * @author moroff
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public interface ModelStructuralFeatureBase extends ModelElementBase {
-   public static final String PROPERTY_DERIVED = "derived";
-   public static final String PROPERTY_MULTIPLICITY = "multiplicity";
-   public static final String PROPERTY_READ_ONLY = "readOnly";
+public interface ModelStructuralFeatureBase extends ModelElementBase
+{
+   String PROPERTY_DERIVED      = "derived";
+   String PROPERTY_MULTIPLICITY = "multiplicity";
+   String PROPERTY_READ_ONLY    = "readOnly";
 
    /**
     * Checks whether the feature is a derived (non persistent) attribute
     */
-   public abstract boolean isDerived();
-   
+   boolean isDerived();
+
    /**
     * Checks whether the feature is read only (no setters generated)
     */
-   public abstract boolean isReadOnly();
-   
-   /**
-	 * @return true if model feature is optional
-	 */
-	public abstract boolean isOptional();
+   boolean isReadOnly();
 
-	/**
-	 * Returns the class owning the feature
-	 */
-	public abstract ModelClassBase getOwningClassBase();
-  
+   /**
+    * @return true if model feature is optional
+    */
+   boolean isOptional();
+
+   /**
+    * Returns the class owning the feature
+    */
+   ModelClassBase getOwningClassBase();
+
    /**
     * Returns the multiplicity of the feature
+    * 
     * @return
     */
-   public Multiplicity getMultiplicity();
+   Multiplicity getMultiplicity();
 }

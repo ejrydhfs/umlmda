@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/j2ee/J2EEModelPackageAdapter.java,v 1.2 2006/10/23 09:32:48 moroff Exp $
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)
@@ -41,13 +40,11 @@ import org.umlmda.uml.generator.java.JavaModelPackageAdapter;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class J2EEModelPackageAdapter extends JavaModelPackageAdapter implements J2EEModelPackage {
+public class J2EEModelPackageAdapter extends JavaModelPackageAdapter implements J2EEModelPackage
+{
    private List classes = null;
-   
+
    /**
     * @param modelPackage
     * @param modelAdapter
@@ -56,11 +53,12 @@ public class J2EEModelPackageAdapter extends JavaModelPackageAdapter implements 
       super(modelPackage, modelAdapter);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.j2ee.J2EEModelPackage#getComponent()
     */
    public String getComponent() {
-      return getTaggedValues().getProperty(ModelTaggedValues.EBJ_COMPONENT, getName()+"/");
+      return getTaggedValues().getProperty(ModelTaggedValues.EBJ_COMPONENT, getName() + "/");
    }
 
    public String getModuleName() {
@@ -73,14 +71,14 @@ public class J2EEModelPackageAdapter extends JavaModelPackageAdapter implements 
    public List getTransactionTypes() {
       Set transactionTypeSet = new HashSet();
 
-      for (Iterator ibs = getClasses().iterator(); ibs.hasNext();) {
+      for ( Iterator ibs = getClasses().iterator(); ibs.hasNext(); ) {
          ModelClass modelClass = (ModelClass) ibs.next();
-         
+
          if ( modelClass.hasStereotype(ModelStereotype.BUSINESS_SERVICE) ) {
-            for (Iterator im = modelClass.getMethods(true).iterator(); im.hasNext();) {
+            for ( Iterator im = modelClass.getMethods(true).iterator(); im.hasNext(); ) {
                ModelMethod method = (ModelMethod) im.next();
                String transactionType = method.getStereotypeProperty("transactionType", "Required");
-               
+
                transactionTypeSet.add(transactionType);
             }
          }
@@ -89,9 +87,10 @@ public class J2EEModelPackageAdapter extends JavaModelPackageAdapter implements 
       Collections.sort(transactionTypes);
       return transactionTypes;
    }
-   
+
    /**
     * Returns a list of methods for the given transaction type of the given model class
+    * 
     * @param modelClass
     * @param transactionType
     */
@@ -99,17 +98,17 @@ public class J2EEModelPackageAdapter extends JavaModelPackageAdapter implements 
       List methods = new ArrayList();
 
       if ( modelClass.hasStereotype(ModelStereotype.BUSINESS_SERVICE) ) {
-         for (Iterator im = modelClass.getMethods(true).iterator(); im.hasNext();) {
+         for ( Iterator im = modelClass.getMethods(true).iterator(); im.hasNext(); ) {
             ModelMethod method = (ModelMethod) im.next();
             String type = method.getStereotypeProperty("transactionType", "Required");
-            
+
             if ( type.equals(transactionType) ) {
                methods.add(method);
             }
          }
       }
-      
+
       return methods;
    }
-   
+
 }

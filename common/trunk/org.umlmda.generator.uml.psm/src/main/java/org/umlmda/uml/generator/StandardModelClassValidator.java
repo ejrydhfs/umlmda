@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/StandardModelClassValidator.java,v 1.1.2.1 2008/03/11 15:46:23 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/StandardModelClassValidator.java,v $
- * $Revision: 1.1.2.1 $
- *     $Name:  $
- *     $Date: 2008/03/11 15:46:23 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -35,11 +30,9 @@ import org.umlmda.profile.ModelStereotype;
 
 /**
  * @author moroff
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class StandardModelClassValidator extends AbstractModelClassValidator {
+public class StandardModelClassValidator extends AbstractModelClassValidator
+{
 
    /**
     * 
@@ -48,28 +41,29 @@ public class StandardModelClassValidator extends AbstractModelClassValidator {
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.validate.AbstractModelClassValidator#validateClass(org.umlmda.model.uml.ModelClass)
     */
    public List validateClass(ModelClass modelClass) {
       List results = Collections.EMPTY_LIST;
-      
+
       // Check enumerations
-      if ( modelClass.hasStereotype(ModelStereotype.ENUMERATION)) {
+      if ( modelClass.hasStereotype(ModelStereotype.ENUMERATION) ) {
          if ( modelClass.getAttributes().size() == 0 ) {
             return addResult(modelClass, results, "Enumeration does not contain attributes");
          }
       }
-      
+
       // Check generalizations
       int countExtendGen = 0;
-      for (Iterator ig = modelClass.getGeneralizations().iterator(); ig.hasNext();) {
+      for ( Iterator ig = modelClass.getGeneralizations().iterator(); ig.hasNext(); ) {
          ModelGeneralization generalization = (ModelGeneralization) ig.next();
-         
-         if ( generalization.hasStereotype(ModelStereotype.EXTENDS)) {
+
+         if ( generalization.hasStereotype(ModelStereotype.EXTENDS) ) {
             ++countExtendGen;
          }
-         
+
          if ( generalization.getGeneral() == null ) {
             addResult(modelClass, results, "General end not defined or unreachable");
          }

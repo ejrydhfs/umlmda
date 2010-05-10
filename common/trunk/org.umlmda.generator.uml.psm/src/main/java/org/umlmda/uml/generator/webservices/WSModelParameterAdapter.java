@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSModelParameterAdapter.java,v 1.1 2006/12/04 10:49:49 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSModelParameterAdapter.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/12/04 10:49:49 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -33,10 +28,10 @@ import org.umlmda.uml.generator.java.JavaModelParameterAdapter;
 
 /**
  * TODO Insert type javadoc
- * @author Dieter Moroff (13.03.2006), last change $Date: 2006/12/04 10:49:49 $ $Name:  $
- * @version $Revision: 1.1 $
+ * 
  */
-public class WSModelParameterAdapter extends JavaModelParameterAdapter implements WSModelParameter {
+public class WSModelParameterAdapter extends JavaModelParameterAdapter implements WSModelParameter
+{
 
    /**
     * @param modelParameter
@@ -46,14 +41,16 @@ public class WSModelParameterAdapter extends JavaModelParameterAdapter implement
       super(modelParameter, model);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getConvertToWs(java.lang.String)
     */
    public String getConvertToWs() {
       return getConvert("WebserviceUtils.convertToWs");
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getConvertToWs(java.lang.String)
     */
    public String getConvertFromWs() {
@@ -62,25 +59,25 @@ public class WSModelParameterAdapter extends JavaModelParameterAdapter implement
 
    private String getConvert(String convertFunction) {
       if ( isConvertionNeeded() ) {
-         return convertFunction+"("+getName()+")";
+         return convertFunction + "(" + getName() + ")";
       }
       else
          return getName();
    }
-   
+
    public boolean isConvertionNeeded() {
       return getJavaType().equals(super.getJavaType()) == false;
    }
-   
+
    /**
     * @see org.umlmda.uml.generator.webservices.WSModelAttribute#getJavaType()
     */
    public String getJavaType() {
       ModelClassifier classifier = getType();
-      
+
       if ( classifier instanceof WSModelDataType ) {
          WSModelDataType dataType = (WSModelDataType) classifier;
-         
+
          return dataType.getJavaType();
       }
       else {
@@ -88,17 +85,17 @@ public class WSModelParameterAdapter extends JavaModelParameterAdapter implement
       }
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModelParameter#getGetter()
     */
    public String getGetter() {
-      if ( getType().getName().equals(ModelDataType.BOOLEAN)) {
-         return "is"+StringUtils.capitalize(getName());
+      if ( getType().getName().equals(ModelDataType.BOOLEAN) ) {
+         return "is" + StringUtils.capitalize(getName());
       }
       else {
-         return "get"+StringUtils.capitalize(getName());
+         return "get" + StringUtils.capitalize(getName());
       }
    }
-   
 
 }

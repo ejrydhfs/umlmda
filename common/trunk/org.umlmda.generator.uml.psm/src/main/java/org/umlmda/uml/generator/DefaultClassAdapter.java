@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)
@@ -35,9 +34,11 @@ import org.umlmda.model.uml.impl.ModelClassAdapter;
 
 /**
  * Defaultimplementation of generator class for uml models
+ * 
  * @author MOROFF
  */
-public class DefaultClassAdapter extends ModelClassAdapter implements GeneratorClass {
+public class DefaultClassAdapter extends ModelClassAdapter implements GeneratorClass
+{
 
    /**
     * @param modelClass
@@ -47,14 +48,16 @@ public class DefaultClassAdapter extends ModelClassAdapter implements GeneratorC
       super(modelClass, model);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorClass#getGeneratedName()
     */
    public String getGeneratedName() {
       return getName();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorClass#getGeneratedPath()
     */
    public String getGeneratedPath() {
@@ -62,70 +65,84 @@ public class DefaultClassAdapter extends ModelClassAdapter implements GeneratorC
       return null;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorClass#getGeneratedName(java.lang.String)
     */
    public String getGeneratedName(String artefactType) {
       return getName();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorClass#getQualifiedName(java.lang.String)
     */
    public String getQualifiedName(String artefactName) {
       return getQualifiedName();
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.generator.model.uml.GeneratorClass#getQualifiedName(java.lang.String, org.umlmda.generator.model.uml.GeneratorClass)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.generator.model.uml.GeneratorClass#getQualifiedName(java.lang.String,
+    * org.umlmda.generator.model.uml.GeneratorClass)
     */
    public String getQualifiedName(String artefactName, GeneratorClass modelClass) {
       return modelClass.getQualifiedName(artefactName);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.generator.model.uml.GeneratorClass#getQualifiedName(java.lang.String, org.umlmda.generator.model.uml.GeneratorMethod)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.generator.model.uml.GeneratorClass#getQualifiedName(java.lang.String,
+    * org.umlmda.generator.model.uml.GeneratorMethod)
     */
    public String getQualifiedName(String artefactName, GeneratorMethod method) {
-      return ((ModelMethod)method).getQualifiedName();
+      return ((ModelMethod) method).getQualifiedName();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorClass#getGeneratorPackage()
     */
    public GeneratorPackage getGeneratorPackage() {
       return (GeneratorPackage) getPackage();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorClass#getScopedName(java.lang.String)
     */
    public String getScopedName(String artefactName) {
       return getQualifiedName(artefactName);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.generator.model.uml.GeneratorClass#getScopedName(java.lang.String, org.umlmda.generator.model.uml.GeneratorClass)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.generator.model.uml.GeneratorClass#getScopedName(java.lang.String,
+    * org.umlmda.generator.model.uml.GeneratorClass)
     */
    public String getScopedName(String artefactName, GeneratorClass genClass) {
       return genClass.getQualifiedName(artefactName);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.generator.model.uml.GeneratorClass#getScopedName(java.lang.String, org.umlmda.generator.model.uml.GeneratorPackage)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.generator.model.uml.GeneratorClass#getScopedName(java.lang.String,
+    * org.umlmda.generator.model.uml.GeneratorPackage)
     */
    public String getScopedName(String artefactName, GeneratorPackage modelPackage) {
       return modelPackage.getQualifiedName(artefactName);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorModelElement#getGeneratorModel()
     */
    public GeneratorModel getGeneratorModel() {
       return (GeneratorModel) getModel();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorModelElement#getReplacementName()
     */
    public String getReplacementName() {
@@ -141,7 +158,8 @@ public class DefaultClassAdapter extends ModelClassAdapter implements GeneratorC
       getGeneratorModel().getContext().setCurrentArtefact(getGeneratorModel().getArtefact(artefact, this));
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.model.uml.GeneratorClassifier#getPsmType()
     */
    public String getPsmType() {

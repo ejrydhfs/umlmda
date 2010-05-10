@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -25,15 +24,17 @@ package org.umlmda.generator.model.util;
 
 /**
  * Utility to produce sourcecode, which help with idents.
+ * 
  * @author MOROFF
  */
-public class CodeEmitter {
-   private boolean firstLine = true;
-   private final int identDepth;
-   private int identBase;
-   private final boolean useSpaces;
-   private StringBuffer buffer = new StringBuffer();
-   private final static String newLine = System.getProperty("line.separator", "\n");
+public class CodeEmitter
+{
+   private boolean             firstLine = true;
+   private final int           identDepth;
+   private int                 identBase;
+   private final boolean       useSpaces;
+   private StringBuffer        buffer    = new StringBuffer();
+   private final static String newLine   = System.getProperty("line.separator", "\n");
 
    /**
     * 
@@ -75,15 +76,15 @@ public class CodeEmitter {
       buffer.append(line);
       buffer.append(newLine);
    }
-   
+
    public String toString() {
       return buffer.toString();
    }
-   
+
    private void ident(int identLevel) {
       final int tabs = identLevel + (firstLine ? 0 : identBase);
       firstLine = false;
-      
+
       if ( useSpaces ) {
          final int spaces = (tabs) * identDepth;
          for ( int i = 0; i < spaces; ++i ) {
@@ -96,14 +97,17 @@ public class CodeEmitter {
          }
       }
    }
+
    /**
     * @return Returns the identBase.
     */
    public int getIdentBase() {
       return identBase;
    }
+
    /**
-    * @param identBase The identBase to set.
+    * @param identBase
+    *           The identBase to set.
     */
    public void setIdentBase(int identBase) {
       this.identBase = identBase;

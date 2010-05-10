@@ -29,9 +29,9 @@ import org.umlmda.generator.set.util.UmsResourceFactoryImpl;
 
 /**
  * @author MOROFF
- *
  */
-public class GenerationSetLoader extends AbstractWorkflowComponent {
+public class GenerationSetLoader extends AbstractWorkflowComponent
+{
    private String generationSet;
 
    private String generationSetSlot;
@@ -44,12 +44,14 @@ public class GenerationSetLoader extends AbstractWorkflowComponent {
    public GenerationSetLoader() {
    }
 
-   /* (non-Javadoc)
-    * @see org.openarchitectureware.workflow.WorkflowComponent#invoke(org.openarchitectureware.workflow.WorkflowContext, org.openarchitectureware.workflow.monitor.ProgressMonitor, org.openarchitectureware.workflow.issues.Issues)
+   /*
+    * (non-Javadoc)
+    * @see org.openarchitectureware.workflow.WorkflowComponent#invoke(org.openarchitectureware.workflow.WorkflowContext,
+    * org.openarchitectureware.workflow.monitor.ProgressMonitor, org.openarchitectureware.workflow.issues.Issues)
     */
    public void invoke(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
-	  if ( monitor != null )
-	     monitor.beginTask("start loading "+generationSet, 0);
+      if ( monitor != null )
+         monitor.beginTask("start loading " + generationSet, 0);
       GenerationSet set;
 
       // register emf packages
@@ -64,26 +66,27 @@ public class GenerationSetLoader extends AbstractWorkflowComponent {
       URI uri = URI.createFileURI(generationSetFile.getAbsolutePath());
 
       ResourceSet resourceSet = new ResourceSetImpl();
-      //        resourceSet.setURIConverter(new FileURIConverter(uri));
+      // resourceSet.setURIConverter(new FileURIConverter(uri));
       Resource resource = resourceSet.getResource(uri, true);
 
       try {
          resource.load(null);
-      } catch (IOException e) {
+      }
+      catch (IOException e) {
          e.printStackTrace();
       }
 
       EList list = resource.getContents();
       set = (GenerationSet) list.get(0);
 
-      logger.info("loaded generationSet from "+resource.getURI().toFileString()+" to slot "+generationSetSlot);
-      
+      logger.info("loaded generationSet from " + resource.getURI().toFileString() + " to slot " + generationSetSlot);
+
       // More diagnostics
-      for (Iterator ip = set.getGenerationProfile().iterator(); ip.hasNext();) {
+      for ( Iterator ip = set.getGenerationProfile().iterator(); ip.hasNext(); ) {
          GenerationProfile generationProfile = (GenerationProfile) ip.next();
          Profile profile = generationProfile.getProfile();
-         
-         logger.info("profile "+profile.getName()+" from "+((EObject)profile).eResource().getURI().toFileString());
+
+         logger.info("profile " + profile.getName() + " from " + ((EObject) profile).eResource().getURI().toFileString());
       }
       // Put the set to the slot
       ctx.set(generationSetSlot, set);
@@ -97,7 +100,8 @@ public class GenerationSetLoader extends AbstractWorkflowComponent {
    }
 
    /**
-    * @param generationSet the generationSet to set
+    * @param generationSet
+    *           the generationSet to set
     */
    public void setGenerationSet(String generationSet) {
       this.generationSet = generationSet;
@@ -111,25 +115,26 @@ public class GenerationSetLoader extends AbstractWorkflowComponent {
    }
 
    /**
-    * @param generationSetSlot the generationSetSlot to set
+    * @param generationSetSlot
+    *           the generationSetSlot to set
     */
    public void setGenerationSetSlot(String generationSetSlot) {
       this.generationSetSlot = generationSetSlot;
    }
 
-    public void checkConfiguration(Issues issues) {
-        if ( generationSet == null ) { 
-           issues.addError( this, "generationSet not specified." );
-        }
-        else {
-           File generationSetFile = new File(generationSet);
+   public void checkConfiguration(Issues issues) {
+      if ( generationSet == null ) {
+         issues.addError(this, "generationSet not specified.");
+      }
+      else {
+         File generationSetFile = new File(generationSet);
 
-           if (generationSetFile.canRead() == false) {
-              String msg = "File " + generationSetFile.getAbsolutePath() + " cannot be read";
+         if ( generationSetFile.canRead() == false ) {
+            String msg = "File " + generationSetFile.getAbsolutePath() + " cannot be read";
 
-              issues.addError( this, msg);
-           }
-        }
-    }
-   
+            issues.addError(this, msg);
+         }
+      }
+   }
+
 }

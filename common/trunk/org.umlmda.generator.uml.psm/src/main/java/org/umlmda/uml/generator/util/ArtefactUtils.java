@@ -13,25 +13,26 @@ import org.umlmda.uml.generator.java.JavaArtefacts;
  * 
  * @author Dieter Moroff (7.4.2008)
  */
-public class ArtefactUtils {
+public class ArtefactUtils
+{
    public static final String SCOPE_IMPLEMENTATION = "Implementation";
-   public static final String SCOPE_INTERFACE = "Interface";
-   private static Logger logger = Logger.getLogger(ArtefactUtils.class);
+   public static final String SCOPE_INTERFACE      = "Interface";
+   private static Logger      logger               = Logger.getLogger(ArtefactUtils.class);
 
    static {
-	   defaultMappings = new HashMap<String, Entry>();
-	   resetDefaultMappings();
+      defaultMappings = new HashMap<String, Entry>();
+      resetDefaultMappings();
    }
-   
-   private static class Entry extends HashMap<String, String> {
+
+   private static class Entry extends HashMap<String, String>
+   {
       Entry(String scope, String artefactName) {
          put(scope, artefactName);
       }
    }
-   
+
    private static final Map<String, Entry> defaultMappings;
-   
-   
+
    public static String getScopeImplemenation() {
       return SCOPE_IMPLEMENTATION;
    }
@@ -42,7 +43,7 @@ public class ArtefactUtils {
 
    public static void resetDefaultMappings() {
       defaultMappings.clear();
-      
+
       setDefaultMapping(ModelStereotype.BUSINESS_SERVICE, JavaArtefacts.BUSINESS_SERVICE_INTERFACE);
       setDefaultMapping(ModelStereotype.BUSINESS_OBJECT, JavaArtefacts.BUSINESS_OBJECT_INTERFACE);
       setDefaultMapping(ModelStereotype.BUSINESS_OBJECT, JavaArtefacts.BUSINESS_OBJECT, SCOPE_IMPLEMENTATION);
@@ -52,19 +53,20 @@ public class ArtefactUtils {
       setDefaultMapping(ModelStereotype.NATIVE_CLASS, JavaArtefacts.PLAIN_CLASS, SCOPE_IMPLEMENTATION);
       setDefaultMapping(ModelStereotype.NATIVE_INTERFACE, JavaArtefacts.PLAIN_INTERFACE);
    }
-   
+
    public static String getDefaultMapping(List<String> stereotypeNames, String scope) {
-      for (String stereotypeName : stereotypeNames) {
+      for ( String stereotypeName : stereotypeNames ) {
          String artefactName = getDefaultMapping(stereotypeName, scope);
-         
+
          if ( artefactName != null ) {
             return artefactName;
          }
       }
-      logger.warn("No mapping found for <<"+stereotypeNames+">> in scope \""+scope+"\"");
+      logger.warn("No mapping found for <<" + stereotypeNames + ">> in scope \"" + scope + "\"");
       return null;
-      
+
    }
+
    public static String getDefaultMapping(List<String> stereotypeNames) {
       return getDefaultMapping(stereotypeNames, SCOPE_INTERFACE);
    }
@@ -72,10 +74,10 @@ public class ArtefactUtils {
    public static String getDefaultMapping(String stereotypeName) {
       return getDefaultMapping(stereotypeName, SCOPE_INTERFACE);
    }
-   
+
    public static String getDefaultMapping(String stereotypeName, String scope) {
       Entry entry = defaultMappings.get(stereotypeName);
-      
+
       if ( entry != null ) {
          return entry.get(scope);
       }
@@ -83,14 +85,14 @@ public class ArtefactUtils {
          return null;
       }
    }
-   
+
    public static void setDefaultMapping(String stereotypeName, String artefactName) {
       setDefaultMapping(stereotypeName, artefactName, SCOPE_INTERFACE);
    }
-   
+
    public static void setDefaultMapping(String stereotypeName, String artefactName, String scope) {
       Entry entry = defaultMappings.get(stereotypeName);
-      
+
       if ( entry != null ) {
          entry.put(scope, artefactName);
       }

@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelElementImpl.java,v 1.7.2.1.2.3 2008/03/17 20:52:07 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelUML2/src/org/umlmda/model/uml/uml2/ModelElementImpl.java,v $
-// $Revision: 1.7.2.1.2.3 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2008/03/17 20:52:07 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -78,7 +71,7 @@ public class ModelElementImpl implements ModelConstants, ModelElementBase
 
       if ( id != null ) {
          String resource = modelElement.eResource().getURI().toString();
-         
+
          modelUId = id + "@" + resource;
       }
       else {
@@ -325,23 +318,23 @@ public class ModelElementImpl implements ModelConstants, ModelElementBase
    public String getQualifiedName() {
       StringBuilder builder = new StringBuilder();
       Element owner = modelElement.getOwner();
-      
-      if ( modelElement instanceof NamedElement ) { 
-         builder.append(((NamedElement)modelElement).getName());
+
+      if ( modelElement instanceof NamedElement ) {
+         builder.append(((NamedElement) modelElement).getName());
       }
       while ( owner instanceof NamedElement ) {
          builder.insert(0, "::");
-         builder.insert(0, ((NamedElement)owner).getName());
-         
+         builder.insert(0, ((NamedElement) owner).getName());
+
          owner = owner.getOwner();
       }
-      
+
       return builder.toString();
    }
-      
+
    @Override
    public String toString() {
       return getQualifiedName();
    }
-      
+
 }

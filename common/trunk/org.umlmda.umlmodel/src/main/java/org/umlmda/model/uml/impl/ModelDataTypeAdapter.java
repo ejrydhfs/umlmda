@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelDataTypeAdapter.java,v 1.3 2006/04/27 11:30:49 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelDataTypeAdapter.java,v $
-// $Revision: 1.3 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/27 11:30:49 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -35,18 +28,17 @@ import org.umlmda.model.uml.ModelDataTypeBase;
 import org.umlmda.model.uml.ModelVisitor;
 
 /**
- * platform independent adapter to MOF model data type.
- * extend for specific platform to override the following properties:
+ * platform independent adapter to MOF model data type. extend for specific platform to override the following properties:
  * platform specific type names
- *
+ * 
  * @author vpussel
- *
  */
-public class ModelDataTypeAdapter extends ModelElementAdapter implements ModelDataType {
+public class ModelDataTypeAdapter extends ModelElementAdapter implements ModelDataType
+{
 
    private final ModelDataTypeBase modelDataType;
-   private static Map typeMapping = new HashMap();
-   
+   private static Map              typeMapping = new HashMap();
+
    static {
       typeMapping.put(ModelDataType.BINARY, ModelDataType.BINARY);
       typeMapping.put(ModelDataType.BOOLEAN, ModelDataType.BOOLEAN);
@@ -63,7 +55,7 @@ public class ModelDataTypeAdapter extends ModelElementAdapter implements ModelDa
       typeMapping.put(ModelDataType.TIMESTAMP, ModelDataType.TIMESTAMP);
       typeMapping.put(ModelDataType.VOID, ModelDataType.VOID);
    }
-   
+
    /**
     * create adapter for model data type
     */
@@ -73,7 +65,8 @@ public class ModelDataTypeAdapter extends ModelElementAdapter implements ModelDa
       this.modelDataType = modelDataType;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitable#accept(org.umlmda.model.uml.ModelVisitor)
     */
    public void accept(ModelVisitor visitor) {

@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelAttributeAdapter.java,v 1.5 2006/04/12 20:18:23 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelAttributeAdapter.java,v $
-// $Revision: 1.5 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/12 20:18:23 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -37,126 +30,135 @@ import org.umlmda.model.uml.ModelDataTypeBase;
 import org.umlmda.model.uml.ModelVisitor;
 
 /**
- * platform independent adapter to MOF model attributes.
- * extend for specific platform to override the following properties:
- * type, data type
- *
+ * platform independent adapter to MOF model attributes. extend for specific platform to override the following properties: type,
+ * data type
+ * 
  * @author vpussel
- *
  */
-public class ModelAttributeAdapter extends ModelStructuralFeatureAdapter implements
-		ModelAttribute {
-	
-	private final ModelAttributeBase modelAttribute;
+public class ModelAttributeAdapter extends ModelStructuralFeatureAdapter implements ModelAttribute
+{
 
-	private ModelClass modelClass = null; // class type of this attribute
-	private ModelDataType modelDataType = null;
-	private ModelClassifier modelClassifier = null;
-	private ModelClass owningClass = null;
+   private final ModelAttributeBase modelAttribute;
 
-	/**
-	 * create adapter from model attribute
-	 */
-	public ModelAttributeAdapter(ModelAttributeBase modelAttribute, Model model) {
-		super(modelAttribute, model);
+   private ModelClass               modelClass      = null; // class type of this attribute
+   private ModelDataType            modelDataType   = null;
+   private ModelClassifier          modelClassifier = null;
+   private ModelClass               owningClass     = null;
 
-		this.modelAttribute = modelAttribute;
-	}
+   /**
+    * create adapter from model attribute
+    */
+   public ModelAttributeAdapter(ModelAttributeBase modelAttribute, Model model) {
+      super(modelAttribute, model);
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#getDataType()
-	 */
-	public ModelDataType getDataType() {
-		if (modelDataType == null) {
-			modelDataType = adaptedModel.getModelDataType(modelAttribute.getDataTypeBase());
-		}
-		return modelDataType;
-	}
+      this.modelAttribute = modelAttribute;
+   }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#getDataType()
+    */
+   public ModelDataType getDataType() {
+      if ( modelDataType == null ) {
+         modelDataType = adaptedModel.getModelDataType(modelAttribute.getDataTypeBase());
+      }
+      return modelDataType;
+   }
+
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelAttributeBase#getDataTypeBase()
     */
    public ModelDataTypeBase getDataTypeBase() {
       return getDataType();
    }
-   
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#getInitialValue()
-	 */
-	public String getInitialValue() {
-		return modelAttribute.getInitialValue();
-	}
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#getModelClassifier()
-	 */
-	public ModelClassifier getModelClassifier() {
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#getInitialValue()
+    */
+   public String getInitialValue() {
+      return modelAttribute.getInitialValue();
+   }
+
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#getModelClassifier()
+    */
+   public ModelClassifier getModelClassifier() {
       if ( isPrimitiveType() )
          return getDataType();
       else
-         return getModelClass(); 
-	}
+         return getModelClass();
+   }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#getModelClass()
-	 */
-	public ModelClass getModelClass() {
-		if (modelClass == null) {
-			modelClass = adaptedModel.getModelClass(modelAttribute.getModelClassBase());
-		}
-		return modelClass;
-	}
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#getModelClass()
+    */
+   public ModelClass getModelClass() {
+      if ( modelClass == null ) {
+         modelClass = adaptedModel.getModelClass(modelAttribute.getModelClassBase());
+      }
+      return modelClass;
+   }
 
-	public ModelClassBase getModelClassBase() {
-		return getModelClass();
-	}
+   public ModelClassBase getModelClassBase() {
+      return getModelClass();
+   }
 
-	public ModelClass getOwningClass() {
-		return (ModelClass)getOwningClassBase();
-	}
+   public ModelClass getOwningClass() {
+      return (ModelClass) getOwningClassBase();
+   }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#getType()
-	 */
-	public String getType() {
-		return modelAttribute.getType();
-	}
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#getType()
+    */
+   public String getType() {
+      return modelAttribute.getType();
+   }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#isClassInstance()
-	 */
-	public boolean isClassInstance() {
-	   return isPrimitiveType() == false;
-	}
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#isClassInstance()
+    */
+   public boolean isClassInstance() {
+      return isPrimitiveType() == false;
+   }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#isConstant()
-	 */
-	public boolean isConstant() {
-		return modelAttribute.isConstant();
-	}
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#isConstant()
+    */
+   public boolean isConstant() {
+      return modelAttribute.isConstant();
+   }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelAttributeBase#isReadOnly()
     */
    public boolean isReadOnly() {
       return modelAttribute.isReadOnly();
    }
-   
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#isPrimitiveType()
-	 */
-	public boolean isPrimitiveType() {
-		return modelAttribute.isPrimitiveType();
-	}
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#isTransient()
-	 */
-	public boolean isTransient() {
-		return modelAttribute.isTransient();
-	}
-   
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#isPrimitiveType()
+    */
+   public boolean isPrimitiveType() {
+      return modelAttribute.isPrimitiveType();
+   }
+
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelAttribute#isTransient()
+    */
+   public boolean isTransient() {
+      return modelAttribute.isTransient();
+   }
+
    public String toString() {
       if ( getModelClassifier() != null ) {
          return getQualifiedName() + " : " + getModelClassifier().getQualifiedName();
@@ -166,12 +168,12 @@ public class ModelAttributeAdapter extends ModelStructuralFeatureAdapter impleme
       }
    }
 
-
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelVisitable#accept(org.umlmda.model.uml.ModelVisitor)
     */
    public void accept(ModelVisitor visitor) {
       visitor.visit(this);
    }
-   
+
 }

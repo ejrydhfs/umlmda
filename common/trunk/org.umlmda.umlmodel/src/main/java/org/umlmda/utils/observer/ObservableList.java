@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/utils/observer/ObservableList.java,v 1.1 2006/04/13 22:53:18 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/utils/observer/ObservableList.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/04/13 22:53:18 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -30,12 +25,12 @@ import java.util.ListIterator;
 
 /**
  * Implementation of a list which can be observed for changes.
- * @author Dieter Moroff (13.04.2006), last change $Date: 2006/04/13 22:53:18 $ $Name:  $
- * @version $Revision: 1.1 $
+ * 
  */
-public class ObservableList extends ObservableCollection implements List {
+public class ObservableList extends ObservableCollection implements List
+{
    private final List list;
-   
+
    /**
     * @param collection
     */
@@ -44,14 +39,16 @@ public class ObservableList extends ObservableCollection implements List {
       this.list = list;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.List#get(int)
     */
    public Object get(int index) {
       return list.get(index);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.List#remove(int)
     */
    public Object remove(int index) {
@@ -61,7 +58,8 @@ public class ObservableList extends ObservableCollection implements List {
       return o;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.List#add(int, java.lang.Object)
     */
    public void add(int index, Object element) {
@@ -70,21 +68,24 @@ public class ObservableList extends ObservableCollection implements List {
       notifyObservers();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.List#indexOf(java.lang.Object)
     */
    public int indexOf(Object o) {
       return list.indexOf(o);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.List#lastIndexOf(java.lang.Object)
     */
    public int lastIndexOf(Object o) {
       return list.indexOf(o);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.List#addAll(int, java.util.Collection)
     */
    public boolean addAll(int index, Collection c) {
@@ -94,28 +95,32 @@ public class ObservableList extends ObservableCollection implements List {
       return added;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.List#subList(int, int)
     */
    public List subList(int fromIndex, int toIndex) {
       return list.subList(fromIndex, toIndex);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.List#listIterator()
     */
    public ListIterator listIterator() {
       return new ObservableListIterator(this, list.listIterator());
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.List#listIterator(int)
     */
    public ListIterator listIterator(int index) {
       return new ObservableListIterator(this, list.listIterator(index));
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.List#set(int, java.lang.Object)
     */
    public Object set(int index, Object element) {

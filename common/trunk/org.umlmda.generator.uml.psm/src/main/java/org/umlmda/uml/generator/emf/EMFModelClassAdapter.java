@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFModelClassAdapter.java,v 1.2 2007/01/03 21:15:54 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFModelClassAdapter.java,v $
- * $Revision: 1.2 $
- *     $Name:  $
- *     $Date: 2007/01/03 21:15:54 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -34,7 +29,8 @@ import org.umlmda.uml.generator.webservices.WSStereotypes;
 /**
  * @author MOROFF
  */
-public class EMFModelClassAdapter extends WSModelClassAdapter implements EMFAnnotationHolder {
+public class EMFModelClassAdapter extends WSModelClassAdapter implements EMFAnnotationHolder
+{
 
    /**
     * @param modelClassBase
@@ -44,7 +40,8 @@ public class EMFModelClassAdapter extends WSModelClassAdapter implements EMFAnno
       super(modelClassBase, model);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.emf.EMFAnnotationHolder#getEmfAnnotation()
     */
    public String getEmfAnnotation() {
@@ -57,15 +54,16 @@ public class EMFModelClassAdapter extends WSModelClassAdapter implements EMFAnno
       return buffer.toString();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelClassifier#getJavaType()
     */
    public String getJavaType() {
       JavaModelClass genClass = (JavaModelClass) getGeneratorModel().getContext().getCurrentModelElement();
-      
-      if ( hasStereotype(WSStereotypes.WEB_SERVICE_DTO)) {
+
+      if ( hasStereotype(WSStereotypes.WEB_SERVICE_DTO) ) {
          return genClass.getScopedName(JavaArtefacts.BUSINESS_OBJECT_INTERFACE, this);
-      } 
+      }
       else {
          return super.getJavaType();
       }

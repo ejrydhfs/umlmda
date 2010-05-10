@@ -40,43 +40,45 @@ import org.umlmda.model.uml.ModelClass;
 import org.umlmda.model.uml.impl.ModelAdapterFactoryImpl;
 import org.umlmda.model.uml.validate.ModelValidationException;
 
-public class StereotypeTest extends TestCase {
-   private Logger logger = Logger.getLogger(getClass()); 
+public class StereotypeTest extends TestCase
+{
+   private Logger              logger        = Logger.getLogger(getClass());
    private static final String UML_METAMODEL = "metamodels/UML.metamodel.uml";
-   private static final String MODEL_FOLDER = "model/uml2/self";
-   private String umlResoures;
+   private static final String MODEL_FOLDER  = "model/uml2/self";
+   private String              umlResoures;
 
    @Override
    protected void setUp() throws Exception {
       super.setUp();
-      
+
       UMLPackageImpl.init();
-      
+
       Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("uml", UMLResource.Factory.INSTANCE);
       Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("emx", UMLResource.Factory.INSTANCE);
       Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("epx", UMLResource.Factory.INSTANCE);
 
-      EPackage.Registry.INSTANCE.put("http://www.eclipse.org/uml2/2.0.0/UML", EPackage.Registry.INSTANCE.get(UMLPackage.eINSTANCE.getNsURI()));
-      
+      EPackage.Registry.INSTANCE.put("http://www.eclipse.org/uml2/2.0.0/UML", EPackage.Registry.INSTANCE.get(UMLPackage.eINSTANCE
+            .getNsURI()));
+
       URL url = getClass().getClassLoader().getResource(UML_METAMODEL);
-      
+
       if ( url == null ) {
-         String msg = UML_METAMODEL+" not found, check classpath";
-         
+         String msg = UML_METAMODEL + " not found, check classpath";
+
          logger.error(msg);
          throw new RuntimeException(msg);
       }
-   
+
       umlResoures = url.toExternalForm().replace(UML_METAMODEL, "");
-      logger.info("Load UML resoruces from "+umlResoures);
-      
+      logger.info("Load UML resoruces from " + umlResoures);
+
       assert url != null;
    }
 
    public void testBooleanAttributes() {
       File file = new File(MODEL_FOLDER, "StereotypeTest/StereotypeTest.uml");
 
-      assertTrue("Model doesn't exists "+file.getAbsolutePath(), file.exists());
+      assertTrue("Model doesn't exists " + file.getAbsolutePath(), file.exists());
 
       ModelFactoryImpl modelFactory = new ModelFactoryImpl();
 
@@ -91,11 +93,13 @@ public class StereotypeTest extends TestCase {
          ModelClass modelClass = (ModelClass) model.find("Test");
 
          assertNotNull("Class found", modelClass);
-      } catch (IOException e) {
+      }
+      catch (IOException e) {
          fail(e.getMessage());
-      } catch (ModelValidationException e) {
+      }
+      catch (ModelValidationException e) {
          fail(e.getValidationResults().toString());
       }
-      
+
    }
 }

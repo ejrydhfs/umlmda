@@ -1,12 +1,5 @@
-//jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 //
-//$Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSModelAdapterFactory.java,v 1.1 2006/12/04 10:49:49 moroff Exp $
-//$Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSModelAdapterFactory.java,v $
-//$Revision: 1.1 $
-// $State: Exp $
-//  $Name:  $
-//  $Date: 2006/12/04 10:49:49 $
-//$Locker:  $
 //
 //This library is free software; you can redistribute it and/or
 //modify it under the terms of the GNU Library General Public
@@ -51,80 +44,94 @@ import org.umlmda.uml.generator.java.PersistenceServicePattern;
 
 /**
  * factory for WebService schema adapters
- *  
+ * 
  * @author vpussel
  */
-public class WSModelAdapterFactory extends JavaModelAdapterFactory {
+public class WSModelAdapterFactory extends JavaModelAdapterFactory
+{
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.impl.ModelAdapterFactoryImpl#createModel(net.sourceforge.umlmda.xmi.uml.Model)
     */
    protected Model createPsmModel(Model model) {
       return new WSModelAdapter(this, model);
    }
 
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.ModelAdapterFactory#createModelPackage(net.sourceforge.umlmda.xmi.uml.ModelPackageBase, net.sourceforge.umlmda.xmi.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelAdapterFactory#createModelPackage(net.sourceforge.umlmda.xmi.uml.ModelPackageBase,
+    * net.sourceforge.umlmda.xmi.uml.Model)
     */
    public ModelAttribute createModelAttribute(ModelAttributeBase modelAttribute, Model model) {
-      if (modelAttribute instanceof WSModelAttributeAdapter)
+      if ( modelAttribute instanceof WSModelAttributeAdapter )
          return (ModelAttribute) modelAttribute;
       else
          return new WSModelAttributeAdapter(modelAttribute, model);
    }
 
    public ModelDataType createModelDataType(ModelDataTypeBase modelDataType, Model model) {
-      if (modelDataType instanceof WSModelDataTypeAdapter)
+      if ( modelDataType instanceof WSModelDataTypeAdapter )
          return (ModelDataType) modelDataType;
       else
          return new WSModelDataTypeAdapter(modelDataType, model);
    }
 
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.impl.ModelAdapterFactoryImpl#createModelClass(net.sourceforge.umlmda.xmi.uml.ModelClass, net.sourceforge.umlmda.xmi.uml.AdaptedModel)
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.impl.ModelAdapterFactoryImpl#createModelClass(net.sourceforge.umlmda.xmi.uml.ModelClass,
+    * net.sourceforge.umlmda.xmi.uml.AdaptedModel)
     */
    public ModelClass createModelClass(ModelClassBase modelClass, Model model) {
-      if (modelClass instanceof WSModelClassAdapter)
+      if ( modelClass instanceof WSModelClassAdapter )
          return (ModelClass) modelClass;
       else
          return new WSModelClassAdapter(modelClass, model);
    }
 
-   /* (non-Javadoc)
-    * @see net.sourceforge.umlmda.xmi.uml.ModelAdapterFactory#createModelPackage(net.sourceforge.umlmda.xmi.uml.ModelPackageBase, net.sourceforge.umlmda.xmi.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see net.sourceforge.umlmda.xmi.uml.ModelAdapterFactory#createModelPackage(net.sourceforge.umlmda.xmi.uml.ModelPackageBase,
+    * net.sourceforge.umlmda.xmi.uml.Model)
     */
    public ModelPackage createModelPackage(ModelPackageBase modelPackage, Model model) {
-      if (modelPackage instanceof WSModelPackageAdapter)
+      if ( modelPackage instanceof WSModelPackageAdapter )
          return (ModelPackage) modelPackage;
       else
          return new WSModelPackageAdapter(modelPackage, model);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelMethod(org.umlmda.model.uml.ModelMethodBase, org.umlmda.model.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelMethod(org.umlmda.model.uml.ModelMethodBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelMethod createModelMethod(ModelMethodBase modelMethod, Model model) {
-      if (modelMethod instanceof WSModelMethodAdapter)
+      if ( modelMethod instanceof WSModelMethodAdapter )
          return (ModelMethod) modelMethod;
       else
          return new WSModelMethodAdapter(modelMethod, model);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelAssociation(org.umlmda.model.uml.ModelAssociationBase, org.umlmda.model.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelAssociation(org.umlmda.model.uml.ModelAssociationBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelAssociation createModelAssociation(ModelAssociationBase modelAssociation, Model destModel) {
-      if (modelAssociation instanceof WSModelAssocationAdapter)
+      if ( modelAssociation instanceof WSModelAssocationAdapter )
          return (ModelAssociation) modelAssociation;
       else
          return new WSModelAssocationAdapter(modelAssociation, destModel);
    }
 
-   /* (non-Javadoc)
-    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelParameter(org.umlmda.model.uml.ModelParameterBase, org.umlmda.model.uml.Model)
+   /*
+    * (non-Javadoc)
+    * @see org.umlmda.model.uml.ModelAdapterFactory#createModelParameter(org.umlmda.model.uml.ModelParameterBase,
+    * org.umlmda.model.uml.Model)
     */
    public ModelParameter createModelParameter(ModelParameterBase modelParameter, Model destModel) {
-      if (modelParameter instanceof WSModelParameterAdapter)
+      if ( modelParameter instanceof WSModelParameterAdapter )
          return (ModelParameter) modelParameter;
       else
          return new WSModelParameterAdapter(modelParameter, destModel);

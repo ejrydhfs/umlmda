@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelClassImpl.java,v 1.4 2006/08/09 10:40:23 moroff Exp $
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -32,20 +31,21 @@ import org.umlmda.model.uml.ModelClassBase;
 import org.umlmda.model.uml.ModelPackageBase;
 import org.umlmda.utils.observer.ObservableList;
 
-
 /**
  * Basic implementation of the model class.
+ * 
  * @author Dieter Moroff (21.10.2005)
  */
-public class ModelClassImpl extends ModelElementImpl implements ModelClassBase {
-   private ObservableList attributes = new ObservableList(new ArrayList());
-   private ObservableList constants = new ObservableList(new ArrayList());
-   private ObservableList methods = new ObservableList(new ArrayList());
+public class ModelClassImpl extends ModelElementImpl implements ModelClassBase
+{
+   private ObservableList attributes      = new ObservableList(new ArrayList());
+   private ObservableList constants       = new ObservableList(new ArrayList());
+   private ObservableList methods         = new ObservableList(new ArrayList());
    private ObservableList generalizations = new ObservableList(new ArrayList());
-   private boolean isAbstract = false;
+   private boolean        isAbstract      = false;
    private ObservableList allAssociations = new ObservableList(new ArrayList());
-   private ObservableList associations = new ObservableList(new ArrayList());
-   
+   private ObservableList associations    = new ObservableList(new ArrayList());
+
    /**
     * @param model
     * @param owner
@@ -73,9 +73,9 @@ public class ModelClassImpl extends ModelElementImpl implements ModelClassBase {
       allAssociations.addObserver(this);
       associations.addObserver(this);
    }
-   
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
     */
    public void update(Observable o, Object arg) {
@@ -99,57 +99,65 @@ public class ModelClassImpl extends ModelElementImpl implements ModelClassBase {
          notifyObservers(PROPERTY_ASSOCIATIONS);
       }
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelClassBase#getPackageBase()
     */
    public ModelPackageBase getPackageBase() {
       return (ModelPackageBase) getOwnerBase();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelClassBase#getAttributes()
     */
    public List getAttributes() {
       return attributes;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelClassBase#getConstants()
     */
    public List getConstants() {
       return constants;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelClassBase#getMethods()
     */
    public List getMethods() {
       return methods;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelClassBase#getSuperClasses()
     */
    public List getGeneralizations() {
       return generalizations;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelClassBase#getAssociations()
     */
    public List getAssociations() {
       return associations;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelClassBase#getAllAssociations()
     */
    public List getAllAssociations() {
       return allAssociations;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelClassBase#isAbstract()
     */
    public boolean isAbstract() {

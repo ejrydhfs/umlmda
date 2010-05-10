@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSPSMRequestReponseCreateVisitor.java,v 1.2 2007/01/03 21:12:22 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/webservices/WSPSMRequestReponseCreateVisitor.java,v $
- * $Revision: 1.2 $
- *     $Name:  $
- *     $Date: 2007/01/03 21:12:22 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -44,15 +39,15 @@ import org.umlmda.model.uml.impl.ModelPackageImpl;
 import org.umlmda.model.uml.impl.ModelParameterImpl;
 
 /**
- * Visitor to creates web service request and reponse classes for method,
- * used for soap wrapping.
- * @author Dieter Moroff (13.04.2006), last change $Date: 2007/01/03 21:12:22 $ $Name:  $
- * @version $Revision: 1.2 $
+ * Visitor to creates web service request and reponse classes for method, used for soap wrapping.
+ * 
  */
-public class WSPSMRequestReponseCreateVisitor extends DefaultModelVisitor {
+public class WSPSMRequestReponseCreateVisitor extends DefaultModelVisitor
+{
 
    public static final String RESPONSE_POSTFIX = "Response";
-   public static final String REQUEST_POSTFIX = "Request";
+   public static final String REQUEST_POSTFIX  = "Request";
+
    /**
     * 
     */
@@ -63,25 +58,24 @@ public class WSPSMRequestReponseCreateVisitor extends DefaultModelVisitor {
    public boolean visit(ModelMethod method) {
       super.visit(method);
 
-      if (method.hasStereotype(WSStereotypes.WEB_SERVICE_METHOD)
-       && (method.getReturnType() == null 
-        || method.getReturnType().hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE) == false)) {
+      if ( method.hasStereotype(WSStereotypes.WEB_SERVICE_METHOD)
+            && (method.getReturnType() == null || method.getReturnType().hasStereotype(WSStereotypes.WEB_SERVICE_RESPONSE) == false) ) {
          if ( method.getBase() instanceof ModelMethodImpl ) {
             ModelMethodImpl methodImpl = (ModelMethodImpl) method.getBase();
-            
+
             // Replace returntype with response class
             methodImpl.setReturnTypeBase(createResponseClass(method));
-   
+
             // Replace parameters with request class
             ModelParameterBase requestParameterImpl = createRequestParameter(method);
-   
+
             methodImpl.getParameters().clear();
             methodImpl.getParameters().add(requestParameterImpl);
          }
       }
       return true;
    }
-   
+
    /**
     * @param methodImpl
     * @return
@@ -90,12 +84,12 @@ public class WSPSMRequestReponseCreateVisitor extends DefaultModelVisitor {
       // Check if parameters already replaced
       if ( method.getParameters().size() == 1 ) {
          ModelParameter parameter = (ModelParameter) method.getParameters().get(0);
-         
+
          if ( parameter.hasStereotype(WSStereotypes.WEB_SERVICE_REQUEST) ) {
             return (ModelParameterBase) parameter.getBase();
          }
       }
-      
+
       ModelMethodImpl methodImpl = (ModelMethodImpl) method.getBase();
       WSModelClass modelClass = (WSModelClass) method.getOwningClass();
       WSModelPackage modelPackage = (WSModelPackage) modelClass.getPackageBase();
@@ -105,30 +99,30 @@ public class WSPSMRequestReponseCreateVisitor extends DefaultModelVisitor {
       ModelClass wsRequestClass = (ModelClass) model.find(qualifiedName);
       ModelClassImpl wsRequestClassImpl;
       Multiplicity multiplicity = new Multiplicity(1, 1);
-      
+
       if ( wsRequestClass != null ) {
          wsRequestClassImpl = (ModelClassImpl) wsRequestClass.getBase();
-      }      
-      else { 
+      }
+      else {
          wsRequestClassImpl = new ModelClassImpl(model, (ModelPackageBase) modelPackage.getWsPackage());
          wsRequestClassImpl.setName(name);
          wsRequestClassImpl.getStereotypes().add(WSStereotypes.WEB_SERVICE_REQUEST);
          wsRequestClassImpl.getStereotypes().add(WSStereotypes.WEB_SERVICE_OBJECT);
-         
-         for (Iterator ip = methodImpl.getParameters().iterator(); ip.hasNext();) {
+
+         for ( Iterator ip = methodImpl.getParameters().iterator(); ip.hasNext(); ) {
             ModelParameterBase parameter = (ModelParameterBase) ip.next();
             ModelAttributeImpl attributeImpl = new ModelAttributeImpl(model, wsRequestClassImpl);
-            
+
             attributeImpl.setName(parameter.getName());
             attributeImpl.setModelClassifierBase(parameter.getTypeBase());
             attributeImpl.setMultiplicity(multiplicity);
             wsRequestClassImpl.getAttributes().add(attributeImpl);
          }
-         
+
       }
-      
+
       ModelParameterImpl parameterImpl = new ModelParameterImpl(model, methodImpl);
-      
+
       parameterImpl.setName("in");
       parameterImpl.setTypeBase(wsRequestClassImpl);
       WSPSMClassCreatorVisitor.createWsClassAdapter(model, wsRequestClassImpl);
@@ -148,7 +142,6 @@ public class WSPSMRequestReponseCreateVisitor extends DefaultModelVisitor {
       String qualifiedName = modelPackage.getWsPackage().getQualifiedName() + "." + name;
       ModelClassBase wsResponseClass = (ModelClassBase) model.find(qualifiedName);
 
-      
       if ( wsResponseClass != null ) {
          return wsResponseClass;
       }
@@ -159,7 +152,7 @@ public class WSPSMRequestReponseCreateVisitor extends DefaultModelVisitor {
          wsResponseClassImpl.getStereotypes().add(WSStereotypes.WEB_SERVICE_RESPONSE);
          wsResponseClassImpl.getStereotypes().add(WSStereotypes.WEB_SERVICE_OBJECT);
 
-         if (methodImpl.getReturnTypeBase() != null) {
+         if ( methodImpl.getReturnTypeBase() != null ) {
             ModelAttributeImpl attributeImpl = new ModelAttributeImpl(model, wsResponseClassImpl);
 
             attributeImpl.setModelClassifierBase(methodImpl.getReturnTypeBase());
@@ -181,7 +174,7 @@ public class WSPSMRequestReponseCreateVisitor extends DefaultModelVisitor {
    private String getRequestReponseName(ModelMethodBase method, String postfix) {
       ModelClassBase modelClass = method.getOwningClass();
 
-      return modelClass.getName()+StringUtils.capitalize(method.getName())+postfix;
+      return modelClass.getName() + StringUtils.capitalize(method.getName()) + postfix;
    }
-   
+
 }

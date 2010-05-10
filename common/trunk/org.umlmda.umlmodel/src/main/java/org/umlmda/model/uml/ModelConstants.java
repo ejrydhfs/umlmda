@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelConstants.java,v 1.1 2005/10/27 19:10:37 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelConstants.java,v $
-// $Revision: 1.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2005/10/27 19:10:37 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -26,12 +19,10 @@
 package org.umlmda.model.uml;
 
 /**
- * @author moroff
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * @author moroff Window>Preferences>Java>Code Generation>Code and Comments
  */
-public interface ModelConstants {
-	public final static String EMPTY = "";
-	
+public interface ModelConstants
+{
+   String EMPTY = "";
+
 }

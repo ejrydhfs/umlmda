@@ -5,13 +5,14 @@ import org.umlmda.generator.model.util.StringUtilTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class AllTests {
+public class AllTests
+{
 
    public static Test suite() {
       TestSuite suite = new TestSuite("Test for org.umlmda.generator.model");
-      //$JUnit-BEGIN$
+      // $JUnit-BEGIN$
       suite.addTestSuite(StringUtilTest.class);
-      //$JUnit-END$
+      // $JUnit-END$
       return suite;
    }
 

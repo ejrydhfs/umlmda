@@ -1,8 +1,5 @@
 /*
  * Created on 16.02.2006
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.generator.model.util;
 
@@ -21,20 +18,23 @@ import org.openarchitectureware.xpand2.XpandExecutionContextImpl;
 
 /**
  * Runtime services for the UMLMDA generator.
+ * 
  * @author moroff
  */
-public class GeneratorRuntime {
+public class GeneratorRuntime
+{
 
-   public static final String VELOCITY_PROPERTIES = "/velocity.properties";
+   public static final String        VELOCITY_PROPERTIES   = "/velocity.properties";
 
-   private static GeneratorRuntime instance;
-   private static Logger logger = Logger.getLogger(GeneratorRuntime.class);
-   private boolean isInitialized = false;
-   private Feedback feedback = null;
-   private Template template = null;
-   private boolean isVelocityInitialized = false;
+   private static GeneratorRuntime   instance;
+   private static Logger             logger                = Logger.getLogger(GeneratorRuntime.class);
+   private boolean                   isInitialized         = false;
+   private Feedback                  feedback              = null;
+   private Template                  template              = null;
+   private boolean                   isVelocityInitialized = false;
    private XpandExecutionContextImpl xpandExecutionContext = null;
-   private XpandOutputImpl xpandOutputImpl = null;
+   private XpandOutputImpl           xpandOutputImpl       = null;
+
    private GeneratorRuntime() {
       super();
    }
@@ -43,38 +43,40 @@ public class GeneratorRuntime {
       logger.info("Startup generator runtime");
       oAWXpandInit();
    }
-   
+
    public void shutdown() {
       logger.info("Shutdown generator runtime");
       oAWXPandRelease();
    }
-   
+
    /**
     * Gets the singleton
+    * 
     * @return
     */
    public static GeneratorRuntime getInstance() {
       if ( instance == null ) {
          instance = new GeneratorRuntime();
       }
-      
+
       return instance;
    }
-   
+
    /**
     * @return Returns the feedback.
     */
    public Feedback getFeedback() {
       return feedback;
    }
-   
+
    /**
-    * @param feedback The feedback to set.
+    * @param feedback
+    *           The feedback to set.
     */
    public void setFeedback(Feedback feedback) {
       this.feedback = feedback;
    }
-   
+
    /**
     * Initialize velocity
     */
@@ -84,23 +86,25 @@ public class GeneratorRuntime {
          ExtendedProperties properties = null;
          try {
             InputStream propertiesStream = getClass().getResourceAsStream(VELOCITY_PROPERTIES);
-            if (propertiesStream != null) {
+            if ( propertiesStream != null ) {
                properties = new ExtendedProperties();
                properties.load(propertiesStream);
                propertiesStream.close();
             }
-         } catch (IOException e) {
-            getFeedback().message(Feedback.WARNING, VELOCITY_PROPERTIES+" not found in classpath, using default");
+         }
+         catch (IOException e) {
+            getFeedback().message(Feedback.WARNING, VELOCITY_PROPERTIES + " not found in classpath, using default");
          }
 
          if ( properties != null ) {
             Velocity.setExtendedProperties(properties);
          }
-         
+
          try {
             Velocity.init();
-         } catch (Exception e1) {
-            getFeedback().message(Feedback.ERROR, "Velocity cound not be initialized: "+e1.getMessage());
+         }
+         catch (Exception e1) {
+            getFeedback().message(Feedback.ERROR, "Velocity cound not be initialized: " + e1.getMessage());
             throw new RuntimeException(e1);
          }
       }
@@ -113,23 +117,24 @@ public class GeneratorRuntime {
       if ( isVelocityInitialized == false ) {
          velocityInit();
       }
-      
+
       return new VelocityEngine();
    }
-   
+
    public void oAWXpandInit() {
-      
+
       try {
          xpandOutputImpl = new XpandOutputImpl();
          xpandExecutionContext = new XpandExecutionContextImpl(xpandOutputImpl, null);
          xpandExecutionContext.registerMetaModel(new JavaMetaModel("java", new JavaBeansStrategy()));
-      } catch (RuntimeException e) {
+      }
+      catch (RuntimeException e) {
          logger.warn("oAW Xpand not initialized", e);
       }
    }
-   
+
    public void oAWXPandRelease() {
-      
+
    }
 
    public XpandExecutionContextImpl getXpandExecutionContext() {

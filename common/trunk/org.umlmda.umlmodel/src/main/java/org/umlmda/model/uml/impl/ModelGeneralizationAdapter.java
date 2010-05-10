@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelGeneralizationAdapter.java,v 1.1 2006/08/09 10:40:24 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/impl/ModelGeneralizationAdapter.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/08/09 10:40:24 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -33,9 +28,10 @@ import org.umlmda.model.uml.ModelGeneralizationBase;
 /**
  * @author MOROFF
  */
-public class ModelGeneralizationAdapter extends ModelElementAdapter implements ModelGeneralization {
+public class ModelGeneralizationAdapter extends ModelElementAdapter implements ModelGeneralization
+{
    private final ModelGeneralizationBase modelGeneralization;
-   
+
    /**
     * @param modelElement
     * @param adaptedModel
@@ -45,28 +41,32 @@ public class ModelGeneralizationAdapter extends ModelElementAdapter implements M
       this.modelGeneralization = modelGeneralization;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelGeneralization#getSpecific()
     */
    public ModelClass getSpecific() {
       return adaptedModel.getModelClass(modelGeneralization.getSpecificBase());
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelGeneralization#getGeneral()
     */
    public ModelClass getGeneral() {
       return adaptedModel.getModelClass(modelGeneralization.getGeneralBase());
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelGeneralizationBase#getSpecificBase()
     */
    public ModelClassBase getSpecificBase() {
       return getSpecific();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelGeneralizationBase#getGeneralBase()
     */
    public ModelClassBase getGeneralBase() {

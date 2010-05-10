@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelGeneralizationImpl.java,v 1.1 2006/08/09 10:40:11 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelGeneralizationImpl.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/08/09 10:40:11 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -32,13 +27,15 @@ import ru.novosoft.uml.foundation.core.MGeneralization;
 
 /**
  * Generalization implementation for novosoft nsuml
+ * 
  * @author Dieter Moroff
  */
-public class ModelGeneralizationImpl extends ModelElementImpl implements ModelGeneralizationBase {
+public class ModelGeneralizationImpl extends ModelElementImpl implements ModelGeneralizationBase
+{
    private final MGeneralization generalization;
-   private ModelClassBase child = null;
-   private ModelClassBase parent = null;
-   
+   private ModelClassBase        child  = null;
+   private ModelClassBase        parent = null;
+
    /**
     * @param model
     * @param owner
@@ -46,27 +43,28 @@ public class ModelGeneralizationImpl extends ModelElementImpl implements ModelGe
    public ModelGeneralizationImpl(ModelImpl model, MGeneralization generalization) {
       super(model, generalization);
       this.generalization = generalization;
-    }
+   }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelGeneralizationBase#getChildBase()
     */
    public ModelClassBase getSpecificBase() {
       if ( child == null && generalization.getChild() instanceof MClass ) {
-         child = ((ModelImpl)getModelBase()).findClass((MClass)generalization.getChild());
+         child = ((ModelImpl) getModelBase()).findClass((MClass) generalization.getChild());
       }
       return child;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.ModelGeneralizationBase#getParentBase()
     */
    public ModelClassBase getGeneralBase() {
       if ( parent == null && generalization.getParent() instanceof MClass ) {
-         parent = ((ModelImpl)getModelBase()).findClass((MClass)generalization.getParent());
+         parent = ((ModelImpl) getModelBase()).findClass((MClass) generalization.getParent());
       }
       return parent;
    }
-
 
 }

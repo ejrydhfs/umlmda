@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelParameterBase.java,v 1.2 2006/04/13 23:04:37 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelParameterBase.java,v $
-// $Revision: 1.2 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2006/04/13 23:04:37 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -28,24 +21,23 @@ package org.umlmda.model.uml;
 
 /**
  * @author moroff
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public interface ModelParameterBase extends ModelElementBase {
-   public static final String PROPERTY_TYPEBASE = "typeBase";
+public interface ModelParameterBase extends ModelElementBase
+{
+   String PROPERTY_TYPEBASE = "typeBase";
 
-   public static final String IN = "in";
+   String IN                = "in";
 
-   public static final String OUT = "out";
+   String OUT               = "out";
 
-   public static final String IN_OUT = "in_out";
+   String IN_OUT            = "in_out";
 
    /**
     * Returns the parameters direction <code></code>
+    * 
     * @return
     */
-   public abstract String getDirection();
-   
-   public abstract ModelClassifierBase getTypeBase();
+   String getDirection();
+
+   ModelClassifierBase getTypeBase();
 }

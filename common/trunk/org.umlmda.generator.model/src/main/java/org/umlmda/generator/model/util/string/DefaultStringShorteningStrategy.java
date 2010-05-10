@@ -1,6 +1,5 @@
 /*
  * Copyright: (C) 2010 COR AG Insurance Technologies
- * Name:      $Id: DefaultStringShorteningStrategy.java,v $Version 17.03.2010 15:38:59 {user} Exp $
  */
 package org.umlmda.generator.model.util.string;
 

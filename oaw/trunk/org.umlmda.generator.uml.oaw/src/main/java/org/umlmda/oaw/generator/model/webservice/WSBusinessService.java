@@ -1,6 +1,6 @@
 package org.umlmda.oaw.generator.model.webservice;
 
-
-public interface WSBusinessService extends WSModelClass {
+public interface WSBusinessService extends WSModelClass
+{
 
 }

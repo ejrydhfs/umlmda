@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 //
-// $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelStructuralFeature.java,v 1.2 2005/11/08 08:03:01 moroff Exp $
-// $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelStructuralFeature.java,v $
-// $Revision: 1.2 $
-//  $State: Exp $
-//   $Name:  $
-//   $Date: 2005/11/08 08:03:01 $
-// $Locker:  $
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Library General Public
@@ -28,14 +21,12 @@ package org.umlmda.model.uml;
 
 /**
  * @author moroff
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public interface ModelStructuralFeature extends ModelStructuralFeatureBase, ModelElement {
+public interface ModelStructuralFeature extends ModelStructuralFeatureBase, ModelElement
+{
    /**
     * @return true if the attribute allows multiple values
     */
-   public abstract boolean isMultivalue();
+   boolean isMultivalue();
 
 }

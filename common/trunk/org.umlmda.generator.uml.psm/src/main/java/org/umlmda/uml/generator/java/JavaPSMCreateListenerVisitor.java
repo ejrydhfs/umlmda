@@ -1,11 +1,4 @@
-/*
- *   $Header$
- *   $Source$
- * $Revision$
- *     $Name$
- *     $Date$
- * 
- * This library is free software; you can redistribute it and/or
+/* This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
@@ -37,27 +30,28 @@ import org.umlmda.model.uml.impl.ModelParameterImpl;
 import org.umlmda.profile.ModelStereotype;
 
 /**
- * Visitor to create a listener for <<AsyncCall>> methods 
- * @author Dieter Moroff (14.04.2006), last change $Date$ $Name$
- * @version $Revision$
+ * Visitor to create a listener for <<AsyncCall>> methods
+ * 
+ * @author Dieter Moroff (14.04.2006)
  */
-public class JavaPSMCreateListenerVisitor extends DefaultModelVisitor {
+public class JavaPSMCreateListenerVisitor extends DefaultModelVisitor
+{
 
    public boolean visit(ModelMethod method) {
       super.visit(method);
-      
+
       if ( method.hasStereotype(ModelStereotype.ASYNC_CALL) ) {
-         
+
          // Check if listener was created
          ModelParameterImpl parameterImpl = createAsyncParameter(method);
          ModelMethodBase methodBase = (ModelMethodBase) method.getBase();
          Model model = method.getModel();
-         
+
          methodBase.getParameters().add(model.getModelParameter(parameterImpl));
       }
       return true;
    }
-   
+
    /**
     * @param ownerClass
     * @param genPackage
@@ -68,23 +62,25 @@ public class JavaPSMCreateListenerVisitor extends DefaultModelVisitor {
       JavaModelClass ownerClass = (JavaModelClass) method.getOwner();
       JavaModelPackage genPackage = (JavaModelPackage) ownerClass.getPackage();
       JavaModel genModel = (JavaModel) genPackage.getModel();
-      
+
       String listenerPostfix = genModel.getProperties().getProperty("ListenerPostfix", "Listener");
-      JavaModelClass listener = (JavaModelClass) genModel.find(ownerClass.getQualifiedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE)+listenerPostfix);
-      
+      JavaModelClass listener = (JavaModelClass) genModel.find(ownerClass
+            .getQualifiedName(JavaArtefacts.BUSINESS_SERVICE_INTERFACE)
+            + listenerPostfix);
+
       if ( listener == null ) {
          ModelClassImpl listenerClass = new ModelClassImpl(genModel, genPackage);
          listener = (JavaModelClass) genModel.getModelClass(listenerClass);
-         listenerClass.setName(ownerClass.getName()+listenerPostfix);
+         listenerClass.setName(ownerClass.getName() + listenerPostfix);
          listenerClass.getStereotypes().add(ModelStereotype.SERVICE_LISTENER);
-         
+
          {
             ModelMethodImpl onReturn = new ModelMethodImpl(genModel, listenerClass);
             onReturn.setName("on" + StringUtils.capitalize(method.getName()) + "Return");
 
             ModelParameterImpl onReturnParameter = new ModelParameterImpl(genModel, onReturn);
             onReturnParameter.setName("message");
-            onReturnParameter.setTypeBase(((ModelMethodBase)method.getBase()).getReturnTypeBase());
+            onReturnParameter.setTypeBase(((ModelMethodBase) method.getBase()).getReturnTypeBase());
             onReturn.getParameters().add(genModel.getModelParameter(onReturnParameter));
             listenerClass.getMethods().add(genModel.getModelMethod(onReturn));
          }
@@ -103,11 +99,11 @@ public class JavaPSMCreateListenerVisitor extends DefaultModelVisitor {
          genPackage.getClasses().add(listener);
          genModel.getClasses().add(listener);
       }
-      
+
       ModelParameterImpl parameterImpl = new ModelParameterImpl(genModel, method);
       parameterImpl.setTypeBase(listener);
       parameterImpl.setName("listener");
       return parameterImpl;
    }
-   
+
 }

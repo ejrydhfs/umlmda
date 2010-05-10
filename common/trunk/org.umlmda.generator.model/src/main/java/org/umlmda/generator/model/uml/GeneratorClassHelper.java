@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -27,13 +26,11 @@ import org.umlmda.generator.model.util.GeneratorUtils;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class GeneratorClassHelper {
+public class GeneratorClassHelper
+{
    private final GeneratorClass genClass;
-   
+
    /**
     * 
     */
@@ -43,8 +40,8 @@ public class GeneratorClassHelper {
    }
 
    /**
-    * Returns the generated name of the current class
-    * and current generated artefact
+    * Returns the generated name of the current class and current generated artefact
+    * 
     * @return
     */
    public String getGeneratedName() {
@@ -52,14 +49,13 @@ public class GeneratorClassHelper {
    }
 
    /**
-    * Returns the generated name of the current class
-    * and the given artefact
+    * Returns the generated name of the current class and the given artefact
+    * 
     * @param string
     * @return
     */
    public String getGeneratedName(String artefactType) {
-   	  return GeneratorUtils.getGeneratedName(genClass, artefactType);
+      return GeneratorUtils.getGeneratedName(genClass, artefactType);
    }
-   
-   
+
 }

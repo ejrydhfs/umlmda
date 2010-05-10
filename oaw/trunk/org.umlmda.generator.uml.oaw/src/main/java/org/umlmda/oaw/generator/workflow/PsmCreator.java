@@ -20,18 +20,18 @@ import org.umlmda.model.uml.validate.ModelValidationException;
 
 /**
  * @author MOROFF
- *
  */
-public class PsmCreator extends AbstractWorkflowComponent {
+public class PsmCreator extends AbstractWorkflowComponent
+{
    private String adapterFactory;
    private String pimModelSlot;
    private String psmModelSlot;
    private String generationSetSlot;
    private String generationProfile;
    private Logger logger = Logger.getLogger(getClass());
-   
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.openarchitectureware.workflow.WorkflowComponent#checkConfiguration(org.openarchitectureware.workflow.issues.Issues)
     */
    public void checkConfiguration(Issues issues) {
@@ -39,8 +39,10 @@ public class PsmCreator extends AbstractWorkflowComponent {
 
    }
 
-   /* (non-Javadoc)
-    * @see org.openarchitectureware.workflow.WorkflowComponent#invoke(org.openarchitectureware.workflow.WorkflowContext, org.openarchitectureware.workflow.monitor.ProgressMonitor, org.openarchitectureware.workflow.issues.Issues)
+   /*
+    * (non-Javadoc)
+    * @see org.openarchitectureware.workflow.WorkflowComponent#invoke(org.openarchitectureware.workflow.WorkflowContext,
+    * org.openarchitectureware.workflow.monitor.ProgressMonitor, org.openarchitectureware.workflow.issues.Issues)
     */
    @SuppressWarnings("unchecked")
    public void invoke(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
@@ -49,50 +51,54 @@ public class PsmCreator extends AbstractWorkflowComponent {
       Object pimModel = ctx.get(pimModelSlot);
       GeneratorModel psmModel = null;
       GenerationSet set = null;
-      
+
       if ( !(pimModel instanceof Model) ) {
-         issues.addError("Expected "+Model.class+" in slot "+pimModelSlot+" but was "+pimModel.getClass());
+         issues.addError("Expected " + Model.class + " in slot " + pimModelSlot + " but was " + pimModel.getClass());
       }
-      
+
       try {
          adapterFactoryClass = (Class<ModelAdapterFactory>) Class.forName(adapterFactory);
          factory = adapterFactoryClass.newInstance();
-         psmModel = (GeneratorModel) factory.createModel((Model)pimModel);
+         psmModel = (GeneratorModel) factory.createModel((Model) pimModel);
          set = (GenerationSet) ctx.get(generationSetSlot);
          psmModel.setGenerationSet(set);
 
          // Check generation set
          if ( set == null ) {
-        	issues.addError("No generationset in "+generationSetSlot+" found"); 
+            issues.addError("No generationset in " + generationSetSlot + " found");
          }
-         
+
          // Lockup and set profile
          boolean foundProfile = false;
-         
-         for (Iterator ip = set.getGenerationProfile().iterator(); ip.hasNext() && !foundProfile;) {
+
+         for ( Iterator ip = set.getGenerationProfile().iterator(); ip.hasNext() && !foundProfile; ) {
             GenerationProfile generationProfile = (GenerationProfile) ip.next();
             Profile profile = generationProfile.getProfile();
-            
+
             if ( this.generationProfile.equals(profile.getName()) ) {
                psmModel.setProfile(generationProfile);
                foundProfile = true;
             }
          }
-         
+
          if ( !foundProfile ) {
-            String msg = "Profile "+generationProfile+" not found in generationset "+set.getName();
+            String msg = "Profile " + generationProfile + " not found in generationset " + set.getName();
             issues.addError(msg);
          }
          ctx.set(psmModelSlot, psmModel);
-         logger.info("Put instance of "+psmModel.getClass()+" to "+psmModelSlot);
-      } catch (ClassNotFoundException e) {
-         issues.addError("modeladapter class "+adapterFactory+" could not be loaded");
-      } catch (InstantiationException e) {
-         issues.addError("modeladapter class "+adapterFactory+" could not be instantiated "+e.getMessage());
-      } catch (IllegalAccessException e) {
-         issues.addError("modeladapter class "+adapterFactory+" could not be instantiated "+e.getMessage());
-      } catch (ModelValidationException e) {
-         issues.addError("Model is not valid "+e.getValidationResults().toString());
+         logger.info("Put instance of " + psmModel.getClass() + " to " + psmModelSlot);
+      }
+      catch (ClassNotFoundException e) {
+         issues.addError("modeladapter class " + adapterFactory + " could not be loaded");
+      }
+      catch (InstantiationException e) {
+         issues.addError("modeladapter class " + adapterFactory + " could not be instantiated " + e.getMessage());
+      }
+      catch (IllegalAccessException e) {
+         issues.addError("modeladapter class " + adapterFactory + " could not be instantiated " + e.getMessage());
+      }
+      catch (ModelValidationException e) {
+         issues.addError("Model is not valid " + e.getValidationResults().toString());
       }
 
    }
@@ -105,7 +111,8 @@ public class PsmCreator extends AbstractWorkflowComponent {
    }
 
    /**
-    * @param adapterFactory the adapterFactory to set
+    * @param adapterFactory
+    *           the adapterFactory to set
     */
    public void setAdapterFactory(String adapterFactory) {
       this.adapterFactory = adapterFactory;
@@ -119,7 +126,8 @@ public class PsmCreator extends AbstractWorkflowComponent {
    }
 
    /**
-    * @param pimModelSlot the pimModelSlot to set
+    * @param pimModelSlot
+    *           the pimModelSlot to set
     */
    public void setPimModelSlot(String pimModelSlot) {
       this.pimModelSlot = pimModelSlot;
@@ -133,7 +141,8 @@ public class PsmCreator extends AbstractWorkflowComponent {
    }
 
    /**
-    * @param psmModelSlot the psmModelSlot to set
+    * @param psmModelSlot
+    *           the psmModelSlot to set
     */
    public void setPsmModelSlot(String psmModelSlot) {
       this.psmModelSlot = psmModelSlot;
@@ -147,7 +156,8 @@ public class PsmCreator extends AbstractWorkflowComponent {
    }
 
    /**
-    * @param generationSetSlot the generationSetSlot to set
+    * @param generationSetSlot
+    *           the generationSetSlot to set
     */
    public void setGenerationSetSlot(String generationSetSlot) {
       this.generationSetSlot = generationSetSlot;
@@ -161,7 +171,8 @@ public class PsmCreator extends AbstractWorkflowComponent {
    }
 
    /**
-    * @param generationProfile the generationProfile to set
+    * @param generationProfile
+    *           the generationProfile to set
     */
    public void setGenerationProfile(String generationProfile) {
       this.generationProfile = generationProfile;

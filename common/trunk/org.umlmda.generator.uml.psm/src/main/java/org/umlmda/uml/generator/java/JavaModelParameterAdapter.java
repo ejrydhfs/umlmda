@@ -1,11 +1,4 @@
-/*
- *   $Header$
- *   $Source$
- * $Revision$
- *     $Name$
- *     $Date$
- * 
- * This library is free software; you can redistribute it and/or
+/* This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
@@ -30,10 +23,11 @@ import org.umlmda.model.uml.impl.ModelParameterAdapter;
 
 /**
  * TODO Insert type javadoc
- * @author Dieter Moroff (13.03.2006), last change $Date$ $Name$
- * @version $Revision$
+ * 
+ * @author Dieter Moroff (13.03.2006)
  */
-public class JavaModelParameterAdapter extends ModelParameterAdapter implements JavaModelParameter {
+public class JavaModelParameterAdapter extends ModelParameterAdapter implements JavaModelParameter
+{
 
    /**
     * @param modelParameter
@@ -43,12 +37,13 @@ public class JavaModelParameterAdapter extends ModelParameterAdapter implements 
       super(modelParameter, model);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.java.JavaModelParameter#getJavaType()
     */
    public String getJavaType() {
       JavaModelClassifier classifier = (JavaModelClassifier) getType();
-      
+
       return classifier.getJavaType();
    }
 

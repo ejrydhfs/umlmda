@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmpResourceFactoryImpl.java,v 1.3 2005/11/08 08:06:52 moroff Exp $
  */
 package org.umlmda.generator.profile.util;
 
@@ -13,24 +12,23 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 
 /**
- * <!-- begin-user-doc -->
- * The <b>Resource Factory</b> associated with the package.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> The <b>Resource Factory</b> associated with the package. <!-- end-user-doc -->
+ * 
  * @see org.umlmda.generator.profile.util.UmpResourceImpl
  * @generated
  */
-public class UmpResourceFactoryImpl extends ResourceFactoryImpl {
+public class UmpResourceFactoryImpl extends ResourceFactoryImpl
+{
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public static final String copyright = "www.umlmda.org";
 
    /**
-    * Creates an instance of the resource factory.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * Creates an instance of the resource factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public UmpResourceFactoryImpl() {
@@ -38,9 +36,8 @@ public class UmpResourceFactoryImpl extends ResourceFactoryImpl {
    }
 
    /**
-    * Creates an instance of the resource.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * Creates an instance of the resource. <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public Resource createResource(URI uri) {
@@ -48,4 +45,4 @@ public class UmpResourceFactoryImpl extends ResourceFactoryImpl {
       return result;
    }
 
-} //UmpResourceFactoryImpl
+} // UmpResourceFactoryImpl

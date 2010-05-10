@@ -5,7 +5,7 @@ package org.umlmda.uml.generator.java;
 import org.umlmda.generator.model.uml.GeneratorPackage;
 import org.umlmda.model.uml.ModelPackage;
 
-public interface JavaModelPackage extends JavaModelElement, GeneratorPackage, ModelPackage, JavaImportHelper 
+public interface JavaModelPackage extends JavaModelElement, GeneratorPackage, ModelPackage, JavaImportHelper
 {
 
 }

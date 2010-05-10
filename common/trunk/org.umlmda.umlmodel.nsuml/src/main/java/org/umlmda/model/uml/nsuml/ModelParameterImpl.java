@@ -1,5 +1,4 @@
 /*
- *  $Header: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelParameterImpl.java,v 1.1 2005/10/27 19:34:14 moroff Exp $
  *  Copyright (C) 2003, 2004 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://umlmda.sf.net)
@@ -32,10 +31,11 @@ import ru.novosoft.uml.foundation.data_types.MParameterDirectionKind;
 /**
  * @author Dieter Moroff
  */
-public class ModelParameterImpl extends ModelElementImpl implements ModelParameterBase {
-   private final MParameter modelParameter;
+public class ModelParameterImpl extends ModelElementImpl implements ModelParameterBase
+{
+   private final MParameter    modelParameter;
    private ModelClassifierBase modelClassifier = null;
-   
+
    /**
     * @param modelElement
     */
@@ -46,20 +46,21 @@ public class ModelParameterImpl extends ModelElementImpl implements ModelParamet
 
    /**
     * Returns the parameters direction <code></code>
+    * 
     * @return
     */
    public String getDirection() {
-      if ( modelParameter.getKind().getValue() == MParameterDirectionKind._IN  )
+      if ( modelParameter.getKind().getValue() == MParameterDirectionKind._IN )
          return IN;
-      else if ( modelParameter.getKind().getValue() == MParameterDirectionKind._OUT  )
+      else if ( modelParameter.getKind().getValue() == MParameterDirectionKind._OUT )
          return OUT;
       else
          return IN_OUT;
    }
-   
+
    public ModelClassifierBase getTypeBase() {
       if ( modelClassifier == null ) {
-         modelClassifier = model.findClassifier(modelParameter.getType());      
+         modelClassifier = model.findClassifier(modelParameter.getType());
       }
       return modelClassifier;
    }

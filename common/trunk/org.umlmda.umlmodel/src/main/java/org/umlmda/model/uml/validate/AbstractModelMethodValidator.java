@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/validate/AbstractModelMethodValidator.java,v 1.1 2006/05/04 15:16:30 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/validate/AbstractModelMethodValidator.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/05/04 15:16:30 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -32,10 +27,10 @@ import org.umlmda.model.uml.ModelMethod;
 
 /**
  * TODO Insert type javadoc
- * @author Dieter Moroff (02.05.2006), last change $Date: 2006/05/04 15:16:30 $ $Name:  $
- * @version $Revision: 1.1 $
+ * 
  */
-public abstract class AbstractModelMethodValidator extends AbstractModelElementValidator {
+public abstract class AbstractModelMethodValidator extends AbstractModelElementValidator
+{
 
    /**
     * 
@@ -44,18 +39,20 @@ public abstract class AbstractModelMethodValidator extends AbstractModelElementV
       super();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.validate.ModelElementValidator#isAppropriateFor(java.lang.Class)
     */
    public final boolean isAppropriateFor(Class modelElementType) {
       return ModelMethod.class.isAssignableFrom(modelElementType);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.model.uml.validate.ModelElementValidator#validate(org.umlmda.model.uml.ModelElement)
     */
    public final List validate(ModelElement modelElement) {
-      return validateMethod((ModelMethod)modelElement);
+      return validateMethod((ModelMethod) modelElement);
    }
 
    /**

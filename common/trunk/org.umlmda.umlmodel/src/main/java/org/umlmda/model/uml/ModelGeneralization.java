@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelGeneralization.java,v 1.1 2006/08/09 10:40:26 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelGeneralization.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/08/09 10:40:26 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,11 +21,9 @@ package org.umlmda.model.uml;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public interface ModelGeneralization extends ModelGeneralizationBase, ModelElement {
+public interface ModelGeneralization extends ModelGeneralizationBase, ModelElement
+{
 
    /**
     * Returns the specific child (subclass) of the generalization

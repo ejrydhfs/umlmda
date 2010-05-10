@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmsFactoryImpl.java,v 1.3 2005/11/08 08:06:52 moroff Exp $
  */
 package org.umlmda.generator.set.impl;
 
@@ -14,23 +13,22 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.umlmda.generator.set.*;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
-public class UmsFactoryImpl extends EFactoryImpl implements UmsFactory {
+public class UmsFactoryImpl extends EFactoryImpl implements UmsFactory
+{
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public static final String copyright = "www.umlmda.org";
 
    /**
-    * Creates and instance of the factory.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * Creates and instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public UmsFactoryImpl() {
@@ -38,22 +36,24 @@ public class UmsFactoryImpl extends EFactoryImpl implements UmsFactory {
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public EObject create(EClass eClass) {
       switch (eClass.getClassifierID()) {
-         case UmsPackage.GENERATION_SET: return (EObject)createGenerationSet();
-         case UmsPackage.GENERATION_PROFILE: return (EObject)createGenerationProfile();
-         default:
-            throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+      case UmsPackage.GENERATION_SET:
+         return (EObject) createGenerationSet();
+      case UmsPackage.GENERATION_PROFILE:
+         return (EObject) createGenerationProfile();
+      default:
+         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
       }
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public GenerationSet createGenerationSet() {
@@ -62,8 +62,8 @@ public class UmsFactoryImpl extends EFactoryImpl implements UmsFactory {
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public GenerationProfile createGenerationProfile() {
@@ -72,17 +72,17 @@ public class UmsFactoryImpl extends EFactoryImpl implements UmsFactory {
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public UmsPackage getUmsPackage() {
-      return (UmsPackage)getEPackage();
+      return (UmsPackage) getEPackage();
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @deprecated
     * @generated
     */
@@ -90,4 +90,4 @@ public class UmsFactoryImpl extends EFactoryImpl implements UmsFactory {
       return UmsPackage.eINSTANCE;
    }
 
-} //UmsFactoryImpl
+} // UmsFactoryImpl

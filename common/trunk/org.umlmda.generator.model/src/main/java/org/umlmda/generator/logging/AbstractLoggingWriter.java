@@ -1,8 +1,5 @@
 /*
  * Created on 15.12.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.generator.logging;
 
@@ -10,13 +7,11 @@ import org.umlmda.generator.model.util.CodeEmitter;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public abstract class AbstractLoggingWriter implements LoggingWriter {
+public abstract class AbstractLoggingWriter implements LoggingWriter
+{
    protected final CodeEmitter emitter;
-   
+
    /**
     * 
     */
@@ -25,8 +20,8 @@ public abstract class AbstractLoggingWriter implements LoggingWriter {
       this.emitter = emitter;
    }
 
-   
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.logging.LoggingWriter#log(int, java.lang.String, int)
     */
    public String log(int level, String message, int ident) {
@@ -34,12 +29,13 @@ public abstract class AbstractLoggingWriter implements LoggingWriter {
       emitter.addLine(ident, log(level, message));
       return emitter.toString();
    }
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.logging.LoggingWriter#log(int, java.lang.String)
     */
    public String log(int level, String message) {
-      switch(level) {
+      switch (level) {
       case ERROR:
          return error(message);
       case WARN:
@@ -52,9 +48,9 @@ public abstract class AbstractLoggingWriter implements LoggingWriter {
          return trace(message);
       }
    }
-   
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.generator.logging.LoggingWriter#isLoggingSupported()
     */
    public boolean isLoggingSupported() {

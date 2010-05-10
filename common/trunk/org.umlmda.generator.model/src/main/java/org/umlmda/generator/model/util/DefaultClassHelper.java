@@ -1,5 +1,4 @@
 /*
- *  $Header$
  *  Copyright (C) 2003, 2004, 2005 Dieter Moroff
  *
  *  This file is part of UMLMDA (http://www.umlmda.org)
@@ -27,20 +26,20 @@ import org.umlmda.model.uml.ModelDataType;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class DefaultClassHelper extends AbstractClassHelper {
+public class DefaultClassHelper extends AbstractClassHelper
+{
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.generator.IClassHelper#getType(org.umlmda.model.uml.ModelDataType)
     */
    public String getType(ModelDataType type) {
       return type.getName();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.generator.IClassHelper#getNamespaceSep()
     */
    public String getNamespaceSep() {

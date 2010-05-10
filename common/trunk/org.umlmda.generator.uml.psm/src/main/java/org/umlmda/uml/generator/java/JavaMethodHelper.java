@@ -1,12 +1,5 @@
-// jUMLMDA, GeneratorBase-API
+// UMLMDA, GeneratorBase-API
 //  
-//   $Header$
-//   $Source$
-// $Revision$
-//    $State$
-//     $Name$
-//     $Date$
-//   $Locker$
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Library General Public
@@ -38,13 +31,14 @@ import org.umlmda.profile.ModelStereotype;
 import org.umlmda.uml.generator.AbstractMethodHelper;
 
 /**
- * This helperclass for generating method signature. This base implementation
- * return a java method signature. It can be derived to generate c++ or idl
- * methd signatures.
+ * This helperclass for generating method signature. This base implementation return a java method signature. It can be derived to
+ * generate c++ or idl methd signatures.
+ * 
  * @author Dieter Moroff
  */
-public class JavaMethodHelper extends AbstractMethodHelper {
-   
+public class JavaMethodHelper extends AbstractMethodHelper
+{
+
    /**
     * @param classHelper
     */
@@ -62,19 +56,20 @@ public class JavaMethodHelper extends AbstractMethodHelper {
    protected String getParameterSignature(ModelParameter parameter) {
       ModelClassifier type = parameter.getType();
       StringBuffer signature = new StringBuffer();
-      
+
       if ( type instanceof JavaModelClass ) {
-         signature.append(((JavaModelClass)type).getJavaType());
+         signature.append(((JavaModelClass) type).getJavaType());
       }
       else {
-         signature.append(getClassHelper().getType((ModelDataType)type));
+         signature.append(getClassHelper().getType((ModelDataType) type));
       }
       signature.append(" ");
-      signature.append(parameter.getName());   
+      signature.append(parameter.getName());
       return signature.toString();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.generator.AbstractMethodHelper#getExceptionDeclKeyword()
     */
    protected String getExceptionDeclKeyword() {
@@ -84,39 +79,12 @@ public class JavaMethodHelper extends AbstractMethodHelper {
    protected String getReturnTypeSignature(ModelMethod method) {
       if ( method instanceof JavaModelMethod ) {
          JavaModelMethod javaMethod = (JavaModelMethod) method;
-      
+
          return javaMethod.getJavaType();
       }
       else {
          return super.getReturnTypeSignature(method);
       }
    }
-   
+
 }
-
-
-//-------------------------------------------------------------------------
-//$Log$
-//Revision 1.3  2007/07/16 07:43:29  moroff
-//*** empty log message ***
-//
-//Revision 1.2  2007/02/12 09:05:40  moroff
-//Support of attributes and parameters which are none <<BusinessObject>> elements
-//
-//Revision 1.1  2006/07/10 15:35:33  moroff
-//Refactoring base functionality to org.umlmda.generator.model
-//
-//Revision 1.2  2005/10/27 19:01:18  moroff
-//net.sourceforge.umlmda renamed to org.umlmda
-//
-//Revision 1.1  2005/10/20 21:20:29  moroff
-//More refactoring, make java templates more flexible.
-//
-//Revision 1.2  2004/12/08 22:14:04  moroff
-//Remove unused imports
-//
-//Revision 1.1  2004/10/06 19:33:14  moroff
-//* Target language specific signatures put in help-classes, delegating to these 
-//   classes inside the writer classes
-//
-//-------------------------------------------------------------------------

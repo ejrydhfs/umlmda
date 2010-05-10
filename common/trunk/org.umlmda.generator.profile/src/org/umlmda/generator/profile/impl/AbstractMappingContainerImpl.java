@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
- * $Id: AbstractMappingContainerImpl.java,v 1.1 2006/06/24 19:07:54 moroff Exp $
  */
 package org.umlmda.generator.profile.impl;
 
@@ -27,39 +26,39 @@ import org.umlmda.generator.profile.Mapping;
 import org.umlmda.generator.profile.UmpPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Abstract Mapping Container</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Abstract Mapping Container</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.umlmda.generator.profile.impl.AbstractMappingContainerImpl#getMappings <em>Mappings</em>}</li>
+ * <li>{@link org.umlmda.generator.profile.impl.AbstractMappingContainerImpl#getMappings <em>Mappings</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
-public abstract class AbstractMappingContainerImpl extends EObjectImpl implements AbstractMappingContainer {
+public abstract class AbstractMappingContainerImpl extends EObjectImpl implements AbstractMappingContainer
+{
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public static final String copyright = "www.umlmda.org";
 
    /**
-    * The cached value of the '{@link #getMappings() <em>Mappings</em>}' containment reference list.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * The cached value of the '{@link #getMappings() <em>Mappings</em>}' containment reference list. <!-- begin-user-doc --> <!--
+    * end-user-doc -->
+    * 
     * @see #getMappings()
     * @generated
     * @ordered
     */
-   protected EList mappings = null;
+   protected EList            mappings  = null;
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    protected AbstractMappingContainerImpl() {
@@ -67,8 +66,8 @@ public abstract class AbstractMappingContainerImpl extends EObjectImpl implement
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    protected EClass eStaticClass() {
@@ -76,87 +75,87 @@ public abstract class AbstractMappingContainerImpl extends EObjectImpl implement
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public List getMappings() {
-      if (mappings == null) {
+      if ( mappings == null ) {
          mappings = new EObjectContainmentEList(Mapping.class, this, UmpPackage.ABSTRACT_MAPPING_CONTAINER__MAPPINGS);
       }
       return mappings;
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-      if (featureID >= 0) {
+      if ( featureID >= 0 ) {
          switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-            case UmpPackage.ABSTRACT_MAPPING_CONTAINER__MAPPINGS:
-               return ((InternalEList)getMappings()).basicRemove(otherEnd, msgs);
-            default:
-               return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
+         case UmpPackage.ABSTRACT_MAPPING_CONTAINER__MAPPINGS:
+            return ((InternalEList) getMappings()).basicRemove(otherEnd, msgs);
+         default:
+            return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
          }
       }
       return eBasicSetContainer(null, featureID, msgs);
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public Object eGet(EStructuralFeature eFeature, boolean resolve) {
       switch (eDerivedStructuralFeatureID(eFeature)) {
-         case UmpPackage.ABSTRACT_MAPPING_CONTAINER__MAPPINGS:
-            return getMappings();
+      case UmpPackage.ABSTRACT_MAPPING_CONTAINER__MAPPINGS:
+         return getMappings();
       }
       return eDynamicGet(eFeature, resolve);
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public void eSet(EStructuralFeature eFeature, Object newValue) {
       switch (eDerivedStructuralFeatureID(eFeature)) {
-         case UmpPackage.ABSTRACT_MAPPING_CONTAINER__MAPPINGS:
-            getMappings().clear();
-            getMappings().addAll((Collection)newValue);
-            return;
+      case UmpPackage.ABSTRACT_MAPPING_CONTAINER__MAPPINGS:
+         getMappings().clear();
+         getMappings().addAll((Collection) newValue);
+         return;
       }
       eDynamicSet(eFeature, newValue);
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public void eUnset(EStructuralFeature eFeature) {
       switch (eDerivedStructuralFeatureID(eFeature)) {
-         case UmpPackage.ABSTRACT_MAPPING_CONTAINER__MAPPINGS:
-            getMappings().clear();
-            return;
+      case UmpPackage.ABSTRACT_MAPPING_CONTAINER__MAPPINGS:
+         getMappings().clear();
+         return;
       }
       eDynamicUnset(eFeature);
    }
 
    /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+    * <!-- begin-user-doc --> <!-- end-user-doc -->
+    * 
     * @generated
     */
    public boolean eIsSet(EStructuralFeature eFeature) {
       switch (eDerivedStructuralFeatureID(eFeature)) {
-         case UmpPackage.ABSTRACT_MAPPING_CONTAINER__MAPPINGS:
-            return mappings != null && !mappings.isEmpty();
+      case UmpPackage.ABSTRACT_MAPPING_CONTAINER__MAPPINGS:
+         return mappings != null && !mappings.isEmpty();
       }
       return eDynamicIsSet(eFeature);
    }
 
-} //AbstractMappingContainerImpl
+} // AbstractMappingContainerImpl

@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelVisitable.java,v 1.1 2006/04/12 20:18:30 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/ModelVisitable.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/04/12 20:18:30 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,12 +20,11 @@
 package org.umlmda.model.uml;
 
 /**
- * Interface for all classes which can be visisted by the model 
- * visitor.
- * @author Dieter Moroff (12.04.2006), last change $Date: 2006/04/12 20:18:30 $ $Name:  $
- * @version $Revision: 1.1 $
+ * Interface for all classes which can be visisted by the model visitor.
+ * 
  */
-public interface ModelVisitable {
-   
-   public void accept(ModelVisitor visitor);
+public interface ModelVisitable
+{
+
+   void accept(ModelVisitor visitor);
 }

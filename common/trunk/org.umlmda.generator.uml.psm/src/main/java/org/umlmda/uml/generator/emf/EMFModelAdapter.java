@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFModelAdapter.java,v 1.1 2007/01/03 21:15:54 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.psm/src/org/umlmda/uml/generator/emf/EMFModelAdapter.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2007/01/03 21:15:54 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -33,11 +28,9 @@ import org.umlmda.uml.generator.webservices.WSPSMRequestReponseCreateVisitor;
 
 /**
  * @author MOROFF
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class EMFModelAdapter extends WSModelAdapter {
+public class EMFModelAdapter extends WSModelAdapter
+{
 
    private boolean init = false;
 
@@ -49,34 +42,34 @@ public class EMFModelAdapter extends WSModelAdapter {
       super(factory, srcModel);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see org.umlmda.uml.generator.webservices.WSModel#isSoapWrapping()
     */
    public boolean isSoapWrapping() {
       return true;
    }
-   
+
    /**
     * 
     */
    protected void wsInit() {
       if ( !init ) {
          ModelVisitableIterator modelIterator;
-         
+
          this.init = true;
-         
+
          // Create web service classes
          modelIterator = new ModelVisitableIterator(new WSPSMClassCreatorVisitor());
          modelIterator.iterate(this);
 
-//         // Create hierarchy classes for polymorphic types
-//         modelIterator = new ModelVisitableIterator(new WSPSMClassHierarchyCreatorVisitor());
-//         modelIterator.iterate(this);
-         
+         // // Create hierarchy classes for polymorphic types
+         // modelIterator = new ModelVisitableIterator(new WSPSMClassHierarchyCreatorVisitor());
+         // modelIterator.iterate(this);
+
          modelIterator = new ModelVisitableIterator(new EMFPSMTestCreateVisitor());
          modelIterator.iterate(this);
       }
    }
-   
-   
+
 }

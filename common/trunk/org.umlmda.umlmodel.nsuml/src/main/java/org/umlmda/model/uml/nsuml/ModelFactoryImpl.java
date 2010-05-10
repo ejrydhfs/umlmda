@@ -1,12 +1,5 @@
-// jUMLMDA, UMLModel-API
+// UMLMDA, UMLModel-API
 // 
-//   $Header: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelFactoryImpl.java,v 1.1 2005/10/27 19:34:14 moroff Exp $
-//   $Source: /cvsroot/umlmda/UMLModelNSUML/src/org/umlmda/model/uml/nsuml/ModelFactoryImpl.java,v $
-// $Revision: 1.1 $
-//    $State: Exp $
-//     $Name:  $
-//     $Date: 2005/10/27 19:34:14 $
-//   $Locker:  $
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Library General Public
@@ -37,7 +30,6 @@ import java.util.zip.ZipFile;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-
 import org.umlmda.model.uml.ModelBase;
 import org.umlmda.model.uml.ModelFactory;
 import org.umlmda.model.uml.nsuml.xmi.XMIReader;
@@ -51,41 +43,44 @@ import cb.xmi.XMIGenerator;
 
 /**
  * @author moroff
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class ModelFactoryImpl implements ModelFactory {
+public class ModelFactoryImpl implements ModelFactory
+{
    private Map pathMap = null;
-   
-   /* (non-Javadoc)
+
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelFactory#loadModel(java.io.InputStream)
     */
    public ModelBase loadModel(InputStream modelStream) throws IOException {
       try {
          XMIReader xmiReader = new XMIReader();
-         return new ModelImpl(xmiReader.parse(new InputSource(modelStream))); 
-      } catch (SAXException e) {
+         return new ModelImpl(xmiReader.parse(new InputSource(modelStream)));
+      }
+      catch (SAXException e) {
          throw new RuntimeException(e);
-      } catch (ParserConfigurationException e) {
+      }
+      catch (ParserConfigurationException e) {
          throw new RuntimeException(e);
-      } finally {
-         modelStream.close();     
+      }
+      finally {
+         modelStream.close();
       }
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelFactory#loadModel(java.io.File)
     */
    public ModelBase loadModel(File modelFile) throws IOException {
       InputStream modelStream = null;
-      
-      if ( modelFile.getAbsolutePath().endsWith(".zargo")) {
+
+      if ( modelFile.getAbsolutePath().endsWith(".zargo") ) {
          ZipFile zipFile = new ZipFile(modelFile, ZipFile.OPEN_READ);
-         for (Enumeration ez = zipFile.entries(); ez.hasMoreElements();) {
+         for ( Enumeration ez = zipFile.entries(); ez.hasMoreElements(); ) {
             ZipEntry zipEntry = (ZipEntry) ez.nextElement();
-                     
-            if ( zipEntry.getName().endsWith(".xmi")) {
+
+            if ( zipEntry.getName().endsWith(".xmi") ) {
                modelStream = zipFile.getInputStream(zipEntry);
                break;
             }
@@ -93,29 +88,27 @@ public class ModelFactoryImpl implements ModelFactory {
          if ( modelStream == null )
             throw new RuntimeException("No xmi entry in " + modelFile.getAbsolutePath());
       }
-      else if ( modelFile.getAbsolutePath().endsWith(".mdl")) {
+      else if ( modelFile.getAbsolutePath().endsWith(".mdl") ) {
          PetalParser parser = PetalParser.createParser(modelFile.getAbsolutePath(), null);
 
          // Abandon all diagrams since they're not used by the generator anyway
          // This saves us a lot of memory
-         parser.setIgnoredNodes(new Class[] { cb.petal.Diagram.class,
-           cb.petal.View.class });
+         parser.setIgnoredNodes(new Class[] { cb.petal.Diagram.class, cb.petal.View.class });
 
          parser.setPathMap(pathMap);
-         PetalFile    tree = parser.parse();
-         XMIGenerator gen  = new XMIGenerator(tree, null) {
+         PetalFile tree = parser.parse();
+         XMIGenerator gen = new XMIGenerator(tree, null) {
             protected XMIFactory getFactory() {
                return new UMLMDAXMIFactory(getTree(), this);
             }
          };
-         
-    
+
          gen.start();
          return new ModelImpl(gen.getModel());
       }
       else
          modelStream = new FileInputStream(modelFile);
-         
+
       return loadModel(modelStream);
    }
 

@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/validate/ModelValidationException.java,v 1.1 2006/05/04 15:16:30 moroff Exp $
- *   $Source: /cvsroot/umlmda/UMLModel/src/org/umlmda/model/uml/validate/ModelValidationException.java,v $
- * $Revision: 1.1 $
- *     $Name:  $
- *     $Date: 2006/05/04 15:16:30 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -29,12 +24,12 @@ import java.util.List;
 
 /**
  * Exception thrown, if model validation fails
- * @author Dieter Moroff (02.05.2006), last change $Date: 2006/05/04 15:16:30 $ $Name:  $
- * @version $Revision: 1.1 $
+ * 
  */
-public class ModelValidationException extends Exception {
+public class ModelValidationException extends Exception
+{
    private final List validationResults;
-   
+
    /**
     * 
     */
@@ -54,14 +49,14 @@ public class ModelValidationException extends Exception {
    public List getValidationResults() {
       return validationResults;
    }
-   
+
    public String getMessage() {
       StringBuffer buffer = new StringBuffer(getClass().getName());
-      
+
       buffer.append("\n");
-      for (Iterator ir = validationResults.iterator(); ir.hasNext();) {
+      for ( Iterator ir = validationResults.iterator(); ir.hasNext(); ) {
          ValidationResult result = (ValidationResult) ir.next();
-         
+
          buffer.append(result.toString());
          if ( ir.hasNext() ) {
             buffer.append("\n");

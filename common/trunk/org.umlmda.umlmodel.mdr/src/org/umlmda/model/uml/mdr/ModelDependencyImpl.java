@@ -1,8 +1,5 @@
 /*
  * Created on 04.11.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.umlmda.model.uml.mdr;
 
@@ -21,8 +18,8 @@ import org.umlmda.model.uml.ModelDependencyBase;
 /**
  * @author MOROFF
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * 
+ * 
  */
 public class ModelDependencyImpl extends ModelElementImpl implements ModelDependencyBase {
    private final Dependency modelDependency;

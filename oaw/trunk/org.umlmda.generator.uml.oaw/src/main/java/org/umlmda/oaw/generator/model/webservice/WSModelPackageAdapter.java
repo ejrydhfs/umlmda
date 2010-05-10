@@ -1,9 +1,4 @@
 /*
- *   $Header: /cvsroot/umlmda/org.umlmda.generator.uml.oaw/src/org/umlmda/oaw/generator/model/java/JavaModelPackageAdapter.java,v 1.2 2006/10/23 09:45:06 moroff Exp $
- *   $Source: /cvsroot/umlmda/org.umlmda.generator.uml.oaw/src/org/umlmda/oaw/generator/model/java/JavaModelPackageAdapter.java,v $
- * $Revision: 1.2 $
- *     $Name:  $
- *     $Date: 2006/10/23 09:45:06 $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -34,9 +29,9 @@ import org.umlmda.profile.ModelStereotype;
 
 /**
  * @author MOROFF
- *
  */
-public class WSModelPackageAdapter extends org.umlmda.uml.generator.webservices.WSModelPackageAdapter implements WSModelPackage {
+public class WSModelPackageAdapter extends org.umlmda.uml.generator.webservices.WSModelPackageAdapter implements WSModelPackage
+{
 
    /**
     * @param modelPackage
@@ -48,21 +43,21 @@ public class WSModelPackageAdapter extends org.umlmda.uml.generator.webservices.
 
    public List<WSBusinessObject> getBusinessObjects() {
       List<WSBusinessObject> businessObjects = new ArrayList<WSBusinessObject>();
-      
-      for (Iterator ic = getClasses(ModelStereotype.BUSINESS_OBJECT).iterator(); ic.hasNext();) {
+
+      for ( Iterator ic = getClasses(ModelStereotype.BUSINESS_OBJECT).iterator(); ic.hasNext(); ) {
          WSBusinessObject businessObject = (WSBusinessObject) ic.next();
-         
+
          businessObjects.add(businessObject);
       }
       return businessObjects;
-    }
+   }
 
    public List<WSBusinessService> getBusinessServices() {
       List<WSBusinessService> businessServices = new ArrayList<WSBusinessService>();
-      
-      for (Iterator ic = getClasses(ModelStereotype.BUSINESS_SERVICE).iterator(); ic.hasNext();) {
+
+      for ( Iterator ic = getClasses(ModelStereotype.BUSINESS_SERVICE).iterator(); ic.hasNext(); ) {
          WSBusinessService businessService = (WSBusinessService) ic.next();
-         
+
          businessServices.add(businessService);
       }
       return businessServices;
