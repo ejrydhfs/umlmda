@@ -6,36 +6,29 @@
 
 «DEFINE Root FOR JavaModel»
    «REM» Define standard service artifacts supporting jaxws«ENDREM»
-   «ERROR "Root called on <<Model>> "+name»
+   «ERROR "Root called on <<JavaModel>> "+name»
    «EXPAND java::Root::initArtefacts»
    «EXPAND Root FOREACH this.packages.typeSelect(WSModelPackage)»
 «ENDDEFINE»
 
-«DEFINE Root FOR WSBusinessException»
-«ENDDEFINE»
-
-«DEFINE Root FOR WSBusinessObject»
-«ENDDEFINE»
-
 «DEFINE Root FOR WSBusinessService»
+   «ERROR "Root called on <<WSBusinessService>> "+name»
    «IF hasStereotype("WebService")»
       «EXPAND jaxws::server::WSPortLocal::WSPortLocal»
       «EXPAND jaxws::server::WSServlet::servletRoot»
    «ENDIF»
 «ENDDEFINE»
 
-«DEFINE Root FOR WSEnumeration»
-«ENDDEFINE»
-
 «DEFINE Root FOR WSBusinessComponent»
+   «ERROR "Root called on <<WSBusinessComponent>> "+name»
 	«EXPAND Root FOREACH classes.typeSelect(ModelClass)»
 «ENDDEFINE»
 
 «DEFINE Root FOR WSModelPackage»
-   «ERROR "Root called on <<Package>> "+qualifiedName»
+   «ERROR "Root called on <<WSModelPackage>> "+qualifiedName»
    «EXPAND Root FOREACH classes.typeSelect(WSModelClass)»
 «ENDDEFINE»
 
 «DEFINE Root FOR ModelElement»
-	«ERROR "Root should not be called on <<Object>>: "+qualifiedName+" ("+metaType+")"»
+	«ERROR "Root should not be called on <<ModelElement>>: "+qualifiedName+" ("+metaType+")"»
 «ENDDEFINE»

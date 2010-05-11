@@ -6,7 +6,7 @@
 
 «DEFINE Root FOR JavaModel»
    «REM» Define standard service artifacts supporting jaxws «ENDREM»
-   «ERROR "Root called on <<Model>> "+name»
+   «ERROR "Root called on <<JavaModel>> "+name»
    «EXPAND java::Root::initArtefacts FOR this»
    «EXPAND Root FOREACH this.packages.typeSelect(WSModelPackage).select( p | p.hasStereotype("WebServiceComponent") )»
 «ENDDEFINE»
@@ -21,8 +21,8 @@
    «EXPAND Root FOREACH classes.typeSelect(WSModelClass)»
 «ENDDEFINE»
 
-«DEFINE Root FOR WSBusinessObject»
-   «ERROR "Root called on <<WSBusinessObject>> "+name»
+«DEFINE Root FOR WSModelClass»
+   «ERROR "Root called on <<WSModelClass>> "+name»
    «IF hasStereotype("WebServiceObject")»
       «EXPAND jaxws::common::WSBusinessObject::wsBORoot»
    «ENDIF»
@@ -48,20 +48,11 @@
    «ENDIF»
 «ENDDEFINE»
 
-«DEFINE Root FOR WSBusinessException»
-   «ERROR ">>>>>>>>>>>> WSBusinessException = "+this.name»
-«ENDDEFINE»
-
 «DEFINE Root FOR WSEnumeration»
    «ERROR "Root called on <<WSEnumeration>> "+name»
    «IF hasStereotype("WebServiceEnumeration")»
       «EXPAND jaxws::common::WSEnumeration::wsEnumerationRoot»
    «ENDIF»
-«ENDDEFINE»
-
-«DEFINE Root FOR WSBusinessComponent»
-   «ERROR ">>>>>> WSBusinessComponent = "+this.name»
-	«REM»«EXPAND Root FOREACH classes.typeSelect(ModelClass).select( c | c.hasStereotype("WebServiceObject") )»«ENDREM»
 «ENDDEFINE»
 
 «DEFINE Root FOR ModelElement»
