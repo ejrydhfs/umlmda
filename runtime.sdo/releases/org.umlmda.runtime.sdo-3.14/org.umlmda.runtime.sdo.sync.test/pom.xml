@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <parent>
+      <artifactId>org.umlmda.runtime.sdo</artifactId>
+      <groupId>org.umlmda</groupId>
+      <version>3.14</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>org.umlmda.runtime.sdo.sync.test</artifactId>
+   <name>UMLMDA SDO Sync-Service Test</name>
+   <description />
+   <packaging>jar</packaging>
+
+   <dependencies>
+      <dependency>
+         <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.gwt.jreemul</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.sdo.sync</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.sdo.sync.gwtclient</artifactId>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.sdo.sync.gwtserver</artifactId>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.common</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>${pom.groupId}</groupId>
+         <artifactId>org.umlmda.runtime.sdo.sync.test.java</artifactId>
+         <scope>test</scope>
+      </dependency>
+   </dependencies>
+
+</project>
