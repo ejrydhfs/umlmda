@@ -18,7 +18,7 @@ public interface SynchronizeStrategy
    class CollectUntilInvoke implements SynchronizeStrategy
    {
 
-      void postRecordAction() {
+      public void postRecordAction() {
          // Nothing to do
       }
    }
@@ -36,7 +36,7 @@ public interface SynchronizeStrategy
       }
 
       @SuppressWarnings("unchecked")
-      void postRecordAction() {
+      public void postRecordAction() {
          command.invoke();
       }
    }
