@@ -30,7 +30,7 @@ public class ChangeDoubleEntry extends AbstractChangeEntry
 
          if ( super.equals(obj) ) {
             if ( value == chgEntry.getValue() )
-               bReturn = true; // Values are the same String or both are null
+               bReturn = true; // Values are the same object or both are null
             else
                bReturn = (value != null) && value.equals(chgEntry.getValue());
          }

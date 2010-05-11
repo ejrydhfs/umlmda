@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.umlmda.runtime.sdo.sync.SynchronizedObject;
 import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 
+@SuppressWarnings("serial")
 public abstract class AbstractChangeLogEntry implements Serializable
 {
 

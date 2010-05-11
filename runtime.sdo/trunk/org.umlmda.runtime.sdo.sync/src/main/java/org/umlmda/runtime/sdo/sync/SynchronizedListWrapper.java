@@ -78,7 +78,6 @@ public class SynchronizedListWrapper<T> extends AbstractSynchronizedObject imple
 
    public boolean remove(Object o) {
       if ( o instanceof SynchronizedObject ) {
-         int listIndex = wrappedList.indexOf(o);
          boolean listResult = wrappedList.remove(o);
 
          if ( listResult == true ) {

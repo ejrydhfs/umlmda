@@ -35,7 +35,6 @@ public interface SynchronizeStrategy
          this.command = command;
       }
 
-      @SuppressWarnings("unchecked")
       public void postRecordAction() {
          command.invoke();
       }

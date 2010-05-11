@@ -3,6 +3,7 @@ package org.umlmda.runtime.sdo.sync.entries;
 import java.io.Serializable;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public abstract class AbstractInvocationResult implements Serializable
 {
    private List<AbstractChangeLogEntry> remoteChanges;

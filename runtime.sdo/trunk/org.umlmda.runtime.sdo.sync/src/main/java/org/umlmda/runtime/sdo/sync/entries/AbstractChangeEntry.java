@@ -1,9 +1,8 @@
 package org.umlmda.runtime.sdo.sync.entries;
 
+@SuppressWarnings("serial")
 public abstract class AbstractChangeEntry extends AbstractChangeLogEntry
 {
-
-   private static final long serialVersionUID = 100L;
 
    private String            propertyName;
 

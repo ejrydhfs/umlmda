@@ -18,7 +18,6 @@ public class NewEntry extends AbstractChangeLogEntry
    public NewEntry() {
    }
 
-   @SuppressWarnings("unchecked")
    public NewEntry(int recordedObjectId, ModeledElement modeledElement) {
       super(recordedObjectId);
       elementProxy = new ModeledElementProxy(modeledElement);

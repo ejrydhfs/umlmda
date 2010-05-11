@@ -1,5 +1,6 @@
 package org.umlmda.runtime.sdo.sync.parameter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,14 +18,14 @@ public class ParameterUtil
       for ( int i = 0; i < parameters.length; i++ ) {
          Object parameter = parameters[i];
 
-         if ( parameter instanceof String ) {
-            parameterList.add(new StringParameter((String) parameter));
-         }
-         else if ( parameter instanceof SynchronizedObject ) {
-            parameterList.add(new ObjectParameter((SynchronizedObject) parameter));
+         if ( parameter instanceof BigDecimal ) {
+            parameterList.add(new BigDecimalParameter((BigDecimal) parameter));
          }
          else if ( parameter instanceof Boolean ) {
             parameterList.add(new BooleanParameter((Boolean) parameter));
+         }
+         else if ( parameter instanceof Character ) {
+            parameterList.add(new CharacterParameter((Character) parameter));
          }
          else if ( parameter instanceof Date ) {
             parameterList.add(new DateParameter((Date) parameter));
@@ -32,11 +33,26 @@ public class ParameterUtil
          else if ( parameter instanceof Double ) {
             parameterList.add(new DoubleParameter((Double) parameter));
          }
+         else if ( parameter instanceof Enumeration ) {
+            parameterList.add(new EnumerationParameter((Enumeration) parameter));
+         }
+         else if ( parameter instanceof Float ) {
+            parameterList.add(new FloatParameter((Float) parameter));
+         }
          else if ( parameter instanceof Integer ) {
             parameterList.add(new IntegerParameter((Integer) parameter));
          }
-         else if ( parameter instanceof Enumeration ) {
-            parameterList.add(new EnumerationParameter((Enumeration) parameter));
+         else if ( parameter instanceof Long ) {
+            parameterList.add(new LongParameter((Long) parameter));
+         }
+         else if ( parameter instanceof Short ) {
+            parameterList.add(new ShortParameter((Short) parameter));
+         }
+         else if ( parameter instanceof String ) {
+            parameterList.add(new StringParameter((String) parameter));
+         }
+         else if ( parameter instanceof SynchronizedObject ) {
+            parameterList.add(new ObjectParameter((SynchronizedObject) parameter));
          }
 
          else {

@@ -66,6 +66,7 @@ public class PlayerImpl implements Player
       synchronizedObjects.clear();
    }
 
+   @SuppressWarnings("unchecked")
    public synchronized SynchronizedObject playback(List<AbstractChangeLogEntry> changeEntries, SynchronizedObject rootObject) {
       int count = changeEntries.size();
       Set<NewEntry> processedNewEntries = new HashSet<NewEntry>();
@@ -76,8 +77,8 @@ public class PlayerImpl implements Player
 
       // Create new Objects first
       int index = 0;
-      for ( Iterator ile = changeEntries.iterator(); ile.hasNext(); ) {
-         AbstractChangeLogEntry logEntry = (AbstractChangeLogEntry) ile.next();
+      for ( Iterator<AbstractChangeLogEntry> ile = changeEntries.iterator(); ile.hasNext(); ) {
+         AbstractChangeLogEntry logEntry = ile.next();
 
          if ( logEntry instanceof NewEntry ) {
             SynchronizedObject object = synchronizedObjects.get(logEntry.getRecordId());

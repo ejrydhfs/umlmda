@@ -1,5 +1,6 @@
 package org.umlmda.runtime.sdo.sync.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -21,13 +22,17 @@ import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.SynchronizedSet;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
+import org.umlmda.runtime.sdo.sync.entries.ChangeBigDecimalEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeBooleanEntry;
+import org.umlmda.runtime.sdo.sync.entries.ChangeCharacterEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeDateEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeDoubleEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeEnumerationEntry;
+import org.umlmda.runtime.sdo.sync.entries.ChangeFloatEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeIntegerEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeLongEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeObjectEntry;
+import org.umlmda.runtime.sdo.sync.entries.ChangeShortEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeStringArrayEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeStringEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeToNull;
@@ -94,8 +99,14 @@ public class SynchronizerImpl implements Recorder
          if ( value == null ) {
             addEntry(new ChangeToNull(object.getRecordObjectId(), propertyName));
          }
+         else if ( value instanceof BigDecimal ) {
+            addEntry(new ChangeBigDecimalEntry(object.getRecordObjectId(), propertyName, (BigDecimal) value));
+         }
          else if ( value instanceof Boolean ) {
             addEntry(new ChangeBooleanEntry(object.getRecordObjectId(), propertyName, (Boolean) value));
+         }
+         else if ( value instanceof Character ) {
+            addEntry(new ChangeCharacterEntry(object.getRecordObjectId(), propertyName, (Character) value));
          }
          else if ( value instanceof Date ) {
             addEntry(new ChangeDateEntry(object.getRecordObjectId(), propertyName, (Date) value));
@@ -103,11 +114,17 @@ public class SynchronizerImpl implements Recorder
          else if ( value instanceof Double ) {
             addEntry(new ChangeDoubleEntry(object.getRecordObjectId(), propertyName, (Double) value));
          }
-         else if ( value instanceof Long ) {
-            addEntry(new ChangeLongEntry(object.getRecordObjectId(), propertyName, (Long) value));
+         else if ( value instanceof Float ) {
+            addEntry(new ChangeFloatEntry(object.getRecordObjectId(), propertyName, (Float) value));
          }
          else if ( value instanceof Integer ) {
             addEntry(new ChangeIntegerEntry(object.getRecordObjectId(), propertyName, (Integer) value));
+         }
+         else if ( value instanceof Long ) {
+            addEntry(new ChangeLongEntry(object.getRecordObjectId(), propertyName, (Long) value));
+         }
+         else if ( value instanceof Short ) {
+            addEntry(new ChangeShortEntry(object.getRecordObjectId(), propertyName, (Short) value));
          }
          else if ( value instanceof String ) {
             addEntry(new ChangeStringEntry(object.getRecordObjectId(), propertyName, (String) value));
