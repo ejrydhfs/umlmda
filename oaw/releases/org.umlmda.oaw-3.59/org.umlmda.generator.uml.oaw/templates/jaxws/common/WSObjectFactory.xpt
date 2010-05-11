@@ -1,0 +1,73 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION java::UMLMDA»
+
+
+«DEFINE wsObjectFactoryRoot FOR WSModelPackage»
+«LET generatedName(this, "jaxWs.Stub") AS className»
+«FILE generatedPath+"/ObjectFactory.java"»
+	package «getQualifiedPackageName("jaxWs.Stub")»;
+	
+	import javax.xml.bind.JAXBElement;
+	import javax.xml.bind.annotation.XmlElementDecl;
+	import javax.xml.bind.annotation.XmlRegistry;
+	import javax.xml.namespace.QName;
+
+	/**
+	 * This object contains factory methods for each Java content interface and Java element interface generated in the
+	 * «getQualifiedPackageName("jaxWs.Stub")» package.
+	 * <p>
+	 * An ObjectFactory allows you to programatically construct new instances of the Java representation for XML content. The Java
+	 * representation of XML content can consist of schema derived interfaces and classes representing the binding of schema type
+	 * definitions, element declarations and model groups. Factory methods for each of these are provided in this class.
+	 */
+	@XmlRegistry
+	public class ObjectFactory
+	{
+
+	   «REM» Exception classes are handled in a special way «ENDREM»
+	   «FOREACH classes.typeSelect(WSModelClass).select( c | c.hasStereotype("WebServiceException") ) AS exception»
+	      private final static QName _«exception.getScopedName("jaxWs.Stub")»Element_QNAME = new QName("«exception.wsNamespace()»",
+	                                                                            "«exception.getScopedName("jaxWs.Stub")»Element");
+	   «ENDFOREACH»
+	
+	   /**
+	    * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package:
+	    * «getQualifiedPackageName("jaxWs.Stub")»
+	    */
+	   public ObjectFactory() {
+	   }
+
+      «FOREACH classes.typeSelect(WSModelClass).select( c | c.hasStereotype("WebServiceObject") ) AS class»
+         «LET class.getScopedName("jaxWs.Stub") AS wsObjectClassName»
+		   /**
+		    * Create an instance of {@link «wsObjectClassName» }
+		    */
+		   public «wsObjectClassName» create«wsObjectClassName.toFirstUpper()»() {
+		      return new «wsObjectClassName»();
+		   }
+
+         «ENDLET»
+      «ENDFOREACH»
+
+      «REM» Exception classes are handled in a special way «ENDREM»
+      «FOREACH classes.typeSelect(WSModelClass).select( c | c.hasStereotype("WebServiceException") ) AS exception»
+		   /**
+		    * Create an instance of {@link JAXBElement }{@code <}{@link «exception.getScopedName("jaxWs.Stub")» }{@code >}
+		    */
+		   @XmlElementDecl(namespace = "«exception.wsNamespace()»", name = "«exception.getScopedName("jaxWs.Stub")»Element")
+		   public JAXBElement<«exception.getScopedName("jaxWs.Stub")»> create«exception.getScopedName("jaxWs.Stub").toFirstUpper()»Element(«exception.getScopedName("jaxWs.Stub")» value) {
+		      return new JAXBElement<«exception.getScopedName("jaxWs.Stub")»>(_«exception.getScopedName("jaxWs.Stub")»Element_QNAME, «exception.getScopedName("jaxWs.Stub")».class, null, value);
+		   }
+
+      «ENDFOREACH»
+   }
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»

@@ -1,0 +1,13 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelAttribute
+ */
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator::java;
+
+extension org::umlmda::uml::java::Classifier;
+extension org::umlmda::uml::java::DataType;
+extension org::umlmda::uml::java::ModelClass;
+
+String javaTypeName(JavaModelParameter parm) :
+	parm.type.javaTypeName();
+	

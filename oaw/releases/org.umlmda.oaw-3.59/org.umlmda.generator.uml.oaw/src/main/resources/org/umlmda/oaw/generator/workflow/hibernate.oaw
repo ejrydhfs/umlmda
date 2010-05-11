@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+
+    <!-- Creating UMLMDA Java PSM -->
+	<component id="persistencePsmCreator"
+			class="org.umlmda.oaw.generator.workflow.PsmCreator">
+		<adapterFactory value="org.umlmda.oaw.generator.model.java.JavaModelAdapterFactory"/>
+		<pimModelSlot value="pim"/>
+		<psmModelSlot value="persistenceModel"/>
+		<generationSetSlot value="gs"/>
+		<generationProfile value="hibernate"/>
+	</component>
+
+	<component id="dirCleaner"
+			class="org.openarchitectureware.workflow.common.DirectoryCleaner" skipOnErrors="true">
+		<directories value="${hibernateGenPath}"/>
+	</component>
+
+	<component id="generator" class="org.openarchitectureware.xpand2.Generator" skipOnErrors="true">
+	   <metaModel class="org.openarchitectureware.type.impl.java.JavaMetaModel">
+	   		<typeStrategy class="org.openarchitectureware.type.impl.java.beans.JavaBeansStrategy" />
+	   </metaModel>
+	   <fileEncoding value="ISO-8859-1"/>
+	   <expand value="Hibernate::Root FOR persistenceModel"/>
+	   <genPath value="${hibernateGenPath}"/>
+       <srcPath value="${hibernateGenPath}"/>
+
+       <prSrcPaths value="${hibernateGenPath}"/>
+       <prDefaultExcludes value="false"/>
+
+    	<beautifier class="org.openarchitectureware.xpand2.output.JavaBeautifier"/>
+		<beautifier class="org.openarchitectureware.xpand2.output.XmlBeautifier"/>
+	</component>
+
+</workflow>
