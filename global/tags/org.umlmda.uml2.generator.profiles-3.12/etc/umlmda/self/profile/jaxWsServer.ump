@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.profile:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.profile="http:///org/umlmda/generator/profile.ecore" name="jaxWsServer" adapterFactory="org.umlmda.uml.generator.webservices.WSModelAdapterFactory">
+  <stereotypes name="WebService">
+    <mappings>
+      <artefact href="jaxWsArtefacts.ump#//@artefacts.9"/>
+    </mappings>
+  </stereotypes>
+  <defaultProperties name="DateMapping" value="java.util.Date"/>
+  <defaultProperties name="soapWrapping" value="false"/>
+  <basedOn href="jaxWsArtefacts.ump#jaxWsArtefacts"/>
+</org.umlmda.generator.profile:Profile>

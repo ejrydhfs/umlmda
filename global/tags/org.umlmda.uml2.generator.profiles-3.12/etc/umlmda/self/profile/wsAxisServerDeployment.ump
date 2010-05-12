@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.profile:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.profile="http:///org/umlmda/generator/profile.ecore" name="wsAxisServerDeployment" adapterFactory="org.umlmda.uml.generator.webservices.WSModelAdapterFactory">
+  <stereotypes name="WebServiceComponent">
+    <mappings artefact="//@artefacts.7"/>
+    <mappings artefact="//@artefacts.6"/>
+  </stereotypes>
+  <stereotypes name="WebService">
+    <mappings artefact="//@artefacts.8"/>
+  </stereotypes>
+  <artefacts name="ws.Stub" description="Von WSDL2Java generierte Sourcen" namespacePostfix=".axis" type="None"/>
+  <artefacts name="ws.Request" description="Von WSDL2Java generierte Sourcen" postfix="" namespacePostfix=".axis" replacement="$2Request" replacementPattern="(.*)\.(.*)" type="None"/>
+  <artefacts name="ws.Response" description="Von WSDL2Java generierte Sourcen" postfix="" namespacePostfix=".axis" replacement="$2Response" replacementPattern="(.*)\.(.*)" type="None"/>
+  <artefacts name="ws.ServicePort" description="Von WSDL2Java generierte Sourcen" postfix="Port" namespacePostfix=".axis" type="None"/>
+  <artefacts name="ws.ServiceLocator" description="Von WSDL2Java generierte Sourcen" postfix="Locator" namespacePostfix=".axis" type="None"/>
+  <artefacts name="ws.Servlet" fileExtension="java" postfix="Servlet" namespacePostfix=".servlet" writer="org.umlmda.uml.generator.webservices.writer.WSServletWriter"/>
+  <artefacts name="ws.WebservicesXml" filename="webservices" fileExtension="xml" useNamespace="false" type="FreeMarker" writer="webservice/WebservicesXml.ftl"/>
+  <artefacts name="ws.WebXml" filename="web" fileExtension="xml" useNamespace="false" type="FreeMarker" writer="webservice/WebXml.ftl"/>
+  <artefacts name="ws.MappingXml" filename="" fileExtension="xml" postfix="Mapping" useNamespace="false" type="FreeMarker" writer="webservice/MappingXml.ftl"/>
+  <defaultProperties name="DateMapping" value="java.util.Date"/>
+  <defaultProperties name="soapWrapping" value="true"/>
+  <basedOn href="wsAxisServer.ump#wsAxisServer"/>
+  <basedOn href="wsAxisClient.ump#wsAxisClient"/>
+  <basedOn href="j2ee.ump#j2ee"/>
+</org.umlmda.generator.profile:Profile>
