@@ -1,0 +1,34 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION java::Visitor»
+
+«DEFINE Visitor FOR JavaBusinessComponent»
+	«LET generatedName(this, "java.Visitor") AS className»
+	«FILE generatedPath+"/"+className+".java"»
+		package «getQualifiedPackageName("java.Visitor")»;
+		
+		«EXPAND ImportVisitorBaseIface FOR this»
+		«resetImports()»
+		«registerImports("java.BusinessObjectInterface", classes, "BusinessObject")»
+		«registeredImports()»
+		
+		/**
+		 * Visitor interface for the business object of «qualifiedName» 
+		 */
+		public interface «className» extends Visitor {
+   		«FOREACH this.visitedClasses() AS genClass»
+            void visit(«getScopedName("java.BusinessObjectInterface", genClass)» a«genClass.name»);
+         «ENDFOREACH»
+		}
+	«ENDFILE»
+	«ENDLET»
+«ENDDEFINE»
+
+«DEFINE ImportVisitorBaseIface FOR JavaBusinessComponent»
+   import org.umlmda.runtime.visitor.Visitor;
+«ENDDEFINE»
