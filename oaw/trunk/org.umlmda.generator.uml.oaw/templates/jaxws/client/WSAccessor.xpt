@@ -16,9 +16,9 @@
 «EXTENSION org::umlmda::uml::java::Parameter»
 
 «DEFINE WSAccessor FOR WSBusinessService»
-«LET generatedName(this, "jaxWs.Accessor") AS className»
+«LET generatedName(this, "jaxWs.WSAccessor") AS className»
 «FILE generatedPath+"/"+className+".java"»
-   package «generatorPackage.getQualifiedPackageName("jaxWs.Accessor")»;
+   package «generatorPackage.getQualifiedPackageName("jaxWs.WSAccessor")»;
 
 	import java.net.MalformedURLException;
 	import java.net.URL;
@@ -39,10 +39,10 @@
    import org.umlmda.runtime.naming.NamingUtils;
    
    «resetImports()»
-   «registerImport("jaxWs.Utils")»
+   «registerImport("ws.Utils")»
    «registerImport("jee.EJBLocal", PIMClass)»
    «registerImport("jee.EJBRemote", PIMClass)»
-   «registerImport("jaxWs.Port")»
+   «registerImport("ws.ServicePort")»
    «FOREACH schemaPackages().select(e|e.PIMPackage.getClasses("BusinessObject").size > 0) AS pkg»
       «registerImport("java.BusinessObjectFactoryImpl", pkg.PIMPackage)»
    «ENDFOREACH»
@@ -57,9 +57,9 @@
 
    private Logger logger = Logger.getLogger(«generatedName».class);
    // Accessor Utilities
-   private final «getScopedName("jaxWs.Utils")» utils = new «getScopedName("jaxWs.Utils")»();
+   private final «getScopedName("ws.Utils")» utils = new «getScopedName("ws.Utils")»();
    // Service port
-   private final «getScopedName("jaxWs.Port")» servicePort;
+   private final «getScopedName("ws.ServicePort")» servicePort;
    // Namespace entry containing the service URL
    public final static String COMP_SERVICE_URL = "«PIMClass.wsUrlJNDIEntry()»";
    
@@ -104,7 +104,7 @@
       «ENDFOREACH»
       
 
-      «getScopedName("jaxWs.ServiceLocator")» locator = new «getScopedName("jaxWs.ServiceLocator")»(serviceURL, new QName("«wsNamespace()»", "«name»"));
+      «getScopedName("ws.ServiceLocator")» locator = new «getScopedName("ws.ServiceLocator")»(serviceURL, new QName("«wsNamespace()»", "«name»"));
       servicePort = locator.get«name»Port();
    }
    
@@ -153,7 +153,7 @@
 «ENDDEFINE»
 
 «DEFINE requestParameter(WSModelParameter parameter) FOR WSModelClass»
-    «this.getScopedName("jaxWs.Stub")» «parameter.name»Ws = utils.create«name»(«parameter.name»);
+    «this.getScopedName("ws.Stub")» «parameter.name»Ws = utils.create«name»(«parameter.name»);
 «ENDDEFINE»
 
 «DEFINE requestParameter(WSModelParameter parameter) FOR WSModelDataType»
@@ -164,7 +164,7 @@
 «ENDDEFINE»
 
 «DEFINE declResponseValue FOR WSModelClass»
-    «getScopedName("jaxWs.Stub")» response = 
+    «getScopedName("ws.Stub")» response = 
 «ENDDEFINE»
 
 «DEFINE declResponseValue FOR WSModelDataType»

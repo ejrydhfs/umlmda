@@ -9,9 +9,9 @@
 
 
 «DEFINE wsPortRoot FOR WSBusinessService»
-«LET generatedName(this, "jaxWs.Port") AS className»
+«LET generatedName(this, "ws.ServicePort") AS className»
 «FILE generatedPath+"/"+className+".java"»
-	package «generatorPackage.getQualifiedPackageName("jaxWs.Port")»;
+	package «generatorPackage.getQualifiedPackageName("ws.ServicePort")»;
 	
 	import javax.jws.WebMethod;
 	import javax.jws.WebParam;
@@ -23,9 +23,9 @@
    «resetImports()»
    «REM» Method parameters and return types «ENDREM»
    «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
-      «registerImport("jaxWs.Stub", (JavaModelClass)method.returnType)»
+      «registerImport("ws.Stub", (JavaModelClass)method.returnType)»
       «FOREACH method.parameters.typeSelect(JavaModelParameter) AS param»
-	      «registerImport("jaxWs.Stub", (JavaModelClass)param.type)»
+	      «registerImport("ws.Stub", (JavaModelClass)param.type)»
 	   «ENDFOREACH»
    «ENDFOREACH»
    «registeredImports()»
@@ -49,7 +49,7 @@
 «DEFINE XmlAnnotations FOR WSBusinessService»
 	@WebService(name = "«generatedName»", targetNamespace = "«wsNamespace()»")
 	@SOAPBinding(style = SOAPBinding.Style.RPC)
-	@XmlSeeAlso( { «generatorPackage.getQualifiedPackageName("jaxWs.Stub")».ObjectFactory.class, com.fja.cor.bs.runtime.ws.jax.ObjectFactory.class })
+	@XmlSeeAlso( { «generatorPackage.getQualifiedPackageName("ws.Stub")».ObjectFactory.class, com.fja.cor.bs.runtime.ws.jax.ObjectFactory.class })
 «ENDDEFINE»
 
 
@@ -58,20 +58,20 @@
    «FOREACH parameters.typeSelect(JavaModelParameter) AS param -»
      * @param «param.name»
    «ENDFOREACH -»
-    * @return returns «((JavaModelClass)returnType).getQualifiedName("jaxWs.Stub")»
+    * @return returns «((JavaModelClass)returnType).getQualifiedName("ws.Stub")»
    «FOREACH exceptions.typeSelect(JavaModelClass) AS exc -»
       * @throws «name.toFirstUpper()»«exc.name»
    «ENDFOREACH -»
     */
    @WebMethod(action = "«wsNamespace()»/«name»")
    @WebResult(name = "returnValue", partName = "returnValue")
-   public «((JavaModelClass)returnType).getGeneratedName("jaxWs.Stub")» «name»(
+   public «((JavaModelClass)returnType).getGeneratedName("ws.Stub")» «name»(
    «FOREACH parameters.typeSelect(JavaModelParameter) AS param SEPARATOR ", "»
-      @WebParam(name = "«param.name»", partName = "«param.name»") «((JavaModelClass)param.type).getGeneratedName("jaxWs.Stub")» «param.name»
+      @WebParam(name = "«param.name»", partName = "«param.name»") «((JavaModelClass)param.type).getGeneratedName("ws.Stub")» «param.name»
    «ENDFOREACH»
    )
    «IF exceptions.size > 0»
-      throws «FOREACH exceptions.typeSelect(JavaModelClass) AS exc SEPARATOR ", "»«name.toFirstUpper()»«exc.getGeneratedName("jaxWs.Stub")»«ENDFOREACH»
+      throws «FOREACH exceptions.typeSelect(JavaModelClass) AS exc SEPARATOR ", "»«name.toFirstUpper()»«exc.getGeneratedName("ws.Stub")»«ENDFOREACH»
    «ENDIF»
 «ENDDEFINE»
 

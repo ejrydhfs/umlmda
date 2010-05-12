@@ -9,9 +9,9 @@
 
 
 «DEFINE wsExceptionRoot(JavaModelMethod usingMethod) FOR WSModelClass»
-«LET generatedName(this, "jaxWs.Stub") AS className»
+«LET generatedName(this, "ws.Stub") AS className»
 «LET usingMethod.name.toFirstUpper()+name AS classNameForMethod»
-«LET ((JavaModelClass)usingMethod.owner).generatorPackage.getQualifiedPackageName("jaxWs.Port") AS packageName»
+«LET ((JavaModelClass)usingMethod.owner).generatorPackage.getQualifiedPackageName("ws.ServicePort") AS packageName»
 «FILE generatedPath+"/"+classNameForMethod+".java"»
 	package «packageName»;
 	
@@ -19,7 +19,7 @@
 
    /**
     * This is the method specific representation of «className» for WS method <i>«usingMethod.name»</i> 
-    * in <i>«((JavaModelClass)usingMethod.owner).getScopedName("jaxWs.Port")»</i>. 
+    * in <i>«((JavaModelClass)usingMethod.owner).getScopedName("ws.ServicePort")»</i>. 
     */
    @WebFault(name = "«name»Element", targetNamespace = "«wsNamespace()»")
    public class «classNameForMethod» extends Exception {
@@ -49,7 +49,7 @@
 	   }
 	
 	   /**
-	    * @return returns fault bean: «getQualifiedName("jaxWs.Stub")»
+	    * @return returns fault bean: «getQualifiedName("ws.Stub")»
 	    */
 	   public «className» getFaultInfo() {
 	      return faultInfo;

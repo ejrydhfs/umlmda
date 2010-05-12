@@ -11,9 +11,9 @@
 
 
 «DEFINE wsBORoot FOR WSModelClass»
-«LET generatedName(this, "jaxWs.Stub") AS className»
+«LET generatedName(this, "ws.Stub") AS className»
 «FILE generatedPath+"/"+className+".java"»
-	package «generatorPackage.getQualifiedPackageName("jaxWs.Stub")»;
+	package «generatorPackage.getQualifiedPackageName("ws.Stub")»;
 	
    «EXPAND imports»   
 
@@ -64,17 +64,17 @@
       «IF wsSubclasses.size > 0»
          import javax.xml.bind.annotation.XmlSeeAlso;
          «FOREACH wsSubclasses AS wsSubclass»
-            «registerImport("jaxWs.Stub", wsSubclass)»
+            «registerImport("ws.Stub", wsSubclass)»
          «ENDFOREACH»
       «ENDIF»
    «ENDLET»
    «REM» Import super class «ENDREM»
    «IF superClass != null»
-      «registerImport("jaxWs.Stub", (JavaModelClass)superClass)»
+      «registerImport("ws.Stub", (JavaModelClass)superClass)»
    «ENDIF»
    
    «FOREACH attributes.typeSelect(JavaModelAttribute).select( a | !a.primitiveType && a.modelClassifier.hasStereotype("WebServiceEnumeration") ) AS attrib»
-      «registerImport("jaxWs.Stub", (JavaModelClass)attrib.modelClassifier)»
+      «registerImport("ws.Stub", (JavaModelClass)attrib.modelClassifier)»
    «ENDFOREACH»
 
    «registeredImports()»

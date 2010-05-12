@@ -45,11 +45,11 @@
 
 
 «DEFINE complexType FOR WSModelClass»
-	«LET getGeneratedName("jaxWs.Stub") AS wsObjectClassName»
+	«LET getGeneratedName("ws.Stub") AS wsObjectClassName»
 	<complexType name="«wsObjectClassName»">
       «IF superClass!=null»
       <complexContent>
-         <extension base="«((WSModelClass)superClass).wsNamespacePrefix()»:«((WSModelClass)superClass).getGeneratedName("jaxWs.Stub")»">
+         <extension base="«((WSModelClass)superClass).wsNamespacePrefix()»:«((WSModelClass)superClass).getGeneratedName("ws.Stub")»">
       «ENDIF»
       «LET attributes.typeSelect(JavaModelAttribute) AS attribs»
       «LET associations.typeSelect(JavaModelAssociation) AS assocs»
@@ -83,7 +83,7 @@
                <element 
                   name="«assoc.name»" 
                   minOccurs="«assoc.multiplicity.lower»" maxOccurs="«IF assoc.multiplicity.unbound»unbounded«ELSE»«assoc.multiplicity.upper»«ENDIF»" 
-                  type="«((WSModelClass)assoc.target).wsNamespacePrefix()»:«((WSModelClass)assoc.target).getGeneratedName("jaxWs.Stub")»"
+                  type="«((WSModelClass)assoc.target).wsNamespacePrefix()»:«((WSModelClass)assoc.target).getGeneratedName("ws.Stub")»"
                      />
             «ENDFOREACH»
             </sequence>
@@ -105,7 +105,7 @@
 
 
 «DEFINE enumSimpleType FOR WSModelClass»
-   «LET getGeneratedName("jaxWs.Stub") AS wsObjectClassName»
+   «LET getGeneratedName("ws.Stub") AS wsObjectClassName»
    <simpleType name="«wsObjectClassName»">
       <restriction base="xsd:«((WSEnumeration)this).javaValueType.toFirstLower()»">
       «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»

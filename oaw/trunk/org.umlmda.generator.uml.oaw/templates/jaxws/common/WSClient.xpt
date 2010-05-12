@@ -55,7 +55,7 @@
 	      super(«className.toUpperCase()»_WSDL_LOCATION, new QName("«wsNamespace()»", "«className»"));
 	   }
 	
-   «LET generatedName(this, "jaxWs.Port") AS portName»
+   «LET generatedName(this, "ws.ServicePort") AS portName»
 	   /**
 	    * @return returns «portName»
 	    */
