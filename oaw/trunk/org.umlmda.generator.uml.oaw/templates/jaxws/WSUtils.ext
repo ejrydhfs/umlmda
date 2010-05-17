@@ -111,19 +111,19 @@ cached List[ModelElement] referencedElements(WSModelPackage package) :
 
 // Returns all direct and indirect references of the given services' methods
 private cached List[ModelElement] referencedElements(List[WSModelClass] services) :
-    services.collect( s | s.referencedElements(true) ).flatten()
+    services.collect( s | s.referencedElements() ).flatten()
 ;
 
 
 // Returns all direct and indirect references of the given service's methods to DTO classes
 cached List[ModelElement] relevantReferencedElements(WSModelClass service) :
     let pkgElements = ((WSModelPackage)service.owner).referencedElements() :
-    service.referencedElements(true).reject( e | pkgElements.contains(e) )
+    service.referencedElements().reject( e | pkgElements.contains(e) )
 ;
 
 
 // Returns all direct and indirect references of the given service's methods to DTO classes
-cached List[ModelElement] referencedElements(WSModelClass service, Boolean indirect) :
+cached List[ModelElement] referencedElements(WSModelClass service) :
     let result = {} :
     let methods = service.methods.typeSelect(ModelMethod) :
     
@@ -133,9 +133,7 @@ cached List[ModelElement] referencedElements(WSModelClass service, Boolean indir
     result.addAll( methods.exceptions.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
     
     // References of found elements
-    indirect ? (
-        result.addAll( result.typeSelect(WSModelClass).referencedElements(service) )
-    ) : ( null ) ->
+    result.addAll( result.typeSelect(WSModelClass).referencedElements(service) ) ->
 
     // Now filter complete result set
     result.filterDuplicateElementsByName()

@@ -203,8 +203,8 @@
 	      «EXPAND copyMethodContent(wsObjectQualified)»
 	   }
 	   
-	   «REM» BS DTO creation only for objects referenced directly in the service «ENDREM»
-	   «IF service==null || service.referencedElements(false).contains(this)»
+	   «REM» BS DTO creation only for objects referenced in the service «ENDREM»
+	   «IF service==null || service.referencedElements().contains(this)»
 	      «EXPAND createInterfaceDTOMethod(wsObjectQualified, bsObjectQualified, true)»
 	   «ENDIF»
 	
@@ -273,7 +273,9 @@
    «LET PIMClass.attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.hasStereotype("Id")) AS key»
    public «wsObjectQualified» create«name»(«bsObjectQualified» src) {
       «wsObjectQualified» dest = new «wsObjectQualified»();
-      dest.«key.setter»(src.«key.getter»());
+      «IF key!=null»
+         dest.«key.setter»(src.«key.getter»());
+      «ENDIF»
       return dest;
    }
    «ENDLET»
