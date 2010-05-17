@@ -1,0 +1,79 @@
+import org::umlmda::generator::model::uml;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+// =================
+// Artifact mappings
+// =================
+String entityImpl(JavaBusinessObject cls) :
+	cls.getScopedName("hibernate.Entity");
+
+String entityPKeyImpl(JavaBusinessObject cls) :
+	cls.getScopedName("hibernate.Entity")+"$Pkey";
+
+String entityPackage(JavaBusinessObject cls) :
+	cls.component.getQualifiedPackageName("hibernate.Entity");
+
+String mappingName(JavaBusinessObject cls) :
+	cls.getGeneratedName("hibernate.MappingXml")+".hbm.xml";
+			
+// =========================
+// Database related mappings
+// =========================
+// Database table name 
+String tableName(JavaBusinessObject cls) :
+   cls.getStereotypeProperty("DB_TABLE", cls.upperCaseIdentifier);
+   
+// Database column name   
+String columnName(JavaModelAttribute attr) : 
+   attr.getStereotypeProperty("DB_COLUMN", attr.upperCaseIdentifier);
+   
+//String dbType(JavaModelAttribute attr) :
+//   attr.dataTypeBase.dbType();   
+  
+// Map UMLMDA type to hibernate type    
+String dbType(ModelClassifier type) :
+	"";
+	
+String dbType(ModelDataType type) :
+	switch (type.name) {
+		case "int" : "integer"
+		case "char" : "character"
+		case "byte[]" : "binary"
+		default : type.name.toLowerCase()
+	};
+
+String dbType(ModelClass type) :
+	type.hasStereotype("Enumeration") ? type.enumType().dbType() : "failed";
+	
+	
+//String dbType(String typeName) :
+  
+// =========
+// Utilities
+// =========
+List[JavaModelAttribute] keyAttributes(JavaBusinessObject cls) :
+	cls.keyAttributes.typeSelect(JavaModelAttribute);
+
+List[JavaModelAttribute] noneKeyAttributes(JavaBusinessObject cls) :
+	cls.attributes
+	   .typeSelect(JavaModelAttribute)
+	   .select(e|!e.isKeyAttribute());
+	
+boolean isKeyAttribute(JavaModelAttribute attr) :
+	attr.hasStereotype("PKey");
+
+ModelDataType enumType(ModelClass cls) :
+	cls.attributes.typeSelect(ModelAttribute).first().dataType;		
+	
+List[JavaModelAssociation] compositions(JavaBusinessObject cls) :
+	cls.declaredAssociations.typeSelect(JavaModelAssociation).select(e|e.navigatableToTarget && e.composition);
+
+List[JavaModelAssociation] references(JavaBusinessObject cls) :
+	cls.declaredAssociations.typeSelect(JavaModelAssociation).select(e|e.navigatableToTarget && !e.composition);
+
+String mappedType(JavaModelAssociation assoc) :
+	assoc.unique ? "set" : (assoc.ordered ? "list" : "collection");

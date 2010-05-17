@@ -1,0 +1,110 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION java::UMLMDA»
+
+«DEFINE servletRoot FOR WSBusinessService»
+«LET generatedName(this, "jaxWs.Servlet") AS className»
+«FILE generatedPath+"/"+className+".java"»
+   package «generatorPackage.getQualifiedPackageName("jaxWs.Servlet")»;
+
+   «EXPAND imports»
+
+	@Stateless
+	@TransactionAttribute(TransactionAttributeType.NEVER)
+	@WebService(name = "«getGeneratedName("jaxWs.Client")»", serviceName="«getGeneratedName("jaxWs.Client")»", targetNamespace = "«wsNamespace()»")
+	@SOAPBinding(style = SOAPBinding.Style.RPC)
+	public class «generatedName» implements «getScopedName("jaxWs.WSPortLocal")» {
+	
+	   @EJB (beanInterface=«PIMClass.getQualifiedName("jee.EJBLocal")».class)
+	   private «PIMClass.getQualifiedName("java.BusinessServiceInterface")» delegate;
+
+	   private «getGeneratedName("ws.Utils")» utils = new «getGeneratedName("ws.Utils")»();
+	
+	   /**
+	    * Constructor, creates factories and delegate.
+	    */
+	   public «generatedName»() {
+	      super();
+	      utils.set«((WSModelPackage)findRuntimeWsPackage().package).getGeneratedName("java.BusinessObjectFactory")»(
+	        new «((WSModelPackage)findRuntimeWsPackage().package).getGeneratedName("java.BusinessObjectFactoryImpl")»());
+	      «IF ! ((WSModelPackage)package).isRuntimeWsPackage()»
+	        utils.set«((JavaModelPackage)package.package).getGeneratedName("java.BusinessObjectFactory")»(
+	           new «((JavaModelPackage)package.package).getGeneratedName("java.BusinessObjectFactoryImpl")»());
+	      «ENDIF»
+	   }
+
+      «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+         «EXPAND wsMethod FOR method»
+      «ENDFOREACH»
+	
+	}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE imports FOR WSBusinessService»
+   import javax.ejb.EJB;
+   import javax.ejb.Stateless;
+   import javax.ejb.TransactionAttribute;
+   import javax.ejb.TransactionAttributeType;
+   import javax.jws.WebMethod;
+   import javax.jws.WebParam;
+   import javax.jws.WebResult;
+   import javax.jws.WebService;
+   import javax.jws.soap.SOAPBinding;
+   import javax.xml.bind.annotation.XmlSeeAlso;
+
+   «resetImports()»
+   «registerImport("ws.Utils")»
+   «registerImport("java.BusinessObjectFactoryImpl", (JavaModelPackage)findRuntimeWsPackage().package)»
+   «IF ! ((WSModelPackage)package).isRuntimeWsPackage()»
+      «registerImport("java.BusinessObjectFactoryImpl", (JavaModelPackage)package.package)»
+   «ENDIF»
+
+   «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+      «FOREACH method.parameters.typeSelect(JavaModelParameter) AS param»
+         «registerImport("ws.Stub", (WSModelClass)param.type)»
+      «ENDFOREACH»
+      «registerImport("ws.Stub", (WSModelClass)method.returnType)»
+      «REM» Special method exceptions «ENDREM»
+      «FOREACH method.exceptions.typeSelect(WSModelClass) AS exc»
+         import «exc.generatorPackage.getQualifiedPackageName("ws.Stub")».«method.name.toFirstUpper()+exc.name»;
+      «ENDFOREACH»
+   «ENDFOREACH»
+   «registeredImports()»
+«ENDDEFINE»
+
+
+«DEFINE wsMethod FOR WSModelMethod»
+   «EXPAND jaxws::common::WSPort::wsMethodDecl» {
+       try {
+         «((WSModelClass)requestParameter().type).getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws","")» bsin = 
+               utils.create«requestParameter().type.name»(«requestParameter().name»);
+         «((WSModelClass)returnType).getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws","")» result;
+         
+         utils.resolveReferences();
+         result = delegate.«name»(bsin);
+         utils.resetReferences();
+         «((WSModelClass)returnType).getQualifiedName("ws.Stub")» convertedResult = utils.create«returnType.name»(result);
+         utils.resolveReferences();
+         return convertedResult;
+
+      «FOREACH exceptions.typeSelect(WSModelClass) AS exc»         
+      } catch («exc.getQualifiedName("java.BusinessException").replaceFirst(".ws","")» e) {
+         «exc.getQualifiedName("ws.Stub")» exception = utils.create«exc.name»(e);
+         utils.resolveReferences();
+         throw new «name.toFirstUpper()»«exc.getGeneratedName("ws.Stub")»(e.getMessage(), exception);
+      «ENDFOREACH»
+      } finally {
+         utils.resetReferences();
+      }
+   }
+«ENDDEFINE»
+

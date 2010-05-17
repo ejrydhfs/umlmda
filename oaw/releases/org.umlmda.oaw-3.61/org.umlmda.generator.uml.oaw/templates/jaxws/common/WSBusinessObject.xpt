@@ -1,0 +1,224 @@
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION java::UMLMDA»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::DataType»
+
+
+«DEFINE wsBORoot FOR WSModelClass»
+«LET generatedName(this, "ws.Stub") AS className»
+«FILE generatedPath+"/"+className+".java"»
+	package «generatorPackage.getQualifiedPackageName("ws.Stub")»;
+	
+   «EXPAND imports»   
+
+   /**
+    * «documentation»
+    */
+   «EXPAND XmlAnnotations»
+	public class «generatedName» «IF superClass!=null»extends «superClass.name»«ENDIF» {
+
+      «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»
+         «EXPAND varDefinition FOR attrib»
+      «ENDFOREACH»
+
+      «FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+         «EXPAND varDefinition FOR assoc»
+      «ENDFOREACH»
+
+      «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»
+         «EXPAND accessors FOR attrib»
+      «ENDFOREACH»
+
+      «FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+         «EXPAND accessors FOR assoc»
+      «ENDFOREACH»
+
+   }   
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE imports FOR WSModelClass»
+   «IF associations.typeSelect(JavaModelAssociation).size > 0»
+      import java.util.ArrayList;
+      import java.util.List;
+   «ENDIF»
+   
+   import javax.xml.bind.annotation.XmlAccessType;
+   import javax.xml.bind.annotation.XmlAccessorType;
+   import javax.xml.bind.annotation.XmlElement;
+   import javax.xml.bind.annotation.XmlSchemaType;
+   import javax.xml.bind.annotation.XmlType;
+   import javax.xml.datatype.XMLGregorianCalendar;
+
+   «resetImports()»
+   «REM» Import sub classes «ENDREM»
+   «LET subClasses.typeSelect(JavaModelClass).select( c | c.hasStereotype("WebServiceObject") && c.superClass==this ) AS wsSubclasses»
+      «IF wsSubclasses.size > 0»
+         import javax.xml.bind.annotation.XmlSeeAlso;
+         «FOREACH wsSubclasses AS wsSubclass»
+            «registerImport("ws.Stub", wsSubclass)»
+         «ENDFOREACH»
+      «ENDIF»
+   «ENDLET»
+   «REM» Import super class «ENDREM»
+   «IF superClass != null»
+      «registerImport("ws.Stub", (JavaModelClass)superClass)»
+   «ENDIF»
+   
+   «FOREACH attributes.typeSelect(JavaModelAttribute).select( a | !a.primitiveType && a.modelClassifier.hasStereotype("WebServiceEnumeration") ) AS attrib»
+      «registerImport("ws.Stub", (JavaModelClass)attrib.modelClassifier)»
+   «ENDFOREACH»
+
+   «registeredImports()»
+«ENDDEFINE»
+
+
+«DEFINE XmlAnnotations FOR WSModelClass»
+   @XmlAccessorType(XmlAccessType.FIELD)
+   @XmlType(name = "«generatedName»", namespace = "«((WSModelPackage)package).namespace»"
+      «LET attributes.typeSelect(JavaModelAttribute) AS attribs»
+      «LET associations.typeSelect(JavaModelAssociation) AS assocs»
+         «IF attribs.size > 0 || assocs.size > 0»
+            , propOrder = { 
+            «IF attribs.size > 0»
+               «FOREACH attribs AS attrib SEPARATOR ","»"«attrib.name»"«ENDFOREACH»
+            «ENDIF»
+            «IF assocs.size > 0»«IF attribs.size > 0», «ENDIF»
+               «FOREACH assocs AS assoc SEPARATOR ","»"«assoc.name»"«ENDFOREACH»
+            «ENDIF»
+            }
+         «ENDIF»
+      «ENDLET»
+      «ENDLET»
+   )
+   «LET subClasses.typeSelect(JavaModelClass).select( c | c.hasStereotype("WebServiceObject") && c.superClass==this ) AS wsSubclasses»
+      «IF wsSubclasses.size > 0»
+         @XmlSeeAlso( { «FOREACH wsSubclasses AS wsSubclass SEPARATOR ", "»«wsSubclass.name».class «ENDFOREACH» })
+      «ENDIF»
+   «ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE varDefinition FOR JavaModelAttribute»
+   «IF ! derived»
+	   «IF ! multivalue»
+	      @XmlElement(required = true«IF optional», nillable = true«ENDIF»)
+	      «IF primitiveType»
+	         «IF {"date", "dateTime", "timestamp"}.contains(dataType.name)»
+	            @XmlSchemaType(name = "«dataType.name»")
+	         «ENDIF»
+		      protected «javaTypeName()» «name»;
+	      «ELSE»
+	         protected «modelClassifier.name» «name»;
+	      «ENDIF»
+	   «ELSE»
+         «IF primitiveType»
+            «IF {"date", "dateTime", "timestamp"}.contains(dataType.name)»
+               @XmlSchemaType(name = "«dataType.name»")
+            «ENDIF»
+            protected List<«((JavaModelDataType)modelClassifier).javaTypeName()»> «name»;
+         «ELSE»
+            protected List<«modelClassifier.name»> «name»;
+         «ENDIF»
+      «ENDIF»
+   «ENDIF»
+«ENDDEFINE»
+
+
+«DEFINE accessors FOR JavaModelAttribute»
+   «IF ! derived»
+      /**
+       * Gets the value of the «name» property.
+       * 
+       * @return possible object is {@link «IF primitiveType»«javaTypeName()»«ELSE»«modelClassifier.name»«ENDIF» }
+       */
+      «IF primitiveType»
+         public «IF ! multivalue»«javaTypeName()»«ELSE»List<«((JavaModelDataType)modelClassifier).javaTypeName()»>«ENDIF» «getter»() {
+      «ELSE»
+         public «IF ! multivalue»«modelClassifier.name»«ELSE»List<«modelClassifier.name»>«ENDIF» «getter»() {
+      «ENDIF»
+      «IF multivalue»
+         if ( «name» == null ) {
+            «name» = new ArrayList<«IF primitiveType»«((JavaModelDataType)modelClassifier).javaTypeName()»«ELSE»«modelClassifier.name»«ENDIF»>();
+         }
+      «ENDIF»
+         return «name»;
+      }
+
+      «IF ! multivalue»
+         /**
+	       * Sets the value of the «name» property.
+	       * 
+	       * @param value
+	       *           allowed object is {@link «IF primitiveType»«javaTypeName()»«ELSE»«modelClassifier.name»«ENDIF» }
+	       */
+	      «IF primitiveType»
+	         public void «setter»(«javaTypeName()» value) {
+	      «ELSE»
+	         public void «setter»(«modelClassifier.name» value) {
+	      «ENDIF»
+	         this.«name» = value;
+	      }
+      «ENDIF»
+
+   «ENDIF»
+«ENDDEFINE»
+
+
+«DEFINE varDefinition FOR JavaModelAssociation»
+   «IF ! derived»
+      «IF ! multiple»
+         «IF multiplicity.lower == 1»@XmlElement(required = true)«ENDIF»
+         protected «target.name» «name»;
+      «ELSE»
+         protected List<«target.name»> «name»;
+      «ENDIF»
+   «ENDIF»
+«ENDDEFINE»
+
+
+«DEFINE accessors FOR JavaModelAssociation»
+   «IF ! derived»
+      /**
+       * Gets the value of the «name» property.
+       * 
+      «IF ! multiple -»
+		    * @return possible object is {@link «target.name» }
+		    */
+         public «target.name» «getter»() {
+      «ELSE -»
+          * @return List of {@link «target.name» }
+          */
+         public List<«target.name»> «getter»() {
+      «ENDIF»
+      «IF multiple»
+         if ( «name» == null ) {
+            «name» = new ArrayList<«target.name»>();
+         }
+      «ENDIF»
+         return «name»;
+      }
+
+      «IF ! multiple»
+         /**
+          * Sets the value of the «name» property.
+          * 
+          * @param value
+          *           allowed object is {@link «target.name» }
+          */
+         public void «setter»(«target.name» value) {
+            this.«name» = value;
+         }
+      «ENDIF»
+
+   «ENDIF»
+«ENDDEFINE»
+
