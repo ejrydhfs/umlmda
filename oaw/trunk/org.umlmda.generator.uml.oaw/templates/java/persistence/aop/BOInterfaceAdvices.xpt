@@ -16,7 +16,7 @@
 «ENDAROUND»
 
 
-«AROUND java::BOInterface::attrSetterDecl FOR JavaModelAttribute»
+«AROUND java::BOInterface::attrSetterDecl(Boolean forInterface) FOR JavaModelAttribute»
    «REM» Version attributes shouldn't be changed by the application «ENDREM»
    «IF !hasStereotype("VersionAttribute")»
       «targetDef.proceed()»

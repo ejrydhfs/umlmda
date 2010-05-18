@@ -22,19 +22,19 @@
 // ==========================================
 // Skip <<UMLMDASDOProfile::Client>> features
 // ==========================================
-«AROUND java::BOInterface::handleAttribute FOR JavaModelAttribute»
+«AROUND java::BOInterface::handleAttribute(Boolean forInterface) FOR JavaModelAttribute»
 	«IF this.isSDOClientOnly() == false»
 		«targetDef.proceed()»
 	«ENDIF»
 «ENDAROUND»
 
-«AROUND java::BOInterface::handleAssociation FOR JavaModelAssociation»
+«AROUND java::BOInterface::handleAssociation(Boolean forInterface) FOR JavaModelAssociation»
 	«IF this.isSDOClientOnly() == false»
 		«targetDef.proceed()»
 	«ENDIF»
 «ENDAROUND»
 
-«AROUND java::BOInterface::handleMethod FOR JavaModelMethod»
+«AROUND java::BOInterface::handleMethod(Boolean forInterface) FOR JavaModelMethod»
 	«IF this.isSDOClientOnly() == false»
 		«targetDef.proceed()»
 	«ENDIF»

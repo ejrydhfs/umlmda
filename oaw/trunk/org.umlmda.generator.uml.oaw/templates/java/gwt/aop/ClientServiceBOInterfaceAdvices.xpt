@@ -23,8 +23,8 @@
 «AROUND java::BOInterface::handleAttributes FOR JavaModelClass»
 	«FOREACH javaAttributes() AS attr»
 		«IF attr.derived == false»
-			«EXPAND java::BOInterface::attrGetterDecl FOR attr»;
-			«EXPAND java::BOInterface::attrSetterDecl FOR attr»;
+			«EXPAND java::BOInterface::attrGetterDecl(true) FOR attr»;
+			«EXPAND java::BOInterface::attrSetterDecl(true) FOR attr»;
 		«ENDIF»
 	«ENDFOREACH»
 «ENDAROUND»
@@ -32,8 +32,8 @@
 «AROUND java::BOInterface::handleAssociations FOR JavaModelClass»
 	«FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
 		«IF assoc.derived == false»
-			«EXPAND java::BOInterface::assocGetterDecl FOR assoc»;
-			«EXPAND java::BOInterface::assocSetterDecl FOR assoc»;
+			«EXPAND java::BOInterface::assocGetterDecl(true) FOR assoc»;
+			«EXPAND java::BOInterface::assocSetterDecl(true) FOR assoc»;
 		«ENDIF»
 	«ENDFOREACH»
 «ENDAROUND»
