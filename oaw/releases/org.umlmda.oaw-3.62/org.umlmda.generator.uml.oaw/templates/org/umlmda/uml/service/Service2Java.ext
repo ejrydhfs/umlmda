@@ -1,0 +1,91 @@
+import uml;
+import UMLMDACommonProfile;
+import UMLMDAPersistenceProfile;
+
+// and we also load the io extensions, for the purpose of
+// debugging, in case we need it   
+extension org::openarchitectureware::util::stdlib::io;   
+extension org::openarchitectureware::util::stdlib::issues;   
+
+extension org::umlmda::oaw::util::Model;
+extension org::umlmda::oaw::util::Element;
+extension org::umlmda::oaw::util::Stereotype;
+extension org::umlmda::oaw::util::TypeMapper;
+ 
+extension org::umlmda::uml::Common2Java;
+
+cached Object m2m( uml::Model m ) :
+    m.process() ->
+    // delete All the alias types for all Models
+    collectedModels("org::umlmda::uml::Service2Java::DestroyAliases").forAll(model|model.destroyAliases()) ->
+    m
+;
+
+cached Void process(uml::Model m) :
+    info("processing model "+m.name) ->
+ 
+    m.markAsProcessed("org::umlmda::uml::Service2Java") ->
+    
+    m.setName(m.name+"_java_psm") ->
+
+    // Starting conversions    
+    m.allOwnedElements().typeSelect(uml::Element).process() ->
+    
+    // Process packages after conversion
+    m.allOwnedElements().typeSelect(uml::Package).applyGenerationStereotypes() ->
+    
+    // Destroy all collected elements
+    m.processLater("org::umlmda::uml::Service2Java::DestroyAliases") ->
+    
+    // Process Referenced Models
+    collectedModels("org::umlmda::uml::Service2Java").select (model|model != null).forAll(model|model.process()) ->
+    true
+;
+
+// Unprocessed elements
+cached Void process(uml::Element element) :
+	debug("Nothing to do on "+element.metaType)
+;
+
+cached Void process(uml::NamedElement element) :
+	debug("Nothing to do on "+element.qualifiedName+" ("+element.metaType+")")
+;
+	
+// Ignored elements
+cached Void process(uml::Comment common) :
+	true
+;
+
+cached Void process(uml::LiteralSpecification literal) :
+	true
+;
+
+cached Void process(uml::ProfileApplication profileApplication) :
+	true
+;
+
+cached Void process(uml::Class class) :
+    true
+;
+
+cached Void process(uml::Package package) :
+    package.applyGenerationStereotypes()
+;    
+	
+cached Void process(uml::Property property) :
+    property.association == null ?
+        property.replaceAliasType()
+    :
+        property.type.getModel().processLater("org::umlmda::uml::Service2Java")
+;    
+		
+cached Void process(uml::Generalization generalization) :
+	let general = generalization.general :
+	let generalModel = general.getModel() :
+    let ownModel = generalization.specific.getModel() :	
+	
+	generalModel == ownModel ?
+	   general.process()
+	:
+	   generalModel.processLater("org::umlmda::uml::Service2Java")  
+;

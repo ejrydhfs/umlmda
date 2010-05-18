@@ -1,0 +1,89 @@
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION java::UMLMDA»
+
+
+«DEFINE wsPortRoot FOR WSBusinessService»
+«LET generatedName(this, "ws.ServicePort") AS className»
+«FILE generatedPath+"/"+className+".java"»
+	package «generatorPackage.getQualifiedPackageName("ws.ServicePort")»;
+
+   «EXPAND imports»	
+
+   /**
+    * «documentation»
+    */
+   «EXPAND XmlAnnotations»
+	public interface «generatedName» {
+
+      «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+         «EXPAND wsMethodDecl FOR method»;
+      «ENDFOREACH»
+
+   }   
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE imports FOR WSBusinessService»
+   import javax.jws.WebMethod;
+   import javax.jws.WebParam;
+   import javax.jws.WebResult;
+   import javax.jws.WebService;
+   import javax.jws.soap.SOAPBinding;
+   import javax.xml.bind.annotation.XmlSeeAlso;
+
+   «resetImports()»
+   «REM» Method parameters and return types «ENDREM»
+   «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+      «EXPAND stubImport FOR (WSModelClassifier)method.returnType»
+      «FOREACH method.parameters.typeSelect(JavaModelParameter) AS param»
+         «EXPAND stubImport FOR (WSModelClassifier)param.type»
+      «ENDFOREACH»
+   «ENDFOREACH»
+   «registeredImports()»
+«ENDDEFINE»
+
+«DEFINE stubImport FOR WSBusinessObject»
+   «registerImport("ws.Stub", (JavaModelClass)this)»
+«ENDDEFINE»
+
+«DEFINE stubImport FOR WSModelClassifier»
+«ENDDEFINE»
+
+
+«DEFINE XmlAnnotations FOR WSBusinessService»
+	@WebService(name = "«generatedName»", targetNamespace = "«wsNamespace()»")
+	@SOAPBinding(style = SOAPBinding.Style.RPC)
+	@XmlSeeAlso( { «generatorPackage.getQualifiedPackageName("ws.Stub")».ObjectFactory.class, com.fja.cor.bs.runtime.ws.jax.ObjectFactory.class })
+«ENDDEFINE»
+
+
+«DEFINE wsMethodDecl FOR WSModelMethod»
+   /**
+   «FOREACH parameters.typeSelect(JavaModelParameter) AS param -»
+     * @param «param.name»
+   «ENDFOREACH -»
+    * @return returns «((WSModelClassifier)returnType).generatedStubName()»
+   «FOREACH exceptions.typeSelect(JavaModelClass) AS exc -»
+      * @throws «name.toFirstUpper()»«exc.name»
+   «ENDFOREACH -»
+    */
+   @WebMethod(action = "«wsNamespace()»/«name»")
+   @WebResult(name = "returnValue", partName = "returnValue")
+   public «((WSModelClassifier)returnType).generatedStubName()» «name»(
+   «FOREACH parameters.typeSelect(JavaModelParameter) AS param SEPARATOR ", "»
+      @WebParam(name = "«param.name»", partName = "«param.name»") «((WSModelClassifier)param.type).generatedStubName()» «param.name»
+   «ENDFOREACH»
+   )
+   «IF exceptions.size > 0»
+      throws «FOREACH exceptions.typeSelect(WSModelClass) AS exc SEPARATOR ", "»«name.toFirstUpper()»«((WSModelClassifier)exc).generatedStubName()»«ENDFOREACH»
+   «ENDIF»
+«ENDDEFINE»
+

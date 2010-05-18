@@ -1,0 +1,122 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::generator::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION java::UMLMDA»
+
+
+«REM» Abstract utils for a package «ENDREM»
+«DEFINE wsdlRoot FOR WSBusinessService»
+   «LET generatedName(this, "jaxWs.Client") AS className»
+	«FILE "WEB-INF/wsdl/"+name+".wsdl" resourceGenPath»
+   <?xml version="1.0" encoding="ISO-8859-1"?>
+   <wsdl:definitions 
+			targetNamespace="http://www.cor.fja.com/pnc/bs/ref/sample/ws/jax" 
+			xmlns:apachesoap="http://xml.apache.org/xml-soap" 
+			xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" 
+			xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	      «REM» Referenced namespaces «ENDREM»
+	      «FOREACH schemaPackages() AS component»
+	         xmlns:«component.wsNamespacePrefix()»="«component.namespace»"
+	      «ENDFOREACH»>
+      <wsdl:types>
+	      «REM» Referenced schemas «ENDREM»
+	      «FOREACH schemaPackages() AS component»
+	         <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+	             targetNamespace="«component.namespace»/import">
+	            <import namespace="«component.namespace»" schemaLocation="«component.owner.name.toFirstLower()».xsd"/> 
+	         </schema>
+	      «ENDFOREACH»
+      </wsdl:types>
+
+      «REM» --------------------------------- Messages --------------------------------------------------------- «ENDREM»
+      «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+         «EXPAND wsdlMessage FOR method»
+      «ENDFOREACH»
+
+      «REM» --------------------------------- Port ------------------------------------------------------------- «ENDREM»
+		<wsdl:portType name="«getGeneratedName("ws.ServicePort")»">
+         «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+	         «EXPAND wsdlOperation FOR method»
+	      «ENDFOREACH»
+		</wsdl:portType>
+
+      «REM» --------------------------------- Binding ---------------------------------------------------------- «ENDREM»
+		<wsdl:binding name="«className»SoapBinding" type="«wsNamespacePrefix()»:«getGeneratedName("ws.ServicePort")»">
+		   <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+         «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+            «EXPAND wsdlSoapOperation FOR method»
+         «ENDFOREACH»
+		</wsdl:binding>
+
+      «REM» --------------------------------- Service ---------------------------------------------------------- «ENDREM»
+      <wsdl:service name="«className»">
+         <wsdl:port name="«generatedName("ws.ServicePort")»" binding="«wsNamespacePrefix()»:«className»SoapBinding">
+            <wsdlsoap:address location="http://this.value.is.replaced.by.jboss"/>
+         </wsdl:port>
+      </wsdl:service>
+   </wsdl:definitions>
+	«ENDFILE»
+	«ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE wsdlMessage FOR WSModelMethod»
+   <wsdl:message name="«getGeneratedName("ws.Request").toFirstLower()»">
+	   «FOREACH parameters.typeSelect(JavaModelParameter) AS param»
+         <wsdl:part name="«param.name»" type="«((WSModelClass)param.type).wsNamespacePrefix()»:«((WSModelClass)param.type).getGeneratedName("ws.Stub")»"/>
+	   «ENDFOREACH»
+   </wsdl:message>
+   <wsdl:message name="«getGeneratedName("ws.Response").toFirstLower()»">
+      <wsdl:part name="returnValue" type="«((WSModelClass)returnType).wsNamespacePrefix()»:«((WSModelClass)returnType).getGeneratedName("ws.Stub")»"/>
+   </wsdl:message>
+   «IF exceptions.size > 0»
+      «FOREACH exceptions.typeSelect(WSModelClass) AS exc»
+         <wsdl:message name="«name»«exc.getGeneratedName("ws.Stub")»">
+            <wsdl:part name="fault" element="«exc.wsNamespacePrefix()»:«exc.getGeneratedName("ws.Stub")»Element"/>
+         </wsdl:message>
+      «ENDFOREACH»
+   «ENDIF»
+«ENDDEFINE»
+
+
+«DEFINE wsdlOperation FOR WSModelMethod»
+	<wsdl:operation name="«name»" >
+		<wsdl:input name="«getGeneratedName("ws.Request").toFirstLower()»" message="«wsNamespacePrefix()»:«getGeneratedName("ws.Request").toFirstLower()»"/>
+		<wsdl:output name="«getGeneratedName("ws.Response").toFirstLower()»" message="«wsNamespacePrefix()»:«getGeneratedName("ws.Response").toFirstLower()»"/>
+   «IF exceptions.size > 0»
+      «FOREACH exceptions.typeSelect(WSModelClass) AS exc»
+         <wsdl:fault name="«name»«exc.getGeneratedName("ws.Stub")»" message="«exc.wsNamespacePrefix()»:«name»«exc.getGeneratedName("ws.Stub")»"/>
+      «ENDFOREACH»
+   «ENDIF»
+	</wsdl:operation>
+«ENDDEFINE»
+
+
+«DEFINE wsdlSoapOperation FOR WSModelMethod»
+   <wsdl:operation name="«name»">
+      <wsdlsoap:operation soapAction="«wsNamespace()»/«name»"/>
+      <wsdl:input name="«getGeneratedName("ws.Request").toFirstLower()»">
+         <wsdlsoap:body use="literal" namespace="«wsNamespace()»"/>
+      </wsdl:input>
+      <wsdl:output name="«getGeneratedName("ws.Response").toFirstLower()»">
+         <wsdlsoap:body use="literal" namespace="«wsNamespace()»"/>
+      </wsdl:output>
+   «IF exceptions.size > 0»
+      «FOREACH exceptions.typeSelect(WSModelClass) AS exc»
+         <wsdl:fault name="«name»«exc.getGeneratedName("ws.Stub")»">
+           <wsdlsoap:fault name="«name»«exc.getGeneratedName("ws.Stub")»" 
+                           use="literal" namespace="«wsNamespace()»"/>
+         </wsdl:fault>
+      «ENDFOREACH»
+   «ENDIF»
+   </wsdl:operation>
+«ENDDEFINE»
+

@@ -1,0 +1,20 @@
+import uml;
+//import org::umlmda::uml::StructuralFeature;
+
+// checked alle Attribute einer Klasse ob für diese auch ein Typ definiert wurde.
+// VALIDATED 
+context Property ERROR this.qualifiedName + " Property must have a type":
+	this.type != null; 
+  
+//context Entity ERROR "Names of Entity attributes must be unique":
+// NOT VALIDATED
+//	attribute.forAll(a1| attribute.notExists(a2| a1 != a2 && a1.name == a2.name ) );
+  
+// checked eine Klasse ob für diese auch ein Super-Typ gefunden wurde. 
+// NOT VALIDATED
+//context Class ERROR this.qualifiedName+" has unknown Super Class":
+//	this.generalization.typeSelect(Generalization).exists(a1| a1.general==null) == false;
+
+// Checks enumeration have at least one attribute
+context Class ERROR this.qualifiedName + " <<Enumeration>> must have at least one attribute" :
+	this.getAppliedStereotypes().typeSelect(Stereotype).exists(s|s.name == "Enumeration") && this.attribute.size > 0;
