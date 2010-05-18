@@ -73,6 +73,16 @@ cached String wsNamespacePrefix(WSModelPackage package) :
 
 
 
+cached String generatedStubName(WSBusinessObject object) :
+    ((JavaModelClass)object).getGeneratedName("ws.Stub")
+;
+
+cached String generatedStubName(WSModelClassifier classifier) :
+    classifier.javaType
+;
+
+
+
 // Checks if the given package is the Runtime WS package by comparing it to the one found in the current model
 cached Boolean isRuntimeWsPackage(WSModelPackage package) :
     package == package.findRuntimeWsPackage() 

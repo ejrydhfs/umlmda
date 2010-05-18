@@ -12,23 +12,8 @@
 «LET generatedName(this, "ws.ServicePort") AS className»
 «FILE generatedPath+"/"+className+".java"»
 	package «generatorPackage.getQualifiedPackageName("ws.ServicePort")»;
-	
-	import javax.jws.WebMethod;
-	import javax.jws.WebParam;
-	import javax.jws.WebResult;
-	import javax.jws.WebService;
-	import javax.jws.soap.SOAPBinding;
-	import javax.xml.bind.annotation.XmlSeeAlso;
 
-   «resetImports()»
-   «REM» Method parameters and return types «ENDREM»
-   «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
-      «registerImport("ws.Stub", (JavaModelClass)method.returnType)»
-      «FOREACH method.parameters.typeSelect(JavaModelParameter) AS param»
-	      «registerImport("ws.Stub", (JavaModelClass)param.type)»
-	   «ENDFOREACH»
-   «ENDFOREACH»
-   «registeredImports()»
+   «EXPAND imports»	
 
    /**
     * «documentation»
@@ -46,6 +31,33 @@
 «ENDDEFINE»
 
 
+«DEFINE imports FOR WSBusinessService»
+   import javax.jws.WebMethod;
+   import javax.jws.WebParam;
+   import javax.jws.WebResult;
+   import javax.jws.WebService;
+   import javax.jws.soap.SOAPBinding;
+   import javax.xml.bind.annotation.XmlSeeAlso;
+
+   «resetImports()»
+   «REM» Method parameters and return types «ENDREM»
+   «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+      «EXPAND stubImport FOR (WSModelClassifier)method.returnType»
+      «FOREACH method.parameters.typeSelect(JavaModelParameter) AS param»
+         «EXPAND stubImport FOR (WSModelClassifier)param.type»
+      «ENDFOREACH»
+   «ENDFOREACH»
+   «registeredImports()»
+«ENDDEFINE»
+
+«DEFINE stubImport FOR WSBusinessObject»
+   «registerImport("ws.Stub", (JavaModelClass)this)»
+«ENDDEFINE»
+
+«DEFINE stubImport FOR WSModelClassifier»
+«ENDDEFINE»
+
+
 «DEFINE XmlAnnotations FOR WSBusinessService»
 	@WebService(name = "«generatedName»", targetNamespace = "«wsNamespace()»")
 	@SOAPBinding(style = SOAPBinding.Style.RPC)
@@ -58,20 +70,20 @@
    «FOREACH parameters.typeSelect(JavaModelParameter) AS param -»
      * @param «param.name»
    «ENDFOREACH -»
-    * @return returns «((JavaModelClass)returnType).getQualifiedName("ws.Stub")»
+    * @return returns «((WSModelClassifier)returnType).generatedStubName()»
    «FOREACH exceptions.typeSelect(JavaModelClass) AS exc -»
       * @throws «name.toFirstUpper()»«exc.name»
    «ENDFOREACH -»
     */
    @WebMethod(action = "«wsNamespace()»/«name»")
    @WebResult(name = "returnValue", partName = "returnValue")
-   public «((JavaModelClass)returnType).getGeneratedName("ws.Stub")» «name»(
+   public «((WSModelClassifier)returnType).generatedStubName()» «name»(
    «FOREACH parameters.typeSelect(JavaModelParameter) AS param SEPARATOR ", "»
-      @WebParam(name = "«param.name»", partName = "«param.name»") «((JavaModelClass)param.type).getGeneratedName("ws.Stub")» «param.name»
+      @WebParam(name = "«param.name»", partName = "«param.name»") «((WSModelClassifier)param.type).generatedStubName()» «param.name»
    «ENDFOREACH»
    )
    «IF exceptions.size > 0»
-      throws «FOREACH exceptions.typeSelect(JavaModelClass) AS exc SEPARATOR ", "»«name.toFirstUpper()»«exc.getGeneratedName("ws.Stub")»«ENDFOREACH»
+      throws «FOREACH exceptions.typeSelect(WSModelClass) AS exc SEPARATOR ", "»«name.toFirstUpper()»«((WSModelClassifier)exc).generatedStubName()»«ENDFOREACH»
    «ENDIF»
 «ENDDEFINE»
 
