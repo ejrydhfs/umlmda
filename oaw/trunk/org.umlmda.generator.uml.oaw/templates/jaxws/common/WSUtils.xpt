@@ -24,7 +24,7 @@
 	import java.util.Map;
 	import java.util.NoSuchElementException;
 	
-	«IF ! isRuntimeWsPackage()»
+	«IF ! isRuntimeWsPackage() && findRuntimeWsPackage()!=null»
       import «findRuntimeWsPackage().getQualifiedPackageName("ws.Utils")».«((JavaModelElement)findRuntimeWsPackage().owner).generatedName("ws.Utils")»;
 	«ENDIF»
 	import «getQualifiedPackageName("java.BusinessObjectFactory").replaceFirst(".ws", "")».«((JavaModelElement)owner).generatedName("java.BusinessObjectFactory")»;
@@ -33,7 +33,7 @@
 	 * Contains all create and copy methods for objects used in more than one service interface.
 	 */
 	public abstract class «className» 
-      «IF ! isRuntimeWsPackage()»extends «((JavaModelElement)findRuntimeWsPackage().owner).generatedName("ws.Utils")»«ENDIF» 
+      «IF ! isRuntimeWsPackage() && findRuntimeWsPackage()!=null»extends «((JavaModelElement)findRuntimeWsPackage().owner).generatedName("ws.Utils")»«ENDIF» 
    {
       
       «IF isRuntimeWsPackage()»
