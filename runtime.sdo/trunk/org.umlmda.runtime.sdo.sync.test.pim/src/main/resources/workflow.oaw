@@ -7,10 +7,6 @@
     <!-- initializes resourcemaps, urimaps, etc. -->
     <component class="org.openarchitectureware.adapter.rsdp.workflow.RSASetup" >
         <!-- Standard profiles -->
-		<pathMapEntry>
-			<alias value="UMLMDA_PROFILE"/>
-			<path value="${basedir}/profiles/rsm/3rd/umlmda/profiles"/>
-		</pathMapEntry>
         <pathMapEntry>
             <alias value="UML2_MSL_PROFILES"/>
             <path value="${basedir}/profiles/rsm/3rd/ibm"/>
