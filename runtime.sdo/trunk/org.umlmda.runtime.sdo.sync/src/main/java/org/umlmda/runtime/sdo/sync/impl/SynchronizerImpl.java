@@ -1,6 +1,5 @@
 package org.umlmda.runtime.sdo.sync.impl;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -22,7 +21,6 @@ import org.umlmda.runtime.sdo.sync.SynchronizedObjectProxy;
 import org.umlmda.runtime.sdo.sync.SynchronizedSet;
 import org.umlmda.runtime.sdo.sync.entries.AbstractChangeLogEntry;
 import org.umlmda.runtime.sdo.sync.entries.AbstractInvocationResult;
-import org.umlmda.runtime.sdo.sync.entries.ChangeBigDecimalEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeBooleanEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeCharacterEntry;
 import org.umlmda.runtime.sdo.sync.entries.ChangeDateEntry;
@@ -98,9 +96,6 @@ public class SynchronizerImpl implements Recorder
       if ( recording ) {
          if ( value == null ) {
             addEntry(new ChangeToNull(object.getRecordObjectId(), propertyName));
-         }
-         else if ( value instanceof BigDecimal ) {
-            addEntry(new ChangeBigDecimalEntry(object.getRecordObjectId(), propertyName, (BigDecimal) value));
          }
          else if ( value instanceof Boolean ) {
             addEntry(new ChangeBooleanEntry(object.getRecordObjectId(), propertyName, (Boolean) value));

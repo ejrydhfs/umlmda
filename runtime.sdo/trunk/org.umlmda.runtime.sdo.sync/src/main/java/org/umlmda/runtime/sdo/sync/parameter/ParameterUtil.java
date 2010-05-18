@@ -1,6 +1,5 @@
 package org.umlmda.runtime.sdo.sync.parameter;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,10 +17,7 @@ public class ParameterUtil
       for ( int i = 0; i < parameters.length; i++ ) {
          Object parameter = parameters[i];
 
-         if ( parameter instanceof BigDecimal ) {
-            parameterList.add(new BigDecimalParameter((BigDecimal) parameter));
-         }
-         else if ( parameter instanceof Boolean ) {
+         if ( parameter instanceof Boolean ) {
             parameterList.add(new BooleanParameter((Boolean) parameter));
          }
          else if ( parameter instanceof Character ) {
