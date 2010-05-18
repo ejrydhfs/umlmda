@@ -7,7 +7,7 @@
    </parent>
    <artifactId>org.umlmda.runtime.sdo</artifactId>
    <packaging>pom</packaging>
-   <version>3.16-SNAPSHOT</version>
+   <version>3.16</version>
    <name>UMLMDA runtime.sdo pom</name>
    <description>UMLMDA maven project for umlmda runtime.sdo modules.</description>
 
@@ -226,8 +226,8 @@
    </build>
 
    <scm>
-      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime.sdo/trunk</connection>
-      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime.sdo/trunk</developerConnection>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime.sdo/releases/org.umlmda.runtime.sdo-3.16</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/runtime.sdo/releases/org.umlmda.runtime.sdo-3.16</developerConnection>
    </scm>
 
    <repositories>
