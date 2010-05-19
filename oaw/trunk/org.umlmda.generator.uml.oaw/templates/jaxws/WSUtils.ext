@@ -73,16 +73,6 @@ cached String wsNamespacePrefix(WSModelPackage package) :
 
 
 
-cached String generatedStubName(WSBusinessObject object) :
-    ((JavaModelClass)object).getGeneratedName("ws.Stub")
-;
-
-cached String generatedStubName(WSModelClassifier classifier) :
-    classifier.javaType
-;
-
-
-
 // Checks if the given package is the Runtime WS package by comparing it to the one found in the current model
 cached Boolean isRuntimeWsPackage(WSModelPackage package) :
     package == package.findRuntimeWsPackage() 
@@ -94,13 +84,41 @@ cached WSModelPackage findRuntimeWsPackage(JavaModelElement element) :
 ;
 
 
+// Finds the nesting business component of the given model package, if one exists.
+// If the given package is a WS component, it's treated different than other packages.
+cached WSBusinessComponent nestingWSBusinessComponent(WSModelPackage package) :
+    let owner = (WSModelPackage)package.package :
+    package.hasStereotype("WebServiceComponent") ? (
+        ((WSModelPackage)owner.package).nestingWSBusinessComponent()
+    ) : (
+        owner != null ? (
+            owner.hasStereotype("BusinessComponent") ? (
+                owner.wsPackage
+            ) : (
+                owner.nestingWSBusinessComponent()
+            )
+        ) : (
+            null
+        )
+    )
+;
+
+// Returns the given component, if it has the stereotype BusinessComponent.
+// Otherwise the owner package is searched for the next nesting business component. 
+cached WSBusinessComponent nestingWSBusinessComponent(WSBusinessComponent component) :
+    component.hasStereotype("BusinessComponent") ? (
+        component.wsPackage
+    ) : (
+        ((WSModelPackage)component.package).nestingWSBusinessComponent()
+    )
+;
+
 
 
 // Returns all WebService classes of the given package
 cached List[WSModelClass] webServices(WSModelPackage package) :
     package.classes.typeSelect(WSModelClass).select( e | e.hasStereotype("WebService") )
 ;
-
 
 
 
@@ -165,5 +183,28 @@ private cached List[ModelElement] referencedElements(WSModelClass class, WSModel
     result.addAll( associations.referencedElements(service) ) ->
     
     result
+;
+
+
+
+// ====================================================================================================
+// =========================================== N A M I N G ============================================
+// ====================================================================================================
+
+cached String generatedStubName(WSBusinessObject object) :
+    object.getGeneratedName("ws.Stub")
+;
+
+cached String generatedStubName(WSModelClassifier classifier) :
+    classifier.javaType
+;
+
+
+cached String xsdTypeName(WSBusinessObject object) :
+    object.wsNamespacePrefix()+":"+object.getGeneratedName("ws.Stub")
+;
+
+cached String xsdTypeName(WSModelClassifier classifier) :
+    "xsd:"+ classifier.javaType.toFirstLower()
 ;
 

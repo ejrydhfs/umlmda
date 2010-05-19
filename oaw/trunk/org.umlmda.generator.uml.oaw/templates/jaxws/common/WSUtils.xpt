@@ -15,32 +15,20 @@
 «LET ((JavaModelElement)owner).generatedName("ws.Utils") AS className»
 «FILE generatedPath+"/"+className+".java"»
 	package «getQualifiedPackageName("ws.Utils")»;
-	
-	import java.util.ArrayList;
-	import java.util.HashMap;
-	import java.util.IdentityHashMap;
-	import java.util.Iterator;
-	import java.util.List;
-	import java.util.Map;
-	import java.util.NoSuchElementException;
-	
-	«IF ! isRuntimeWsPackage() && findRuntimeWsPackage()!=null»
-      import «findRuntimeWsPackage().getQualifiedPackageName("ws.Utils")».«((JavaModelElement)findRuntimeWsPackage().owner).generatedName("ws.Utils")»;
-	«ENDIF»
-	import «getQualifiedPackageName("java.BusinessObjectFactory").replaceFirst(".ws", "")».«((JavaModelElement)owner).generatedName("java.BusinessObjectFactory")»;
+
+   «EXPAND imports»	
 	
 	/**
 	 * Contains all create and copy methods for objects used in more than one service interface.
 	 */
-	public abstract class «className» 
-      «IF ! isRuntimeWsPackage() && findRuntimeWsPackage()!=null»extends «((JavaModelElement)findRuntimeWsPackage().owner).generatedName("ws.Utils")»«ENDIF» 
+	public abstract class «className» «EXPAND extendsStatement» 
    {
       
-      «IF isRuntimeWsPackage()»
+      «REM» Basic utility methods, normally placed in the runtime package (if that exists) «ENDREM» 
+      «IF isRuntimeWsPackage() || findRuntimeWsPackage()==null»
          «EXPAND runtimeMethods»
-      «ELSE»
-         «EXPAND factoryMethods»
       «ENDIF»
+      «EXPAND factoryMethods»
 
       «FOREACH referencedElements().typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
          «EXPAND exceptionMethods(null) FOR re»
@@ -53,6 +41,42 @@
    }
 «ENDFILE»
 «ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE imports FOR WSModelPackage»
+   import java.util.ArrayList;
+   import java.util.HashMap;
+   import java.util.IdentityHashMap;
+   import java.util.Iterator;
+   import java.util.List;
+   import java.util.Map;
+   import java.util.NoSuchElementException;
+   
+   «REM» First inherit from a nesting component, otherwise try runtime package «ENDREM»
+   «IF nestingWSBusinessComponent()!=null»
+      «EXPAND importUtilsClass FOR nestingWSBusinessComponent()»
+   «ELSE»
+      «IF ! isRuntimeWsPackage() && findRuntimeWsPackage()!=null»
+         «EXPAND importUtilsClass FOR findRuntimeWsPackage()»
+      «ENDIF»
+   «ENDIF»
+   import «getQualifiedPackageName("java.BusinessObjectFactory").replaceFirst(".ws", "")».«((JavaModelElement)owner).generatedName("java.BusinessObjectFactory")»;
+«ENDDEFINE»
+
+«DEFINE importUtilsClass FOR WSModelPackage»
+   import «getQualifiedPackageName("ws.Utils")».«((JavaModelElement)owner).generatedName("ws.Utils")»;
+«ENDDEFINE»
+
+
+«DEFINE extendsStatement FOR WSModelPackage»
+   «IF nestingWSBusinessComponent()!=null»
+      extends «((JavaModelElement)nestingWSBusinessComponent().owner).generatedName("ws.Utils")»
+   «ELSE»
+      «IF ! isRuntimeWsPackage() && findRuntimeWsPackage()!=null»
+         extends «((JavaModelElement)findRuntimeWsPackage().owner).generatedName("ws.Utils")»
+      «ENDIF»
+   «ENDIF»
 «ENDDEFINE»
 
 
@@ -132,8 +156,6 @@
       resolvers.clear();
       registry.clear();
    }
-
-   «EXPAND factoryMethods»
 «ENDDEFINE»
 
 
@@ -200,7 +222,7 @@
 	
 	   // Copy interface DTO to web service DTO
 	   «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
-	      «EXPAND copyMethodContent(wsObjectQualified)»
+	      «EXPAND copyMethodContent(wsObjectQualified, bsObjectQualified)»
 	   }
 	   
 	   «REM» BS DTO creation only for objects referenced in the service «ENDREM»
@@ -210,7 +232,7 @@
 	
 	   // Copy web service DTO to interface DTO
 	   «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
-	      «EXPAND copyMethodContent(null)»
+	      «EXPAND copyMethodContent(null, bsObjectQualified)»
 	   }
 	   
 	   «ENDLET»
@@ -235,14 +257,14 @@
 
    // Copy interface DTO to web service DTO
    «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
-      «EXPAND copyMethodContent(wsObjectQualified)»
+      «EXPAND copyMethodContent(wsObjectQualified, bsObjectQualified)»
    }
 
    «EXPAND createInterfaceDTOMethod(wsObjectQualified, bsObjectQualified, false)»
    
    // Copy web service DTO to interface DTO
    «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
-      «EXPAND copyMethodContent(null)»
+      «EXPAND copyMethodContent(null, bsObjectQualified)»
    }
    
    «ENDLET»
@@ -316,7 +338,7 @@
 
 
 «REM» Copies element attributes and associations from BS to WS and backwards «ENDREM»
-«DEFINE copyMethodContent(String wsObjectQualified) FOR WSModelClass»
+«DEFINE copyMethodContent(String wsObjectQualified, String bsObjectQualified) FOR WSModelClass»
    «IF superClass!=null»
       copy«((WSModelClass)superClass).generatedName("ws.Stub")»(src, dest);
    «ENDIF»
@@ -339,7 +361,16 @@
          «IF attrib.primitiveType»
 	         «IF wsObjectQualified==null»
 	            «REM» WS to BS: List to Array «ENDREM»
-	            dest.«attrib.setter»(src.«attrib.getter»().toArray(new «((WSModelClassifier)attrib.modelClassifier).javaType»[ src.«attrib.getter»().size() ]));
+	            
+		         «IF attrib.readOnly»
+		            org.umlmda.runtime.reflect.FieldAccessor.set(
+                        dest, 
+                        «bsObjectQualified».«EXPAND java::BOInterface::propertyNameConstant FOR attrib», 
+                        src.«attrib.getter»().toArray(new «((WSModelClassifier)attrib.modelClassifier).javaType»[ src.«attrib.getter»().size() ]));
+		         «ELSE»
+                  dest.«attrib.setter»(src.«attrib.getter»().toArray(new «((WSModelClassifier)attrib.modelClassifier).javaType»[ src.«attrib.getter»().size() ]));
+		         «ENDIF»
+	            
 	         «ELSE»
 	            «REM» BS to WS: Array to List «ENDREM»
 		         if ( src.«attrib.getter»()!=null ) {
@@ -397,7 +428,14 @@
       «ELSE»
 
          «REM» Normal attribute «ENDREM»
-         dest.«attrib.setter»(src.«attrib.getter»());
+         «IF attrib.readOnly»
+            org.umlmda.runtime.reflect.FieldAccessor.set(
+                  dest, 
+                  «bsObjectQualified».«EXPAND java::BOInterface::propertyNameConstant FOR attrib», 
+                  src.«attrib.getter»());
+         «ELSE»
+            dest.«attrib.setter»(src.«attrib.getter»());
+         «ENDIF»
 
       «ENDIF»
    «ENDFOREACH»

@@ -46,7 +46,8 @@
 
 
 «DEFINE imports FOR WSModelClass»
-   «IF associations.typeSelect(JavaModelAssociation).size > 0»
+   «REM» List classes for associations or multivalue attributes «ENDREM»
+   «IF associations.typeSelect(JavaModelAssociation).size > 0 || attributes.typeSelect(JavaModelAttribute).select(a|a.multivalue).size > 0»
       import java.util.ArrayList;
       import java.util.List;
    «ENDIF»
@@ -120,6 +121,9 @@
 	         protected «modelClassifier.name» «name»;
 	      «ENDIF»
 	   «ELSE»
+         «IF multiplicity.lower>0»
+            @XmlElement(required = true)
+         «ENDIF»
          «IF primitiveType»
             «IF {"date", "dateTime", "timestamp"}.contains(dataType.name)»
                @XmlSchemaType(name = "«dataType.name»")

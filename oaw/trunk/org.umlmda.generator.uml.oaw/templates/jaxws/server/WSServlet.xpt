@@ -31,8 +31,10 @@
 	    */
 	   public «generatedName»() {
 	      super();
-	      utils.set«((WSModelPackage)findRuntimeWsPackage().package).getGeneratedName("java.BusinessObjectFactory")»(
-	        new «((WSModelPackage)findRuntimeWsPackage().package).getGeneratedName("java.BusinessObjectFactoryImpl")»());
+         «IF findRuntimeWsPackage()!=null»
+	        utils.set«((WSModelPackage)findRuntimeWsPackage().package).getGeneratedName("java.BusinessObjectFactory")»(
+	           new «((WSModelPackage)findRuntimeWsPackage().package).getGeneratedName("java.BusinessObjectFactoryImpl")»());
+         «ENDIF»
 	      «IF ! ((WSModelPackage)package).isRuntimeWsPackage()»
 	        utils.set«((JavaModelPackage)package.package).getGeneratedName("java.BusinessObjectFactory")»(
 	           new «((JavaModelPackage)package.package).getGeneratedName("java.BusinessObjectFactoryImpl")»());
@@ -61,18 +63,29 @@
    import javax.jws.soap.SOAPBinding;
    import javax.xml.bind.annotation.XmlSeeAlso;
 
+   import org.umlmda.runtime.webservice.WebserviceUtils;
+   
+   «IF methods.typeSelect(WSModelMethod).select( m | m.returnType==null ).size > 0»
+      import javax.jws.Oneway;
+   «ENDIF»
+
    «resetImports()»
    «registerImport("ws.Utils")»
-   «registerImport("java.BusinessObjectFactoryImpl", (JavaModelPackage)findRuntimeWsPackage().package)»
+   «IF findRuntimeWsPackage()!=null»
+      «registerImport("java.BusinessObjectFactoryImpl", (JavaModelPackage)findRuntimeWsPackage().package)»
+   «ENDIF»
    «IF ! ((WSModelPackage)package).isRuntimeWsPackage()»
       «registerImport("java.BusinessObjectFactoryImpl", (JavaModelPackage)package.package)»
    «ENDIF»
 
+   «REM» Method parameters, return types and exceptions «ENDREM»
    «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
       «FOREACH method.parameters.typeSelect(JavaModelParameter) AS param»
-         «registerImport("ws.Stub", (WSModelClass)param.type)»
+         «EXPAND jaxws::common::WSPort::stubImport(this) FOR (WSModelClassifier)param.type»
       «ENDFOREACH»
-      «registerImport("ws.Stub", (WSModelClass)method.returnType)»
+      «IF method.returnType!=null»
+         «EXPAND jaxws::common::WSPort::stubImport(this) FOR (WSModelClassifier)method.returnType»
+      «ENDIF»
       «REM» Special method exceptions «ENDREM»
       «FOREACH method.exceptions.typeSelect(WSModelClass) AS exc»
          import «exc.generatorPackage.getQualifiedPackageName("ws.Stub")».«method.name.toFirstUpper()+exc.name»;
@@ -85,17 +98,21 @@
 «DEFINE wsMethod FOR WSModelMethod»
    «EXPAND jaxws::common::WSPort::wsMethodDecl» {
        try {
-         «((WSModelClass)requestParameter().type).getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws","")» bsin = 
-               utils.create«requestParameter().type.name»(«requestParameter().name»);
-         «((WSModelClass)returnType).getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws","")» result;
+		   «FOREACH parameters.typeSelect(JavaModelParameter) AS param»
+            «EXPAND parameterTransfer(param) FOR (WSModelClassifier)param.type»
+		   «ENDFOREACH»
+		   «IF returnType!=null»
+            «EXPAND returnTypeDeclaration FOR (WSModelClassifier)returnType»
+		   «ENDIF»
          
          utils.resolveReferences();
-         result = delegate.«name»(bsin);
-         utils.resetReferences();
-         «((WSModelClass)returnType).getQualifiedName("ws.Stub")» convertedResult = utils.create«returnType.name»(result);
-         utils.resolveReferences();
-         return convertedResult;
-
+         «IF returnType!=null»result = «ENDIF»delegate.«name»(
+            «FOREACH parameters.typeSelect(JavaModelParameter) AS param SEPARATOR ", "»
+               bs«param.name.toFirstUpper()»
+            «ENDFOREACH»);
+         «IF returnType!=null»
+            «EXPAND returnTypeTransfer FOR (WSModelClassifier)returnType»
+         «ENDIF»
       «FOREACH exceptions.typeSelect(WSModelClass) AS exc»         
       } catch («exc.getQualifiedName("java.BusinessException").replaceFirst(".ws","")» e) {
          «exc.getQualifiedName("ws.Stub")» exception = utils.create«exc.name»(e);
@@ -106,5 +123,36 @@
          utils.resetReferences();
       }
    }
+«ENDDEFINE»
+
+
+«DEFINE parameterTransfer(JavaModelParameter param) FOR WSBusinessObject»
+   «((WSModelClass)param.type).getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws","")» bs«param.name.toFirstUpper()» = 
+      utils.create«param.type.name»(«param.name»);
+«ENDDEFINE»
+
+«DEFINE parameterTransfer(JavaModelParameter param) FOR WSModelClassifier»
+   «param.javaType» bs«param.name.toFirstUpper()» = «param.name»;
+«ENDDEFINE»
+
+
+«DEFINE returnTypeDeclaration FOR WSBusinessObject»
+   «getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws","")» result;
+«ENDDEFINE»
+
+«DEFINE returnTypeDeclaration FOR WSModelClassifier»
+   «javaType» result;
+«ENDDEFINE»
+
+
+«DEFINE returnTypeTransfer FOR WSBusinessObject»
+   utils.resetReferences();
+   «getQualifiedName("ws.Stub")» convertedResult = utils.create«name»(result);
+   utils.resolveReferences();
+   return convertedResult;
+«ENDDEFINE»
+
+«DEFINE returnTypeTransfer FOR WSModelClassifier»
+   return WebserviceUtils.convertToWs(result);
 «ENDDEFINE»
 

@@ -71,12 +71,14 @@
 «DEFINE wsdlMessage FOR WSModelMethod»
    <wsdl:message name="«getGeneratedName("ws.Request").toFirstLower()»">
 	   «FOREACH parameters.typeSelect(JavaModelParameter) AS param»
-         <wsdl:part name="«param.name»" type="«((WSModelClass)param.type).wsNamespacePrefix()»:«((WSModelClass)param.type).getGeneratedName("ws.Stub")»"/>
+         <wsdl:part name="«param.name»" type="«((WSModelClassifier)param.type).xsdTypeName()»"/>
 	   «ENDFOREACH»
    </wsdl:message>
-   <wsdl:message name="«getGeneratedName("ws.Response").toFirstLower()»">
-      <wsdl:part name="returnValue" type="«((WSModelClass)returnType).wsNamespacePrefix()»:«((WSModelClass)returnType).getGeneratedName("ws.Stub")»"/>
-   </wsdl:message>
+   «IF returnType!=null»
+      <wsdl:message name="«getGeneratedName("ws.Response").toFirstLower()»">
+         <wsdl:part name="returnValue" type="«((WSModelClassifier)returnType).xsdTypeName()»"/>
+      </wsdl:message>
+   «ENDIF»
    «IF exceptions.size > 0»
       «FOREACH exceptions.typeSelect(WSModelClass) AS exc»
          <wsdl:message name="«name»«exc.getGeneratedName("ws.Stub")»">
@@ -88,9 +90,15 @@
 
 
 «DEFINE wsdlOperation FOR WSModelMethod»
-	<wsdl:operation name="«name»" >
+	<wsdl:operation name="«name»"
+	«LET parameters.typeSelect(JavaModelParameter) AS params»
+      «IF params.size>1» parameterOrder="«FOREACH params AS param SEPARATOR " "»«param.name»«ENDFOREACH»"«ENDIF»
+   «ENDLET»
+	>
 		<wsdl:input name="«getGeneratedName("ws.Request").toFirstLower()»" message="«wsNamespacePrefix()»:«getGeneratedName("ws.Request").toFirstLower()»"/>
+   «IF returnType!=null»		
 		<wsdl:output name="«getGeneratedName("ws.Response").toFirstLower()»" message="«wsNamespacePrefix()»:«getGeneratedName("ws.Response").toFirstLower()»"/>
+   «ENDIF»		
    «IF exceptions.size > 0»
       «FOREACH exceptions.typeSelect(WSModelClass) AS exc»
          <wsdl:fault name="«name»«exc.getGeneratedName("ws.Stub")»" message="«exc.wsNamespacePrefix()»:«name»«exc.getGeneratedName("ws.Stub")»"/>
@@ -106,9 +114,11 @@
       <wsdl:input name="«getGeneratedName("ws.Request").toFirstLower()»">
          <wsdlsoap:body use="literal" namespace="«wsNamespace()»"/>
       </wsdl:input>
+   «IF returnType!=null»      
       <wsdl:output name="«getGeneratedName("ws.Response").toFirstLower()»">
          <wsdlsoap:body use="literal" namespace="«wsNamespace()»"/>
       </wsdl:output>
+   «ENDIF»
    «IF exceptions.size > 0»
       «FOREACH exceptions.typeSelect(WSModelClass) AS exc»
          <wsdl:fault name="«name»«exc.getGeneratedName("ws.Stub")»">

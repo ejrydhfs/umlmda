@@ -38,30 +38,40 @@
    import javax.jws.WebService;
    import javax.jws.soap.SOAPBinding;
    import javax.xml.bind.annotation.XmlSeeAlso;
+   
+   «IF methods.typeSelect(WSModelMethod).select( m | m.returnType==null ).size > 0»
+      import javax.jws.Oneway;
+   «ENDIF»
 
    «resetImports()»
    «REM» Method parameters and return types «ENDREM»
    «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
-      «EXPAND stubImport FOR (WSModelClassifier)method.returnType»
+      «IF method.returnType!=null»
+         «EXPAND stubImport(this) FOR (WSModelClassifier)method.returnType»
+      «ENDIF»
       «FOREACH method.parameters.typeSelect(JavaModelParameter) AS param»
-         «EXPAND stubImport FOR (WSModelClassifier)param.type»
+         «EXPAND stubImport(this) FOR (WSModelClassifier)param.type»
       «ENDFOREACH»
    «ENDFOREACH»
    «registeredImports()»
 «ENDDEFINE»
 
-«DEFINE stubImport FOR WSBusinessObject»
-   «registerImport("ws.Stub", (JavaModelClass)this)»
+«DEFINE stubImport(WSModelClass class) FOR WSBusinessObject»
+   «class.registerImport("ws.Stub", this)»
 «ENDDEFINE»
 
-«DEFINE stubImport FOR WSModelClassifier»
+«DEFINE stubImport(WSModelClass class) FOR WSModelClassifier»
 «ENDDEFINE»
 
 
 «DEFINE XmlAnnotations FOR WSBusinessService»
 	@WebService(name = "«generatedName»", targetNamespace = "«wsNamespace()»")
 	@SOAPBinding(style = SOAPBinding.Style.RPC)
-	@XmlSeeAlso( { «generatorPackage.getQualifiedPackageName("ws.Stub")».ObjectFactory.class, com.fja.cor.bs.runtime.ws.jax.ObjectFactory.class })
+	@XmlSeeAlso( { 
+      «FOREACH referencedPackages.typeSelect(JavaModelPackage) AS refPkg SEPARATOR ", "»
+         «refPkg.getQualifiedPackageName("ws.Stub")».ObjectFactory.class
+      «ENDFOREACH»
+   })
 «ENDDEFINE»
 
 
@@ -76,8 +86,12 @@
    «ENDFOREACH -»
     */
    @WebMethod(action = "«wsNamespace()»/«name»")
-   @WebResult(name = "returnValue", partName = "returnValue")
-   public «((WSModelClassifier)returnType).generatedStubName()» «name»(
+   «IF returnType!=null»
+      @WebResult(name = "returnValue", partName = "returnValue")
+   «ELSE»
+      @Oneway
+   «ENDIF»
+   public «IF returnType!=null»«((WSModelClassifier)returnType).generatedStubName()»«ELSE»void«ENDIF» «name»(
    «FOREACH parameters.typeSelect(JavaModelParameter) AS param SEPARATOR ", "»
       @WebParam(name = "«param.name»", partName = "«param.name»") «((WSModelClassifier)param.type).generatedStubName()» «param.name»
    «ENDFOREACH»
