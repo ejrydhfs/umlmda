@@ -16,6 +16,7 @@ public class PropertyChangeEventManager
 
    public static final PropertyChangeEventManager INSTANCE = new PropertyChangeEventManager();
    private boolean                                queuing  = false;
+   private boolean                                queuingFinishing = false;
    private List<QueueEntry>                       queue    = new ArrayList<QueueEntry>();
 
    /**
@@ -25,7 +26,7 @@ public class PropertyChangeEventManager
     *         switched on.
     */
    synchronized public boolean startQueuing() {
-      if ( queuing ) {
+      if ( queuing || queuingFinishing ) {
          return false;
       }
       else {
@@ -35,14 +36,19 @@ public class PropertyChangeEventManager
    }
 
    synchronized public void finishQueuing() {
-      queuing = false;
+      if ( !queuingFinishing ) {
+         queuingFinishing = true;
+         queuing = false;
+         
+         // Use all events from queue and notify the listeners
+         for ( Iterator<QueueEntry> iqe = queue.iterator(); iqe.hasNext(); ) {
+            QueueEntry entry = (QueueEntry) iqe.next();
 
-      // Use all events from queue and notify the listeners
-      for ( Iterator<QueueEntry> iqe = queue.iterator(); iqe.hasNext(); ) {
-         QueueEntry entry = (QueueEntry) iqe.next();
-
-         notifyListeners(entry.listener, entry.evt);
-         iqe.remove();
+            notifyListeners(entry.listener, entry.evt);
+            iqe.remove();
+         }
+         
+         queuingFinishing = false;
       }
    }
 
