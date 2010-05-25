@@ -122,7 +122,8 @@ public class PlayerImpl implements Player
             Object listElement = getValue(listAddEntry.getValue());
             List<Object> list = (List<Object>) object;
 
-            list.add(listAddEntry.getIndex(), listElement);
+            // Safety measure: if listAddEntry's index is wrong/too big, use the list's size as index
+            list.add(Math.min(list.size(), listAddEntry.getIndex()), listElement);
          }
 
          else if ( logEntry instanceof SetAddEntry ) {
