@@ -92,6 +92,10 @@ public class PlayerImpl implements Player
 
                debug("Created (" + index + "/" + count + "): " + logEntry + " as " + object.getClass().getName());
             }
+            else {
+               // PNC-2292: Add the entry to processed ones anyway!
+               processedNewEntries.add((NewEntry) logEntry);
+            }
          }
       }
 
@@ -122,7 +126,7 @@ public class PlayerImpl implements Player
             Object listElement = getValue(listAddEntry.getValue());
             List<Object> list = (List<Object>) object;
 
-            // Safety measure: if listAddEntry's index is wrong/too big, use the list's size as index
+            // PNC-2291: Safety measure: if listAddEntry's index is wrong/too big, use the list's size as index
             list.add(Math.min(list.size(), listAddEntry.getIndex()), listElement);
          }
 
