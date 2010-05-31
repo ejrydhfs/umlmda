@@ -23,10 +23,12 @@
    «EXPAND XmlAnnotations»
 	public class «generatedName» «IF superClass!=null»extends «superClass.name»«ENDIF» {
 
+      // Attributes
       «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»
          «EXPAND varDefinition FOR attrib»
       «ENDFOREACH»
 
+      // Associations
       «FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
          «EXPAND varDefinition FOR assoc»
       «ENDFOREACH»
@@ -76,6 +78,10 @@
    
    «FOREACH attributes.typeSelect(JavaModelAttribute).select( a | !a.primitiveType && a.modelClassifier.hasStereotype("WebServiceEnumeration") ) AS attrib»
       «registerImport("ws.Stub", (JavaModelClass)attrib.modelClassifier)»
+   «ENDFOREACH»
+
+   «FOREACH associations.typeSelect(JavaModelAssociation) AS assoc»
+      «registerImport("ws.Stub", (JavaModelClass)assoc.target)»
    «ENDFOREACH»
 
    «registeredImports()»
