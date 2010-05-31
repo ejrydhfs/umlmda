@@ -216,11 +216,19 @@
    «LET getQualifiedName("ws.Stub") AS wsObjectQualified»
 
    «IF hasStereotype("WebServiceDTO")»
+      // ====================================================================================================
+      // DTO «name»
+      // ====================================================================================================
+   
 	   «LET getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws", "") AS bsObjectQualified»
 	   
 		«EXPAND createWebServiceDTOMethod(wsObjectQualified, bsObjectQualified)»
 	
-	   // Copy interface DTO to web service DTO
+      /**
+       * Copy interface DTO to web service DTO.
+       * @param src Source BS object to copy from
+       * @param dest Destination WS object to copy to
+       */
 	   «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
 	      «EXPAND copyMethodContent(wsObjectQualified, bsObjectQualified)»
 	   }
@@ -230,17 +238,35 @@
 	      «EXPAND createInterfaceDTOMethod(wsObjectQualified, bsObjectQualified, true)»
 	   «ENDIF»
 	
-	   // Copy web service DTO to interface DTO
+      /** 
+       * Copy web service DTO to interface DTO.
+       * @param src Source WS object to copy from
+       * @param dest Destination BS object to copy to
+       */
 	   «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
 	      «EXPAND copyMethodContent(null, bsObjectQualified)»
 	   }
 	   
 	   «ENDLET»
-	«ELSEIF hasStereotype("WebServiceDTOReference")»
+	«ELSEIF hasStereotype("WebServiceDTOHierarchy")»
       «LET PIMClass.getQualifiedName("java.BusinessObjectInterface") AS bsObjectQualified»
-	
+   
+      // ====================================================================================================
+      // Hierarchy DTO «name»
+      // ====================================================================================================
+
+      «EXPAND createWebServiceHierarchieDTOMethods(wsObjectQualified, bsObjectQualified)»
+      
+      «ENDLET»
+   «ELSEIF hasStereotype("WebServiceDTOReference")»
+      «LET PIMClass.getQualifiedName("java.BusinessObjectInterface") AS bsObjectQualified»
+   
+      // ====================================================================================================
+      // Reference DTO «name»
+      // ====================================================================================================
+
       «EXPAND createWebServiceReferenceDTOMethod(wsObjectQualified, bsObjectQualified)»
-	
+   
       «ENDLET»
 	«ENDIF»
    «ENDLET»
@@ -253,16 +279,28 @@
    «LET getQualifiedName("ws.Stub") AS wsObjectQualified»
    «LET getQualifiedName("java.BusinessException").replaceFirst(".ws", "") AS bsObjectQualified»
 
+	// ====================================================================================================
+	// Exception «name»
+	// ====================================================================================================
+
    «EXPAND createWebServiceDTOMethod(wsObjectQualified, bsObjectQualified)»
 
-   // Copy interface DTO to web service DTO
+   /** 
+    * Copy interface DTO to web service DTO.
+    * @param src Source BS object to copy from
+    * @param dest Destination WS object to copy to
+    */
    «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
       «EXPAND copyMethodContent(wsObjectQualified, bsObjectQualified)»
    }
 
    «EXPAND createInterfaceDTOMethod(wsObjectQualified, bsObjectQualified, false)»
    
-   // Copy web service DTO to interface DTO
+   /** 
+    * Copy web service DTO to interface DTO.
+    * @param src Source WS object to copy from
+    * @param dest Destination BS object to copy to
+    */
    «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
       «EXPAND copyMethodContent(null, bsObjectQualified)»
    }
@@ -273,7 +311,11 @@
 
 
 «DEFINE createWebServiceDTOMethod(String wsObjectQualified, String bsObjectQualified) FOR WSModelClass»
-   // Create «generatedName("ws.Stub")» web service DTO from interface DTO
+   /** 
+    * Create «generatedName("ws.Stub")» web service DTO from interface DTO. 
+    * @param src Source BS object to copy from
+    * @return New WS object initialized from the given BS object. 
+    */
    public «wsObjectQualified» create«name»(«bsObjectQualified» src) {
       if ( src != null ) {
          «wsObjectQualified» dest = new «wsObjectQualified»();
@@ -291,12 +333,18 @@
 
 «REM» Reference objects only carry the ID of the original object «ENDREM»
 «DEFINE createWebServiceReferenceDTOMethod(String wsObjectQualified, String bsObjectQualified) FOR WSModelClass»
-   // Create «generatedName("ws.Stub")» web service reference DTO from interface DTO
+   /** 
+    * Create «generatedName("ws.Stub")» web service reference DTO from interface DTO. 
+    * @param src Source BS object to copy from
+    * @return New WS reference initialized from the given BS object. 
+    */
    «LET PIMClass.attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.hasStereotype("Id")) AS key»
    public «wsObjectQualified» create«name»(«bsObjectQualified» src) {
       «wsObjectQualified» dest = new «wsObjectQualified»();
       «IF key!=null»
          dest.«key.setter»(src.«key.getter»());
+      «ELSE»
+         // TODO: Source DTO doesn't have a key. Model error? Reference DTO is pointless without a key...
       «ENDIF»
       return dest;
    }
@@ -304,9 +352,51 @@
 «ENDDEFINE»
 
 
+«DEFINE createWebServiceHierarchieDTOMethods(String wsObjectQualified, String bsObjectQualified) FOR WSModelClass»
+   /** 
+    * Create «name» hierarchical web service DTO from interface DTO. 
+    * @param src Source BS object to copy from.
+    * @return New WS hierachie object referencing a new WS object initialized from the given BS object. 
+    */
+   public «wsObjectQualified» create«name»(«bsObjectQualified» src) {
+      «wsObjectQualified» dest = new «wsObjectQualified»();
+
+      «FOREACH associations.typeSelect(JavaModelAssociation) AS assoc SEPARATOR " else "»
+         «LET ((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface") AS targetBSQualified»
+	      if ( src instanceof «targetBSQualified» ) {
+	         dest.«assoc.setter»( create«assoc.target.name»( («targetBSQualified»)src) );
+	      }   
+         «ENDLET»
+      «ENDFOREACH»
+
+      return dest;
+   }
+
+   /** 
+    * Create «PIMClass.name» interface DTO from hierarchical web service DTO. 
+    * @param src Source WS hierarchical object to copy from.
+    * @return New BS interface object from the given WS hierarchical object. 
+    */
+   public «bsObjectQualified» create«name»(«wsObjectQualified» src) {
+      «FOREACH associations.typeSelect(JavaModelAssociation) AS assoc SEPARATOR " else "»
+         if ( src.«assoc.getter»() != null ) {
+            return create«assoc.target.name»( src.«assoc.getter»() );
+         }   
+      «ENDFOREACH»
+      else {
+         return null;
+      }
+   }
+«ENDDEFINE»
+
+
 «DEFINE createInterfaceDTOMethod(String wsObjectQualified, String bsObjectQualified, Boolean useFactory) FOR WSModelClass»
    «IF ! abstract»
-      // Create «generatedName("java.BusinessObjectInterface")» interface DTO from web service DTO
+      /** 
+       * Create «generatedName("java.BusinessObjectInterface")» interface DTO from web service DTO. 
+	    * @param src Source WS object to copy from
+	    * @return New BS object initialized from the given WS object. 
+       */
       public «bsObjectQualified» create«name»(«wsObjectQualified» src) {
          if ( src != null ) {
             «bsObjectQualified» dest = («bsObjectQualified») getRegistry().get(src);
@@ -344,10 +434,13 @@
    «ENDIF»
 
    «REM» -- Attributes -------------------------------------------------------------------------------------- «ENDREM»
+   «IF attributes.typeSelect(JavaModelAttribute).size > 0»
+      // Attributes
+   «ENDIF»
    «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»
 
       «REM» Check for null value when copying to WS object «ENDREM»
-      «IF ! attrib.optional && wsObjectQualified!=null && attrib.modelClassifier.name!="boolean"»
+      «IF ! attrib.optional && wsObjectQualified!=null && ! attrib.javaPrimitiveType»
          if ( src.«attrib.getter»() == null ) {
             throw new IllegalArgumentException(
                   "None optional attribute «wsObjectQualified».«attrib.name» is null");
@@ -416,9 +509,7 @@
          dest.«attrib.setter»(
 			   «IF wsObjectQualified==null»
 			      «REM» WS to BS «ENDREM»
-			      «LET PIMClass.attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.name==attrib.name) AS bsSiblingAttrib»
-			      «((WSModelClass)bsSiblingAttrib.modelClassifier).getQualifiedName("java.BusinessObjectInterface")».fromValue( src.«attrib.getter»().value() )
-			      «ENDLET»
+			      «((WSEnumeration)attrib.modelClassifier).PIMClass.getQualifiedName("java.BusinessObjectInterface")».fromValue( src.«attrib.getter»().value() )
 			   «ELSE»
 			      «REM» BS to WS «ENDREM»
 			      «((WSModelClass)attrib.modelClassifier).getQualifiedName("ws.Stub")».fromValue( src.«attrib.getter»().getValue() )
@@ -442,6 +533,9 @@
 
 
    «REM» -- Associations ------------------------------------------------------------------------------------ «ENDREM»
+   «IF associations.typeSelect(JavaModelAttribute).size > 0»
+      // Associations
+   «ENDIF»
    «FOREACH associations.typeSelect(JavaModelAssociation).select( a | a.target.hasStereotype("WebServiceObject") ) AS assoc»
       «LET ((WSModelClass)assoc.target).generatedName("ws.Stub") AS targetName»
 	   «IF assoc.multiple»
@@ -460,20 +554,25 @@
          }
       «ELSE»
          «IF wsObjectQualified==null && assoc.target.hasStereotype("WebServiceDTOReference")»
+
             «REM» WS to BS + reference object«ENDREM»
-		      register(new ResolveReference() {
-		         @Override
-		         protected void resolve() {
-		            if ( src.«assoc.getter»() != null ) {
-		               dest.«assoc.setter»(
+            «IF assoc.target.attributes.typeSelect(JavaModelAttribute).size > 0»
+            register(new ResolveReference() {
+               @Override
+               protected void resolve() {
+                  if ( src.«assoc.getter»() != null ) {
+                     dest.«assoc.setter»(
                         getObject(«((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface")».class, 
                            src.«assoc.getter»().«assoc.target.attributes.typeSelect(JavaModelAttribute).first().getter»()));
-		            }
-		            else {
+                  }
+                  else {
                      dest.«assoc.setter»(null);
-		            }
-		         }
-		      });
+                  }
+               }
+            });
+            «ELSE»
+               // TODO: Can't set "«assoc.setter»" as the reference DTO  «assoc.target.name» doesn't have an ID attribute!
+            «ENDIF»         
          «ELSE»
             «REM» BS to WS «ENDREM»
             if ( src.«assoc.getter»() != null ) {
