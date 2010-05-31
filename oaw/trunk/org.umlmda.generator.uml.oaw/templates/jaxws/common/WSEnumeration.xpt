@@ -17,21 +17,15 @@
 	import javax.xml.bind.annotation.XmlEnum;
 	import javax.xml.bind.annotation.XmlType;
 
-   «resetImports()»
-   «REM» Import super class «ENDREM»
-   «IF superClass != null»
-      «registerImport("ws.Stub", (JavaModelClass)superClass)»
-   «ENDIF»
-   «registeredImports()»
-
    /**
     * «documentation»
     */
 	@XmlType(name = "«generatedName»", namespace = "«wsNamespace()»")
 	@XmlEnum
-	public enum «generatedName» «IF superClass!=null»extends «superClass.name»«ENDIF» {
-
-      «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib SEPARATOR ", "»
+	public enum «generatedName» {
+   
+      «IF superClass!=null»// Contains values for super enum «superClass.name»«ENDIF»
+      «FOREACH getAttributes(true).typeSelect(JavaModelAttribute) AS attrib SEPARATOR ", "»
          «attrib.name» («attrib.initialValue»)
       «ENDFOREACH»;
 
