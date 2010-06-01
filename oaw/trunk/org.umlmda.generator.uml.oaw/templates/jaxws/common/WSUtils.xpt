@@ -21,7 +21,7 @@
 	/**
 	 * Contains all create and copy methods for objects used in more than one service interface.
 	 */
-	public abstract class «className» «EXPAND extendsStatement» 
+	public class «className» «EXPAND extendsStatement» 
    {
       
       «REM» Basic utility methods, normally placed in the runtime package (if that exists) «ENDREM» 
@@ -30,10 +30,18 @@
       «ENDIF»
       «EXPAND factoryMethods»
 
+      «REM» Utility classes from other packages to be used for referenced DTOs «ENDREM»
+      // ====================================================================================================
+      // Utilities for referenced classes
+      // ====================================================================================================
+      «EXPAND utilsAccessor FOREACH referencedPackages.typeSelect(WSModelPackage)»
+
+      «REM» Exception methods «ENDREM»
       «FOREACH referencedElements().typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
          «EXPAND exceptionMethods(null) FOR re»
       «ENDFOREACH»
 
+      «REM» Normal DTO methods «ENDREM»
       «FOREACH referencedElements().typeSelect(WSModelClass).reject( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
          «EXPAND dtoMethods(null) FOR re»
       «ENDFOREACH»
@@ -177,6 +185,22 @@
 «ENDDEFINE»
 
 
+«DEFINE utilsAccessor FOR WSModelPackage»
+   «LET ((WSModelPackage)owner).generatedName("ws.Utils") AS utilsName»
+   «LET getQualifiedPackageName("ws.Utils") AS qualifiedUtilsPackage»
+      private «qualifiedUtilsPackage».«utilsName» «utilsName.toFirstLower()» = null;
+      
+      protected «qualifiedUtilsPackage».«utilsName» get«utilsName»() {
+         if ( «utilsName.toFirstLower()» == null ) {
+            «utilsName.toFirstLower()» = new «qualifiedUtilsPackage».«utilsName»();
+         }
+         return «utilsName.toFirstLower()»;
+      }
+   «ENDLET»
+   «ENDLET»
+«ENDDEFINE»
+
+
 «REM» ==================================================================================================== «ENDREM»
 «REM» ==================================================================================================== «ENDREM»
 «REM» ==================================================================================================== «ENDREM»
@@ -229,7 +253,7 @@
        * @param src Source BS object to copy from
        * @param dest Destination WS object to copy to
        */
-	   «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
+	   «IF subClasses.size==0»protected«ELSE»public«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
 	      «EXPAND copyMethodContent(wsObjectQualified, bsObjectQualified)»
 	   }
 	   
@@ -243,7 +267,7 @@
        * @param src Source WS object to copy from
        * @param dest Destination BS object to copy to
        */
-	   «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
+	   «IF subClasses.size==0»protected«ELSE»public«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
 	      «EXPAND copyMethodContent(null, bsObjectQualified)»
 	   }
 	   
@@ -290,7 +314,7 @@
     * @param src Source BS object to copy from
     * @param dest Destination WS object to copy to
     */
-   «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
+   «IF subClasses.size==0»protected«ELSE»public«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
       «EXPAND copyMethodContent(wsObjectQualified, bsObjectQualified)»
    }
 
@@ -301,7 +325,7 @@
     * @param src Source WS object to copy from
     * @param dest Destination BS object to copy to
     */
-   «IF service==null»protected«ELSE»private«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
+   «IF subClasses.size==0»protected«ELSE»public«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
       «EXPAND copyMethodContent(null, bsObjectQualified)»
    }
    
@@ -364,7 +388,7 @@
       «FOREACH associations.typeSelect(JavaModelAssociation) AS assoc SEPARATOR " else "»
          «LET ((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface") AS targetBSQualified»
 	      if ( src instanceof «targetBSQualified» ) {
-	         dest.«assoc.setter»( create«assoc.target.name»( («targetBSQualified»)src) );
+	         dest.«assoc.setter»( «EXPAND createDTOCall(this) FOR (WSModelClass)assoc.target»( («targetBSQualified»)src) );
 	      }   
          «ENDLET»
       «ENDFOREACH»
@@ -380,7 +404,7 @@
    public «bsObjectQualified» create«name»(«wsObjectQualified» src) {
       «FOREACH associations.typeSelect(JavaModelAssociation) AS assoc SEPARATOR " else "»
          if ( src.«assoc.getter»() != null ) {
-            return create«assoc.target.name»( src.«assoc.getter»() );
+            return «EXPAND createDTOCall(this) FOR (WSModelClass)assoc.target»( src.«assoc.getter»() );
          }   
       «ENDFOREACH»
       else {
@@ -430,6 +454,9 @@
 «REM» Copies element attributes and associations from BS to WS and backwards «ENDREM»
 «DEFINE copyMethodContent(String wsObjectQualified, String bsObjectQualified) FOR WSModelClass»
    «IF superClass!=null»
+      «IF superClass.package != package»
+         get«((WSModelPackage)superClass.package.owner).generatedName("ws.Utils")»().
+      «ENDIF»
       copy«((WSModelClass)superClass).generatedName("ws.Stub")»(src, dest);
    «ENDIF»
 
@@ -546,10 +573,14 @@
                «((WSModelClass)assoc.target).getQualifiedName("ws.Stub")»
             «ELSE»
                «REM» BS to WS «ENDREM»
-               «((WSModelClass)assoc.target).getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws", "")»
+               «IF ((WSModelClass)assoc.target).PIMClass != null»
+                  «((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface")»
+               «ELSE»
+                  «((WSModelClass)assoc.target).getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws", "")»
+               «ENDIF»
             «ENDIF»
             «targetName.toFirstLower()» : src.«assoc.getter»() ) {
-	            dest.«assoc.getter»().add(create«targetName»(«targetName.toFirstLower()»));
+	            dest.«assoc.getter»().add(«EXPAND createDTOCall(this) FOR (WSModelClass)assoc.target»(«targetName.toFirstLower()»));
 	         }
          }
       «ELSE»
@@ -576,7 +607,7 @@
          «ELSE»
             «REM» BS to WS «ENDREM»
             if ( src.«assoc.getter»() != null ) {
-               dest.«assoc.setter»(create«targetName»(src.«assoc.getter»()));
+               dest.«assoc.setter»(«EXPAND createDTOCall(this) FOR (WSModelClass)assoc.target»(src.«assoc.getter»()));
             }
          «ENDIF»
       «ENDIF»
@@ -584,3 +615,10 @@
    «ENDFOREACH»
 «ENDDEFINE»
 
+
+«DEFINE createDTOCall(WSModelClass callerClass) FOR WSModelClass»
+   «IF callerClass.package != package»
+      get«((WSModelPackage)package.owner).generatedName("ws.Utils")»().
+   «ENDIF»
+   create«name»
+«ENDDEFINE»
