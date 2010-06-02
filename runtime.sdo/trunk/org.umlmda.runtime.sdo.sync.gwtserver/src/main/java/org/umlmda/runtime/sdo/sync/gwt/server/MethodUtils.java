@@ -47,7 +47,7 @@ public class MethodUtils {
       for (int i = 0; i < parameterTypes.length; i++) {
          Class<?> parameterClass = parameterTypes[i];
       
-         if ( isAssignable(parameterClass, parameters[i].getClass()) == false ) {
+         if ( parameters[i] != null && isAssignable(parameterClass, parameters[i].getClass()) == false ) {
             return false;
          }
       }

@@ -50,6 +50,9 @@ public class ParameterUtil
          else if ( parameter instanceof SynchronizedObject ) {
             parameterList.add(new ObjectParameter((SynchronizedObject) parameter));
          }
+         else if ( parameter == null ) {
+            parameterList.add(new NullParameter());
+         }
 
          else {
             throw new IllegalArgumentException(parameter.getClass() + " not supported");
