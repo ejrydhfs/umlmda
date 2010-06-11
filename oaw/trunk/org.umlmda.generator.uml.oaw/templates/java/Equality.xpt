@@ -24,7 +24,7 @@
 	         
 	         return 
 		         «FOREACH attributes AS attr SEPARATOR "&&"» 
-	               «attr.name» == other.«attr.getter»() || («attr.name» != null && «attr.name».equals(other.«attr.getter»()))
+	               ( «attr.name» == other.«attr.getter»() || («attr.name» != null && «attr.name».equals(other.«attr.getter»())) )
 		         «ENDFOREACH» 
 	         ;
 	      }
