@@ -20,51 +20,27 @@
 «FILE generatedPath+"/"+className+".java"»
    package «generatorPackage.getQualifiedPackageName("jaxWs.WSAccessor")»;
 
-	import java.net.MalformedURLException;
-	import java.net.URL;
-	
-	import javax.ejb.Stateless;
-	import javax.ejb.TransactionAttribute;
-	import javax.ejb.TransactionAttributeType;
-
-	import javax.naming.ConfigurationException;
-	import javax.naming.Context;
-   import javax.naming.InitialContext;
-	import javax.naming.NamingException;
-
-   import javax.xml.namespace.QName;
-
-   import org.apache.log4j.Logger;
-   
-   import org.umlmda.runtime.naming.NamingUtils;
-   
-   «resetImports()»
-   «registerImport("ws.Utils")»
-   «registerImport("jee.EJBLocal", PIMClass)»
-   «registerImport("jee.EJBRemote", PIMClass)»
-   «registerImport("ws.ServicePort")»
-   «FOREACH schemaPackages().select(e|e.PIMPackage.getClasses("BusinessObject").size > 0) AS pkg»
-      «registerImport("java.BusinessObjectFactoryImpl", pkg.PIMPackage)»
-   «ENDFOREACH»
-   «registeredImports()»
+   «EXPAND imports»
 
    /**
     * Web service client ejb
     */
-	@Stateless(name="«PIMClass.name»", mappedName=«PIMClass.getScopedName("jee.EJBRemote")».JNDI_NAME)
+	@Stateless(name="«PIMClass.name»", mappedName=«PIMClass.getGeneratedName("jee.EJBRemote")».JNDI_NAME)
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	public class «generatedName» implements «PIMClass.getScopedName("jee.EJBLocal")», «PIMClass.getScopedName("jee.EJBRemote")»  {
+	public class «generatedName» implements «PIMClass.getGeneratedName("jee.EJBLocal")», «PIMClass.getGeneratedName("jee.EJBRemote")»  {
 
    private Logger logger = Logger.getLogger(«generatedName».class);
+
    // Accessor Utilities
-   private final «getScopedName("ws.Utils")» utils = new «getScopedName("ws.Utils")»();
+   private «getScopedName("ws.Utils")» utils;
+   
    // Service port
    private final «getScopedName("ws.ServicePort")» servicePort;
    // Namespace entry containing the service URL
    public final static String COMP_SERVICE_URL = "«PIMClass.wsUrlJNDIEntry()»";
    
    /**
-    * Protect ctor, don't call directly use factory to create an instance
+    * Protect constructor. Don't call directly - use factory to create an instance.
     */
    public «generatedName»() {
       URL serviceURL = null;
@@ -98,11 +74,10 @@
          logger.error(e.getMessage(), e);
          throw new RuntimeException(e);
       }
-      // Init accessor utilities
-      «FOREACH schemaPackages().select(e|e.PIMPackage.getClasses("BusinessObject").size > 0) AS pkg»
-         utils.set«pkg.PIMPackage.getGeneratedName("java.BusinessObjectFactory")»(new «pkg.PIMPackage.getScopedName("java.BusinessObjectFactoryImpl")»());
-      «ENDFOREACH»
       
+      // Init accessor utilities using Guice injection
+      Injector injector = Guice.createInjector(new «name»Module());
+      utils = injector.getInstance(«getScopedName("ws.Utils")».class);
 
       «getScopedName("ws.ServiceLocator")» locator = new «getScopedName("ws.ServiceLocator")»(serviceURL, new QName("«wsNamespace()»", "«name»"));
       servicePort = locator.get«name»Port();
@@ -115,6 +90,35 @@
 «ENDFILE»
 «ENDLET»
 «ENDDEFINE»
+
+
+«DEFINE imports FOR WSBusinessService»
+   import java.net.MalformedURLException;
+   import java.net.URL;
+   
+   import javax.ejb.Stateless;
+   import javax.ejb.TransactionAttribute;
+   import javax.ejb.TransactionAttributeType;
+   import javax.naming.ConfigurationException;
+   import javax.naming.Context;
+   import javax.naming.InitialContext;
+   import javax.naming.NamingException;
+   import javax.xml.namespace.QName;
+
+   import com.google.inject.Guice;
+   import com.google.inject.Injector;
+
+   import org.apache.log4j.Logger;
+   import org.umlmda.runtime.naming.NamingUtils;
+   
+   «resetImports()»
+   «registerImport("ws.Utils")»
+   «registerImport("jee.EJBLocal", PIMClass)»
+   «registerImport("jee.EJBRemote", PIMClass)»
+   «registerImport("ws.ServicePort")»
+   «registeredImports()»
+«ENDDEFINE»
+
 
 «DEFINE callWSMethod FOR JavaModelMethod»
    /**
@@ -156,6 +160,8 @@
     «this.getScopedName("ws.Stub")» «parameter.name»Ws = utils.create«name»(«parameter.name»);
 «ENDDEFINE»
 
+
+
 «DEFINE requestParameter(WSModelParameter parameter) FOR WSModelDataType»
     «this.WSJavaType» «parameter.name»Ws = «parameter.convertToWs»;
 «ENDDEFINE»
@@ -184,3 +190,5 @@
 «DEFINE handleReponseValue FOR WSModelDataType»
    return response;
 «ENDDEFINE»
+
+
