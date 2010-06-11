@@ -1,0 +1,15 @@
+/**
+ * Standard Xtend Library for UML2 base generation on domain models. Extensions for ModelClass
+ */
+import java::util;
+import org::umlmda::generator::model::uml;
+import org::umlmda::profile;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+cached List[JavaModelAttribute] implementedDomainKeys(JavaModelClass class) :
+    class.implementedAttributes.typeSelect(JavaModelAttribute).select(e|e.hasStereotype("Id"))
+;    

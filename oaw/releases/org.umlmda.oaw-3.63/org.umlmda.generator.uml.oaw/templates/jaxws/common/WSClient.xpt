@@ -1,0 +1,84 @@
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION java::UMLMDA»
+
+
+«DEFINE wsClientRoot FOR WSBusinessService»
+«LET generatedName(this, "jaxWs.Client") AS className»
+«LET generatorPackage.getQualifiedPackageName("jaxWs.Client") AS packageName»
+«FILE generatedPath+"/"+className+".java"»
+	package «packageName»;
+	
+	import java.net.MalformedURLException;
+	import java.net.URL;
+	import java.util.logging.Logger;
+	
+	import javax.xml.namespace.QName;
+	import javax.xml.ws.Service;
+	import javax.xml.ws.WebEndpoint;
+	import javax.xml.ws.WebServiceClient;
+	import javax.xml.ws.WebServiceFeature;
+
+   /**
+    * «documentation»
+    */
+   @WebServiceClient(name = "«className»", targetNamespace = "«wsNamespace()»", wsdlLocation = "/WEB-INF/wsdl/«className».wsdl")
+	public class «className» extends Service {
+
+	   private final static URL    «className.toUpperCase()»_WSDL_LOCATION;
+	   private final static Logger logger = Logger.getLogger(«packageName».«className».class.getName());
+	
+	   static {
+	      URL url = null;
+	      try {
+	         URL baseUrl;
+	         baseUrl = «packageName».«className».class.getResource(".");
+	         url = new URL(baseUrl, "/WEB-INF/wsdl/«className».wsdl");
+	      }
+	      catch (MalformedURLException e) {
+	         logger.warning("Failed to create URL for the wsdl Location: '/WEB-INF/wsdl/«className».wsdl', retrying as a local file");
+	         logger.warning(e.getMessage());
+	      }
+	      «className.toUpperCase()»_WSDL_LOCATION = url;
+	   }
+	
+	   public «className»(URL wsdlLocation, QName serviceName) {
+	      super(wsdlLocation, serviceName);
+	   }
+	
+	   public «className»() {
+	      super(«className.toUpperCase()»_WSDL_LOCATION, new QName("«wsNamespace()»", "«className»"));
+	   }
+	
+   «LET generatedName(this, "ws.ServicePort") AS portName»
+	   /**
+	    * @return returns «portName»
+	    */
+	   @WebEndpoint(name = "«portName»")
+	   public «portName» get«portName»() {
+	      return super.getPort(new QName("«wsNamespace()»", "«portName»"), «portName».class);
+	   }
+	
+	   /**
+	    * @param features
+	    *           A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy. Supported features not in the
+	    *           <code>features</code> parameter will have their default values.
+	    * @return returns «portName»
+	    */
+	   @WebEndpoint(name = "«portName»")
+	   public «portName» get«portName»(WebServiceFeature... features) {
+	      return super.getPort(new QName("«wsNamespace()»", "«portName»"), «portName».class, features);
+	   }
+   «ENDLET»
+
+   }   
+«ENDFILE»
+«ENDLET»
+«ENDLET»
+«ENDDEFINE»
+
