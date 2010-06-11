@@ -31,10 +31,12 @@
       «EXPAND factoryMethods»
 
       «REM» Utility classes from other packages to be used for referenced DTOs «ENDREM»
-      // ====================================================================================================
-      // Utilities for referenced classes
-      // ====================================================================================================
-      «EXPAND utilsAccessor FOREACH referencedPackages.typeSelect(WSModelPackage)»
+      «IF referencedPackages.typeSelect(WSModelPackage).select( p | p.PIMPackage.getClasses("BusinessObject").size > 0 ).size > 0»
+	      // ====================================================================================================
+	      // Utilities for referenced classes
+	      // ====================================================================================================
+	      «EXPAND utilsAccessor FOREACH referencedPackages.typeSelect(WSModelPackage).select( p | p.PIMPackage.getClasses("BusinessObject").size > 0 )»
+      «ENDIF»
 
       «REM» Exception methods «ENDREM»
       «FOREACH referencedElements().typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceException") ).sortBy( e | e.name ) AS re»
@@ -60,6 +62,7 @@
    import java.util.List;
    import java.util.Map;
    import java.util.NoSuchElementException;
+   import com.google.inject.Inject;
    
    «REM» First inherit from a nesting component, otherwise try runtime package «ENDREM»
    «IF nestingWSBusinessComponent()!=null»
@@ -134,6 +137,9 @@
          idMap.put(object.getClass(), object);
    }
 
+   /**
+    * For resolving an object reference, to be implemented for concrete associations.
+    */
    protected abstract class ResolveReference {
       protected abstract void resolve();
 
@@ -147,18 +153,26 @@
       }
    }
 
+   /**
+    * Register a reference resolver for later resolving.
+    */
    protected void register(ResolveReference resolveReference) {
       resolvers.add(resolveReference);
    }
 
+   /**
+    * Resolve all registered references.
+    */
    public void resolveReferences() {
       List<ResolveReference> resolver = new ArrayList<ResolveReference>(resolvers);
-      for ( Iterator<ResolveReference> iter = resolver.iterator(); iter.hasNext(); ) {
-         ResolveReference resolveReference = iter.next();
+      for ( ResolveReference resolveReference : resolver ) {
          resolveReference.resolve();
       }
    }
 
+   /**
+    * Clear all collected reference resolvers.
+    */
    public void resetReferences() {
       resolveRegistry.clear();
       resolvers.clear();
@@ -169,6 +183,7 @@
 
 «DEFINE factoryMethods FOR WSModelPackage»
    «LET ((JavaModelPackage)package).generatedName("java.BusinessObjectFactory") AS factoryClass»
+      @Inject
       private «factoryClass» «factoryClass.toFirstLower()» = null;
    
       /**
@@ -177,10 +192,6 @@
       protected «factoryClass» get«factoryClass»() {
          return «factoryClass.toFirstLower()»;
       }
-   
-      public void set«factoryClass»(«factoryClass» factory) {
-         «factoryClass.toFirstLower()» = factory;
-      }
    «ENDLET»
 «ENDDEFINE»
 
@@ -188,12 +199,11 @@
 «DEFINE utilsAccessor FOR WSModelPackage»
    «LET ((WSModelPackage)owner).generatedName("ws.Utils") AS utilsName»
    «LET getQualifiedPackageName("ws.Utils") AS qualifiedUtilsPackage»
-      private «qualifiedUtilsPackage».«utilsName» «utilsName.toFirstLower()» = null;
+      @Inject
+      private «qualifiedUtilsPackage».«utilsName» «utilsName.toFirstLower()»;
       
-      protected «qualifiedUtilsPackage».«utilsName» get«utilsName»() {
-         if ( «utilsName.toFirstLower()» == null ) {
-            «utilsName.toFirstLower()» = new «qualifiedUtilsPackage».«utilsName»();
-         }
+      /** Returns an instance of the utils class for business component «owner.name». */
+      public «qualifiedUtilsPackage».«utilsName» get«utilsName»() {
          return «utilsName.toFirstLower()»;
       }
    «ENDLET»
@@ -246,30 +256,16 @@
    
 	   «LET getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws", "") AS bsObjectQualified»
 	   
-		«EXPAND createWebServiceDTOMethod(wsObjectQualified, bsObjectQualified)»
+		«EXPAND createWsDTOMethod(wsObjectQualified, bsObjectQualified)»
 	
-      /**
-       * Copy interface DTO to web service DTO.
-       * @param src Source BS object to copy from
-       * @param dest Destination WS object to copy to
-       */
-	   «IF subClasses.size==0»protected«ELSE»public«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
-	      «EXPAND copyMethodContent(wsObjectQualified, bsObjectQualified)»
-	   }
+      «EXPAND copyBsToWsMethod(wsObjectQualified, bsObjectQualified)»
 	   
 	   «REM» BS DTO creation only for objects referenced in the service «ENDREM»
 	   «IF service==null || service.referencedElements().contains(this)»
-	      «EXPAND createInterfaceDTOMethod(wsObjectQualified, bsObjectQualified, true)»
+	      «EXPAND createBsDTOMethod(wsObjectQualified, bsObjectQualified, true)»
 	   «ENDIF»
 	
-      /** 
-       * Copy web service DTO to interface DTO.
-       * @param src Source WS object to copy from
-       * @param dest Destination BS object to copy to
-       */
-	   «IF subClasses.size==0»protected«ELSE»public«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
-	      «EXPAND copyMethodContent(null, bsObjectQualified)»
-	   }
+	   «EXPAND copyWsToBsMethod(wsObjectQualified, bsObjectQualified)»
 	   
 	   «ENDLET»
 	«ELSEIF hasStereotype("WebServiceDTOHierarchy")»
@@ -307,34 +303,20 @@
 	// Exception «name»
 	// ====================================================================================================
 
-   «EXPAND createWebServiceDTOMethod(wsObjectQualified, bsObjectQualified)»
+   «EXPAND createWsDTOMethod(wsObjectQualified, bsObjectQualified)»
 
-   /** 
-    * Copy interface DTO to web service DTO.
-    * @param src Source BS object to copy from
-    * @param dest Destination WS object to copy to
-    */
-   «IF subClasses.size==0»protected«ELSE»public«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
-      «EXPAND copyMethodContent(wsObjectQualified, bsObjectQualified)»
-   }
+   «EXPAND copyBsToWsMethod(wsObjectQualified, bsObjectQualified)»
 
-   «EXPAND createInterfaceDTOMethod(wsObjectQualified, bsObjectQualified, false)»
+   «EXPAND createBsDTOMethod(wsObjectQualified, bsObjectQualified, false)»
    
-   /** 
-    * Copy web service DTO to interface DTO.
-    * @param src Source WS object to copy from
-    * @param dest Destination BS object to copy to
-    */
-   «IF subClasses.size==0»protected«ELSE»public«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
-      «EXPAND copyMethodContent(null, bsObjectQualified)»
-   }
+   «EXPAND copyWsToBsMethod(wsObjectQualified, bsObjectQualified)»
    
    «ENDLET»
    «ENDLET»
 «ENDDEFINE»
 
 
-«DEFINE createWebServiceDTOMethod(String wsObjectQualified, String bsObjectQualified) FOR WSModelClass»
+«DEFINE createWsDTOMethod(String wsObjectQualified, String bsObjectQualified) FOR WSModelClass»
    /** 
     * Create «generatedName("ws.Stub")» web service DTO from interface DTO. 
     * @param src Source BS object to copy from
@@ -401,7 +383,7 @@
     * @param src Source WS hierarchical object to copy from.
     * @return New BS interface object from the given WS hierarchical object. 
     */
-   public «bsObjectQualified» create«name»(«wsObjectQualified» src) {
+   public «bsObjectQualified» create«PIMClass.name»(«wsObjectQualified» src) {
       «FOREACH associations.typeSelect(JavaModelAssociation) AS assoc SEPARATOR " else "»
          if ( src.«assoc.getter»() != null ) {
             return «EXPAND createDTOCall(this) FOR (WSModelClass)assoc.target»( src.«assoc.getter»() );
@@ -414,7 +396,7 @@
 «ENDDEFINE»
 
 
-«DEFINE createInterfaceDTOMethod(String wsObjectQualified, String bsObjectQualified, Boolean useFactory) FOR WSModelClass»
+«DEFINE createBsDTOMethod(String wsObjectQualified, String bsObjectQualified, Boolean useFactory) FOR WSModelClass»
    «IF ! abstract»
       /** 
        * Create «generatedName("java.BusinessObjectInterface")» interface DTO from web service DTO. 
@@ -452,173 +434,292 @@
 
 
 «REM» Copies element attributes and associations from BS to WS and backwards «ENDREM»
-«DEFINE copyMethodContent(String wsObjectQualified, String bsObjectQualified) FOR WSModelClass»
-   «IF superClass!=null»
-      «IF superClass.package != package»
-         get«((WSModelPackage)superClass.package.owner).generatedName("ws.Utils")»().
-      «ENDIF»
-      copy«((WSModelClass)superClass).generatedName("ws.Stub")»(src, dest);
-   «ENDIF»
+«DEFINE copyBsToWsMethod(String wsObjectQualified, String bsObjectQualified) FOR WSModelClass»
+   /**
+    * Copy interface DTO to web service DTO.
+    * @param src Source BS object to copy from
+    * @param dest Destination WS object to copy to
+    */
+   «IF subClasses.size==0»protected«ELSE»public«ENDIF» void copy«name»(final «bsObjectQualified» src, final «wsObjectQualified» dest) {
 
-   «REM» -- Attributes -------------------------------------------------------------------------------------- «ENDREM»
-   «IF attributes.typeSelect(JavaModelAttribute).size > 0»
-      // Attributes
-   «ENDIF»
-   «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»
-
-      «REM» Check for null value when copying to WS object «ENDREM»
-      «IF ! attrib.optional && wsObjectQualified!=null && ! attrib.javaPrimitiveType»
-         if ( src.«attrib.getter»() == null ) {
-            throw new IllegalArgumentException(
-                  "None optional attribute «wsObjectQualified».«attrib.name» is null");
-         }
+      «IF superClass!=null»
+         «IF superClass.package != package»
+            get«((WSModelPackage)superClass.package.owner).generatedName("ws.Utils")»().
+         «ENDIF»
+         copy«((WSModelClass)superClass).generatedName("ws.Stub")»(src, dest);
       «ENDIF»
 
-      «IF attrib.multivalue»
+	   «REM» -- Attributes -------------------------------------------------------------------------------------- «ENDREM»
+	   «IF attributes.typeSelect(JavaModelAttribute).size > 0»
+	      // Attributes
+	   «ENDIF»
+	   «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»
+	
+	      «REM» Check for null value when copying to WS object «ENDREM»
+	      «IF ! attrib.optional && ! attrib.javaPrimitiveType»
+	         if ( src.«attrib.getter»() == null ) {
+	            throw new IllegalArgumentException(
+	                  "None optional attribute «wsObjectQualified».«attrib.name» is null");
+	         }
+	      «ENDIF»
 
+         «IF attrib.multivalue»
          «REM» Multivalue attribute «ENDREM»
 
-         «IF attrib.primitiveType»
-	         «IF wsObjectQualified==null»
-	            «REM» WS to BS: List to Array «ENDREM»
-	            
-		         «IF attrib.readOnly»
-		            org.umlmda.runtime.reflect.FieldAccessor.set(
-                        dest, 
-                        «bsObjectQualified».«EXPAND java::BOInterface::propertyNameConstant FOR attrib», 
-                        src.«attrib.getter»().toArray(new «((WSModelClassifier)attrib.modelClassifier).javaType»[ src.«attrib.getter»().size() ]));
-		         «ELSE»
-                  dest.«attrib.setter»(src.«attrib.getter»().toArray(new «((WSModelClassifier)attrib.modelClassifier).javaType»[ src.«attrib.getter»().size() ]));
-		         «ENDIF»
-	            
-	         «ELSE»
-	            «REM» BS to WS: Array to List «ENDREM»
+            «IF attrib.primitiveType»
+
+	            «REM» Array to List «ENDREM»
 		         if ( src.«attrib.getter»()!=null ) {
 			         for ( int i = 0; i < src.«attrib.getter»().length; i++ ) {
 			            dest.«attrib.getter»().add( src.«attrib.getter»()[i] );
 			         }
 		         }
-	         «ENDIF»
-         «ELSEIF attrib.modelClassifier.hasStereotype("WebServiceEnumeration")»
-            «REM» Enumeration type «ENDREM»
-	         if ( src.«attrib.getter»() != null ) {
-               «LET PIMClass.attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.name==attrib.name) AS bsSiblingAttrib»
-               «LET ((WSModelClass)bsSiblingAttrib.modelClassifier).getQualifiedName("java.BusinessObjectInterface") AS bsEnumQualified»
-               «LET ((WSModelClass)attrib.modelClassifier).getQualifiedName("ws.Stub") AS wsEnumQualified»
 
-	            «IF wsObjectQualified==null»
-	               «REM» WS to BS: List to Array «ENDREM»
-	               «LET "dest"+attrib.name.toFirstUpper() AS tempArray»
+	         «ELSEIF attrib.modelClassifier.hasStereotype("WebServiceEnumeration")»
+	            «REM» Enumeration type «ENDREM»
+		         if ( src.«attrib.getter»() != null ) {
+	               «LET PIMClass.attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.name==attrib.name) AS bsSiblingAttrib»
+	               «LET ((WSModelClass)bsSiblingAttrib.modelClassifier).getQualifiedName("java.BusinessObjectInterface") AS bsEnumQualified»
+	               «LET ((WSModelClass)attrib.modelClassifier).getQualifiedName("ws.Stub") AS wsEnumQualified»
+	               «REM» Array to List «ENDREM»
+                  for ( int i = 0; i < src.«attrib.getter»().length; i++ ) {
+	                  dest.«attrib.getter»().add( «wsEnumQualified».fromValue( src.«attrib.getter»()[i].getValue() ) );
+	               }
+	               «ENDLET»
+	               «ENDLET»
+	               «ENDLET»
+		         }
+		      «ELSE»
+	            // TODO: Unsupported multivalue attribute type for '«attrib.name»'!!
+	         «ENDIF»
+	
+	      «ELSEIF ! attrib.primitiveType && attrib.modelClassifier.hasStereotype("WebServiceEnumeration")»
+
+	         «REM» Enumeration «ENDREM»
+	         dest.«attrib.setter»(
+			      «((WSModelClass)attrib.modelClassifier).getQualifiedName("ws.Stub")».fromValue( src.«attrib.getter»().getValue() )
+	         );
+	
+	      «ELSE»
+
+	         «REM» Normal attribute «ENDREM»
+	         «IF attrib.readOnly»
+	            org.umlmda.runtime.reflect.FieldAccessor.set(
+	                  dest, 
+	                  «bsObjectQualified».«EXPAND java::BOInterface::propertyNameConstant FOR attrib», 
+	                  src.«attrib.getter»());
+	         «ELSE»
+	            dest.«attrib.setter»(src.«attrib.getter»());
+	         «ENDIF»
+
+	      «ENDIF»
+	   «ENDFOREACH»
+
+
+	   «REM» -- Associations ------------------------------------------------------------------------------------ «ENDREM»
+	   «IF associations.typeSelect(WSModelAssociation).size > 0»
+	      // Associations
+	   «ENDIF»
+	   «FOREACH associations.typeSelect(WSModelAssociation).select( a | a.target.hasStereotype("WebServiceObject") ) AS assoc»
+	      «LET ((WSModelClass)assoc.target).generatedName("ws.Stub") AS targetName»
+		   «IF assoc.multiple»
+	         if ( src.«assoc.getter»() != null ) {
+	            for (
+		            «IF ((WSModelClass)assoc.target).PIMClass != null»
+	                  «((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface")»
+	               «ELSE»
+	                  «((WSModelClass)assoc.target).getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws", "")»
+	               «ENDIF»
+   	            «targetName.toFirstLower()» : src.«assoc.getter»() ) {
+		            dest.«assoc.getter»().add(«EXPAND createDTOCall(this) FOR (WSModelClass)assoc.target»(«targetName.toFirstLower()»));
+		         }
+	         }
+	      «ELSE»
+            if ( src.«assoc.getter»() != null ) {
+               dest.«assoc.setter»(«EXPAND createDTOCall(this) FOR (WSModelClass)assoc.target»(src.«assoc.getter»()));
+            }
+	      «ENDIF»
+	      «ENDLET»
+	   «ENDFOREACH»
+   }
+«ENDDEFINE»
+
+
+«REM» Copies element attributes and associations from BS to WS and backwards «ENDREM»
+«DEFINE copyWsToBsMethod(String wsObjectQualified, String bsObjectQualified) FOR WSModelClass»
+   /** 
+    * Copy web service DTO to interface DTO.
+    * @param src Source WS object to copy from
+    * @param dest Destination BS object to copy to
+    */
+   «IF subClasses.size==0»protected«ELSE»public«ENDIF» void copy«name»(final «wsObjectQualified» src, final «bsObjectQualified» dest) {
+
+	   «IF superClass!=null»
+	      «IF superClass.package != package»
+	         get«((WSModelPackage)superClass.package.owner).generatedName("ws.Utils")»().
+	      «ENDIF»
+	      copy«((WSModelClass)superClass).generatedName("ws.Stub")»(src, dest);
+	   «ENDIF»
+	
+	   «REM» -- Attributes -------------------------------------------------------------------------------------- «ENDREM»
+	   «IF attributes.typeSelect(JavaModelAttribute).size > 0»
+	      // Attributes
+	   «ENDIF»
+	   «FOREACH attributes.typeSelect(JavaModelAttribute) AS attrib»
+	
+	      «IF attrib.multivalue»
+	         «REM» Multivalue attribute «ENDREM»
+	
+	         «IF attrib.primitiveType»
+               «REM» List to Array «ENDREM»
+               «IF attrib.readOnly»
+                  org.umlmda.runtime.reflect.FieldAccessor.set(
+                        dest, 
+                        «bsObjectQualified».«EXPAND java::BOInterface::propertyNameConstant FOR attrib», 
+                        src.«attrib.getter»().toArray(new «((WSModelClassifier)attrib.modelClassifier).javaType»[ src.«attrib.getter»().size() ]));
+               «ELSE»
+                  dest.«attrib.setter»(src.«attrib.getter»().toArray(new «((WSModelClassifier)attrib.modelClassifier).javaType»[ src.«attrib.getter»().size() ]));
+               «ENDIF»
+               
+            «ELSEIF attrib.modelClassifier.hasStereotype("WebServiceEnumeration")»
+               «REM» Enumeration type «ENDREM»
+               if ( src.«attrib.getter»() != null ) {
+                  «LET PIMClass.attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.name==attrib.name) AS bsSiblingAttrib»
+                  «LET ((WSModelClass)bsSiblingAttrib.modelClassifier).getQualifiedName("java.BusinessObjectInterface") AS bsEnumQualified»
+                  «LET ((WSModelClass)attrib.modelClassifier).getQualifiedName("ws.Stub") AS wsEnumQualified»
+
+                  «REM» List to Array «ENDREM»
+                  «LET "dest"+attrib.name.toFirstUpper() AS tempArray»
                   «bsEnumQualified»[] «tempArray» = new «bsEnumQualified»[ src.«attrib.getter»().size() ];
                   for ( int i = 0; i < src.«attrib.getter»().size(); i++ ) {
                      «tempArray»[i] = «bsEnumQualified».fromValue( src.«attrib.getter»().get(i).value() );
                   }
                   dest.«attrib.setter»(«tempArray»);
-	               «ENDLET»
-	            «ELSE»
-	               «REM» BS to WS: Array to List «ENDREM»
-                  for ( int i = 0; i < src.«attrib.getter»().length; i++ ) {
-	                  dest.«attrib.getter»().add( «wsEnumQualified».fromValue( src.«attrib.getter»()[i].getValue() ) );
-	               }
-	            «ENDIF»
+                  «ENDLET»
 
-               «ENDLET»
-               «ENDLET»
-               «ENDLET»
-	         }
-	      «ELSE»
-            // TODO: Unsupported multivalue attribute type for '«attrib.name»'!!
-         «ENDIF»
-
-      «ELSEIF ! attrib.primitiveType && attrib.modelClassifier.hasStereotype("WebServiceEnumeration")»
-
-         «REM» Enumeration «ENDREM»
-         dest.«attrib.setter»(
-			   «IF wsObjectQualified==null»
-			      «REM» WS to BS «ENDREM»
-			      «((WSEnumeration)attrib.modelClassifier).PIMClass.getQualifiedName("java.BusinessObjectInterface")».fromValue( src.«attrib.getter»().value() )
-			   «ELSE»
-			      «REM» BS to WS «ENDREM»
-			      «((WSModelClass)attrib.modelClassifier).getQualifiedName("ws.Stub")».fromValue( src.«attrib.getter»().getValue() )
-			   «ENDIF»
-         );
-
-      «ELSE»
-
-         «REM» Normal attribute «ENDREM»
-         «IF attrib.readOnly»
-            org.umlmda.runtime.reflect.FieldAccessor.set(
-                  dest, 
-                  «bsObjectQualified».«EXPAND java::BOInterface::propertyNameConstant FOR attrib», 
-                  src.«attrib.getter»());
-         «ELSE»
-            dest.«attrib.setter»(src.«attrib.getter»());
-         «ENDIF»
-
-      «ENDIF»
-   «ENDFOREACH»
-
-
-   «REM» -- Associations ------------------------------------------------------------------------------------ «ENDREM»
-   «IF associations.typeSelect(JavaModelAttribute).size > 0»
-      // Associations
-   «ENDIF»
-   «FOREACH associations.typeSelect(JavaModelAssociation).select( a | a.target.hasStereotype("WebServiceObject") ) AS assoc»
-      «LET ((WSModelClass)assoc.target).generatedName("ws.Stub") AS targetName»
-	   «IF assoc.multiple»
-         if ( src.«assoc.getter»() != null ) {
-            for ( 
-            «IF wsObjectQualified==null»
-               «REM» WS to BS «ENDREM»
-               «((WSModelClass)assoc.target).getQualifiedName("ws.Stub")»
-            «ELSE»
-               «REM» BS to WS «ENDREM»
-               «IF ((WSModelClass)assoc.target).PIMClass != null»
-                  «((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface")»
-               «ELSE»
-                  «((WSModelClass)assoc.target).getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws", "")»
-               «ENDIF»
-            «ENDIF»
-            «targetName.toFirstLower()» : src.«assoc.getter»() ) {
-	            dest.«assoc.getter»().add(«EXPAND createDTOCall(this) FOR (WSModelClass)assoc.target»(«targetName.toFirstLower()»));
-	         }
-         }
-      «ELSE»
-         «IF wsObjectQualified==null && assoc.target.hasStereotype("WebServiceDTOReference")»
-
-            «REM» WS to BS + reference object«ENDREM»
-            «IF assoc.target.attributes.typeSelect(JavaModelAttribute).size > 0»
-            register(new ResolveReference() {
-               @Override
-               protected void resolve() {
-                  if ( src.«assoc.getter»() != null ) {
-                     dest.«assoc.setter»(
-                        getObject(«((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface")».class, 
-                           src.«assoc.getter»().«assoc.target.attributes.typeSelect(JavaModelAttribute).first().getter»()));
-                  }
-                  else {
-                     dest.«assoc.setter»(null);
-                  }
+                  «ENDLET»
+                  «ENDLET»
+                  «ENDLET»
                }
-            });
+               
             «ELSE»
-               // TODO: Can't set "«assoc.setter»" as the reference DTO  «assoc.target.name» doesn't have an ID attribute!
-            «ENDIF»         
+            
+               // TODO: Unsupported multivalue attribute type for '«attrib.name»'!!
+               
+            «ENDIF»
+
+         «ELSEIF ! attrib.primitiveType && attrib.modelClassifier.hasStereotype("WebServiceEnumeration")»
+            «REM» Single Enumeration value «ENDREM»
+            
+            dest.«attrib.setter»(
+               «((WSEnumeration)attrib.modelClassifier).PIMClass.getQualifiedName("java.BusinessObjectInterface")».fromValue( src.«attrib.getter»().value() )
+            );
+
          «ELSE»
-            «REM» BS to WS «ENDREM»
-            if ( src.«assoc.getter»() != null ) {
-               dest.«assoc.setter»(«EXPAND createDTOCall(this) FOR (WSModelClass)assoc.target»(src.«assoc.getter»()));
-            }
+            «REM» Normal attribute «ENDREM»
+            
+            «IF attrib.readOnly»
+               org.umlmda.runtime.reflect.FieldAccessor.set(
+                     dest, 
+                     «bsObjectQualified».«EXPAND java::BOInterface::propertyNameConstant FOR attrib», 
+                     src.«attrib.getter»());
+            «ELSE»
+               dest.«attrib.setter»(src.«attrib.getter»());
+            «ENDIF»
+
          «ENDIF»
-      «ENDIF»
-      «ENDLET»
-   «ENDFOREACH»
+      «ENDFOREACH»
+
+
+	   «REM» -- Associations ------------------------------------------------------------------------------------ «ENDREM»
+	   «IF associations.typeSelect(WSModelAssociation).size > 0»
+	      // Associations
+	   «ENDIF»
+	   «FOREACH associations.typeSelect(WSModelAssociation).select( a | a.target.hasStereotype("WebServiceObject") ) AS assoc»
+	      «LET ((WSModelClass)assoc.target).generatedName("ws.Stub") AS targetName»
+
+	      «IF assoc.multiple»
+	      
+	         if ( src.«assoc.getter»() != null ) {
+
+               «IF assoc.target.hasStereotype("WebServiceDTOReference")»
+                  «REM» WS to BS with reference object«ENDREM»
+                  «IF assoc.target.attributes.typeSelect(JavaModelAttribute).size > 0»
+                     register(new ResolveReference() {
+                        @Override
+                        protected void resolve() {
+                           for («((WSModelClass)assoc.target).getQualifiedName("ws.Stub")» «targetName.toFirstLower()» : src.«assoc.getter»() ) {
+                              dest.«assoc.getter»().add(
+                                    («((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface")») getObject(
+                                          «((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface")».class, 
+                                          «targetName.toFirstLower()».«assoc.target.attributes.typeSelect(JavaModelAttribute).first().getter»));
+                           }
+                        }
+                     });
+                  «ELSE»
+                     // TODO: Can't add to "«assoc.setter»" as the reference DTO  «assoc.target.name» doesn't have an ID attribute!
+                  «ENDIF»
+
+               «ELSE»
+                  «REM» Normal WS to BS «ENDREM»
+                  for («((WSModelClass)assoc.target).getQualifiedName("ws.Stub")» «targetName.toFirstLower()» : src.«assoc.getter»() ) {
+                     dest.«assoc.getter»().add(
+                        («((WSModelClass)assoc.PIMAssociation.target).getQualifiedName("java.BusinessObjectInterface")»)
+                        «EXPAND createDTOCall(PIMClass) FOR (WSModelClass)((WSModelClass)assoc.target).PIMClass»(«targetName.toFirstLower()»)
+                     );
+                  }
+               
+               «ENDIF»
+	         }
+	      
+	      «ELSE»
+         
+            «IF assoc.target.hasStereotype("WebServiceDTOReference")»
+               «REM» WS to BS with reference object«ENDREM»
+
+               «IF assoc.target.attributes.typeSelect(JavaModelAttribute).size > 0»
+               register(new ResolveReference() {
+                  @Override
+                  protected void resolve() {
+                     if ( src.«assoc.getter»() != null ) {
+                        dest.«assoc.setter»(
+                           getObject(«((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface")».class, 
+                              src.«assoc.getter»().«assoc.target.attributes.typeSelect(JavaModelAttribute).first().getter»()));
+                     }
+                     else {
+                        dest.«assoc.setter»(null);
+                     }
+                  }
+               });
+               «ELSE»
+                  // TODO: Can't set "«assoc.setter»" as the reference DTO  «assoc.target.name» doesn't have an ID attribute!
+               «ENDIF»
+
+            «ELSE»
+               «REM» Normal WS to BS «ENDREM»
+               if ( src.«assoc.getter»() != null ) {
+                  dest.«assoc.setter»(
+                     («((WSModelClass)assoc.PIMAssociation.target).getQualifiedName("java.BusinessObjectInterface")»)
+                     «EXPAND createDTOCall(PIMClass) FOR (WSModelClass)((WSModelClass)assoc.target).PIMClass»(src.«assoc.getter»())
+                  );
+               }
+
+            «ENDIF»
+            
+         «ENDIF»
+         «ENDLET»
+      «ENDFOREACH»
+   }
 «ENDDEFINE»
 
 
-«DEFINE createDTOCall(WSModelClass callerClass) FOR WSModelClass»
+«DEFINE createDTOCall(JavaModelClass callerClass) FOR WSModelClass»
    «IF callerClass.package != package»
-      get«((WSModelPackage)package.owner).generatedName("ws.Utils")»().
+      «IF hasStereotype("WebServiceDTO") || hasStereotype("WebServiceDTOHierarchy") || hasStereotype("WebServiceDTOReference")»
+         get«((WSModelPackage)package.owner).generatedName("ws.Utils")»().
+      «ELSE»
+         get«((WSModelPackage)package).generatedName("ws.Utils")»().
+      «ENDIF»
    «ENDIF»
    create«name»
 «ENDDEFINE»
