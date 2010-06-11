@@ -180,6 +180,10 @@ public class SynchronizerImpl implements Recorder
    public boolean isRecording() {
       return recording;
    }
+   
+   public synchronized boolean isInvocationRunning() {
+      return invocationStatus.equals(InvocationStatus.RUNNING);
+   }
 
    public void recordInvoke(final SynchronizedObject recordedObject, final String methodName, final Object... parameters) {
       // Translate parameters

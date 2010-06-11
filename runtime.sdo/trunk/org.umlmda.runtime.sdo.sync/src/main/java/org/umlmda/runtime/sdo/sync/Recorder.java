@@ -19,6 +19,8 @@ public interface Recorder
    boolean stopRecording();
 
    boolean isRecording();
+   
+   boolean isInvocationRunning();
 
    void register(SynchronizedObject recordedObject, boolean recordCreation);
 

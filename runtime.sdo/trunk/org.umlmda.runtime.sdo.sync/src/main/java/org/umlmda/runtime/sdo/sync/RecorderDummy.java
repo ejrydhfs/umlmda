@@ -123,6 +123,10 @@ public class RecorderDummy implements Recorder
       return recording;
    }
 
+   public boolean isInvocationRunning() {
+      return false;
+   }
+   
    public void setSynchronizeStrategy(SynchronizeStrategy strategy) {
    }
 
