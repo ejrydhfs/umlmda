@@ -16,6 +16,7 @@
    «IF hasStereotype("WebService")»
       «EXPAND jaxws::server::WSPortLocal::WSPortLocal»
       «EXPAND jaxws::server::WSServlet::servletRoot»
+      «EXPAND jaxws::server::GuiceFactoryModule::FactoryModule FOR this»
    «ENDIF»
 «ENDDEFINE»
 

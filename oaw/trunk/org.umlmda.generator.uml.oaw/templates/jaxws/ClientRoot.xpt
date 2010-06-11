@@ -15,6 +15,7 @@
    «ERROR "Root called on <<WSBusinessService>> "+name»
    «IF hasStereotype("WebService")»
       «EXPAND jaxws::client::WSAccessor::WSAccessor FOR this»
+      «EXPAND jaxws::client::GuiceFactoryModule::FactoryModule FOR this»
    «ENDIF»
 «ENDDEFINE»
 
