@@ -21,8 +21,7 @@
 	/**
 	 * Contains all create and copy methods for objects used in more than one service interface.
 	 */
-	public class «className» «EXPAND extendsStatement» 
-   {
+	public class «className» «EXPAND extendsStatement» {
       
       «REM» Basic utility methods, normally placed in the runtime package (if that exists) «ENDREM» 
       «IF isRuntimeWsPackage() || findRuntimeWsPackage()==null»
