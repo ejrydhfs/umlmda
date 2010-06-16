@@ -10,7 +10,6 @@
 
 «DEFINE wsClientRoot FOR WSBusinessService»
 «LET generatedName(this, "jaxWs.Client") AS className»
-«LET "WEB-INF/wsdl/"+className+".wsdl" AS wsdlLocation»
 «LET generatorPackage.getQualifiedPackageName("jaxWs.Client") AS packageName»
 «FILE generatedPath+"/"+className+".java"»
 	package «packageName»;
@@ -28,33 +27,13 @@
    /**
     * «documentation»
     */
-   @WebServiceClient(name = "«className»", targetNamespace = "«wsNamespace()»", wsdlLocation = "«wsdlLocation»")
+   @WebServiceClient(name = "«className»", targetNamespace = "«wsNamespace()»")
 	public class «className» extends Service {
 
-      private final static String DEFAULT_«className.toUpperCase()»_WSDL_LOCATION = "«wsdlLocation»";
-	   private final static URL    «className.toUpperCase()»_WSDL_LOCATION;
 	   private final static Logger logger = Logger.getLogger(«packageName».«className».class.getName());
-	
-	   static {
-	      URL url = null;
-	      try {
-	         URL baseUrl;
-	         baseUrl = «packageName».«className».class.getResource(".");
-	         url = new URL(baseUrl, DEFAULT_«className.toUpperCase()»_WSDL_LOCATION);
-	      }
-	      catch (MalformedURLException e) {
-	         logger.warning("Failed to create URL for the wsdl Location: '"+ DEFAULT_«className.toUpperCase()»_WSDL_LOCATION +"', retrying as a local file");
-	         logger.warning(e.getMessage());
-	      }
-	      «className.toUpperCase()»_WSDL_LOCATION = url;
-	   }
 	
 	   public «className»(URL wsdlLocation, QName serviceName) {
 	      super(wsdlLocation, serviceName);
-	   }
-	
-	   public «className»() {
-	      super(«className.toUpperCase()»_WSDL_LOCATION, new QName("«wsNamespace()»", "«className»"));
 	   }
 	
    «LET generatedName(this, "ws.ServicePort") AS portName»
@@ -80,7 +59,6 @@
 
    }   
 «ENDFILE»
-«ENDLET»
 «ENDLET»
 «ENDLET»
 «ENDDEFINE»
