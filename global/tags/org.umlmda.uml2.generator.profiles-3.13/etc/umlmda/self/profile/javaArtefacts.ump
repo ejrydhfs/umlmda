@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.umlmda.generator.profile:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.umlmda.generator.profile="http:///org/umlmda/generator/profile.ecore" name="javaArtefacts" adapterFactory="org.umlmda.uml.generator.java.JavaModelAdapterFactory">
+  <artefacts name="java.BusinessFactory" prefix="" postfix="" replacement="\u$1Factory" replacementPattern="(.*)" writer="org.umlmda.uml.generator.java.writer.BusinessFactoryWriter"/>
+  <artefacts name="java.BusinessObjectFactoryImpl" prefix="" postfix="" namespacePostfix=".dto.impl" replacement="\u$1FactoryImpl" replacementPattern="(.*)" writer="org.umlmda.uml.generator.java.writer.BusinessObjectFactoryImplWriter"/>
+  <artefacts name="java.BusinessObjectFactory" prefix="" postfix="" namespacePostfix=".dto" replacement="\u$1Factory" replacementPattern="(.*)" writer="org.umlmda.uml.generator.java.writer.BusinessObjectFactoryWriter"/>
+  <artefacts name="java.BusinessException" namespacePostfix=".exception" writer="org.umlmda.uml.generator.java.writer.BusinessExceptionWriter"/>
+  <artefacts name="java.BusinessObjectInterface" prefix="" namespacePostfix=".dto" writer="org.umlmda.uml.generator.java.writer.BusinessInterfaceWriter"/>
+  <artefacts name="java.BusinessServiceInterface" prefix="" namespacePostfix="" writer="org.umlmda.uml.generator.java.writer.BusinessInterfaceWriter"/>
+  <artefacts name="java.BusinessObject" prefix="" postfix="Impl" namespacePostfix=".dto.impl" replacement="" replacementPattern="" writer="org.umlmda.uml.generator.java.writer.SimpleBeanWriter"/>
+  <artefacts name="java.DelegateInterface" fileExtension="java" postfix="Delegate" namespacePostfix=".dto" type="Velocity" writer="java/DelegateInterface.vm" generationStrategy="org.umlmda.uml.generator.java.DelegationGenerationStrategy"/>
+  <artefacts name="java.DelegateImpl" postfix="DelegateImpl" namespacePostfix=".dto.impl.delegate" type="None"/>
+  <artefacts name="java.ServiceListener" postfix="" writer="org.umlmda.uml.generator.java.writer.BusinessInterfaceWriter"/>
+  <artefacts name="java.PlainClass"/>
+  <artefacts name="java.PlainInterface"/>
+  <artefacts name="java.Enumeration" fileExtension="java" namespacePostfix=".dto" type="Velocity" writer="java/Enumeration.vm"/>
+  <artefacts name="java.Visitor" fileExtension="java" postfix="" namespacePostfix=".dto" replacement="\u$1Visitor" replacementPattern="(.*)" type="Velocity" writer="java/Visitor.vm"/>
+  <artefacts name="java.AbstractVisitor" fileExtension="java" prefix="" postfix="" namespacePostfix=".dto.impl" replacement="Abstract\u$1Visitor" replacementPattern="(.*)" type="Velocity" writer="java/AbstractVisitor.vm"/>
+  <artefacts name="java.VisitableIterator" fileExtension="java" postfix="" namespacePostfix=".dto" replacement="\u$1VisitableIterator" replacementPattern="(.*)" type="Velocity" writer="java/VisitableIterator.vm"/>
+  <artefacts name="java.ConstraintVisitor" fileExtension="java" postfix="" namespacePostfix=".util" replacement="\u$1ConstraintVisitor" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintVisitor.vm"/>
+  <artefacts name="java.ConstraintIteration" fileExtension="java" postfix="" namespacePostfix=".util" replacement="\u$1ConstraintIteration" replacementPattern="(.*)" type="Velocity" writer="java/ConstraintIteration.vm"/>
+  <artefacts name="java.MetaFeaturesInterface" fileExtension="java" postfix="Features" namespacePostfix=".dto.meta" type="Velocity" writer="java/MetaFeaturesInterface.vm"/>
+  <artefacts name="java.MetaClassInterface" fileExtension="java" postfix="Class" namespacePostfix=".dto.meta" type="Velocity" writer="java/MetaClassInterface.vm"/>
+  <artefacts name="gwt.EnumerationCustomFieldSerializer" fileExtension="java" postfix="_CustomFieldSerializer" namespacePostfix=".dto" type="None" writer=""/>
+  <artefacts name="jee.EJBLocal" fileExtension="java" prefix="" namespacePostfix="" replacement="\u$1Local" replacementPattern="(.*)" type="None"/>
+  <artefacts name="jee.EJBRemote" fileExtension="java" prefix="" namespacePostfix="" replacement="\u$1Remote" replacementPattern="(.*)" type="None"/>
+</org.umlmda.generator.profile:Profile>

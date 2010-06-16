@@ -1,0 +1,155 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.releng</artifactId>
+      <version>3.2.0</version>
+   </parent>
+   <artifactId>org.umlmda.uml2.generator.profiles</artifactId>
+   <name>UMLMDA generator profiles</name>
+   <version>3.13</version>
+   <description />
+   <packaging>pom</packaging>
+
+   <scm>
+      <connection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.generator.profiles-3.13</connection>
+      <developerConnection>scm:svn:https://umlmda.svn.sourceforge.net/svnroot/umlmda/global/tags/org.umlmda.uml2.generator.profiles-3.13</developerConnection>
+   </scm>
+
+   <build>
+      <plugins>
+         <!-- Zusammenpacken der UMLMDA Profile -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>model2java</id>
+                  <phase>package</phase>
+                  <configuration>
+                     <tasks>
+                        <mkdir dir="${project.build.directory}" />
+                        <zip destfile="${project.build.directory}/java-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="java*.ump" />
+                        </zip>
+                        <zip destfile="${project.build.directory}/gwt-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="gwt*.ump" />
+                        </zip>
+                        <zip destfile="${project.build.directory}/j2ee-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="j2ee*.ump" />
+                        </zip>
+                        <zip destfile="${project.build.directory}/jee-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="jee*.ump" />
+                        </zip>
+                        <zip destfile="${project.build.directory}/ws-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="ws*.ump" />
+                        </zip>
+                        <zip destfile="${project.build.directory}/wsdl-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="wsdl*.ump" />
+                        </zip>
+                        <zip destfile="${project.build.directory}/jaxws-profiles.zip">
+                           <fileset dir="${basedir}/etc/umlmda/self/profile" includes="jaxWs*.ump" />
+                        </zip>
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>attach-artifacts</id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>attach-artifact</goal>
+                  </goals>
+                  <configuration>
+                     <artifacts>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/java-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>java-ump</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/gwt-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>gwt-ump</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/j2ee-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>j2ee-ump</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/jee-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>jee-ump</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/ws-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>ws-ump</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/wsdl-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>wsdl-ump</classifier>
+                        </artifact>
+                        <artifact>
+                           <file>
+                              ${project.build.directory}/jaxws-profiles.zip
+                           </file>
+                           <type>zip</type>
+                           <classifier>jaxws-ump</classifier>
+                        </artifact>
+                     </artifacts>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
+
+   <repositories>
+      <repository>
+         <id>artifactory</id>
+         <url>http://coding.ds2k.de/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+      <repository>
+         <id>cor-artifactory</id>
+         <url>http://cor-health-dev1.corag.de/artifactory/repo</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
+
+</project>
