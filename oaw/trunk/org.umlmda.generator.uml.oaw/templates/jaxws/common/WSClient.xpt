@@ -10,6 +10,7 @@
 
 «DEFINE wsClientRoot FOR WSBusinessService»
 «LET generatedName(this, "jaxWs.Client") AS className»
+«LET "WEB-INF/wsdl/"+className+".wsdl" AS wsdlLocation»
 «LET generatorPackage.getQualifiedPackageName("jaxWs.Client") AS packageName»
 «FILE generatedPath+"/"+className+".java"»
 	package «packageName»;
@@ -27,9 +28,10 @@
    /**
     * «documentation»
     */
-   @WebServiceClient(name = "«className»", targetNamespace = "«wsNamespace()»", wsdlLocation = "/WEB-INF/wsdl/«className».wsdl")
+   @WebServiceClient(name = "«className»", targetNamespace = "«wsNamespace()»", wsdlLocation = "«wsdlLocation»")
 	public class «className» extends Service {
 
+      private final static String DEFAULT_«className.toUpperCase()»_WSDL_LOCATION = "«wsdlLocation»";
 	   private final static URL    «className.toUpperCase()»_WSDL_LOCATION;
 	   private final static Logger logger = Logger.getLogger(«packageName».«className».class.getName());
 	
@@ -38,10 +40,10 @@
 	      try {
 	         URL baseUrl;
 	         baseUrl = «packageName».«className».class.getResource(".");
-	         url = new URL(baseUrl, "/WEB-INF/wsdl/«className».wsdl");
+	         url = new URL(baseUrl, DEFAULT_«className.toUpperCase()»_WSDL_LOCATION);
 	      }
 	      catch (MalformedURLException e) {
-	         logger.warning("Failed to create URL for the wsdl Location: '/WEB-INF/wsdl/«className».wsdl', retrying as a local file");
+	         logger.warning("Failed to create URL for the wsdl Location: '"+ DEFAULT_«className.toUpperCase()»_WSDL_LOCATION +"', retrying as a local file");
 	         logger.warning(e.getMessage());
 	      }
 	      «className.toUpperCase()»_WSDL_LOCATION = url;
@@ -78,6 +80,7 @@
 
    }   
 «ENDFILE»
+«ENDLET»
 «ENDLET»
 «ENDLET»
 «ENDDEFINE»
