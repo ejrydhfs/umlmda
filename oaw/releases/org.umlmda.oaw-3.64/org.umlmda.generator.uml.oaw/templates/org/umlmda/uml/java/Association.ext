@@ -1,0 +1,47 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelAssociation
+ */
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator::java;
+
+extension org::umlmda::uml::java::DataType;
+
+cached String javaTypeName(JavaModelAssociation assoc) :
+	((JavaModelClass)assoc.target).javaType;
+	
+cached String javaType(JavaModelAssociation assoc) :
+	assoc.interfaceType
+;		
+
+cached String javaNonGenericType(JavaModelAssociation assoc) :
+    assoc.interfaceType.contains('<') ? 
+        assoc.interfaceType.split('<').first() 
+    : 
+        assoc.interfaceType
+;
+
+cached Boolean isbidirectional(JavaModelAssociation assoc) :
+    assoc.navigatableToSource && assoc.navigatableToTarget
+;
+
+cached Boolean isbidirectionalOneToMany(JavaModelAssociation assoc) :
+      assoc.isbidirectional() 
+ && ((assoc.multiple && !assoc.reverse.multiple) || (assoc.reverse.multiple && !assoc.multiple))
+;
+
+cached JavaModelClass bidirectionalParent(JavaModelAssociation assoc) :
+    assoc.multiple ? assoc.source : assoc.target
+;
+
+cached String bidirectionalParentType(JavaModelAssociation assoc) :
+    assoc.bidirectionalParent().getScopedName("java.BusinessObjectInterface")
+;
+    
+cached JavaModelClass bidirectionalChild(JavaModelAssociation assoc) :
+    assoc.multiple ? assoc.target : assoc.source
+;
+
+cached String bidirectionalChildType(JavaModelAssociation assoc) : 
+    assoc.bidirectionalChild().getScopedName("java.BusinessObjectInterface")
+;
+        

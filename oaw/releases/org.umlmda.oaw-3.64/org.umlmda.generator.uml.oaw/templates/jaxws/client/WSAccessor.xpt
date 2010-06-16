@@ -1,0 +1,194 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION jaxws::client::WSAccessor»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::JmiReflect»
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+«EXTENSION org::umlmda::uml::java::Parameter»
+
+«DEFINE WSAccessor FOR WSBusinessService»
+«LET generatedName(this, "jaxWs.WSAccessor") AS className»
+«FILE generatedPath+"/"+className+".java"»
+   package «generatorPackage.getQualifiedPackageName("jaxWs.WSAccessor")»;
+
+   «EXPAND imports»
+
+   /**
+    * Web service client ejb
+    */
+	@Stateless(name="«PIMClass.name»", mappedName=«PIMClass.getGeneratedName("jee.EJBRemote")».JNDI_NAME)
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+	public class «generatedName» implements «PIMClass.getGeneratedName("jee.EJBLocal")», «PIMClass.getGeneratedName("jee.EJBRemote")»  {
+
+   private Logger logger = Logger.getLogger(«generatedName».class);
+
+   // Accessor Utilities
+   private «getScopedName("ws.Utils")» utils;
+   
+   // Service port
+   private final «getScopedName("ws.ServicePort")» servicePort;
+   // Namespace entry containing the service URL
+   public final static String COMP_SERVICE_URL = "«PIMClass.wsUrlJNDIEntry()»";
+   
+   /**
+    * Protect constructor. Don't call directly - use factory to create an instance.
+    */
+   public «generatedName»() {
+      URL serviceURL = null;
+
+      try {
+         Object envEntry = NamingUtils.lookup(Object.class, COMP_SERVICE_URL);
+            
+         if ( envEntry instanceof URL ) {
+            serviceURL = (URL)envEntry;
+         }
+         else if ( envEntry instanceof String ) {
+            serviceURL = new URL((String)envEntry);
+         }
+         if ( serviceURL == null ) {
+            String msg = "No entry in "+COMP_SERVICE_URL;
+
+            throw new RuntimeException(msg);
+         }
+
+         String msg = "Using service at "+serviceURL.toExternalForm();
+         logger.debug(msg);
+      } catch (ConfigurationException e) {
+         String msg = "lookup failed: "+COMP_SERVICE_URL;
+         logger.error(msg, e);
+         throw new RuntimeException(msg, e);
+      } catch (NamingException e) {
+         String msg = "lookup failed: "+COMP_SERVICE_URL;
+         logger.error(msg, e);
+         throw new RuntimeException(e);
+      } catch (MalformedURLException e) {
+         logger.error(e.getMessage(), e);
+         throw new RuntimeException(e);
+      }
+      
+      // Init accessor utilities using Guice injection
+      Injector injector = Guice.createInjector(new «name»Module());
+      utils = injector.getInstance(«getScopedName("ws.Utils")».class);
+
+      «getScopedName("ws.ServiceLocator")» locator = new «getScopedName("ws.ServiceLocator")»(serviceURL, new QName("«wsNamespace()»", "«name»"));
+      servicePort = locator.get«name»Port();
+   }
+   
+   «FOREACH methods.typeSelect(JavaModelMethod) AS method»
+      «EXPAND callWSMethod FOR method»
+   «ENDFOREACH»
+}   
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE imports FOR WSBusinessService»
+   import java.net.MalformedURLException;
+   import java.net.URL;
+   
+   import javax.ejb.Stateless;
+   import javax.ejb.TransactionAttribute;
+   import javax.ejb.TransactionAttributeType;
+   import javax.naming.ConfigurationException;
+   import javax.naming.Context;
+   import javax.naming.InitialContext;
+   import javax.naming.NamingException;
+   import javax.xml.namespace.QName;
+
+   import com.google.inject.Guice;
+   import com.google.inject.Injector;
+
+   import org.apache.log4j.Logger;
+   import org.umlmda.runtime.naming.NamingUtils;
+   
+   «resetImports()»
+   «registerImport("ws.Utils")»
+   «registerImport("jee.EJBLocal", PIMClass)»
+   «registerImport("jee.EJBRemote", PIMClass)»
+   «registerImport("ws.ServicePort")»
+   «registeredImports()»
+«ENDDEFINE»
+
+
+«DEFINE callWSMethod FOR JavaModelMethod»
+   /**
+    * 
+    */
+   «EXPAND java::BOInterface::methodDecl("public") FOR pimMethod()» {
+      try {
+         «FOREACH parameters.typeSelect(WSModelParameter) AS param»
+            «EXPAND requestParameter(param) FOR (WSModelClassifier)param.type»
+         «ENDFOREACH»
+			utils.resolveReferences();
+         «IF returnType != null»
+   			«EXPAND declResponseValue FOR (WSModelClassifier)returnType» 
+   		«ENDIF»	
+			servicePort.«name»(
+			   «FOREACH parameters.typeSelect(ModelParameter) AS param SEPARATOR ","»
+			         «param.name»Ws
+			   «ENDFOREACH»
+         );
+         «IF returnType != null»
+            «EXPAND handleReponseValue FOR (WSModelClassifier)returnType»
+         «ENDIF»
+      }
+      «FOREACH exceptions.typeSelect(WSModelClass) AS exceptionCls»
+         catch («wsExceptionClass(exceptionCls)» e) {
+            throw new «exceptionCls.PIMClass.javaTypeName()»();
+         }
+      «ENDFOREACH» 
+      finally {
+         utils.resetReferences();
+      }
+   }
+«ENDDEFINE»
+
+«DEFINE requestParameter(WSModelParameter parameter) FOR WSModelClassifier»
+«ENDDEFINE»
+
+«DEFINE requestParameter(WSModelParameter parameter) FOR WSModelClass»
+    «this.getScopedName("ws.Stub")» «parameter.name»Ws = utils.create«name»(«parameter.name»);
+«ENDDEFINE»
+
+
+
+«DEFINE requestParameter(WSModelParameter parameter) FOR WSModelDataType»
+    «this.WSJavaType» «parameter.name»Ws = «parameter.convertToWs»;
+«ENDDEFINE»
+
+«DEFINE declResponseValue FOR WSModelClassifier»
+«ENDDEFINE»
+
+«DEFINE declResponseValue FOR WSModelClass»
+    «getScopedName("ws.Stub")» response = 
+«ENDDEFINE»
+
+«DEFINE declResponseValue FOR WSModelDataType»
+   «WSJavaType» response = 
+«ENDDEFINE»
+
+«DEFINE handleReponseValue FOR WSModelClassifier»
+«ENDDEFINE»
+
+«DEFINE handleReponseValue FOR WSModelClass»
+    utils.resetReferences();
+    «PIMClass.javaTypeName()» convertedResult = utils.create«name»(response);
+    utils.resolveReferences();
+    return convertedResult;
+«ENDDEFINE»
+
+«DEFINE handleReponseValue FOR WSModelDataType»
+   return response;
+«ENDDEFINE»
+
+

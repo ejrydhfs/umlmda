@@ -1,0 +1,11 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+
+«DEFINE FactoryModule FOR WSBusinessService»
+   «EXPAND jaxws::common::GuiceFactoryModule::FactoryModule(generatedPath, generatorPackage.getQualifiedPackageName("jaxWs.WSAccessor"))»
+«ENDDEFINE»

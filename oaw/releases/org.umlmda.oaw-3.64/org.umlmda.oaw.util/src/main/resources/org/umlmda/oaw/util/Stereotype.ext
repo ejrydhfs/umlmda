@@ -1,0 +1,82 @@
+import uml;
+
+extension org::openarchitectureware::util::stdlib::io;   
+
+// Returns the applicable stereotypes for the given model element.
+List[Stereotype] applicableStereotypes(uml::Element element) :
+    JAVA org.umlmda.oaw.util.uml2.StereotypeUtils.getApplicableStereotypes(org.eclipse.uml2.uml.Element)
+;
+
+// Get the stereotype property value at the given model element.
+Object getStereotypeProperty ( uml::Element element, String stereotypeName, String propertyName ) :
+    JAVA org.umlmda.oaw.util.uml2.StereotypeUtils.getStereotypeProperty( org.eclipse.uml2.uml.Element, java.lang.String, java.lang.String )
+;
+
+// Get the stereotype property value at the given model element, with default value if unset.
+Object getStereotypeProperty ( uml::Element element, String stereotypeName, String propertyName, Object defaultValue ) :
+    JAVA org.umlmda.oaw.util.uml2.StereotypeUtils.getStereotypeProperty( org.eclipse.uml2.uml.Element, java.lang.String, java.lang.String, java.lang.Object )
+;
+
+// Set the stereotype property value at the given model element.
+Object setStereotypeProperty ( uml::Element element, String stereotypeName, String propertyName, Object value ) :
+    JAVA org.umlmda.oaw.util.uml2.StereotypeUtils.setStereotypeProperty( org.eclipse.uml2.uml.Element, java.lang.String, java.lang.String, java.lang.Object )
+;
+
+
+// ============
+// Common stuff
+// ============
+cached boolean hasStereotype(Element element, List[String] stereotypeNames) :
+    let stereotypes = stereotypeNames.select(n|hasStereotype(element, n)) :
+    
+    stereotypes.isEmpty == false
+;
+
+cached boolean hasStereotype(Element element, String stereotypeName) :
+    let stereotypes = element.getAppliedStereotypes().select(e|e.name == stereotypeName) :
+    
+    stereotypes.isEmpty == false
+;   
+
+cached Void unapplyStereotype(Element element, String stereotypeName) :
+    let stereotype = element.getAppliedStereotypes().select(e|e.name == stereotypeName).first() :
+
+	stereotype != null ? (
+		element.unapplyStereotype(stereotype)
+	) : (
+		true
+	)
+;
+
+cached Void unapplyStereotypes(Element element, List[String] stereotypeNames) :
+	JAVA org.umlmda.oaw.util.uml2.StereotypeUtils.unapplyStereotypes(org.eclipse.uml2.uml.Element, java.util.List)
+;
+				
+cached Void applyStereotype(Element element, String stereotypeName) :
+    let profiles = element.getModel().getAllAppliedProfiles() :
+    let stereotypes = element.applicableStereotypes() : 
+    let stereotype = stereotypes.select(s|s.name == stereotypeName).first() :
+    
+    stereotype != null ?
+        element.applyStereotype(stereotype)
+    :
+        error("No applicable stereotype with the name "+stereotypeName+" found")
+;
+
+cached Void applyStereotype(Element element, String profileName, String stereotypeName) :
+    let stereotype = element.applicableStereotypes().select(s|s.name == stereotypeName && s.getProfile().name == profileName).first() :
+    
+    stereotype != null ?
+        element.applyStereotype(stereotype)
+    :
+        error("No applicable stereotype with the name "+stereotypeName+" found")
+;
+            
+cached Stereotype getStereotype(Model model, String stereotypeName) :
+    model.getAppliedProfiles().eAllContents.typeSelect(Stereotype).select(s|s.name == stereotypeName).first()
+;
+
+cached Stereotype getStereotype(Model model, String profileName, String stereotypeName) :
+    model.getAppliedProfiles().select(p|p.name == profileName).eAllContents.typeSelect(Stereotype).select(s|s.name == stereotypeName).first()
+;
+

@@ -1,0 +1,94 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+«EXTENSION java::Equality»
+«EXTENSION org::umlmda::uml::java::Artefact»
+«EXTENSION org::umlmda::uml::java::Attribute»
+«EXTENSION org::umlmda::uml::java::Association»
+«EXTENSION org::umlmda::uml::java::DataType»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+«EXTENSION org::umlmda::uml::java::StructuralFeature»
+
+«DEFINE equals(List[JavaModelAttribute] attributes) FOR JavaModelClass»
+	«IF attributes.isEmpty == false»
+	   @Override
+	   public boolean equals(Object obj) {
+	      
+	      if ( «IF superClass != null»super.equals(obj) && «ENDIF»obj instanceof «javaType» ) {
+	         «javaType» other = («javaType») obj;
+	         
+	         return 
+		         «FOREACH attributes AS attr SEPARATOR "&&"» 
+	               ( «attr.name» == other.«attr.getter»() || («attr.name» != null && «attr.name».equals(other.«attr.getter»())) )
+		         «ENDFOREACH» 
+	         ;
+	      }
+	
+	      return false;
+	   }
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE hashCode(List[ModelAttribute] attributes) FOR JavaModelClass»
+   «IF attributes.isEmpty == false»
+	   @Override
+	   public int hashCode() {
+	      final int prime = 31;
+	      int result = 
+	         «IF superClass != null»
+	            super.hashCode()
+	         «ELSE»
+	            1
+	         «ENDIF»;
+	      «FOREACH attributes AS attr»
+	         result = prime * result + ((«attr.name» == null) ? 0 : «attr.name».hashCode());
+	      «ENDFOREACH»
+	      return result;
+	   }
+   «ENDIF»
+«ENDDEFINE»
+
+«DEFINE arePropertiesEqual FOR JavaModelClass»
+   public boolean arePropertiesEqual(Object obj) {
+      if ( equals(obj) && obj instanceof «javaType») {
+         «javaType» other = («javaType») obj;
+
+			«IF features().isEmpty»
+			   return true;
+			«ELSE»
+            return
+            «FOREACH features() AS feature SEPARATOR "&&"»
+               «EXPAND equalCheck FOR feature»
+            «ENDFOREACH» 
+            ;   
+         «ENDIF»
+      }
+      
+      return false;
+   }   
+«ENDDEFINE»
+
+«DEFINE equalCheck FOR JavaModelStructuraleFeature»
+   «name» == other.«getter»() || («name» != null && «name».equals(other.«getter»()))
+«ENDDEFINE»
+
+«DEFINE equalCheck FOR JavaModelAttribute»
+	«IF primitiveType»
+      «name» == other.«getter»()
+	«ELSE»
+	   «name» == other.«getter»() || («name» != null && «name».equals(other.«getter»()))
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE equalCheck FOR JavaModelAssociation»
+   «IF multiple»
+      org.umlmda.runtime.lang.EqualityUtil.equals(«name», other.«getter»())
+   «ELSE»
+      «name» == other.«getter»() || («name» != null && «name».equals(other.«getter»()))
+   «ENDIF»
+«ENDDEFINE»
