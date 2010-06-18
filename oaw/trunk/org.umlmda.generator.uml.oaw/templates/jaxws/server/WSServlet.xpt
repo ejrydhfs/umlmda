@@ -143,6 +143,10 @@
 «ENDDEFINE»
 
 «DEFINE returnTypeTransfer FOR WSModelClassifier»
-   return WebserviceUtils.convertToWs(result);
+   «IF name!="string"»
+      return WebserviceUtils.convertToWs(result);
+   «ELSE»
+      return result;
+   «ENDIF»
 «ENDDEFINE»
 
