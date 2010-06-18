@@ -24,7 +24,7 @@
 	public class «className» «EXPAND extendsStatement» {
       
       «REM» Basic utility methods, normally placed in the runtime package (if that exists) «ENDREM» 
-      «IF isRuntimeWsPackage() || findRuntimeWsPackage()==null»
+      «IF (isRuntimeWsPackage() || findRuntimeWsPackage()==null) && nestingWSBusinessComponent()==null»
          «EXPAND runtimeMethods»
       «ENDIF»
       «EXPAND factoryMethods»
@@ -91,6 +91,9 @@
 
 
 «DEFINE runtimeMethods FOR WSModelPackage»
+   // ====================================================================================================
+   // Basic utility methods
+   // ====================================================================================================
    private final Map<Object, Object>          registry        = new HashMap<Object, Object>();
 
    private List<ResolveReference>             resolvers       = new ArrayList<ResolveReference>();
@@ -181,6 +184,9 @@
 
 
 «DEFINE factoryMethods FOR WSModelPackage»
+   // ====================================================================================================
+   // Package factory configuration
+   // ====================================================================================================
    «LET ((JavaModelPackage)package).generatedName("java.BusinessObjectFactory") AS factoryClass»
       @Inject
       private «factoryClass» «factoryClass.toFirstLower()» = null;
