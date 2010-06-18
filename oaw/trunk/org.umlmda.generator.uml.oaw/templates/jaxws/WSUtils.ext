@@ -60,11 +60,19 @@ cached String wsNamespacePrefix(WSModelClass class) :
 
 // Convenience method to get the namespace for a WS package
 cached String wsNamespacePrefix(WSModelPackage package) :
+    package.privateWsNamespacePrefix() != "" ? (
+        package.privateWsNamespacePrefix()
+    ) : (
+        package.PIMPackage.name.toFirstLower()
+    )
+;
+
+private cached String privateWsNamespacePrefix(WSModelPackage package) :
     package.getStereotypeProperty("WSNamespacePrefix") != null ? (
         package.getStereotypeProperty("WSNamespacePrefix")
     ) : (
         package.package != null ? (
-            ((WSModelPackage)package.package).wsNamespacePrefix()
+            ((WSModelPackage)package.package).privateWsNamespacePrefix()
         ) : (
             ""
         )
