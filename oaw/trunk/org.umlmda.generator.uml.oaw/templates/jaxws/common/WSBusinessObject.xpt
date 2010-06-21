@@ -134,7 +134,7 @@
             «IF {"date", "dateTime", "timestamp"}.contains(dataType.name)»
                @XmlSchemaType(name = "«dataType.name»")
             «ENDIF»
-            protected List<«((JavaModelDataType)modelClassifier).javaTypeName()»> «name»;
+            protected List<«((JavaModelDataType)modelClassifier).javaTypeName(true)»> «name»;
          «ELSE»
             protected List<«modelClassifier.name»> «name»;
          «ENDIF»
@@ -151,15 +151,15 @@
        * @return possible object is {@link «IF primitiveType»«javaTypeName()»«ELSE»«modelClassifier.name»«ENDIF» }
        */
       «IF primitiveType»
-         public «IF ! multivalue»«javaTypeName()»«ELSE»List<«((JavaModelDataType)modelClassifier).javaTypeName()»>«ENDIF» «getter»() {
+         public «IF ! multivalue»«javaTypeName()»«ELSE»List<«((JavaModelDataType)modelClassifier).javaTypeName(true)»>«ENDIF» «getter»() {
       «ELSE»
          public «IF ! multivalue»«modelClassifier.name»«ELSE»List<«modelClassifier.name»>«ENDIF» «getter»() {
       «ENDIF»
-      «IF multivalue»
-         if ( «name» == null ) {
-            «name» = new ArrayList<«IF primitiveType»«((JavaModelDataType)modelClassifier).javaTypeName()»«ELSE»«modelClassifier.name»«ENDIF»>();
-         }
-      «ENDIF»
+	      «IF multivalue»
+	         if ( «name» == null ) {
+	            «name» = new ArrayList<«IF primitiveType»«((JavaModelDataType)modelClassifier).javaTypeName(true)»«ELSE»«modelClassifier.name»«ENDIF»>();
+	         }
+	      «ENDIF»
          return «name»;
       }
 

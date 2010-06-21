@@ -8,6 +8,7 @@
 
 «EXTENSION jaxws::WSUtils»
 «EXTENSION java::UMLMDA»
+«EXTENSION org::umlmda::uml::java::DataType»
 
 
 «REM» Abstract utils for a package «ENDREM»
@@ -583,7 +584,22 @@
                         «bsObjectQualified».«EXPAND java::BOInterface::propertyNameConstant FOR attrib», 
                         src.«attrib.getter»().toArray(new «((WSModelClassifier)attrib.modelClassifier).javaType»[ src.«attrib.getter»().size() ]));
                «ELSE»
-                  dest.«attrib.setter»(src.«attrib.getter»().toArray(new «((WSModelClassifier)attrib.modelClassifier).javaType»[ src.«attrib.getter»().size() ]));
+                  «LET ((WSModelClassifier)attrib.modelClassifier).javaType AS bsType»
+                  if ( src.«attrib.getter»()!=null ) {
+                     «REM» Check if the WS type can be converted to the BS array type easily «ENDREM»
+	                  «IF bsType == ((JavaModelDataType)attrib.modelClassifier).javaTypeName(true)»
+	                     dest.«attrib.setter»(src.«attrib.getter»().toArray(new «bsType»[ src.«attrib.getter»().size() ]));
+	                  «ELSE»
+		                  «LET "dest"+attrib.name.toFirstUpper() AS tempArray»
+		                  «bsType»[] «tempArray» = new «bsType»[ src.«attrib.getter»().size() ];
+		                  for ( int i = 0; i < src.«attrib.getter»().size(); i++ ) {
+		                     «tempArray»[i] = src.«attrib.getter»().get(i);
+		                  }
+		                  dest.«attrib.setter»(«tempArray»);
+	                     «ENDLET»
+	                  «ENDIF»
+	               }
+                  «ENDLET»
                «ENDIF»
                
             «ELSEIF attrib.modelClassifier.hasStereotype("WebServiceEnumeration")»
