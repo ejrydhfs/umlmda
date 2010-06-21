@@ -32,7 +32,7 @@ Model «name»«EXPAND metaType»
 
 
 «DEFINE dump FOR JavaModelPackage»
-  Package «name»«EXPAND metaType»
+  Package «qualifiedName»«EXPAND metaType»
 «EXPAND dumpStereotypes('   ') -»
 «EXPAND dump FOREACH classes.typeSelect(ModelClass).sortBy( e | e.name ) -»
 «ENDDEFINE»
@@ -70,29 +70,29 @@ Model «name»«EXPAND metaType»
 
 
 «REM» Attribute details «ENDREM»
-«DEFINE dump FOR ModelAttribute»        «name» : «modelClassifier»«IF multivalue» («multiplicity»)«ELSEIF optional» (0..1)«ENDIF»«IF initialValue.length > 0» = '«initialValue»'«ENDIF»
+«DEFINE dump FOR ModelAttribute»       - «name» : «modelClassifier»«IF multivalue» («multiplicity»)«ELSEIF optional» (0..1)«ENDIF»«IF initialValue.length > 0» = '«initialValue»'«ENDIF»
 «IF derived -»
-         derived
+          derived
 «ENDIF -»
 «IF readOnly -»
-         readOnly
+          readOnly
 «ENDIF -»
 «IF transient -»
-         transient
+          transient
 «ENDIF -»
 «IF stereotypes.size>0 -»
-«EXPAND dumpStereotypes('         ')»«ENDIF -»
+«EXPAND dumpStereotypes('          ')»«ENDIF -»
 «ENDDEFINE»
 
 
 «REM» Method details «ENDREM»
-«DEFINE dump FOR ModelMethod»        «name» («EXPAND dump FOREACH parameters.typeSelect(ModelParameter) SEPARATOR ", "») «IF returnType!=null»: «returnType.name»«ENDIF»
+«DEFINE dump FOR ModelMethod»        - «name» («EXPAND dump FOREACH parameters.typeSelect(ModelParameter) SEPARATOR ", "») «IF returnType!=null»: «returnType.name»«ENDIF»
 «IF stereotypes.size>0 -»
-«EXPAND dumpStereotypes('         ')»«ENDIF -»
+«EXPAND dumpStereotypes('          ')»«ENDIF -»
 «IF exceptions.size>0 -»
-         + Exceptions
+          + Exceptions
 «FOREACH exceptions.typeSelect(ModelClassifier) AS exc -»
-            «exc.name»«ENDFOREACH»
+             «exc.name»«ENDFOREACH»
 «ENDIF -»
 «ENDDEFINE»
 
@@ -101,37 +101,37 @@ Model «name»«EXPAND metaType»
 
 
 «REM» Association details «ENDREM»
-«DEFINE dump FOR ModelAssociation»        «name»: «source.name» («reverse.multiplicity») «IF ! navigatableToTarget»<«ENDIF»-«IF ! navigatableToSource»>«ENDIF» «target.name» («multiplicity»)
+«DEFINE dump FOR ModelAssociation»       - «name»: «source.name» («reverse.multiplicity») «IF ! navigatableToTarget»<«ENDIF»-«IF ! navigatableToSource»>«ENDIF» «target.name» («multiplicity»)
 «IF aggregation -»
-         aggregation
+          aggregation
 «ENDIF -»
 «IF composition -»
-         composition
+          composition
 «ENDIF -»
 «IF derived -»
-         derived
+          derived
 «ENDIF -»
 «IF ordered -»
-         ordered
+          ordered
 «ENDIF -»
 «IF readOnly -»
-         readOnly
+          readOnly
 «ENDIF -»
 «IF stereotypes.size>0 -»
-«EXPAND dumpStereotypes('         ')»«ENDIF -»
+«EXPAND dumpStereotypes('          ')»«ENDIF -»
 «ENDDEFINE»
 
 
 
 «REM» Dumps applied stereotypes and their properties of a model element«ENDREM»
-«DEFINE dumpStereotypes(String indent) FOR JavaModelElement»«IF stereotypes.size>0 -»«indent»+ Stereotypes
+«DEFINE dumpStereotypes(String indent) FOR ModelElement»«IF stereotypes.size>0 -»«indent»+ Stereotypes
 «EXPAND dumpString(indent+' ') FOREACH stereotypes.typeSelect(String).sortBy( s | s ) -»
 «EXPAND dumpStereotypeProperties(indent)»«ENDIF -»
 «ENDDEFINE»
 
 
 «REM» Dumps appliead stereotype properties of a model element«ENDREM»
-«DEFINE dumpStereotypeProperties(String indent) FOR JavaModelElement»«IF taggedValues.size()>0 -»«indent»+ Stereotype-Properties
+«DEFINE dumpStereotypeProperties(String indent) FOR ModelElement»«IF taggedValues.size()>0 -»«indent»+ Stereotype-Properties
 «EXPAND dumpString(indent+' ') FOREACH taggedValues.toString().subString(1,taggedValues.toString().length-1).trim().split(", ").sortBy( s | s )»«ENDIF -»
 «ENDDEFINE»
 
