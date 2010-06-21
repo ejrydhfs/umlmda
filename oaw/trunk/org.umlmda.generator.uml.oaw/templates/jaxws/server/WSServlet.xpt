@@ -104,7 +104,7 @@
             «EXPAND returnTypeTransfer FOR (WSModelClassifier)returnType»
          «ENDIF»
       «FOREACH exceptions.typeSelect(WSModelClass) AS exc»         
-      } catch («exc.getQualifiedName("java.BusinessException").replaceFirst(".ws","")» e) {
+      } catch («exc.PIMClass.getQualifiedName("java.BusinessException")» e) {
          «exc.getQualifiedName("ws.Stub")» exception = utils.create«exc.name»(e);
          utils.resolveReferences();
          throw new «name.toFirstUpper()»«exc.getGeneratedName("ws.Stub")»(e.getMessage(), exception);
