@@ -86,9 +86,14 @@ Model «name»«EXPAND metaType»
 
 
 «REM» Method details «ENDREM»
-«DEFINE dump FOR ModelMethod»        «name» («EXPAND dump FOREACH parameters.typeSelect(ModelParameter) SEPARATOR ", "») : «returnType.name»
+«DEFINE dump FOR ModelMethod»        «name» («EXPAND dump FOREACH parameters.typeSelect(ModelParameter) SEPARATOR ", "») «IF returnType!=null»: «returnType.name»«ENDIF»
 «IF stereotypes.size>0 -»
 «EXPAND dumpStereotypes('         ')»«ENDIF -»
+«IF exceptions.size>0 -»
+         + Exceptions
+«FOREACH exceptions.typeSelect(ModelClassifier) AS exc -»
+            «exc.name»«ENDFOREACH»
+«ENDIF -»
 «ENDDEFINE»
 
 
