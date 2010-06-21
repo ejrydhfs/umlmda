@@ -673,7 +673,7 @@
                               dest.«assoc.getter»().add(
                                     («((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface")») getObject(
                                           «((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface")».class, 
-                                          «targetName.toFirstLower()».«assoc.target.attributes.typeSelect(JavaModelAttribute).first().getter»));
+                                          «targetName.toFirstLower()».«assoc.target.attributes.typeSelect(JavaModelAttribute).first().getter»()));
                            }
                         }
                      });
