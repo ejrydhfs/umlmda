@@ -1,0 +1,68 @@
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION java::UMLMDA»
+
+
+«DEFINE wsExceptionRoot(JavaModelMethod usingMethod) FOR WSModelClass»
+«LET (WSBusinessService)usingMethod.owner AS service»
+«LET generatedName(this, "ws.Stub") AS className»
+«LET usingMethod.name.toFirstUpper()+name AS classNameForMethod»
+«LET service.generatorPackage.getQualifiedPackageName("ws.ServicePort") AS packageName»
+«FILE service.generatorPackage.generatedPath+"/"+classNameForMethod+".java"»
+	package «packageName»;
+	
+   import javax.xml.ws.WebFault;
+   «REM» Import base exception «ENDREM»
+   import «getQualifiedName("ws.Stub")»;
+
+   /**
+    * This is the method specific representation of «className» for WS method <i>«usingMethod.name»</i> 
+    * in <i>«((JavaModelClass)usingMethod.owner).getScopedName("ws.ServicePort")»</i>. 
+    */
+   @WebFault(name = "«name»Element", targetNamespace = "«wsNamespace()»")
+   public class «classNameForMethod» extends Exception {
+
+	   /**
+	    * Java type that goes as soapenv:Fault detail element.
+	    */
+	   private «className» faultInfo;
+	
+	   /**
+	    * @param message
+	    * @param faultInfo
+	    */
+	   public «classNameForMethod»(String message, «className» faultInfo) {
+	      super(message);
+	      this.faultInfo = faultInfo;
+	   }
+	
+	   /**
+	    * @param message
+	    * @param faultInfo
+	    * @param cause
+	    */
+	   public «classNameForMethod»(String message, «className» faultInfo, Throwable cause) {
+	      super(message, cause);
+	      this.faultInfo = faultInfo;
+	   }
+	
+	   /**
+	    * @return returns fault bean: «getQualifiedName("ws.Stub")»
+	    */
+	   public «className» getFaultInfo() {
+	      return faultInfo;
+	   }
+
+   }
+«ENDFILE»
+«ENDLET»
+«ENDLET»
+«ENDLET»
+«ENDLET»
+«ENDDEFINE»
+

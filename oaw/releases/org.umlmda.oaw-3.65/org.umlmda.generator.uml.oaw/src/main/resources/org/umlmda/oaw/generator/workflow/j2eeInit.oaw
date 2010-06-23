@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+
+	<component id="dirCleaner"
+			class="org.openarchitectureware.workflow.common.DirectoryCleaner" skipOnErrors="true">
+		<directories value="${j2eeGenPath}"/>
+	</component>
+
+    <!-- Creating UMLMDA J2EE PSM -->
+	<component id="j2eePsmCreator"
+			class="org.umlmda.oaw.generator.workflow.PsmCreator">
+		<adapterFactory value="org.umlmda.oaw.generator.model.j2ee.J2EEModelAdapterFactory"/>
+		<pimModelSlot value="pim"/>
+		<psmModelSlot value="j2eeModel"/>
+		<generationSetSlot value="gs"/>
+		<generationProfile value="j2ee"/>
+	</component>
+
+    <!-- Creating UMLMDA J2EE Deployment PSM -->
+	<component id="j2eeDeploymentPsmCreator"
+			class="org.umlmda.oaw.generator.workflow.PsmCreator">
+		<adapterFactory value="org.umlmda.oaw.generator.model.j2ee.J2EEModelAdapterFactory"/>
+		<pimModelSlot value="pim"/>
+		<psmModelSlot value="j2eeDeploymentModel"/>
+		<generationSetSlot value="gs"/>
+		<generationProfile value="j2eeDeployment"/>
+	</component>
+
+</workflow>

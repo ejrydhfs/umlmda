@@ -1,0 +1,97 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelAssociation
+ */
+import java::util;
+import org::umlmda::generator::model::uml;
+import org::umlmda::profile;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+
+extension org::umlmda::uml::java::Artefact;
+extension org::umlmda::uml::persistence::Class;
+
+
+// Returns the column name prefix for FK keys belonging to the given association.
+// Valid for associations with stereotype "PersistentAssociation".
+cached String fkColumnPrefix(ModelAssociation assoc) :
+    assoc.getStereotypeProperty("fkColumnPrefix", assoc.name)
+;
+
+
+cached List[String] persistenceAttributes(JavaModelAssociation assoc) :
+    let attributes = {} :
+    let targetArtefact = assoc.target.getDefaultArtefact(scopeImplementation()) :
+    let targetImpl = ((JavaModelClass)assoc.target).getScopedName(targetArtefact) :
+
+    assoc.composition ? attributes.add("cascade=CascadeType.ALL") : true ->
+    assoc.composition ? attributes.add("fetch=FetchType.EAGER") : attributes.add("fetch=FetchType.LAZY") ->
+    // optional only on OneToOne
+    assoc.optional || assoc.multiple ? true : attributes.add("optional=false") ->
+    // mapped by
+    assoc.isBidirectional() && (assoc.aggregation || assoc.composition) ? attributes.add("mappedBy=\""+assoc.reverse.name+"\"") : true ->
+    attributes.add("targetEntity="+targetImpl+".class") ->
+    attributes
+;    
+
+cached String implDeclType(JavaModelAssociation assoc) :
+    assoc.multiple ? assoc.collectionInterfaceType : assoc.implementationInterfaceType
+;
+    
+cached Boolean isBidirectional(JavaModelAssociation assoc) :
+    assoc.navigatableToTarget && assoc.reverse.navigatableToTarget
+;    
+
+cached Boolean isOwner(JavaModelAssociation assoc) :
+    assoc.composition || assoc.aggregation
+;
+
+// Returns non-derived key columns from the target of the given association.
+cached List[JavaModelAttribute] joinColumns(ModelAssociation assoc) :
+    assoc.target.keyAttributes.typeSelect(ModelAttribute).reject(a | a.derived)
+;
+
+// Returns non-derived key columns that exist in both association partners.
+cached List[JavaModelAttribute] sharedJoinColumns(ModelAssociation assoc) :
+    let sourceColumns = assoc.source.keyAttributes.typeSelect(ModelAttribute).reject(a | a.derived).name :
+    assoc.joinColumns().select(e|sourceColumns.contains(e.name))
+;
+
+// Returns non-derived key columns that differ between both association partners.
+cached List[JavaModelAttribute] unsharedJoinColumns(ModelAssociation assoc) :
+    let sourceColumns = assoc.reverse.joinColumns().name :
+    assoc.joinColumns().reject( jc | sourceColumns.contains( jc.name ) )
+;
+
+cached Boolean hasSharedKey(JavaModelAssociation assoc) :
+    let targetKeys = assoc.target.keyAttributes.typeSelect(ModelAttribute) :
+    let sourceKeys = assoc.source.keyAttributes.typeSelect(ModelAttribute) :
+    let commonKeys = targetKeys.select(tk|sourceKeys.exists(sk|tk.name == sk.name)) :
+    
+    commonKeys.size > 0
+;
+
+// Returns the domain key attributes that exist in both association partners.
+cached List[JavaModelAttribute] sharedDomainKeys(JavaModelAssociation assoc) :
+    let targetKeys = assoc.target.domainKeys() :
+    let sourceKeys = assoc.source.domainKeys() :
+    targetKeys.select(tk|sourceKeys.exists(sk|tk.name == sk.name))
+;
+
+private List[String] keyNames(ModelClass class) :
+    class.keyAttributes.typeSelect(ModelAttribute).collect(e|e.name)
+;    
+
+cached Boolean hasSharedJoinColumns(JavaModelAssociation assoc) :
+    !assoc.multiple && assoc.reverse.multiple
+;
+
+cached Boolean hasUnSharedJoinColumns(JavaModelAssociation assoc) :
+    assoc.isBidirectional() && !assoc.isOwner() && !assoc.multiple && !assoc.unsharedJoinColumns().isEmpty
+;    
+
+cached Boolean isJoinAssociation(JavaModelAssociation assoc) :
+    assoc.isBidirectional() && !assoc.isOwner() && !assoc.multiple && !assoc.derived
+;
