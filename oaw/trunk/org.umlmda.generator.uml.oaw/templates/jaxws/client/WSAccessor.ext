@@ -16,7 +16,7 @@ cached JavaModelMethod pimMethod(JavaModelMethod method) :
 ;    
 
 cached String wsExceptionClass(JavaModelMethod method, JavaModelClass exceptionClass) :
-    exceptionClass.javaPackage.getQualifiedPackageName("ws.Stub")
+    ((JavaModelPackage)((WSModelClass)method.owner).package).getQualifiedPackageName("ws.Stub")
    +"."+method.name.toFirstUpper()+exceptionClass.getGeneratedName("ws.Stub")
 ;
 

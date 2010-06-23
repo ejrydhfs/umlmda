@@ -9,13 +9,16 @@
 
 
 «DEFINE wsExceptionRoot(JavaModelMethod usingMethod) FOR WSModelClass»
+«LET (WSBusinessService)usingMethod.owner AS service»
 «LET generatedName(this, "ws.Stub") AS className»
 «LET usingMethod.name.toFirstUpper()+name AS classNameForMethod»
-«LET ((JavaModelClass)usingMethod.owner).generatorPackage.getQualifiedPackageName("ws.ServicePort") AS packageName»
-«FILE generatedPath+"/"+classNameForMethod+".java"»
+«LET service.generatorPackage.getQualifiedPackageName("ws.ServicePort") AS packageName»
+«FILE service.generatorPackage.generatedPath+"/"+classNameForMethod+".java"»
 	package «packageName»;
 	
    import javax.xml.ws.WebFault;
+   «REM» Import base exception «ENDREM»
+   import «getQualifiedName("ws.Stub")»;
 
    /**
     * This is the method specific representation of «className» for WS method <i>«usingMethod.name»</i> 
@@ -57,6 +60,7 @@
 
    }
 «ENDFILE»
+«ENDLET»
 «ENDLET»
 «ENDLET»
 «ENDLET»

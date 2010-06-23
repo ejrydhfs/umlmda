@@ -78,7 +78,7 @@
       «ENDIF»
       «REM» Special method exceptions «ENDREM»
       «FOREACH method.exceptions.typeSelect(WSModelClass) AS exc»
-         import «exc.generatorPackage.getQualifiedPackageName("ws.Stub")».«method.name.toFirstUpper()+exc.name»;
+         import «generatorPackage.getQualifiedPackageName("ws.Stub")».«method.name.toFirstUpper()+exc.name»;
       «ENDFOREACH»
    «ENDFOREACH»
    «registeredImports()»
