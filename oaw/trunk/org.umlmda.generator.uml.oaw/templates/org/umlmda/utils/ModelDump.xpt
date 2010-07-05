@@ -61,11 +61,15 @@ Model «name»«EXPAND metaType»
 
 «REM» Superclasses of a model class«ENDREM»
 «DEFINE dumpSuperclasses FOR JavaModelClass»«IF this.superClasses.size>0 -»     + Superclasses
-«EXPAND dumpString('      ') FOREACH this.superClasses.typeSelect(ModelClass).sortBy( sc | sc.name ).collect( sc| sc.name ) -»
+«EXPAND dumpSuperclass(this) FOREACH this.superClasses.typeSelect(JavaModelClass).sortBy( sc | sc.name ) -»
 «ENDIF -»
 «IF implementedInterfaces.size>0»     + Interfaces
 «EXPAND dumpString('      ') FOREACH implementedInterfaces.typeSelect(ModelClass).sortBy( sc | sc.name ).collect( sc| sc.name ) -»
 «ENDIF -»
+«ENDDEFINE»
+
+
+«DEFINE dumpSuperclass(JavaModelClass current) FOR JavaModelClass»        «name» «IF current.superClass==this»<<extends>>«ENDIF»
 «ENDDEFINE»
 
 
