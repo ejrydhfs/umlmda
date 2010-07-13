@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.umlmda</groupId>
 		<artifactId>org.umlmda.oaw</artifactId>
-		<version>3.66-SNAPSHOT</version>
+		<version>3.66</version>
 	</parent>
 
 	<artifactId>org.umlmda.oaw.util</artifactId>
