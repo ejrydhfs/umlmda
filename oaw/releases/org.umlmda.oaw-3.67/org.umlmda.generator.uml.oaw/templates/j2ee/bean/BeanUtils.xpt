@@ -1,0 +1,66 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::j2ee»
+«EXTENSION java::UMLMDA»
+
+«DEFINE BeanUtils FOR J2EEBusinessService»
+«LET generatedName(this, "j2ee.BeanUtils") AS interfaceName»
+«LET getScopedName("j2ee.HomeInterface") AS homeInterface»
+«FILE generatedPath+"/"+interfaceName+".java"»//@@Generated file, please edit UserSections only
+//@@UserSection-Begin RCSHeader
+//@@UserSection-End RCSHeader
+
+package «generatorPackage.getQualifiedPackageName("j2ee.BeanUtils")»;
+
+«this.resetImports()»
+«this.registerImport("j2ee.HomeInterface")»
+«this.registeredImports()»
+
+/**
+ * EJB-Utility class for «getScopedName("java.BusinessServiceInterface")».
+ */
+public class «interfaceName» {
+
+   /** Cached remote home (EJBHome). Uses lazy loading to obtain its value (loaded by getHome() methods). */
+   private static «homeInterface» cachedRemoteHome = null;
+
+   private static Object lookupHome(java.util.Hashtable environment, String jndiName, Class narrowTo) throws javax.naming.NamingException {
+      // Obtain initial context
+      javax.naming.InitialContext initialContext = new javax.naming.InitialContext(environment);
+      try {
+         Object objRef = initialContext.lookup(jndiName);
+         // only narrow if necessary
+         if (java.rmi.Remote.class.isAssignableFrom(narrowTo)) 
+            return javax.rmi.PortableRemoteObject.narrow(objRef, narrowTo);
+         else
+            return objRef;
+      } finally {
+         initialContext.close();
+      }
+   }
+
+   // Home interface lookup methods
+
+   /**
+    * Obtain remote home interface from default initial context
+    * @return Home interface for <%=getModelClass().getName()%>. Lookup using COMP_NAME
+    */
+   public static «homeInterface» getHome() throws javax.naming.NamingException
+   {
+      if (cachedRemoteHome == null) { 
+         try { 
+            cachedRemoteHome = («homeInterface») lookupHome(null, «homeInterface».COMP_NAME, «homeInterface».class); 
+         } catch (javax.naming.NamingException e){ 
+            cachedRemoteHome = («homeInterface») lookupHome(null, «homeInterface».JNDI_NAME, «homeInterface».class); 
+         } 
+      } 
+      return cachedRemoteHome;
+   }
+
+	
+}
+«ENDFILE»
+«ENDLET»
+«ENDLET»
+«ENDDEFINE»
