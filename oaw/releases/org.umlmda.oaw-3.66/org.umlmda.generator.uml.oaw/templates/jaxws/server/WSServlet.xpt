@@ -1,0 +1,152 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION java::UMLMDA»
+
+
+«DEFINE servletRoot FOR WSBusinessService»
+«LET generatedName(this, "jaxWs.Servlet") AS className»
+«FILE generatedPath+"/"+className+".java"»
+   package «generatorPackage.getQualifiedPackageName("jaxWs.Servlet")»;
+
+   «EXPAND imports»
+
+	@Stateless
+	@TransactionAttribute(TransactionAttributeType.NEVER)
+	@WebService(name = "«getGeneratedName("jaxWs.Client")»", serviceName="«getGeneratedName("jaxWs.Client")»Service", targetNamespace = "«wsNamespace()»")
+	@SOAPBinding(style = SOAPBinding.Style.RPC)
+	public class «generatedName» implements «getScopedName("jaxWs.WSPortLocal")» {
+	
+	   @EJB (beanInterface=«PIMClass.getQualifiedName("jee.EJBLocal")».class)
+	   private «PIMClass.getQualifiedName("java.BusinessServiceInterface")» delegate;
+
+	   private «getGeneratedName("ws.Utils")» utils;
+	
+	   /**
+	    * Constructor, creates factories and delegate.
+	    */
+	   public «generatedName»() {
+	      super();
+
+	      Injector injector = Guice.createInjector(new «name»Module());
+	      utils = injector.getInstance(«getScopedName("ws.Utils")».class);
+	   }
+
+      «EXPAND wsMethod FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") )»
+	}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+
+«DEFINE imports FOR WSBusinessService»
+   import javax.ejb.EJB;
+   import javax.ejb.Stateless;
+   import javax.ejb.TransactionAttribute;
+   import javax.ejb.TransactionAttributeType;
+   import javax.jws.WebMethod;
+   import javax.jws.WebParam;
+   import javax.jws.WebResult;
+   import javax.jws.WebService;
+   import javax.jws.soap.SOAPBinding;
+   import javax.xml.bind.annotation.XmlSeeAlso;
+   
+   «IF methods.typeSelect(WSModelMethod).select( m | m.returnType==null ).size > 0»
+      import javax.jws.Oneway;
+   «ENDIF»
+
+   import com.google.inject.Guice;
+   import com.google.inject.Injector;
+
+   import org.umlmda.runtime.webservice.WebserviceUtils;
+
+   «resetImports()»
+   «registerImport("ws.Utils")»
+
+   «REM» Method parameters, return types and exceptions «ENDREM»
+   «FOREACH methods.typeSelect(WSModelMethod).select( m | m.hasStereotype("WebServiceMethod") ) AS method»
+      «FOREACH method.parameters.typeSelect(JavaModelParameter) AS param»
+         «EXPAND jaxws::common::WSPort::stubImport(this) FOR (WSModelClassifier)param.type»
+      «ENDFOREACH»
+      «IF method.returnType!=null»
+         «EXPAND jaxws::common::WSPort::stubImport(this) FOR (WSModelClassifier)method.returnType»
+      «ENDIF»
+      «REM» Special method exceptions «ENDREM»
+      «FOREACH method.exceptions.typeSelect(WSModelClass) AS exc»
+         import «generatorPackage.getQualifiedPackageName("ws.Stub")».«method.name.toFirstUpper()+exc.name»;
+      «ENDFOREACH»
+   «ENDFOREACH»
+   «registeredImports()»
+«ENDDEFINE»
+
+
+«DEFINE wsMethod FOR WSModelMethod»
+   «EXPAND jaxws::common::WSPort::wsMethodDecl» {
+       try {
+		   «FOREACH parameters.typeSelect(JavaModelParameter) AS param»
+            «EXPAND parameterTransfer(param) FOR (WSModelClassifier)param.type»
+		   «ENDFOREACH»
+		   «IF returnType!=null»
+            «EXPAND returnTypeDeclaration FOR (WSModelClassifier)returnType»
+		   «ENDIF»
+         
+         utils.resolveReferences();
+         «IF returnType!=null»result = «ENDIF»delegate.«name»(
+            «FOREACH parameters.typeSelect(JavaModelParameter) AS param SEPARATOR ", "»
+               bs«param.name.toFirstUpper()»
+            «ENDFOREACH»);
+         «IF returnType!=null»
+            «EXPAND returnTypeTransfer FOR (WSModelClassifier)returnType»
+         «ENDIF»
+      «FOREACH exceptions.typeSelect(WSModelClass) AS exc»         
+      } catch («exc.PIMClass.getQualifiedName("java.BusinessException")» e) {
+         «exc.getQualifiedName("ws.Stub")» exception = utils.create«exc.name»(e);
+         utils.resolveReferences();
+         throw new «name.toFirstUpper()»«exc.getGeneratedName("ws.Stub")»(e.getMessage(), exception);
+      «ENDFOREACH»
+      } finally {
+         utils.resetReferences();
+      }
+   }
+«ENDDEFINE»
+
+
+«DEFINE parameterTransfer(JavaModelParameter param) FOR WSBusinessObject»
+   «((WSModelClass)param.type).PIMClass.getQualifiedName("java.BusinessObjectInterface")» bs«param.name.toFirstUpper()» = 
+      utils.create«((WSModelClass)param.type).PIMClass.name»(«param.name»);
+«ENDDEFINE»
+
+«DEFINE parameterTransfer(JavaModelParameter param) FOR WSModelClassifier»
+   «param.javaType» bs«param.name.toFirstUpper()» = «param.name»;
+«ENDDEFINE»
+
+
+«DEFINE returnTypeDeclaration FOR WSBusinessObject»
+   «getQualifiedName("java.BusinessObjectInterface").replaceFirst(".ws","")» result;
+«ENDDEFINE»
+
+«DEFINE returnTypeDeclaration FOR WSModelClassifier»
+   «javaType» result;
+«ENDDEFINE»
+
+
+«DEFINE returnTypeTransfer FOR WSBusinessObject»
+   utils.resetReferences();
+   «getQualifiedName("ws.Stub")» convertedResult = utils.create«name»(result);
+   utils.resolveReferences();
+   return convertedResult;
+«ENDDEFINE»
+
+«DEFINE returnTypeTransfer FOR WSModelClassifier»
+   «IF name!="string"»
+      return WebserviceUtils.convertToWs(result);
+   «ELSE»
+      return result;
+   «ENDIF»
+«ENDDEFINE»
+

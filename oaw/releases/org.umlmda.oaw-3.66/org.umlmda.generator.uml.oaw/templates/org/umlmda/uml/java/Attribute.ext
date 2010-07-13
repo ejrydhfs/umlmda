@@ -1,0 +1,47 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelAttribute
+ */
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator::java;
+
+extension org::umlmda::uml::java::DataType;
+
+// Returns the Java compatible type declaration with regard to multiplicity and optionality.
+// If it's a multivalue attribute, an array type will be returned. 
+// If a primitive attribute (e.g. "int") is optional the type will be the corresponding class (e.g. "Integer").
+cached String javaTypeName(JavaModelAttribute attr) :
+	attr.dataType == null ? attr.javaComplexAttributeTypeName()
+	                      : attr.javaAttributeTypeName(attr.optional);
+
+cached String javaPropertyTypeName(JavaModelAttribute attr) :
+	attr.dataType == null ? attr.javaType
+	                      : attr.javaAttributeTypeName(true);
+	                         
+private String javaAttributeTypeName(JavaModelAttribute attr, boolean optional) :
+    attr.multivalue ?
+		attr.dataType.javaTypeName(false)+"[]"
+	:	
+		attr.dataType.javaTypeName(optional)
+;
+
+private String javaComplexAttributeTypeName(JavaModelAttribute attr) :
+    attr.multivalue ?
+        attr.javaType+"[]"
+    :   
+        attr.javaType
+;
+	
+/**
+ * @return the initial value of the attribute, if datatype is string and the model
+ * value doesn't contaits quotes, the quotes are added
+ */	
+cached String initialValue(JavaModelAttribute attr) :
+//	attr.javaTypeName() == "String" && attr.initialValue.startsWith('"') == false ?
+//		'"'+attr.initialValue+'"'
+//	:	
+		attr.initialValue
+;
+
+cached String javaNonGenericType(JavaModelAttribute attr) :
+    attr.javaPropertyTypeName()
+;
