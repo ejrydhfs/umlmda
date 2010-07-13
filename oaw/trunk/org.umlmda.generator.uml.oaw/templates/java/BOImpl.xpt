@@ -23,14 +23,14 @@
 «this.registerImports(getDefaultArtefact("BusinessObject"), implementationReferencedTypes, "BusinessObject")»
 «this.registerImports(getDefaultArtefact("BusinessException"), implementationReferencedTypes, "BusinessException")»
 «this.registerImports(getDefaultArtefact("Enumeration"), implementationReferencedTypes, "Enumeration")»
-«EXPAND ImportVisitorBase FOR this»
+«EXPAND ImportVisitorBase»
 «FILE generatedPath+"/"+className+".java"»
 package «generatorPackage.getQualifiedPackageName(getDefaultArtefact("BusinessObject", scopeImplementation()))»;
 
-«EXPAND standardImports FOR this»
-«EXPAND propertyChangeImports FOR this»
-«EXPAND xmlSerializationImports FOR this»
-«EXPAND java::JmiReflect::Imports FOR this»
+«EXPAND standardImports»
+«EXPAND propertyChangeImports»
+«EXPAND xmlSerializationImports»
+«EXPAND java::JmiReflect::Imports»
 «this.registeredImports()»
 
 /**
@@ -40,21 +40,22 @@ public
 «IF abstract»
 abstract
 «ENDIF»
-class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»  {
-	«EXPAND standardBody FOR this»
+class «className» «EXPAND extendsDecl» «EXPAND implementsDecl»  {
+	«EXPAND standardBody»
 }
 «ENDFILE»
 «ENDLET»
 «ENDDEFINE»
 
 «DEFINE standardBody FOR JavaBusinessObject»
-	«EXPAND versionInfo FOR this»
-	«EXPAND propertyChangeSupportAttr FOR this»
-	«EXPAND persistenceImpl FOR this»
-	«EXPAND delegateFactory FOR this»
-	«EXPAND standardCtor FOR this»
+	«EXPAND versionInfo»
+   «EXPAND serializationFields»
+	«EXPAND propertyChangeSupportAttr»
+	«EXPAND persistenceImpl»
+	«EXPAND delegateFactory»
+	«EXPAND standardCtor»
 
-	«EXPAND handleAttributes FOR this»	
+	«EXPAND handleAttributes»	
 	
 	«FOREACH implementedAssociations.typeSelect(JavaModelAssociation) AS assoc»
 		«EXPAND handleAssociation(this) FOR assoc»
@@ -64,14 +65,15 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 		«EXPAND handleMethod(this) FOR method»
 	«ENDFOREACH»
 	
-	«EXPAND modelMetaInformation FOR this»
-	«EXPAND propertyChangeSupportMethods FOR this»
-	«EXPAND java::JmiReflect::Impl FOR this»
-	«EXPAND visitorMethods FOR this»
-	«EXPAND xmlSerializationMethods FOR this»
+	«EXPAND modelMetaInformation»
+	«EXPAND propertyChangeSupportMethods»
+	«EXPAND java::JmiReflect::Impl»
+	«EXPAND visitorMethods»
+	«EXPAND xmlSerializationMethods»
 «ENDDEFINE»
 
 «DEFINE standardImports FOR JavaBusinessObject»
+   import java.io.ObjectStreamField; 
 	import java.io.Serializable;
 	import java.util.Iterator;
 «ENDDEFINE»
@@ -83,29 +85,29 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 «ENDDEFINE»
 
 «DEFINE handleAttribute(JavaModelClass modelClass) FOR JavaModelAttribute»
-	«EXPAND attrDecl FOR this»
+	«EXPAND attrDecl»
 
-	«EXPAND BOInterface::attrGetterDecl FOR this»
-	«EXPAND getterBody(modelClass) FOR this»
+	«EXPAND BOInterface::attrGetterDecl»
+	«EXPAND getterBody(modelClass)»
 	
-	«EXPAND BOInterface::attrSetterDecl FOR this» 
-	«EXPAND setterBody(modelClass) FOR this»
+	«EXPAND BOInterface::attrSetterDecl» 
+	«EXPAND setterBody(modelClass)»
 «ENDDEFINE»
 
 «DEFINE handleAssociation(JavaModelClass modelClass) FOR JavaModelAssociation»
-		«EXPAND assocDecl FOR this»
+		«EXPAND assocDecl»
 	
-		«EXPAND BOInterface::assocGetterDecl FOR this»
-		«EXPAND getterBody(modelClass) FOR this»
+		«EXPAND BOInterface::assocGetterDecl»
+		«EXPAND getterBody(modelClass)»
 	
-		«EXPAND BOInterface::assocSetterDecl FOR this»
-		«EXPAND setterBody(modelClass) FOR this»
-		«EXPAND internalSetMethod FOR this»
+		«EXPAND BOInterface::assocSetterDecl»
+		«EXPAND setterBody(modelClass)»
+		«EXPAND internalSetMethod»
 «ENDDEFINE»
 
 «DEFINE handleMethod(JavaModelClass modelClass) FOR JavaModelMethod»
-	«EXPAND BOInterface::methodDecl FOR this» {
-		«EXPAND methodBody(modelClass) FOR this»
+	«EXPAND BOInterface::methodDecl» {
+		«EXPAND methodBody(modelClass)»
 	}
 «ENDDEFINE»
 
@@ -113,7 +115,7 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 	«IF hasSuperClass()»
 		extends «getScopedName(getDefaultArtefact(javaSuperClass, scopeImplementation()), javaSuperClass)»
 	«ELSE»
-		«EXPAND standardExtendsDecl FOR this»	
+		«EXPAND standardExtendsDecl»	
 	«ENDIF»
 «ENDDEFINE»
 
@@ -121,13 +123,13 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 «ENDDEFINE»
 
 «DEFINE implementsDecl FOR JavaModelClass»
-    implements «getScopedName(getDefaultArtefact(this))» «EXPAND standardBOInterfaces FOR this»
+    implements «getScopedName(getDefaultArtefact(this))» «EXPAND standardBOInterfaces»
 «ENDDEFINE»
 
 «DEFINE standardBOInterfaces FOR JavaModelClass»
 	, Serializable, XMLSerializable
-	«EXPAND persistenceInterface FOR this»
-	«EXPAND visitorInterface FOR this»
+	«EXPAND persistenceInterface»
+	«EXPAND visitorInterface»
 «ENDDEFINE»
 
 «DEFINE versionInfo FOR JavaModelClass»
@@ -146,6 +148,12 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 //@@UserSection-End VersionInfo
 «ENDDEFINE»
 
+
+«REM» Fields to be serialized - and their order! - can be defined here. «ENDREM»
+«DEFINE serializationFields FOR JavaModelClass»
+«ENDDEFINE»
+
+
 «DEFINE modelMetaInformation FOR JavaModelClass»
 	public String getModelName() {
 		return MODEL_NAME;
@@ -158,31 +166,31 @@ class «className» «EXPAND extendsDecl FOR this» «EXPAND implementsDecl FOR this»
 
 «DEFINE standardCtor FOR JavaModelClass»
 	/**
-	 * Default Ctor. «EXPAND docInitializer FOR this»
+	 * Default Ctor. «EXPAND docInitializer»
 	 */
 	public «generatedName(this, "java.BusinessObject")»()
 	{
 		super();
-		«EXPAND callInitializer FOR this»
+		«EXPAND callInitializer»
 	}
 «ENDDEFINE»
 
 
 «DEFINE standardCtor FOR JavaBusinessObject»
-   «EXPAND standardCtor("protected") FOR this»
+   «EXPAND standardCtor("protected")»
 «ENDDEFINE»
 
 «DEFINE standardCtor(String visibility) FOR JavaBusinessObject»
 	/**
-	 * Default Ctor. «EXPAND docInitializer FOR this»
+	 * Default Ctor. «EXPAND docInitializer»
 	 */
 	«visibility» «generatedName»()
 	{
 		super();
-		«EXPAND callInitializer FOR this»
+		«EXPAND callInitializer»
 	}
 
-   «EXPAND standardCtorWithKeys(visibility) FOR this»
+   «EXPAND standardCtorWithKeys(visibility)»
 «ENDDEFINE»
 
 «DEFINE standardCtorWithKeys(String visibility) FOR JavaBusinessObject»
@@ -232,7 +240,7 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 	«IF derived == false»
 		«IF multiple»
 			«IF isbidirectionalOneToMany() && unique»
-			   «EXPAND bidirOneToManyParentSetDecl FOR this»
+			   «EXPAND bidirOneToManyParentSetDecl»
 			«ELSE»
             private «interfaceType» «name» = new «implementationType»();
 	   	«ENDIF»
@@ -259,7 +267,7 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 «DEFINE getterBody(ModelClass implementingClass) FOR JavaModelStructuraleFeature»
 	{
 	«IF derived»
-		«EXPAND derivedGetterBody(implementingClass) FOR this»
+		«EXPAND derivedGetterBody(implementingClass)»
 	«ELSE»
 		return «name»;
 	«ENDIF»
@@ -274,9 +282,9 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 «IF readOnly == false»
 	{
 	«IF derived»
-		«EXPAND derivedSetterBody(implementingClass) FOR this»
+		«EXPAND derivedSetterBody(implementingClass)»
 	«ELSE»
-		«EXPAND setterAssignment FOR this»
+		«EXPAND setterAssignment»
 	«ENDIF»
 	}
 «ENDIF»
@@ -287,9 +295,9 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 «ENDDEFINE»
 
 «DEFINE setterAssignment FOR JavaModelStructuraleFeature»
-		«EXPAND saveOldValue FOR this»
+		«EXPAND saveOldValue»
 		this.«name» = «name»;
-		«EXPAND callPostSetMethod FOR this»
+		«EXPAND callPostSetMethod»
 	    «EXPAND firePropertyChange(this) FOR (JavaModelClass)owner»
 «ENDDEFINE»
 
@@ -339,11 +347,11 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 		«setter»Internal(«name»);
 	«ELSE»
 	   if ( «name» != this.«name» ) {
-			«EXPAND saveOldValue FOR this»
+			«EXPAND saveOldValue»
 			this.«name» = «name»;
-			«EXPAND callPostSetMethod FOR this»
+			«EXPAND callPostSetMethod»
 	      «EXPAND firePropertyChange(this) FOR (JavaModelClass)owner»
-         «EXPAND setterAssignmentReverse FOR this»
+         «EXPAND setterAssignmentReverse»
       }
 	«ENDIF»
 «ENDDEFINE»
@@ -351,7 +359,7 @@ Calling modeled initializer {@link #«initializerMethod().name»()}.
 «DEFINE internalSetMethod FOR JavaModelAssociation»
 	«IF multiple && derived == false && readOnly == false»
 	   private void «setter»Internal(«interfaceType» «name») {
-	   		«EXPAND saveOldValue FOR this»
+	   		«EXPAND saveOldValue»
 	      
 	      if ( «name» != null ) {
 	         if ( this.«name» == null ) {
@@ -688,7 +696,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 		 */
 		protected «getScopedName("java.DelegateInterface")» get«name»Delegate() {
 			if ( the«name»Delegate == null ) {
-				the«name»Delegate = new «getScopedName("java.DelegateImpl")»(this «EXPAND propertyChangeSupportParameter FOR this»);
+				the«name»Delegate = new «getScopedName("java.DelegateImpl")»(this «EXPAND propertyChangeSupportParameter»);
       		}
       		return the«name»Delegate;
    		}
@@ -702,7 +710,7 @@ import org.umlmda.runtime.bean.BeanUtils;
 	   }
 	«ENDFOREACH»  
 «ELSE»
-	«EXPAND getAbstractDelegate FOR this»
+	«EXPAND getAbstractDelegate»
 	«FOREACH noneExtendedSuperClasses().typeSelect(JavaModelClass) AS superClass»
 		«EXPAND getAbstractDelegate FOR superClass»
 	«ENDFOREACH»

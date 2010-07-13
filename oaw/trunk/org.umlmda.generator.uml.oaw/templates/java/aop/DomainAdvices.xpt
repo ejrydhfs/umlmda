@@ -4,7 +4,12 @@
 «IMPORT org::umlmda::oaw::generator::util»
 «IMPORT org::umlmda::oaw::generator::model::java»
 
+«EXTENSION java::UMLMDA»
+«EXTENSION org::umlmda::uml::java::Association»
+«EXTENSION org::umlmda::uml::java::Attribute»
 «EXTENSION org::umlmda::uml::domain::Class»
+«EXTENSION org::umlmda::uml::java::ModelClass»
+
 
 «REM»
    Add equals and hashCode using domain key attributes, and implement EqualityCheckable interface
@@ -29,3 +34,44 @@
 «AROUND java::BOInterface::standardBaseInterface FOR JavaBusinessObject»
    «targetDef.proceed()», org.umlmda.runtime.lang.EqualityCheckable, org.umlmda.runtime.lang.ChildNavigatable
 «ENDAROUND»
+
+
+«REM» Fields to be serialized in this object. 
+      Most important: the order in which they are handled, i.e. keys first! «ENDREM»
+«AROUND java::BOImpl::serializationFields FOR JavaModelClass»
+   «LET keyAttributes.typeSelect(JavaModelAttribute).reject( a | a.derived ) AS relevantKeys»
+   «LET implementedAttributes.typeSelect(JavaModelAttribute).reject( a | a.derived ) AS relevantAttribs»
+   «LET associations.typeSelect(JavaModelAssociation).reject( a | a.target==parent || (a.isbidirectional() && !a.multiple && a.reverse.multiple) ) AS relevantAssocs»
+   private static final ObjectStreamField[] serialPersistentFields = {
+      «REM» Key attributes «ENDREM»
+      «IF relevantKeys.size > 0» 
+         «FOREACH relevantKeys AS keyAttr SEPARATOR ","»
+            new ObjectStreamField("«keyAttr.name»", «keyAttr.javaTypeName()».class)
+         «ENDFOREACH»
+         «IF relevantAttribs.size > 0 || relevantAssocs.size > 0»
+            ,
+         «ENDIF»
+      «ENDIF»
+      «REM» Normal attributes «ENDREM»
+      «IF relevantAttribs.size > 0»
+         «FOREACH relevantAttribs AS attr SEPARATOR ","»
+            new ObjectStreamField("«attr.name»", «attr.javaTypeName()».class)
+         «ENDFOREACH»   
+         «IF relevantAssocs.size > 0»
+            ,
+         «ENDIF»
+      «ENDIF»
+      «REM» Associations (avoid backlinking to parents and if an assoc is bidirectional, prefer a possible to-n side) «ENDREM»
+      «FOREACH relevantAssocs AS assoc SEPARATOR ","»
+         «IF assoc.multiple»
+            new ObjectStreamField("«assoc.name»", «assoc.collectionInterfaceType».class) 
+         «ELSE»
+            new ObjectStreamField("«assoc.name»", «assoc.interfaceType».class) 
+         «ENDIF»
+      «ENDFOREACH»   
+   };
+   «ENDLET»
+   «ENDLET»
+   «ENDLET»
+«ENDAROUND»
+
