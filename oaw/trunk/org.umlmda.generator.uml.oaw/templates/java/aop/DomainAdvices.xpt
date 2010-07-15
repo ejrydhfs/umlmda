@@ -41,7 +41,7 @@
 «AROUND java::BOImpl::serializationFields FOR JavaModelClass»
    «LET keyAttributes.typeSelect(JavaModelAttribute).reject( a | a.derived ) AS relevantKeys»
    «LET implementedAttributes.typeSelect(JavaModelAttribute).reject( a | a.derived ) AS relevantAttribs»
-   «LET implementedAssociations.typeSelect(JavaModelAssociation).reject( a | a.target==parent || (a.isbidirectional() && !a.multiple && a.reverse.multiple) ) AS relevantAssocs»
+   «LET implementedAssociations.typeSelect(JavaModelAssociation).reject( a | a.derived ) AS relevantAssocs»
    private static final ObjectStreamField[] serialPersistentFields = {
       «REM» Key attributes «ENDREM»
       «IF relevantKeys.size > 0» 
