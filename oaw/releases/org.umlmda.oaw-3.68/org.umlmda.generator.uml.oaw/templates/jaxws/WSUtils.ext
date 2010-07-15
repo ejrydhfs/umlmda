@@ -1,0 +1,218 @@
+import java::util;
+import org::umlmda::generator::model::uml;
+import org::umlmda::profile;
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator;
+import org::umlmda::uml::generator::java;
+import org::umlmda::uml::generator::webservices;
+import org::umlmda::oaw::generator::util;
+import org::umlmda::oaw::generator::model::java;
+import org::umlmda::oaw::generator::model::webservice;
+
+extension java::UMLMDA;
+
+
+    
+cached List[WSModelClass] schemaTypes(WSModelClass class) :
+    class.schemaTypes
+;
+        
+cached List[WSModelPackage] schemaPackages(WSModelClass class) :
+    class.schemaTypes().collect(e|e.package).toSet().typeSelect(WSModelPackage)
+;    
+
+cached JavaModelParameter requestParameter(JavaModelMethod method) :
+    method.parameters.typeSelect(JavaModelParameter).first()
+;     
+
+cached WSModelClass requestClass(JavaModelMethod method) :
+    (WSModelClass)(method.requestParameter().type)
+;        
+
+cached WSModelClass responseClass(JavaModelMethod method) :
+    method.returnType
+;    
+
+// Convenience method to get the namespace for a WS method
+cached String wsNamespace(WSModelMethod method) :
+    ((WSModelClass)method.owner).wsNamespace()
+;
+
+// Convenience method to get the namespace for a WS class
+cached String wsNamespace(WSModelClass class) :
+    ((WSModelPackage)class.package).namespace
+;
+
+
+// Convenience method to get the namespace for a WS method
+cached String wsNamespacePrefix(WSModelMethod method) :
+    ((WSModelClass)method.owner).wsNamespacePrefix()
+;
+
+// Convenience method to get the namespace for a WS class
+cached String wsNamespacePrefix(WSModelClass class) :
+    class.component != null ? (
+        ((WSBusinessComponent)class.component).wsNamespacePrefix()
+    ) : (
+        ((WSModelPackage)class.package).wsNamespacePrefix()
+    )
+;
+
+// Convenience method to get the namespace for a WS package
+cached String wsNamespacePrefix(WSModelPackage package) :
+    package.privateWsNamespacePrefix() != "" ? (
+        package.privateWsNamespacePrefix()
+    ) : (
+        package.PIMPackage.name.toFirstLower()
+    )
+;
+
+private cached String privateWsNamespacePrefix(WSModelPackage package) :
+    package.getStereotypeProperty("WSNamespacePrefix") != null ? (
+        package.getStereotypeProperty("WSNamespacePrefix")
+    ) : (
+        package.package != null ? (
+            ((WSModelPackage)package.package).privateWsNamespacePrefix()
+        ) : (
+            ""
+        )
+    )
+;
+
+
+
+// Checks if the given package is the Runtime WS package by comparing it to the one found in the current model
+cached Boolean isRuntimeWsPackage(WSModelPackage package) :
+    package == package.findRuntimeWsPackage() 
+;
+
+// Finds the Runtime WS package in the current model
+cached WSModelPackage findRuntimeWsPackage(JavaModelElement element) :
+    ((JavaModel)element.model).allModelElements.typeSelect(WSModelPackage).selectFirst( e | e.name=="ws" && e.owner.name=="runtime" ) 
+;
+
+
+// Finds the nesting business component of the given model package, if one exists.
+// If the given package is a WS component, it's treated different than other packages.
+cached WSBusinessComponent nestingWSBusinessComponent(WSModelPackage package) :
+    let owner = (WSModelPackage)package.package :
+    package.hasStereotype("WebServiceComponent") ? (
+        ((WSModelPackage)owner.package).nestingWSBusinessComponent()
+    ) : (
+        owner != null ? (
+            owner.hasStereotype("BusinessComponent") ? (
+                owner.wsPackage
+            ) : (
+                owner.nestingWSBusinessComponent()
+            )
+        ) : (
+            null
+        )
+    )
+;
+
+// Returns the given component, if it has the stereotype BusinessComponent.
+// Otherwise the owner package is searched for the next nesting business component. 
+cached WSBusinessComponent nestingWSBusinessComponent(WSBusinessComponent component) :
+    component.hasStereotype("BusinessComponent") ? (
+        component.wsPackage
+    ) : (
+        ((WSModelPackage)component.package).nestingWSBusinessComponent()
+    )
+;
+
+
+
+// Returns all WebService classes of the given package
+cached List[WSModelClass] webServices(WSModelPackage package) :
+    package.classes.typeSelect(WSModelClass).select( e | e.hasStereotype("WebService") )
+;
+
+
+
+// Returns all direct and indirect references of the given package and it's services
+cached List[ModelElement] referencedElements(WSModelPackage package) :
+    let result = {} :
+
+    package.webServices().size>0 ? (
+	    // All services' elements
+	    result.addAll( referencedElements(package.webServices()) )->
+	    // Now filter complete result set
+	    result.intersectElementsByName()
+	) : (
+        // All own elements
+        result.addAll( package.classes.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") ) )
+    )
+;
+
+// Returns all direct and indirect references of the given services' methods
+private cached List[ModelElement] referencedElements(List[WSModelClass] services) :
+    services.collect( s | s.referencedElements() ).flatten()
+;
+
+
+// Returns all direct and indirect references of the given service's methods to DTO classes
+cached List[ModelElement] relevantReferencedElements(WSModelClass service) :
+    let pkgElements = ((WSModelPackage)service.owner).referencedElements() :
+    service.referencedElements().reject( e | pkgElements.contains(e) )
+;
+
+
+// Returns all direct and indirect references of the given service's methods to DTO classes
+cached List[ModelElement] referencedElements(WSModelClass service) :
+    let result = {} :
+    let methods = service.methods.typeSelect(ModelMethod) :
+    
+    // References in service methods
+    result.addAll( methods.returnType.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
+    result.addAll( methods.parameters.typeSelect(ModelParameter).type.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
+    result.addAll( methods.exceptions.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
+    
+    // References of found elements
+    result.addAll( result.typeSelect(WSModelClass).referencedElements(service) ) ->
+
+    // Now filter complete result set
+    result.filterDuplicateElementsByName()
+;
+
+// Returns all direct and indirect references of the given class to other DTO classes
+private cached List[ModelElement] referencedElements(WSModelClass class, WSModelClass service) :
+    let result = {} :
+    let associations = class.associations.typeSelect(ModelAssociation).target.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) :
+    
+    // Local hierarchy
+    class.superClass != null && class.superClass.hasStereotype("WebServiceObject") && class.superClass.package==service.package ? (
+        result.add( class.superClass )
+    ) : ( null ) ->
+    result.addAll( class.subClasses.typeSelect(WSModelClass).select( e | e.hasStereotype("WebServiceObject") && e.package==service.package ) ) ->
+
+    // Direct and indirect references
+    result.addAll( associations ) ->
+    result.addAll( associations.referencedElements(service) ) ->
+    
+    result
+;
+
+
+
+// ====================================================================================================
+// =========================================== N A M I N G ============================================
+// ====================================================================================================
+
+cached String generatedStubName(WSBusinessObject object) :
+    object.getGeneratedName("ws.Stub")
+;
+
+cached String generatedStubName(WSModelClassifier classifier) :
+    classifier.javaType
+;
+
+
+cached String xsdTypeName(WSBusinessObject object) :
+    object.wsNamespacePrefix()+":"+object.getGeneratedName("ws.Stub")
+;
+
+cached String xsdTypeName(WSModelClassifier classifier) :
+    "xsd:"+ classifier.javaType.toFirstLower()
+;
+

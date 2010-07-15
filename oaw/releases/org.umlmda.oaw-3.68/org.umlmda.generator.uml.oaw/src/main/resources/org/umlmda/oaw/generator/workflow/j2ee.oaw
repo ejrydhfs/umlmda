@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+
+	<cartridge file="org/umlmda/oaw/generator/workflow/j2eeInit.oaw">
+		<j2eeGenPath value="${j2eeGenPath}"/>
+	</cartridge>
+
+	<component id="generator" class="org.openarchitectureware.xpand2.Generator" skipOnErrors="true">
+	   <metaModel class="org.openarchitectureware.type.impl.java.JavaMetaModel">
+	   		<typeStrategy class="org.openarchitectureware.type.impl.java.beans.JavaBeansStrategy" />
+	   </metaModel>
+	   <fileEncoding value="ISO-8859-1"/>
+	   <expand value="J2EE::Root FOR j2eeModel"/>
+	   <genPath value="${j2eeGenPath}"/>
+       <srcPath value="${j2eeGenPath}"/>
+
+	   <!-- protected regions configuration -->
+       <prSrcPaths value="${j2eeGenPath}"/>
+       <prDefaultExcludes value="false"/>
+
+		<!-- Beautifiers -->
+		<beautifier class="org.openarchitectureware.xpand2.output.JavaBeautifier"/>
+		<beautifier class="org.openarchitectureware.xpand2.output.XmlBeautifier"/>
+	</component>
+
+	<component id="generator" class="org.openarchitectureware.xpand2.Generator" skipOnErrors="true">
+	   <metaModel class="org.openarchitectureware.type.impl.java.JavaMetaModel">
+	   		<typeStrategy class="org.openarchitectureware.type.impl.java.beans.JavaBeansStrategy" />
+	   </metaModel>
+	   <fileEncoding value="ISO-8859-1"/>
+	   <expand value="J2EEDeployment::Root FOR j2eeDeploymentModel"/>
+	   <genPath value="${j2eeGenPath}"/>
+       <srcPath value="${j2eeGenPath}"/>
+
+	   <!-- protected regions configuration -->
+       <prSrcPaths value="${j2eeGenPath}"/>
+       <prDefaultExcludes value="false"/>
+
+		<!-- Beautifiers -->
+		<beautifier class="org.openarchitectureware.xpand2.output.JavaBeautifier"/>
+		<beautifier class="org.openarchitectureware.xpand2.output.XmlBeautifier"/>
+	</component>
+
+</workflow>

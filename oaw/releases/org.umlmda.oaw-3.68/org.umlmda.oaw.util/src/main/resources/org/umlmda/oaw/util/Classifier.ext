@@ -1,0 +1,8 @@
+import uml;
+
+/**
+ * Creates a new generalazation. Just necessary because the extension to the uml function does'n work
+ */
+uml::Generalization createGeneralization(uml::Classifier specific, uml::Classifier general) :
+    JAVA org.umlmda.oaw.util.uml2.GeneralizationUtils.createGeneralization(org.eclipse.uml2.uml.Classifier, org.eclipse.uml2.uml.Classifier)
+;

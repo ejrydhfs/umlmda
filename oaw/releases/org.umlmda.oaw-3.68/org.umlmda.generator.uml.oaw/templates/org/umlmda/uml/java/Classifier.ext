@@ -1,0 +1,10 @@
+/**
+ * Standard Xtend Library for UML2 base generation. Extensions for ModelDataType.
+ */
+import org::umlmda::model::uml;
+import org::umlmda::uml::generator::java;
+
+extension org::umlmda::utils::String;
+ 
+String javaTypeName(ModelClassifier classifier) :
+	"Should not be called"; 
