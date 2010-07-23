@@ -4,7 +4,7 @@
    <parent>
       <groupId>org.umlmda</groupId>
       <artifactId>org.umlmda.oaw</artifactId>
-      <version>3.69-SNAPSHOT</version>
+      <version>3.69</version>
    </parent>
 
    <artifactId>org.umlmda.generator.uml.oaw</artifactId>
