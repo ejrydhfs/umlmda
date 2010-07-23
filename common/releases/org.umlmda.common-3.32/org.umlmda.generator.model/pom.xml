@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.umlmda</groupId>
+      <artifactId>org.umlmda.common</artifactId>
+      <version>3.32</version>
+   </parent>
+   <artifactId>org.umlmda.generator.model</artifactId>
+   <name>UMLMDA common generator model</name>
+   <description />
+
+   <dependencies>
+      <dependency>
+         <groupId>commons-lang</groupId>
+         <artifactId>commons-lang</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>oro</groupId>
+         <artifactId>oro</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.velocity</groupId>
+         <artifactId>velocity</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-core-expressions</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-core-workflow</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.openarchitectureware</groupId>
+         <artifactId>oaw-core-xpand2</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>${parent.groupId}</groupId>
+         <artifactId>org.umlmda.umlmodel</artifactId>
+         <version>${parent.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>${parent.groupId}</groupId>
+         <artifactId>org.umlmda.generator.profile</artifactId>
+         <version>${parent.version}</version>
+      </dependency>
+   </dependencies>
+   
+</project>
