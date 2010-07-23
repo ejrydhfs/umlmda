@@ -79,7 +79,7 @@
       Injector injector = Guice.createInjector(new «name»Module());
       utils = injector.getInstance(«getScopedName("ws.Utils")».class);
 
-      «getScopedName("ws.ServiceLocator")» locator = new «getScopedName("ws.ServiceLocator")»(serviceURL, new QName("«wsNamespace()»", "«name»"));
+      «getScopedName("ws.ServiceLocator")» locator = new «getScopedName("ws.ServiceLocator")»(serviceURL, new QName("«wsNamespace()»", "«getGeneratedName("jaxWs.Client")»Service"));
       servicePort = locator.get«name»Port();
    }
    

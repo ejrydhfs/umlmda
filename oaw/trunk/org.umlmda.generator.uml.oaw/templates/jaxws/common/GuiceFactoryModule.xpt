@@ -14,6 +14,8 @@
 «LET model.packages.typeSelect(WSModelPackage).select(p|p.hasStereotype("WebServiceComponent")).sortBy(p|p.name) AS allComponentPackages»
 «FILE qualifiedFilePath+"/"+className+".java"»
    package «qualifiedPackageName»;
+   
+   import org.umlmda.runtime.webservice.ReferenceUtils;
 
    import com.google.inject.AbstractModule;
    import com.google.inject.Provides;
@@ -42,14 +44,12 @@
                .to(«pimPkg.getGeneratedName("java.BusinessObjectFactoryImpl")».class)
                .in(Singleton.class);
          «ENDFOREACH»
-	   }
 
-      «FOREACH allComponentPackages.collect(p|p.PIMPackage) AS pimPkg»
-         @Provides @Singleton
-         «pimPkg.getGeneratedName("ws.Utils")» provide«pimPkg.getGeneratedName("ws.Utils")»() {
-            return new «pimPkg.getGeneratedName("ws.Utils")»();
-         }
-      «ENDFOREACH»	   
+	      «FOREACH allComponentPackages.collect(p|p.PIMPackage) AS pimPkg»
+	         bind(«pimPkg.getGeneratedName("ws.Utils")».class).in(Singleton.class);
+	      «ENDFOREACH»  
+	      bind(ReferenceUtils.class).in(Singleton.class);    
+	   }
 
    }   
 «ENDFILE»

@@ -55,13 +55,11 @@
 
 
 «DEFINE imports FOR WSModelPackage»
-   import java.util.ArrayList;
-   import java.util.HashMap;
-   import java.util.IdentityHashMap;
-   import java.util.Iterator;
-   import java.util.List;
    import java.util.Map;
-   import java.util.NoSuchElementException;
+
+   import org.umlmda.runtime.webservice.ReferenceUtils;
+   import org.umlmda.runtime.webservice.ReferenceUtils.ResolveReference;
+         
    import com.google.inject.Inject;
    
    «REM» First inherit from a nesting component, otherwise try runtime package «ENDREM»
@@ -92,94 +90,46 @@
 
 
 «DEFINE runtimeMethods FOR WSModelPackage»
-   // ====================================================================================================
+// ====================================================================================================
    // Basic utility methods
    // ====================================================================================================
-   private final Map<Object, Object>          registry        = new HashMap<Object, Object>();
-
-   private List<ResolveReference>             resolvers       = new ArrayList<ResolveReference>();
-   private Map<String, Map<Class<?>, Object>> resolveRegistry = new HashMap<String, Map<Class<?>, Object>>();
+   @Inject
+   ReferenceUtils referenceUtils;
 
    /**
     * @return the registry
     */
    protected Map<Object, Object> getRegistry() {
-      return registry;
+      return referenceUtils.getRegistry();
    }
 
    protected <T> T getObject(Class<T> clazz, String id) {
-      Map<Class<?>, Object> idMap = resolveRegistry.get(id);
-      Object reference = null;
-
-      if ( idMap != null ) {
-         for ( Map.Entry<Class<?>, Object> classMapEntry : idMap.entrySet() ) {
-            if ( clazz.isAssignableFrom(classMapEntry.getValue().getClass()) ) {
-               if ( reference == null ) {
-                  reference = classMapEntry.getValue();
-               }
-               else {
-                  throw new IllegalStateException("Found more than one instance to resolve id " + id + " for class " + clazz);
-               }
-            }
-         }
-      }
-      if ( reference == null && id != null )
-         throw new NoSuchElementException("No instance to resolve id " + id + " for class " + clazz + " found!");
-
-      return (T) reference;
+      return referenceUtils.getObject(clazz, id);
    }
 
    protected void registerObject(Object object, String id) {
-      Map<Class<?>, Object> idMap = resolveRegistry.get(id);
-      if ( idMap == null ) {
-         idMap = new IdentityHashMap<Class<?>, Object>();
-         idMap.put(object.getClass(), object);
-         resolveRegistry.put(id, idMap);
-      }
-      else
-         idMap.put(object.getClass(), object);
-   }
-
-   /**
-    * For resolving an object reference, to be implemented for concrete associations.
-    */
-   protected abstract class ResolveReference {
-      protected abstract void resolve();
-
-      Object lookup(Object objectRef) {
-         if ( objectRef != null ) {
-            return registry.get(objectRef);
-         }
-         else {
-            return null;
-         }
-      }
+      referenceUtils.registerObject(object, id);
    }
 
    /**
     * Register a reference resolver for later resolving.
     */
    protected void register(ResolveReference resolveReference) {
-      resolvers.add(resolveReference);
+      referenceUtils.register(resolveReference);
    }
 
    /**
     * Resolve all registered references.
     */
    public void resolveReferences() {
-      List<ResolveReference> resolver = new ArrayList<ResolveReference>(resolvers);
-      for ( ResolveReference resolveReference : resolver ) {
-         resolveReference.resolve();
-      }
+      referenceUtils.resolveReferences();
    }
 
    /**
     * Clear all collected reference resolvers.
     */
    public void resetReferences() {
-      resolveRegistry.clear();
-      resolvers.clear();
-      registry.clear();
+      referenceUtils.resetReferences();
    }
 «ENDDEFINE»
 
@@ -373,7 +323,7 @@
    public «wsObjectQualified» create«name»(«bsObjectQualified» src) {
       «wsObjectQualified» dest = new «wsObjectQualified»();
 
-      «FOREACH associations.typeSelect(JavaModelAssociation) AS assoc SEPARATOR " else "»
+      «FOREACH modelAssociations.typeSelect(JavaModelAssociation) AS assoc SEPARATOR " else "»
          «LET ((WSModelClass)assoc.target).PIMClass.getQualifiedName("java.BusinessObjectInterface") AS targetBSQualified»
 	      if ( src instanceof «targetBSQualified» ) {
 	         dest.«assoc.setter»( «EXPAND createDTOCall(this) FOR (WSModelClass)assoc.target»( («targetBSQualified»)src) );
@@ -423,11 +373,11 @@
                
                getRegistry().put(src, dest);
                copy«name»(src, dest);
-               «LET PIMClass.attributes.typeSelect(JavaModelAttribute).selectFirst(a|a.hasStereotype("Id")) AS key»
-	               «IF key != null»
-	                  registerObject(dest, dest.«key.getter»());
-	               «ENDIF»
-               «ENDLET»
+					«LET PIMClass.getAttributes(true).typeSelect(JavaModelAttribute).selectFirst(a|a.hasStereotype("Id")) AS key»
+					   «IF key != null»
+						   registerObject(dest, dest.«key.getter»());
+						«ENDIF»
+					«ENDLET»
             }
             return dest;
          }
@@ -502,10 +452,11 @@
 	      «ELSEIF ! attrib.primitiveType && attrib.modelClassifier.hasStereotype("WebServiceEnumeration")»
 
 	         «REM» Enumeration «ENDREM»
-	         dest.«attrib.setter»(
+	         if(src.«attrib.getter»() != null) {
+	           dest.«attrib.setter»(
 			      «((WSModelClass)attrib.modelClassifier).getQualifiedName("ws.Stub")».fromValue( src.«attrib.getter»().getValue() )
-	         );
-	
+   	         );
+            }	
 	      «ELSE»
 
 	         «REM» Normal attribute «ENDREM»
@@ -631,11 +582,11 @@
 
          «ELSEIF ! attrib.primitiveType && attrib.modelClassifier.hasStereotype("WebServiceEnumeration")»
             «REM» Single Enumeration value «ENDREM»
-            
-            dest.«attrib.setter»(
-               «((WSEnumeration)attrib.modelClassifier).PIMClass.getQualifiedName("java.BusinessObjectInterface")».fromValue( src.«attrib.getter»().value() )
-            );
-
+            if ( src.«attrib.getter»() != null ) {
+	            dest.«attrib.setter»(
+	               «((WSEnumeration)attrib.modelClassifier).PIMClass.getQualifiedName("java.BusinessObjectInterface")».fromValue( src.«attrib.getter»().value() )
+	            );
+            }
          «ELSE»
             «REM» Normal attribute «ENDREM»
             
@@ -666,7 +617,7 @@
                «IF assoc.target.hasStereotype("WebServiceDTOReference")»
                   «REM» WS to BS with reference object«ENDREM»
                   «IF assoc.target.attributes.typeSelect(JavaModelAttribute).size > 0»
-                     register(new ResolveReference() {
+                     register(new ReferenceUtils.ResolveReference() {
                         @Override
                         protected void resolve() {
                            for («((WSModelClass)assoc.target).getQualifiedName("ws.Stub")» «targetName.toFirstLower()» : src.«assoc.getter»() ) {
@@ -699,7 +650,7 @@
                «REM» WS to BS with reference object«ENDREM»
 
                «IF assoc.target.attributes.typeSelect(JavaModelAttribute).size > 0»
-               register(new ResolveReference() {
+               register(new ReferenceUtils.ResolveReference() {
                   @Override
                   protected void resolve() {
                      if ( src.«assoc.getter»() != null ) {
