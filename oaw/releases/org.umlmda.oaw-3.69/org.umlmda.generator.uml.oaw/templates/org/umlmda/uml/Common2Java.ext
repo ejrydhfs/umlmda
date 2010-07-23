@@ -1,0 +1,155 @@
+import uml;
+
+// and we also load the io extensions, for the purpose of
+// debugging, in case we need it   
+extension org::openarchitectureware::util::stdlib::io;   
+extension org::openarchitectureware::util::stdlib::issues;   
+
+extension org::umlmda::oaw::util::Element;
+extension org::umlmda::oaw::util::Stereotype;
+extension org::umlmda::oaw::util::TypeMapper;
+
+/**
+ * Replace the type of properties, using an <<Alias>> type.
+ */
+cached Void replaceAliasType(Property prop) :
+	let propType = prop.type :
+	let isAlias = ( propType != null ? propType.hasStereotype("Alias") : false ) :
+	
+	isAlias ? (
+	   debug("Replacing alias on "+prop.qualifiedName) ->
+	   prop.setType(propType.ownedElement.typeSelect(Property).first().type) ->
+	   propType.destroyLater(prop.getModel().qualifiedName)
+	   // TODO merge stereotype information
+	) : (
+	   true
+	)
+;	
+
+cached Void replaceEnumerationType(Property prop) :
+    let propType = prop.type :
+    let isEnum = ( propType != null ? propType.hasStereotype("Enumeration") : false ) :
+    
+    isEnum ? (
+       debug("Replacing enumeration on "+prop.qualifiedName) ->
+
+       propType.ownedElement.typeSelect(Property).isEmpty == false ? (
+          prop.setType(propType.ownedElement.typeSelect(Property).first().type)
+       ) : (
+          false
+       )
+    ) : (
+        false
+    )
+;
+
+/**
+ * Adds standard UMLMDA generation stereotypes on class
+ */
+cached Void applyGenerationStereotypes(Class cls) :
+    applyGenerationStereotypes(cls, {}, false)
+;
+/**
+ * Adds standard UMLMDA generation stereotypes on class
+ */
+cached Void applyGenerationStereotypes(Class cls, List[String] profileStereotypes, Boolean remove) :
+
+    cls.getAppliedStereotypes().size == 0 ? (
+        cls.addObjectStereotype()
+    ) : (
+        cls.hasStereotype(profileStereotypes) ? (
+            (remove ? cls.removeStereotypes(profileStereotypes) : false) ->
+            cls.addObjectStereotype()
+        ) : (
+            true
+        )    
+    )
+;
+
+/**
+ * Adds standard UMLMDA generation stereotypes on package
+ */
+Void applyGenerationStereotypes(Package pkg) :
+    let packageStereotype = packageStereotype() :
+    let objectStereotype = objectStereotype() :
+    let ownedBusinessObjects = pkg.ownedElement.typeSelect(Class).select(e|e.hasObjectStereotype()) :
+    
+    info("Process package "+pkg.qualifiedName) ->
+    ownedBusinessObjects.size > 0 ? (
+        pkg.applyStereotypeToElement(packageStereotype)    
+    ) : (
+        true
+    )    
+;
+
+// Utilities
+private Boolean hasObjectStereotype(Class cls) :
+    let objectStereotype = objectStereotype() :
+    let stereotypes = cls.getAppliedStereotypes() :
+
+    debug("Checking for objectStereotype in "+cls.qualifiedName) ->
+    stereotypes.select(e|e == objectStereotype).size > 0
+;
+    
+private cached Void addObjectStereotype(Class cls) :
+    let objectStereotype = objectStereotype() :
+
+    cls.applyStereotypeToElement(objectStereotype)    
+;
+
+private cached Void removeStereotypes(Class cls, List[String] stereotypeNames) :
+	cls.unapplyStereotypes(stereotypeNames)
+;
+	
+private cached Stereotype objectStereotype() :
+    let objectStereotypeName = (String)GLOBALVAR objectStereotype :
+    let generationProfile = generationProfile() :
+    let stereotype = generationProfile().ownedStereotype.selectFirst(e|e.name == objectStereotypeName) :
+    
+    info("ObjectStereotype is "+stereotype.qualifiedName) ->
+    stereotype
+;
+
+private cached Stereotype packageStereotype() :
+    let packageStereotypeName = (String)GLOBALVAR packageStereotype :
+    let generationProfile = generationProfile() :
+    let stereotype = generationProfile().ownedStereotype.selectFirst(e|e.name == packageStereotypeName) :
+    
+    info("PackageStereotype is "+stereotype.qualifiedName) ->
+    stereotype
+;
+
+cached Profile generationProfile() :
+    let profile = (Profile)GLOBALVAR generationProfile :
+    
+    info("Using generation profile "+profile.qualifiedName) ->
+    profile
+;
+    
+cached Void applyStereotypeToElement(NamedElement element, Stereotype stereotype) : 
+    element.getAppliedStereotypes().contains(stereotype) ? (
+        debug("Stereotype <<"+stereotype.name+">> already applied to model "+element.qualifiedName) ->
+        true
+    ) : (
+        info("Applying <<"+stereotype.name+">> to "+element.qualifiedName) ->
+        element.applyStereotype(stereotype)
+    )    
+;
+    
+cached Void applyProfileToModel(Model model, Profile profile) :
+    model.getAppliedProfiles().contains(profile) ? (
+        debug("Profile "+profile.qualifiedName+" already applied to model "+model.qualifiedName) ->
+        true
+    ) : (
+        info("Applying profile "+profile.qualifiedName+" to model "+model.qualifiedName) ->
+        model.applyProfile(profile)
+    )
+;        
+
+// Processing classes
+Boolean destroyAliases(uml::Model m) :
+    info("destroying aliases for model "+m.name) ->
+    destroyCollected(m.qualifiedName) ->
+    true
+;
+

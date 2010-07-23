@@ -1,0 +1,59 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::uml::generator::webservices»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«IMPORT org::umlmda::oaw::generator::model::webservice»
+«IMPORT org::umlmda::oaw::generator::util»
+
+«EXTENSION jaxws::WSUtils»
+«EXTENSION java::UMLMDA»
+
+
+«DEFINE FactoryModule(String qualifiedFilePath, String qualifiedPackageName) FOR WSBusinessService»
+«LET name+"Module" AS className»
+«LET model.packages.typeSelect(WSModelPackage).select(p|p.hasStereotype("WebServiceComponent")).sortBy(p|p.name) AS allComponentPackages»
+«FILE qualifiedFilePath+"/"+className+".java"»
+   package «qualifiedPackageName»;
+   
+   import org.umlmda.runtime.webservice.ReferenceUtils;
+
+   import com.google.inject.AbstractModule;
+   import com.google.inject.Provides;
+   import com.google.inject.Singleton;
+
+   «resetImports()»
+   «FOREACH allComponentPackages AS pkg»
+      import «pkg.getQualifiedPackageName("ws.Utils")».«((JavaModelElement)pkg.owner).generatedName("ws.Utils")»;
+      «registerImport("java.BusinessObjectFactory", pkg.PIMPackage)»
+      «registerImport("java.BusinessObjectFactoryImpl", pkg.PIMPackage)»
+   «ENDFOREACH»
+   «registeredImports()»
+
+   /**
+    * Dependency injection module for the web service utility users.
+    */
+	public class «className»  extends AbstractModule {
+
+	   /* (non-Javadoc)
+	    * @see com.google.inject.AbstractModule#configure()
+	    */
+	   @Override
+	   protected void configure() {
+         «FOREACH allComponentPackages.collect(p|p.PIMPackage) AS pimPkg»
+            bind(«pimPkg.getGeneratedName("java.BusinessObjectFactory")».class)
+               .to(«pimPkg.getGeneratedName("java.BusinessObjectFactoryImpl")».class)
+               .in(Singleton.class);
+         «ENDFOREACH»
+
+	      «FOREACH allComponentPackages.collect(p|p.PIMPackage) AS pimPkg»
+	         bind(«pimPkg.getGeneratedName("ws.Utils")».class).in(Singleton.class);
+	      «ENDFOREACH»  
+	      bind(ReferenceUtils.class).in(Singleton.class);    
+	   }
+
+   }   
+«ENDFILE»
+«ENDLET»
+«ENDLET»
+«ENDDEFINE»
+

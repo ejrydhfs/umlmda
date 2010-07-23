@@ -1,0 +1,42 @@
+«IMPORT org::umlmda::model::uml»
+«IMPORT org::umlmda::uml::generator»
+«IMPORT org::umlmda::uml::generator::java»
+«IMPORT org::umlmda::oaw::generator::util»
+«IMPORT org::umlmda::oaw::generator::model::java»
+«EXTENSION java::UMLMDA»
+«EXTENSION java::NamingConventions»
+
+«DEFINE BOFactory FOR JavaBusinessComponent»
+«LET generatedName(this, "java.BusinessObjectFactory") AS className»
+«FILE generatedPath+"/"+className+".java"»
+package «getQualifiedPackageName("java.BusinessObjectFactory")»;
+
+«FOREACH businessObjects.typeSelect(JavaBusinessObject) AS bo»
+	«this.registerImport("java.BusinessObjectInterface", bo)»
+«ENDFOREACH»
+«this.registeredImports()»
+
+/**
+ * Business object factory interface for «qualifiedName». «documentation»
+ */
+public interface «className» {
+	«FOREACH businessObjects.typeSelect(JavaBusinessObject) AS bo»
+		«IF bo.abstract == false»
+			«EXPAND createBODecl(true) FOR bo»;
+		«ENDIF»
+	«ENDFOREACH»
+}
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE createBODecl(Boolean forInterface)  FOR JavaBusinessObject»
+   /**
+    * Create business service implementation for «getScopedName("java.BusinessObjectInterface")».
+    */
+   «IF ! forInterface»public «ENDIF»«getScopedName("java.BusinessObjectInterface")» create«name»()
+«ENDDEFINE» 
+«DEFINE createBODecl FOR JavaBusinessObject»
+   «EXPAND createBODecl(false)»
+«ENDDEFINE» 
+ 

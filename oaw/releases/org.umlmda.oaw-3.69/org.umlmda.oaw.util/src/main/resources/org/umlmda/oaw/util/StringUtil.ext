@@ -1,0 +1,47 @@
+/*
+ * XTend accessor methods for the utility class org.umlmda.generator.model.util.StringUtil.
+ */
+import uml;
+
+extension org::umlmda::utils::String;
+
+
+// Shorten a string to the given max length.
+// Uses the configured strategy (global var "stringShorteningStrategy") or the default implementation.
+cached String shortenString(String stringToShorten, Integer maxLength) :
+    shortenString(stringToShorten, maxLength, "")
+;
+
+// Shorten a string to the given max length - taking the given prefix string into account!
+// Uses the configured strategy (global var "stringShorteningStrategy") or the default implementation.
+cached String shortenString(String stringToShorten, Integer maxLength, String prefix) :
+    shortenString(stringShorteningStrategy(), stringToShorten, maxLength, prefix)
+;
+
+// Shorten a string to the given max length.
+// Uses the shortening strategy provided as parameter.
+cached String shortenString(String strategyClass, String stringToShorten, Integer maxLength) :
+    JAVA org.umlmda.generator.model.util.StringUtil.shortenString( java.lang.String, java.lang.String, java.lang.Integer )
+;
+
+// Shorten a string to the given max length - taking the given prefix string into account!
+// Uses the shortening strategy provided as parameter.
+cached String shortenString(String strategyClass, String stringToShorten, Integer maxLength, String prefix) :
+    JAVA org.umlmda.generator.model.util.StringUtil.shortenString( java.lang.String, java.lang.String, java.lang.Integer, java.lang.String )
+;
+
+
+// ----------------------------------------------------------------------------
+// C O N F I G U R A T I O N   V A L U E S ------------------------------------
+// ----------------------------------------------------------------------------
+
+// Configuration value for the string shortening strategy.
+private String globalVarStringShorteningStrategy() : 
+    GLOBALVAR stringShorteningStrategy;
+
+// Get configuration value for the string shortening strategy or use the default defined here.
+cached String stringShorteningStrategy() :
+    isEmpty(globalVarStringShorteningStrategy()) 
+        ? "org.umlmda.generator.model.util.string.DefaultStringShorteningStrategy" 
+        : globalVarStringShorteningStrategy()
+;
