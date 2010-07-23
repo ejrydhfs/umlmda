@@ -390,6 +390,8 @@ public class WSModelClassAdapter extends JavaModelClassAdapter implements WSMode
       if ( isAbstract() == false ) {
          instanceClasses.add(this);
       }
+      
+      Collections.sort(instanceClasses, getHierachyComparator());
       return instanceClasses;
    }
 

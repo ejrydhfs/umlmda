@@ -71,9 +71,10 @@ public class ModelClassAdapter extends ModelClassifierAdapter implements ModelCl
    private List                 constants               = null; // list of constant attributes
    private List                 methods                 = null; // list of methods
    private List                 allMethods              = null; // list of methods including super classes
-   private List                 navigatableAssociations = null; // list navigatable of associations
+   private List                 navigatableAssociations = null; // list navigatable of associations in alphabetic target class order
    private List                 associations            = null; // list of associations including non navigatable
    private List                 allAssociations         = null; // list of navigatable associations including base classes
+   private List<ModelAssociation> modelAssociations     = null; // list of assocations in model order
    // Cached derived model information
    // TODO think about correct resetting
    private List                 referencedTypes         = null; // list of referenced classes
@@ -88,6 +89,7 @@ public class ModelClassAdapter extends ModelClassifierAdapter implements ModelCl
 
    private static Comparator    derivedComparator       = null;
    private static Comparator    hierarchyComparator     = null;
+
 
    /**
     * create adapter from ModelClass
@@ -420,6 +422,19 @@ public class ModelClassAdapter extends ModelClassifierAdapter implements ModelCl
       return navigatableAssociations;
    }
 
+   public List<ModelAssociation> getModelAssociations() {
+      
+      if ( modelAssociations == null ) {
+         modelAssociations = new ArrayList<ModelAssociation>(modelClass.getAssociations().size());
+         for ( Iterator<ModelAssociationBase> iter = modelClass.getAssociations().iterator(); iter.hasNext(); ) {
+            ModelAssociationBase ass = iter.next();
+            ModelAssociation newAss = adaptedModel.getModelAssociation(ass);
+            modelAssociations.add(newAss);
+         }
+      }
+      return modelAssociations;
+   }
+   
    /*
     * (non-Javadoc)
     * @see net.sourceforge.umlmda.xmi.uml.ModelClass#getAllAssociations()
