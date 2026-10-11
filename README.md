@@ -15,13 +15,15 @@ for business applications is provided.
 
 ## License
 
-GNU Library General Public License, version 2 or later (`LGPL-2.0-or-later`) — see
-[`COPYING`](COPYING). The SourceForge project lists the license as "LGPLv2". Most source files
-carry the matching header ("This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Library General Public License as published by the Free
-Software Foundation; either version 2 of the License, or (at your option) any later version");
-a subset of files instead carries the otherwise equivalent LGPL 2.1 wording ("GNU Lesser
-General Public License ... version 2.1 ... or later").
+GNU Library General Public License, version 2 or later (`LGPL-2.0-or-later`). The SourceForge
+project lists the license as "LGPLv2". Most source files carry the matching header ("This
+library is free software; you can redistribute it and/or modify it under the terms of the GNU
+Library General Public License as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version"); a subset of files instead carries the
+otherwise equivalent LGPL 2.1 wording ("GNU Lesser General Public License ... version 2.1 ...
+or later"). Since the grant is "version 2 of the License, or (at your option) any later
+version", both texts are included: [`COPYING`](COPYING) (GNU Library General Public License
+v2) and [`LICENSE`](LICENSE) (GNU Lesser General Public License v2.1).
 
 Copyright remains with the original authors (see the commit history). Third-party components
 under `3rd-party/` and libraries bundled inside the per-component `lib/` directories remain
